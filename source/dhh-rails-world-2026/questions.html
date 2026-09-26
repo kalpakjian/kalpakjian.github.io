@@ -70,6 +70,10 @@
     </div>
     <p><strong>現況與風險：</strong>DHH 一行 Rust 都不看，靠的是外部驗收；Basecamp 5 的「瑞士起司架構」，就是<strong>驗收能力跟不上產出速度的代價</strong>。</p>
     <p>當設計師用 vibe coding 各自送出 20、30 個各自合理的 PR，疊在一起系統千瘡百孔，當時沒有人看得出來，因為沒有人在看。這不是 code review 快一點的問題，而是團隊有沒有人具備<strong>「看結果就知道對不對」的判斷力</strong>。</p>
+    <div class="callout" style="margin: 16px 0; background: #fff8f0; border-left: 4px solid var(--accent);">
+      <div class="label">社群反思與深度視角 (Ownership)</div>
+      <p style="margin: 6px 0 0; font-size: 15px; color: #444b53;">業界工程領袖（如 Jared Smith）對這場演講的關鍵反思在於：Basecamp 5 變成瑞士起司，本質上不是「AI 模型還不夠好」的技術問題，而是<strong>「架構責任歸屬（Ownership）」</strong>的問題——沒有人為 20 個各自合理決策的總和負責任。更強的模型並不會自動替誰扛起責任，它只會讓同樣的架構失誤以更高的吞吐量發生。<strong>Keep the architecture human-owned.</strong></p>
+    </div>
     <ul class="checklist">
       <li><strong>團隊自查：</strong>團隊目前的 PR review 是在挑語法微調（找 variable 命名、排版），還是在驗證系統架構與狀態邊界？</li>
       <li><strong>團隊自查：</strong>有沒有建立「外部黑盒子驗收工具」（CLI、端到端即時環境 preview），讓 reviewer 可以在 10 分鐘內跑過主流程？</li>
@@ -100,3 +104,4 @@
 </footer>
 </body>
 </html>
+
