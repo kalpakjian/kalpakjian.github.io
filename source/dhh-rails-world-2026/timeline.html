@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>時間線與關鍵數字 ｜ DHH @ Rails World 2026</title>
+<meta name="description" content="從 1839 相機誕生到 2025-11-24 Opus 4.5、Fable 5、GPT-6 Astra，以及 60x 產出、CPU -99% 等關鍵指標。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">DHH @ Rails World 2026 <span class="tag">專題</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="article.html">全文整理</a>
+      <a href="timeline.html" class="active">時間線與數字</a>
+      <a href="questions.html">三個問題</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container article">
+  <section class="hero" style="padding-bottom: 0;">
+    <span class="kicker">02 / 時間線與數字</span>
+    <h1>跳躍、停滯、再跳躍：歷史對照與關鍵數據</h1>
+    <p class="lead">DHH 提醒：技術進步從來不是線性的。理解這個「跳躍、停滯、再跳躍」的節奏，才能看清過去不到一年裡軟體業到底發生了什麼事。</p>
+  </section>
+
+  <!-- 關鍵數字牆 -->
+  <section class="sec">
+    <span class="sec-num">DASHBOARD</span>
+    <h2>演講關鍵數字牆</h2>
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="big">60x</div>
+        <div class="desc">DHH 8 月產出速率（一個月 15 萬行，約 21 年均值的一半）</div>
+      </div>
+      <div class="stat">
+        <div class="big">100–1000x</div>
+        <div class="desc">無工具差 vs. 有工具頂尖開發者的產出差距數量級</div>
+      </div>
+      <div class="stat">
+        <div class="big">-99% / -95%</div>
+        <div class="desc">新 HEY 換 Rust 後端之 CPU / 記憶體消耗降幅</div>
+      </div>
+      <div class="stat">
+        <div class="big">1 台 Pi</div>
+        <div class="desc">粗估新 HEY 尖峰流量所需運算力（原留 10 台僅為冗餘）</div>
+      </div>
+      <div class="stat">
+        <div class="big">0.5 MB</div>
+        <div class="desc">簡報軟體 Hype 執行檔大小（相較 Spotify 播放器 1.2 GB）</div>
+      </div>
+      <div class="stat">
+        <div class="big">9 秒</div>
+        <div class="desc">Omarchy Linux 實驗室安裝時間（去年 3 分 33 秒）</div>
+      </div>
+      <div class="stat">
+        <div class="big">95%</div>
+        <div class="desc">Evil Martians 委託的 Rails agent 基準評測首版完成率</div>
+      </div>
+      <div class="stat">
+        <div class="big">$20M</div>
+        <div class="desc">Omarchy Linux 發行版目前募得資金（美元）</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 歷史對照時間線 -->
+  <section class="sec">
+    <span class="sec-num">TIMELINE PART 1</span>
+    <h2>歷史的鏡子：肖像畫、Kodak Brownie 與相機</h2>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="when">18 世紀</div>
+        <h3>肖像畫是上層階級的奢侈品</h3>
+        <p>委託大師坐上數小時、耗時數月完成一幅畫。寫實複製現實是一項高價值的經濟技能。</p>
+      </div>
+      <div class="t-item">
+        <div class="when">1840 年代</div>
+        <h3>相機出現</h3>
+        <p>技術剛萌芽，成本依然高昂，並未立即顛覆主流市場。</p>
+      </div>
+      <div class="t-item hot">
+        <div class="when">1900 年</div>
+        <h3>Kodak Brownie：一美元平民化</h3>
+        <p>拍照從奢侈品變成平民消費。「盡可能忠實重現現實」一夕失去經濟價值。畫家沒有消失，轉向印象派、立體派等創意爆發（如 DHH 曾曾祖父 Laurits Tuxen）。</p>
+      </div>
+      <div class="t-item">
+        <div class="when">1900 – 1980 年代（約 80 年）</div>
+        <h3>技術停滯期</h3>
+        <p>相機本質結構幾乎無巨幅改變，低谷與漸進改進交織。</p>
+      </div>
+      <div class="t-item">
+        <div class="when">現代</div>
+        <h3>手機相機普及</h3>
+        <p>拍照成本「便宜到無法計量」，全球每年拍攝約 2 兆張照片。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI 時代時間線 -->
+  <section class="sec">
+    <span class="sec-num">TIMELINE PART 2</span>
+    <h2>軟體業的這一年：從 Opus 4.5 到 GPT-6 Astra</h2>
+    <div class="timeline">
+      <div class="t-item hot">
+        <div class="when">2025 年 11 月 24 日</div>
+        <h3>軟體業的 Kodak Brownie 時刻：Opus 4.5 發布</h3>
+        <p>歷史書標記為 agent 時代的起點。第一次有夠多人能負擔、並體驗到與新智慧協作；開發者可以叫 agent 做事、並願意 merge 其產出。</p>
+      </div>
+      <div class="t-item">
+        <div class="when">2026 年 2 月 – 5 月</div>
+        <h3>「幻滅低谷」</h3>
+        <p>新模型體感倒退，市場開始質疑「AI 進步是不是停了」。在攝影史維持近百年的低谷，在 AI 時代只維持了 4 個月。</p>
+      </div>
+      <div class="t-item">
+        <div class="when">2026 年 3 月</div>
+        <h3>DHH 宣告從「專業程式設計師」退休</h3>
+        <p>不再手寫程式碼，全心轉向交辦結果、黑盒子外部驗收。37signals 啟動 pencils down，手寫被視為例外異常。</p>
+      </div>
+      <div class="t-item hot">
+        <div class="when">2026 年 6 月</div>
+        <h3>Fable 5 & Mythos 出現：進入「AI 狂喜」</h3>
+        <p>直接丟「問題」或「想法」，agent 自己把功能做出來，實作過程完全不需要人指揮（從「交辦任務」跨入「交辦結果」）。</p>
+      </div>
+      <div class="t-item">
+        <div class="when">2026 年 9 月</div>
+        <h3>GPT-6 Astra & DeepSeek-4-1 Flash</h3>
+        <p>打破前沿智慧被單一公司或單一國家壟斷的疑慮。任何對未來的預測 20 分鐘後就過期。</p>
+      </div>
+      <div class="t-item hot">
+        <div class="when">Rails World 2026 開幕</div>
+        <h3>DHH 演講宣言：手寫程式碼正式結束</h3>
+        <p>預言到 2026 年底手寫對絕大多數工程師不再划算。呼籲所有團隊下週五前為 app 做 CLI、全力樂觀擁抱轉型。</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="pager">
+    <a href="article.html"><span class="dir">← 上一篇</span>全文整理</a>
+    <a href="questions.html" class="right"><span class="dir">下一篇 →</span>台灣團隊躲不掉的三個問題</a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>本專題整理自 <strong>Rails World 2026 Opening Keynote – DHH</strong>。內容忠於原文，未增添原文以外的資訊。</p>
+    <p><a href="index.html">首頁</a> ・ <a href="article.html">全文整理</a> ・ <a href="timeline.html">時間線與數字</a> ・ <a href="questions.html">三個問題</a></p>
+  </div>
+</footer>
+</body>
+</html>

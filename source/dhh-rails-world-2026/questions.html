@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台灣團隊躲不掉的三個問題 ｜ DHH @ Rails World 2026</title>
+<meta name="description" content="當手寫成本趨近於零、產出暴增 60 倍，驗收能力有沒有跟上？需求範例、測試真偽、10 分鐘 PR 決策自查清單。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">DHH @ Rails World 2026 <span class="tag">專題</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="article.html">全文整理</a>
+      <a href="timeline.html">時間線與數字</a>
+      <a href="questions.html" class="active">三個問題</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container article">
+  <section class="hero" style="padding-bottom: 0;">
+    <span class="kicker">03 / 台灣團隊</span>
+    <h1>讀完之後：台灣軟體團隊躲不掉的三個問題</h1>
+    <p class="lead">DHH 一向講話很滿，你可以不同意他的時間表，也可以先不管 DRY 和抽象該不該退場。但當寫程式的成本趨近於零、產出暴增 60 倍時，這三個核心問題沒有團隊能避開。</p>
+  </section>
+
+  <div class="callout">
+    <div class="label">核心矛盾</div>
+    <p style="margin: 8px 0 0;">產出暴增 60 倍，你的<strong>驗收能力</strong>有跟著長 60 倍嗎？手寫程式碼不再划算之後，<em>真正划算的能力到底是什麼？</em></p>
+  </div>
+
+  <!-- 問題一 -->
+  <article class="q-block" id="q1">
+    <div class="q-head">
+      <span class="q-num">問題 01</span>
+      <h2>需求有沒有一開始就寫成可以驗證的例子？</h2>
+    </div>
+    <p><strong>現況與風險：</strong>agent 是照你給的東西做的。DHH 說他用英文寫程式，而英文「比較模糊、比較不確定」。當實作端不再有人幫你補腦，模糊的需求會直接變成模糊的產品。需求澄清從「最好有」變成<strong>「沒有就完蛋」</strong>。</p>
+    <p>過去由資深工程師在實作時「邊寫邊替 PM 想通邊界案例」的默契已經失效；agent 會用最字面的方式完成你模糊的字句，產出一大堆看似合理卻不是你真正要的程式碼。</p>
+    <ul class="checklist">
+      <li><strong>團隊自查：</strong>目前交給 agent 或工程師的 specification，是否每一條都包含具體輸入／輸出的 Example？</li>
+      <li><strong>團隊自查：</strong>有沒有明確定義邊界案例（edge cases）、錯誤處理情境與非預期行為？</li>
+      <li><strong>團隊自查：</strong>需求的驗收條件（Acceptance Criteria）能否在不看內部實作的情況下被黑盒子驗證？</li>
+    </ul>
+  </article>
+
+  <!-- 問題二 -->
+  <article class="q-block" id="q2">
+    <div class="q-head">
+      <span class="q-num">問題 02</span>
+      <h2>你的測試是在證明程式碼能跑，還是在證明它做對了事？</h2>
+    </div>
+    <p><strong>現況與風險：</strong>60 倍的產出量，意味著自動化測試也會被 agent 一起大量產出。這些測試很容易變成<strong>「跟程式碼互相印證」的表演</strong>，全綠但沒有人知道產品到底對不對。</p>
+    <p>誰來設計真正會抓到問題的測試？誰去探索 agent 沒想到的路徑？如果測試只是 mirror 實作裡的 bug，那就是雙重盲目。</p>
+    <ul class="checklist">
+      <li><strong>團隊自查：</strong>測試案例是跟著實作一起讓同一個 agent 寫完，還是獨立依據需求設計的？</li>
+      <li><strong>團隊自查：</strong>團隊是否有人進行探索性測試（Exploratory Testing）與破壞性測試，專門挑 agent 盲區？</li>
+      <li><strong>團隊自查：</strong>CI 的「綠燈」是在保護系統商業邏輯，還是只是保證函式能被 call 且不噴 error？</li>
+    </ul>
+  </article>
+
+  <!-- 問題三 -->
+  <article class="q-block" id="q3">
+    <div class="q-head">
+      <span class="q-num">問題 03</span>
+      <h2>agent 交出來的 PR，你的團隊有沒有人能在 10 分鐘內判斷它該不該 merge？</h2>
+    </div>
+    <p><strong>現況與風險：</strong>DHH 一行 Rust 都不看，靠的是外部驗收；Basecamp 5 的「瑞士起司架構」，就是<strong>驗收能力跟不上產出速度的代價</strong>。</p>
+    <p>當設計師用 vibe coding 各自送出 20、30 個各自合理的 PR，疊在一起系統千瘡百孔，當時沒有人看得出來，因為沒有人在看。這不是 code review 快一點的問題，而是團隊有沒有人具備<strong>「看結果就知道對不對」的判斷力</strong>。</p>
+    <ul class="checklist">
+      <li><strong>團隊自查：</strong>團隊目前的 PR review 是在挑語法微調（找 variable 命名、排版），還是在驗證系統架構與狀態邊界？</li>
+      <li><strong>團隊自查：</strong>有沒有建立「外部黑盒子驗收工具」（CLI、端到端即時環境 preview），讓 reviewer 可以在 10 分鐘內跑過主流程？</li>
+      <li><strong>團隊自查：</strong>面對每天數十個 PR 的吞吐量，團隊誰擁有「架構全貌感」，能看出 30 個單獨合理的 PR 會不會疊成瑞士起司？</li>
+    </ul>
+  </article>
+
+  <!-- 結論 -->
+  <section class="sec">
+    <span class="sec-num">CONCLUSION</span>
+    <h2>結論：誰扛責任換了人</h2>
+    <p>DHH 完全不會 Rust，並把這件事當成一種特權：他只從外部把 Rust 程式碼當黑盒子驗收，就像歷史上每一個委託工程團隊做事的老闆一樣。<strong>這不是新現象，只是「誰扛這個責任」換了人。</strong></p>
+    <p>手寫程式碼對絕大多數工程師來說，將不再是一門划算的生意。真正划算的，變成了另一種能力：<em>定義精確問題、黑盒子外部驗收、以及為整個系統架構負起最終責任的判斷力。</em></p>
+    <blockquote class="pull">帶著喜悅回顧那個親手寫程式的時代，然後接受它已經結束了。<span class="who">— DHH</span></blockquote>
+  </section>
+
+  <nav class="pager">
+    <a href="timeline.html"><span class="dir">← 上一篇</span>時間線與關鍵數字</a>
+    <a href="index.html" class="right"><span class="dir">回到 →</span>專題首頁</a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>本專題整理自 <strong>Rails World 2026 Opening Keynote – DHH</strong>。內容忠於原文，未增添原文以外的資訊。</p>
+    <p><a href="index.html">首頁</a> ・ <a href="article.html">全文整理</a> ・ <a href="timeline.html">時間線與數字</a> ・ <a href="questions.html">三個問題</a></p>
+  </div>
+</footer>
+</body>
+</html>

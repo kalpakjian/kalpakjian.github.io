@@ -1,0 +1,45 @@
+﻿# Fluid Theme Settings
+navbar:
+  blog_title: AI Tech Notes
+  ground_glass:
+    enable: true
+  menu:
+    - { key: 'home', link: '/', icon: 'iconfont icon-home-fill' }
+    - { key: 'archive', link: '/archives/', icon: 'iconfont icon-archive-fill' }
+    - { key: 'category', link: '/categories/', icon: 'iconfont icon-category-fill' }
+    - { key: 'tag', link: '/tags/', icon: 'iconfont icon-tags-fill' }
+    - { key: '專題：DHH退休', link: '/dhh-rails-world-2026/index.html', icon: 'iconfont icon-bookmark' }
+    - { key: 'about', link: '/about/', icon: 'iconfont icon-user-fill' }
+
+index:
+  banner_img: https://images.unsplash.com/photo-1518770660439-4636190af475?w=1600
+  banner_mask_alpha: 0.3
+  slogan:
+    enable: true
+    text: 'AI Tech Notes - 探索本地 LLM 與 Agent 架構'
+  auto_excerpt:
+    enable: true
+
+post:
+  banner_img: https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600
+  toc:
+    enable: true
+    number: true
+  code:
+    copy: true
+    highlight:
+      enable: true
+      lib: 'highlightjs'
+      highlightjs:
+        style: 'atom-one-dark'
+
+custom_css:
+  - /css/custom.css
+
+footer:
+  content: '© 2026 kalpakjian | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank">Fluid</a>'
+
+search:
+  enable: true
+  type: 'local'
+  path: /search.xml

@@ -1,0 +1,25 @@
+﻿/* 自訂全域樣式強化 (相容 DHH 典雅風格與 Fluid 主題) */
+:root {
+  --custom-accent: #c0392b;
+}
+
+/* 強化中文字體渲染與行高 */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Segoe UI", Roboto, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 程式碼區塊微調 */
+.markdown-body pre {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* 引用區塊左側強調線 */
+.markdown-body blockquote {
+  border-left: 4px solid var(--custom-accent) !important;
+  background: rgba(192, 57, 43, 0.04);
+  padding: 12px 18px;
+  border-radius: 0 8px 8px 0;
+}
