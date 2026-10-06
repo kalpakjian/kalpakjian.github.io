@@ -9,6 +9,7 @@ navbar:
     - { key: 'category', link: '/categories/', icon: 'iconfont icon-category-fill' }
     - { key: 'tag', link: '/tags/', icon: 'iconfont icon-tags-fill' }
     - { key: '專題：DHH退休', link: '/dhh-rails-world-2026/index.html', icon: 'iconfont icon-bookmark' }
+    - { key: '專題：OpenCV筆記', link: '/opencv-notes/index.html', icon: 'iconfont icon-bookmark' }
     - { key: 'about', link: '/about/', icon: 'iconfont icon-user-fill' }
 
 index:

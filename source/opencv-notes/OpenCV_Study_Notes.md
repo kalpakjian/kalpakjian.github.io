@@ -2607,6 +2607,8 @@ ORB 配 Hamming、SIFT 配 L2
 
 ---
 
+<a id="mc-exam"></a>
+
 ## 附錄 G：MC 模擬試卷（60 題）
 
 > **適用**：IVDC「Certificate in Application of Computer Vision Technology」期末筆試
@@ -3028,6 +3030,8 @@ D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型
 
 ---
 
+<a id="mc-answers"></a>
+
 ### G.5 答案速查表
 
 **用法**：做完 [G.2](#g2-第一部分基礎與色彩空間第-120-題)～[G.4](#g4-第三部分濾波邊緣特徵匹配專案第-4160-題) 全部 60 題後，才回來對照此表。
@@ -3063,6 +3067,8 @@ D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型
 | 題數 | 16 | 13 | 17 | 14 |
 
 ---
+
+<a id="mc-explanations"></a>
 
 ### G.6 逐題詳解
 
