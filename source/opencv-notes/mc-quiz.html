@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenCV MC 模擬測驗（60 題）| AI Tech Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#e2e5ea; --txt:#1f2328; --dim:#5b636e;
+  --blue:#2563eb; --green:#15803d; --green-bg:#e8f6ec; --red:#b91c1c;
+  --red-bg:#fdeaea; --sel:#dbeafe; --sel-line:#2563eb;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",
+    "Microsoft JhengHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+a{color:var(--blue)}
+.topbar{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  padding:12px 20px 10px;
+}
+.topbar .row1{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px}
+.topbar h1{font-size:17px; margin:0; font-weight:700}
+.topbar .back{font-size:13px; color:var(--dim); text-decoration:none}
+.topbar .back:hover{color:var(--blue)}
+.stats{display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; font-size:14px; color:var(--dim)}
+.stats b{font-size:18px; color:var(--txt)}
+.stats .ok b{color:var(--green)}
+.stats .no b{color:var(--red)}
+.saved{font-size:12px; color:var(--green); opacity:0; transition:opacity .3s}
+.saved.on{opacity:1}
+.progress{height:6px; background:var(--line); border-radius:99px; margin-top:10px; overflow:hidden}
+.progress i{display:block; height:100%; width:0; background:var(--blue); border-radius:99px; transition:width .25s}
+.controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+button{
+  font:inherit; font-size:13px; padding:6px 13px; border-radius:8px;
+  border:1px solid var(--line); background:#fff; color:var(--txt); cursor:pointer;
+  transition:.15s;
+}
+button:hover{border-color:#b9c0c9; background:#fbfbfc}
+button.primary{background:var(--blue); border-color:var(--blue); color:#fff}
+button.primary:hover{background:#1d4ed8}
+button.active{background:var(--sel); border-color:var(--sel-line); color:#1e40af; font-weight:600}
+button.danger{color:var(--red); border-color:#f0c4c4}
+button.danger:hover{background:var(--red-bg)}
+.navwrap{padding:16px 20px 0}
+.navgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px}
+.navgrid button{padding:6px 0; font-size:13px; border-radius:7px; text-align:center; font-variant-numeric:tabular-nums}
+.navgrid button.done{background:#eef2ff; border-color:#c7d2fe; color:#3730a3}
+.navgrid button.right{background:var(--green-bg); border-color:#a7d7b6; color:var(--green); font-weight:700}
+.navgrid button.wrong{background:var(--red-bg); border-color:#eeb4b4; color:var(--red); font-weight:700}
+main{max-width:900px; margin:0 auto; padding:20px 20px 80px}
+.parttitle{
+  margin:34px 0 14px; font-size:15px; font-weight:700; color:var(--dim);
+  border-left:4px solid var(--blue); padding-left:10px;
+}
+.q{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px 18px; margin-bottom:14px;
+}
+.q.correct{border-color:#a7d7b6; background:var(--green-bg)}
+.q.incorrect{border-color:#eeb4b4; background:var(--red-bg)}
+.qhead{display:flex; gap:10px; align-items:flex-start}
+.num{
+  flex:0 0 auto; min-width:30px; height:26px; line-height:26px; text-align:center;
+  background:#eef1f5; border-radius:7px; font-size:13px; font-weight:700;
+  color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.qtext{margin:0; font-weight:600; font-size:16px}
+.opts{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:7px}
+.opt{
+  display:flex; gap:10px; align-items:flex-start; padding:9px 12px;
+  border:1px solid var(--line); border-radius:9px; background:#fff;
+  cursor:pointer; transition:.12s; user-select:none;
+}
+.opt:hover{border-color:#b9c0c9; background:#fbfbfc}
+.opt .lt{
+  flex:0 0 auto; width:22px; height:22px; line-height:22px; text-align:center;
+  border-radius:6px; background:#eef1f5; font-size:12px; font-weight:700; color:var(--dim);
+}
+.opt.picked{border-color:var(--sel-line); background:var(--sel)}
+.opt.picked .lt{background:var(--sel-line); color:#fff}
+.opt.right{border-color:#7cc08f; background:var(--green-bg)}
+.opt.right .lt{background:var(--green); color:#fff}
+.opt.wrong{border-color:#e39191; background:var(--red-bg)}
+.opt.wrong .lt{background:var(--red); color:#fff}
+.tag{font-size:11px; padding:1px 7px; border-radius:99px; margin-left:auto;
+     flex:0 0 auto; font-weight:700; align-self:center}
+.tag.right{background:var(--green); color:#fff}
+.tag.wrong{background:var(--red); color:#fff}
+.expl{
+  margin-top:12px; padding:11px 14px; background:#f8fafc; border-radius:9px;
+  border-left:3px solid var(--blue); font-size:14.5px; color:#333a44;
+}
+.expl b{color:var(--txt)}
+.empty{text-align:center; color:var(--dim); padding:50px 20px; font-size:15px}
+footer{
+  max-width:900px; margin:0 auto; padding:0 20px 60px; color:var(--dim);
+  font-size:13px; text-align:center;
+}
+@media print{
+  .topbar,.navwrap,footer,.controls{display:none !important}
+  body{background:#fff; font-size:12pt}
+  main{max-width:none; padding:0}
+  .q{break-inside:avoid; page-break-inside:avoid; border-color:#999}
+}
+@media (max-width:560px){
+  .topbar{padding:10px 14px 8px}
+  .topbar h1{font-size:15px}
+  main{padding:14px 14px 60px}
+  .navwrap{padding:12px 14px 0}
+  .q{padding:13px 14px}
+  .qtext{font-size:15px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="row1">
+    <h1>OpenCV 學習筆記 · MC 模擬測驗</h1>
+    <a class="back" href="index.html">&larr; 回到 OpenCV 學習筆記</a>
+    <span class="saved" id="saved">進度已儲存 &#10003;</span>
+  </div>
+  <div class="stats">
+    <span>已答 <b id="nAns">0</b> / 60</span>
+    <span class="ok">得分 <b id="nScore">0</b> / 60</span>
+    <span class="no">答錯 <b id="nWrong">0</b></span>
+    <span id="hint">作答進度自動存在此瀏覽器，關掉再回來可繼續</span>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <button id="btnReveal" class="primary">顯示答案</button>
+    <button id="btnAll" class="active">全部 60 題</button>
+    <button id="btnUnans">只看未答</button>
+    <button id="btnWrong">只看答錯</button>
+    <button id="btnTop">回到頂部</button>
+    <button id="btnReset" class="danger">重設全部</button>
+  </div>
+</header>
+
+<div class="navwrap">
+  <div class="navgrid" id="navgrid"></div>
+</div>
+
+<main id="quiz"></main>
+
+<footer>
+  <p>IVDC 電腦視覺課程個人學習筆記 · 只考基本理論，不含程式碼</p>
+  <p>單一 HTML 檔、無外部資源，可離線使用</p>
+</footer>
+<script>
+const QUESTIONS = [{"q":"OpenCV 的全名是？","o":["Open Source Computer Vision Library","Open Computer Vision Library","OpenCV Standard Computer Vision Library","Open Standard Vision Library"],"a":0,"e":"OpenCV 是 **Open Source Computer Vision Library** 的縮寫。"},{"q":"OpenCV 最初是由哪家公司發起？","o":["Google","Intel","Microsoft","NVIDIA"],"a":1,"e":"1999 年由 **Intel** 發起（Gary Bradski 於 Intel Research），之後由 Willow Garage 與 OpenCV.org 接手維護。"},{"q":"OpenCV 內含多少個以上已最佳化的演算法？","o":["250+","1000+","2500+","25000+"],"a":2,"e":"OpenCV 內含 **2500 個以上**已最佳化的電腦視覺與機器學習演算法。"},{"q":"下列何者「不是」OpenCV 的主要特色？","o":["開源且免費","跨平台（Windows / Linux / macOS / Android）","內建深度學習推論模組","只支援 C++，不提供其他語言介面"],"a":3,"e":"OpenCV 除了 C++ 之外，還提供 **Python、Java、JavaScript** 等介面，所以「只支援 C++」是錯的。"},{"q":"OpenCV 採用哪一種授權方式？","o":["開源免費（BSD 授權）","需付費的商業授權","僅限學術用途","必須開源你的整個專案"],"a":0,"e":"OpenCV 採用寬鬆的 **BSD 授權**，可免費商用，且不強制開源你的專案。"},{"q":"在電腦視覺中，一張數位影像基本上是由什麼組成？","o":["一串文字編碼","排列成矩陣的像素數值","一組向量圖形指令","一個壓縮檔案"],"a":1,"e":"數位影像本質上是**二維（或多維）的數值矩陣**，每個格子是一個像素。"},{"q":"OpenCV 讀入彩色影像時，預設的通道順序是？","o":["RGB","HSV","BGR","GRAY"],"a":2,"e":"OpenCV 預設讀入的是 **BGR**，不是 RGB，這是造成顏色顯示異常的頭號原因。"},{"q":"若一張影像的形狀標示為 (480, 640, 3)，這三個數字分別代表？","o":["寬 480、高 640、3 個通道","高 480、寬 640、1 個通道","高 640、寬 480、3 個通道","高 480、寬 640、3 個通道"],"a":3,"e":"形狀的順序是 **(高, 寬, 通道數)**，所以 480 是高、640 是寬、3 是彩色通道數。"},{"q":"一個彩色像素通常由幾個數值組成？","o":["3 個","1 個","2 個","4 個"],"a":0,"e":"彩色像素由 **3 個**數值（藍、綠、紅）組成；灰階則只需要 1 個。"},{"q":"「像素（pixel）」在數位影像中指的是？","o":["一整張影像的尺寸","影像的最小組成單位，帶有顏色或亮度數值","影像的檔案大小","影像的壓縮比例"],"a":1,"e":"像素是數位影像的**最小單位**，每個像素帶有顏色或亮度數值。"},{"q":"OpenCV 為什麼預設採用 BGR 而非 RGB？","o":["因為 BGR 的顏色比較準確","因為 BGR 的檔案比較小","源自早期開發慣例與硬體廠商的記憶體排列格式","因為 RGB 是被專利保護的"],"a":2,"e":"這是**歷史與硬體慣例**造成的：早期相機與影像擷取卡的記憶體排列即為 BGR。"},{"q":"車牌辨識（ANPR）主要結合哪兩項技術？","o":["僅影像分類","僅語音辨識","僅資料庫查詢","物件偵測 + 文字辨識（OCR）"],"a":3,"e":"車牌辨識先用**物件偵測**定位車牌，再用 **OCR** 讀出車牌文字。"},{"q":"下列哪一項「不是」OpenCV 的典型應用？","o":["關聯式資料庫正規化","人臉偵測","醫學影像分析","自動駕駛視覺"],"a":0,"e":"資料庫正規化屬於資料庫領域，與電腦視覺無關。"},{"q":"HSV 色彩空間的三個通道分別代表？","o":["紅、綠、藍","色相、飽和度、明度","亮度、紅綠軸、藍黃軸","青、洋紅、黃"],"a":1,"e":"HSV = **Hue（色相）+ Saturation（飽和度）+ Value（明度）**。"},{"q":"在 OpenCV 中，色相（Hue）的數值範圍是？","o":["0–255","0–360","0–179","0–100"],"a":2,"e":"為了塞進 8 位元整數，OpenCV 把色相由 0–360 度壓縮為 **0–179**。"},{"q":"HSV 相對於 RGB 的最大優點是？","o":["檔案體積較小","運算速度最快","可直接壓縮影像","把「顏色」與「亮度」分離，對光照變化較不敏感"],"a":3,"e":"HSV 把**顏色資訊（H、S）與亮度（V）分開**，因此換光源時顏色判斷仍然穩定。"},{"q":"哪一個色彩空間被認為是「感知均勻（perceptually uniform）」？","o":["LAB","RGB","HSV","BGR"],"a":0,"e":"**LAB** 是感知均勻色彩空間：數值差距與人眼感受的差異成正比。"},{"q":"LAB 色彩空間的 L 通道代表什麼？","o":["紅綠軸","亮度（Lightness）","藍黃軸","飽和度"],"a":1,"e":"L 代表 **Lightness（亮度）**；A 是綠↔紅軸，B 是藍↔黃軸。"},{"q":"在 HSV 中偵測紅色時，通常需要兩段範圍，原因是？","o":["紅色屬於無彩色","色相只有 100 個階層","紅色在色環上跨越 0 度邊界","紅色需要較高的飽和度"],"a":2,"e":"色相是**環狀**的，紅色位於 0 度附近而跨越邊界，所以要取頭尾兩段再合併。"},{"q":"若要偵測膚色或交通號誌的顏色，最適合用哪個色彩空間？","o":["BGR","灰階","LAB 的 B 通道","HSV"],"a":3,"e":"**HSV** 能把顏色與亮度分離，是膚色與號誌顏色分割最常用的色彩空間。"},{"q":"影像前處理（pre-processing）的主要目的是？","o":["提升影像品質，讓後續分析更準確","增大影像的檔案體積","對影像進行加密","減少色彩的數量以節省空間"],"a":0,"e":"前處理的目標是**提升影像品質**（去雜訊、統一尺寸、增強對比），讓後續分析更可靠。"},{"q":"下列哪一項「不是」常見的影像前處理步驟？","o":["調整尺寸","對影像加密","去除雜訊","二值化"],"a":1,"e":"加密與影像分析無關。常見前處理是**調整尺寸、去雜訊、增強對比、二值化**。"},{"q":"為什麼分析前常常需要先縮小影像尺寸？","o":["讓顏色更鮮豔","提高影像解析度","降低運算量並統一處理尺寸","讓檔案可以壓縮"],"a":2,"e":"縮小尺寸可**大幅降低運算量**，並讓不同來源的影像有統一尺寸以便批次處理。"},{"q":"ROI 是什麼意思？","o":["Real Output Image","Rotated Image","Real Object Identifier","Region Of Interest（感興趣區域）"],"a":3,"e":"ROI = **Region of Interest**，指影像中我們真正關心、要處理的那個區域。"},{"q":"取用影像某個區域時，「先 Y 後 X」的意思是？","o":["先指定列（垂直方向），再指定行（水平方向）","先指定行（水平方向），再指定列（垂直方向）","先指定通道，再指定座標","先指定顏色，再指定位置"],"a":0,"e":"矩陣索引是 **[列, 行]**，也就是**先 Y（垂直）後 X（水平）**，這與直覺相反，是經典陷阱。"},{"q":"二值化（thresholding）的作用是？","o":["把彩色轉成灰階","把灰階影像轉換成只有黑與白的影像","把影像放大","把影像模糊化"],"a":1,"e":"二值化把灰階影像依閾值切成**黑（0）與白（255）兩類**，常用於前景／背景分離。"},{"q":"Otsu 閾值法的特點是？","o":["只能處理彩色影像","需要人工指定閾值","能自動計算出最佳閾值，不需人工指定","只能處理椒鹽雜訊"],"a":2,"e":"**Otsu** 會分析灰階直方圖，**自動找出**最能分開前景與背景的閾值。"},{"q":"灰階影像每個像素只需要一個數值，原因是？","o":["因為灰階是壓縮格式","因為灰階沒有解析度","因為灰階只用來做邊緣偵測","因為只保留了亮度資訊，不需要顏色"],"a":3,"e":"灰階只保留**亮度（明暗）**，丟棄顏色資訊，所以每個像素只需 1 個數值。"},{"q":"影像矩陣中的「通道（channel）」指的是？","o":["每個像素在該維度上擁有的數值數量","影像的寬度","影像的檔案格式","影像的更新版本"],"a":0,"e":"通道數代表**每個像素有幾個數值**：彩色 3 個、含透明 4 個、灰階 1 個。"},{"q":"為什麼整數資料型別在相加時，可能得到比預期小的值？","o":["因為浮點數誤差","因為超過型別上限時會發生溢位回繞","因為記憶體不足","因為顏色被反轉"],"a":1,"e":"8 位元整數上限是 255，超過就會**溢位回繞**（例如 200 + 100 變成 44）。"},{"q":"什麼是「飽和運算（saturation arithmetic）」？","o":["運算結果一律變成 0","運算結果取平均值","運算結果超過上限時就停在最大值","運算結果無條件進位"],"a":2,"e":"飽和運算在超過上限時**停在最大值**（例如 255），不會回繞，因此影像不會出現異常色塊。"},{"q":"遮罩（mask）在影像處理中的主要作用是？","o":["把影像放大","改變影像的檔案格式","計算影像的直方圖","選擇性地只處理或保留部分區域"],"a":3,"e":"遮罩是與影像同大小的**二值圖**，用來指定「哪些區域要處理、哪些要忽略」。"},{"q":"為什麼建立資料集時，常需要對影像做翻轉或旋轉？","o":["做資料增強，讓模型看過更多角度","為了減少檔案大小","為了提高解析度","為了修正色彩"],"a":0,"e":"翻轉與旋轉是最常見的**資料增強**手段，可提升模型對角度變化的泛化能力。"},{"q":"繪圖時顏色參數為什麼要用 (B, G, R) 的順序？","o":["因為 BGR 比較好看","因為必須與 OpenCV 的 BGR 通道順序一致","因為 BGR 比較省記憶體","因為 RGB 已被淘汰"],"a":1,"e":"顏色必須與影像本身的通道順序一致，OpenCV 是 **BGR**，所以紅色要寫成 (0, 0, 255)。"},{"q":"在灰階影像上指定彩色繪圖顏色，結果會是？","o":["仍然是彩色","程式會發生錯誤","只有黑白（只取用顏色的第一個數值）","自動轉成彩色後再繪圖"],"a":2,"e":"灰階只有 1 個通道，繪圖時**只取顏色的第一個分量**，因此不會出現彩色。"},{"q":"在繪圖功能中，「填滿圖形」通常用什麼值表示？","o":["0","1","255","負值（-1）"],"a":3,"e":"**-1** 是「填滿」的慣用值；正整數則代表線條粗細。"},{"q":"什麼是「仿射變換（affine transformation）」？","o":["保持平行線仍然平行的線性變換","會讓平行線相交的變換","只能做旋轉的變換","只改變顏色的變換"],"a":0,"e":"仿射變換包含**平移、旋轉、縮放、剪切**，其特性是**平行線經變換後仍然平行**。"},{"q":"仿射變換與透視變換最大的差別在於？","o":["仿射變換不能旋轉","透視變換不保持平行線平行，可處理三維投影效果","透視變換只能用於灰階影像","仿射變換會改變顏色"],"a":1,"e":"透視變換模擬**三維視角投影**，平行線可能交會於消失點，因此自由度更多。"},{"q":"在 OpenCV 中，旋轉角度為正數代表什麼方向？","o":["順時針","由平台決定","逆時針","無效輸入"],"a":2,"e":"OpenCV 的角度以**逆時針為正**（與數學座標系一致），和螢幕座標的直覺相反。"},{"q":"為什麼透視變換比仿射變換需要更多的對應點？","o":["因為它處理的影像比較大","因為它需要更多顏色資訊","因為它不能自動計算","因為它要解的自由度更多（8 個）"],"a":3,"e":"仿射變換有 6 個自由度（需 3 組對應點），透視變換有 **8 個自由度**（需 4 組對應點）。"},{"q":"影像濾波（卷積）的主要目的是？","o":["去除雜訊、平滑影像或強化特定特徵","改變影像的檔案格式","壓縮影像以節省空間","把彩色轉成灰階"],"a":0,"e":"濾波（卷積）用一個小窗口掃過影像，達到**去雜訊、平滑或強化特徵**的效果。"},{"q":"濾波器的 kernel 大小為什麼通常必須是正奇數？","o":["因為奇數運算比較快","因為這樣才有唯一的中心點","因為偶數會造成顏色反轉","因為奇數才能處理彩色影像"],"a":1,"e":"濾波需要一個**唯一的中心像素**作為輸出位置，只有正奇數大小的 kernel 才會有正中心。"},{"q":"kernel 尺寸越大，效果通常是？","o":["越清晰銳利","完全沒有影響","模糊程度越強，但細節流失越多","顏色越鮮豔"],"a":2,"e":"kernel 越大，參與平均的鄰域越廣，**越模糊、細節流失越多**，運算也越慢。"},{"q":"移除椒鹽雜訊（salt-and-pepper noise）最有效的方法是？","o":["平均模糊","高斯模糊","雙邊濾波","中值濾波"],"a":3,"e":"椒鹽雜訊是極端的黑點與白點，**中值濾波**取中位數可把極端值直接排除。"},{"q":"哪一種濾波器能在去除雜訊的同時保留邊緣？","o":["雙邊濾波","平均模糊","高斯模糊","中值濾波"],"a":0,"e":"**雙邊濾波**同時考慮空間距離與顏色差異，顏色差太多就不混合，因此能保住邊緣。"},{"q":"中值濾波為什麼對椒鹽雜訊特別有效？","o":["因為它會把影像放大","因為它取中位數，極端值會被排除","因為它會偵測邊緣","因為它會增加對比"],"a":1,"e":"中位數是排序後的中間值，**離群的極端值不影響結果**，所以椒鹽雜訊會被抹掉。"},{"q":"形態學中的「侵蝕（erosion）」效果是？","o":["白色區域變大","整張影像變模糊","白色區域變小","色彩被反轉"],"a":2,"e":"侵蝕會讓**白色（前景）區域變小**，可用來移除細小的白色雜點。"},{"q":"形態學中的「膨脹（dilation）」效果是？","o":["白色區域變小","影像被旋轉","對比度降低","白色區域變大"],"a":3,"e":"膨脹會讓**白色（前景）區域變大**，可用來填補小洞或連接斷裂的線條。"},{"q":"開運算（opening）的順序與用途是？","o":["先侵蝕再膨脹，用來移除背景中的小白點","先膨脹再侵蝕，用來填補物件內的小黑洞","只做侵蝕，用來移除大物件","只做膨脹，用來連接斷裂線條"],"a":0,"e":"**開運算 = 先侵蝕再膨脹**：先抹掉小白點，再把主體還原成原本大小。"},{"q":"閉運算（closing）的順序與用途是？","o":["先侵蝕再膨脹，用來移除小白點","先膨脹再侵蝕，用來填補物件內部的小黑洞","只做膨脹，用來做邊緣偵測","只做侵蝕，用來做去背"],"a":1,"e":"**閉運算 = 先膨脹再侵蝕**：先封住小洞，再把外輪廓還原成原本大小。"},{"q":"影像中的「邊緣（edge）」指的是？","o":["影像的最外框","影像中顏色最飽和的區域","亮度或顏色劇烈變化的地方","影像中最大的物件"],"a":2,"e":"邊緣是**亮度或顏色急遽變化**的位置，通常對應到物體的輪廓或紋理交界。"},{"q":"邊緣偵測的基本原理是？","o":["計算影像的檔案大小","計算影像的平均顏色","計算影像的通道數","計算像素亮度變化的劇烈程度（梯度）"],"a":3,"e":"邊緣偵測的核心是計算**梯度**——也就是亮度變化的速率，變化越大越可能是邊緣。"},{"q":"邊緣偵測（如 Canny）的輸入影像必須是？","o":["單通道的灰階影像","三通道的彩色影像","含透明通道的影像","任意格式都可以"],"a":0,"e":"邊緣偵測計算的是亮度梯度，因此輸入必須是**單通道 8 位元灰階影像**。"},{"q":"Canny 邊緣偵測使用兩個閾值的目的是？","o":["一個控制模糊、一個控制對比","高閾值確定邊緣，低閾值把相連的弱邊緣接起來","兩個閾值必須完全相等","用來決定影像尺寸"],"a":1,"e":"這是**遲滯（hysteresis）**策略：高閾值找出確定的邊緣，低閾值再把與之相連的弱邊緣保留下來。"},{"q":"特徵點（keypoint）指的是？","o":["影像中最亮的像素","影像的中心點","影像中具有辨識度、容易定位的關鍵點（如角點）","影像的左上角座標"],"a":2,"e":"特徵點是影像中**具有辨識度、容易重複定位**的點，通常是角點或紋理明顯處。"},{"q":"描述子（descriptor）的作用是？","o":["決定影像的尺寸","儲存影像的檔案路徑","標記影像的建立時間","用一組數值向量描述關鍵點周圍的內容，以便比對"],"a":3,"e":"描述子把關鍵點周圍的內容轉成**數值向量**，兩張影像的描述子越接近代表越可能是同一點。"},{"q":"ORB 演算法由哪兩部分組成？","o":["FAST 關鍵點偵測 + BRIEF 描述子","Harris 角點 + SIFT 描述子","SURF 關鍵點 + LBP 描述子","Canny 邊緣 + Hough 直線"],"a":0,"e":"ORB = **Oriented FAST + Rotated BRIEF**，是免費且快速的組合。"},{"q":"ORB 具備「旋轉不變性」的原因是？","o":["因為它會把影像縮小","因為它會計算關鍵點的主方向，並旋轉描述子的取樣點","因為它會增加影像對比","因為它會去除雜訊"],"a":1,"e":"ORB 先算出每個關鍵點的**主方向**，再依該方向旋轉取樣點，因此影像旋轉後仍能匹配。"},{"q":"特徵匹配時，二進位描述子（如 ORB）適合用哪種距離度量？","o":["歐氏距離（L2）","曼哈頓距離（L1）","Hamming 距離","餘弦相似度"],"a":2,"e":"二進位描述子比對的是**位元差異數**，因此使用 **Hamming 距離**；L2 適用於 SIFT 這類浮點描述子。"},{"q":"RANSAC 在特徵匹配中的主要作用是？","o":["加快特徵偵測速度","產生描述子","增強影像對比","剔除錯誤匹配，找出最多 inliers 的模型"],"a":3,"e":"RANSAC 會**隨機抽樣並反覆驗證**，找出獲得最多 inliers 的模型，用來剔除錯誤匹配。"}];
+
+const LET = 'ABCD';
+const KEY = 'opencv-mc-quiz-v2';
+const state = { answers:{}, revealed:false, filter:'all' };
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p && typeof p === 'object'){
+      state.answers = (p.answers && typeof p.answers === 'object') ? p.answers : {};
+      state.revealed = !!p.revealed;
+      state.filter = p.filter || 'all';
+    }
+  }catch(e){}
+}
+let savedTimer = null;
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const el = document.getElementById('saved');
+    if(el){ el.classList.add('on'); clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ el.classList.remove('on'); }, 1200); }
+  }catch(e){}
+}
+
+function tally(){
+  let answered = 0, score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    if(a !== undefined && a !== null){
+      answered++;
+      if(a === QUESTIONS[i].a) score++;
+    }
+  }
+  return { answered:answered, score:score, wrong:answered-score };
+}
+
+function isVisible(i){
+  const a = state.answers[i];
+  const has = (a !== undefined && a !== null);
+  if(state.filter === 'unanswered') return !has;
+  if(state.filter === 'wrong') return has && a !== QUESTIONS[i].a;
+  return true;
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdInline(s){
+  s = esc(s);
+  let out = '';
+  let bold = false;
+  let i = 0;
+  while(i < s.length){
+    if(s.charAt(i) === '*' && s.charAt(i + 1) === '*'){
+      bold = !bold;
+      out += bold ? '<b>' : '</b>';
+      i += 2;
+    } else {
+      out += s.charAt(i);
+      i++;
+    }
+  }
+  return out;
+}
+
+function renderStats(){
+  const t = tally();
+  document.getElementById('nAns').textContent = t.answered;
+  document.getElementById('nScore').textContent = t.score;
+  document.getElementById('nWrong').textContent = t.wrong;
+  document.getElementById('bar').style.width = (t.answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('btnReveal').textContent = state.revealed ? '隱藏答案' : '顯示答案';
+  document.getElementById('hint').textContent = state.revealed
+    ? '已顯示正解與解析'
+    : '作答進度自動存在此瀏覽器，關掉再回來可繼續';
+}
+
+function renderNav(){
+  const nav = document.getElementById('navgrid');
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    const has = (a !== undefined && a !== null);
+    let cls = '';
+    if(has) cls = 'done';
+    if(state.revealed && has) cls = (a === QUESTIONS[i].a) ? 'right' : 'wrong';
+    html += '<button class="' + cls + '" data-goto="' + i + '">' + (i+1) + '</button>';
+  }
+  nav.innerHTML = html;
+}
+
+function renderQuestions(){
+  const box = document.getElementById('quiz');
+  let html = '';
+  let shown = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(!isVisible(i)) continue;
+    shown++;
+    const q = QUESTIONS[i];
+    if(i === 0 || i === 20 || i === 40){
+      const label = i === 0 ? '第一部分：基礎與色彩空間（1–20）'
+                  : i === 20 ? '第二部分：前處理、矩陣、繪圖、變換（21–40）'
+                  : '第三部分：濾波、邊緣、特徵、匹配（41–60）';
+      html += '<div class="parttitle">' + label + '</div>';
+    }
+    const picked = state.answers[i];
+    const hasPicked = (picked !== undefined && picked !== null);
+    let qcls = '';
+    if(state.revealed && hasPicked) qcls = (picked === q.a) ? 'correct' : 'incorrect';
+
+    html += '<article class="q ' + qcls + '" id="q' + (i+1) + '">';
+    html += '<div class="qhead"><span class="num">' + (i+1) + '</span>';
+    html += '<p class="qtext">' + mdInline(q.q) + '</p></div>';
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      let cls = 'opt';
+      if(hasPicked && picked === k) cls += ' picked';
+      let tag = '';
+      if(state.revealed){
+        if(k === q.a){ cls += ' right'; tag = '<span class="tag right">正解</span>'; }
+        else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
+      }
+      html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
+      html += '<span class="lt">' + LET[k] + '</span><span>' + esc(q.o[k]) + '</span>' + tag + '</li>';
+    }
+    html += '</ul>';
+    if(state.revealed){
+      html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
+    }
+    html += '</article>';
+  }
+  if(shown === 0){
+    html = '<div class="empty">目前篩選條件下沒有題目 &#128522;<br>換個篩選，或按「全部 60 題」。</div>';
+  }
+  box.innerHTML = html;
+}
+
+function renderAll(){ renderStats(); renderNav(); renderQuestions(); }
+
+document.addEventListener('click', function(ev){
+  const opt = ev.target.closest ? ev.target.closest('.opt') : null;
+  if(opt){
+    state.answers[parseInt(opt.getAttribute('data-q'), 10)] = parseInt(opt.getAttribute('data-k'), 10);
+    saveState();
+    renderAll();
+    return;
+  }
+  const go = ev.target.closest ? ev.target.closest('[data-goto]') : null;
+  if(go){
+    const idx = parseInt(go.getAttribute('data-goto'), 10);
+    if(state.filter !== 'all'){ state.filter = 'all'; syncFilterButtons(); renderAll(); }
+    const el = document.getElementById('q' + (idx + 1));
+    if(el){
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      el.style.transition = 'box-shadow .3s';
+      el.style.boxShadow = '0 0 0 3px rgba(37,99,235,.35)';
+      setTimeout(function(){ el.style.boxShadow = ''; }, 900);
+    }
+    saveState();
+  }
+});
+
+function syncFilterButtons(){
+  const map = { all:'btnAll', unanswered:'btnUnans', wrong:'btnWrong' };
+  for(const k in map){
+    const b = document.getElementById(map[k]);
+    if(b) b.classList.toggle('active', state.filter === k);
+  }
+}
+
+function setFilter(f){
+  state.filter = f;
+  syncFilterButtons();
+  saveState();
+  renderAll();
+}
+
+function bind(){
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.revealed = !state.revealed; saveState(); renderAll();
+  });
+  document.getElementById('btnAll').addEventListener('click', function(){ setFilter('all'); });
+  document.getElementById('btnUnans').addEventListener('click', function(){ setFilter('unanswered'); });
+  document.getElementById('btnWrong').addEventListener('click', function(){ setFilter('wrong'); });
+  document.getElementById('btnTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('確定要清除全部作答紀錄嗎？此動作無法復原。')) return;
+    state.answers = {}; state.revealed = false; state.filter = 'all';
+    saveState(); syncFilterButtons(); renderAll();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && state.revealed){ state.revealed = false; saveState(); renderAll(); }
+  });
+}
+
+loadState();
+syncFilterButtons();
+renderAll();
+bind();
+</script>
+</body>
+</html>

@@ -4768,18 +4768,30 @@ ORB 配 Hamming、SIFT 配 L2
 <h2 id="附錄-gmc-模擬試卷60-題">附錄 G：MC 模擬試卷（60 題）</h2>
 <blockquote>
 <p><strong>適用</strong>：IVDC「Certificate in Application of Computer Vision Technology」期末筆試
-<strong>題型</strong>：全部單選題（Multiple Choice），四選一
+<strong>題型</strong>：全部單選題（四選一），<strong>只考基本理論與概念，不考程式碼</strong>
 <strong>題數</strong>：60 題　<strong>滿分</strong>：60 分　<strong>建議時間</strong>：75 分鐘
 <strong>範圍</strong>：涵蓋 PDF 全部 15 節（第 3–29 頁）</p>
 </blockquote>
 <h3 id="g1-作答說明與應試技巧">G.1 作答說明與應試技巧</h3>
-<p><strong>使用方式（請務必照順序做）</strong></p>
+<h4 id="-互動式線上測驗推薦">▶ 互動式線上測驗（推薦）</h4>
+<p><strong><a href="mc-quiz.html">開始 60 題線上測驗</a></strong></p>
+<p>線上版功能：</p>
+<ul>
+<li><strong>點選答案</strong>即自動計分，並即時顯示得分</li>
+<li><strong>作答進度自動存在你的瀏覽器</strong>（localStorage）——關掉網頁、隔天再開都能繼續</li>
+<li>可切換「只顯示未答」或「只顯示答錯」的題目，快速複習</li>
+<li>按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷</li>
+</ul>
+<blockquote>
+<p>需要紙本練習或列印時，就用下面的 G.2–G.6 靜態版 —— <strong>兩邊題目完全相同</strong>。</p>
+</blockquote>
+<h4 id="使用方式紙本版">使用方式（紙本版）</h4>
 <ol>
 <li><strong>先蓋住答案</strong>，用 75 分鐘完整做完 60 題，模擬真實考試節奏。</li>
 <li>對照 <a href="#g5-答案速查表">G.5 答案速查表</a> 自行評分。</li>
 <li>只針對<strong>答錯的題目</strong>看 <a href="#g6-逐題詳解">G.6 逐題詳解</a>，並回到對應章節補強。</li>
 </ol>
-<p><strong>時間分配建議</strong></p>
+<h4 id="時間分配建議">時間分配建議</h4>
 <table>
 <thead>
 <tr>
@@ -4806,7 +4818,7 @@ ORB 配 Hamming、SIFT 配 L2
 </tr>
 </tbody>
 </table>
-<p><strong>評分參考</strong></p>
+<h4 id="評分參考">評分參考</h4>
 <table>
 <thead>
 <tr>
@@ -4838,389 +4850,198 @@ ORB 配 Hamming、SIFT 配 L2
 </tr>
 </tbody>
 </table>
-<p><strong>出題率最高的 10 個考點</strong></p>
+<h4 id="出題率最高的-10-個考點">出題率最高的 10 個考點</h4>
 <table>
 <thead>
 <tr>
 <th>#</th>
 <th>考點</th>
 <th>一句話答案</th>
-<th>相關題號</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
 <td>通道順序</td>
-<td>OpenCV 讀入是 <strong>BGR</strong>，顯示用要轉 RGB</td>
-<td>6, 17, 34</td>
+<td>OpenCV 讀入是 <strong>BGR</strong>，顯示前要轉成 RGB</td>
 </tr>
 <tr>
 <td>2</td>
-<td><code>resize</code> 的 dsize</td>
-<td>是 <strong>(寬, 高)</strong>，與 <code>shape</code> 的 (高, 寬) 相反</td>
-<td>22</td>
+<td>形狀順序</td>
+<td>形狀是 <strong>(高, 寬, 通道)</strong></td>
 </tr>
 <tr>
 <td>3</td>
-<td>ROI 切片</td>
+<td>ROI 索引</td>
 <td>先 <strong>Y（列）</strong> 後 <strong>X（行）</strong></td>
-<td>24</td>
 </tr>
 <tr>
 <td>4</td>
 <td>kernel 大小</td>
-<td>必須是<strong>正奇數</strong></td>
-<td>41</td>
+<td>必須是<strong>正奇數</strong>，才有唯一中心點</td>
 </tr>
 <tr>
 <td>5</td>
-<td><code>thickness = -1</code></td>
-<td>代表<strong>填滿</strong></td>
-<td>35</td>
+<td>填滿圖形</td>
+<td>用負值 <strong>-1</strong> 代表填滿</td>
 </tr>
 <tr>
 <td>6</td>
-<td>溢位</td>
-<td><code>uint8</code> 用 NumPy <code>+</code> 會<strong>回繞</strong>（200+100→44），<code>cv2.add</code> 會<strong>飽和</strong>（→255）</td>
-<td>29, 30</td>
+<td>整數溢位</td>
+<td>超過上限會<strong>回繞</strong>；飽和運算則<strong>停在最大值</strong></td>
 </tr>
 <tr>
 <td>7</td>
 <td>開／閉運算</td>
 <td>開 = 先侵蝕再膨脹（去小白點）；閉 = 先膨脹再侵蝕（補小黑洞）</td>
-<td>46, 47</td>
 </tr>
 <tr>
 <td>8</td>
-<td>Canny 輸入</td>
-<td>必須是<strong>單通道 8-bit 灰階</strong></td>
-<td>48</td>
+<td>邊緣偵測輸入</td>
+<td>必須是<strong>單通道灰階</strong>影像</td>
 </tr>
 <tr>
 <td>9</td>
 <td>ORB 距離</td>
-<td>用 <strong><code>NORM_HAMMING</code></strong>（SIFT 才用 L2）</td>
-<td>55</td>
+<td>二進位描述子用 <strong>Hamming 距離</strong></td>
 </tr>
 <tr>
 <td>10</td>
 <td>RANSAC</td>
-<td>作用是<strong>剔除 outliers</strong>，不是加速</td>
-<td>60</td>
+<td>作用是<strong>剔除錯誤匹配</strong>，不是加速</td>
 </tr>
 </tbody>
 </table>
 <hr />
 <h3 id="g2-第一部分基礎與色彩空間第-120-題">G.2 第一部分：基礎與色彩空間（第 1–20 題）</h3>
 <p><strong>1.</strong> OpenCV 的全名是？<br>
-A. Open Source Computer Vision Library<br>
-B. Open Computer Vision Library<br>
-C. OpenCV Standard Computer Vision Library<br>
-D. Open Standard Vision Library</p>
-<p><strong>2.</strong> OpenCV 最初由哪家公司發起？<br>
-A. Google<br>
-B. Intel<br>
-C. Microsoft<br>
-D. NVIDIA</p>
+A. Open Source Computer Vision Library<br><br>B. Open Computer Vision Library<br><br>C. OpenCV Standard Computer Vision Library<br><br>D. Open Standard Vision Library</p>
+<p><strong>2.</strong> OpenCV 最初是由哪家公司發起？<br>
+A. Google<br><br>B. Intel<br><br>C. Microsoft<br><br>D. NVIDIA</p>
 <p><strong>3.</strong> OpenCV 內含多少個以上已最佳化的演算法？<br>
-A. 250+<br>
-B. 1000+<br>
-C. 2500+<br>
-D. 25000+</p>
-<p><strong>4.</strong> 下列何者<strong>不是</strong> OpenCV 的主要特色？<br>
-A. 開源免費（BSD 授權）<br>
-B. 跨平台（Windows / Linux / macOS / Android）<br>
-C. 內建深度學習推論模組 <code>dnn</code><br>
-D. 只支援 C++，不提供 Python 介面</p>
-<p><strong>5.</strong> 在 Python 中，OpenCV 讀入的影像實際上是什麼資料型別？<br>
-A. <code>numpy.ndarray</code><br>
-B. <code>list</code><br>
-C. <code>PIL.Image</code><br>
-D. <code>dict</code></p>
-<p><strong>6.</strong> <code>cv2.imread()</code> 預設讀入的通道順序為？<br>
-A. RGB<br>
-B. HSV<br>
-C. BGR<br>
-D. GRAY</p>
-<p><strong>7.</strong> 若 <code>cv2.imread("x.jpg")</code> 回傳 <code>None</code>，最可能的原因？<br>
-A. 檔案路徑錯誤或檔案不存在<br>
-B. 影像太大<br>
-C. 沒有安裝 matplotlib<br>
-D. 影像不是彩色</p>
-<p><strong>8.</strong> 若 <code>image.shape</code> 為 <code>(480, 640, 3)</code>，則該影像是？<br>
-A. 寬 480、高 640、3 通道<br>
-B. 高 480、寬 640、1 通道<br>
-C. 高 640、寬 480、3 通道<br>
-D. 高 480、寬 640、3 通道</p>
-<p><strong>9.</strong> 車牌辨識（ANPR）主要結合了哪兩項技術？<br>
-A. 僅影像分類<br>
-B. 僅語音辨識<br>
-C. 物件偵測 + 文字辨識（OCR）<br>
-D. 資料庫查詢</p>
-<p><strong>10.</strong> 下列哪一項<strong>不是</strong> OpenCV 的典型應用？<br>
-A. 人臉偵測<br>
-B. 關聯式資料庫正規化<br>
-C. 醫學影像分析<br>
-D. 自動駕駛視覺</p>
-<p><strong>11.</strong> HSV 色彩空間中，H（Hue，色相）在 OpenCV 的範圍是？<br>
-A. 0–255<br>
-B. 0–360<br>
-C. 0–100<br>
-D. 0–179</p>
-<p><strong>12.</strong> HSV 相對於 RGB 的最大優點是？<br>
-A. 檔案較小<br>
-B. 把「顏色」與「亮度」分離，對光照變化較不敏感<br>
-C. 運算速度最快<br>
-D. 可直接壓縮影像</p>
-<p><strong>13.</strong> 哪個色彩空間是「感知均勻（perceptually uniform）」的，常用於抗光照的顏色比較？<br>
-A. LAB<br>
-B. RGB<br>
-C. HSV<br>
-D. BGR</p>
-<p><strong>14.</strong> LAB 的 L 通道代表？<br>
-A. 紅綠軸<br>
-B. 藍黃軸<br>
-C. 亮度（Lightness）<br>
-D. 飽和度</p>
-<p><strong>15.</strong> 灰階轉換的標準亮度公式（ITU-R BT.601）為？<br>
-A. <code>0.114R + 0.587G + 0.299B</code><br>
-B. <code>0.299R + 0.587G + 0.114B</code><br>
-C. <code>(R + G + B) / 3</code><br>
-D. <code>max(R, G, B)</code></p>
-<p><strong>16.</strong> 要把 BGR 影像轉為灰階，應使用？<br>
-A. <code>cv2.COLOR_BGR2GRAY</code><br>
-B. <code>cv2.COLOR_BGR2RGB</code><br>
-C. <code>cv2.COLOR_GRAY2BGR</code><br>
-D. <code>cv2.COLOR_BGR2HSV</code></p>
-<p><strong>17.</strong> 用 <code>cv2.imread()</code> 讀圖後直接以 <code>matplotlib.pyplot.imshow()</code> 顯示，顏色會紅藍對調，原因是？<br>
-A. 影像檔案損毀<br>
-B. 缺少 <code>plt.axis("off")</code><br>
-C. 記憶體不足<br>
-D. Matplotlib 預期 RGB，但 OpenCV 給的是 BGR</p>
-<p><strong>18.</strong> <code>cv2.cvtColor(image, cv2.COLOR_BGR2HSV)</code> 回傳陣列的 dtype 是？<br>
-A. <code>float32</code><br>
-B. <code>int16</code><br>
-C. <code>uint8</code><br>
-D. <code>float64</code></p>
-<p><strong>19.</strong> 在 HSV 中偵測紅色時，通常需要兩段範圍（如 0–10 與 170–179），原因是？<br>
-A. 紅色在 HSV 色環上跨越 0 度邊界<br>
-B. 紅色屬於無彩色<br>
-C. OpenCV 的 H 只有 100 階<br>
-D. 紅色需要較高的飽和度</p>
-<p><strong>20.</strong> 下列何者可以「提升影像對比」？<br>
-A. <code>cv2.resize()</code><br>
-B. 直方圖均衡化（histogram equalization）<br>
-C. <code>cv2.flip()</code><br>
-D. <code>cv2.putText()</code></p>
+A. 250+<br><br>B. 1000+<br><br>C. 2500+<br><br>D. 25000+</p>
+<p><strong>4.</strong> 下列何者「不是」OpenCV 的主要特色？<br>
+A. 開源且免費<br><br>B. 跨平台（Windows / Linux / macOS / Android）<br><br>C. 內建深度學習推論模組<br><br>D. 只支援 C++，不提供其他語言介面</p>
+<p><strong>5.</strong> OpenCV 採用哪一種授權方式？<br>
+A. 開源免費（BSD 授權）<br><br>B. 需付費的商業授權<br><br>C. 僅限學術用途<br><br>D. 必須開源你的整個專案</p>
+<p><strong>6.</strong> 在電腦視覺中，一張數位影像基本上是由什麼組成？<br>
+A. 一串文字編碼<br><br>B. 排列成矩陣的像素數值<br><br>C. 一組向量圖形指令<br><br>D. 一個壓縮檔案</p>
+<p><strong>7.</strong> OpenCV 讀入彩色影像時，預設的通道順序是？<br>
+A. RGB<br><br>B. HSV<br><br>C. BGR<br><br>D. GRAY</p>
+<p><strong>8.</strong> 若一張影像的形狀標示為 (480, 640, 3)，這三個數字分別代表？<br>
+A. 寬 480、高 640、3 個通道<br><br>B. 高 480、寬 640、1 個通道<br><br>C. 高 640、寬 480、3 個通道<br><br>D. 高 480、寬 640、3 個通道</p>
+<p><strong>9.</strong> 一個彩色像素通常由幾個數值組成？<br>
+A. 3 個<br><br>B. 1 個<br><br>C. 2 個<br><br>D. 4 個</p>
+<p><strong>10.</strong> 「像素（pixel）」在數位影像中指的是？<br>
+A. 一整張影像的尺寸<br><br>B. 影像的最小組成單位，帶有顏色或亮度數值<br><br>C. 影像的檔案大小<br><br>D. 影像的壓縮比例</p>
+<p><strong>11.</strong> OpenCV 為什麼預設採用 BGR 而非 RGB？<br>
+A. 因為 BGR 的顏色比較準確<br><br>B. 因為 BGR 的檔案比較小<br><br>C. 源自早期開發慣例與硬體廠商的記憶體排列格式<br><br>D. 因為 RGB 是被專利保護的</p>
+<p><strong>12.</strong> 車牌辨識（ANPR）主要結合哪兩項技術？<br>
+A. 僅影像分類<br><br>B. 僅語音辨識<br><br>C. 僅資料庫查詢<br><br>D. 物件偵測 + 文字辨識（OCR）</p>
+<p><strong>13.</strong> 下列哪一項「不是」OpenCV 的典型應用？<br>
+A. 關聯式資料庫正規化<br><br>B. 人臉偵測<br><br>C. 醫學影像分析<br><br>D. 自動駕駛視覺</p>
+<p><strong>14.</strong> HSV 色彩空間的三個通道分別代表？<br>
+A. 紅、綠、藍<br><br>B. 色相、飽和度、明度<br><br>C. 亮度、紅綠軸、藍黃軸<br><br>D. 青、洋紅、黃</p>
+<p><strong>15.</strong> 在 OpenCV 中，色相（Hue）的數值範圍是？<br>
+A. 0–255<br><br>B. 0–360<br><br>C. 0–179<br><br>D. 0–100</p>
+<p><strong>16.</strong> HSV 相對於 RGB 的最大優點是？<br>
+A. 檔案體積較小<br><br>B. 運算速度最快<br><br>C. 可直接壓縮影像<br><br>D. 把「顏色」與「亮度」分離，對光照變化較不敏感</p>
+<p><strong>17.</strong> 哪一個色彩空間被認為是「感知均勻（perceptually uniform）」？<br>
+A. LAB<br><br>B. RGB<br><br>C. HSV<br><br>D. BGR</p>
+<p><strong>18.</strong> LAB 色彩空間的 L 通道代表什麼？<br>
+A. 紅綠軸<br><br>B. 亮度（Lightness）<br><br>C. 藍黃軸<br><br>D. 飽和度</p>
+<p><strong>19.</strong> 在 HSV 中偵測紅色時，通常需要兩段範圍，原因是？<br>
+A. 紅色屬於無彩色<br><br>B. 色相只有 100 個階層<br><br>C. 紅色在色環上跨越 0 度邊界<br><br>D. 紅色需要較高的飽和度</p>
+<p><strong>20.</strong> 若要偵測膚色或交通號誌的顏色，最適合用哪個色彩空間？<br>
+A. BGR<br><br>B. 灰階<br><br>C. LAB 的 B 通道<br><br>D. HSV</p>
 <hr />
 <h3 id="g3-第二部分前處理矩陣繪圖變換第-2140-題">G.3 第二部分：前處理、矩陣、繪圖、變換（第 21–40 題）</h3>
 <p><strong>21.</strong> 影像前處理（pre-processing）的主要目的是？<br>
-A. 增大檔案體積<br>
-B. 加密影像內容<br>
-C. 提升影像品質，讓後續分析更準確<br>
-D. 減少色彩數量以節省空間</p>
-<p><strong>22.</strong> <code>cv2.resize(image, (320, 240))</code> 中 <code>(320, 240)</code> 代表？<br>
-A. (寬, 高)<br>
-B. (高, 寬)<br>
-C. (通道, 尺寸)<br>
-D. (行, 列)</p>
-<p><strong>23.</strong> 將影像「縮小」時，建議使用的插值法是？<br>
-A. <code>cv2.INTER_CUBIC</code><br>
-B. <code>cv2.INTER_LANCZOS4</code><br>
-C. <code>cv2.INTER_AREA</code><br>
-D. <code>cv2.INTER_NEAREST</code></p>
-<p><strong>24.</strong> 要取出第 100–300 列、第 50–250 行的 ROI，正確語法是？<br>
-A. <code>image[50:250, 100:300]</code><br>
-B. <code>image[:, 100:300]</code><br>
-C. <code>image[100:300]</code><br>
-D. <code>image[100:300, 50:250]</code></p>
-<p><strong>25.</strong> 關於 NumPy 切片取得的 ROI，下列敘述何者正確？<br>
-A. 切片會複製資料，修改不影響原圖<br>
-B. 切片是檢視（view），修改會影響原圖<br>
-C. 切片後必須先 resize 才能使用<br>
-D. 切片只能作用於灰階圖</p>
-<p><strong>26.</strong> <code>cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)</code> 中的 <code>127</code> 與 <code>255</code> 分別代表？<br>
-A. 閾值（threshold）與超過閾值時要給的值<br>
-B. 最大值與最小值<br>
-C. kernel 大小與邊界處理方式<br>
-D. 模糊強度與對比係數</p>
-<p><strong>27.</strong> 使用 Otsu 自動閾值時，<code>thresh</code> 參數應填？<br>
-A. 127<br>
-B. 255<br>
-C. -1<br>
-D. 0</p>
-<p><strong>28.</strong> <code>cv2.addWeighted(a, 0.6, b, 0.4, 0)</code> 的輸出等於？<br>
-A. <code>a*0.4 + b*0.6</code><br>
-B. <code>(a + b) * 0.6</code><br>
-C. <code>a*0.6 + b*0.4</code><br>
-D. <code>a + b</code></p>
-<p><strong>29.</strong> 對 <code>uint8</code> 陣列執行 NumPy 的 <code>img + 100</code>，若某像素原值為 200，結果是？<br>
-A. 255<br>
-B. 44<br>
-C. 300<br>
-D. 0</p>
-<p><strong>30.</strong> 若要「飽和加法」（超過 255 就停在 255），應使用？<br>
-A. <code>cv2.add(img1, img2)</code><br>
-B. <code>img1 + img2</code>（NumPy）<br>
-C. <code>cv2.subtract(img1, img2)</code><br>
-D. <code>np.multiply(img1, img2)</code></p>
-<p><strong>31.</strong> 要把「白色遮罩區域」以外的內容全部變黑，應使用？<br>
-A. <code>cv2.bitwise_or(img, mask)</code><br>
-B. <code>cv2.add(img, mask)</code><br>
-C. <code>cv2.split(img)</code><br>
-D. <code>cv2.bitwise_and(img, img, mask=mask)</code></p>
-<p><strong>32.</strong> <code>cv2.flip(img, 1)</code> 代表？<br>
-A. 垂直翻轉（上下）<br>
-B. 旋轉 180 度<br>
-C. 水平翻轉（左右）<br>
-D. 不進行翻轉</p>
-<p><strong>33.</strong> <code>cv2.flip(img, 0)</code> 代表？<br>
-A. 垂直翻轉（上下）<br>
-B. 水平翻轉（左右）<br>
-C. 旋轉 90 度<br>
-D. 不進行翻轉</p>
-<p><strong>34.</strong> 繪圖函式中的顏色參數是依什麼順序？<br>
-A. <code>(R, G, B)</code><br>
-B. <code>(B, G, R)</code>，與影像通道一致<br>
-C. <code>(H, S, V)</code><br>
-D. <code>(L, A, B)</code></p>
-<p><strong>35.</strong> 要畫「填滿」的圓形或矩形，<code>thickness</code> 應設為？<br>
-A. 0<br>
-B. 1<br>
-C. 255<br>
-D. -1</p>
-<p><strong>36.</strong> 在<strong>灰階</strong>影像上呼叫 <code>cv2.rectangle(img_gray, p1, p2, (0, 0, 255), 2)</code> 會？<br>
-A. 畫出紅色框<br>
-B. 產生錯誤<br>
-C. 因為顏色第一個分量是 0，畫出<strong>黑色</strong>框<br>
-D. 自動轉為彩色後再畫紅框</p>
-<p><strong>37.</strong> <code>cv2.getRotationMatrix2D(center, angle, scale)</code> 回傳的矩陣大小是？<br>
-A. 2×3<br>
-B. 2×2<br>
-C. 3×3<br>
-D. 3×4</p>
-<p><strong>38.</strong> 在 <code>cv2.getRotationMatrix2D</code> 中，正角度代表？<br>
-A. 順時針<br>
-B. 逆時針<br>
-C. 無法確定，依平台而定<br>
-D. 無效輸入</p>
-<p><strong>39.</strong> 仿射變換（affine transformation）需要幾組對應點？<br>
-A. 2 點<br>
-B. 4 點<br>
-C. 3 點<br>
-D. 8 點</p>
-<p><strong>40.</strong> 透視變換（perspective transformation）需要幾組對應點，其矩陣為？<br>
-A. 3 點、2×3<br>
-B. 4 點、2×3<br>
-C. 8 點、3×3<br>
-D. 4 點、3×3</p>
+A. 提升影像品質，讓後續分析更準確<br><br>B. 增大影像的檔案體積<br><br>C. 對影像進行加密<br><br>D. 減少色彩的數量以節省空間</p>
+<p><strong>22.</strong> 下列哪一項「不是」常見的影像前處理步驟？<br>
+A. 調整尺寸<br><br>B. 對影像加密<br><br>C. 去除雜訊<br><br>D. 二值化</p>
+<p><strong>23.</strong> 為什麼分析前常常需要先縮小影像尺寸？<br>
+A. 讓顏色更鮮豔<br><br>B. 提高影像解析度<br><br>C. 降低運算量並統一處理尺寸<br><br>D. 讓檔案可以壓縮</p>
+<p><strong>24.</strong> ROI 是什麼意思？<br>
+A. Real Output Image<br><br>B. Rotated Image<br><br>C. Real Object Identifier<br><br>D. Region Of Interest（感興趣區域）</p>
+<p><strong>25.</strong> 取用影像某個區域時，「先 Y 後 X」的意思是？<br>
+A. 先指定列（垂直方向），再指定行（水平方向）<br><br>B. 先指定行（水平方向），再指定列（垂直方向）<br><br>C. 先指定通道，再指定座標<br><br>D. 先指定顏色，再指定位置</p>
+<p><strong>26.</strong> 二值化（thresholding）的作用是？<br>
+A. 把彩色轉成灰階<br><br>B. 把灰階影像轉換成只有黑與白的影像<br><br>C. 把影像放大<br><br>D. 把影像模糊化</p>
+<p><strong>27.</strong> Otsu 閾值法的特點是？<br>
+A. 只能處理彩色影像<br><br>B. 需要人工指定閾值<br><br>C. 能自動計算出最佳閾值，不需人工指定<br><br>D. 只能處理椒鹽雜訊</p>
+<p><strong>28.</strong> 灰階影像每個像素只需要一個數值，原因是？<br>
+A. 因為灰階是壓縮格式<br><br>B. 因為灰階沒有解析度<br><br>C. 因為灰階只用來做邊緣偵測<br><br>D. 因為只保留了亮度資訊，不需要顏色</p>
+<p><strong>29.</strong> 影像矩陣中的「通道（channel）」指的是？<br>
+A. 每個像素在該維度上擁有的數值數量<br><br>B. 影像的寬度<br><br>C. 影像的檔案格式<br><br>D. 影像的更新版本</p>
+<p><strong>30.</strong> 為什麼整數資料型別在相加時，可能得到比預期小的值？<br>
+A. 因為浮點數誤差<br><br>B. 因為超過型別上限時會發生溢位回繞<br><br>C. 因為記憶體不足<br><br>D. 因為顏色被反轉</p>
+<p><strong>31.</strong> 什麼是「飽和運算（saturation arithmetic）」？<br>
+A. 運算結果一律變成 0<br><br>B. 運算結果取平均值<br><br>C. 運算結果超過上限時就停在最大值<br><br>D. 運算結果無條件進位</p>
+<p><strong>32.</strong> 遮罩（mask）在影像處理中的主要作用是？<br>
+A. 把影像放大<br><br>B. 改變影像的檔案格式<br><br>C. 計算影像的直方圖<br><br>D. 選擇性地只處理或保留部分區域</p>
+<p><strong>33.</strong> 為什麼建立資料集時，常需要對影像做翻轉或旋轉？<br>
+A. 做資料增強，讓模型看過更多角度<br><br>B. 為了減少檔案大小<br><br>C. 為了提高解析度<br><br>D. 為了修正色彩</p>
+<p><strong>34.</strong> 繪圖時顏色參數為什麼要用 (B, G, R) 的順序？<br>
+A. 因為 BGR 比較好看<br><br>B. 因為必須與 OpenCV 的 BGR 通道順序一致<br><br>C. 因為 BGR 比較省記憶體<br><br>D. 因為 RGB 已被淘汰</p>
+<p><strong>35.</strong> 在灰階影像上指定彩色繪圖顏色，結果會是？<br>
+A. 仍然是彩色<br><br>B. 程式會發生錯誤<br><br>C. 只有黑白（只取用顏色的第一個數值）<br><br>D. 自動轉成彩色後再繪圖</p>
+<p><strong>36.</strong> 在繪圖功能中，「填滿圖形」通常用什麼值表示？<br>
+A. 0<br><br>B. 1<br><br>C. 255<br><br>D. 負值（-1）</p>
+<p><strong>37.</strong> 什麼是「仿射變換（affine transformation）」？<br>
+A. 保持平行線仍然平行的線性變換<br><br>B. 會讓平行線相交的變換<br><br>C. 只能做旋轉的變換<br><br>D. 只改變顏色的變換</p>
+<p><strong>38.</strong> 仿射變換與透視變換最大的差別在於？<br>
+A. 仿射變換不能旋轉<br><br>B. 透視變換不保持平行線平行，可處理三維投影效果<br><br>C. 透視變換只能用於灰階影像<br><br>D. 仿射變換會改變顏色</p>
+<p><strong>39.</strong> 在 OpenCV 中，旋轉角度為正數代表什麼方向？<br>
+A. 順時針<br><br>B. 由平台決定<br><br>C. 逆時針<br><br>D. 無效輸入</p>
+<p><strong>40.</strong> 為什麼透視變換比仿射變換需要更多的對應點？<br>
+A. 因為它處理的影像比較大<br><br>B. 因為它需要更多顏色資訊<br><br>C. 因為它不能自動計算<br><br>D. 因為它要解的自由度更多（8 個）</p>
 <hr />
 <h3 id="g4-第三部分濾波邊緣特徵匹配專案第-4160-題">G.4 第三部分：濾波、邊緣、特徵、匹配、專案（第 41–60 題）</h3>
-<p><strong>41.</strong> 下列哪個 kernel 大小<strong>不合法</strong>？<br>
-A. <code>(3, 3)</code><br>
-B. <code>(5, 5)</code><br>
-C. <code>(10, 10)</code><br>
-D. <code>(7, 7)</code></p>
-<p><strong>42.</strong> 移除椒鹽雜訊（salt-and-pepper noise）最有效的是？<br>
-A. <code>cv2.medianBlur</code><br>
-B. <code>cv2.blur</code><br>
-C. <code>cv2.GaussianBlur</code><br>
-D. <code>cv2.bilateralFilter</code></p>
-<p><strong>43.</strong> 哪一種濾波器能在去雜訊的同時「保留邊緣」？<br>
-A. 平均模糊（average blur）<br>
-B. 高斯模糊（Gaussian blur）<br>
-C. 中值模糊（median blur）<br>
-D. 雙邊濾波（bilateral filter）</p>
-<p><strong>44.</strong> <code>cv2.bilateralFilter(img, 9, 75, 75)</code> 中的 <code>75, 75</code> 分別代表？<br>
-A. sigmaColor 與 sigmaSpace<br>
-B. kernel 大小與步長<br>
-C. 閾值與最大值<br>
-D. dx 與 dy</p>
-<p><strong>45.</strong> 形態學的「侵蝕（erode）」效果是？<br>
-A. 白色區域變大<br>
-B. 白色區域變小<br>
-C. 整張影像變模糊<br>
-D. 色彩反轉</p>
-<p><strong>46.</strong> 開運算（Opening）的順序與用途是？<br>
-A. 先膨脹再侵蝕；填補物件內的小黑洞<br>
-B. 只侵蝕；移除大物件<br>
-C. 先侵蝕再膨脹；移除背景小白點<br>
-D. 只膨脹；連接斷裂線條</p>
-<p><strong>47.</strong> 閉運算（Closing）的順序與用途是？<br>
-A. 先侵蝕再膨脹；移除背景小白點<br>
-B. 只膨脹；做邊緣偵測<br>
-C. 只侵蝕；做去背<br>
-D. 先膨脹再侵蝕；填補物件內的小黑洞</p>
-<p><strong>48.</strong> Canny 邊緣偵測的輸入影像必須是？<br>
-A. 單通道 8-bit 灰階<br>
-B. 3 通道彩色<br>
-C. float64 彩色<br>
-D. 任意格式皆可</p>
-<p><strong>49.</strong> 關於 Canny 的兩個閾值，下列敘述何者正確？<br>
-A. <code>threshold1</code> 是高閾值、<code>threshold2</code> 是低閾值<br>
-B. 兩個閾值必須相等<br>
-C. 梯度高於 <code>threshold2</code> 的點確定為邊緣；介於兩者之間者，若與確定邊緣相連則保留<br>
-D. <code>threshold1</code> 必須大於 255</p>
-<p><strong>50.</strong> 使用 <code>cv2.Sobel()</code> 時，為何常指定 <code>ddepth=cv2.CV_64F</code>？<br>
-A. 加快運算速度<br>
-B. 保留負梯度值，避免被 uint8 截斷為 0<br>
-C. 減少記憶體用量<br>
-D. 自動完成二值化</p>
-<p><strong>51.</strong> <code>cv2.findContours()</code> 在 OpenCV 4.x / 5.x 的回傳值是？<br>
-A. 2 個值（contours, hierarchy）<br>
-B. 3 個值（image, contours, hierarchy）<br>
-C. 1 個值<br>
-D. 4 個值</p>
-<p><strong>52.</strong> 只取最外層輪廓（忽略巢狀輪廓）應使用哪個 mode？<br>
-A. <code>cv2.RETR_LIST</code><br>
-B. <code>cv2.RETR_TREE</code><br>
-C. <code>cv2.RETR_CCOMP</code><br>
-D. <code>cv2.RETR_EXTERNAL</code></p>
-<p><strong>53.</strong> ORB 演算法是由哪兩部分組成？<br>
-A. Harris + SIFT<br>
-B. FAST（關鍵點）+ BRIEF（描述子），並加入方向資訊<br>
-C. SURF + LBP<br>
-D. Canny + Hough</p>
-<p><strong>54.</strong> ORB 描述子的長度是？<br>
-A. 64 bytes<br>
-B. 128 bytes<br>
-C. 32 bytes（256 bits）<br>
-D. 16 bytes</p>
-<p><strong>55.</strong> ORB 的描述子應搭配哪種距離度量？<br>
-A. <code>cv2.NORM_L2</code><br>
-B. <code>cv2.NORM_L1</code><br>
-C. 餘弦相似度<br>
-D. <code>cv2.NORM_HAMMING</code></p>
-<p><strong>56.</strong> 下列哪個演算法「免費授權且速度最快」，適合即時應用？<br>
-A. SIFT<br>
-B. SURF<br>
-C. ORB<br>
-D. BRISK</p>
-<p><strong>57.</strong> <code>cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)</code> 中 <code>crossCheck=True</code> 的作用是？<br>
-A. 只保留互相匹配的點（雙向驗證），過濾明顯誤配<br>
-B. 加快匹配速度<br>
-C. 產生描述子<br>
-D. 自動執行 RANSAC</p>
-<p><strong>58.</strong> Lowe's ratio test 的典型寫法是？<br>
-A. <code>m.distance &gt; 0.75 * n.distance</code><br>
-B. <code>m.distance &lt; 0.75 * n.distance</code><br>
-C. <code>m.distance == n.distance</code><br>
-D. <code>m.distance + n.distance &lt; 0.75</code></p>
-<p><strong>59.</strong> 全景圖生成（panorama）的核心技術是？<br>
-A. 色彩空間轉換<br>
-B. 直方圖均衡化<br>
-C. 形態學運算<br>
-D. 特徵匹配 + Homography 對齊 + 影像拼接</p>
-<p><strong>60.</strong> 關於 Homography 與 RANSAC，下列敘述何者<strong>錯誤</strong>？<br>
-A. Homography 是 3×3 矩陣，有 8 個自由度<br>
-B. 至少需要 4 組對應點才能求解<br>
-C. RANSAC 的主要作用是加快特徵偵測速度<br>
-D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型</p>
+<p><strong>41.</strong> 影像濾波（卷積）的主要目的是？<br>
+A. 去除雜訊、平滑影像或強化特定特徵<br><br>B. 改變影像的檔案格式<br><br>C. 壓縮影像以節省空間<br><br>D. 把彩色轉成灰階</p>
+<p><strong>42.</strong> 濾波器的 kernel 大小為什麼通常必須是正奇數？<br>
+A. 因為奇數運算比較快<br><br>B. 因為這樣才有唯一的中心點<br><br>C. 因為偶數會造成顏色反轉<br><br>D. 因為奇數才能處理彩色影像</p>
+<p><strong>43.</strong> kernel 尺寸越大，效果通常是？<br>
+A. 越清晰銳利<br><br>B. 完全沒有影響<br><br>C. 模糊程度越強，但細節流失越多<br><br>D. 顏色越鮮豔</p>
+<p><strong>44.</strong> 移除椒鹽雜訊（salt-and-pepper noise）最有效的方法是？<br>
+A. 平均模糊<br><br>B. 高斯模糊<br><br>C. 雙邊濾波<br><br>D. 中值濾波</p>
+<p><strong>45.</strong> 哪一種濾波器能在去除雜訊的同時保留邊緣？<br>
+A. 雙邊濾波<br><br>B. 平均模糊<br><br>C. 高斯模糊<br><br>D. 中值濾波</p>
+<p><strong>46.</strong> 中值濾波為什麼對椒鹽雜訊特別有效？<br>
+A. 因為它會把影像放大<br><br>B. 因為它取中位數，極端值會被排除<br><br>C. 因為它會偵測邊緣<br><br>D. 因為它會增加對比</p>
+<p><strong>47.</strong> 形態學中的「侵蝕（erosion）」效果是？<br>
+A. 白色區域變大<br><br>B. 整張影像變模糊<br><br>C. 白色區域變小<br><br>D. 色彩被反轉</p>
+<p><strong>48.</strong> 形態學中的「膨脹（dilation）」效果是？<br>
+A. 白色區域變小<br><br>B. 影像被旋轉<br><br>C. 對比度降低<br><br>D. 白色區域變大</p>
+<p><strong>49.</strong> 開運算（opening）的順序與用途是？<br>
+A. 先侵蝕再膨脹，用來移除背景中的小白點<br><br>B. 先膨脹再侵蝕，用來填補物件內的小黑洞<br><br>C. 只做侵蝕，用來移除大物件<br><br>D. 只做膨脹，用來連接斷裂線條</p>
+<p><strong>50.</strong> 閉運算（closing）的順序與用途是？<br>
+A. 先侵蝕再膨脹，用來移除小白點<br><br>B. 先膨脹再侵蝕，用來填補物件內部的小黑洞<br><br>C. 只做膨脹，用來做邊緣偵測<br><br>D. 只做侵蝕，用來做去背</p>
+<p><strong>51.</strong> 影像中的「邊緣（edge）」指的是？<br>
+A. 影像的最外框<br><br>B. 影像中顏色最飽和的區域<br><br>C. 亮度或顏色劇烈變化的地方<br><br>D. 影像中最大的物件</p>
+<p><strong>52.</strong> 邊緣偵測的基本原理是？<br>
+A. 計算影像的檔案大小<br><br>B. 計算影像的平均顏色<br><br>C. 計算影像的通道數<br><br>D. 計算像素亮度變化的劇烈程度（梯度）</p>
+<p><strong>53.</strong> 邊緣偵測（如 Canny）的輸入影像必須是？<br>
+A. 單通道的灰階影像<br><br>B. 三通道的彩色影像<br><br>C. 含透明通道的影像<br><br>D. 任意格式都可以</p>
+<p><strong>54.</strong> Canny 邊緣偵測使用兩個閾值的目的是？<br>
+A. 一個控制模糊、一個控制對比<br><br>B. 高閾值確定邊緣，低閾值把相連的弱邊緣接起來<br><br>C. 兩個閾值必須完全相等<br><br>D. 用來決定影像尺寸</p>
+<p><strong>55.</strong> 特徵點（keypoint）指的是？<br>
+A. 影像中最亮的像素<br><br>B. 影像的中心點<br><br>C. 影像中具有辨識度、容易定位的關鍵點（如角點）<br><br>D. 影像的左上角座標</p>
+<p><strong>56.</strong> 描述子（descriptor）的作用是？<br>
+A. 決定影像的尺寸<br><br>B. 儲存影像的檔案路徑<br><br>C. 標記影像的建立時間<br><br>D. 用一組數值向量描述關鍵點周圍的內容，以便比對</p>
+<p><strong>57.</strong> ORB 演算法由哪兩部分組成？<br>
+A. FAST 關鍵點偵測 + BRIEF 描述子<br><br>B. Harris 角點 + SIFT 描述子<br><br>C. SURF 關鍵點 + LBP 描述子<br><br>D. Canny 邊緣 + Hough 直線</p>
+<p><strong>58.</strong> ORB 具備「旋轉不變性」的原因是？<br>
+A. 因為它會把影像縮小<br><br>B. 因為它會計算關鍵點的主方向，並旋轉描述子的取樣點<br><br>C. 因為它會增加影像對比<br><br>D. 因為它會去除雜訊</p>
+<p><strong>59.</strong> 特徵匹配時，二進位描述子（如 ORB）適合用哪種距離度量？<br>
+A. 歐氏距離（L2）<br><br>B. 曼哈頓距離（L1）<br><br>C. Hamming 距離<br><br>D. 餘弦相似度</p>
+<p><strong>60.</strong> RANSAC 在特徵匹配中的主要作用是？<br>
+A. 加快特徵偵測速度<br><br>B. 產生描述子<br><br>C. 增強影像對比<br><br>D. 剔除錯誤匹配，找出最多 inliers 的模型</p>
 <hr />
 <p><a id="mc-answers"></a></p>
 <h3 id="g5-答案速查表">G.5 答案速查表</h3>
-<p><strong>用法</strong>：做完 <a href="#g2-第一部分基礎與色彩空間第-120-題">G.2</a>～<a href="#g4-第三部分濾波邊緣特徵匹配專案第-4160-題">G.4</a> 全部 60 題後，才回來對照此表。</p>
+<p><strong>用法</strong>：做完 G.2～G.4 全部 60 題後，才回來對照此表。</p>
 <table>
 <thead>
 <tr>
@@ -5245,10 +5066,10 @@ D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型</p>
 <td>C</td>
 <td>D</td>
 <td>A</td>
+<td>B</td>
 <td>C</td>
-<td>A</td>
 <td>D</td>
-<td>C</td>
+<td>A</td>
 <td>B</td>
 </tr>
 </tbody>
@@ -5272,16 +5093,16 @@ D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型</p>
 <tbody>
 <tr>
 <td><strong>答案</strong></td>
-<td>D</td>
-<td>B</td>
-<td>A</td>
 <td>C</td>
-<td>B</td>
-<td>A</td>
 <td>D</td>
-<td>C</td>
 <td>A</td>
 <td>B</td>
+<td>C</td>
+<td>D</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
 </tr>
 </tbody>
 </table>
@@ -5304,16 +5125,16 @@ D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型</p>
 <tbody>
 <tr>
 <td><strong>答案</strong></td>
-<td>C</td>
 <td>A</td>
+<td>B</td>
 <td>C</td>
 <td>D</td>
-<td>B</td>
 <td>A</td>
-<td>D</td>
+<td>B</td>
 <td>C</td>
-<td>B</td>
+<td>D</td>
 <td>A</td>
+<td>B</td>
 </tr>
 </tbody>
 </table>
@@ -5336,12 +5157,12 @@ D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型</p>
 <tbody>
 <tr>
 <td><strong>答案</strong></td>
-<td>D</td>
 <td>C</td>
+<td>D</td>
 <td>A</td>
 <td>B</td>
-<td>D</td>
 <td>C</td>
+<td>D</td>
 <td>A</td>
 <td>B</td>
 <td>C</td>
@@ -5368,15 +5189,15 @@ D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型</p>
 <tbody>
 <tr>
 <td><strong>答案</strong></td>
-<td>C</td>
 <td>A</td>
+<td>B</td>
+<td>C</td>
 <td>D</td>
 <td>A</td>
 <td>B</td>
 <td>C</td>
 <td>D</td>
 <td>A</td>
-<td>C</td>
 <td>B</td>
 </tr>
 </tbody>
@@ -5400,20 +5221,20 @@ D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型</p>
 <tbody>
 <tr>
 <td><strong>答案</strong></td>
-<td>A</td>
+<td>C</td>
 <td>D</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+<td>A</td>
 <td>B</td>
 <td>C</td>
 <td>D</td>
-<td>C</td>
-<td>A</td>
-<td>B</td>
-<td>D</td>
-<td>C</td>
 </tr>
 </tbody>
 </table>
-<p><strong>答案分佈檢查</strong>（可用来驗證自己有沒有整排猜同一個字母）</p>
+<p><strong>答案分佈</strong>（可用來檢查自己有沒有整排猜同一個字母）</p>
 <table>
 <thead>
 <tr>
@@ -5427,10 +5248,10 @@ D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型</p>
 <tbody>
 <tr>
 <td>題數</td>
-<td>16</td>
-<td>13</td>
-<td>17</td>
-<td>14</td>
+<td>15</td>
+<td>15</td>
+<td>15</td>
+<td>15</td>
 </tr>
 </tbody>
 </table>
@@ -5452,302 +5273,302 @@ D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型</p>
 <tr>
 <td>1</td>
 <td>A</td>
-<td>OpenCV = <strong>Open Source Computer Vision Library</strong>。</td>
+<td>OpenCV 是 <strong>Open Source Computer Vision Library</strong> 的縮寫。</td>
 </tr>
 <tr>
 <td>2</td>
 <td>B</td>
-<td>1999 年由 <strong>Intel</strong> 發起（Gary Bradski 於 Intel Research），後由 Willow Garage / OpenCV.org 維護。</td>
+<td>1999 年由 <strong>Intel</strong> 發起（Gary Bradski 於 Intel Research），之後由 Willow Garage 與 OpenCV.org 接手維護。</td>
 </tr>
 <tr>
 <td>3</td>
 <td>C</td>
-<td>內含 <strong>2500+</strong> 個已最佳化的電腦視覺與機器學習演算法。</td>
+<td>OpenCV 內含 <strong>2500 個以上</strong>已最佳化的電腦視覺與機器學習演算法。</td>
 </tr>
 <tr>
 <td>4</td>
 <td>D</td>
-<td>OpenCV 提供完整的 <strong>Python 綁定</strong>（<code>import cv2</code>），另有 C++、Java、JavaScript 介面，所以「只支援 C++」是錯的。</td>
+<td>OpenCV 除了 C++ 之外，還提供 <strong>Python、Java、JavaScript</strong> 等介面，所以「只支援 C++」是錯的。</td>
 </tr>
 <tr>
 <td>5</td>
 <td>A</td>
-<td>影像實際是 <strong><code>numpy.ndarray</code></strong>（dtype 通常為 uint8，形狀 <code>(H, W, C)</code>），這是 OpenCV 與 NumPy 緊密整合的關鍵。</td>
+<td>OpenCV 採用寬鬆的 <strong>BSD 授權</strong>，可免費商用，且不強制開源你的專案。</td>
 </tr>
 <tr>
 <td>6</td>
-<td>C</td>
-<td><code>cv2.imread()</code> 預設回傳 <strong>BGR</strong>，不是 RGB —— 這是顏色顯示錯亂的頭號原因。</td>
+<td>B</td>
+<td>數位影像本質上是<strong>二維（或多維）的數值矩陣</strong>，每個格子是一個像素。</td>
 </tr>
 <tr>
 <td>7</td>
-<td>A</td>
-<td><code>imread</code> 讀不到檔案時<strong>不拋例外，而是回傳 <code>None</code></strong>。最常見原因是路徑錯誤、檔名大小寫不符或含中文路徑。</td>
+<td>C</td>
+<td>OpenCV 預設讀入的是 <strong>BGR</strong>，不是 RGB，這是造成顏色顯示異常的頭號原因。</td>
 </tr>
 <tr>
 <td>8</td>
 <td>D</td>
-<td><code>shape</code> 是 <strong>(高, 寬, 通道)</strong>，故 480 = 高、640 = 寬、3 = BGR 三通道。</td>
+<td>形狀的順序是 <strong>(高, 寬, 通道數)</strong>，所以 480 是高、640 是寬、3 是彩色通道數。</td>
 </tr>
 <tr>
 <td>9</td>
-<td>C</td>
-<td>ANPR 先用<strong>物件偵測</strong>定位車牌，再用 <strong>OCR</strong> 讀出文字（OpenCV 可用 <code>cv2.dnn</code> 搭配 Tesseract）。</td>
+<td>A</td>
+<td>彩色像素由 <strong>3 個</strong>數值（藍、綠、紅）組成；灰階則只需要 1 個。</td>
 </tr>
 <tr>
 <td>10</td>
 <td>B</td>
-<td>關聯式資料庫正規化屬於資料庫領域，與電腦視覺無關。</td>
+<td>像素是數位影像的<strong>最小單位</strong>，每個像素帶有顏色或亮度數值。</td>
 </tr>
 <tr>
 <td>11</td>
-<td>D</td>
-<td>OpenCV 為了塞進 uint8，把 Hue 由 0–360° 縮放為 <strong>0–179</strong>；S、V 仍為 0–255。</td>
+<td>C</td>
+<td>這是<strong>歷史與硬體慣例</strong>造成的：早期相機與影像擷取卡的記憶體排列即為 BGR。</td>
 </tr>
 <tr>
 <td>12</td>
-<td>B</td>
-<td>HSV 把<strong>色相（H）</strong>與<strong>亮度（V）</strong>分離，換光源時 H 變化小，因此比 RGB 更適合做顏色分割。</td>
+<td>D</td>
+<td>車牌辨識先用<strong>物件偵測</strong>定位車牌，再用 <strong>OCR</strong> 讀出車牌文字。</td>
 </tr>
 <tr>
 <td>13</td>
 <td>A</td>
-<td><strong>LAB</strong> 是感知均勻色彩空間，L 為亮度、A/B 為色彩對立軸，常用於抗光照的顏色比對。</td>
+<td>資料庫正規化屬於資料庫領域，與電腦視覺無關。</td>
 </tr>
 <tr>
 <td>14</td>
-<td>C</td>
-<td>L = <strong>Lightness（亮度）</strong>；A 是綠↔紅軸，B 是藍↔黃軸。</td>
+<td>B</td>
+<td>HSV = <strong>Hue（色相）+ Saturation（飽和度）+ Value（明度）</strong>。</td>
 </tr>
 <tr>
 <td>15</td>
-<td>B</td>
-<td>ITU-R BT.601 亮度公式為 <strong><code>Y = 0.299R + 0.587G + 0.114B</code></strong>（綠色權重最高，因眼睛對綠最敏感）。</td>
+<td>C</td>
+<td>為了塞進 8 位元整數，OpenCV 把色相由 0–360 度壓縮為 <strong>0–179</strong>。</td>
 </tr>
 <tr>
 <td>16</td>
-<td>A</td>
-<td><code>cv2.COLOR_BGR2GRAY</code> 才是 BGR→灰階；<code>COLOR_BGR2RGB</code> 是換成 RGB，<code>COLOR_GRAY2BGR</code> 方向相反。</td>
+<td>D</td>
+<td>HSV 把<strong>顏色資訊（H、S）與亮度（V）分開</strong>，因此換光源時顏色判斷仍然穩定。</td>
 </tr>
 <tr>
 <td>17</td>
-<td>D</td>
-<td>OpenCV 給 BGR、Matplotlib 預期 RGB，所以紅藍互換。解法：<code>cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</code> 後再 <code>imshow</code>。</td>
+<td>A</td>
+<td><strong>LAB</strong> 是感知均勻色彩空間：數值差距與人眼感受的差異成正比。</td>
 </tr>
 <tr>
 <td>18</td>
-<td>C</td>
-<td>對 8-bit 輸入，<code>cvtColor</code> 輸出仍是 <strong>uint8</strong>（H 0–179、S/V 0–255）。只有做 float 運算後才會變 float。</td>
+<td>B</td>
+<td>L 代表 <strong>Lightness（亮度）</strong>；A 是綠↔紅軸，B 是藍↔黃軸。</td>
 </tr>
 <tr>
 <td>19</td>
-<td>A</td>
-<td>HSV 是圓環，紅色位於 0° 附近會<strong>跨越 0/179 邊界</strong>，故需兩段 mask 再以 <code>cv2.bitwise_or</code> 合併。</td>
+<td>C</td>
+<td>色相是<strong>環狀</strong>的，紅色位於 0 度附近而跨越邊界，所以要取頭尾兩段再合併。</td>
 </tr>
 <tr>
 <td>20</td>
-<td>B</td>
-<td><strong>直方圖均衡化</strong>（<code>cv2.equalizeHist</code>）把灰階分布拉開以提升對比；resize / flip / putText 都不改變對比。</td>
+<td>D</td>
+<td><strong>HSV</strong> 能把顏色與亮度分離，是膚色與號誌顏色分割最常用的色彩空間。</td>
 </tr>
 <tr>
 <td>21</td>
-<td>C</td>
-<td>前處理的目標是<strong>提升影像品質</strong>（去雜訊、統一尺寸、增強對比），讓後續分析更準確。</td>
+<td>A</td>
+<td>前處理的目標是<strong>提升影像品質</strong>（去雜訊、統一尺寸、增強對比），讓後續分析更可靠。</td>
 </tr>
 <tr>
 <td>22</td>
-<td>A</td>
-<td><code>resize</code> 的 <code>dsize</code> 是 <strong>(寬, 高)</strong>，與 <code>shape</code> 的 (高, 寬) <strong>相反</strong>，是經典陷阱。</td>
+<td>B</td>
+<td>加密與影像分析無關。常見前處理是<strong>調整尺寸、去雜訊、增強對比、二值化</strong>。</td>
 </tr>
 <tr>
 <td>23</td>
 <td>C</td>
-<td>縮小影像建議用 <strong><code>INTER_AREA</code></strong>（區域重取樣，避免摩爾紋）；放大則用 <code>INTER_CUBIC</code> / <code>INTER_LINEAR</code>。</td>
+<td>縮小尺寸可<strong>大幅降低運算量</strong>，並讓不同來源的影像有統一尺寸以便批次處理。</td>
 </tr>
 <tr>
 <td>24</td>
 <td>D</td>
-<td>切片順序是先 Y（列）後 X（行），即 <code>image[startY:endY, startX:endX]</code>。</td>
+<td>ROI = <strong>Region of Interest</strong>，指影像中我們真正關心、要處理的那個區域。</td>
 </tr>
 <tr>
 <td>25</td>
-<td>B</td>
-<td>NumPy 基本切片回傳的是 <strong>view（檢視）</strong>而非複本，改 ROI 會連帶改到原圖；要獨立請加 <code>.copy()</code>。</td>
+<td>A</td>
+<td>矩陣索引是 <strong>[列, 行]</strong>，也就是<strong>先 Y（垂直）後 X（水平）</strong>，這與直覺相反，是經典陷阱。</td>
 </tr>
 <tr>
 <td>26</td>
-<td>A</td>
-<td>第 2 個參數是<strong>閾值</strong>，第 3 個是<strong>超過閾值時要填入的值</strong>（通常為 255）。</td>
+<td>B</td>
+<td>二值化把灰階影像依閾值切成<strong>黑（0）與白（255）兩類</strong>，常用於前景／背景分離。</td>
 </tr>
 <tr>
 <td>27</td>
-<td>D</td>
-<td>使用 <code>cv2.THRESH_OTSU</code> 時，<code>thresh</code> 參數<strong>會被忽略</strong>，慣例填 <strong>0</strong>。</td>
+<td>C</td>
+<td><strong>Otsu</strong> 會分析灰階直方圖，<strong>自動找出</strong>最能分開前景與背景的閾值。</td>
 </tr>
 <tr>
 <td>28</td>
-<td>C</td>
-<td><code>addWeighted</code> 公式為 <code>dst = src1*alpha + src2*beta + gamma</code>，故等於 <code>a*0.6 + b*0.4</code>。</td>
+<td>D</td>
+<td>灰階只保留<strong>亮度（明暗）</strong>，丟棄顏色資訊，所以每個像素只需 1 個數值。</td>
 </tr>
 <tr>
 <td>29</td>
-<td>B</td>
-<td>uint8 上限 255，<code>200 + 100 = 300</code> 會<strong>溢位回繞</strong>成 <code>300 - 256 = 44</code>（NumPy 原生加法的行為）。</td>
+<td>A</td>
+<td>通道數代表<strong>每個像素有幾個數值</strong>：彩色 3 個、含透明 4 個、灰階 1 個。</td>
 </tr>
 <tr>
 <td>30</td>
-<td>A</td>
-<td><strong><code>cv2.add()</code></strong> 做飽和運算，超過 255 就停在 255；NumPy 的 <code>+</code> 則會回繞。</td>
+<td>B</td>
+<td>8 位元整數上限是 255，超過就會<strong>溢位回繞</strong>（例如 200 + 100 變成 44）。</td>
 </tr>
 <tr>
 <td>31</td>
-<td>D</td>
-<td><strong><code>cv2.bitwise_and(img, img, mask=mask)</code></strong> 是最標準的遮罩寫法：遮罩為 0 的區域輸出全黑。</td>
+<td>C</td>
+<td>飽和運算在超過上限時<strong>停在最大值</strong>（例如 255），不會回繞，因此影像不會出現異常色塊。</td>
 </tr>
 <tr>
 <td>32</td>
-<td>C</td>
-<td><code>flipCode = 1</code> 代表<strong>水平翻轉</strong>（左右鏡射，繞 y 軸）。</td>
+<td>D</td>
+<td>遮罩是與影像同大小的<strong>二值圖</strong>，用來指定「哪些區域要處理、哪些要忽略」。</td>
 </tr>
 <tr>
 <td>33</td>
 <td>A</td>
-<td><code>flipCode = 0</code> 代表<strong>垂直翻轉</strong>（上下顛倒，繞 x 軸）；<code>-1</code> 則同時做上下左右。</td>
+<td>翻轉與旋轉是最常見的<strong>資料增強</strong>手段，可提升模型對角度變化的泛化能力。</td>
 </tr>
 <tr>
 <td>34</td>
 <td>B</td>
-<td>顏色參數順序是 <strong><code>(B, G, R)</code></strong>，必須與影像的 BGR 通道一致，否則紅藍對調。</td>
+<td>顏色必須與影像本身的通道順序一致，OpenCV 是 <strong>BGR</strong>，所以紅色要寫成 (0, 0, 255)。</td>
 </tr>
 <tr>
 <td>35</td>
-<td>D</td>
-<td><code>thickness = -1</code> 代表<strong>填滿</strong>（僅對圓、矩形、多邊形等封閉圖形有效）。</td>
+<td>C</td>
+<td>灰階只有 1 個通道，繪圖時<strong>只取顏色的第一個分量</strong>，因此不會出現彩色。</td>
 </tr>
 <tr>
 <td>36</td>
-<td>C</td>
-<td>灰階只有 1 個通道，繪圖時<strong>只取顏色的第一個分量</strong>。<code>(0, 0, 255)</code> 的第一個分量是 0 → 畫出<strong>黑色</strong>框。要白框請填 <code>255</code>。</td>
+<td>D</td>
+<td><strong>-1</strong> 是「填滿」的慣用值；正整數則代表線條粗細。</td>
 </tr>
 <tr>
 <td>37</td>
 <td>A</td>
-<td><code>getRotationMatrix2D</code> 回傳 <strong>2×3</strong> 仿射矩陣，可直接餵給 <code>cv2.warpAffine()</code>。</td>
+<td>仿射變換包含<strong>平移、旋轉、縮放、剪切</strong>，其特性是<strong>平行線經變換後仍然平行</strong>。</td>
 </tr>
 <tr>
 <td>38</td>
 <td>B</td>
-<td>OpenCV 角度以<strong>逆時針為正</strong>（與數學座標系一致），與螢幕 y 軸向下的直覺相反。</td>
+<td>透視變換模擬<strong>三維視角投影</strong>，平行線可能交會於消失點，因此自由度更多。</td>
 </tr>
 <tr>
 <td>39</td>
 <td>C</td>
-<td>仿射變換有 6 個未知數，故需 <strong>3 組</strong>對應點（<code>cv2.getAffineTransform</code>）。</td>
+<td>OpenCV 的角度以<strong>逆時針為正</strong>（與數學座標系一致），和螢幕座標的直覺相反。</td>
 </tr>
 <tr>
 <td>40</td>
 <td>D</td>
-<td>透視變換有 8 個自由度，需 <strong>4 組</strong>對應點，矩陣為 <strong>3×3</strong>（<code>cv2.getPerspectiveTransform</code>）。</td>
+<td>仿射變換有 6 個自由度（需 3 組對應點），透視變換有 <strong>8 個自由度</strong>（需 4 組對應點）。</td>
 </tr>
 <tr>
 <td>41</td>
-<td>C</td>
-<td>kernel 必須是<strong>正奇數</strong>（才有唯一中心點）。<code>(10, 10)</code> 是偶數，不合法。</td>
+<td>A</td>
+<td>濾波（卷積）用一個小窗口掃過影像，達到<strong>去雜訊、平滑或強化特徵</strong>的效果。</td>
 </tr>
 <tr>
 <td>42</td>
-<td>A</td>
-<td><strong><code>cv2.medianBlur</code>（中值濾波）</strong> 取鄰域中位數，能有效移除極端值（椒鹽雜訊）且較不模糊邊緣。</td>
+<td>B</td>
+<td>濾波需要一個<strong>唯一的中心像素</strong>作為輸出位置，只有正奇數大小的 kernel 才會有正中心。</td>
 </tr>
 <tr>
 <td>43</td>
-<td>D</td>
-<td><strong>雙邊濾波</strong>同時考慮空間距離（sigmaSpace）與顏色差異（sigmaColor），顏色差異大就不混合，故能保邊。</td>
+<td>C</td>
+<td>kernel 越大，參與平均的鄰域越廣，<strong>越模糊、細節流失越多</strong>，運算也越慢。</td>
 </tr>
 <tr>
 <td>44</td>
-<td>A</td>
-<td>簽名為 <code>bilateralFilter(src, d, sigmaColor, sigmaSpace)</code>，故 <code>9 = d</code>、<code>75 = sigmaColor</code>、<code>75 = sigmaSpace</code>。</td>
+<td>D</td>
+<td>椒鹽雜訊是極端的黑點與白點，<strong>中值濾波</strong>取中位數可把極端值直接排除。</td>
 </tr>
 <tr>
 <td>45</td>
-<td>B</td>
-<td>侵蝕（erode）讓<strong>白色區域變小</strong>（前景被腐蝕），可移除細小白色雜點。</td>
+<td>A</td>
+<td><strong>雙邊濾波</strong>同時考慮空間距離與顏色差異，顏色差太多就不混合，因此能保住邊緣。</td>
 </tr>
 <tr>
 <td>46</td>
-<td>C</td>
-<td><strong>開運算 = 先侵蝕再膨脹</strong>，用來<strong>移除背景中的小白點</strong>（先抹掉，再把主體還原大小）。</td>
+<td>B</td>
+<td>中位數是排序後的中間值，<strong>離群的極端值不影響結果</strong>，所以椒鹽雜訊會被抹掉。</td>
 </tr>
 <tr>
 <td>47</td>
-<td>D</td>
-<td><strong>閉運算 = 先膨脹再侵蝕</strong>，用來<strong>填補物件內部的小黑洞</strong>（先封洞，再把外輪廓還原）。</td>
+<td>C</td>
+<td>侵蝕會讓<strong>白色（前景）區域變小</strong>，可用來移除細小的白色雜點。</td>
 </tr>
 <tr>
 <td>48</td>
-<td>A</td>
-<td>Canny 只接受<strong>單通道 8-bit</strong> 影像，彩色圖需先 <code>cv2.cvtColor(..., cv2.COLOR_BGR2GRAY)</code>。</td>
+<td>D</td>
+<td>膨脹會讓<strong>白色（前景）區域變大</strong>，可用來填補小洞或連接斷裂的線條。</td>
 </tr>
 <tr>
 <td>49</td>
-<td>C</td>
-<td>Canny 用<strong>雙閾值 + 遲滯（hysteresis）</strong>：高於高閾值者確定為邊緣；介於兩者之間者，只有與確定邊緣相連才保留。</td>
+<td>A</td>
+<td><strong>開運算 = 先侵蝕再膨脹</strong>：先抹掉小白點，再把主體還原成原本大小。</td>
 </tr>
 <tr>
 <td>50</td>
 <td>B</td>
-<td>Sobel 會產生<strong>負值</strong>（梯度方向），用 uint8 會被截斷成 0。用 <strong><code>CV_64F</code></strong> 保留負值，之後再取 <code>np.absolute()</code> 轉回 uint8。</td>
+<td><strong>閉運算 = 先膨脹再侵蝕</strong>：先封住小洞，再把外輪廓還原成原本大小。</td>
 </tr>
 <tr>
 <td>51</td>
-<td>A</td>
-<td>OpenCV <strong>4.x / 5.x</strong> 的 <code>findContours</code> 回傳 <strong>2 個值</strong>（contours, hierarchy）；3.x 舊版才是 3 個值。</td>
+<td>C</td>
+<td>邊緣是<strong>亮度或顏色急遽變化</strong>的位置，通常對應到物體的輪廓或紋理交界。</td>
 </tr>
 <tr>
 <td>52</td>
 <td>D</td>
-<td><strong><code>cv2.RETR_EXTERNAL</code></strong> 只取最外層輪廓；<code>RETR_TREE</code> 建立完整階層，<code>RETR_LIST</code> 取全部但不建階層。</td>
+<td>邊緣偵測的核心是計算<strong>梯度</strong>——也就是亮度變化的速率，變化越大越可能是邊緣。</td>
 </tr>
 <tr>
 <td>53</td>
-<td>B</td>
-<td>ORB = <strong>Oriented FAST + Rotated BRIEF</strong>：FAST 找關鍵點、BRIEF 產生二進位描述子，並加上主方向以獲得旋轉不變性。</td>
+<td>A</td>
+<td>邊緣偵測計算的是亮度梯度，因此輸入必須是<strong>單通道 8 位元灰階影像</strong>。</td>
 </tr>
 <tr>
 <td>54</td>
-<td>C</td>
-<td>ORB 描述子是 <strong>32 bytes = 256 bits</strong>（32×8），遠小於 SIFT 的 128 bytes，因此快又省記憶體。</td>
+<td>B</td>
+<td>這是<strong>遲滯（hysteresis）</strong>策略：高閾值找出確定的邊緣，低閾值再把與之相連的弱邊緣保留下來。</td>
 </tr>
 <tr>
 <td>55</td>
-<td>D</td>
-<td>ORB / BRIEF 是<strong>二進位</strong>描述子，用 <strong>Hamming 距離</strong>（<code>cv2.NORM_HAMMING</code>）；SIFT / SURF 才用 L2。</td>
+<td>C</td>
+<td>特徵點是影像中<strong>具有辨識度、容易重複定位</strong>的點，通常是角點或紋理明顯處。</td>
 </tr>
 <tr>
 <td>56</td>
-<td>C</td>
-<td><strong>ORB</strong> 開源免費（BSD）且速度最快；SIFT / SURF 曾有專利且運算較重。</td>
+<td>D</td>
+<td>描述子把關鍵點周圍的內容轉成<strong>數值向量</strong>，兩張影像的描述子越接近代表越可能是同一點。</td>
 </tr>
 <tr>
 <td>57</td>
 <td>A</td>
-<td><code>crossCheck=True</code> 做<strong>雙向驗證</strong>：只有 A 的最佳匹配是 B、且 B 的最佳匹配也是 A 才保留，可濾掉明顯誤配。</td>
+<td>ORB = <strong>Oriented FAST + Rotated BRIEF</strong>，是免費且快速的組合。</td>
 </tr>
 <tr>
 <td>58</td>
 <td>B</td>
-<td>Lowe's ratio test：<code>knnMatch(k=2)</code> 取最近兩個，若最佳距離 <strong>&lt; 0.75 ×</strong> 次佳距離才視為好匹配。</td>
+<td>ORB 先算出每個關鍵點的<strong>主方向</strong>，再依該方向旋轉取樣點，因此影像旋轉後仍能匹配。</td>
 </tr>
 <tr>
 <td>59</td>
-<td>D</td>
-<td>全景圖 = <strong>特徵匹配 → 用 Homography 對齊兩張圖 → 影像拼接與融合</strong>（OpenCV 另有 <code>cv2.Stitcher</code> 可直接用）。</td>
+<td>C</td>
+<td>二進位描述子比對的是<strong>位元差異數</strong>，因此使用 <strong>Hamming 距離</strong>；L2 適用於 SIFT 這類浮點描述子。</td>
 </tr>
 <tr>
 <td>60</td>
-<td>C</td>
-<td>RANSAC 的作用是<strong>剔除錯誤匹配（outliers）</strong>、找出最多 inliers 的模型，<strong>不是</strong>加快特徵偵測。故 C 敘述錯誤。</td>
+<td>D</td>
+<td>RANSAC 會<strong>隨機抽樣並反覆驗證</strong>，找出獲得最多 inliers 的模型，用來剔除錯誤匹配。</td>
 </tr>
 </tbody>
 </table>
@@ -5766,15 +5587,19 @@ D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型</p>
 <td><a href="#1-what-is-opencv">第 1 節 What is OpenCV?</a>、<a href="#2-opencv-applications">第 2 節 Applications</a></td>
 </tr>
 <tr>
-<td>6, 11–20</td>
+<td>6–11</td>
+<td><a href="#3-color-spaces">第 3 節 Color Spaces</a></td>
+</tr>
+<tr>
+<td>12–20</td>
 <td><a href="#3-color-spaces">第 3 節 Color Spaces</a>、<a href="#4-color-space-conversion">第 4 節 Color Space Conversion</a></td>
 </tr>
 <tr>
-<td>21–27</td>
+<td>21–28</td>
 <td><a href="#5-image-pre-processing">第 5 節 Image Pre-processing</a></td>
 </tr>
 <tr>
-<td>28–33</td>
+<td>29–33</td>
 <td><a href="#6-matrix-operations">第 6 節 Matrix Operations</a></td>
 </tr>
 <tr>
@@ -5786,29 +5611,25 @@ D. RANSAC 用於剔除 outliers，找出最多 inliers 的模型</p>
 <td><a href="#8-transformations">第 8 節 Transformations</a></td>
 </tr>
 <tr>
-<td>41–47</td>
+<td>41–50</td>
 <td><a href="#9-filtering-techniques">第 9 節 Filtering Techniques</a></td>
 </tr>
 <tr>
-<td>48–52</td>
+<td>51–54</td>
 <td><a href="#10-edge-detection">第 10 節 Edge Detection</a></td>
 </tr>
 <tr>
-<td>53–56</td>
-<td><a href="#11-feature-extraction">第 11 節 Feature Extraction</a></td>
+<td>55–59</td>
+<td><a href="#11-feature-extraction">第 11 節 Feature Extraction</a>、<a href="#12-feature-matching">第 12 節 Feature Matching</a></td>
 </tr>
 <tr>
-<td>57–60</td>
-<td><a href="#12-feature-matching">第 12 節 Feature Matching</a></td>
-</tr>
-<tr>
-<td>9, 10, 59</td>
-<td><a href="#13-real-world-projects">第 13 節 Real-World Projects</a></td>
+<td>60</td>
+<td><a href="#12-feature-matching">第 12 節 Feature Matching</a>、<a href="#13-real-world-projects">第 13 節 Real-World Projects</a></td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p><strong>最後提醒</strong>：這 60 題是依照 PDF 第 3–29 頁的出題重心設計的。若考試改為<strong>程式填空題</strong>，請另外做 <a href="#附錄-c模擬試題連答案">附錄 C</a> 的 C.4 程式題，並用 <a href="#附錄-f一頁精華考前-10-分鐘">附錄 F 一頁精華</a> 做最後掃描。</p>
+<p><strong>提醒</strong>：本卷只考<strong>基本理論與概念</strong>，不含任何程式碼。若考試出現程式填空題，請另外做 <a href="#附錄-c模擬試題連答案">附錄 C</a> 的 C.4 程式題，並用 <a href="#附錄-f一頁精華考前-10-分鐘">附錄 F 一頁精華</a> 做最後掃描。</p>
 </blockquote>
 <hr />
 <p><em>本學習筆記依據 <code>3 IVDC OpenCV.pdf</code>（29 頁）編寫，涵蓋原稿全部標題與程式範例，並補充 API 參數、常見錯誤與模擬試題。</em>
