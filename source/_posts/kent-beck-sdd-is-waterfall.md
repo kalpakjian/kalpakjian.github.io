@@ -13,8 +13,8 @@ tags:
   - 軟體工藝
   - 度量
 toc: true
-index_img: https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200
-banner_img: https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600
+index_img: /img/covers/kent-beck-sdd-is-waterfall.png
+banner_img: /img/covers/kent-beck-sdd-is-waterfall.png
 ---
 
 > <strong>整理說明</strong>：本文將敏捷三叔公（David Ko）整理的 [Kent Beck 演講筆記](https://agile3uncles.com/2026/10/06/sdd-is-waterfall-kent-becks-9-hard-truths/) 重新排版成更有結構性的版本。原始演講為 Kent Beck《Software Engineering in the Age of AI》（Prodacity 2026），[演講影片](https://www.youtube.com/watch?v=F8fBgDCf2Y4)。內容版權屬原作者所有，此為學習整理用途。

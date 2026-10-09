@@ -16,8 +16,8 @@ tags:
   - 論文導讀
   - 架構
 toc: true
-index_img: https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200
-banner_img: https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1600
+index_img: /img/covers/harness-engineering-eleven-coding-agents.png
+banner_img: /img/covers/harness-engineering-eleven-coding-agents.png
 ---
 
 > <strong>整理說明</strong>：本篇整理自 [工程師米奇](https://www.facebook.com/share/p/19Qk38HJkr/) 分享的論文導讀，並對照原始論文補充細節。論文為 Paul Barbaste、Tristan Darrigol、Germain Vu、Tom Wiltberger（Wavestone AI Lab）《Harness Engineering: Anatomy, Architecture, and Evolution of Coding Agents — A Source-Code Study of Eleven Systems》，arXiv:2609.00006，2026 年 7 月 15 日提交，正文 83 頁，以 CC BY 4.0 發布。內容版權屬原作者所有，此為學習整理用途。

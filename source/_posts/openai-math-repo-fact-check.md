@@ -13,8 +13,8 @@ tags:
   - 事實查核
 math: true
 toc: true
-index_img: https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200
-banner_img: https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1600
+index_img: /img/covers/openai-math-repo-fact-check.png
+banner_img: /img/covers/openai-math-repo-fact-check.png
 ---
 
 > <strong>整理說明</strong>：本文分兩部分。前半是對「OpenAI 一口氣發表數百篇數學論文、AGI 已至」這個流傳版本的修正；後半是我逐項對照 <a href="https://github.com/openai/math">openai/math</a> 一手來源（README、<code>overview.tex</code>、<code>history.md</code>、<code>lean/docs/</code>、<code>lean/ComparatorChallenges/</code>）所做的查核紀錄，附上可重現的指令與 commit hash。

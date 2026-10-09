@@ -1,4 +1,4 @@
-﻿---
+---
 title: Hello World - 我的 AI 技術筆記
 date: 2026-09-27 10:00:00
 categories:
@@ -8,8 +8,8 @@ tags:
   - LLM
   - Hexo
   - 開發筆記
-index_img: https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200
-banner_img: https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600
+index_img: /img/covers/hello-world-ai-notes.png
+banner_img: /img/covers/hello-world-ai-notes.png
 ---
 
 歡迎來到我的全新技術部落格 **AI Tech Notes**！
