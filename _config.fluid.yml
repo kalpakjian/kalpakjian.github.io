@@ -33,6 +33,10 @@ post:
       lib: 'highlightjs'
       highlightjs:
         style: 'atom-one-dark'
+  math:
+    enable: true
+    specific: true
+    engine: mathjax
 
 custom_css:
   - /css/custom.css
