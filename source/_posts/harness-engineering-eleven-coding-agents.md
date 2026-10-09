@@ -58,7 +58,7 @@ banner_img: https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1600
 
 「harness engineering」這個說法在 **2026 年初**才被命名為一門學科，論文的目標就是給這門年輕學科一份有原始碼依據的參考。
 
-值得注意的是定義裡**沒有「框架」**這個詞。論文的 2.2 節「What a Harness Is Not」刻意把第三方編排函式庫排除在外——這也預告了後面的第一個「缺席」。
+值得注意的是定義裡<strong>沒有「框架」</strong>這個詞。論文的 2.2 節「What a Harness Is Not」刻意把第三方編排函式庫排除在外——這也預告了後面的第一個「缺席」。
 
 ### 七個標準子系統
 
