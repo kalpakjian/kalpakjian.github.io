@@ -510,7 +510,7 @@ Pi 最大的特色是<strong>「agent 可以擴展 agent 本身」</strong>。�
 
 ## 十、一手實測：把 Pi 接上本地模型
 
-前面兩節都是文獻整理。這一節是實測：把 Pi 接上本機 Ollama，用**同一份 harness、同一個任務、兩個不同大小的模型**，看差異有多大。
+前面兩節都是文獻整理。這一節是實測：把 Pi 接上本機 Ollama，用**同一份 harness、同一個任務**，跑三個不同大小的模型、三種 thinking 等級，以及一組「削減 prompt」的對照。八次執行全部收錄於下。
 
 ### 測試環境
 
@@ -520,7 +520,9 @@ Pi 最大的特色是<strong>「agent 可以擴展 agent 本身」</strong>。�
 | 推論 | Ollama（OpenAI 相容端點 `127.0.0.1:11434/v1`） |
 | GPU | NVIDIA RTX 4090 24 GB |
 | 模型 A | `qwen3.8-27b-uncensored-32k`（27.3B, Q5_K_M, 32K context） |
-| 模型 B | `qwen3-8b-heretic-32k`（8.2B, Q4_K_M, 32K context） |
+| 模型 B | `gemma4-12b-32k`（11.9B, Q4_K_M, 32K context） |
+| 模型 C | `qwen3-8b-heretic-32k`（8.2B, Q4_K_M, 32K context） |
+| 對照組 | `qwen3.8-27b-uncensored-8k`（同一個 27B，但只有 8K context）+ `--no-skills` |
 | 任務 | 修好 `calc.py` 的 off-by-one bug，讓 4 個 pytest 測試全綠 |
 
 專案刻意很小，並在 `AGENTS.md` 寫死規則：「每次修改 `calc.py` 後必須執行 `python -m pytest -q`」「只修改 `calc.py`，不要改動測試檔」。基準線是 `2 failed, 2 passed`。
@@ -588,26 +590,77 @@ FROM qwen3.8-27b-uncensored:latest
 PARAMETER num_ctx 32768
 ```
 
-### 實測四：同一個 harness，兩個模型
+### 實測四：同一個 harness，三個模型
 
-| | 模型 A（27B） | 模型 B（8B） |
+| | 27B | 12B | 8B |
+| --- | --- | --- | --- |
+| 結果 | ✅ 4 passed | ✅ 4 passed | ✅ 4 passed |
+| 工具序列 | `read → read → bash → edit → bash` | `bash → read → edit → bash` | `bash → edit → read → edit → bash` |
+| 工具呼叫數 | 5 | **4** | 5 |
+| 第一個動作 | **先讀檔調查** | 先跑指令 | 先跑指令 |
+| 修正次數 | 1 次到位 | 1 次到位 | **2 次（多繞一圈）** |
+| 輸出 tokens 合計 | **438** | 544 | **5,378（12.3 倍）** |
+| 單回合最大輸出 | 143 | 299 | 2,562 |
+| 上下文峰值 | 9,213 | 9,392 | 10,909 |
+| 牆鐘時間 | **7.9 s** | 30.1 s | 65.6 s |
+
+三個模型都解掉了任務，但軌跡與成本差距很大：
+
+- **27B**：先讀 `calc.py` 與 `test_calc.py` 建立理解，再跑測試確認症狀，然後一次精準修好。輸出最省（438 tokens）。
+- **12B**：先跑測試拿到紅字，再回頭讀檔、一次改對。工具呼叫最少（4 次），但單回合輸出比 27B 大。
+- **8B**：先跑測試，改一次、回頭讀檔、又改一次——**多繞了一圈**，而且單回合吐出 2,562 tokens（是 27B 最大回合的 18 倍），總輸出是 27B 的 **12.3 倍**。
+
+<div class="callout">
+  <div class="callout-title">這正是第八節那句話的實測版本</div>
+  <p><strong>harness 完整不保證等於強 agent。</strong>harness 一樣、規則一樣、任務一樣、<code>AGENTS.md</code> 一樣，差別只在那顆模型——而差距具體表現在三件事上：<strong>先調查還是先動手、一次改對還是來回兩次、輸出 438 還是 5,378 tokens</strong>。</p>
+</div>
+
+### 實測五：thinking 等級的影響
+
+固定 27B + 32K，只改 `--thinking`：
+
+| thinking | 工具序列 | 工具呼叫數 | 輸出 tokens | 牆鐘時間 |
+| --- | --- | --- | --- | --- |
+| `off` | `read → read → bash → edit → read → bash` | 6 | 605 | 10.1 s |
+| `medium` | `bash → read → read → edit → read → bash` | 6 | 512 | 8.2 s |
+| `high` | `bash → read → edit → bash` | **4** | **490** | 8.2 s |
+
+趨勢是：**thinking 越高，工具呼叫越少、輸出越省、軌跡越直接**。`high` 只用了 4 次工具呼叫就完成，而 `off` 來回 6 次。
+
+但要誠實說：**每一格只有一組樣本，雜訊不小。** 同一個 thinking 等級重跑，軌跡就會變——例如 `medium` 第一次是 `read → read → bash → edit → bash`，第二次變成 `bash → read → read → edit → read → bash`。所以這張表該讀成「趨勢」，不是「定論」。
+
+<div class="callout">
+  <div class="callout-title">比 thinking 更大的變數：prompt cache</div>
+  <p>同一組設定（27B / 32K / thinking=off）跑兩次：<strong>冷快取 29.5 秒，暖快取 10.1 秒</strong>——差 3 倍，而且與模型、thinking 都無關。</p>
+  <p>也就是說，當你在本地量測 agent 的效能時，<strong>第一個該控制的變數是快取狀態，不是模型參數</strong>。這也是為什麼後面那張總表的「牆鐘時間」欄要配著看。</p>
+</div>
+
+### 實測六：把 prompt 削掉，8K 模型就活了
+
+回到實測三那個撞牆的 8K 模型。既然問題出在 prompt 有 8,313 tokens，那就把 prompt 削掉——加上 `--no-skills`：
+
+| | 8K + skills | 8K + `--no-skills` |
 | --- | --- | --- |
-| 結果 | ✅ 4 passed | ✅ 4 passed |
-| 牆鐘時間 | **7.9 s** | 65.6 s |
-| 工具序列 | `read → read → bash → edit → bash` | `bash → edit → read → edit → bash` |
-| 第一個動作 | **先讀檔調查** | **先跑指令動手** |
-| 修正次數 | 1 次到位 | 2 次（多繞一圈） |
-| 輸出 tokens 合計 | **438** | 5,378（**12.3 倍**） |
-| 單回合最大輸出 | 143 | 2,562 |
-| 上下文峰值 | 9,213 | 10,909 |
+| system prompt | ~7,426（Ollama 實測 8,313） | **~886** |
+| 首回合 input | **被 400 拒絕** | **1,852** |
+| 上下文峰值 | — | **2,762** |
+| 工具序列 | — | `bash → read → read → edit → bash` |
+| 輸出 tokens | — | 451 |
+| 結果 | ❌ 空輸出 + exit 0 | ✅ 4 passed |
 
-兩個模型都解掉了任務。但軌跡完全不同：27B 先讀 `calc.py` 與 `test_calc.py`，再跑測試確認症狀，然後**一次精準修好**；8B 一開始就跑 `pytest`，改一次、回頭讀檔、又改一次，而且單回合吐出 2,562 tokens 的輸出（是 27B 最大回合的 18 倍）。
+**同一個模型、同一份 harness、同一個任務**，只差一個 `--no-skills`，就從「完全不動」變成「順利完成」。
 
-**這就是第八節那句「harness 完整不保證等於強 agent」的實測版本。** harness 一樣、規則一樣、任務一樣，差別只在那顆模型。
+而且注意它的輸出 tokens 是 **451**——和 27B + 32K 的 438 幾乎一樣。上下文峰值 2,762 更只有原本的 **3.3 分之一**。
 
-### 實測五：三個意外驗證
+<div class="callout">
+  <div class="callout-title">這是第四節那三個鐵則的極端版</div>
+  <p>第四節說 context 管理是真正的難點，三個鐵則是「截斷輸出、grep 定位、摘要舊輪次」。這個實驗把同一件事推到極致：<strong>當 harness 的固定開銷就吃掉整個視窗時，你連第一句話都說不出口。</strong></p>
+  <p>而且解法不一定要換更大的模型——<strong>先問「這些 token 是誰塞進來的」，通常比換模型便宜得多。</strong></p>
+</div>
 
-**1. 專案規則真的生效。** 跑完後 `git diff` 顯示**只有 `calc.py` 被改**，`test_calc.py` 完全沒被動——`AGENTS.md` 寫的「只修改 calc.py」被遵守了。第五節講的護欄不一定要寫在程式碼裡，寫在專案規則檔也有效。
+### 實測七：三個意外驗證
+
+**1. 專案規則真的生效——而且 11 次全中。** 掃過所有執行的原始事件串流：**沒有任何一次**的 `edit`／`write` 動到 `test_calc.py`，`git diff` 也顯示只有 `calc.py` 被改。三個模型家族、五種設定、11 次執行，`AGENTS.md` 寫的「只修改 calc.py」**100% 被遵守**。第五節講的護欄不一定要寫在程式碼裡，寫在專案規則檔也有效。
 
 **2. `edit` 的唯一匹配設計是對的。** 27B 送出的參數：
 
@@ -619,12 +672,27 @@ edit {"path": "calc.py", "edits": [{
 
 `oldText` 精準涵蓋 bug 行加上方的註解行，一次命中、零歧義。這正是第三節描述的「Claude Code 風格精準 patch」——**不是把整檔重寫，而是用最小且唯一的片段定位**。
 
-**3. Prompt caching 讓 agent 迴圈變便宜。** 五個回合累計 `cacheRead` 43,165 tokens，但真正新增的 input 只有 809 tokens。每一回合只重新計算約 100–280 個新 token，這是 7.9 秒跑完的主因。
+**3. Prompt caching 讓 agent 迴圈變便宜。** 27B 那次五個回合累計 `cacheRead` 43,165 tokens，但真正新增的 input 只有 809 tokens。每一回合只重新計算約 100–280 個新 token，這是 7.9 秒跑完的主因。
 
 <div class="callout">
   <div class="callout-title">對本地推論的意義</div>
   <p>agent 迴圈的成本瓶頸不是「context 有多大」，而是「<strong>每回合新增多少</strong>」。這也是為什麼第四節那三個鐵則（截斷輸出、grep 定位、摘要舊輪次）值得認真做——它們削的正是每回合的新增量。</p>
 </div>
+
+### 全部八次執行
+
+| 實驗 | 模型 | thinking | skills | 首回合 input | 上下文峰值 | 工具數 | 輸出 tokens | 牆鐘 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `fix` | 27B | medium | on | 42（快取 8,300） | 9,213 | 5 | **438** | **7.9 s** |
+| `fix_gemma` | 12B | medium | on | 8,347 | 9,392 | **4** | 544 | 30.1 s |
+| `fix8b` | 8B | medium | on | 8,091 | 10,909 | 5 | 5,378 | 65.6 s |
+| `think_off` | 27B | off | on | 8,342（冷） | 9,257 | 5 | 545 | 29.5 s |
+| `think_off2` | 27B | off | on | 4（快取 8,338） | 9,419 | 6 | 605 | 10.1 s |
+| `think_med2` | 27B | medium | on | 4（快取 8,338） | 9,409 | 6 | 512 | 8.2 s |
+| `think_high` | 27B | high | on | 4（快取 8,338） | 9,429 | **4** | **490** | 8.2 s |
+| `fix8k_noskills` | 27B-8k | medium | **off** | **1,852** | **2,762** | 5 | 451 | 21.1 s |
+
+**八次全部 `4 passed`。** 注意最後一列：它是唯一一列「首回合 input 遠小於其他」的執行，而這正是它能在 8K 視窗裡活下來的原因。
 
 ### Pi 的事件格式：自建 harness 的參考
 
@@ -644,10 +712,12 @@ session → agent_start → turn_start
 | 本文說法 | 實測結果 |
 | --- | --- |
 | Pi 約四個原子工具 | ✅ 完全正確 |
-| Pi 的 system prompt 極小 | ⚠️ 核心對（487 tokens），但周邊索引讓它變 8,313 tokens |
+| Pi 的 system prompt 極小 | ⚠️ 核心對（487 tokens），但 skills 索引讓它變 8,313 tokens |
 | Pi 適合研究 harness | ✅ 事件格式、session 匯出、`--mode json` 都可直接讀 |
-| 模型是可替換零件，智能上限由模型決定 | ✅ 同 harness 同任務，輸出差 12.3 倍、時間差 8.3 倍 |
+| 模型是可替換零件，智能上限由模型決定 | ✅ 同 harness 同任務，8B 的輸出是 27B 的 **12.3 倍** |
 | 護欄要自己配 | ✅ 8K 設定直接撞牆——「設定」本身就是護欄 |
+| 專案規則檔可以當護欄用 | ✅ 11 次執行、3 個模型家族，**100% 遵守** |
+| Context 管理是真正的難點 | ✅ 削掉 skills 後，8K 模型從「完全不動」變「順利完成」 |
 
 **一句話**：Pi 給了你一個小到能讀完的核心，但沒有給你小到能忽略的環境。**能不能跑起來，取決於你有沒有先量過自己的 context 預算。**
 
@@ -772,7 +842,7 @@ while not spec_satisfied():
 
 **第十節實測**
 
-- 第十節所有數字均為本機實測（Pi 1.1.0 + Ollama + RTX 4090 24 GB）。量測用的 harness 腳本、Pi 的原始 JSON 事件串流、兩個模型的完整 session 匯出檔，都保存在 `pi-lab` 實驗目錄；`Modelfile` 與重現指令已列於該節內文。
+- 第十節所有數字均為本機實測（Pi 1.1.0 + Ollama + RTX 4090 24 GB）。量測用的 harness 腳本、Pi 的原始 JSON 事件串流、三個模型的完整 session 匯出檔，都保存在 `pi-lab` 實驗目錄；`Modelfile` 與重現指令已列於該節內文。八次執行、11 份事件串流全數保留，可逐筆複查。
 - Pi 的 `--mode json` 事件格式、`--export` 與內建工具清單以官方文件與 `pi --help` 為準：<https://pi.dev/>
 
 > 本文為學習整理用途，程式碼骨架為原創示例，可直接取用修改。內容觀點部分來自上述來源，版權屬原作者所有。
