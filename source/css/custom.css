@@ -23,3 +23,102 @@ body {
   padding: 12px 18px;
   border-radius: 0 8px 8px 0;
 }
+
+/* ===== 文章元件：模組流水線示意圖（.pipeline） ===== */
+.markdown-body .pipeline {
+  margin: 24px 0;
+  padding: 18px 16px 20px;
+  border: 1px solid rgba(128, 128, 128, 0.28);
+  border-radius: 12px;
+  background: rgba(128, 128, 128, 0.06);
+}
+
+.markdown-body .pipeline-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 14px;
+  color: var(--custom-accent);
+}
+
+.markdown-body .pipeline-track {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.markdown-body .pipeline-node {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 132px;
+  padding: 12px 14px;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-left: 4px solid var(--custom-accent);
+  border-radius: 10px;
+  background: rgba(128, 128, 128, 0.1);
+  text-align: left;
+}
+
+.markdown-body .pipeline-node .node-name {
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.markdown-body .pipeline-node .node-desc {
+  font-size: 0.8rem;
+  opacity: 0.75;
+  line-height: 1.35;
+}
+
+.markdown-body .pipeline-arrow {
+  color: var(--custom-accent);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* ===== 文章元件：重點提示框（.callout） ===== */
+.markdown-body .callout {
+  margin: 20px 0;
+  padding: 14px 18px;
+  border: 1px solid rgba(128, 128, 128, 0.25);
+  border-left: 4px solid var(--custom-accent);
+  border-radius: 0 10px 10px 0;
+  background: rgba(192, 57, 43, 0.05);
+}
+
+.markdown-body .callout .callout-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--custom-accent);
+}
+
+.markdown-body .callout p:last-child {
+  margin-bottom: 0;
+}
+
+/* 任務清單（checkbox）不顯示項目符號，並對齊文字 */
+.markdown-body li:has(> input[type="checkbox"]) {
+  list-style: none;
+  margin-left: -18px;
+}
+
+.markdown-body li > input[type="checkbox"] {
+  margin-right: 6px;
+  vertical-align: middle;
+  accent-color: var(--custom-accent);
+}
+
+@media (max-width: 640px) {
+  .markdown-body .pipeline-arrow {
+    display: none;
+  }
+
+  .markdown-body .pipeline-node {
+    width: 100%;
+  }
+}
+
