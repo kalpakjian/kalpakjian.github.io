@@ -88,10 +88,9 @@ ignore:
 theme: fluid
 
 # Deployment
-deploy:
-  type: git
-  repo: https://github.com/kalpakjian/kalpakjian.github.io.git
-  branch: gh-pages
+# 發佈方式：push 到 main → GitHub Actions（.github/workflows/pages.yml）
+# 自動執行 hexo clean && hexo generate 並部署到 GitHub Pages。
+# 本專案「不使用」hexo deploy（遠端沒有 gh-pages 分支），故不需要 deploy 區段。
 
 # Search Generator
 search:
