@@ -21,6 +21,7 @@ tags:
   - Ollama
   - TypeScript
   - 擴展性
+  - 實測
   - 開源工具
   - Python
 toc: true
@@ -28,7 +29,7 @@ index_img: /img/covers/building-a-coding-agent.png
 banner_img: /img/covers/building-a-coding-agent.png
 ---
 
-> <strong>整理說明</strong>：本文的起點是 Geoffrey Huntley〈Replaced〉一文引發的爭論——「2026 年的資深工程師應該能重建 Claude Code 這類最基本的 agent」——以及 Shopify CEO Tobi Lütke 把 AI 使用納入績效與資源分配考量的內部備忘錄。前半先把那句話「合理」與「過頭」的部分分開；後半把它落地成一份可以照著做的實作指南：六個零件、一個迴圈，以及一支約 90 行、真的能跑起來的 Python 骨架。文章後段再把兩個開源 harness 當對照組：<a href="https://cline.bot/cli">Cline CLI</a>（把六個零件做滿的一端）與 <a href="https://github.com/earendil-works/pi">Pi</a>（把核心拆到最小的另一端），看同一組零件在不同設計哲學下長成什麼樣子。相關論點與連結見文末「參考來源」。
+> <strong>整理說明</strong>：本文的起點是 Geoffrey Huntley〈Replaced〉一文引發的爭論——「2026 年的資深工程師應該能重建 Claude Code 這類最基本的 agent」——以及 Shopify CEO Tobi Lütke 把 AI 使用納入績效與資源分配考量的內部備忘錄。前半先把那句話「合理」與「過頭」的部分分開；後半把它落地成一份可以照著做的實作指南：六個零件、一個迴圈，以及一支約 90 行、真的能跑起來的 Python 骨架。文章後段再把兩個開源 harness 當對照組：<a href="https://cline.bot/cli">Cline CLI</a>（把六個零件做滿的一端）與 <a href="https://github.com/earendil-works/pi">Pi</a>（把核心拆到最小的另一端），看同一組零件在不同設計哲學下長成什麼樣子；最後一節則把 Pi 接上本機 Ollama 實測，用同一份 harness 跑兩個不同大小的模型。相關論點與連結見文末「參考來源」。
 
 <!-- more -->
 
@@ -38,7 +39,7 @@ banner_img: /img/covers/building-a-coding-agent.png
 
 換個說法：<strong>agent = 模型 + harness</strong>。模型提供智能，harness（外殼）負責把智能變成真實世界裡的工作。這篇文章講的是 harness。
 
-但反過來也要說清楚：<strong>harness 完整，並不保證等於強 agent</strong>。像 Cline CLI 這樣功能齊全的開源 harness，能給你 agent 的骨架、工具、審批與自動化，卻不能給你判斷力——它的智能上限，等於<strong>你接的模型</strong>加上<strong>你設計的驗證迴路</strong>。這是第八、九節要展開的對照。
+但反過來也要說清楚：<strong>harness 完整，並不保證等於強 agent</strong>。像 Cline CLI 這樣功能齊全的開源 harness，能給你 agent 的骨架、工具、審批與自動化，卻不能給你判斷力——它的智能上限，等於<strong>你接的模型</strong>加上<strong>你設計的驗證迴路</strong>。這是第八到第十節要展開的對照。
 
 ---
 
@@ -75,7 +76,7 @@ Tobi Lütke 的立場則更接近管理層面的要求：AI 不再只是個人�
 
 不管是一百行的研究原型，還是百萬行的產品，拆開來都是同樣六個零件。前五個是**內層 agent**（Claude Code 本體），第六個加上「規格檔 + 每輪單一任務」就是**外層 Ralph 迴圈**。
 
-這不是紙上分類。市面上已經有把六個零件全部做出來的成品——例如 <a href="https://cline.bot/cli">Cline CLI</a>；也有反過來只保留最小核心的 <a href="https://github.com/earendil-works/pi">Pi</a>。第八、九節會拿這兩個開源 harness 逐一對照，看同一組零件在兩種相反的設計哲學下長成什麼樣子。
+這不是紙上分類。市面上已經有把六個零件全部做出來的成品——例如 <a href="https://cline.bot/cli">Cline CLI</a>；也有反過來只保留最小核心的 <a href="https://github.com/earendil-works/pi">Pi</a>。第八到第十節會拿這兩個開源 harness 逐一對照，並實際把其中一個接上本地模型跑一次，看同一組零件在兩種相反的設計哲學下長成什麼樣子。
 
 | # | 零件 | 作用 | 對應文章中的說法 |
 | --- | --- | --- | --- |
@@ -425,7 +426,7 @@ Cline CLI 的 agent 能力要分兩層看：
 | 基本 coding agent | 高 | 內建 `read`、`write`、`edit`、`bash` 等原子工具，可讀專案、改檔、跑指令 |
 | 模型自由度 | 很高 | 支援 Anthropic、OpenAI、Google、Ollama、OpenRouter 等多 provider，並可在會話中切換模型 |
 | 可嵌入性 | 很高 | 有 TypeScript SDK、print／JSON mode、RPC mode，適合放進 CLI、CI 或自己的產品 |
-| 可觀察性 | 很高 | 系統 prompt 極小、架構模組化，容易研究 context、工具呼叫與 session 狀態 |
+| 可觀察性 | 很高 | 系統 prompt 核心極小、架構模組化，容易研究 context、工具呼叫與 session 狀態 |
 | 自我擴展 | 很高 | agent 可閱讀本機文件與範例，撰寫並載入 TypeScript extension，修改工具、UI、provider、context 與壓縮行為 |
 | 開箱即用 | 中等 | 預設工具少、部分進階功能需自行配置；適合願意動手的人 |
 | 安全治理 | 中等偏低 | 權限與沙箱邊界較依賴使用者配置；直接跑 bash 時尤其要小心 |
@@ -448,10 +449,12 @@ Cline CLI 的 agent 能力要分兩層看：
 | 預設工具 | 約四個原子工具 | 較完整：檔案、shell、MCP、Plan／Act | 內建工具、sub-agents、teams、plan mode 等 |
 | 模型選擇 | 20+ provider、300+ 模型，可中途切換 | 多 provider 與本地模型 | 主要為 Claude 模型最佳化 |
 | 擴展深度 | TypeScript extension 可改 agent 行為與 runtime 事件 | MCP、SDK、hooks、tool policies | plugins、hooks、skills、MCP |
-| Token 效率 | 很高；system prompt 極小，context 工程空間大 | 中等 | 較重，但功能與引導較完整 |
+| Token 效率 | 核心 prompt 極小，但周邊索引會膨脹（見第十節實測） | 中等 | 較重，但功能與引導較完整 |
 | 適合誰 | 想研究 harness、自建工作流、控制 token 成本的人 | 想要開源但接近成品體驗的人 | 想要最少設定、追求單一廠商最佳體驗的人 |
 
-注意 **Token 效率**那一列。Pi 的系統 prompt 極小，代表它把大部分的 context 預算留給你——這在接本地小模型時是決定性的優勢，因為小模型的 context window 本來就窄。相對地，Claude Code 的「較重」換來的是更完整的引導與更少的設定負擔。
+注意 **Token 效率**那一列。Pi 把大部分的 context 預算留給你——這在接本地小模型時是關鍵，因為小模型的 context window 本來就窄。相對地，Claude Code 的「較重」換來的是更完整的引導與更少的設定負擔。
+
+不過「Pi 的 system prompt 極小」這個常見說法，在第十節的實測裡被證明**只對了一半**：核心確實極小，但自動載入的周邊索引可以把總量放大一個量級。先看下去。
 
 ### 最特別的地方：agent 可以擴展 agent 本身
 
@@ -505,7 +508,152 @@ Pi 最大的特色是<strong>「agent 可以擴展 agent 本身」</strong>。�
 
 ---
 
-## 十、漸進式里程碑：不要一次做完
+## 十、一手實測：把 Pi 接上本地模型
+
+前面兩節都是文獻整理。這一節是實測：把 Pi 接上本機 Ollama，用**同一份 harness、同一個任務、兩個不同大小的模型**，看差異有多大。
+
+### 測試環境
+
+| 項目 | 規格 |
+| --- | --- |
+| Pi | `@earendil-works/pi-coding-agent` 0.99.1 → **1.1.0** |
+| 推論 | Ollama（OpenAI 相容端點 `127.0.0.1:11434/v1`） |
+| GPU | NVIDIA RTX 4090 24 GB |
+| 模型 A | `qwen3.8-27b-uncensored-32k`（27.3B, Q5_K_M, 32K context） |
+| 模型 B | `qwen3-8b-heretic-32k`（8.2B, Q4_K_M, 32K context） |
+| 任務 | 修好 `calc.py` 的 off-by-one bug，讓 4 個 pytest 測試全綠 |
+
+專案刻意很小，並在 `AGENTS.md` 寫死規則：「每次修改 `calc.py` 後必須執行 `python -m pytest -q`」「只修改 `calc.py`，不要改動測試檔」。基準線是 `2 failed, 2 passed`。
+
+### 實測一：預設工具真的是四個
+
+從 Pi 實際送出的 system prompt 直接讀出來：
+
+```
+<tools>
+- read: Read file contents
+- bash: Execute bash commands (ls, grep, find, etc.)
+- edit: Make precise file edits with exact text replacement, including multiple disjoint edits in one call
+- write: Create or overwrite files
+</tools>
+```
+
+`--help` 另外列出了 `powershell`、`grep`、`find`、`ls`，但都標示 **off by default**。所以第九節那句「約四個原子工具」是準確的——**而且這四個正好就是第七節那份骨架的四個工具**。
+
+### 實測二：「system prompt 極小」只對一半
+
+把 Pi 的 system prompt 依區段拆開量測：
+
+| 區段 | 字元 | ~tokens | 佔比 |
+| --- | --- | --- | --- |
+| preamble | 169 | 42 | 0.6% |
+| tools | 339 | 84 | 1.1% |
+| rules | 839 | 209 | 2.8% |
+| docs | 1,379 | 344 | 4.6% |
+| project_context（AGENTS.md ×2） | 492 | 196 | 2.6% |
+| **skills** | **25,276** | **6,540** | **88.6%** |
+| cwd | 34 | 8 | 0.1% |
+
+- **核心**（preamble + tools + rules + docs + cwd）= 2,760 字元 ≈ **487 tokens**。「極小」對核心而言完全成立。
+- 但 **`skills` 索引獨佔 88.6%**。它來自 `~/.agents/skills/` 底下約 30 個 Azure／AI skill，Pi 會把每個的 name + description + location 全部注入。
+
+<div class="callout">
+  <div class="callout-title">「小」最容易被誤解的地方</div>
+  <p>Pi 的核心確實極小，但 harness 的實際 prompt 成本 = <strong>核心 + 你機器上所有被自動發現的東西</strong>。同一個 Pi，在不同人的機器上，prompt 可能差一個量級。<strong>context 預算是「你環境的函數」，不是「產品的常數」。</strong></p>
+</div>
+
+### 實測三：差 121 tokens 的沉默失敗
+
+Pi 預設接的是 8K context 的模型。實際送出的 prompt 是 **8,313 tokens**——比 8,192 多 121：
+
+```
+400 exceed_context_size_error
+n_prompt_tokens: 8313, n_ctx: 8192
+```
+
+Pi 的錯誤處理其實很正確：`stopReason: "error"`、`willRetry: false`、`durationMs: 214`，並附加一個 `context_edit` 事件後才 `agent_settled`。
+
+**但在 `-p`（非互動）模式下，使用者只看到「空輸出 + exit code 0」。**
+
+<div class="callout">
+  <div class="callout-title">沉默失敗比錯誤訊息更危險</div>
+  <p>我第一時間誤判成「Pi 不支援非互動模式」，因為它 1 秒內就結束、且零輸出。真相是它在<strong>快速失敗</strong>。要看到原因，必須用 <code>--mode json</code> 去讀事件串流。</p>
+  <p>這和第十三節的陷阱是同一類：<strong>「程式結束了」不等於「任務完成了」</strong>。差別只在這裡的驗證器是 exit code，而 exit code 說謊了。</p>
+</div>
+
+修法是把它升到 32K（載入佔 18.4 GB VRAM，4090 綽綽有餘）：
+
+```
+FROM qwen3.8-27b-uncensored:latest
+PARAMETER num_ctx 32768
+```
+
+### 實測四：同一個 harness，兩個模型
+
+| | 模型 A（27B） | 模型 B（8B） |
+| --- | --- | --- |
+| 結果 | ✅ 4 passed | ✅ 4 passed |
+| 牆鐘時間 | **7.9 s** | 65.6 s |
+| 工具序列 | `read → read → bash → edit → bash` | `bash → edit → read → edit → bash` |
+| 第一個動作 | **先讀檔調查** | **先跑指令動手** |
+| 修正次數 | 1 次到位 | 2 次（多繞一圈） |
+| 輸出 tokens 合計 | **438** | 5,378（**12.3 倍**） |
+| 單回合最大輸出 | 143 | 2,562 |
+| 上下文峰值 | 9,213 | 10,909 |
+
+兩個模型都解掉了任務。但軌跡完全不同：27B 先讀 `calc.py` 與 `test_calc.py`，再跑測試確認症狀，然後**一次精準修好**；8B 一開始就跑 `pytest`，改一次、回頭讀檔、又改一次，而且單回合吐出 2,562 tokens 的輸出（是 27B 最大回合的 18 倍）。
+
+**這就是第八節那句「harness 完整不保證等於強 agent」的實測版本。** harness 一樣、規則一樣、任務一樣，差別只在那顆模型。
+
+### 實測五：三個意外驗證
+
+**1. 專案規則真的生效。** 跑完後 `git diff` 顯示**只有 `calc.py` 被改**，`test_calc.py` 完全沒被動——`AGENTS.md` 寫的「只修改 calc.py」被遵守了。第五節講的護欄不一定要寫在程式碼裡，寫在專案規則檔也有效。
+
+**2. `edit` 的唯一匹配設計是對的。** 27B 送出的參數：
+
+```json
+edit {"path": "calc.py", "edits": [{
+  "oldText": "    # BUG: off-by-one, should be total / len(numbers)\n    return total / len(numbers) + 1",
+  "newText": "    return total / len(numbers)" }]}
+```
+
+`oldText` 精準涵蓋 bug 行加上方的註解行，一次命中、零歧義。這正是第三節描述的「Claude Code 風格精準 patch」——**不是把整檔重寫，而是用最小且唯一的片段定位**。
+
+**3. Prompt caching 讓 agent 迴圈變便宜。** 五個回合累計 `cacheRead` 43,165 tokens，但真正新增的 input 只有 809 tokens。每一回合只重新計算約 100–280 個新 token，這是 7.9 秒跑完的主因。
+
+<div class="callout">
+  <div class="callout-title">對本地推論的意義</div>
+  <p>agent 迴圈的成本瓶頸不是「context 有多大」，而是「<strong>每回合新增多少</strong>」。這也是為什麼第四節那三個鐵則（截斷輸出、grep 定位、摘要舊輪次）值得認真做——它們削的正是每回合的新增量。</p>
+</div>
+
+### Pi 的事件格式：自建 harness 的參考
+
+`--mode json` 輸出的是事件串流，結構乾淨到可以直接照抄：
+
+```
+session → agent_start → turn_start
+  → message_start / message_update / message_end / turn_end   （每回合重複）
+→ agent_end → agent_settled
++ entry_appended（含 context_edit，即壓縮事件）
+```
+
+注意 `context_edit` 是一個**獨立事件**，不是藏在訊息裡——這讓「agent 什麼時候壓縮了 context」變成可觀測的事實，而不是黑箱。要自建 harness 的話，這個事件設計值得直接借用。
+
+### 這一節驗證了什麼
+
+| 本文說法 | 實測結果 |
+| --- | --- |
+| Pi 約四個原子工具 | ✅ 完全正確 |
+| Pi 的 system prompt 極小 | ⚠️ 核心對（487 tokens），但周邊索引讓它變 8,313 tokens |
+| Pi 適合研究 harness | ✅ 事件格式、session 匯出、`--mode json` 都可直接讀 |
+| 模型是可替換零件，智能上限由模型決定 | ✅ 同 harness 同任務，輸出差 12.3 倍、時間差 8.3 倍 |
+| 護欄要自己配 | ✅ 8K 設定直接撞牆——「設定」本身就是護欄 |
+
+**一句話**：Pi 給了你一個小到能讀完的核心，但沒有給你小到能忽略的環境。**能不能跑起來，取決於你有沒有先量過自己的 context 預算。**
+
+---
+
+## 十一、漸進式里程碑：不要一次做完
 
 | 階段 | 目標 | 驗收標準 |
 | --- | --- | --- |
@@ -523,7 +671,7 @@ Pi 最大的特色是<strong>「agent 可以擴展 agent 本身」</strong>。�
 
 ---
 
-## 十一、內層 agent vs 外層 Ralph 迴圈
+## 十二、內層 agent vs 外層 Ralph 迴圈
 
 這兩個名詞常被混用，但職責完全不同：
 
@@ -553,7 +701,7 @@ while not spec_satisfied():
 
 ---
 
-## 十二、常見陷阱
+## 十三、常見陷阱
 
 1. **一開始就想做 multi-agent 或自主規劃** → 先讓單一 agent 跑得穩。
 2. **沒有測試就讓它自動跑** → 你得到的不是生產力，是高產能的破壞者。
@@ -584,6 +732,8 @@ while not spec_satisfied():
 而 Cline CLI 與 Pi 正好從兩個方向證明了同一件事：Cline 把六個零件都做到了生產級，Pi 把核心拆到只剩四個原子工具——所以你<strong>不需要從零造一個</strong>；但如果你不清楚那六個零件在做什麼，你既看不懂 Cline 的黑箱，也配不出 Pi 的護欄。**harness 可以下載，判斷力不行。**
 
 這也是為什麼第九節要把 Pi 的六步練法接回本文結構：它給的不是一條新路，而是同一條路的三層視角——<strong>怎麼用 agent、怎麼擴展 agent、怎麼從零重建 agent</strong>。三層都走過一次，你才算真的把 harness 變成自己的能力，而不是把某個產品的操作手冊背下來。
+
+第十節的實測則補上最後一塊：**這些都是可以被量測的**。8,313 tokens 的 prompt、7.9 秒的迴圈、12.3 倍的輸出差距——當你能報出這些數字，你就不再是「感覺這個 agent 還行」的使用者，而是能診斷它的人。
 
 延伸閱讀：本站另一篇〈[剖開 11 個主流 coding agent 的原始碼](/2026/10/09/harness-engineering-eleven-coding-agents/)〉整理了 11 個生產級系統的 7 個標準子系統與 18 條設計建議，可以當作本文的架構對照表。
 
@@ -619,5 +769,10 @@ while not spec_satisfied():
 - 〈Pi Agent Harness 筆記〉：<https://zwt0204.github.io/llm/2026/07/03/pi-agent-harness/>
 - 〈Pi vs Claude Code vs Cline〉：<https://andrew.ooo/answers/pi-coding-agent-vs-claude-code-vs-cline-may-2026/>
 - 〈Pi Agent 深度分析〉（網易）：<https://www.163.com/dy/article/L8S2RLRH05566SCS.html>
+
+**第十節實測**
+
+- 第十節所有數字均為本機實測（Pi 1.1.0 + Ollama + RTX 4090 24 GB）。量測用的 harness 腳本、Pi 的原始 JSON 事件串流、兩個模型的完整 session 匯出檔，都保存在 `pi-lab` 實驗目錄；`Modelfile` 與重現指令已列於該節內文。
+- Pi 的 `--mode json` 事件格式、`--export` 與內建工具清單以官方文件與 `pi --help` 為準：<https://pi.dev/>
 
 > 本文為學習整理用途，程式碼骨架為原創示例，可直接取用修改。內容觀點部分來自上述來源，版權屬原作者所有。
