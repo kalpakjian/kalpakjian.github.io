@@ -27,6 +27,18 @@ banner_img: /img/covers/openai-math-repo-fact-check.png
 
 更準確的說法是：這是「AI 開始能系統性參與數學研究」的重大訊號，但不是 AGI 已經被證明出現的證據。
 
+## 本文查核的對象
+
+這篇文章的起點，是這支在中文圈廣泛流傳的影片：
+
+<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:10px; box-shadow:0 4px 14px rgba(0,0,0,0.15); margin:16px 0 8px;">
+  <iframe src="https://www.youtube.com/embed/GZaOyjdsfvE" title="OpenAI一口气发布722项数学成果，数学专业最黑暗一天，AI数学新纪元真来了！" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
+</div>
+
+<p style="font-size:0.9em; color:#888; margin-top:0;">〈OpenAI一口气发布722项数学成果，数学专业最黑暗一天，AI数学新纪元真来了！〉— <a href="https://www.youtube.com/@%E6%9F%8F%E6%8B%89%E5%9B%BE%E6%A2%A6%E8%A7%81%E7%94%B5%E5%AD%90%E7%BE%8A">柏拉图梦见电子羊</a>（YouTube）</p>
+
+影片標題裡的「<strong>722 項數學成果</strong>」，正好就是本文要查核的數字。影片指出的方向——AI 在數學研究上的能力躍進——值得高度重視；但其中幾個關鍵數字，以及「AGI 已至」這個結論，在與 repo 一手資料逐項對照後需要修正。以下是查核結果。
+
 ## 先更正幾個關鍵數字
 
 流傳版本常把「722 篇手稿、235 個附 Lean 證明」當成定論。實際的 repo README（commit `fd4aeeb2`，2026-10-08）原文是：
@@ -201,3 +213,7 @@ Invoke-WebRequest .../lean/ComparatorChallenges/ExactFourier.lean
 - <a href="https://github.com/openai/math/blob/main/history.md">history.md</a>（撤回與修正記錄）
 - <a href="https://github.com/openai/math/blob/main/lean/docs/130.md">lean/docs/130.md</a>（FFT 形式化範圍）
 - <a href="https://github.com/openai/math/blob/main/lean/ComparatorChallenges/ExactFourier.lean">ComparatorChallenges/ExactFourier.lean</a>（弱化版，含 <code>sorry</code>）
+
+### 影片來源
+
+- <a href="https://www.youtube.com/watch?v=GZaOyjdsfvE">OpenAI一口气发布722项数学成果，数学专业最黑暗一天，AI数学新纪元真来了！</a>— 柏拉图梦见电子羊（本文查核的對象）
