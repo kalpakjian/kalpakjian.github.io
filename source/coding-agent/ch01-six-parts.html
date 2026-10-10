@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01 一個 coding agent 只有六個零件 ｜ 從零打造一個 coding agent</title>
+<meta name="description" content="把「資深工程師要能重建 Claude Code」拆成合理與過頭兩半，並攤開 coding agent 的六個零件與它們的資料流。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">從零打造一個 coding agent <span class="tag">專題</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-six-parts.html" class="active">01 六個零件</a>
+      <a href="ch02-tools-context.html">02 工具與 Context</a>
+      <a href="ch03-guardrails-verify.html">03 護欄與骨架</a>
+      <a href="ch04-cline.html">04 Cline CLI</a>
+      <a href="ch05-pi.html">05 Pi</a>
+      <a href="ch06-experiment.html">06 一手實測</a>
+      <a href="ch07-workflow.html">07 工作流</a>
+      <a href="ch08-standard.html">08 結語</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container article">
+  <section class="hero" style="padding-bottom:0;">
+    <span class="kicker">01 / 拆解</span>
+    <h1>一個 coding agent 只有六個零件</h1>
+    <p class="lead">不管是一百行的研究原型，還是百萬行的產品，拆開來都是同樣六個零件。</p>
+    <p class="meta">起點是 Geoffrey Huntley〈Replaced〉那句話：「2026 年的資深工程師應該能重建 Claude Code 這類最基本的 agent。」</p>
+  </section>
+
+  <figure class="cover">
+    <img src="img/ch01-six-parts.png" alt="六個不同形狀的發光模組以連線環繞中央核心，像一張展開的技術圖" width="1344" height="768" loading="eager">
+    <figcaption>六個零件不是紙上分類——市面上已經有把六個零件全部做出來的成品（Cline CLI），也有反過來只保留最小核心的（Pi）。</figcaption>
+  </figure>
+
+  <nav class="toc">
+    <h2>本章目錄</h2>
+    <ol>
+      <li><a href="#s1">先把那句話拆開：哪部分合理，哪部分過頭</a></li>
+      <li><a href="#s2">一個 coding agent 只有六個零件</a></li>
+      <li><a href="#s3">資料流：一句話講完</a></li>
+    </ol>
+  </nav>
+
+  <section class="sec" id="s1">
+    <span class="sec-num">SECTION 01</span>
+    <h2>先把那句話拆開：哪部分合理，哪部分過頭</h2>
+    <p>Huntley 的原意並不是「每個人都要複製 Anthropic 的產品」。他指出的是你應該懂 agent 的基本構成：</p>
+    <ul>
+      <li>讀取專案檔案與程式碼</li>
+      <li>呼叫 shell、測試、git 等工具</li>
+      <li>維持任務上下文</li>
+      <li>根據錯誤結果迭代修正</li>
+      <li>在適當時機停下來交給人審查</li>
+    </ul>
+    <p>換言之，重點是<strong>能設計與駕馭工作迴路</strong>，而不是只會在 IDE 裡按「Accept suggestion」。至於「做不出 Claude Code 就不算資深」這種講法，當成警號與練習目標可以，當成資格判定就過頭了：</p>
+
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>說法</th><th>合理程度</th><th>判斷</th></tr></thead>
+        <tbody>
+          <tr><td>工程師應理解 context window、tokenization、工具呼叫與 agent 迴圈</td><td>高</td><td>這是現代 AI 工程的基本素養</td></tr>
+          <tr><td>應該有可展示的 AI 實作專案</td><td>高</td><td>比只會聊天式使用 AI 更有說服力</td></tr>
+          <tr><td>應能自己建立小型 coding agent</td><td>中高</td><td>對後端、平台、自動化、AI 工具工程師特別有價值</td></tr>
+          <tr><td>做不出 Claude Code 就不是資深工程師</td><td>低到中</td><td>過度絕對；資深價值還包括系統設計、維運、安全、領域知識與團隊協作</td></tr>
+          <tr><td>用 AI 兩週完成過去 50 萬的專案</td><td>需保留</td><td>可能發生，但高度依賴專案類型、既有程式碼、測試與人類監督</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Tobi Lütke 的立場則更接近管理層面的要求：AI 不再只是個人效率工具，而是影響招聘、資源分配與績效評估的工作方式。但這也不等於「所有工程師都必須造一個 Claude Code」，Shopify 的要求更接近「必須主動、熟練地將 AI 納入日常工作」。</p>
+
+    <div class="callout">
+      <div class="label">本專題的立場</div>
+      <p style="margin:0;">「資深工程師要能重建 Claude Code」適合當成<strong>練習目標</strong>，不適合當成<strong>資格判定</strong>。真正會被淘汰的不是「沒有自己寫 Claude Code」的人，而是仍然只用 AI 複製貼上、無法設計驗證、也不願承擔工程責任的人。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s2">
+    <span class="sec-num">SECTION 02</span>
+    <h2>一個 coding agent 只有六個零件</h2>
+    <p>不管是一百行的研究原型，還是百萬行的產品，拆開來都是同樣六個零件。前五個是<strong>內層 agent</strong>（Claude Code 本體），第六個加上「規格檔 + 每輪單一任務」就是<strong>外層 Ralph 迴圈</strong>。</p>
+    <p>這不是紙上分類。市面上已經有把六個零件全部做出來的成品——例如 <a href="https://cline.bot/cli">Cline CLI</a>；也有反過來只保留最小核心的 <a href="https://github.com/earendil-works/pi">Pi</a>。第 4～6 章會拿這兩個開源 harness 逐一對照，並實際把其中一個接上本地模型跑一次，看同一組零件在兩種相反的設計哲學下長成什麼樣子。</p>
+
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>#</th><th>零件</th><th>作用</th><th>對應文章中的說法</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>模型（policy）</strong></td><td>決策：下一步做什麼</td><td>可替換，本地或 API 皆可</td></tr>
+          <tr><td>2</td><td><strong>工具（action space）</strong></td><td>它能對世界做什麼</td><td>讀檔、shell、測試、git</td></tr>
+          <tr><td>3</td><td><strong>迴圈（control loop）</strong></td><td>決策 → 執行 → 觀察 → 再決策</td><td>「設計與駕馭工作迴路」</td></tr>
+          <tr><td>4</td><td><strong>Context 管理器</strong></td><td>決定模型每一輪看到什麼</td><td>維持任務上下文</td></tr>
+          <tr><td>5</td><td><strong>護欄（guardrails）</strong></td><td>沙箱、白名單、步數上限、人工批准</td><td>「適當時機停下來交給人」</td></tr>
+          <tr><td>6</td><td><strong>驗證器（verifier）</strong></td><td>測試／lint／type check／git diff</td><td>「根據錯誤結果迭代修正」</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="label">最容易被忽略的一點</div>
+      <p style="margin:0;">第 6 個零件不是選配。<strong>「完成」的定義必須是可驗證的</strong>——測試綠燈、型別檢查通過、diff 符合預期——而不是模型說「我做完了」。這是整套設計的靈魂，也是業餘作品與工程級 harness 的分界線。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s3">
+    <span class="sec-num">SECTION 03</span>
+    <h2>資料流：一句話講完</h2>
+<pre><code>目標 ──▶ [ system prompt + 工具 schema + 當前狀態 ] ──▶ LLM
+          ▲                                              │
+          │                                        tool_call
+          │                                              ▼
+      結果截斷後回饋 ◀── 執行工具（讀檔／改檔／跑測試／git）
+          │
+          └── 重複，直到：模型宣告完成 ／ 驗證通過 ／ 超過步數 ／ 需要人工批准</code></pre>
+    <p>整個 agent 就是這個 <code>while</code> 迴圈。所有複雜度都藏在「括號裡那三件事」：<strong>餵什麼給模型</strong>、<strong>允許它做什麼</strong>、<strong>怎麼判斷它做對了</strong>。</p>
+    <p>接下來兩章就是把這三件事逐一展開：<a href="ch02-tools-context.html">第 2 章</a>先講「餵什麼」（工具與 context），<a href="ch03-guardrails-verify.html">第 3 章</a>再講「允許它做什麼」與「怎麼判斷它做對了」（護欄與驗證迴路），最後把它們寫成一支 90 行的骨架。</p>
+  </section>
+
+  <nav class="pager">
+    <a href="index.html"><span class="dir">← 專題首頁</span>從零打造一個 coding agent</a>
+    <a class="right" href="ch02-tools-context.html"><span class="dir">下一章 →</span>02 工具設計與 Context 管理</a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>本專題整理自 Geoffrey Huntley〈Replaced〉與〈Ralph Wiggum as a software engineer〉、Tobi Lütke 的 Shopify AI 備忘錄，並加上 <strong>Cline CLI</strong>、<strong>Pi</strong> 兩個開源 harness 的對照與本機實測。觀點部分版權屬原作者所有。</p>
+    <p><a href="index.html">專題首頁</a> ・ <a href="ch02-tools-context.html">下一章：工具與 Context</a></p>
+  </div>
+</footer>
+</body>
+</html>

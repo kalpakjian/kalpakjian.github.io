@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06 一手實測：把 Pi 接上本地模型 ｜ 從零打造一個 coding agent</title>
+<meta name="description" content="同一個 harness、同一個任務，跑三個模型、三種 thinking 等級，加上削減 prompt 的對照。八次執行、11 份事件串流全數收錄。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">從零打造一個 coding agent <span class="tag">專題</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-six-parts.html">01 六個零件</a>
+      <a href="ch02-tools-context.html">02 工具與 Context</a>
+      <a href="ch03-guardrails-verify.html">03 護欄與骨架</a>
+      <a href="ch04-cline.html">04 Cline CLI</a>
+      <a href="ch05-pi.html">05 Pi</a>
+      <a href="ch06-experiment.html" class="active">06 一手實測</a>
+      <a href="ch07-workflow.html">07 工作流</a>
+      <a href="ch08-standard.html">08 結語</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container article">
+  <section class="hero" style="padding-bottom:0;">
+    <span class="kicker">06 / 一手實測</span>
+    <h1>把 Pi 接上本地模型</h1>
+    <p class="lead">前面兩章都是文獻整理。這一章是實測：把 Pi 接上本機 Ollama，用<strong>同一份 harness、同一個任務</strong>，跑三個不同大小的模型、三種 thinking 等級，以及一組「削減 prompt」的對照。</p>
+    <p class="meta">八次執行全部收錄於下。所有數字均為本機實測，原始事件串流保留在 <code>pi-lab</code> 實驗目錄，可逐筆複查。</p>
+  </section>
+
+  <figure class="cover">
+    <img src="img/ch06-experiment.png" alt="示波器上兩條分歧的訊號軌跡，一條乾淨銳利，一條雜亂" width="1344" height="768" loading="eager">
+    <figcaption>同一份 harness、同一個任務、同一份 <code>AGENTS.md</code>——差別只在那顆模型，而差距可以被量測。</figcaption>
+  </figure>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="big">8,313</div><div class="desc">Pi 實際送出的 system prompt tokens（超過 8K 視窗 121 個）</div></div>
+    <div class="stat"><div class="big">88.6%</div><div class="desc">其中來自 <code>skills</code> 索引的佔比；核心只有 487 tokens</div></div>
+    <div class="stat"><div class="big">12.3×</div><div class="desc">8B 模型的輸出 tokens 是 27B 的倍數</div></div>
+    <div class="stat"><div class="big">100%</div><div class="desc">11 次執行中，<code>AGENTS.md</code> 規則被遵守的比例</div></div>
+  </div>
+
+  <nav class="toc">
+    <h2>本章目錄</h2>
+    <ol>
+      <li><a href="#s0">測試環境</a></li>
+      <li><a href="#s1">實測一：預設工具真的是四個</a></li>
+      <li><a href="#s2">實測二：「system prompt 極小」只對一半</a></li>
+      <li><a href="#s3">實測三：差 121 tokens 的沉默失敗</a></li>
+      <li><a href="#s4">實測四：同一個 harness，三個模型</a></li>
+      <li><a href="#s5">實測五：thinking 等級的影響</a></li>
+      <li><a href="#s6">實測六：把 prompt 削掉，8K 模型就活了</a></li>
+      <li><a href="#s7">實測七：三個意外驗證</a></li>
+      <li><a href="#s8">全部八次執行</a></li>
+      <li><a href="#s9">Pi 的事件格式：自建 harness 的參考</a></li>
+      <li><a href="#s10">這一章驗證了什麼</a></li>
+    </ol>
+  </nav>
+
+  <section class="sec" id="s0">
+    <span class="sec-num">SETUP</span>
+    <h2>測試環境</h2>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>項目</th><th>規格</th></tr></thead>
+        <tbody>
+          <tr><td>Pi</td><td><code>@earendil-works/pi-coding-agent</code> 0.99.1 → <strong>1.1.0</strong></td></tr>
+          <tr><td>推論</td><td>Ollama（OpenAI 相容端點 <code>127.0.0.1:11434/v1</code>）</td></tr>
+          <tr><td>GPU</td><td>NVIDIA RTX 4090 24 GB</td></tr>
+          <tr><td>模型 A</td><td><code>qwen3.8-27b-uncensored-32k</code>（27.3B, Q5_K_M, 32K context）</td></tr>
+          <tr><td>模型 B</td><td><code>gemma4-12b-32k</code>（11.9B, Q4_K_M, 32K context）</td></tr>
+          <tr><td>模型 C</td><td><code>qwen3-8b-heretic-32k</code>（8.2B, Q4_K_M, 32K context）</td></tr>
+          <tr><td>對照組</td><td><code>qwen3.8-27b-uncensored-8k</code>（同一個 27B，但只有 8K context）+ <code>--no-skills</code></td></tr>
+          <tr><td>任務</td><td>修好 <code>calc.py</code> 的 off-by-one bug，讓 4 個 pytest 測試全綠</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>專案刻意很小，並在 <code>AGENTS.md</code> 寫死規則：「每次修改 <code>calc.py</code> 後必須執行 <code>python -m pytest -q</code>」「只修改 <code>calc.py</code>，不要改動測試檔」。基準線是 <code>2 failed, 2 passed</code>。</p>
+  </section>
+
+  <section class="sec" id="s1">
+    <span class="sec-num">實測 01</span>
+    <h2>預設工具真的是四個</h2>
+    <p>從 Pi 實際送出的 system prompt 直接讀出來：</p>
+<pre><code>&lt;tools&gt;
+- read: Read file contents
+- bash: Execute bash commands (ls, grep, find, etc.)
+- edit: Make precise file edits with exact text replacement, including multiple disjoint edits in one call
+- write: Create or overwrite files
+&lt;/tools&gt;</code></pre>
+    <p><code>--help</code> 另外列出了 <code>powershell</code>、<code>grep</code>、<code>find</code>、<code>ls</code>，但都標示 <strong>off by default</strong>。所以第 5 章那句「約四個原子工具」是準確的——<strong>而且這四個正好就是第 3 章那份骨架的四個工具</strong>。</p>
+  </section>
+
+  <section class="sec" id="s2">
+    <span class="sec-num">實測 02</span>
+    <h2>「system prompt 極小」只對一半</h2>
+    <p>把 Pi 的 system prompt 依區段拆開量測：</p>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>區段</th><th>字元</th><th>~tokens</th><th>佔比</th></tr></thead>
+        <tbody>
+          <tr><td>preamble</td><td>169</td><td>42</td><td>0.6%</td></tr>
+          <tr><td>tools</td><td>339</td><td>84</td><td>1.1%</td></tr>
+          <tr><td>rules</td><td>839</td><td>209</td><td>2.8%</td></tr>
+          <tr><td>docs</td><td>1,379</td><td>344</td><td>4.6%</td></tr>
+          <tr><td>project_context（AGENTS.md ×2）</td><td>492</td><td>196</td><td>2.6%</td></tr>
+          <tr><td><strong>skills</strong></td><td><strong>25,276</strong></td><td><strong>6,540</strong></td><td><strong>88.6%</strong></td></tr>
+          <tr><td>cwd</td><td>34</td><td>8</td><td>0.1%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li><strong>核心</strong>（preamble + tools + rules + docs + cwd）= 2,760 字元 ≈ <strong>487 tokens</strong>。「極小」對核心而言完全成立。</li>
+      <li>但 <strong><code>skills</code> 索引獨佔 88.6%</strong>。它來自 <code>~/.agents/skills/</code> 底下約 30 個 Azure／AI skill，Pi 會把每個的 name + description + location 全部注入。</li>
+    </ul>
+
+    <div class="callout">
+      <div class="label">「小」最容易被誤解的地方</div>
+      <p style="margin:0;">Pi 的核心確實極小，但 harness 的實際 prompt 成本 = <strong>核心 + 你機器上所有被自動發現的東西</strong>。同一個 Pi，在不同人的機器上，prompt 可能差一個量級。<strong>context 預算是「你環境的函數」，不是「產品的常數」。</strong></p>
+    </div>
+  </section>
+
+  <section class="sec" id="s3">
+    <span class="sec-num">實測 03</span>
+    <h2>差 121 tokens 的沉默失敗</h2>
+    <p>Pi 預設接的是 8K context 的模型。實際送出的 prompt 是 <strong>8,313 tokens</strong>——比 8,192 多 121：</p>
+<pre><code>400 exceed_context_size_error
+n_prompt_tokens: 8313, n_ctx: 8192</code></pre>
+    <p>Pi 的錯誤處理其實很正確：<code>stopReason: "error"</code>、<code>willRetry: false</code>、<code>durationMs: 214</code>，並附加一個 <code>context_edit</code> 事件後才 <code>agent_settled</code>。</p>
+    <p><strong>但在 <code>-p</code>（非互動）模式下，使用者只看到「空輸出 + exit code 0」。</strong></p>
+
+    <div class="callout warn">
+      <div class="label">沉默失敗比錯誤訊息更危險</div>
+      <p style="margin:0 0 12px;">我第一時間誤判成「Pi 不支援非互動模式」，因為它 1 秒內就結束、且零輸出。真相是它在<strong>快速失敗</strong>。要看到原因，必須用 <code>--mode json</code> 去讀事件串流。</p>
+      <p style="margin:0;">這和第 7 章的陷阱是同一類：<strong>「程式結束了」不等於「任務完成了」</strong>。差別只在這裡的驗證器是 exit code，而 exit code 說謊了。</p>
+    </div>
+
+    <p>修法是把它升到 32K（載入佔 18.4 GB VRAM，4090 綽綽有餘）：</p>
+    <span class="file-label">Modelfile</span>
+<pre><code>FROM qwen3.8-27b-uncensored:latest
+PARAMETER num_ctx 32768</code></pre>
+  </section>
+
+  <section class="sec" id="s4">
+    <span class="sec-num">實測 04</span>
+    <h2>同一個 harness，三個模型</h2>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th></th><th>27B</th><th>12B</th><th>8B</th></tr></thead>
+        <tbody>
+          <tr><td>結果</td><td>✅ 4 passed</td><td>✅ 4 passed</td><td>✅ 4 passed</td></tr>
+          <tr><td>工具序列</td><td><code>read → read → bash → edit → bash</code></td><td><code>bash → read → edit → bash</code></td><td><code>bash → edit → read → edit → bash</code></td></tr>
+          <tr><td>工具呼叫數</td><td>5</td><td><strong>4</strong></td><td>5</td></tr>
+          <tr><td>第一個動作</td><td><strong>先讀檔調查</strong></td><td>先跑指令</td><td>先跑指令</td></tr>
+          <tr><td>修正次數</td><td>1 次到位</td><td>1 次到位</td><td><strong>2 次（多繞一圈）</strong></td></tr>
+          <tr><td>輸出 tokens 合計</td><td><strong>438</strong></td><td>544</td><td><strong>5,378（12.3 倍）</strong></td></tr>
+          <tr><td>單回合最大輸出</td><td>143</td><td>299</td><td>2,562</td></tr>
+          <tr><td>上下文峰值</td><td>9,213</td><td>9,392</td><td>10,909</td></tr>
+          <tr><td>牆鐘時間</td><td><strong>7.9 s</strong></td><td>30.1 s</td><td>65.6 s</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>三個模型都解掉了任務，但軌跡與成本差距很大：</p>
+    <ul>
+      <li><strong>27B</strong>：先讀 <code>calc.py</code> 與 <code>test_calc.py</code> 建立理解，再跑測試確認症狀，然後一次精準修好。輸出最省（438 tokens）。</li>
+      <li><strong>12B</strong>：先跑測試拿到紅字，再回頭讀檔、一次改對。工具呼叫最少（4 次），但單回合輸出比 27B 大。</li>
+      <li><strong>8B</strong>：先跑測試，改一次、回頭讀檔、又改一次——<strong>多繞了一圈</strong>，而且單回合吐出 2,562 tokens（是 27B 最大回合的 18 倍），總輸出是 27B 的 <strong>12.3 倍</strong>。</li>
+    </ul>
+
+    <div class="callout">
+      <div class="label">這正是第 4 章那句話的實測版本</div>
+      <p style="margin:0;"><strong>harness 完整不保證等於強 agent。</strong>harness 一樣、規則一樣、任務一樣、<code>AGENTS.md</code> 一樣，差別只在那顆模型——而差距具體表現在三件事上：<strong>先調查還是先動手、一次改對還是來回兩次、輸出 438 還是 5,378 tokens</strong>。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s5">
+    <span class="sec-num">實測 05</span>
+    <h2>thinking 等級的影響</h2>
+    <p>固定 27B + 32K，只改 <code>--thinking</code>：</p>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>thinking</th><th>工具序列</th><th>工具呼叫數</th><th>輸出 tokens</th><th>牆鐘時間</th></tr></thead>
+        <tbody>
+          <tr><td><code>off</code></td><td><code>read → read → bash → edit → read → bash</code></td><td>6</td><td>605</td><td>10.1 s</td></tr>
+          <tr><td><code>medium</code></td><td><code>bash → read → read → edit → read → bash</code></td><td>6</td><td>512</td><td>8.2 s</td></tr>
+          <tr><td><code>high</code></td><td><code>bash → read → edit → bash</code></td><td><strong>4</strong></td><td><strong>490</strong></td><td>8.2 s</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>趨勢是：<strong>thinking 越高，工具呼叫越少、輸出越省、軌跡越直接</strong>。<code>high</code> 只用了 4 次工具呼叫就完成，而 <code>off</code> 來回 6 次。</p>
+    <p>但要誠實說：<strong>每一格只有一組樣本，雜訊不小。</strong>同一個 thinking 等級重跑，軌跡就會變——例如 <code>medium</code> 第一次是 <code>read → read → bash → edit → bash</code>，第二次變成 <code>bash → read → read → edit → read → bash</code>。所以這張表該讀成「趨勢」，不是「定論」。</p>
+
+    <div class="callout">
+      <div class="label">比 thinking 更大的變數：prompt cache</div>
+      <p style="margin:0 0 12px;">同一組設定（27B / 32K / thinking=off）跑兩次：<strong>冷快取 29.5 秒，暖快取 10.1 秒</strong>——差 3 倍，而且與模型、thinking 都無關。</p>
+      <p style="margin:0;">也就是說，當你在本地量測 agent 的效能時，<strong>第一個該控制的變數是快取狀態，不是模型參數</strong>。這也是為什麼後面那張總表的「牆鐘時間」欄要配著看。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s6">
+    <span class="sec-num">實測 06</span>
+    <h2>把 prompt 削掉，8K 模型就活了</h2>
+    <p>回到實測三那個撞牆的 8K 模型。既然問題出在 prompt 有 8,313 tokens，那就把 prompt 削掉——加上 <code>--no-skills</code>：</p>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th></th><th>8K + skills</th><th>8K + <code>--no-skills</code></th></tr></thead>
+        <tbody>
+          <tr><td>system prompt</td><td>~7,426（Ollama 實測 8,313）</td><td><strong>~886</strong></td></tr>
+          <tr><td>首回合 input</td><td><strong>被 400 拒絕</strong></td><td><strong>1,852</strong></td></tr>
+          <tr><td>上下文峰值</td><td>—</td><td><strong>2,762</strong></td></tr>
+          <tr><td>工具序列</td><td>—</td><td><code>bash → read → read → edit → bash</code></td></tr>
+          <tr><td>輸出 tokens</td><td>—</td><td>451</td></tr>
+          <tr><td>結果</td><td>❌ 空輸出 + exit 0</td><td>✅ 4 passed</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>同一個模型、同一份 harness、同一個任務</strong>，只差一個 <code>--no-skills</code>，就從「完全不動」變成「順利完成」。</p>
+    <p>而且注意它的輸出 tokens 是 <strong>451</strong>——和 27B + 32K 的 438 幾乎一樣。上下文峰值 2,762 更只有原本的 <strong>3.3 分之一</strong>。</p>
+
+    <div class="callout">
+      <div class="label">這是第 2 章那三個鐵則的極端版</div>
+      <p style="margin:0 0 12px;">第 2 章說 context 管理是真正的難點，三個鐵則是「截斷輸出、grep 定位、摘要舊輪次」。這個實驗把同一件事推到極致：<strong>當 harness 的固定開銷就吃掉整個視窗時，你連第一句話都說不出口。</strong></p>
+      <p style="margin:0;">而且解法不一定要換更大的模型——<strong>先問「這些 token 是誰塞進來的」，通常比換模型便宜得多。</strong></p>
+    </div>
+  </section>
+
+  <section class="sec" id="s7">
+    <span class="sec-num">實測 07</span>
+    <h2>三個意外驗證</h2>
+    <p><strong>1. 專案規則真的生效——而且 11 次全中。</strong>掃過所有執行的原始事件串流：<strong>沒有任何一次</strong>的 <code>edit</code>／<code>write</code> 動到 <code>test_calc.py</code>，<code>git diff</code> 也顯示只有 <code>calc.py</code> 被改。三個模型家族、五種設定、11 次執行，<code>AGENTS.md</code> 寫的「只修改 calc.py」<strong>100% 被遵守</strong>。第 3 章講的護欄不一定要寫在程式碼裡，寫在專案規則檔也有效。</p>
+    <p><strong>2. <code>edit</code> 的唯一匹配設計是對的。</strong>27B 送出的參數：</p>
+<pre><code>edit {"path": "calc.py", "edits": [{
+  "oldText": "    # BUG: off-by-one, should be total / len(numbers)\n    return total / len(numbers) + 1",
+  "newText": "    return total / len(numbers)" }]}</code></pre>
+    <p><code>oldText</code> 精準涵蓋 bug 行加上方的註解行，一次命中、零歧義。這正是第 2 章描述的「Claude Code 風格精準 patch」——<strong>不是把整檔重寫，而是用最小且唯一的片段定位</strong>。</p>
+    <p><strong>3. Prompt caching 讓 agent 迴圈變便宜。</strong>27B 那次五個回合累計 <code>cacheRead</code> 43,165 tokens，但真正新增的 input 只有 809 tokens。每一回合只重新計算約 100–280 個新 token，這是 7.9 秒跑完的主因。</p>
+
+    <div class="callout note">
+      <div class="label">對本地推論的意義</div>
+      <p style="margin:0;">agent 迴圈的成本瓶頸不是「context 有多大」，而是「<strong>每回合新增多少</strong>」。這也是為什麼第 2 章那三個鐵則（截斷輸出、grep 定位、摘要舊輪次）值得認真做——它們削的正是每回合的新增量。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s8">
+    <span class="sec-num">總表</span>
+    <h2>全部八次執行</h2>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>實驗</th><th>模型</th><th>thinking</th><th>skills</th><th>首回合 input</th><th>上下文峰值</th><th>工具數</th><th>輸出 tokens</th><th>牆鐘</th></tr></thead>
+        <tbody>
+          <tr><td><code>fix</code></td><td>27B</td><td>medium</td><td>on</td><td>42（快取 8,300）</td><td>9,213</td><td>5</td><td><strong>438</strong></td><td><strong>7.9 s</strong></td></tr>
+          <tr><td><code>fix_gemma</code></td><td>12B</td><td>medium</td><td>on</td><td>8,347</td><td>9,392</td><td><strong>4</strong></td><td>544</td><td>30.1 s</td></tr>
+          <tr><td><code>fix8b</code></td><td>8B</td><td>medium</td><td>on</td><td>8,091</td><td>10,909</td><td>5</td><td>5,378</td><td>65.6 s</td></tr>
+          <tr><td><code>think_off</code></td><td>27B</td><td>off</td><td>on</td><td>8,342（冷）</td><td>9,257</td><td>5</td><td>545</td><td>29.5 s</td></tr>
+          <tr><td><code>think_off2</code></td><td>27B</td><td>off</td><td>on</td><td>4（快取 8,338）</td><td>9,419</td><td>6</td><td>605</td><td>10.1 s</td></tr>
+          <tr><td><code>think_med2</code></td><td>27B</td><td>medium</td><td>on</td><td>4（快取 8,338）</td><td>9,409</td><td>6</td><td>512</td><td>8.2 s</td></tr>
+          <tr><td><code>think_high</code></td><td>27B</td><td>high</td><td>on</td><td>4（快取 8,338）</td><td>9,429</td><td><strong>4</strong></td><td><strong>490</strong></td><td>8.2 s</td></tr>
+          <tr><td><code>fix8k_noskills</code></td><td>27B-8k</td><td>medium</td><td><strong>off</strong></td><td><strong>1,852</strong></td><td><strong>2,762</strong></td><td>5</td><td>451</td><td>21.1 s</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>八次全部 <code>4 passed</code>。</strong>注意最後一列：它是唯一一列「首回合 input 遠小於其他」的執行，而這正是它能在 8K 視窗裡活下來的原因。</p>
+  </section>
+
+  <section class="sec" id="s9">
+    <span class="sec-num">附錄</span>
+    <h2>Pi 的事件格式：自建 harness 的參考</h2>
+    <p><code>--mode json</code> 輸出的是事件串流，結構乾淨到可以直接照抄：</p>
+<pre><code>session → agent_start → turn_start
+  → message_start / message_update / message_end / turn_end   （每回合重複）
+→ agent_end → agent_settled
++ entry_appended（含 context_edit，即壓縮事件）</code></pre>
+    <p>注意 <code>context_edit</code> 是一個<strong>獨立事件</strong>，不是藏在訊息裡——這讓「agent 什麼時候壓縮了 context」變成可觀測的事實，而不是黑箱。要自建 harness 的話，這個事件設計值得直接借用。</p>
+  </section>
+
+  <section class="sec" id="s10">
+    <span class="sec-num">結論</span>
+    <h2>這一章驗證了什麼</h2>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>本文說法</th><th>實測結果</th></tr></thead>
+        <tbody>
+          <tr><td>Pi 約四個原子工具</td><td>✅ 完全正確</td></tr>
+          <tr><td>Pi 的 system prompt 極小</td><td>⚠️ 核心對（487 tokens），但 skills 索引讓它變 8,313 tokens</td></tr>
+          <tr><td>Pi 適合研究 harness</td><td>✅ 事件格式、session 匯出、<code>--mode json</code> 都可直接讀</td></tr>
+          <tr><td>模型是可替換零件，智能上限由模型決定</td><td>✅ 同 harness 同任務，8B 的輸出是 27B 的 <strong>12.3 倍</strong></td></tr>
+          <tr><td>護欄要自己配</td><td>✅ 8K 設定直接撞牆——「設定」本身就是護欄</td></tr>
+          <tr><td>專案規則檔可以當護欄用</td><td>✅ 11 次執行、3 個模型家族，<strong>100% 遵守</strong></td></tr>
+          <tr><td>Context 管理是真正的難點</td><td>✅ 削掉 skills 後，8K 模型從「完全不動」變「順利完成」</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="label">一句話</div>
+      <p style="margin:0;">Pi 給了你一個小到能讀完的核心，但沒有給你小到能忽略的環境。<strong>能不能跑起來，取決於你有沒有先量過自己的 context 預算。</strong></p>
+    </div>
+  </section>
+
+  <nav class="pager">
+    <a href="ch05-pi.html"><span class="dir">← 上一章</span>05 Pi：把核心拆到最小</a>
+    <a class="right" href="ch07-workflow.html"><span class="dir">下一章 →</span>07 里程碑、Ralph 迴圈與常見陷阱</a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>本章所有數字均為本機實測（Pi 1.1.0 + Ollama + RTX 4090 24 GB）。量測用的 harness 腳本、Pi 的原始 JSON 事件串流、三個模型的完整 session 匯出檔，都保存在 <code>pi-lab</code> 實驗目錄；<code>Modelfile</code> 與重現指令已列於本章內文。八次執行、11 份事件串流全數保留，可逐筆複查。</p>
+    <p><a href="index.html">專題首頁</a> ・ <a href="ch07-workflow.html">下一章：工作流與陷阱</a></p>
+  </div>
+</footer>
+</body>
+</html>

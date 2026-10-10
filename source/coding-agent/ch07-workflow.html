@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>07 里程碑、Ralph 迴圈與常見陷阱 ｜ 從零打造一個 coding agent</title>
+<meta name="description" content="六個漸進式里程碑（M5 沒做完就不要進 M6）、內層 agent 與外層 Ralph 迴圈的職責分工，以及七個最常見的坑。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">從零打造一個 coding agent <span class="tag">專題</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-six-parts.html">01 六個零件</a>
+      <a href="ch02-tools-context.html">02 工具與 Context</a>
+      <a href="ch03-guardrails-verify.html">03 護欄與骨架</a>
+      <a href="ch04-cline.html">04 Cline CLI</a>
+      <a href="ch05-pi.html">05 Pi</a>
+      <a href="ch06-experiment.html">06 一手實測</a>
+      <a href="ch07-workflow.html" class="active">07 工作流</a>
+      <a href="ch08-standard.html">08 結語</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container article">
+  <section class="hero" style="padding-bottom:0;">
+    <span class="kicker">07 / 落地</span>
+    <h1>里程碑、Ralph 迴圈與常見陷阱</h1>
+    <p class="lead">不要一次做完。六個里程碑的順序本身就是護欄——先讓單一 agent 跑得穩，再談自動化。</p>
+    <p class="meta">這一章把前面的零件收束成一條可以照著走的路徑，並列出七個最常見的坑。</p>
+  </section>
+
+  <figure class="cover">
+    <img src="img/ch07-workflow.png" alt="六級發光階梯向上穿過黑暗空間，某一級設有警告標誌與阻擋桿" width="1344" height="768" loading="eager">
+    <figcaption>六個里程碑像一道階梯：M5 的護欄沒做完，就不要跨到 M6 的外層迴圈。</figcaption>
+  </figure>
+
+  <nav class="toc">
+    <h2>本章目錄</h2>
+    <ol>
+      <li><a href="#s1">漸進式里程碑：不要一次做完</a></li>
+      <li><a href="#s2">內層 agent vs 外層 Ralph 迴圈</a></li>
+      <li><a href="#s3">常見陷阱</a></li>
+    </ol>
+  </nav>
+
+  <section class="sec" id="s1">
+    <span class="sec-num">SECTION 01</span>
+    <h2>漸進式里程碑：不要一次做完</h2>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>階段</th><th>目標</th><th>驗收標準</th></tr></thead>
+        <tbody>
+          <tr><td><strong>M1</strong></td><td>唯讀 agent：<code>list_files</code> / <code>grep</code> / <code>read_file</code></td><td>能正確回答「這個 bug 在哪個檔哪一行」</td></tr>
+          <tr><td><strong>M2</strong></td><td>加上 <code>edit_file</code> + <code>git_diff</code></td><td>能改一個函式且 diff 乾淨</td></tr>
+          <tr><td><strong>M3</strong></td><td>加上 <code>run_shell</code> + 測試驗證迴路</td><td>測試紅燈能自行修正到綠燈</td></tr>
+          <tr><td><strong>M4</strong></td><td>Context 壓縮 + todo 外顯化</td><td>連續 20 步不爆 context</td></tr>
+          <tr><td><strong>M5</strong></td><td>護欄：路徑白名單、黑名單、dry-run、批准點</td><td>嘗試 <code>../</code> 與 <code>rm -rf</code> 被正確攔截</td></tr>
+          <tr><td><strong>M6</strong></td><td>外層 Ralph loop：規格檔 + 每輪單一任務 + 進度檔</td><td>無人干預下完成一個小型規格</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="label">鐵則</div>
+      <p style="margin:0;"><strong>M5 沒做完就不要進 M6。</strong>這是絕大多數人踩的坑——先讓它自動跑，出事後才想補護欄，順序完全相反。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s2">
+    <span class="sec-num">SECTION 02</span>
+    <h2>內層 agent vs 外層 Ralph 迴圈</h2>
+    <p>這兩個名詞常被混用，但職責完全不同：</p>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th></th><th>內層 agent</th><th>外層 Ralph 迴圈</th></tr></thead>
+        <tbody>
+          <tr><td>單位</td><td>一個任務內的一步</td><td>一整個任務／一輪迭代</td></tr>
+          <tr><td>Context</td><td>累積當前工作狀態</td><td><strong>每輪清空重建</strong></td></tr>
+          <tr><td>記憶</td><td>對話歷史</td><td>git log + 進度檔 + 規格檔</td></tr>
+          <tr><td>終止條件</td><td>測試通過</td><td>規格的所有驗收條件通過</td></tr>
+          <tr><td>誰負責</td><td>模型</td><td><strong>你（規格設計者）</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>外層迴圈本質上就是：</p>
+<pre><code>while not spec_satisfied():
+    spawn(agent, next_smallest_task)
+    verify()      # 測試 / lint / type check
+    commit()      # 讓下一輪能從 git 讀到自己的成果</code></pre>
+    <p>所以「Ralph 不是框架，而是把工程師的角色從逐行寫程式，搬到規格設計與驗證」這個說法，在技術上是站得住的。它把工程師的職責重新排序成四件事：</p>
+    <ol>
+      <li>寫清楚規格與驗收條件</li>
+      <li>設計可自動驗證的測試</li>
+      <li>控制 agent 的執行範圍與風險</li>
+      <li>審查、整合並修正產出</li>
+    </ol>
+  </section>
+
+  <section class="sec" id="s3">
+    <span class="sec-num">SECTION 03</span>
+    <h2>常見陷阱</h2>
+    <ol>
+      <li><strong>一開始就想做 multi-agent 或自主規劃</strong> → 先讓單一 agent 跑得穩。<span style="color:var(--muted);">（對應 M1～M3）</span></li>
+      <li><strong>沒有測試就讓它自動跑</strong> → 你得到的不是生產力，是高產能的破壞者。<span style="color:var(--muted);">（見第 3 章）</span></li>
+      <li><strong>工具輸出直接灌進 context</strong> → 兩輪就爆掉，模型注意力也被稀釋。<span style="color:var(--muted);">（見第 2 章的三個鐵則）</span></li>
+      <li><strong>用整檔覆寫代替精準 patch</strong> → 每次修改都產生巨大 diff，無法 review、無法回滾。<span style="color:var(--muted);">（見第 2 章的 <code>edit_file</code> 設計）</span></li>
+      <li><strong>沒有步數與 token 上限</strong> → 一個迴圈燒掉一整天的額度。<span style="color:var(--muted);">（見第 3 章的三重硬上限）</span></li>
+      <li><strong>沒有 git 快照</strong> → 失敗時無法恢復，只能手動收拾。<span style="color:var(--muted);">（見第 3 章的動工前快照）</span></li>
+      <li><strong>把「模型說完成」當成完成</strong> → 唯一的完成定義是驗證器綠燈。<span style="color:var(--muted);">（見第 1 章的零件 6、第 6 章的沉默失敗）</span></li>
+    </ol>
+
+    <div class="callout warn">
+      <div class="label">第 7 點在實測裡真的發生了</div>
+      <p style="margin:0;">第 6 章的「差 121 tokens 的沉默失敗」就是這個陷阱的具體版本：Pi 回傳空輸出、exit code 0，看起來像「跑完了」，實際上是「從來沒開始」。<strong>當你的驗證器是 exit code，而 exit code 說謊時，你需要的是事件串流，不是更樂觀的假設。</strong></p>
+    </div>
+  </section>
+
+  <nav class="pager">
+    <a href="ch06-experiment.html"><span class="dir">← 上一章</span>06 一手實測：把 Pi 接上本地模型</a>
+    <a class="right" href="ch08-standard.html"><span class="dir">下一章 →</span>08 一個比較健康的資深標準</a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>本專題整理自 Geoffrey Huntley〈Replaced〉與〈Ralph Wiggum as a software engineer〉、Tobi Lütke 的 Shopify AI 備忘錄，並加上 <strong>Cline CLI</strong>、<strong>Pi</strong> 兩個開源 harness 的對照與本機實測。觀點部分版權屬原作者所有。</p>
+    <p><a href="index.html">專題首頁</a> ・ <a href="ch08-standard.html">下一章：結語</a></p>
+  </div>
+</footer>
+</body>
+</html>

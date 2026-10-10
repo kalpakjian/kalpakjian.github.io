@@ -28,6 +28,7 @@ code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
   - 'dhh-rails-world-2026/**'
+  - 'coding-agent/**'
   - 'opencv-notes/**'
   - 'ai-intro-notes/**'
   - 'cv-intro-notes/**'

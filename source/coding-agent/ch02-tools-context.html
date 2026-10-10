@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 工具設計與 Context 管理 ｜ 從零打造一個 coding agent</title>
+<meta name="description" content="工具是 agent 的 action space：最小可用集、edit_file 的唯一匹配設計。Context 不是塞滿，而是每一輪重新組裝——三個鐵則與 Ralph 的乾淨 context。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">從零打造一個 coding agent <span class="tag">專題</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-six-parts.html">01 六個零件</a>
+      <a href="ch02-tools-context.html" class="active">02 工具與 Context</a>
+      <a href="ch03-guardrails-verify.html">03 護欄與骨架</a>
+      <a href="ch04-cline.html">04 Cline CLI</a>
+      <a href="ch05-pi.html">05 Pi</a>
+      <a href="ch06-experiment.html">06 一手實測</a>
+      <a href="ch07-workflow.html">07 工作流</a>
+      <a href="ch08-standard.html">08 結語</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container article">
+  <section class="hero" style="padding-bottom:0;">
+    <span class="kicker">02 / 零件（上）</span>
+    <h1>工具設計與 Context 管理</h1>
+    <p class="lead">工具是 agent 唯一能改變世界的手段；而 context 不是「把東西都塞進去」，是每一輪重新組裝。</p>
+    <p class="meta">六個零件裡的零件 2 與零件 4——這兩格決定 agent 能做什麼，以及它每一輪「看得到什麼」。</p>
+  </section>
+
+  <figure class="cover">
+    <img src="img/ch02-tools-context.png" alt="四個發光工具圖示沿著軌道送入一疊半透明層狀玻璃板，部分層正在被裁去" width="1344" height="768" loading="eager">
+    <figcaption>左邊是工具（action space），右邊是 context 管理器：每一輪重新組裝、截斷、摘要，只留下這一輪真正需要的那幾層。</figcaption>
+  </figure>
+
+  <nav class="toc">
+    <h2>本章目錄</h2>
+    <ol>
+      <li><a href="#s1">工具設計：不要一開始就給 30 個工具</a></li>
+      <li><a href="#s2">Context 管理：真正的難點</a></li>
+    </ol>
+  </nav>
+
+  <section class="sec" id="s1">
+    <span class="sec-num">SECTION 01</span>
+    <h2>工具設計：不要一開始就給 30 個工具</h2>
+    <p>工具是 agent 的 action space，也是它唯一能改變世界的手段。最小可用集如下：</p>
+
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>工具</th><th>關鍵設計點</th></tr></thead>
+        <tbody>
+          <tr><td><code>read_file(path, start, end)</code></td><td><strong>帶行號區間</strong>，不要整檔塞進 context</td></tr>
+          <tr><td><code>list_files(glob)</code></td><td>先讓它知道專案長什麼樣</td></tr>
+          <tr><td><code>grep(pattern, glob)</code></td><td>定位比全讀便宜 100 倍</td></tr>
+          <tr><td><code>edit_file(path, old, new)</code></td><td><strong><code>old</code> 必須唯一匹配</strong>，否則回報錯誤讓它重試</td></tr>
+          <tr><td><code>write_file(path, content)</code></td><td>僅用於建立新檔</td></tr>
+          <tr><td><code>run_shell(cmd, timeout)</code></td><td>黑名單 + 逾時 + 輸出截斷</td></tr>
+          <tr><td><code>run_tests()</code></td><td>包好的測試指令，agent 不必自己猜</td></tr>
+          <tr><td><code>git_status</code> / <code>git_diff</code></td><td>讓 agent 看到自己改了什麼</td></tr>
+          <tr><td><code>todo_write</code></td><td>把計畫外顯化，防止它亂飄</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><code>edit_file</code> 的「<code>old</code> 必須唯一匹配」是 Claude Code 風格精準 patch 的核心。若同一段文字出現兩次，工具應該<strong>拒絕執行並回報出現次數</strong>，而不是猜一個位置改下去——這樣才不會產生無法 review 的巨大 diff。</p>
+    <p>每一個工具都要有：<strong>JSON schema、權限等級、逾時、輸出上限、人類可讀的錯誤訊息</strong>。錯誤訊息寫得好，等於免費提升 agent 的成功率。</p>
+
+    <div class="callout note">
+      <div class="label">對照組預告</div>
+      <p style="margin:0;">第 5 章的 Pi 只有四個原子工具（<code>read</code>／<code>bash</code>／<code>edit</code>／<code>write</code>），而第 4 章的 Cline CLI 把工具層做到包含 MCP servers 與 lifecycle hooks。先記住這一格的形狀，後面兩張表會回來對照它。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s2">
+    <span class="sec-num">SECTION 02</span>
+    <h2>Context 管理：真正的難點</h2>
+    <p>Context 不是「把東西都塞進去」，而是<strong>每一輪重新組裝</strong>：</p>
+
+<pre><code>[ system  ]  角色 + 工具使用規則 + 安全紅線
+[ project ]  專案規則檔（類 CLAUDE.md）：怎麼跑測試、禁止改哪些目錄
+[ task    ]  本輪唯一任務 + 驗收條件            ← 每輪重新注入（乾淨 context）
+[ state   ]  當前 todo + 最近一次錯誤 + git diff
+[ history ]  舊輪次壓縮成摘要，工具輸出只留頭尾</code></pre>
+
+    <p>三個鐵則：</p>
+    <ol>
+      <li><strong>工具輸出一定要截斷</strong>——保留開頭與結尾，中間省略。一次 <code>npm test</code> 的完整輸出就足以吃掉半個視窗。</li>
+      <li><strong>檔案用 grep 定位 + 區間讀取</strong>，不要整份讀進來。</li>
+      <li><strong>超過預算就摘要舊輪次</strong>，但「目標與驗收條件」永遠不能被摘要掉。</li>
+    </ol>
+
+    <div class="callout">
+      <div class="label">這就是 Ralph 所謂的「乾淨 context」</div>
+      <p style="margin:0;">Ralph 迴圈常被形容成一種神秘框架，但它技術上只是在做一件事：<strong>每一輪都把 agent 的 context 清空重建，只留下目標、規格與驗收條件</strong>，讓它從 git 紀錄、進度檔與測試結果重新認識自己的處境。這不是魔法，是 context 管理策略。</p>
+    </div>
+
+    <div class="callout note">
+      <div class="label">這三個鐵則會一路跟著你</div>
+      <p style="margin:0 0 10px;">它們不是本章的裝飾，而是後面幾章的伏筆：</p>
+      <ul class="plain" style="margin:0;">
+        <li>第 4 章：連生產級的 Cline CLI，在「長任務記憶與 context 管理」這一格都還只做到「中等」——這三個鐵則就是這個難題的最小解。</li>
+        <li>第 5 章：Pi 的 <strong>Code Mode</strong> 是同一件事的更激進版本——與其把 200 行 grep 結果塞進 context 讓模型自己讀，不如讓模型寫一段程式去讀，只回傳結論。</li>
+        <li>第 6 章：實測六會用一組「削掉 prompt」的對照，把這件事推到極致——當 harness 的固定開銷就吃掉整個視窗時，你連第一句話都說不出口。</li>
+      </ul>
+    </div>
+  </section>
+
+  <nav class="pager">
+    <a href="ch01-six-parts.html"><span class="dir">← 上一章</span>01 一個 coding agent 只有六個零件</a>
+    <a class="right" href="ch03-guardrails-verify.html"><span class="dir">下一章 →</span>03 護欄、驗證迴路與 90 行骨架</a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>本專題整理自 Geoffrey Huntley〈Replaced〉與〈Ralph Wiggum as a software engineer〉、Tobi Lütke 的 Shopify AI 備忘錄，並加上 <strong>Cline CLI</strong>、<strong>Pi</strong> 兩個開源 harness 的對照與本機實測。觀點部分版權屬原作者所有。</p>
+    <p><a href="index.html">專題首頁</a> ・ <a href="ch03-guardrails-verify.html">下一章：護欄與骨架</a></p>
+  </div>
+</footer>
+</body>
+</html>

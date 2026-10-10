@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03 護欄、驗證迴路與 90 行骨架 ｜ 從零打造一個 coding agent</title>
+<meta name="description" content="沒有護欄就不要讓它自動跑；測試是 agent 的煞車系統。附一支約 90 行、真的能跑起來的 Python 最小 coding agent 骨架。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">從零打造一個 coding agent <span class="tag">專題</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-six-parts.html">01 六個零件</a>
+      <a href="ch02-tools-context.html">02 工具與 Context</a>
+      <a href="ch03-guardrails-verify.html" class="active">03 護欄與骨架</a>
+      <a href="ch04-cline.html">04 Cline CLI</a>
+      <a href="ch05-pi.html">05 Pi</a>
+      <a href="ch06-experiment.html">06 一手實測</a>
+      <a href="ch07-workflow.html">07 工作流</a>
+      <a href="ch08-standard.html">08 結語</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container article">
+  <section class="hero" style="padding-bottom:0;">
+    <span class="kicker">03 / 零件（下）</span>
+    <h1>護欄、驗證迴路與 90 行骨架</h1>
+    <p class="lead">沒有護欄，就不要讓它自動跑；沒有測試，你得到的不是生產力，而是高產能的破壞者。</p>
+    <p class="meta">六個零件裡的零件 5 與零件 6，最後收束成一支約 90 行、真的能跑起來的 Python 骨架。</p>
+  </section>
+
+  <figure class="cover">
+    <img src="img/ch03-guardrails-verify.png" alt="發光的安全閘門立在光路上，上方漂浮綠色驗證勾號與終端機視窗" width="1344" height="768" loading="eager">
+    <figcaption>護欄決定 agent「允許做什麼」，驗證器決定「怎麼判斷它做對了」。前者要在後者之後、自動化之前完成。</figcaption>
+  </figure>
+
+  <nav class="toc">
+    <h2>本章目錄</h2>
+    <ol>
+      <li><a href="#s1">護欄：沒有這一層，就不要讓它自動跑</a></li>
+      <li><a href="#s2">驗證迴路：測試就是 agent 的煞車系統</a></li>
+      <li><a href="#s3">最小可跑的 Python 骨架</a></li>
+    </ol>
+  </nav>
+
+  <section class="sec" id="s1">
+    <span class="sec-num">SECTION 01</span>
+    <h2>護欄：沒有這一層，就不要讓它自動跑</h2>
+    <p>這是絕大多數人跳過、然後付出代價的一層。</p>
+    <ul>
+      <li><strong>路徑白名單</strong>：任何解析後落在 workspace 之外的路徑直接拒絕（防 <code>../../</code> 逃逸）。</li>
+      <li><strong>危險指令黑名單</strong>：<code>rm -rf</code>、<code>git push --force</code>、<code>curl | sh</code>、磁碟格式化等 → 攔截並要求人工執行。</li>
+      <li><strong>三重硬上限</strong>：步數、token、單指令時間。三者都要有，否則就是一個無限迴圈燒錢機。</li>
+      <li><strong>動工前先快照</strong>：<code>git commit</code> 或 <code>git stash</code>，讓「回滾」是一個指令，而不是一場災難。</li>
+      <li><strong>dry-run 模式</strong>：寫入與刪除類工具先印出 diff 給人看，確認後才落地。</li>
+    </ul>
+    <p>生產級 harness 也是這樣設計的：Cline CLI 預設就是<strong>逐步審批</strong>——每一處檔案修改與指令執行都要你點頭，diff 攤在眼前；auto-approve 可以開，但那是你主動交出的權限，不是預設值。這種「預設安全、主動放權」的順序，值得直接抄進自己的骨架。</p>
+
+    <div class="callout">
+      <div class="label">順序很重要</div>
+      <p style="margin:0;">護欄要在「讓它自動跑」<strong>之前</strong>做完，不是在出事之後補。這也是 Ralph 迴圈被誤解的地方——「無人值守自動完成軟體」是過度簡化的說法；實務上它仍需要人類做規格設計、code review、架構判斷與安全把關。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s2">
+    <span class="sec-num">SECTION 02</span>
+    <h2>驗證迴路：測試就是 agent 的煞車系統</h2>
+    <p>每次改動後自動串成 pipeline：</p>
+<pre><code>格式化 → lint → type check → 單元測試 → （可選）整合測試</code></pre>
+    <p>失敗時，把 <strong>stderr + <code>git diff</code></strong> 當作下一輪的 context 餵回去。如此一來，agent 不需要「聰明」，它只需要<strong>會看紅字</strong>。</p>
+    <p>沒有測試的 agent，得到的不是生產力，而是高產能的破壞者——它會在幾分鐘內產生你花一整天才能 review 完的程式碼，而其中沒有任何一處被驗證過。</p>
+
+    <div class="callout note">
+      <div class="label">這條迴路在第 6 章會被量測</div>
+      <p style="margin:0;">「失敗 → 讀 stderr → 修正 → 再跑」這個循環，在實測裡就是「修正次數」那一欄：27B 一次到位，8B 多繞了一圈。而 <code>AGENTS.md</code> 寫死的專案規則，在 11 次執行中 100% 被遵守——<strong>護欄不一定要寫在程式碼裡，寫在專案規則檔也有效</strong>。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s3">
+    <span class="sec-num">SECTION 03</span>
+    <h2>最小可跑的 Python 骨架</h2>
+    <p>以下假設使用 OpenAI 相容 API（Ollama、vLLM 或雲端皆可），約 90 行就能跑起來。它已經包含前面講的六個零件中的五個：模型、工具、迴圈、context 截斷、護欄。</p>
+
+    <span class="file-label">mini_agent.py</span>
+<pre><code># mini_agent.py  —  最小 coding agent
+import os, pathlib, subprocess, json
+from openai import OpenAI
+
+ROOT = pathlib.Path.cwd().resolve()
+MODEL = os.getenv("MODEL", "qwen2.5-coder:7b")
+MAX_STEPS, MAX_OUT = 25, 6000
+BLOCK = ("rm -rf", "git push", "shutdown", "mkfs", "curl | sh")
+
+client = OpenAI(base_url=os.getenv("BASE_URL", "http://localhost:11434/v1"),
+                api_key=os.getenv("API_KEY", "not-needed"))
+
+# ---------- 工具 ----------
+def _safe(p: str) -&gt; pathlib.Path:
+    fp = (ROOT / p).resolve()
+    if fp != ROOT and ROOT not in fp.parents:
+        raise ValueError(f"拒絕存取 workspace 外的路徑: {p}")
+    return fp
+
+def read_file(path: str, start: int = 1, end: int = 200) -&gt; str:
+    lines = _safe(path).read_text(encoding="utf-8", errors="replace").splitlines()
+    return "\n".join(f"{i}\t{l}" for i, l in enumerate(lines[start-1:end], start))
+
+def grep(pattern: str, glob: str = "**/*") -&gt; str:
+    hits = []
+    for p in ROOT.glob(glob):
+        if not p.is_file() or ".git" in p.parts:
+            continue
+        for i, l in enumerate(p.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+            if pattern in l:
+                hits.append(f"{p.relative_to(ROOT)}:{i}: {l.strip()}")
+    return "\n".join(hits[:200]) or "(無符合)"
+
+def edit_file(path: str, old: str, new: str) -&gt; str:
+    fp = _safe(path); text = fp.read_text(encoding="utf-8")
+    if text.count(old) != 1:
+        return f"ERROR: old 必須唯一匹配，實際出現 {text.count(old)} 次，請提供更長的片段"
+    fp.write_text(text.replace(old, new), encoding="utf-8")
+    return f"OK: 已修改 {path}"
+
+def run_shell(cmd: str, timeout: int = 60) -&gt; str:
+    if any(b in cmd for b in BLOCK):
+        return "ERROR: 指令被安全規則攔截，需人工執行"
+    try:
+        r = subprocess.run(cmd, shell=True, cwd=ROOT, capture_output=True,
+                           text=True, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        return f"ERROR: 逾時 {timeout}s"
+    return f"exit={r.returncode}\n{r.stdout[-MAX_OUT:]}\n{r.stderr[-MAX_OUT:]}"
+
+REGISTRY = {"read_file": read_file, "grep": grep,
+            "edit_file": edit_file, "run_shell": run_shell}
+
+SCHEMA = [
+    {"type": "function", "function": {"name": "read_file", "parameters": {
+        "type": "object", "properties": {"path": {"type": "string"},
+        "start": {"type": "integer"}, "end": {"type": "integer"}},
+        "required": ["path"]}}},
+    {"type": "function", "function": {"name": "grep", "parameters": {
+        "type": "object", "properties": {"pattern": {"type": "string"}},
+        "required": ["pattern"]}}},
+    {"type": "function", "function": {"name": "edit_file", "parameters": {
+        "type": "object", "properties": {"path": {"type": "string"},
+        "old": {"type": "string"}, "new": {"type": "string"}},
+        "required": ["path", "old", "new"]}}},
+    {"type": "function", "function": {"name": "run_shell", "parameters": {
+        "type": "object", "properties": {"cmd": {"type": "string"}},
+        "required": ["cmd"]}}},
+]
+
+# ---------- 迴圈 ----------
+def agent(goal: str):
+    msgs = [
+        {"role": "system", "content": (
+            "你是 coding agent。規則：\n"
+            "1. 先用 grep 定位，再 read_file 讀區間，不要整檔讀。\n"
+            "2. 修改用 edit_file 做最小 patch。\n"
+            "3. 改完必須執行測試驗證，看到綠燈才算完成。\n"
+            "4. 不要捏造結果，只回報工具輸出的事實。")},
+        {"role": "user", "content": goal},
+    ]
+    for step in range(1, MAX_STEPS + 1):
+        r = client.chat.completions.create(model=MODEL, messages=msgs, tools=SCHEMA)
+        m = r.choices[0].message
+        msgs.append(m.model_dump(exclude_none=True))
+        if not m.tool_calls:
+            return f"[step {step}] 完成：{m.content}"
+        for tc in m.tool_calls:
+            fn = REGISTRY[tc.function.name]
+            args = json.loads(tc.function.arguments or "{}")
+            try:
+                out = fn(**args)
+            except Exception as e:
+                out = f"ERROR: {type(e).__name__}: {e}"
+            print(f"[step {step}] {tc.function.name}({args}) -&gt; {str(out)[:200]}")
+            msgs.append({"role": "tool", "tool_call_id": tc.id, "content": str(out)})
+    return "已達步數上限，交回人工審查。"
+
+if __name__ == "__main__":
+    import sys
+    print(agent(sys.argv[1]))
+</code></pre>
+
+    <p>執行方式（以 Ollama 為例，需支援 tool calling 的模型）：</p>
+<pre><code>ollama pull qwen2.5-coder:7b
+$env:MODEL="qwen2.5-coder:7b"; $env:BASE_URL="http://localhost:11434/v1"
+python mini_agent.py "幫我找出 utils.py 裡的 bug 並修好，修完跑 pytest 驗證"</code></pre>
+
+    <div class="callout">
+      <div class="label">假設與限制</div>
+      <p style="margin:0;">這份骨架假設端點支援 OpenAI tool-calling 格式。若你的本地模型不支援 <code>tools</code>，就把工具描述寫進 system prompt，改成「要求模型輸出 JSON → 自行解析」的土砲做法，<strong>其餘架構完全不變</strong>。這也正好說明了一件事：模型是可替換的零件，harness 才是你的作品。</p>
+    </div>
+
+    <div class="callout note">
+      <div class="label">記住這四個工具</div>
+      <p style="margin:0;">這份骨架的四個工具是 <code>read_file</code>、<code>grep</code>、<code>edit_file</code>、<code>run_shell</code>。下一章你會看到 Cline CLI 把工具層擴張成一個生態系；再下一章你會看到 Pi 的預設工具——<code>read</code>、<code>bash</code>、<code>edit</code>、<code>write</code>——<strong>幾乎就是這四個</strong>。</p>
+    </div>
+  </section>
+
+  <nav class="pager">
+    <a href="ch02-tools-context.html"><span class="dir">← 上一章</span>02 工具設計與 Context 管理</a>
+    <a class="right" href="ch04-cline.html"><span class="dir">下一章 →</span>04 Cline CLI：把六個零件做到生產級</a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>本專題整理自 Geoffrey Huntley〈Replaced〉與〈Ralph Wiggum as a software engineer〉、Tobi Lütke 的 Shopify AI 備忘錄，並加上 <strong>Cline CLI</strong>、<strong>Pi</strong> 兩個開源 harness 的對照與本機實測。程式碼骨架為原創示例，可直接取用修改。</p>
+    <p><a href="index.html">專題首頁</a> ・ <a href="ch04-cline.html">下一章：Cline CLI</a></p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04 Cline CLI：把六個零件做到生產級 ｜ 從零打造一個 coding agent</title>
+<meta name="description" content="Cline CLI 逐格對照你的 90 行版本：工具層、迴圈、Context、護欄、驗證器。真正的上限是 harness 能力不等於實際表現。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">從零打造一個 coding agent <span class="tag">專題</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-six-parts.html">01 六個零件</a>
+      <a href="ch02-tools-context.html">02 工具與 Context</a>
+      <a href="ch03-guardrails-verify.html">03 護欄與骨架</a>
+      <a href="ch04-cline.html" class="active">04 Cline CLI</a>
+      <a href="ch05-pi.html">05 Pi</a>
+      <a href="ch06-experiment.html">06 一手實測</a>
+      <a href="ch07-workflow.html">07 工作流</a>
+      <a href="ch08-standard.html">08 結語</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container article">
+  <section class="hero" style="padding-bottom:0;">
+    <span class="kicker">04 / 光譜的一端</span>
+    <h1>Cline CLI：把六個零件做到生產級</h1>
+    <p class="lead">前面三章你手上已經有一個 90 行、能跑的最小版本。現在把鏡頭拉遠，看一個已經上線的開源 harness 把同一組零件做到什麼程度。</p>
+    <p class="meta"><a href="https://cline.bot/cli">Cline CLI</a>——能力接近 Claude Code，但設計哲學更偏「開放模型選擇 ＋ 明確審批」。</p>
+  </section>
+
+  <figure class="cover">
+    <img src="img/ch04-cline.png" alt="一台組裝完整、面板與旋鈕眾多的複雜機械，每個插槽都被填滿" width="1344" height="768" loading="eager">
+    <figcaption>光譜的一端：六個零件全部做滿。代價是核心很大——你很難一眼看穿它。</figcaption>
+  </figure>
+
+  <nav class="toc">
+    <h2>本章目錄</h2>
+    <ol>
+      <li><a href="#s1">同一組零件，兩種規模</a></li>
+      <li><a href="#s2">能力盤點：Cline CLI</a></li>
+      <li><a href="#s3">和 Claude Code 的定位差異</a></li>
+      <li><a href="#s4">真正的上限：harness 能力 ≠ 實際表現</a></li>
+      <li><a href="#s5">如果你想親手驗證 Huntley 那句話</a></li>
+    </ol>
+  </nav>
+
+  <section class="sec" id="s1">
+    <span class="sec-num">SECTION 01</span>
+    <h2>同一組零件，兩種規模</h2>
+    <p>Cline 原本以 VS Code 擴充聞名；CLI 2.0 之後，它把同一套 agent runtime 帶進終端機，支援 headless、CI／CD、script 與管線使用。用 Huntley 那套標準看，它大約落在：</p>
+    <blockquote style="border-left:4px solid var(--accent);margin:22px 0;padding:2px 0 2px 20px;color:#444b53;">
+      <p style="margin:0;"><strong>一個可直接使用、可自訂、可接本地模型的通用 coding agent harness</strong>——能力接近 Claude Code，但設計哲學更偏「開放模型選擇 ＋ 明確審批」。</p>
+    </blockquote>
+    <p>它已經具備 agent 的核心迴路：</p>
+    <ul>
+      <li>讀取專案結構與相關檔案，建立任務 context</li>
+      <li>建立、修改、刪除檔案，並以 diff 呈現變更</li>
+      <li>執行 shell 指令，即時觀察 stdout／stderr</li>
+      <li>根據 linter、compiler、測試輸出除錯並重試</li>
+      <li>透過 MCP 接資料庫、API、瀏覽器、基礎設施等外部工具</li>
+      <li>支援 Plan／Act：先規劃，確認後才執行</li>
+    </ul>
+    <p>所以它不是「會建議程式碼的工具」，而是能<strong>自己完成一連串工程動作</strong>的 agent。</p>
+
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>#</th><th>零件</th><th>你的 90 行版本</th><th>Cline CLI</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>模型</td><td>一個 OpenAI 相容端點</td><td>幾乎任意：雲端 API、OpenAI-compatible endpoint、Ollama／LM Studio 本地模型</td></tr>
+          <tr><td>2</td><td>工具</td><td>四個（<code>read_file</code>／<code>grep</code>／<code>edit_file</code>／<code>run_shell</code>）</td><td>檔案增刪改（diff 呈現）、shell、MCP servers、SDK 自訂工具與 lifecycle hooks</td></tr>
+          <tr><td>3</td><td>迴圈</td><td>單層 <code>while</code>，25 步上限</td><td>完整 agent runtime，另可放進 cron／CI／script，stdin／stdout 可串接 Unix 工具</td></tr>
+          <tr><td>4</td><td>Context</td><td>手動截斷工具輸出</td><td>Plan／Act、checkpoint、task 狀態</td></tr>
+          <tr><td>5</td><td>護欄</td><td>路徑白名單、指令黑名單、步數上限</td><td>預設逐步審批（可開 auto-approve），diff 可見</td></tr>
+          <tr><td>6</td><td>驗證器</td><td>你自己指定的測試指令</td><td>讀 linter／compiler／測試輸出後自行重試</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>看完這張表，最該注意到的不是「它工具比較多」，而是：你的四個工具只是它工具層的一個<strong>子集</strong>。真正的差距在<strong>零件 4 與 5 的成熟度</strong>，以及<strong>零件 1 可替換的廣度</strong>——這三格，才是「能跑」與「能上線」之間的距離。</p>
+  </section>
+
+  <section class="sec" id="s2">
+    <span class="sec-num">SECTION 02</span>
+    <h2>能力盤點：Cline CLI</h2>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>能力</th><th>Cline CLI 的程度</th></tr></thead>
+        <tbody>
+          <tr><td>單一任務自主完成</td><td>強：可讀檔、改檔、跑指令、依錯誤修正</td></tr>
+          <tr><td>人類控制</td><td>強：預設可逐步批准檔案修改與指令；也可開 auto-approve</td></tr>
+          <tr><td>模型自由度</td><td>很強：支援多家 API、OpenAI-compatible endpoint、Ollama／LM Studio 等本地模型</td></tr>
+          <tr><td>工具擴充</td><td>強：MCP servers、SDK、自訂工具與 lifecycle hooks</td></tr>
+          <tr><td>自動化整合</td><td>強：可放進 cron、CI、script，stdin／stdout 可串接 Unix 工具</td></tr>
+          <tr><td>多 agent 協作</td><td>中等偏新：Cline Kanban 可平行跑多個 agent，各自用獨立 git worktree</td></tr>
+          <tr><td>長任務記憶與 context 管理</td><td>中等：有 Plan／Act、checkpoint、task 狀態，但複雜長跑任務仍很依賴規格與人工拆解</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>這張表裡最誠實的一格是<strong>最後一格</strong>。Context 管理是公認最難的零件，連生產級產品都還在做「中等」——你在第 2 章看到的那三個鐵則（截斷輸出、grep 定位、摘要舊輪次），就是這個難題的最小解。</p>
+  </section>
+
+  <section class="sec" id="s3">
+    <span class="sec-num">SECTION 03</span>
+    <h2>和 Claude Code 的定位差異</h2>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>面向</th><th>Cline CLI</th><th>Claude Code</th></tr></thead>
+        <tbody>
+          <tr><td>定位</td><td>開源、可自選模型的 agent harness</td><td>Anthropic 官方、深度整合 Claude 模型的終端 agent</td></tr>
+          <tr><td>模型</td><td>幾乎任意：雲端 API、本地 Ollama／LM Studio</td><td>主要鎖定 Claude 模型</td></tr>
+          <tr><td>使用介面</td><td>VS Code／JetBrains／CLI／SDK，IDE 體驗特別強</td><td>終端機原生體驗</td></tr>
+          <tr><td>控制方式</td><td>預設逐步審批，diff 可見，適合想保留控制權的人</td><td>也有審批與權限機制，但整體更偏流暢的終端工作流</td></tr>
+          <tr><td>多 agent</td><td>Kanban 平行任務、git worktree 隔離</td><td>Agent Teams／sub-agents 較成熟</td></tr>
+          <tr><td>適合誰</td><td>想用本地模型、控制成本、重視開放性與可審查性的人</td><td>想要最少設定、追求 Claude 生態最佳整合的人</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>這張表的目的不是排名。它們在光譜上位置不同：<strong>Cline 把選擇權交給你</strong>（模型、成本、審批粒度），<strong>Claude Code 把整合度做到最高</strong>。要選哪一邊，取決於你更在意「可替換」還是「少設定」。</p>
+  </section>
+
+  <section class="sec" id="s4">
+    <span class="sec-num">SECTION 04</span>
+    <h2>真正的上限：harness 能力 ≠ 實際表現</h2>
+    <p>Cline CLI 的 agent 能力要分兩層看：</p>
+    <ol>
+      <li><strong>Harness 能力</strong>：已經很完整——檔案操作、shell、MCP、Plan／Act、審批、headless 執行。</li>
+      <li><strong>實際表現</strong>：主要由你接的模型決定。接 Claude Opus／Sonnet 時可接近 Claude Code；接較小或較弱的本地模型時，規劃、長 context、工具呼叫與除錯能力會明顯下降。</li>
+    </ol>
+
+    <div class="callout">
+      <div class="label">這正是本專題的核心論點</div>
+      <p style="margin:0;"><strong>Cline 是很好的 harness，但不保證等於強 agent。</strong>它給你 agent 的骨架；模型、rules、MCP 工具、測試與任務拆解，才決定它能走多遠。反過來說——這也正是為什麼前面花了三章講 harness：骨架是你唯一能控制的部分。</p>
+    </div>
+
+    <div class="callout note">
+      <div class="label">第 6 章會把這句話變成數字</div>
+      <p style="margin:0;">「實際表現由你接的模型決定」不是修辭。第 6 章的實測裡，同一個 harness、同一個任務、同一份 <code>AGENTS.md</code>，只換模型：27B 輸出 438 tokens、7.9 秒；8B 輸出 5,378 tokens、65.6 秒——<strong>12.3 倍的差距</strong>，而且 8B 多繞了一圈才修對。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s5">
+    <span class="sec-num">SECTION 05</span>
+    <h2>如果你想親手驗證 Huntley 那句話</h2>
+    <p>以本地模型、開源、可自訂與成本控制為優先，Cline CLI 比 Claude Code 更適合當主要實驗平台：</p>
+    <ul>
+      <li>用 Ollama／LM Studio 接本地模型，測試<strong>不同模型在同一個 harness</strong> 下的表現差異——這是理解「模型是可替換零件」最快的實驗</li>
+      <li>用 MCP 把 PDF／OCR、檔案整理、Git、Python 腳本接進工作流</li>
+      <li>在 CLI 或 CI 中跑重複性任務：批次整理文件、生成測試、檢查專案結構</li>
+      <li>用 Plan／Act 與逐步審批，配合「先理解底層、再逐步放手」的節奏</li>
+    </ul>
+    <p>但要<strong>真正理解</strong> harness，建議再往下讀一層：它的 tool-call 格式、system prompt、context 組裝與 auto-approve 邏輯。最有效的練習，是用它的 SDK 寫一個只有「讀檔、寫檔、跑 Python、跑測試」四個工具的迷你版——那其實就是第 3 章那份骨架，只是換成 SDK 的形狀。</p>
+
+    <div class="callout">
+      <div class="label">一句話評價</div>
+      <p style="margin:0 0 12px;"><strong>Cline CLI 是「開源、模型自由、可審查」的 Claude Code 替代品；作為 agent harness 已達生產可用級，但它的智能上限等於你所選的模型，加上你設計的驗證迴路。</strong></p>
+      <p style="margin:0;">但 Cline 只是光譜的一端。它把六個零件<strong>全部做滿</strong>，代價是核心很大、你很難一眼看穿它。如果把方向反過來——<strong>只留最小的核心，其餘全部交還給使用者</strong>——會得到什麼？那是下一章要看的另一個極端：Pi。</p>
+    </div>
+  </section>
+
+  <nav class="pager">
+    <a href="ch03-guardrails-verify.html"><span class="dir">← 上一章</span>03 護欄、驗證迴路與 90 行骨架</a>
+    <a class="right" href="ch05-pi.html"><span class="dir">下一章 →</span>05 Pi：把核心拆到最小</a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>本專題整理自 Geoffrey Huntley〈Replaced〉與〈Ralph Wiggum as a software engineer〉、Tobi Lütke 的 Shopify AI 備忘錄，並加上 <strong>Cline CLI</strong>、<strong>Pi</strong> 兩個開源 harness 的對照與本機實測。觀點部分版權屬原作者所有。</p>
+    <p><a href="index.html">專題首頁</a> ・ <a href="ch05-pi.html">下一章：Pi</a></p>
+  </div>
+</footer>
+</body>
+</html>

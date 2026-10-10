@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08 一個比較健康的資深標準 ｜ 從零打造一個 coding agent</title>
+<meta name="description" content="把那句爭論改寫成可以真正拿來自我要求的話，以及五項具體能力。附全篇參考來源。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">從零打造一個 coding agent <span class="tag">專題</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-six-parts.html">01 六個零件</a>
+      <a href="ch02-tools-context.html">02 工具與 Context</a>
+      <a href="ch03-guardrails-verify.html">03 護欄與骨架</a>
+      <a href="ch04-cline.html">04 Cline CLI</a>
+      <a href="ch05-pi.html">05 Pi</a>
+      <a href="ch06-experiment.html">06 一手實測</a>
+      <a href="ch07-workflow.html">07 工作流</a>
+      <a href="ch08-standard.html" class="active">08 結語</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container article">
+  <section class="hero" style="padding-bottom:0;">
+    <span class="kicker">08 / 結語</span>
+    <h1>一個比較健康的資深標準</h1>
+    <p class="lead">如果要把 Huntley 的說法改寫成一句可以真正拿來自我要求的話，我會這樣寫：</p>
+  </section>
+
+  <figure class="cover">
+    <img src="img/ch08-standard.png" alt="工作台上的一台發光天平與驗證清單，一邊是小小的亮核心，一邊是盾牌與勾選清單" width="1344" height="768" loading="eager">
+    <figcaption>真正的標準不是「能不能造出來」，而是「能不能安全地駕馭它」。</figcaption>
+  </figure>
+
+  <blockquote style="border-left:4px solid var(--accent);margin:22px 0;padding:2px 0 2px 20px;color:#444b53;">
+    <p style="margin:0;font-size:19px;">一位 2026 年的資深工程師，應該能<strong>安全地</strong>將 AI agent 整合進真實工程流程，並能判斷何時該信任它、何時必須介入。</p>
+  </blockquote>
+
+  <section class="sec" id="s1">
+    <span class="sec-num">結語 01</span>
+    <h2>具體能力包括</h2>
+    <ul class="chapter-list" style="list-style:none;padding:0;">
+      <li>能把模糊需求轉成可驗證的規格</li>
+      <li>能設計測試、型別檢查與 CI，作為 agent 的煞車系統</li>
+      <li>能評估不同模型、harness 與 token 成本</li>
+      <li>能審查 AI 產生的架構與安全風險</li>
+      <li>能教團隊建立可重複的 AI 工作流</li>
+    </ul>
+  </section>
+
+  <section class="sec" id="s2">
+    <span class="sec-num">結語 02</span>
+    <h2>回到實作層面</h2>
+    <p><strong>做一個 coding agent，就是做一個「有嚴格工具介面、有預算限制的 context 管理器，外面套一層可驗證的迴圈」。</strong>把 context 預算、工具權限、驗證與回滾做對，你就已經做出 Claude Code 的核心骨架，也才真的符合那個「能設計與駕馭工作迴路」的標準。</p>
+    <p>而 Cline CLI 與 Pi 正好從兩個方向證明了同一件事：Cline 把六個零件都做到了生產級，Pi 把核心拆到只剩四個原子工具——所以你<strong>不需要從零造一個</strong>；但如果你不清楚那六個零件在做什麼，你既看不懂 Cline 的黑箱，也配不出 Pi 的護欄。<strong>harness 可以下載，判斷力不行。</strong></p>
+    <p>這也是為什麼第 5 章要把 Pi 的六步練法接回本專題結構：它給的不是一條新路，而是同一條路的三層視角——<strong>怎麼用 agent、怎麼擴展 agent、怎麼從零重建 agent</strong>。三層都走過一次，你才算真的把 harness 變成自己的能力，而不是把某個產品的操作手冊背下來。</p>
+    <p>第 6 章的實測則補上最後一塊：<strong>這些都是可以被量測的</strong>。8,313 tokens 的 prompt、7.9 秒的迴圈、12.3 倍的輸出差距——當你能報出這些數字，你就不再是「感覺這個 agent 還行」的使用者，而是能診斷它的人。</p>
+
+    <div class="callout note">
+      <div class="label">延伸閱讀</div>
+      <p style="margin:0;">本站另一篇〈<a href="/2026/10/09/harness-engineering-eleven-coding-agents/">剖開 11 個主流 coding agent 的原始碼</a>〉整理了 11 個生產級系統的 7 個標準子系統與 18 條設計建議，可以當作本專題的架構對照表。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s3">
+    <span class="sec-num">附錄</span>
+    <h2>參考來源</h2>
+    <h3>主來源</h3>
+    <ul>
+      <li>Geoffrey Huntley, 〈Replaced〉：<a href="https://ghuntley.com/replaced/">https://ghuntley.com/replaced/</a></li>
+      <li>Geoffrey Huntley, 〈Ralph Wiggum as a software engineer〉（Ralph 迴圈）：<a href="https://ghuntley.com/loop/">https://ghuntley.com/loop/</a></li>
+      <li>snarktank/ralph（Ralph 實作）：<a href="https://github.com/snarktank/ralph">https://github.com/snarktank/ralph</a></li>
+      <li>Tobi Lütke 的 Shopify AI 內部備忘錄整理：<a href="https://www.thefoundersreport.com/tobi-lutke-shopify-ai-mandate-public-memo">thefoundersreport.com</a></li>
+      <li>Codacy Blog, 〈What Everyone Gets Wrong About the Ralph Loop〉：<a href="https://blog.codacy.com/what-everyone-gets-wrong-about-the-ralph-loop">blog.codacy.com</a></li>
+    </ul>
+  </section>
+
+  <section class="sec">
+    <h3 style="border-top:3px solid var(--ink);padding-top:14px;">Cline CLI（第 4 章對照對象）</h3>
+    <ul>
+      <li>Cline 官方網站：<a href="https://cline.bot/">https://cline.bot/</a></li>
+      <li>Cline CLI 產品頁：<a href="https://cline.bot/cli">https://cline.bot/cli</a></li>
+      <li>Cline 原始碼（GitHub）：<a href="https://github.com/cline/cline">https://github.com/cline/cline</a></li>
+      <li>Cline CLI 官方文件：<a href="https://docs.cline.bot/usage/cli-overview">https://docs.cline.bot/usage/cli-overview</a></li>
+      <li>〈Cline vs Claude Code〉（Morph）：<a href="https://www.morphllm.com/comparisons/cline-vs-claude-code">morphllm.com</a></li>
+      <li>〈Best Open-Source AI Coding Tools 2026〉（Frontman）：<a href="https://frontman.sh/blog/best-open-source-ai-coding-tools-2026/">frontman.sh</a></li>
+      <li>〈Cline Guide〉（DeployHQ）：<a href="https://www.deployhq.com/guides/cline">deployhq.com</a></li>
+      <li>〈Claude Code vs Cline〉（CodePick）：<a href="https://codepick.dev/zh/compare/claude-code-vs-cline/">codepick.dev</a></li>
+    </ul>
+  </section>
+
+  <section class="sec">
+    <h3 style="border-top:3px solid var(--ink);padding-top:14px;">Pi Coding Agent（第 5 章對照對象）</h3>
+    <ul>
+      <li>Pi 原始碼（GitHub）：<a href="https://github.com/earendil-works/pi">https://github.com/earendil-works/pi</a></li>
+      <li>Pi 官方網站：<a href="https://pi.dev/">https://pi.dev/</a></li>
+      <li>〈Pi Agent Harness：可組合的 coding agent〉（AI-Chain）：<a href="https://ai-chain.tw/zh-cn/blog/pi-agent-harness-composable-coding-agent/">ai-chain.tw</a></li>
+      <li>〈Pi Agent 深入解析 2026〉（KSPL Academy）：<a href="https://academy.kspl.tech/blog/2026-06-05-pi-agent-deep-dive-2026">academy.kspl.tech</a></li>
+      <li>〈Pi Agent vs Claude Code〉（Composio）：<a href="https://composio.dev/content/pi-agent-vs-claude-code">composio.dev</a></li>
+      <li>〈Pi Coding Agent 導讀〉：<a href="https://xerichen.github.io/posts/pi-coding-agent-guide/">xerichen.github.io</a></li>
+      <li>〈Pi Agent Harness 筆記〉：<a href="https://zwt0204.github.io/llm/2026/07/03/pi-agent-harness/">zwt0204.github.io</a></li>
+      <li>〈Pi vs Claude Code vs Cline〉：<a href="https://andrew.ooo/answers/pi-coding-agent-vs-claude-code-vs-cline-may-2026/">andrew.ooo</a></li>
+      <li>〈Pi Agent 深度分析〉（網易）：<a href="https://www.163.com/dy/article/L8S2RLRH05566SCS.html">163.com</a></li>
+    </ul>
+  </section>
+
+  <section class="sec">
+    <h3 style="border-top:3px solid var(--ink);padding-top:14px;">第 6 章實測</h3>
+    <ul>
+      <li>第 6 章所有數字均為本機實測（Pi 1.1.0 + Ollama + RTX 4090 24 GB）。量測用的 harness 腳本、Pi 的原始 JSON 事件串流、三個模型的完整 session 匯出檔，都保存在 <code>pi-lab</code> 實驗目錄；<code>Modelfile</code> 與重現指令已列於該章內文。八次執行、11 份事件串流全數保留，可逐筆複查。</li>
+      <li>Pi 的 <code>--mode json</code> 事件格式、<code>--export</code> 與內建工具清單以官方文件與 <code>pi --help</code> 為準：<a href="https://pi.dev/">https://pi.dev/</a></li>
+    </ul>
+    <p style="color:var(--muted);font-size:14.5px;">本專題為學習整理用途，程式碼骨架為原創示例，可直接取用修改。內容觀點部分來自上述來源，版權屬原作者所有。</p>
+  </section>
+
+  <nav class="pager">
+    <a href="ch07-workflow.html"><span class="dir">← 上一章</span>07 里程碑、Ralph 迴圈與常見陷阱</a>
+    <a class="right" href="index.html"><span class="dir">回到 →</span>專題首頁</a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>本專題整理自 Geoffrey Huntley〈Replaced〉與〈Ralph Wiggum as a software engineer〉、Tobi Lütke 的 Shopify AI 備忘錄，並加上 <strong>Cline CLI</strong>、<strong>Pi</strong> 兩個開源 harness 的對照與本機實測。程式碼骨架為原創示例。</p>
+    <p><a href="index.html">專題首頁</a> ・ <a href="/">回部落格</a></p>
+  </div>
+</footer>
+</body>
+</html>

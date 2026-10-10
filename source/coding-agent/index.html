@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>從零打造一個 coding agent ｜ 專題</title>
+<meta name="description" content="拆解 coding agent 的六個零件、一個迴圈，與 Ralph 迴圈真正的位置。含 90 行可跑的 Python 骨架、Cline CLI 與 Pi 兩個開源 harness 的對照，以及把 Pi 接上本地模型的八次實測。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">從零打造一個 coding agent <span class="tag">專題</span></a>
+    <nav class="nav">
+      <a href="index.html" class="active">首頁</a>
+      <a href="ch01-six-parts.html">01 六個零件</a>
+      <a href="ch02-tools-context.html">02 工具與 Context</a>
+      <a href="ch03-guardrails-verify.html">03 護欄與骨架</a>
+      <a href="ch04-cline.html">04 Cline CLI</a>
+      <a href="ch05-pi.html">05 Pi</a>
+      <a href="ch06-experiment.html">06 一手實測</a>
+      <a href="ch07-workflow.html">07 工作流</a>
+      <a href="ch08-standard.html">08 結語</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <span class="kicker">CODING AGENT HARNESS · 八章專題</span>
+    <h1>從零打造一個 coding agent</h1>
+    <p class="lead">六個零件、一個迴圈，與 Ralph 迴圈真正的位置。</p>
+    <p class="lead">做一個 coding agent，難的從來不是模型，而是<strong>context 管理、工具權限、驗證迴路與失敗恢復</strong>。把這四件事做對，你就已經做出 Claude Code 的核心骨架——模型只是隨時可以換掉的零件。</p>
+    <p class="meta">起點：Geoffrey Huntley〈Replaced〉引發的爭論 × Tobi Lütke 的 Shopify 內部備忘錄｜對照：Cline CLI、Pi｜附本機八次實測</p>
+  </section>
+
+  <figure class="cover">
+    <img src="img/hero.png" alt="agent 迴圈的抽象示意圖：發光的圓形藍圖漂浮在深色空間中" width="1344" height="768" loading="eager">
+    <figcaption>整個 agent 就是一個 <code>while</code> 迴圈；所有複雜度都藏在「餵什麼給模型、允許它做什麼、怎麼判斷它做對了」這三件事裡。</figcaption>
+  </figure>
+
+  <div class="callout">
+    <div class="label">TL;DR — 五句話看完</div>
+    <ul class="plain">
+      <li><strong>agent = 模型 + harness</strong>。模型提供智能，harness（外殼）負責把智能變成真實世界裡的工作。這份專題講的是 harness。</li>
+      <li>任何 coding agent 拆開都是<strong>六個零件</strong>：模型、工具、迴圈、Context 管理器、護欄、驗證器。前五個是內層 agent，第六個加上「規格檔 + 每輪單一任務」就是外層 Ralph 迴圈。</li>
+      <li>第 6 個零件<strong>不是選配</strong>——「完成」的定義必須是可驗證的（測試綠燈、型別通過、diff 符合預期），而不是模型說「我做完了」。</li>
+      <li><strong>harness 完整 ≠ 強 agent</strong>。Cline CLI 把六個零件做到生產級，Pi 把核心拆到只剩四個原子工具；兩者證明了同一件事：harness 可以下載，判斷力不行。</li>
+      <li>本機實測補上最後一塊：同一個 harness、同一個任務，<strong>8B 模型的輸出是 27B 的 12.3 倍</strong>；而 prompt 快取狀態的影響（冷 29.5s／暖 10.1s）比模型參數還大。</li>
+    </ul>
+  </div>
+
+  <h2 style="font-size:22px;margin:44px 0 0;">八章導覽</h2>
+  <p style="color:var(--muted);font-size:15px;margin:8px 0 0;">建議照順序讀：前三章把零件拆開並寫出骨架，中三章拿兩個開源 harness 當對照組並實測，最後兩章把它接回你的工作流。</p>
+
+  <div class="card-grid">
+    <a class="card" href="ch01-six-parts.html">
+      <span class="thumb"><img src="img/ch01-six-parts.png" alt="六個發光模組環繞中央核心的示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">01 / 拆解</span>
+        <h2>一個 coding agent 只有六個零件</h2>
+        <p>先把「資深工程師要能重建 Claude Code」這句話拆成合理與過頭兩半，再攤開六個零件與它們的資料流。</p>
+        <span class="arrow">閱讀本章 →</span>
+      </span>
+    </a>
+    <a class="card" href="ch02-tools-context.html">
+      <span class="thumb"><img src="img/ch02-tools-context.png" alt="工具圖示沿軌道送入層狀玻璃板的示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">02 / 零件（上）</span>
+        <h2>工具設計與 Context 管理</h2>
+        <p>不要一開始就給 30 個工具；而 context 不是把東西都塞進去，是每一輪重新組裝。三個鐵則與 Ralph 的「乾淨 context」。</p>
+        <span class="arrow">閱讀本章 →</span>
+      </span>
+    </a>
+    <a class="card" href="ch03-guardrails-verify.html">
+      <span class="thumb"><img src="img/ch03-guardrails-verify.png" alt="發光的安全閘門與綠色驗證勾號示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">03 / 零件（下）</span>
+        <h2>護欄、驗證迴路與 90 行骨架</h2>
+        <p>沒有護欄就不要讓它自動跑；測試是 agent 的煞車系統。附一支約 90 行、真的能跑起來的 Python 骨架。</p>
+        <span class="arrow">閱讀本章 →</span>
+      </span>
+    </a>
+    <a class="card" href="ch04-cline.html">
+      <span class="thumb"><img src="img/ch04-cline.png" alt="組裝完整、面板眾多的複雜機械示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">04 / 光譜的一端</span>
+        <h2>Cline CLI：把六個零件做到生產級</h2>
+        <p>同一組零件、兩種規模。逐格對照你的 90 行版本，並看清真正的上限：harness 能力不等於實際表現。</p>
+        <span class="arrow">閱讀本章 →</span>
+      </span>
+    </a>
+    <a class="card" href="ch05-pi.html">
+      <span class="thumb"><img src="img/ch05-pi.png" alt="極簡裸金屬骨架與四個工具插槽的示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">05 / 光譜的另一端</span>
+        <h2>Pi：把核心拆到最小</h2>
+        <p>它的預設四個原子工具，幾乎就是第 3 章那份骨架。極簡是雙面刃——護欄不是沒有，而是變成你的責任。</p>
+        <span class="arrow">閱讀本章 →</span>
+      </span>
+    </a>
+    <a class="card" href="ch06-experiment.html">
+      <span class="thumb"><img src="img/ch06-experiment.png" alt="示波器上兩條分岐訊號的示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">06 / 一手實測</span>
+        <h2>把 Pi 接上本地模型</h2>
+        <p>同一個 harness、同一個任務，跑三個模型、三種 thinking 等級，加上一組削減 prompt 的對照。八次執行全部收錄。</p>
+        <span class="arrow">閱讀本章 →</span>
+      </span>
+    </a>
+    <a class="card" href="ch07-workflow.html">
+      <span class="thumb"><img src="img/ch07-workflow.png" alt="發光階梯上升、帶警告標誌的示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">07 / 落地</span>
+        <h2>里程碑、Ralph 迴圈與常見陷阱</h2>
+        <p>六個漸進式里程碑（M5 沒做完就不要進 M6）、內層 agent 與外層迴圈的職責分工，以及七個最常見的坑。</p>
+        <span class="arrow">閱讀本章 →</span>
+      </span>
+    </a>
+    <a class="card" href="ch08-standard.html">
+      <span class="thumb"><img src="img/ch08-standard.png" alt="工作台上的發光天平與驗證清單示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">08 / 結語</span>
+        <h2>一個比較健康的資深標準</h2>
+        <p>把那句爭論改寫成可以真正拿來自我要求的話，以及五項具體能力。附全篇參考來源。</p>
+        <span class="arrow">閱讀本章 →</span>
+      </span>
+    </a>
+  </div>
+
+  <div class="callout note">
+    <div class="label">這份專題的立場</div>
+    <p style="margin:8px 0 0;">「資深工程師要能重建 Claude Code」適合當成<strong>練習目標</strong>，不適合當成<strong>資格判定</strong>。真正會被淘汰的不是「沒有自己寫 Claude Code」的人，而是仍然只用 AI 複製貼上、無法設計驗證、也不願承擔工程責任的人。</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>本專題整理自 Geoffrey Huntley〈Replaced〉與〈Ralph Wiggum as a software engineer〉、Tobi Lütke 的 Shopify AI 備忘錄，並加上 <strong>Cline CLI</strong>、<strong>Pi</strong> 兩個開源 harness 的對照與本機實測。觀點部分版權屬原作者所有。</p>
+    <p><a href="ch01-six-parts.html">開始閱讀 01 六個零件 →</a></p>
+  </div>
+</footer>
+</body>
+</html>
+
