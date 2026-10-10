@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Using Local GPU for ML MC 模擬測驗（60 題）| AI Tech Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#e2e5ea; --txt:#1f2328; --dim:#5b636e;
+  --blue:#2563eb; --green:#15803d; --green-bg:#e8f6ec; --red:#b91c1c;
+  --red-bg:#fdeaea; --sel:#dbeafe; --sel-line:#2563eb;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",
+    "Microsoft JhengHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+a{color:var(--blue)}
+.topbar{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  padding:12px 20px 10px;
+}
+.topbar .row1{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px}
+.topbar h1{font-size:17px; margin:0; font-weight:700}
+.topbar .back{font-size:13px; color:var(--dim); text-decoration:none}
+.topbar .back:hover{color:var(--blue)}
+.stats{display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; font-size:14px; color:var(--dim)}
+.stats b{font-size:18px; color:var(--txt)}
+.stats .ok b{color:var(--green)}
+.stats .no b{color:var(--red)}
+.saved{font-size:12px; color:var(--green); opacity:0; transition:opacity .3s}
+.saved.on{opacity:1}
+.progress{height:6px; background:var(--line); border-radius:99px; margin-top:10px; overflow:hidden}
+.progress i{display:block; height:100%; width:0; background:var(--blue); border-radius:99px; transition:width .25s}
+.controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+button{
+  font:inherit; font-size:13px; padding:6px 13px; border-radius:8px;
+  border:1px solid var(--line); background:#fff; color:var(--txt); cursor:pointer;
+  transition:.15s;
+}
+button:hover{border-color:#b9c0c9; background:#fbfbfc}
+button.primary{background:var(--blue); border-color:var(--blue); color:#fff}
+button.primary:hover{background:#1d4ed8}
+button.active{background:var(--sel); border-color:var(--sel-line); color:#1e40af; font-weight:600}
+button.danger{color:var(--red); border-color:#f0c4c4}
+button.danger:hover{background:var(--red-bg)}
+.navwrap{padding:16px 20px 0}
+.navgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px}
+.navgrid button{padding:6px 0; font-size:13px; border-radius:7px; text-align:center; font-variant-numeric:tabular-nums}
+.navgrid button.done{background:#eef2ff; border-color:#c7d2fe; color:#3730a3}
+.navgrid button.right{background:var(--green-bg); border-color:#a7d7b6; color:var(--green); font-weight:700}
+.navgrid button.wrong{background:var(--red-bg); border-color:#eeb4b4; color:var(--red); font-weight:700}
+main{max-width:900px; margin:0 auto; padding:20px 20px 80px}
+.parttitle{
+  margin:34px 0 14px; font-size:15px; font-weight:700; color:var(--dim);
+  border-left:4px solid var(--blue); padding-left:10px;
+}
+.q{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px 18px; margin-bottom:14px;
+}
+.q.correct{border-color:#a7d7b6; background:var(--green-bg)}
+.q.incorrect{border-color:#eeb4b4; background:var(--red-bg)}
+.qhead{display:flex; gap:10px; align-items:flex-start}
+.num{
+  flex:0 0 auto; min-width:30px; height:26px; line-height:26px; text-align:center;
+  background:#eef1f5; border-radius:7px; font-size:13px; font-weight:700;
+  color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.qtext{margin:0; font-weight:600; font-size:16px}
+.opts{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:7px}
+.opt{
+  display:flex; gap:10px; align-items:flex-start; padding:9px 12px;
+  border:1px solid var(--line); border-radius:9px; background:#fff;
+  cursor:pointer; transition:.12s; user-select:none;
+}
+.opt:hover{border-color:#b9c0c9; background:#fbfbfc}
+.opt .lt{
+  flex:0 0 auto; width:22px; height:22px; line-height:22px; text-align:center;
+  border-radius:6px; background:#eef1f5; font-size:12px; font-weight:700; color:var(--dim);
+}
+.opt.picked{border-color:var(--sel-line); background:var(--sel)}
+.opt.picked .lt{background:var(--sel-line); color:#fff}
+.opt.right{border-color:#7cc08f; background:var(--green-bg)}
+.opt.right .lt{background:var(--green); color:#fff}
+.opt.wrong{border-color:#e39191; background:var(--red-bg)}
+.opt.wrong .lt{background:var(--red); color:#fff}
+.tag{font-size:11px; padding:1px 7px; border-radius:99px; margin-left:auto;
+     flex:0 0 auto; font-weight:700; align-self:center}
+.tag.right{background:var(--green); color:#fff}
+.tag.wrong{background:var(--red); color:#fff}
+.expl{
+  margin-top:12px; padding:11px 14px; background:#f8fafc; border-radius:9px;
+  border-left:3px solid var(--blue); font-size:14.5px; color:#333a44;
+}
+.expl b{color:var(--txt)}
+.empty{text-align:center; color:var(--dim); padding:50px 20px; font-size:15px}
+footer{
+  max-width:900px; margin:0 auto; padding:0 20px 60px; color:var(--dim);
+  font-size:13px; text-align:center;
+}
+@media print{
+  .topbar,.navwrap,footer,.controls{display:none !important}
+  body{background:#fff; font-size:12pt}
+  main{max-width:none; padding:0}
+  .q{break-inside:avoid; page-break-inside:avoid; border-color:#999}
+}
+@media (max-width:560px){
+  .topbar{padding:10px 14px 8px}
+  .topbar h1{font-size:15px}
+  main{padding:14px 14px 60px}
+  .navwrap{padding:12px 14px 0}
+  .q{padding:13px 14px}
+  .qtext{font-size:15px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="row1">
+    <h1>Using Local GPU for ML 學習筆記 · MC 模擬測驗</h1>
+    <a class="back" href="index.html">&larr; 回到 Using Local GPU for ML 學習筆記</a>
+    <span class="saved" id="saved">進度已儲存 &#10003;</span>
+  </div>
+  <div class="stats">
+    <span>已答 <b id="nAns">0</b> / 60</span>
+    <span class="ok">得分 <b id="nScore">0</b> / 60</span>
+    <span class="no">答錯 <b id="nWrong">0</b></span>
+    <span id="hint">作答進度自動存在此瀏覽器，關掉再回來可繼續</span>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <button id="btnReveal" class="primary">顯示答案</button>
+    <button id="btnAll" class="active">全部 60 題</button>
+    <button id="btnUnans">只看未答</button>
+    <button id="btnWrong">只看答錯</button>
+    <button id="btnTop">回到頂部</button>
+    <button id="btnReset" class="danger">重設全部</button>
+  </div>
+</header>
+
+<div class="navwrap">
+  <div class="navgrid" id="navgrid"></div>
+</div>
+
+<main id="quiz"></main>
+
+<footer>
+  <p>IVDC「Using Local GPU for ML」課程個人學習筆記 · 只考基本理論</p>
+  <p>單一 HTML 檔、無外部資源，可離線使用</p>
+</footer>
+<script>
+const QUESTIONS = [{"q":"`nvidia-smi` 主要用來檢查？","o":["Python 版本","顯卡驅動與 GPU 狀態","Git 版本","磁碟空間"],"a":1,"e":"`nvidia-smi` 檢查**驅動與 GPU 狀態**。"},{"q":"安裝 Nvidia 顯示驅動後，通常建議？","o":["立刻重裝系統","關閉防火牆","重開機","刪除驅動"],"a":2,"e":"裝完驅動建議**重開機**。"},{"q":"在 Windows 上編譯 CUDA 需要哪個編譯器？","o":["MSVC（Visual Studio C++）","Java","Go","PHP"],"a":0,"e":"CUDA 需要 **MSVC（Visual Studio C++）**。"},{"q":"安裝 Visual Studio 時要勾選哪個工作負載？","o":[".NET 桌面開發","遊戲開發（Unity）","行動裝置開發","使用 C++ 的桌面開發"],"a":3,"e":"要勾「**使用 C++ 的桌面開發**」。"},{"q":"Anaconda 主要提供什麼？","o":["只有瀏覽器","conda 環境與套件管理","顯卡驅動","防毒軟體"],"a":1,"e":"提供 **conda 環境與套件管理**。"},{"q":"Anaconda 的安裝路徑建議？","o":["越深越好","放在桌面","不含中文與空白","一定要在 D 槽"],"a":2,"e":"路徑**不含中文與空白**。"},{"q":"Anaconda Prompt 的特點是？","o":["已預先設好 conda 環境變數","只能跑 Linux","不能執行 python","需要付費"],"a":0,"e":"**已預先設好 conda 環境變數**。"},{"q":"設定 Anaconda PATH 時要加入哪三個資料夾？","o":["`bin\\`、`lib\\`、`docs\\`","`tools\\`、`cache\\`、`logs\\`","`include\\`、`src\\`、`test\\`","根目錄、`Scripts\\`、`Library\\bin\\`"],"a":3,"e":"**根目錄、`Scripts\\`、`Library\\bin\\`**。"},{"q":"Anaconda 的 `Library\\bin` 主要放什麼？","o":["圖片","文件","原生 DLL","範例程式"],"a":2,"e":"放**原生 DLL**。"},{"q":"修改 PATH 之後，要如何才能生效？","o":["立刻生效","重開終端","重裝系統","不用管"],"a":1,"e":"要**重開終端**。"},{"q":"`conda --version` 用來驗證？","o":["GPU 型號","CUDA 版本","Python 套件數量","conda 是否可用"],"a":3,"e":"驗證 **conda 是否可用**。"},{"q":"`conda create -n myenv python=3.11` 的作用是？","o":["建立名為 myenv 的環境","刪除環境","安裝顯卡驅動","更新 Windows"],"a":0,"e":"**建立名為 myenv 的環境**。"},{"q":"`conda activate myenv` 的作用是？","o":["刪除環境","建立環境","切換到 myenv 環境","匯出環境"],"a":2,"e":"**切換到 myenv 環境**。"},{"q":"在一般 CMD 打 `conda` 出現「不是內部或外部命令」，代表？","o":["沒裝 Anaconda","conda 不在 PATH","電腦中毒","需要重開機"],"a":1,"e":"代表 **conda 不在 PATH**。"},{"q":"`nvidia-smi` 顯示的「CUDA Version」代表？","o":["驅動支援的 CUDA 上限","已安裝的 CUDA Toolkit","PyTorch 的 CUDA 版本","cuDNN 版本"],"a":0,"e":"代表**驅動支援的 CUDA 上限**。"},{"q":"`where.exe cl.exe` 用來檢查？","o":["Git 是否安裝","Python 版本","CUDA 版本","MSVC 編譯器是否存在"],"a":3,"e":"檢查 **MSVC 編譯器**是否存在。"},{"q":"安裝 Anaconda 時，一般建議選擇？","o":["所有使用者","Just Me（僅本人）","不要安裝","只裝 Python"],"a":1,"e":"建議 **Just Me**。"},{"q":"安裝路徑含中文可能導致？","o":["硬碟損壞","顯卡過熱","部分套件或指令出錯","網路變慢"],"a":2,"e":"可能導致**套件或指令出錯**。"},{"q":"檢視 CUDA 相關環境變數的指令是？","o":["`Get-ChildItem Env: | Where-Object Name -like \"CUDA*\"`","`dir cuda`","`ping cuda`","`tasklist`"],"a":0,"e":"用 **`Get-ChildItem Env:` 過濾 `CUDA*`**。"},{"q":"`CUDA_PATH` 環境變數的用途是？","o":["儲存 Python 版本","記錄 GPU 溫度","存放圖片","指向 CUDA 安裝根目錄"],"a":3,"e":"**指向 CUDA 安裝根目錄**。"},{"q":"`nvcc --version` 顯示的是？","o":["已安裝的 CUDA Toolkit 版本","顯卡驅動版本","Python 版本","Git 版本"],"a":0,"e":"顯示**已安裝的 CUDA Toolkit 版本**。"},{"q":"CUDA Toolkit 的預設安裝路徑大致是？","o":["`C:\\Python\\CUDA\\`","`C:\\Windows\\CUDA\\`","`C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\vXX.X\\`","`C:\\Users\\Public\\CUDA\\`"],"a":2,"e":"預設在 **`C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\vXX.X\\`**。"},{"q":"安裝 CUDA Toolkit 時，至少要安裝哪些元件？","o":["只要 Documentation","CUDA（Runtime / Development）","只要 Samples","只要驅動"],"a":1,"e":"至少要裝 **CUDA（Runtime / Development）**。"},{"q":"cuDNN 是什麼？","o":["一種程式語言","一種顯卡型號","一種檔案格式","NVIDIA 的深度學習加速庫"],"a":3,"e":"cuDNN 是 **NVIDIA 的深度學習加速庫**。"},{"q":"cuDNN 官方下載的格式通常是？","o":["zip 壓縮檔","`.msi` 安裝檔","`.deb` 套件","`.exe` 安裝精靈"],"a":0,"e":"下載 **zip**（需手動複製）。"},{"q":"cuDNN 版本必須對應什麼？","o":["Python 版本","螢幕解析度","CUDA 主版本（如 cuda13）","硬碟容量"],"a":2,"e":"要對應 **CUDA 主版本**。"},{"q":"cuDNN 解壓後通常包含哪三個資料夾？","o":["`src`、`test`、`doc`","`bin`、`include`、`lib\\x64`","`app`、`data`、`cache`","`x86`、`arm`、`wasm`"],"a":1,"e":"**`bin`、`include`、`lib\\x64`**。"},{"q":"cuDNN 的 `bin` 檔案要複製到哪？","o":["Python 安裝目錄","Windows 系統資料夾","桌面","CUDA 安裝目錄的 `bin\\`"],"a":3,"e":"複製到 **CUDA `bin\\`**。"},{"q":"cuDNN 的 `lib\\x64` 檔案要複製到哪？","o":["CUDA 安裝目錄的 `lib\\x64\\`","CUDA 安裝目錄的 `bin\\`","Python 的 `site-packages`","使用者文件夾"],"a":0,"e":"複製到 **CUDA `lib\\x64\\`**。"},{"q":"cuDNN 的 `include` 檔案要複製到哪？","o":["`C:\\Windows\\System32`","專案根目錄","CUDA 安裝目錄的 `include\\`","Anaconda 的 `Scripts`"],"a":2,"e":"複製到 **CUDA `include\\`**。"},{"q":"只複製 cuDNN 的 `bin` 而漏了 `lib`，可能出現？","o":["螢幕變黑","連結錯誤（LNK2019）","網路斷線","鍵盤失效"],"a":1,"e":"會出現**連結錯誤 LNK2019**。"},{"q":"執行時出現 `Could not locate cudnn_ops_infer64_9.dll` 代表？","o":["Python 版本太新","Git 沒安裝","螢幕解析度不對","cuDNN 的 `bin` 沒複製到 CUDA"],"a":3,"e":"代表 **cuDNN `bin` 沒複製到 CUDA**。"},{"q":"複製檔案到 `C:\\Program Files\\...` 需要什麼權限？","o":["系統管理員","一般使用者","訪客","不需要權限"],"a":0,"e":"需要**系統管理員**權限。"},{"q":"CUDA 安裝目錄的 `bin\\` 主要放什麼？","o":["圖片","文件","`nvcc.exe` 與 runtime DLL","範例專案"],"a":2,"e":"放 **`nvcc.exe` 與 runtime DLL**。"},{"q":"版本一致性的原則是？","o":["全部用最新版就好","驅動支援的 CUDA 上限 ≥ 要安裝的 CUDA 版本","版本隨便配","只要 Python 對就好"],"a":1,"e":"**驅動支援上限 ≥ 要裝的 CUDA 版本**。"},{"q":"正確的安裝順序是？","o":["PyTorch → CUDA → 驅動","Anaconda → Git → 驅動","順序無所謂","驅動 → 編譯器 / Anaconda → CUDA / cuDNN → PyTorch"],"a":3,"e":"**驅動 → 編譯器/Anaconda → CUDA/cuDNN → PyTorch**。"},{"q":"「先裝 PyTorch 才發現 CUDA 版本不合」的後果是？","o":["需要重裝對應 `cuXXX` 版本的 PyTorch","電腦會壞掉","無法開機","資料全部遺失"],"a":0,"e":"需**重裝對應 `cuXXX` 版本的 PyTorch**。"},{"q":"`CUDA_PATH_V13_4` 這種變數是？","o":["使用者自訂","PyTorch 建立的","CUDA 安裝程式自動建立的版本專用變數","隨機產生"],"a":2,"e":"是 **CUDA 安裝程式自動建立**的版本專用變數。"},{"q":"下載 cuDNN 通常需要什麼？","o":["付費訂閱","登入 NVIDIA 開發者帳號","學校信箱","不需要任何帳號"],"a":1,"e":"需**登入 NVIDIA 開發者帳號**。"},{"q":"CUDA Toolkit Archive 的用途是？","o":["查詢 GPU 溫度","下載 Python","查詢螢幕規格","下載舊版／指定版本的 CUDA Toolkit"],"a":3,"e":"用來**下載舊版／指定版本的 CUDA Toolkit**。"},{"q":"VS Code 的命令列指令是？","o":["`vscode`","`code`","`editor`","`vs`"],"a":1,"e":"VS Code 的 CLI 是 **`code`**。"},{"q":"用 VS Code 寫 ML，建議安裝哪些擴充？","o":["只要主題","只要圖示","只要拼字檢查","Python 與 Jupyter"],"a":3,"e":"建議裝 **Python 與 Jupyter** 擴充。"},{"q":"安裝 Git 時會一併提供什麼？","o":["Git Bash","CUDA","Anaconda","PyTorch"],"a":0,"e":"會一併提供 **Git Bash**。"},{"q":"`git --version` 的用途是？","o":["更新 Git","刪除 Git","驗證 Git 是否安裝成功","安裝 Git"],"a":2,"e":"**驗證 Git 是否安裝成功**。"},{"q":"PyTorch GPU 版安裝檔的後綴是？","o":["`+gpu`","`+cuXXX`","`+cpu`","`+cuda`"],"a":1,"e":"GPU 版後綴是 **`+cuXXX`**。"},{"q":"如何判斷 PyTorch 是 GPU 版？","o":["看檔名有沒有 gpu","看安裝時間","看檔案大小","`torch.__version__` 是否含 `+cuXXX`"],"a":3,"e":"看 **`torch.__version__` 是否含 `+cuXXX`**。"},{"q":"`torch.cuda.is_available()` 回傳 `True` 代表？","o":["GPU 可用","只能使用 CPU","沒有安裝 PyTorch","驅動未安裝"],"a":0,"e":"回 `True`＝**GPU 可用**。"},{"q":"`torch.cuda.device_count()` 回傳什麼？","o":["VRAM 大小","CUDA 版本","GPU 數量","GPU 溫度"],"a":2,"e":"回傳 **GPU 數量**。"},{"q":"`torch.version.cuda` 代表什麼？","o":["顯卡驅動版本","PyTorch 編譯所用的 CUDA 版本","cuDNN 版本","Python 版本"],"a":1,"e":"代表 **PyTorch 編譯所用的 CUDA 版本**。"},{"q":"`torch.cuda.is_available()` 回 `False`，最常見原因是？","o":["螢幕壞了","沒裝 Git","沒裝瀏覽器","裝到 CPU 版或 CUDA 版本不符"],"a":3,"e":"最常見是**裝到 CPU 版或版本不符**。"},{"q":"VS Code 明明裝了 PyTorch 卻用不到 GPU，最常見原因是？","o":["選錯 Python Interpreter","鍵盤問題","螢幕太小","沒開音效"],"a":0,"e":"最常見是**選錯 Python Interpreter**。"},{"q":"VS Code 要選 Python 環境，命令是？","o":["`Python: Run`","`Python: Debug`","`Python: Select Interpreter`","`Python: Format`"],"a":2,"e":"命令是 **`Python: Select Interpreter`**。"},{"q":"`OSError: [WinError 126] 找不到指定的模組` 常見原因是？","o":["記憶體不足","缺 DLL（如 `anaconda3\\Library\\bin` 不在 PATH）","螢幕壞了","網路斷線"],"a":1,"e":"常見原因是**缺 DLL（`Library\\bin` 不在 PATH）**。"},{"q":"遇到 `CUDA out of memory`，可以怎麼做？","o":["重裝 Windows","換螢幕","刪除驅動","減小 batch size、關閉其他佔用 GPU 的程式"],"a":3,"e":"**減小 batch size、關閉佔用 GPU 的程式**。"},{"q":"安裝官方 Python 時務必勾選？","o":["Add python.exe to PATH","建立桌面捷徑","安裝到 D 槽","安裝所有語言"],"a":0,"e":"務必勾 **Add python.exe to PATH**。"},{"q":"建立虛擬環境（venv）的指令是？","o":["`python venv new`","`conda make venv`","`python -m venv .venv`","`venv create`"],"a":2,"e":"指令是 **`python -m venv .venv`**。"},{"q":"同時混用 Anaconda 與官方 Python 的風險是？","o":["顯卡過熱","`python` 與 `pip` 可能指向不同環境","無法上網","硬碟壞掉"],"a":1,"e":"風險是 **`python` 與 `pip` 指向不同環境**。"},{"q":"離線安裝 PyTorch 的作法之一是？","o":["直接複製別人電腦的檔案","關掉網路安裝","用 Windows 商店","`pip download` 後用 `pip install --no-index --find-links`"],"a":3,"e":"用 **`pip download` + `--no-index --find-links`**。"},{"q":"沒有 GPU 時的替代方案是？","o":["用 CPU 版 PyTorch 或改用雲端 GPU（Colab/Kaggle）","放棄學習","只能買新電腦","無法執行任何 Python"],"a":0,"e":"用 **CPU 版 PyTorch 或雲端 GPU**。"},{"q":"本筆記實測的 PyTorch 版本是？","o":["`1.0.0`","`2.0.0+cpu`","`2.14.1+cu132`","`3.0.0`"],"a":2,"e":"本機實測為 **`2.14.1+cu132`**。"}];
+
+const LET = 'ABCD';
+const KEY = 'gpu-ml-mc-quiz-v1';
+const state = { answers:{}, revealed:false, filter:'all' };
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p && typeof p === 'object'){
+      state.answers = (p.answers && typeof p.answers === 'object') ? p.answers : {};
+      state.revealed = !!p.revealed;
+      state.filter = p.filter || 'all';
+    }
+  }catch(e){}
+}
+let savedTimer = null;
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const el = document.getElementById('saved');
+    if(el){ el.classList.add('on'); clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ el.classList.remove('on'); }, 1200); }
+  }catch(e){}
+}
+
+function tally(){
+  let answered = 0, score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    if(a !== undefined && a !== null){
+      answered++;
+      if(a === QUESTIONS[i].a) score++;
+    }
+  }
+  return { answered:answered, score:score, wrong:answered-score };
+}
+
+function isVisible(i){
+  const a = state.answers[i];
+  const has = (a !== undefined && a !== null);
+  if(state.filter === 'unanswered') return !has;
+  if(state.filter === 'wrong') return has && a !== QUESTIONS[i].a;
+  return true;
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdInline(s){
+  s = esc(s);
+  let out = '';
+  let bold = false;
+  let i = 0;
+  while(i < s.length){
+    if(s.charAt(i) === '*' && s.charAt(i + 1) === '*'){
+      bold = !bold;
+      out += bold ? '<b>' : '</b>';
+      i += 2;
+    } else {
+      out += s.charAt(i);
+      i++;
+    }
+  }
+  return out;
+}
+
+function renderStats(){
+  const t = tally();
+  document.getElementById('nAns').textContent = t.answered;
+  document.getElementById('nScore').textContent = t.score;
+  document.getElementById('nWrong').textContent = t.wrong;
+  document.getElementById('bar').style.width = (t.answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('btnReveal').textContent = state.revealed ? '隱藏答案' : '顯示答案';
+  document.getElementById('hint').textContent = state.revealed
+    ? '已顯示正解與解析'
+    : '作答進度自動存在此瀏覽器，關掉再回來可繼續';
+}
+
+function renderNav(){
+  const nav = document.getElementById('navgrid');
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    const has = (a !== undefined && a !== null);
+    let cls = '';
+    if(has) cls = 'done';
+    if(state.revealed && has) cls = (a === QUESTIONS[i].a) ? 'right' : 'wrong';
+    html += '<button class="' + cls + '" data-goto="' + i + '">' + (i+1) + '</button>';
+  }
+  nav.innerHTML = html;
+}
+
+function renderQuestions(){
+  const box = document.getElementById('quiz');
+  let html = '';
+  let shown = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(!isVisible(i)) continue;
+    shown++;
+    const q = QUESTIONS[i];
+    if(i === 0 || i === 20 || i === 40){
+      const label = i === 0 ? '第一部分：安裝前置與環境（1–20）'
+                  : i === 20 ? '第二部分：CUDA 與 cuDNN（21–40）'
+                  : '第三部分：工具、PyTorch 與排錯（41–60）';
+      html += '<div class="parttitle">' + label + '</div>';
+    }
+    const picked = state.answers[i];
+    const hasPicked = (picked !== undefined && picked !== null);
+    let qcls = '';
+    if(state.revealed && hasPicked) qcls = (picked === q.a) ? 'correct' : 'incorrect';
+
+    html += '<article class="q ' + qcls + '" id="q' + (i+1) + '">';
+    html += '<div class="qhead"><span class="num">' + (i+1) + '</span>';
+    html += '<p class="qtext">' + mdInline(q.q) + '</p></div>';
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      let cls = 'opt';
+      if(hasPicked && picked === k) cls += ' picked';
+      let tag = '';
+      if(state.revealed){
+        if(k === q.a){ cls += ' right'; tag = '<span class="tag right">正解</span>'; }
+        else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
+      }
+      html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
+      html += '<span class="lt">' + LET[k] + '</span><span>' + esc(q.o[k]) + '</span>' + tag + '</li>';
+    }
+    html += '</ul>';
+    if(state.revealed){
+      html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
+    }
+    html += '</article>';
+  }
+  if(shown === 0){
+    html = '<div class="empty">目前篩選條件下沒有題目 &#128522;<br>換個篩選，或按「全部 60 題」。</div>';
+  }
+  box.innerHTML = html;
+}
+
+function renderAll(){ renderStats(); renderNav(); renderQuestions(); }
+
+document.addEventListener('click', function(ev){
+  const opt = ev.target.closest ? ev.target.closest('.opt') : null;
+  if(opt){
+    state.answers[parseInt(opt.getAttribute('data-q'), 10)] = parseInt(opt.getAttribute('data-k'), 10);
+    saveState();
+    renderAll();
+    return;
+  }
+  const go = ev.target.closest ? ev.target.closest('[data-goto]') : null;
+  if(go){
+    const idx = parseInt(go.getAttribute('data-goto'), 10);
+    if(state.filter !== 'all'){ state.filter = 'all'; syncFilterButtons(); renderAll(); }
+    const el = document.getElementById('q' + (idx + 1));
+    if(el){
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      el.style.transition = 'box-shadow .3s';
+      el.style.boxShadow = '0 0 0 3px rgba(37,99,235,.35)';
+      setTimeout(function(){ el.style.boxShadow = ''; }, 900);
+    }
+    saveState();
+  }
+});
+
+function syncFilterButtons(){
+  const map = { all:'btnAll', unanswered:'btnUnans', wrong:'btnWrong' };
+  for(const k in map){
+    const b = document.getElementById(map[k]);
+    if(b) b.classList.toggle('active', state.filter === k);
+  }
+}
+
+function setFilter(f){
+  state.filter = f;
+  syncFilterButtons();
+  saveState();
+  renderAll();
+}
+
+function bind(){
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.revealed = !state.revealed; saveState(); renderAll();
+  });
+  document.getElementById('btnAll').addEventListener('click', function(){ setFilter('all'); });
+  document.getElementById('btnUnans').addEventListener('click', function(){ setFilter('unanswered'); });
+  document.getElementById('btnWrong').addEventListener('click', function(){ setFilter('wrong'); });
+  document.getElementById('btnTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('確定要清除全部作答紀錄嗎？此動作無法復原。')) return;
+    state.answers = {}; state.revealed = false; state.filter = 'all';
+    saveState(); syncFilterButtons(); renderAll();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && state.revealed){ state.revealed = false; saveState(); renderAll(); }
+  });
+}
+
+loadState();
+syncFilterButtons();
+renderAll();
+bind();
+</script>
+</body>
+</html>

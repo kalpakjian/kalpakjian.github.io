@@ -1,0 +1,2911 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Using Local GPU for Machine Learning 學習筆記（考試溫習版）</title>
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+</style>
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/">← 回到 AI Tech Notes</a>
+  <h1>Using Local GPU for ML 學習筆記</h1>
+  <div class="sub">IVDC · Certificate in Application of<br>Computer Vision Technology</div>
+  <div class="toc">
+<ul>
+<li><a href="#目錄">目錄</a>
+</li>
+<li><a href="#0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</a>
+</li>
+<li><a href="#1-set-up-nvidia-video-driver">1. Set up Nvidia Video Driver</a>
+<ul>
+<li><a href="#11-步驟">1.1 步驟</a>
+</li>
+<li><a href="#12-驗證指令">1.2 驗證指令</a>
+</li>
+</ul>
+</li>
+<li><a href="#2-install-visual-studio-c">2. Install Visual Studio C++</a>
+<ul>
+<li><a href="#21-步驟">2.1 步驟</a>
+</li>
+<li><a href="#22-驗證">2.2 驗證</a>
+</li>
+</ul>
+</li>
+<li><a href="#3-install-anaconda">3. Install Anaconda</a>
+<ul>
+<li><a href="#31-步驟">3.1 步驟</a>
+</li>
+<li><a href="#32-驗證指令">3.2 驗證指令</a>
+</li>
+</ul>
+</li>
+<li><a href="#4-anaconda-prompt">4. Anaconda Prompt</a>
+<ul>
+<li><a href="#41-開啟方式">4.1 開啟方式</a>
+</li>
+<li><a href="#42-常用指令">4.2 常用指令</a>
+</li>
+</ul>
+</li>
+<li><a href="#5-setup-anaconda-path">5. Setup Anaconda Path</a>
+<ul>
+<li><a href="#51-要加入-path-的三個資料夾">5.1 要加入 PATH 的三個資料夾</a>
+</li>
+<li><a href="#52-設定方式gui">5.2 設定方式（GUI）</a>
+</li>
+<li><a href="#53-設定方式powershell當前使用者">5.3 設定方式（PowerShell，當前使用者）</a>
+</li>
+</ul>
+</li>
+<li><a href="#6-install-or-check-cuda-tool">6. Install or check CUDA tool</a>
+<ul>
+<li><a href="#61-檢查指令">6.1 檢查指令</a>
+</li>
+<li><a href="#62-若尚未安裝">6.2 若尚未安裝</a>
+</li>
+</ul>
+</li>
+<li><a href="#7-check-version-for-pytorch">7. Check version for PyTorch</a>
+<ul>
+<li><a href="#71-決策流程">7.1 決策流程</a>
+</li>
+<li><a href="#72-對照原則">7.2 對照原則</a>
+</li>
+</ul>
+</li>
+<li><a href="#8-cuda-toolkit">8. CUDA Toolkit</a>
+<ul>
+<li><a href="#81-步驟">8.1 步驟</a>
+</li>
+<li><a href="#82-預設安裝路徑">8.2 預設安裝路徑</a>
+</li>
+</ul>
+</li>
+<li><a href="#9-cudnn">9. cuDNN</a>
+<ul>
+<li><a href="#91-步驟">9.1 步驟</a>
+</li>
+</ul>
+</li>
+<li><a href="#10-copy-cudnn-bin-files-to-cuda">10. Copy cuDNN bin files to CUDA</a>
+<ul>
+<li><a href="#101-複製來源與目的">10.1 複製來源與目的</a>
+</li>
+<li><a href="#102-指令powershell系統管理員">10.2 指令（PowerShell，系統管理員）</a>
+</li>
+<li><a href="#103-驗證">10.3 驗證</a>
+</li>
+</ul>
+</li>
+<li><a href="#11-copy-cudnn-lib-files-to-cuda">11. Copy cuDNN lib files to CUDA</a>
+<ul>
+<li><a href="#111-複製來源與目的">11.1 複製來源與目的</a>
+</li>
+<li><a href="#112-指令powershell系統管理員">11.2 指令（PowerShell，系統管理員）</a>
+</li>
+<li><a href="#113-別忘了-include">11.3 別忘了 include</a>
+</li>
+<li><a href="#114-驗證三個資料夾都到位">11.4 驗證三個資料夾都到位</a>
+</li>
+</ul>
+</li>
+<li><a href="#12-check-environment-variables">12. Check Environment Variables</a>
+<ul>
+<li><a href="#121-應該存在的變數">12.1 應該存在的變數</a>
+</li>
+<li><a href="#122-檢查指令">12.2 檢查指令</a>
+</li>
+</ul>
+</li>
+<li><a href="#13-install-visual-studio-code">13. Install Visual Studio Code</a>
+<ul>
+<li><a href="#131-步驟">13.1 步驟</a>
+</li>
+<li><a href="#132-驗證">13.2 驗證</a>
+</li>
+</ul>
+</li>
+<li><a href="#14-install-git">14. Install Git</a>
+<ul>
+<li><a href="#141-步驟">14.1 步驟</a>
+</li>
+<li><a href="#142-驗證">14.2 驗證</a>
+</li>
+</ul>
+</li>
+<li><a href="#15-install-pytorch">15. Install PyTorch</a>
+<ul>
+<li><a href="#151-取得官方安裝指令">15.1 取得官方安裝指令</a>
+</li>
+<li><a href="#152-驗證版本">15.2 驗證版本</a>
+</li>
+</ul>
+</li>
+<li><a href="#16-use-visual-studio-code">16. Use Visual Studio Code</a>
+<ul>
+<li><a href="#161-步驟">16.1 步驟</a>
+</li>
+<li><a href="#162-建議的-settingsjson">16.2 建議的 settings.json</a>
+</li>
+</ul>
+</li>
+<li><a href="#17-use-bash-shell-if-needed">17. Use Bash Shell (if needed)</a>
+<ul>
+<li><a href="#171-開啟方式">17.1 開啟方式</a>
+</li>
+<li><a href="#172-常見用途">17.2 常見用途</a>
+</li>
+</ul>
+</li>
+<li><a href="#18-install-python-if-needed">18. Install Python (if needed)</a>
+<ul>
+<li><a href="#181-兩種選擇">18.1 兩種選擇</a>
+</li>
+<li><a href="#182-若裝官方-python">18.2 若裝官方 Python</a>
+</li>
+<li><a href="#183-建立虛擬環境venv">18.3 建立虛擬環境（venv）</a>
+</li>
+</ul>
+</li>
+<li><a href="#19-check-gpu">19. Check GPU</a>
+<ul>
+<li><a href="#191-原稿程式碼實測通過">19.1 原稿程式碼（實測通過）</a>
+</li>
+<li><a href="#192-更完整的檢查">19.2 更完整的檢查</a>
+</li>
+</ul>
+</li>
+<li><a href="#20-set-path-if-needed">20. Set Path (if needed)</a>
+<ul>
+<li><a href="#201-需要進-path-的常見項目">20.1 需要進 PATH 的常見項目</a>
+</li>
+<li><a href="#202-檢查與設定">20.2 檢查與設定</a>
+</li>
+</ul>
+</li>
+<li><a href="#附錄-a指令速查表">附錄 A：指令速查表</a>
+<ul>
+<li><a href="#a1-驗證類最常考">A.1 驗證類（最常考）</a>
+</li>
+<li><a href="#a2-環境管理">A.2 環境管理</a>
+</li>
+<li><a href="#a3-gpu-驗證python">A.3 GPU 驗證（Python）</a>
+</li>
+<li><a href="#a4-檔案複製cudnn--cuda">A.4 檔案複製（cuDNN → CUDA）</a>
+</li>
+</ul>
+</li>
+<li><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a>
+<ul>
+<li><a href="#b1-十大陷阱總表">B.1 十大陷阱總表</a>
+</li>
+<li><a href="#b2-錯誤訊息對照">B.2 錯誤訊息對照</a>
+</li>
+</ul>
+</li>
+<li><a href="#附錄-c模擬試題連答案">附錄 C：模擬試題（連答案）</a>
+<ul>
+<li><a href="#c1-選擇題20-題">C.1 選擇題（20 題）</a>
+</li>
+<li><a href="#c2-填充題10-題">C.2 填充題（10 題）</a>
+</li>
+<li><a href="#c3-簡答題6-題">C.3 簡答題（6 題）</a>
+</li>
+</ul>
+</li>
+<li><a href="#附錄-d教材頁面索引對照">附錄 D：教材頁面索引對照</a>
+</li>
+<li><a href="#附錄-e離線安裝提示">附錄 E：離線安裝提示</a>
+<ul>
+<li><a href="#e1-需要先下載的安裝檔有網路時先備好">E.1 需要先下載的安裝檔（有網路時先備好）</a>
+</li>
+<li><a href="#e2-離線安裝注意">E.2 離線安裝注意</a>
+</li>
+<li><a href="#e3-沒有-gpu-時的替代">E.3 沒有 GPU 時的替代</a>
+</li>
+</ul>
+</li>
+<li><a href="#附錄-f一頁精華考前-10-分鐘">附錄 F：一頁精華（考前 10 分鐘）</a>
+</li>
+<li><a href="#附錄-gmc-模擬試卷60-題">附錄 G：MC 模擬試卷（60 題）</a>
+<ul>
+<li><a href="#g1-作答說明與應試技巧">G.1 作答說明與應試技巧</a>
+</li>
+<li><a href="#g2-第一部分安裝前置與環境第-120-題">G.2 第一部分：安裝前置與環境（第 1–20 題）</a>
+</li>
+<li><a href="#g3-第二部分cuda-與-cudnn第-2140-題">G.3 第二部分：CUDA 與 cuDNN（第 21–40 題）</a>
+</li>
+<li><a href="#g4-第三部分工具pytorch-與排錯第-4160-題">G.4 第三部分：工具、PyTorch 與排錯（第 41–60 題）</a>
+</li>
+<li><a href="#g5-答案速查表">G.5 答案速查表</a>
+</li>
+<li><a href="#g6-逐題詳解">G.6 逐題詳解</a>
+</li>
+</ul>
+</li>
+<li><a href="#附錄-h答錯題目--複習章節對照">附錄 H：答錯題目 → 複習章節對照</a>
+</li>
+</ul>
+</div>
+
+</nav>
+<main>
+<h1 id="using-local-gpu-for-machine-learning-學習筆記考試溫習版">Using Local GPU for Machine Learning 學習筆記（考試溫習版）</h1>
+<blockquote>
+<p>課程：Certificate in Application of Computer Vision Technology (Part-time)
+機構：匯縱專業發展中心（IVDC）
+教材來源：<code>IVDC_Using Local GPU for ML.pptx</code> → PDF（26 頁）
+本筆記按 PDF 原稿每一個標題逐一填充內容，並補上實際指令、版本對照、常見錯誤、模擬試題。
+原稿為<strong>安裝步驟截圖</strong>（文字極少）；本筆記把每一步補上「要做什麼、用什麼指令、如何驗證」。
+本機實測環境（Windows）：<strong>RTX 4090 / 驅動 617.42 / CUDA 13.4 / PyTorch 2.14.1+cu132</strong>。
+<strong>附錄 G 另備一份 60 題的 MC 模擬試卷（含答案速查表與逐題詳解）</strong>，適合考前完整計時練習。</p>
+</blockquote>
+<hr>
+<h2 id="目錄">目錄</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>章節</th>
+<th>PDF 頁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="#1-set-up-nvidia-video-driver">Set up Nvidia Video Driver</a></td>
+<td>2–3</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#2-install-visual-studio-c">Install Visual Studio C++</a></td>
+<td>4–5</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#3-install-anaconda">Install Anaconda</a></td>
+<td>6–8</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#4-anaconda-prompt">Anaconda Prompt</a></td>
+<td>9</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="#5-setup-anaconda-path">Setup Anaconda Path</a></td>
+<td>10</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="#6-install-or-check-cuda-tool">Install or check CUDA tool</a></td>
+<td>11</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="#7-check-version-for-pytorch">Check version for PyTorch</a></td>
+<td>12</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="#8-cuda-toolkit">CUDA Toolkit</a></td>
+<td>13</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="#9-cudnn">cuDNN</a></td>
+<td>14</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="#10-copy-cudnn-bin-files-to-cuda">Copy cuDNN bin files to CUDA</a></td>
+<td>15</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="#11-copy-cudnn-lib-files-to-cuda">Copy cuDNN lib files to CUDA</a></td>
+<td>16</td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="#12-check-environment-variables">Check Environment Variables</a></td>
+<td>17</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="#13-install-visual-studio-code">Install Visual Studio Code</a></td>
+<td>18</td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="#14-install-git">Install Git</a></td>
+<td>19</td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="#15-install-pytorch">Install PyTorch</a></td>
+<td>20–21</td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="#16-use-visual-studio-code">Use Visual Studio Code</a></td>
+<td>22</td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="#17-use-bash-shell-if-needed">Use Bash Shell (if needed)</a></td>
+<td>23</td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="#18-install-python-if-needed">Install Python (if needed)</a></td>
+<td>24</td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="#19-check-gpu">Check GPU</a></td>
+<td>25</td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="#20-set-path-if-needed">Set Path (if needed)</a></td>
+<td>26</td>
+</tr>
+<tr>
+<td>A</td>
+<td><a href="#附錄-a指令速查表">附錄 A：指令速查表</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>B</td>
+<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>C</td>
+<td><a href="#附錄-c模擬試題連答案">附錄 C：模擬試題（連答案）</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>D</td>
+<td><a href="#附錄-d教材頁面索引對照">附錄 D：教材頁面索引對照</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>E</td>
+<td><a href="#附錄-e離線安裝提示">附錄 E：離線安裝提示</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>F</td>
+<td><a href="#附錄-f一頁精華考前-10-分鐘">附錄 F：一頁精華（考前 10 分鐘）</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>G</td>
+<td><a href="#附錄-gmc-模擬試卷60-題">附錄 G：MC 模擬試卷（60 題）</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>H</td>
+<td><a href="#附錄-h答錯題目--複習章節對照">附錄 H：答錯題目 → 複習章節對照</a></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</h2>
+<div class="codehilite"><pre><span></span><code>在本機用 GPU 跑 ML（Windows）的安裝順序：
+  1. Nvidia 顯示驅動  →  2. Visual Studio C++（編譯器）
+  3. Anaconda（Python 環境）  →  4. conda 指令 / PATH
+  5. CUDA Toolkit（nvcc）  →  6. cuDNN（深度學習加速庫）
+  7. 複製 cuDNN bin/lib → CUDA 安裝目錄  →  8. 檢查環境變數
+  9. VS Code / Git  →  10. PyTorch（GPU 版）  →  11. 驗證 GPU
+
+驗證三招：nvidia-smi  /  nvcc --version  /  torch.cuda.is_available()
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>你會用到的關鍵詞</th>
+<th>一句話記法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nvidia Video Driver</td>
+<td>顯卡驅動；<code>nvidia-smi</code> 可看版本與 VRAM</td>
+</tr>
+<tr>
+<td>Visual Studio C++</td>
+<td>CUDA 編譯需要 MSVC（Build Tools 即可）</td>
+</tr>
+<tr>
+<td>Anaconda</td>
+<td>Python 發行版＋<code>conda</code> 環境管理</td>
+</tr>
+<tr>
+<td>Anaconda Prompt</td>
+<td>已設好 conda 環境的終端</td>
+</tr>
+<tr>
+<td>Anaconda Path</td>
+<td>把 <code>conda</code> 加進 PATH（否則別處叫不到）</td>
+</tr>
+<tr>
+<td>CUDA Toolkit</td>
+<td>提供 <code>nvcc</code> 與 CUDA 執行期</td>
+</tr>
+<tr>
+<td>cuDNN</td>
+<td>NVIDIA 深度學習加速庫（要複製 bin/lib 進 CUDA）</td>
+</tr>
+<tr>
+<td>Environment Variables</td>
+<td><code>CUDA_PATH</code>、<code>PATH</code> 的檢查</td>
+</tr>
+<tr>
+<td>Visual Studio Code</td>
+<td>編輯器（裝 Python 擴充即可跑）</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>版本控制（裝套件、拉 repo 常用）</td>
+</tr>
+<tr>
+<td>PyTorch</td>
+<td>深度學習框架；要裝 <strong>GPU 版（cuXXX）</strong></td>
+</tr>
+<tr>
+<td><code>torch.cuda.is_available()</code></td>
+<td>回傳 <code>True</code> 才代表 GPU 可用</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="1-set-up-nvidia-video-driver">1. Set up Nvidia Video Driver</h2>
+<p><strong>目的</strong>：先裝好顯卡驅動，系統才認得 GPU，之後的 CUDA 才能運作。</p>
+<h3 id="11-步驟">1.1 步驟</h3>
+<ol>
+<li>到 NVIDIA 官網下載對應型號的驅動（或用 GeForce Experience）。</li>
+<li>安裝後<strong>重開機</strong>。</li>
+<li>開啟「命令提示字元」或 PowerShell，輸入 <code>nvidia-smi</code> 驗證。</li>
+</ol>
+<h3 id="12-驗證指令">1.2 驗證指令</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">nvidia-smi</span>
+</code></pre></div>
+
+<p><strong>本機實測輸出（節錄）</strong>：</p>
+<div class="codehilite"><pre><span></span><code>+-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 617.42                 KMD Version: 617.42        CUDA UMD Version: 13.4     |
++-----------------------------------------+------------------------+----------------------+
+|   0  NVIDIA GeForce RTX 4090      WDDM  |   00000000:01:00.0  On |                  Off |
+|  0%   34C    P8             25W /  500W |    1982MiB /  24564MiB |      9%      Default |
++-----------------------------------------+------------------------+----------------------+
+</code></pre></div>
+
+<p>要看的三個數字：<strong>驅動版本</strong>、<strong>VRAM 總量</strong>、<strong>CUDA UMD Version</strong>（本機為 617.42 / 24564MiB / 13.4）。</p>
+<blockquote>
+<p><strong>考點</strong>：<code>nvidia-smi</code> 是<strong>驗證驅動＋GPU</strong> 的第一招；它顯示的是<strong>驅動支援的 CUDA 版本上限</strong>，
+不是實際安裝的 CUDA Toolkit 版本（後者要用 <code>nvcc --version</code>）。</p>
+</blockquote>
+<hr>
+<h2 id="2-install-visual-studio-c">2. Install Visual Studio C++</h2>
+<p><strong>目的</strong>：CUDA 在 Windows 上需要 <strong>MSVC 編譯器</strong>；安裝 <strong>Visual Studio Build Tools（含 C++ 工作負載）</strong> 即可。</p>
+<h3 id="21-步驟">2.1 步驟</h3>
+<ol>
+<li>下載 Visual Studio（社群版）或 <strong>Build Tools for Visual Studio</strong>。</li>
+<li>在安裝精靈中勾選「<strong>使用 C++ 的桌面開發</strong>（Desktop development with C++）」。</li>
+<li>確認包含 <strong>MSVC v143 建置工具</strong> 與 <strong>Windows SDK</strong>。</li>
+<li>安裝完成後重開機（建議）。</li>
+</ol>
+<h3 id="22-驗證">2.2 驗證</h3>
+<div class="codehilite"><pre><span></span><code><span class="c"># 確認 MSVC 編譯器存在（路徑依版本而異）</span>
+<span class="n">where</span><span class="p">.</span><span class="n">exe</span> <span class="n">cl</span><span class="p">.</span><span class="n">exe</span>
+</code></pre></div>
+
+<p>若 <code>cl.exe</code> 找不到，改用「x64 Native Tools Command Prompt for VS」開啟終端。</p>
+<blockquote>
+<p><strong>考點</strong>：CUDA 需要的是 <strong>C++ 編譯工具（MSVC）</strong>，<strong>不一定要完整 IDE</strong>；
+勾錯工作負載（例如只勾 .NET）會導致之後編譯 CUDA 失敗。</p>
+</blockquote>
+<hr>
+<h2 id="3-install-anaconda">3. Install Anaconda</h2>
+<p><strong>目的</strong>：Anaconda 提供 <strong>Python 環境管理（conda）</strong> 與科學計算套件，是 ML 最常用的環境。</p>
+<h3 id="31-步驟">3.1 步驟</h3>
+<ol>
+<li>到 Anaconda 官網下載 <strong>Windows 64-bit Installer</strong>。</li>
+<li>安裝時可選「<strong>Just Me</strong>」；安裝路徑建議<strong>不含中文與空白</strong>。</li>
+<li>安裝精靈會問「Add Anaconda to my PATH environment variable」——
+   <strong>勾不勾都可</strong>（不勾比較乾淨，之後用 Anaconda Prompt 即可）。</li>
+<li>安裝完成後開啟 <strong>Anaconda Prompt</strong> 驗證。</li>
+</ol>
+<h3 id="32-驗證指令">3.2 驗證指令</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">conda</span> <span class="p">-</span><span class="n">-version</span>
+<span class="n">python</span> <span class="p">-</span><span class="n">-version</span>
+</code></pre></div>
+
+<p><strong>本機實測輸出</strong>：</p>
+<div class="codehilite"><pre><span></span><code>conda 24.9.2
+</code></pre></div>
+
+<p>（本機 Anaconda 安裝於 <code>C:\Users\princ\anaconda3</code>，<code>conda.exe</code> 在 <code>Scripts\</code> 底下。）</p>
+<blockquote>
+<p><strong>考點</strong>：<code>conda</code> 同時是<strong>套件管理器</strong>與<strong>環境管理器</strong>；
+<code>conda create -n myenv python=3.11</code> 可建立獨立環境，避免污染 base。</p>
+</blockquote>
+<hr>
+<h2 id="4-anaconda-prompt">4. Anaconda Prompt</h2>
+<p><strong>目的</strong>：<strong>Anaconda Prompt</strong> 是一個已預先設定好 conda 環境變數的終端，
+在裡面 <code>conda</code> / <code>python</code> 一定叫得到（不必手動設 PATH）。</p>
+<h3 id="41-開啟方式">4.1 開啟方式</h3>
+<ul>
+<li>開始功能表 → <strong>Anaconda Prompt (anaconda3)</strong>。</li>
+<li>或在 PowerShell 中呼叫：</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="c"># 直接執行 conda 的完整路徑（不必設 PATH）</span>
+<span class="p">&amp;</span> <span class="s2">&quot;$env:USERPROFILE\anaconda3\Scripts\conda.exe&quot;</span> <span class="p">-</span><span class="n">-version</span>
+</code></pre></div>
+
+<h3 id="42-常用指令">4.2 常用指令</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">conda</span> <span class="n">env</span> <span class="n">list</span>                 <span class="c"># 列出所有環境</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">myenv</span>           <span class="c"># 切換環境</span>
+<span class="n">conda</span> <span class="n">deactivate</span>               <span class="c"># 離開環境</span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：<strong>Anaconda Prompt 與一般 CMD 的差別</strong>在於環境變數是否已設好；
+若在一般 CMD 打 <code>conda</code> 出現「不是內部或外部命令」，就是 PATH 沒設（見第 5 節）。</p>
+</blockquote>
+<hr>
+<h2 id="5-setup-anaconda-path">5. Setup Anaconda Path</h2>
+<p><strong>目的</strong>：把 Anaconda 加進系統 <strong>PATH</strong>，讓任何終端都能直接使用 <code>conda</code> / <code>python</code>。</p>
+<h3 id="51-要加入-path-的三個資料夾">5.1 要加入 PATH 的三個資料夾</h3>
+<table>
+<thead>
+<tr>
+<th>資料夾</th>
+<th>內容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;Anaconda&gt;\</code></td>
+<td><code>python.exe</code></td>
+</tr>
+<tr>
+<td><code>&lt;Anaconda&gt;\Scripts\</code></td>
+<td><code>conda.exe</code>、<code>pip.exe</code></td>
+</tr>
+<tr>
+<td><code>&lt;Anaconda&gt;\Library\bin\</code></td>
+<td>原生 DLL（<strong>ML 套件常需要</strong>）</td>
+</tr>
+</tbody>
+</table>
+<p>以本機為例：<code>C:\Users\princ\anaconda3\</code>、<code>C:\Users\princ\anaconda3\Scripts\</code>、<code>C:\Users\princ\anaconda3\Library\bin\</code>。</p>
+<h3 id="52-設定方式gui">5.2 設定方式（GUI）</h3>
+<ol>
+<li><code>Win</code> 搜尋「<strong>環境變數</strong>」→「編輯系統環境變數」。</li>
+<li>選 <code>Path</code> → <strong>編輯</strong> → <strong>新增</strong> 上述三個路徑 → 確定。</li>
+<li><strong>重開終端</strong>後驗證。</li>
+</ol>
+<h3 id="53-設定方式powershell當前使用者">5.3 設定方式（PowerShell，當前使用者）</h3>
+<div class="codehilite"><pre><span></span><code><span class="nv">$base</span> <span class="p">=</span> <span class="s2">&quot;$env:USERPROFILE\anaconda3&quot;</span>
+<span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span>
+  <span class="s2">&quot;Path&quot;</span><span class="p">,</span>
+  <span class="no">[Environment]</span><span class="p">::</span><span class="n">GetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;Path&quot;</span><span class="p">,</span><span class="s2">&quot;User&quot;</span><span class="p">)</span> <span class="p">+</span> <span class="s2">&quot;;$base;$base\Scripts;$base\Library\bin&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;User&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：改 PATH 後<strong>必須重開終端</strong>才生效；
+<code>Library\bin</code> 很容易被漏掉，導致 <code>import torch</code> 找不到 DLL。</p>
+</blockquote>
+<hr>
+<h2 id="6-install-or-check-cuda-tool">6. Install or check CUDA tool</h2>
+<p><strong>目的</strong>：確認是否已安裝 CUDA Toolkit，並檢查 <code>nvcc</code>（CUDA 編譯器）版本。</p>
+<h3 id="61-檢查指令">6.1 檢查指令</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">nvcc</span> <span class="p">-</span><span class="n">-version</span>
+</code></pre></div>
+
+<p><strong>本機實測輸出</strong>：</p>
+<div class="codehilite"><pre><span></span><code>Cuda compilation tools, release 13.4, V13.4.92
+Build cuda_13.4.r13.4/compiler.38855100_0
+</code></pre></div>
+
+<h3 id="62-若尚未安裝">6.2 若尚未安裝</h3>
+<p>到 NVIDIA 的 <strong>CUDA Toolkit Archive</strong> 下載對應版本（見第 8 節）。</p>
+<blockquote>
+<p><strong>考點</strong>：<code>nvcc --version</code> 顯示的是<strong>已安裝的 CUDA Toolkit</strong>；
+而 <code>nvidia-smi</code> 顯示的是<strong>驅動支援的上限</strong>。兩者可能不同（本機：nvcc 13.4 / 驅動 UMD 13.4）。</p>
+</blockquote>
+<hr>
+<h2 id="7-check-version-for-pytorch">7. Check version for PyTorch</h2>
+<p><strong>目的</strong>：<strong>先決定要裝哪個 CUDA 版本</strong>，再回頭裝對應的 Toolkit 與 PyTorch GPU 版。</p>
+<h3 id="71-決策流程">7.1 決策流程</h3>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">先到</span><span class="w"> </span><span class="n">pytorch</span><span class="mf">.</span><span class="ow">or</span><span class="n">g</span><span class="w"> </span><span class="n">看</span><span class="err">「</span><span class="n">目前支援哪些</span><span class="w"> </span><span class="n">CUDA</span><span class="w"> </span><span class="n">版本</span><span class="err">」（</span><span class="n">例如</span><span class="w"> </span><span class="n">cu121</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cu124</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cu132</span><span class="w"> </span><span class="err">…）</span>
+<span class="mf">2.</span><span class="w"> </span><span class="n">選擇一個你的驅動支援的版本</span><span class="err">（</span><span class="n">驅動版本要</span><span class="w"> </span><span class="err">≥</span><span class="w"> </span><span class="n">該</span><span class="w"> </span><span class="n">CUDA</span><span class="w"> </span><span class="n">版本</span><span class="err">）</span>
+<span class="mf">3.</span><span class="w"> </span><span class="n">安裝對應的</span><span class="w"> </span><span class="n">CUDA</span><span class="w"> </span><span class="kr">To</span><span class="n">olkit</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cuDNN</span>
+<span class="mf">4.</span><span class="w"> </span><span class="n">用官方指令安裝</span><span class="w"> </span><span class="n">PyTorch</span><span class="err">（</span><span class="n">會自動帶對應的</span><span class="w"> </span><span class="n">cuXXX</span><span class="err">）</span>
+</code></pre></div>
+
+<h3 id="72-對照原則">7.2 對照原則</h3>
+<table>
+<thead>
+<tr>
+<th>元件</th>
+<th>要一致的東西</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nvidia 驅動</td>
+<td>支援的 CUDA 上限 ≥ 你要裝的 CUDA</td>
+</tr>
+<tr>
+<td>CUDA Toolkit</td>
+<td>與 PyTorch 的 <code>cuXXX</code> 對應</td>
+</tr>
+<tr>
+<td>cuDNN</td>
+<td>版本要對應 CUDA Toolkit 的<strong>主版本</strong>（如 13.x）</td>
+</tr>
+<tr>
+<td>PyTorch</td>
+<td>安裝檔名含 <code>cuXXX</code>（本機為 <code>+cu132</code>）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>考點</strong>：最常見的坑是「<strong>先裝了 PyTorch 才發現 CUDA 版本不合</strong>」。
+正確順序是 <strong>先確認 PyTorch 支援的 CUDA 版本 → 再裝 Toolkit/cuDNN → 最後裝 PyTorch</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="8-cuda-toolkit">8. CUDA Toolkit</h2>
+<p><strong>目的</strong>：安裝 CUDA Toolkit，取得 <code>nvcc</code>、CUDA runtime 與函式庫。</p>
+<h3 id="81-步驟">8.1 步驟</h3>
+<ol>
+<li>到 <strong>CUDA Toolkit Archive</strong>（NVIDIA 官網）選擇版本。</li>
+<li>下載 Windows 版 <strong>Installer（exe / network）</strong>。</li>
+<li>安裝時可選「<strong>自訂（Custom）</strong>」，至少要裝：
+   - <strong>CUDA</strong>（Runtime / Development / Documentation）
+   - <strong>Visual Studio Integration</strong>（若要用 VS 編譯）</li>
+<li>安裝完成後<strong>重開終端</strong>，執行 <code>nvcc --version</code> 驗證。</li>
+</ol>
+<h3 id="82-預設安裝路徑">8.2 預設安裝路徑</h3>
+<div class="codehilite"><pre><span></span><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\
+</code></pre></div>
+
+<p>其中：
+| 資料夾 | 內容 |
+|--------|------|
+| <code>bin\</code> | <code>nvcc.exe</code>、CUDA runtime DLL |
+| <code>lib\x64\</code> | 匯入庫（<code>.lib</code>） |
+| <code>include\</code> | 標頭檔（<code>cuda.h</code> 等） |</p>
+<blockquote>
+<p><strong>考點</strong>：記住 <strong>CUDA 安裝根目錄</strong>（<code>...\CUDA\v13.4\</code>），因為<strong>第 10、11 節要把 cuDNN 的檔案複製進去</strong>；
+版本號（v13.4）要與你裝的一致。</p>
+</blockquote>
+<hr>
+<h2 id="9-cudnn">9. cuDNN</h2>
+<p><strong>目的</strong>：<strong>cuDNN（CUDA Deep Neural Network library）</strong> 是 NVIDIA 的深度學習加速庫，
+PyTorch / TensorFlow 底層會用到它。</p>
+<h3 id="91-步驟">9.1 步驟</h3>
+<ol>
+<li>到 <strong>NVIDIA cuDNN</strong> 頁面（需登入 NVIDIA 開發者帳號）。</li>
+<li>選擇<strong>對應 CUDA 主版本</strong>的 cuDNN（例如 CUDA 13.x → cuDNN for CUDA 13）。</li>
+<li>下載 <strong>Windows zip</strong>（不是 installer）。</li>
+<li>解壓縮，會得到三個資料夾：</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>cudnn-windows-x86_64-&lt;版本&gt;_cuda13-archive\
+  ├─ bin\      （cudnn64_9.dll 等）
+  ├─ include\  （cudnn*.h）
+  └─ lib\x64\  （cudnn.lib 等）
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：cuDNN 下載的是 <strong>zip 壓縮檔</strong>，需要<strong>手動複製</strong>到 CUDA 目錄（見第 10、11 節）；
+版本必須對應 <strong>CUDA 主版本</strong>，否則會出現 <code>Could not locate cudnn_ops</code> 之類的錯誤。</p>
+</blockquote>
+<hr>
+<h2 id="10-copy-cudnn-bin-files-to-cuda">10. Copy cuDNN bin files to CUDA</h2>
+<p><strong>目的</strong>：把 cuDNN 的 <strong>bin（DLL）</strong> 複製到 CUDA 的 <code>bin\</code>，讓執行期找得到。</p>
+<h3 id="101-複製來源與目的">10.1 複製來源與目的</h3>
+<table>
+<thead>
+<tr>
+<th>來源（cuDNN 解壓後）</th>
+<th>目的（CUDA 安裝目錄）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>...\cudnn...\bin\*</code></td>
+<td><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin\</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="102-指令powershell系統管理員">10.2 指令（PowerShell，系統管理員）</h3>
+<div class="codehilite"><pre><span></span><code><span class="nv">$cudnn</span> <span class="p">=</span> <span class="s2">&quot;C:\path\to\cudnn-windows-x86_64-..._cuda13-archive&quot;</span>
+<span class="nv">$cuda</span>  <span class="p">=</span> <span class="s2">&quot;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4&quot;</span>
+
+<span class="nb">Copy-Item</span> <span class="s2">&quot;$cudnn\bin\*&quot;</span>  <span class="s2">&quot;$cuda\bin\&quot;</span>  <span class="n">-Force</span>
+</code></pre></div>
+
+<h3 id="103-驗證">10.3 驗證</h3>
+<div class="codehilite"><pre><span></span><code><span class="nb">Test-Path</span> <span class="s2">&quot;$cuda\bin\cudnn64_9.dll&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：<strong>bin 一定要複製</strong>，否則執行時會找不到 <code>cudnn64_*.dll</code>；
+複製時要<strong>系統管理員權限</strong>（因為目的在 <code>Program Files</code>）。</p>
+</blockquote>
+<hr>
+<h2 id="11-copy-cudnn-lib-files-to-cuda">11. Copy cuDNN lib files to CUDA</h2>
+<p><strong>目的</strong>：把 cuDNN 的 <strong>lib（<code>.lib</code> 匯入庫）</strong> 複製到 CUDA 的 <code>lib\x64\</code>，讓<strong>編譯</strong>時能連結。</p>
+<h3 id="111-複製來源與目的">11.1 複製來源與目的</h3>
+<table>
+<thead>
+<tr>
+<th>來源（cuDNN 解壓後）</th>
+<th>目的（CUDA 安裝目錄）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>...\cudnn...\lib\x64\*</code></td>
+<td><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\lib\x64\</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="112-指令powershell系統管理員">11.2 指令（PowerShell，系統管理員）</h3>
+<div class="codehilite"><pre><span></span><code><span class="nv">$cudnn</span> <span class="p">=</span> <span class="s2">&quot;C:\path\to\cudnn-windows-x86_64-..._cuda13-archive&quot;</span>
+<span class="nv">$cuda</span>  <span class="p">=</span> <span class="s2">&quot;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4&quot;</span>
+
+<span class="nb">Copy-Item</span> <span class="s2">&quot;$cudnn\lib\x64\*&quot;</span> <span class="s2">&quot;$cuda\lib\x64\&quot;</span> <span class="n">-Force</span>
+</code></pre></div>
+
+<h3 id="113-別忘了-include">11.3 別忘了 include</h3>
+<div class="codehilite"><pre><span></span><code><span class="nb">Copy-Item</span> <span class="s2">&quot;$cudnn\include\*&quot;</span> <span class="s2">&quot;$cuda\include\&quot;</span> <span class="n">-Force</span>
+</code></pre></div>
+
+<h3 id="114-驗證三個資料夾都到位">11.4 驗證三個資料夾都到位</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">foreach</span> <span class="p">(</span><span class="nv">$f</span> <span class="k">in</span> <span class="s2">&quot;bin\cudnn64_9.dll&quot;</span><span class="p">,</span><span class="s2">&quot;include\cudnn.h&quot;</span><span class="p">,</span><span class="s2">&quot;lib\x64\cudnn.lib&quot;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="s2">&quot;$f : &quot;</span> <span class="p">+</span> <span class="p">(</span><span class="nb">Test-Path</span> <span class="s2">&quot;$cuda\$f&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：cuDNN 要複製的是<strong>三份</strong> —— <code>bin</code>（執行期 DLL）、<code>include</code>（標頭）、<code>lib\x64</code>（連結庫）。
+只複製 bin 而漏了 lib，會出現 <strong>連結錯誤（LNK2019）</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="12-check-environment-variables">12. Check Environment Variables</h2>
+<p><strong>目的</strong>：確認 CUDA 相關環境變數是否正確設定，這是「明明裝了卻用不到」的最常見原因。</p>
+<h3 id="121-應該存在的變數">12.1 應該存在的變數</h3>
+<table>
+<thead>
+<tr>
+<th>變數</th>
+<th>值（本機為例）</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CUDA_PATH</code></td>
+<td><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4</code></td>
+<td>CUDA 根目錄</td>
+</tr>
+<tr>
+<td><code>CUDA_PATH_V13_4</code></td>
+<td>同上</td>
+<td>版本專用（安裝程式自動建立）</td>
+</tr>
+<tr>
+<td><code>Path</code></td>
+<td>需含 <code>%CUDA_PATH%\bin</code></td>
+<td>讓 <code>nvcc</code> 等指令可用</td>
+</tr>
+</tbody>
+</table>
+<h3 id="122-檢查指令">12.2 檢查指令</h3>
+<div class="codehilite"><pre><span></span><code><span class="c"># 檢視 CUDA 相關環境變數</span>
+<span class="nb">Get-ChildItem</span> <span class="n">Env</span><span class="p">:</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="n">Name</span> <span class="o">-like</span> <span class="s2">&quot;CUDA*&quot;</span> <span class="p">|</span> <span class="nb">Format-Table</span> <span class="n">-AutoSize</span>
+
+<span class="c"># 確認 PATH 內有 CUDA\bin</span>
+<span class="nv">$env:Path</span> <span class="n">-split</span> <span class="s1">&#39;;&#39;</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="p">{</span> <span class="nv">$_</span> <span class="o">-like</span> <span class="s1">&#39;*CUDA*&#39;</span> <span class="p">}</span>
+</code></pre></div>
+
+<p><strong>本機實測（示意）</strong>：</p>
+<div class="codehilite"><pre><span></span><code>CUDA_PATH       C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4
+CUDA_PATH_V13_4 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：若 <code>CUDA_PATH</code> 不存在，代表安裝時沒勾選「加入環境變數」；
+可手動新增，或重跑 CUDA 安裝程式修復。</p>
+</blockquote>
+<hr>
+<h2 id="13-install-visual-studio-code">13. Install Visual Studio Code</h2>
+<p><strong>目的</strong>：安裝輕量編輯器 <strong>VS Code</strong>，用來寫 Python / 跑筆記本。</p>
+<h3 id="131-步驟">13.1 步驟</h3>
+<ol>
+<li>到 code.visualstudio.com 下載 <strong>Windows User Installer</strong>。</li>
+<li>安裝時建議勾選「<strong>Add to PATH</strong>」與「Open with Code」。</li>
+<li>安裝後開啟，安裝必要擴充：
+   - <strong>Python</strong>（Microsoft）
+   - <strong>Jupyter</strong>（跑 .ipynb）
+   - （可選）<strong>Pylance</strong>、<strong>GitLens</strong></li>
+</ol>
+<h3 id="132-驗證">13.2 驗證</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">code</span> <span class="p">-</span><span class="n">-version</span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：VS Code 的 CLI（<code>code</code>）<strong>只有在安裝時勾選「Add to PATH」才可用</strong>；
+本機若 <code>code</code> 不在 PATH，可直接從開始功能表開啟 VS Code。</p>
+</blockquote>
+<hr>
+<h2 id="14-install-git">14. Install Git</h2>
+<p><strong>目的</strong>：安裝 <strong>Git</strong>，用於版本控制與取得（clone）範例專案。</p>
+<h3 id="141-步驟">14.1 步驟</h3>
+<ol>
+<li>到 git-scm.com 下載 <strong>Windows 版</strong>。</li>
+<li>安裝選項大多<strong>保持預設</strong>即可（含 Git Bash、Git Credential Manager）。</li>
+<li>安裝完成後驗證。</li>
+</ol>
+<h3 id="142-驗證">14.2 驗證</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">git</span> <span class="p">-</span><span class="n">-version</span>
+</code></pre></div>
+
+<p><strong>本機實測輸出</strong>：</p>
+<div class="codehilite"><pre><span></span><code>git version 2.53.0.windows.2
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：Git 安裝會一併提供 <strong>Git Bash</strong>（見第 17 節），在 Windows 上可用 Unix 指令；
+若在 PowerShell 出現 <code>git</code> 找不到，通常是安裝時沒勾 PATH。</p>
+</blockquote>
+<hr>
+<h2 id="15-install-pytorch">15. Install PyTorch</h2>
+<p><strong>目的</strong>：安裝<strong>支援 GPU 的 PyTorch</strong>（檔名含 <code>cuXXX</code>，例如 <code>+cu132</code>）。</p>
+<h3 id="151-取得官方安裝指令">15.1 取得官方安裝指令</h3>
+<p>到 <strong>pytorch.org</strong> 的「Get Started」，選擇：
+- PyTorch Build：<strong>Stable</strong>
+- Your OS：<strong>Windows</strong>
+- Package：<strong>Conda</strong> 或 <strong>Pip</strong>
+- Compute Platform：<strong>CUDA 對應版本</strong>（例如 CUDA 12.1 / 12.4 / 13.2）</p>
+<p>網站會產生對應指令，例如：</p>
+<div class="codehilite"><pre><span></span><code><span class="c"># 範例（實際請以官網產生為準）</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">torch</span> <span class="n">torchvision</span> <span class="n">torchaudio</span> <span class="p">-</span><span class="n">-index-url</span> <span class="n">https</span><span class="p">://</span><span class="n">download</span><span class="p">.</span><span class="n">pytorch</span><span class="p">.</span><span class="n">org</span><span class="p">/</span><span class="n">whl</span><span class="p">/</span><span class="n">cu132</span>
+</code></pre></div>
+
+<p>或使用 conda：</p>
+<div class="codehilite"><pre><span></span><code><span class="n">conda</span> <span class="n">install</span> <span class="n">pytorch</span> <span class="n">torchvision</span> <span class="n">torchaudio</span> <span class="n">pytorch-cuda</span><span class="p">=</span><span class="n">13</span><span class="p">.</span><span class="n">2</span> <span class="n">-c</span> <span class="n">pytorch</span> <span class="n">-c</span> <span class="n">nvidia</span>
+</code></pre></div>
+
+<h3 id="152-驗證版本">15.2 驗證版本</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">-c</span> <span class="s2">&quot;import torch; print(torch.__version__)&quot;</span>
+</code></pre></div>
+
+<p><strong>本機實測輸出</strong>：</p>
+<div class="codehilite"><pre><span></span><code>2.14.1+cu132
+</code></pre></div>
+
+<p><code>+cu132</code> 代表這是<strong>用 CUDA 13.2 編譯的 GPU 版</strong>；若是 <code>+cpu</code> 就是 CPU 版（裝錯了）。</p>
+<blockquote>
+<p><strong>考點</strong>：PyTorch 的 <code>+cuXXX</code> 後綴是<strong>判斷 GPU 版的關鍵</strong>；
+裝到 CPU 版時 <code>torch.cuda.is_available()</code> 會回 <code>False</code>，重裝對應 <code>cuXXX</code> 即可。</p>
+</blockquote>
+<hr>
+<h2 id="16-use-visual-studio-code">16. Use Visual Studio Code</h2>
+<p><strong>目的</strong>：用 VS Code 選對 <strong>Python 解譯器（Interpreter）</strong>，才能用到剛裝好的 GPU 環境。</p>
+<h3 id="161-步驟">16.1 步驟</h3>
+<ol>
+<li>開啟 VS Code → <strong>File ▸ Open Folder</strong> 選專案資料夾。</li>
+<li><code>Ctrl+Shift+P</code> → 輸入 <strong>Python: Select Interpreter</strong>。</li>
+<li>選擇 <strong>Anaconda 的 python</strong>（例如 <code>...\anaconda3\python.exe</code> 或某個 conda 環境）。</li>
+<li>新增終端（<code>Ctrl+`</code>），確認提示字元顯示的環境正確。</li>
+</ol>
+<h3 id="162-建議的-settingsjson">16.2 建議的 settings.json</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;python.defaultInterpreterPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;C:\\Users\\&lt;你&gt;\\anaconda3\\python.exe&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;terminal.integrated.defaultProfile.windows&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Command Prompt&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：<strong>「選錯 Interpreter」是 VS Code 跑不到 GPU 的頭號原因</strong>——
+右下角顯示的 Python 路徑必須是你裝了 PyTorch 的那個環境。</p>
+</blockquote>
+<hr>
+<h2 id="17-use-bash-shell-if-needed">17. Use Bash Shell (if needed)</h2>
+<p><strong>目的</strong>：若需要 Unix 風格指令，可用 <strong>Git Bash</strong>（安裝 Git 時一併安裝）。</p>
+<h3 id="171-開啟方式">17.1 開啟方式</h3>
+<ul>
+<li>開始功能表 → <strong>Git Bash</strong></li>
+<li>或在 VS Code 中把預設終端改成 Git Bash：</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;terminal.integrated.profiles.windows&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Git Bash&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;C:\\Program Files\\Git\\bin\\bash.exe&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;terminal.integrated.defaultProfile.windows&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Git Bash&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="172-常見用途">17.2 常見用途</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 在 Git Bash 中（Unix 風格）</span>
+which<span class="w"> </span>python
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import torch; print(torch.cuda.is_available())&quot;</span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：Git Bash 與 PowerShell 的<strong>路徑寫法不同</strong>（<code>/c/Users/...</code> vs <code>C:\Users\...</code>）；
+在 Git Bash 執行 conda 前，通常要先 <code>conda init bash</code> 或直接呼叫 <code>conda.exe</code>。</p>
+</blockquote>
+<hr>
+<h2 id="18-install-python-if-needed">18. Install Python (if needed)</h2>
+<p><strong>目的</strong>：<strong>只有在不使用 Anaconda 時</strong>才需要另外安裝官方 Python。</p>
+<h3 id="181-兩種選擇">18.1 兩種選擇</h3>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>優點</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Anaconda</strong>（建議）</td>
+<td>內建 conda 環境管理與科學套件</td>
+<td>體積較大</td>
+</tr>
+<tr>
+<td><strong>官方 Python</strong>（python.org）</td>
+<td>乾淨、輕量</td>
+<td>需自行管理虛擬環境（venv）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="182-若裝官方-python">18.2 若裝官方 Python</h3>
+<ol>
+<li>到 python.org 下載 Windows installer。</li>
+<li><strong>務必勾選「Add python.exe to PATH」</strong>。</li>
+<li>驗證：</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="p">-</span><span class="n">-version</span>
+<span class="n">pip</span> <span class="p">-</span><span class="n">-version</span>
+</code></pre></div>
+
+<h3 id="183-建立虛擬環境venv">18.3 建立虛擬環境（venv）</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
+<span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：<strong>不要同時混用 Anaconda 與官方 Python 的 PATH</strong>，否則容易出現
+「<code>python</code> 指向 A、<code>pip</code> 裝到 B」的錯亂；擇一為主即可。</p>
+</blockquote>
+<hr>
+<h2 id="19-check-gpu">19. Check GPU</h2>
+<p><strong>目的</strong>：用 PyTorch 確認 GPU 是否真的可用（<strong>本章是原稿唯一的程式碼</strong>，p25）。</p>
+<h3 id="191-原稿程式碼實測通過">19.1 原稿程式碼（實測通過）</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+    <span class="c1"># Get the number of available GPUs</span>
+    <span class="n">gpu_count</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">device_count</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of GPUs available: </span><span class="si">{</span><span class="n">gpu_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CUDA is not available. PyTorch is using the CPU.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>本機實測輸出</strong>：</p>
+<div class="codehilite"><pre><span></span><code>Number of GPUs available: 1
+NVIDIA GeForce RTX 4090
+</code></pre></div>
+
+<h3 id="192-更完整的檢查">19.2 更完整的檢查</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;torch          :&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cuda available :&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cuda version   :&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">cuda</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;device count   :&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">device_count</span><span class="p">())</span>
+<span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;device name    :&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_name</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;capability     :&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_capability</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</code></pre></div>
+
+<p><strong>本機實測輸出</strong>：</p>
+<div class="codehilite"><pre><span></span><code>torch          : 2.14.1+cu132
+cuda available : True
+cuda version   : 13.2
+device count   : 1
+device name    : NVIDIA GeForce RTX 4090
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：<code>torch.cuda.is_available()</code> 回 <code>True</code> 才算<strong>成功</strong>；
+若回 <code>False</code>，依序檢查：PyTorch 是否為 <code>+cuXXX</code>、驅動版本、CUDA/cuDNN 是否對應。</p>
+</blockquote>
+<hr>
+<h2 id="20-set-path-if-needed">20. Set Path (if needed)</h2>
+<p><strong>目的</strong>：若某些指令仍找不到，補設定 <strong>PATH</strong>。</p>
+<h3 id="201-需要進-path-的常見項目">20.1 需要進 PATH 的常見項目</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>路徑（本機為例）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anaconda</td>
+<td><code>C:\Users\princ\anaconda3\</code>、<code>\Scripts\</code>、<code>\Library\bin\</code></td>
+</tr>
+<tr>
+<td>CUDA</td>
+<td><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin\</code></td>
+</tr>
+<tr>
+<td>Git</td>
+<td><code>C:\Program Files\Git\cmd\</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="202-檢查與設定">20.2 檢查與設定</h3>
+<div class="codehilite"><pre><span></span><code><span class="c"># 檢查目前 PATH</span>
+<span class="nv">$env:Path</span> <span class="n">-split</span> <span class="s1">&#39;;&#39;</span> <span class="p">|</span> <span class="nb">Select-String</span> <span class="n">-Pattern</span> <span class="s1">&#39;anaconda|CUDA|Git&#39;</span>
+
+<span class="c"># 暫時加入（只對本終端有效）</span>
+<span class="nv">$env:Path</span> <span class="p">+=</span> <span class="s2">&quot;;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin&quot;</span>
+</code></pre></div>
+
+<p>永久設定請用「環境變數」GUI（見第 5 節），設定後<strong>重開終端</strong>。</p>
+<blockquote>
+<p><strong>考點</strong>：PATH 是「<strong>找不到指令</strong>」問題的最後一道檢查；
+順序上通常先修 conda（第 5 節）與 CUDA（第 12 節），最後才動系統 PATH。</p>
+</blockquote>
+<hr>
+<h2 id="附錄-a指令速查表">附錄 A：指令速查表</h2>
+<h3 id="a1-驗證類最常考">A.1 驗證類（最常考）</h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>檢查什麼</th>
+<th>本機實測</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nvidia-smi</code></td>
+<td>顯卡驅動、VRAM、GPU 使用率</td>
+<td>617.42 / 24564MiB / RTX 4090</td>
+</tr>
+<tr>
+<td><code>nvcc --version</code></td>
+<td>CUDA Toolkit 版本</td>
+<td>release 13.4, V13.4.92</td>
+</tr>
+<tr>
+<td><code>conda --version</code></td>
+<td>conda 是否可用</td>
+<td>conda 24.9.2</td>
+</tr>
+<tr>
+<td><code>python --version</code></td>
+<td>Python 版本</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>git --version</code></td>
+<td>Git 版本</td>
+<td>git 2.53.0.windows.2</td>
+</tr>
+<tr>
+<td><code>code --version</code></td>
+<td>VS Code CLI（需在 PATH）</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a2-環境管理">A.2 環境管理</h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>conda env list</code></td>
+<td>列出所有環境</td>
+</tr>
+<tr>
+<td><code>conda create -n myenv python=3.11</code></td>
+<td>建立環境</td>
+</tr>
+<tr>
+<td><code>conda activate myenv</code></td>
+<td>切換環境</td>
+</tr>
+<tr>
+<td><code>conda deactivate</code></td>
+<td>離開環境</td>
+</tr>
+<tr>
+<td><code>conda install &lt;pkg&gt;</code></td>
+<td>安裝套件（conda）</td>
+</tr>
+<tr>
+<td><code>pip install &lt;pkg&gt;</code></td>
+<td>安裝套件（pip）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a3-gpu-驗證python">A.3 GPU 驗證（Python）</h3>
+<table>
+<thead>
+<tr>
+<th>程式碼</th>
+<th>意義</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>torch.__version__</code></td>
+<td>PyTorch 版本（<code>+cuXXX</code> = GPU 版）</td>
+</tr>
+<tr>
+<td><code>torch.cuda.is_available()</code></td>
+<td><strong>True = GPU 可用</strong></td>
+</tr>
+<tr>
+<td><code>torch.version.cuda</code></td>
+<td>PyTorch 編譯用的 CUDA 版本</td>
+</tr>
+<tr>
+<td><code>torch.cuda.device_count()</code></td>
+<td>GPU 數量</td>
+</tr>
+<tr>
+<td><code>torch.cuda.get_device_name(0)</code></td>
+<td>GPU 名稱</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a4-檔案複製cudnn--cuda">A.4 檔案複製（cuDNN → CUDA）</h3>
+<table>
+<thead>
+<tr>
+<th>來源</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cudnn\bin\*</code></td>
+<td><code>CUDA\vXX.X\bin\</code></td>
+</tr>
+<tr>
+<td><code>cudnn\include\*</code></td>
+<td><code>CUDA\vXX.X\include\</code></td>
+</tr>
+<tr>
+<td><code>cudnn\lib\x64\*</code></td>
+<td><code>CUDA\vXX.X\lib\x64\</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</h2>
+<h3 id="b1-十大陷阱總表">B.1 十大陷阱總表</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>陷阱</th>
+<th>錯誤做法</th>
+<th>正確做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>安裝順序</td>
+<td>先裝 PyTorch 再看 CUDA</td>
+<td><strong>先確認 PyTorch 支援的 CUDA → 再裝 Toolkit/cuDNN → 最後裝 PyTorch</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>驅動 vs Toolkit</td>
+<td>把 <code>nvidia-smi</code> 的版本當成已裝 CUDA</td>
+<td><code>nvidia-smi</code>＝驅動上限；<code>nvcc --version</code>＝實際 Toolkit</td>
+</tr>
+<tr>
+<td>3</td>
+<td>cuDNN 複製</td>
+<td>只複製 <code>bin</code></td>
+<td><strong><code>bin</code> + <code>include</code> + <code>lib\x64</code> 三份都要</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>cuDNN 版本</td>
+<td>隨便抓最新</td>
+<td>要對應 <strong>CUDA 主版本</strong>（如 cuda13）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>conda 找不到</td>
+<td>在一般 CMD 直接打 <code>conda</code></td>
+<td>用 <strong>Anaconda Prompt</strong>，或先把 conda 加入 PATH</td>
+</tr>
+<tr>
+<td>6</td>
+<td>PATH 漏項</td>
+<td>只加 <code>anaconda3\</code></td>
+<td>還要加 <code>\Scripts\</code> 與 <code>\Library\bin\</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>改 PATH 沒生效</td>
+<td>沒重開終端</td>
+<td>改完<strong>重開終端</strong></td>
+</tr>
+<tr>
+<td>8</td>
+<td>VS Code 沒 GPU</td>
+<td>選錯 Python Interpreter</td>
+<td><strong>Select Interpreter</strong> 指到裝了 PyTorch 的環境</td>
+</tr>
+<tr>
+<td>9</td>
+<td>裝到 CPU 版</td>
+<td><code>torch.__version__</code> 是 <code>+cpu</code></td>
+<td>重裝 <code>+cuXXX</code> 版</td>
+</tr>
+<tr>
+<td>10</td>
+<td>權限不足</td>
+<td>複製檔案到 <code>Program Files</code> 失敗</td>
+<td>用<strong>系統管理員</strong>身分執行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="b2-錯誤訊息對照">B.2 錯誤訊息對照</h3>
+<table>
+<thead>
+<tr>
+<th>訊息</th>
+<th>原因</th>
+<th>處理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>conda : 不是內部或外部命令</code></td>
+<td>conda 不在 PATH</td>
+<td>用 Anaconda Prompt 或設 PATH（第 5 節）</td>
+</tr>
+<tr>
+<td><code>'nvcc' 不是內部或外部命令</code></td>
+<td>CUDA <code>bin</code> 不在 PATH</td>
+<td>檢查 <code>CUDA_PATH</code> 與 PATH（第 12 節）</td>
+</tr>
+<tr>
+<td><code>Could not locate cudnn_ops_infer64_9.dll</code></td>
+<td>cuDNN bin 沒複製</td>
+<td>複製 cuDNN <code>bin\*</code> 到 CUDA <code>bin\</code></td>
+</tr>
+<tr>
+<td><code>LNK2019: unresolved external symbol</code></td>
+<td>cuDNN lib 沒複製</td>
+<td>複製 <code>lib\x64\*</code> 與 <code>include\*</code></td>
+</tr>
+<tr>
+<td><code>torch.cuda.is_available()</code> 回 <code>False</code></td>
+<td>裝到 CPU 版 / CUDA 不符</td>
+<td>重裝 <code>+cuXXX</code> 版（第 15 節）</td>
+</tr>
+<tr>
+<td><code>OSError: [WinError 126] 找不到指定的模組</code></td>
+<td>缺 DLL（常為 <code>Library\bin</code>）</td>
+<td>把 <code>anaconda3\Library\bin</code> 加進 PATH</td>
+</tr>
+<tr>
+<td><code>CUDA out of memory</code></td>
+<td>VRAM 不足</td>
+<td>減 batch size、關閉其他佔用 GPU 的程式</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="附錄-c模擬試題連答案">附錄 C：模擬試題（連答案）</h2>
+<h3 id="c1-選擇題20-題">C.1 選擇題（20 題）</h3>
+<ol>
+<li>
+<p><code>nvidia-smi</code> 主要用來檢查？
+   - A. Python 版本
+   - B. 顯卡驅動與 GPU 狀態
+   - C. Git 版本
+   - D. 磁碟空間</p>
+</li>
+<li>
+<p><code>nvcc --version</code> 顯示的是？
+   - A. 顯卡驅動版本
+   - B. Python 版本
+   - C. 已安裝的 CUDA Toolkit 版本
+   - D. PyTorch 版本</p>
+</li>
+<li>
+<p>在 Windows 上編譯 CUDA 需要哪個編譯器？
+   - A. MSVC（Visual Studio C++）
+   - B. Java
+   - C. Go
+   - D. PHP</p>
+</li>
+<li>
+<p>Anaconda 的 <code>conda</code> 同時是什麼？
+   - A. 只有編輯器
+   - B. 只有瀏覽器
+   - C. 只有防毒軟體
+   - D. 套件管理器與環境管理器</p>
+</li>
+<li>
+<p>Anaconda Prompt 的特點是？
+   - A. 只能跑 Linux
+   - B. 已預先設好 conda 環境變數
+   - C. 不能執行 python
+   - D. 需要付費</p>
+</li>
+<li>
+<p>設定 Anaconda PATH 時，除了 <code>anaconda3\</code> 還要加哪兩個？
+   - A. <code>bin\</code>、<code>lib\</code>
+   - B. <code>tools\</code>、<code>docs\</code>
+   - C. <code>Scripts\</code>、<code>Library\bin\</code>
+   - D. <code>cache\</code>、<code>logs\</code></p>
+</li>
+<li>
+<p>cuDNN 是什麼？
+   - A. NVIDIA 的深度學習加速庫
+   - B. 一種程式語言
+   - C. 一種顯卡型號
+   - D. 一種檔案格式</p>
+</li>
+<li>
+<p>cuDNN 官方下載的格式通常是？
+   - A. <code>.msi</code> 安裝檔
+   - B. <code>.deb</code> 套件
+   - C. <code>.exe</code> 安裝精靈
+   - D. <strong>zip 壓縮檔</strong>（需手動複製）</p>
+</li>
+<li>
+<p>cuDNN 的 <code>bin</code> 檔案要複製到哪？
+   - A. Python 安裝目錄
+   - B. CUDA 安裝目錄的 <code>bin\</code>
+   - C. Windows 系統資料夾
+   - D. 桌面</p>
+</li>
+<li>
+<p>CUDA Toolkit 的預設安裝路徑大致是？</p>
+<ul>
+<li>A. <code>C:\Python\CUDA\</code></li>
+<li>B. <code>C:\Windows\CUDA\</code></li>
+<li>C. <code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\vXX.X\</code></li>
+<li>D. <code>C:\Users\Public\CUDA\</code></li>
+</ul>
+</li>
+<li>
+<p><code>torch.cuda.is_available()</code> 回傳 <code>True</code> 代表？</p>
+<ul>
+<li>A. GPU 可用</li>
+<li>B. 只能使用 CPU</li>
+<li>C. 沒有安裝 PyTorch</li>
+<li>D. 驅動未安裝</li>
+</ul>
+</li>
+<li>
+<p>PyTorch 版本顯示 <code>2.14.1+cu132</code>，<code>+cu132</code> 代表？</p>
+<ul>
+<li>A. 第 132 版</li>
+<li>B. 支援 132 張顯卡</li>
+<li>C. CPU 版本</li>
+<li>D. 以 CUDA 13.2 編譯的 GPU 版</li>
+</ul>
+</li>
+<li>
+<p>VS Code 中明明裝了 PyTorch 卻用不到 GPU，最常見原因是？</p>
+<ul>
+<li>A. 螢幕解析度太低</li>
+<li>B. 選錯 Python Interpreter</li>
+<li>C. 沒裝瀏覽器</li>
+<li>D. 鍵盤問題</li>
+</ul>
+</li>
+<li>
+<p>改了 PATH 之後指令仍找不到，通常是？</p>
+<ul>
+<li>A. 電腦太慢</li>
+<li>B. 需要重裝 Windows</li>
+<li>C. 沒有重開終端</li>
+<li>D. 需要換滑鼠</li>
+</ul>
+</li>
+<li>
+<p><code>CUDA_PATH</code> 環境變數的用途是？</p>
+<ul>
+<li>A. 指向 CUDA 安裝根目錄</li>
+<li>B. 儲存 Python 版本</li>
+<li>C. 記錄 GPU 溫度</li>
+<li>D. 存放圖片</li>
+</ul>
+</li>
+<li>
+<p>Git Bash 是隨哪個軟體一起安裝的？</p>
+<ul>
+<li>A. Anaconda</li>
+<li>B. CUDA</li>
+<li>C. VS Code</li>
+<li>D. Git</li>
+</ul>
+</li>
+<li>
+<p>正確的安裝順序是？</p>
+<ul>
+<li>A. PyTorch → CUDA → 驅動</li>
+<li>B. 驅動 → VS C++ / Anaconda → CUDA / cuDNN → PyTorch</li>
+<li>C. Anaconda → Git → 驅動</li>
+<li>D. 順序無所謂</li>
+</ul>
+</li>
+<li>
+<p>安裝官方 Python 時，務必勾選什麼？</p>
+<ul>
+<li>A. 安裝到 D 槽</li>
+<li>B. 安裝所有語言套件</li>
+<li>C. Add python.exe to PATH</li>
+<li>D. 建立桌面捷徑</li>
+</ul>
+</li>
+<li>
+<p>出現 <code>LNK2019: unresolved external symbol</code> 通常是因為？</p>
+<ul>
+<li>A. cuDNN 的 <code>lib</code>/<code>include</code> 沒複製到 CUDA</li>
+<li>B. 螢幕太小</li>
+<li>C. 沒裝 Git</li>
+<li>D. 網路太慢</li>
+</ul>
+</li>
+<li>
+<p><code>OSError: [WinError 126] 找不到指定的模組</code> 常見原因是？</p>
+<ul>
+<li>A. 記憶體不足</li>
+<li>B. 螢幕壞了</li>
+<li>C. 沒裝瀏覽器</li>
+<li>D. 缺 DLL（常是 <code>anaconda3\Library\bin</code> 不在 PATH）</li>
+</ul>
+</li>
+</ol>
+<details><summary>C.1 答案</summary>
+
+1. **B** 2. **C** 3. **A** 4. **D** 5. **B** 6. **C** 7. **A** 8. **D** 9. **B** 10. **C**
+11. **A** 12. **D** 13. **B** 14. **C** 15. **A** 16. **D** 17. **B** 18. **C** 19. **A** 20. **D**
+
+</details>
+
+<h3 id="c2-填充題10-題">C.2 填充題（10 題）</h3>
+<ol>
+<li>檢查顯卡驅動與 GPU 的指令是 ______。</li>
+<li>檢查 CUDA Toolkit 版本的指令是 ______。</li>
+<li>Anaconda 的環境管理器指令是 ______。</li>
+<li>設定 Anaconda PATH 要加入的三個資料夾：<code>\</code>、<code>______</code>、<code>______</code>。</li>
+<li>cuDNN 下載的是 ______ 檔，需要手動複製到 CUDA 目錄。</li>
+<li>cuDNN 要複製的三個資料夾是 <code>bin</code>、<code>______</code>、<code>______</code>。</li>
+<li>CUDA 的環境變數名稱是 ______。</li>
+<li>PyTorch 版本後綴 <code>+cu132</code> 代表以 CUDA <strong><em>_</em>_ 編譯的 </strong>____ 版。</li>
+<li>驗證 GPU 是否可用的關鍵函式是 ______。</li>
+<li>VS Code 要在命令面板執行「Python: ______」來選對環境。</li>
+</ol>
+<details><summary>C.2 答案</summary>
+
+1. `nvidia-smi`
+2. `nvcc --version`
+3. `conda`
+4. `Scripts\`；`Library\bin\`
+5. zip（壓縮檔）
+6. `include`；`lib\x64`
+7. `CUDA_PATH`
+8. 13.2；GPU
+9. `torch.cuda.is_available()`
+10. Select Interpreter
+
+</details>
+
+<h3 id="c3-簡答題6-題">C.3 簡答題（6 題）</h3>
+<ol>
+<li>說明 <code>nvidia-smi</code> 與 <code>nvcc --version</code> 的差別。</li>
+<li>為什麼 cuDNN 要複製 <code>bin</code>、<code>include</code>、<code>lib\x64</code> 三份？</li>
+<li>說明 <code>conda</code> 的兩個角色，並各舉一個指令。</li>
+<li>設定 PATH 後為何要重開終端？漏掉 <code>Library\bin</code> 會怎樣？</li>
+<li><code>torch.cuda.is_available()</code> 回 <code>False</code> 時，列出你的排查順序。</li>
+<li>VS Code 要如何確認正在使用正確的 Python 環境？</li>
+</ol>
+<details><summary>C.3 參考答案</summary>
+
+1. `nvidia-smi` 顯示**驅動版本與 GPU 狀態**（含驅動支援的 CUDA 上限）；`nvcc --version` 顯示**實際安裝的 CUDA Toolkit 版本**。兩者可能不同。
+2. `bin`＝執行期 DLL（否則找不到 `cudnn64_*.dll`）；`include`＝標頭檔（編譯需要）；`lib\x64`＝匯入庫（連結需要，缺了會 LNK2019）。
+3. 角色一：**套件管理器**（`conda install numpy`）；角色二：**環境管理器**（`conda create -n myenv python=3.11`）。
+4. 因為 PATH 是在程序啟動時讀取；改完**已開的終端不會更新**。漏掉 `Library\bin` 會導致 `import torch` 等出現 **WinError 126 找不到模組**。
+5. 依序：① `torch.__version__` 是否為 `+cuXXX`；② 驅動是否夠新（`nvidia-smi`）；③ `CUDA_PATH` / PATH 是否正確；④ cuDNN 是否複製齊全；⑤ 是否有多個 Python 環境混淆。
+6. `Ctrl+Shift+P` → **Python: Select Interpreter**，選擇裝有 PyTorch 的環境；右下角狀態列與終端提示字元會顯示目前解譯器路徑。
+
+</details>
+
+<hr>
+<h2 id="附錄-d教材頁面索引對照">附錄 D：教材頁面索引對照</h2>
+<table>
+<thead>
+<tr>
+<th>PDF 頁</th>
+<th>標題</th>
+<th>本筆記對應章節</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>封面：Using Local GPU for Machine Learning</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Set up Nvidia Video Driver</td>
+<td>第 1 節</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Set up Nvidia Video Driver</td>
+<td>第 1 節</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Install Visual Studio C++</td>
+<td>第 2 節</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Install Visual Studio C++</td>
+<td>第 2 節</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Install Anaconda</td>
+<td>第 3 節</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Install Anaconda</td>
+<td>第 3 節</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Install Anaconda</td>
+<td>第 3 節</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Anaconda Prompt</td>
+<td>第 4 節</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Setup Anaconda Path</td>
+<td>第 5 節</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Install or check CUDA tool</td>
+<td>第 6 節</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Check version for Pytorch</td>
+<td>第 7 節</td>
+</tr>
+<tr>
+<td>13</td>
+<td>CUDA Toolkit</td>
+<td>第 8 節</td>
+</tr>
+<tr>
+<td>14</td>
+<td>cuDNN</td>
+<td>第 9 節</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Copy cuDNN bin files to CUDA</td>
+<td>第 10 節</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Copy cuDNN lib files to CUDA</td>
+<td>第 11 節</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Check Environment Variables</td>
+<td>第 12 節</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Install Visual Studio Code</td>
+<td>第 13 節</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Install Git</td>
+<td>第 14 節</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Install Pytorch</td>
+<td>第 15 節</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Install Pytorch</td>
+<td>第 15 節</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Use Visual Studio Code</td>
+<td>第 16 節</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Use Bash Shell (if needed)</td>
+<td>第 17 節</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Install Python (if needed)</td>
+<td>第 18 節</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Check GPU（含 PyTorch 程式碼）</td>
+<td>第 19 節</td>
+</tr>
+<tr>
+<td>26</td>
+<td>Set Path (if needed)</td>
+<td>第 20 節</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>說明：原稿幾乎每頁都是<strong>安裝精靈截圖</strong>，只有 <strong>p25</strong> 含實際程式碼（PyTorch GPU 檢查）；
+本筆記把每一步補上「目的、指令、驗證方式」，讓沒有截圖也能照著做。</p>
+</blockquote>
+<hr>
+<h2 id="附錄-e離線安裝提示">附錄 E：離線安裝提示</h2>
+<h3 id="e1-需要先下載的安裝檔有網路時先備好">E.1 需要先下載的安裝檔（有網路時先備好）</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>來源</th>
+<th>檔名關鍵字</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nvidia 驅動</td>
+<td>nvidia.com / GeForce Experience</td>
+<td><code>*-desktop-win10-win11-*.exe</code></td>
+</tr>
+<tr>
+<td>Visual Studio Build Tools</td>
+<td>visualstudio.microsoft.com</td>
+<td><code>vs_BuildTools.exe</code></td>
+</tr>
+<tr>
+<td>Anaconda</td>
+<td>anaconda.com</td>
+<td><code>Anaconda3-*-Windows-x86_64.exe</code></td>
+</tr>
+<tr>
+<td>CUDA Toolkit</td>
+<td>NVIDIA CUDA Archive</td>
+<td><code>cuda_*_windows.exe</code></td>
+</tr>
+<tr>
+<td>cuDNN</td>
+<td>NVIDIA Developer（需登入）</td>
+<td><code>cudnn-windows-x86_64-*_cuda13-archive.zip</code></td>
+</tr>
+<tr>
+<td>VS Code</td>
+<td>code.visualstudio.com</td>
+<td><code>VSCodeUserSetup-x64-*.exe</code></td>
+</tr>
+<tr>
+<td>Git</td>
+<td>git-scm.com</td>
+<td><code>Git-*-64-bit.exe</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="e2-離線安裝注意">E.2 離線安裝注意</h3>
+<ul>
+<li><strong>cuDNN 需登入 NVIDIA 帳號</strong>才能下載，建議<strong>事先</strong>下載好 zip。</li>
+<li>PyTorch 的 wheel 很大（數 GB），建議先用 <code>pip download</code> 或 <code>conda</code> 的離線包：
+  <code>powershell
+  pip download torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu132 -d .\wheels
+  # 離線安裝
+  pip install --no-index --find-links .\wheels torch torchvision torchaudio</code></li>
+<li><strong>順序不能省</strong>：驅動 → 編譯器/Anaconda → CUDA/cuDNN → PyTorch。</li>
+</ul>
+<h3 id="e3-沒有-gpu-時的替代">E.3 沒有 GPU 時的替代</h3>
+<ul>
+<li>裝 <strong>CPU 版 PyTorch</strong> 仍可學習與跑小模型（<code>torch.cuda.is_available()</code> 會是 <code>False</code>）。</li>
+<li>雲端替代：Colab、Kaggle、或雲端 GPU 服務（不必在本機裝 CUDA）。</li>
+</ul>
+<hr>
+<h2 id="附錄-f一頁精華考前-10-分鐘">附錄 F：一頁精華（考前 10 分鐘）</h2>
+<div class="codehilite"><pre><span></span><code>【安裝順序（必背）】
+  1 Nvidia 驅動 → 2 VS C++ (MSVC) → 3 Anaconda → 4 Anaconda Prompt
+  5 Anaconda PATH → 6/7 確認 CUDA 版本 → 8 CUDA Toolkit → 9 cuDNN
+  10/11 複製 cuDNN bin + lib(+include) → 12 檢查環境變數
+  13 VS Code → 14 Git → 15 PyTorch(GPU 版) → 16-18 使用/選 Interpreter
+  19 驗證 GPU → 20 補 PATH
+
+【三大驗證指令】
+  nvidia-smi            → 驅動 / VRAM / GPU 狀態
+  nvcc --version        → 已裝的 CUDA Toolkit 版本
+  conda --version       → conda 是否可用
+
+【PyTorch GPU 檢查（p25 原稿程式碼）】
+  import torch
+  if torch.cuda.is_available():
+      print(torch.cuda.device_count()); print(torch.cuda.get_device_name())
+  else:
+      print(&quot;CUDA is not available. PyTorch is using the CPU.&quot;)
+  → 本機實測：1 / NVIDIA GeForce RTX 4090
+
+【版本對照（本機實測）】
+  驅動 617.42 ｜ nvcc CUDA 13.4 ｜ torch 2.14.1+cu132 ｜ conda 24.9.2 ｜ git 2.53.0
+
+【三大關鍵觀念】
+  (1) nvidia-smi ≠ nvcc：前者是驅動上限，後者是實際 Toolkit
+  (2) cuDNN 要複製「bin + include + lib\x64」三份到 CUDA 目錄
+  (3) +cuXXX 才是 GPU 版；is_available() 回 True 才算成功
+
+【最常見三個坑】
+  conda 找不到 → 用 Anaconda Prompt 或設 PATH(含 Scripts 與 Library\bin)
+  改了 PATH 沒用 → 要重開終端
+  VS Code 沒 GPU → Python: Select Interpreter 選對環境
+</code></pre></div>
+
+<hr>
+<h2 id="附錄-gmc-模擬試卷60-題">附錄 G：MC 模擬試卷（60 題）</h2>
+<h3 id="g1-作答說明與應試技巧">G.1 作答說明與應試技巧</h3>
+<ul>
+<li><strong>60 題單選</strong>、滿分 60 分、建議 <strong>75 分鐘</strong>。</li>
+<li>分三部分：<strong>安裝前置與環境（1–20）</strong>、<strong>CUDA 與 cuDNN（21–40）</strong>、<strong>工具、PyTorch 與排錯（41–60）</strong>。</li>
+<li>答案分佈刻意打散（A/B/C/D 各 15 題），避免整排猜同一個字母。</li>
+<li>建議先做完整份再看答案；答錯的題目請用「逐題詳解」對應回章節重讀。</li>
+</ul>
+<h3 id="g2-第一部分安裝前置與環境第-120-題">G.2 第一部分：安裝前置與環境（第 1–20 題）</h3>
+<ol>
+<li>
+<p><code>nvidia-smi</code> 主要用來檢查？
+   - A. Python 版本
+   - B. 顯卡驅動與 GPU 狀態
+   - C. Git 版本
+   - D. 磁碟空間</p>
+</li>
+<li>
+<p>安裝 Nvidia 顯示驅動後，通常建議？
+   - A. 立刻重裝系統
+   - B. 關閉防火牆
+   - C. 重開機
+   - D. 刪除驅動</p>
+</li>
+<li>
+<p>在 Windows 上編譯 CUDA 需要哪個編譯器？
+   - A. MSVC（Visual Studio C++）
+   - B. Java
+   - C. Go
+   - D. PHP</p>
+</li>
+<li>
+<p>安裝 Visual Studio 時要勾選哪個工作負載？
+   - A. .NET 桌面開發
+   - B. 遊戲開發（Unity）
+   - C. 行動裝置開發
+   - D. 使用 C++ 的桌面開發</p>
+</li>
+<li>
+<p>Anaconda 主要提供什麼？
+   - A. 只有瀏覽器
+   - B. conda 環境與套件管理
+   - C. 顯卡驅動
+   - D. 防毒軟體</p>
+</li>
+<li>
+<p>Anaconda 的安裝路徑建議？
+   - A. 越深越好
+   - B. 放在桌面
+   - C. 不含中文與空白
+   - D. 一定要在 D 槽</p>
+</li>
+<li>
+<p>Anaconda Prompt 的特點是？
+   - A. 已預先設好 conda 環境變數
+   - B. 只能跑 Linux
+   - C. 不能執行 python
+   - D. 需要付費</p>
+</li>
+<li>
+<p>設定 Anaconda PATH 時要加入哪三個資料夾？
+   - A. <code>bin\</code>、<code>lib\</code>、<code>docs\</code>
+   - B. <code>tools\</code>、<code>cache\</code>、<code>logs\</code>
+   - C. <code>include\</code>、<code>src\</code>、<code>test\</code>
+   - D. 根目錄、<code>Scripts\</code>、<code>Library\bin\</code></p>
+</li>
+<li>
+<p>Anaconda 的 <code>Library\bin</code> 主要放什麼？
+   - A. 圖片
+   - B. 文件
+   - C. 原生 DLL
+   - D. 範例程式</p>
+</li>
+<li>
+<p>修改 PATH 之後，要如何才能生效？</p>
+<ul>
+<li>A. 立刻生效</li>
+<li>B. 重開終端</li>
+<li>C. 重裝系統</li>
+<li>D. 不用管</li>
+</ul>
+</li>
+<li>
+<p><code>conda --version</code> 用來驗證？</p>
+<ul>
+<li>A. GPU 型號</li>
+<li>B. CUDA 版本</li>
+<li>C. Python 套件數量</li>
+<li>D. conda 是否可用</li>
+</ul>
+</li>
+<li>
+<p><code>conda create -n myenv python=3.11</code> 的作用是？</p>
+<ul>
+<li>A. 建立名為 myenv 的環境</li>
+<li>B. 刪除環境</li>
+<li>C. 安裝顯卡驅動</li>
+<li>D. 更新 Windows</li>
+</ul>
+</li>
+<li>
+<p><code>conda activate myenv</code> 的作用是？</p>
+<ul>
+<li>A. 刪除環境</li>
+<li>B. 建立環境</li>
+<li>C. 切換到 myenv 環境</li>
+<li>D. 匯出環境</li>
+</ul>
+</li>
+<li>
+<p>在一般 CMD 打 <code>conda</code> 出現「不是內部或外部命令」，代表？</p>
+<ul>
+<li>A. 沒裝 Anaconda</li>
+<li>B. conda 不在 PATH</li>
+<li>C. 電腦中毒</li>
+<li>D. 需要重開機</li>
+</ul>
+</li>
+<li>
+<p><code>nvidia-smi</code> 顯示的「CUDA Version」代表？</p>
+<ul>
+<li>A. 驅動支援的 CUDA 上限</li>
+<li>B. 已安裝的 CUDA Toolkit</li>
+<li>C. PyTorch 的 CUDA 版本</li>
+<li>D. cuDNN 版本</li>
+</ul>
+</li>
+<li>
+<p><code>where.exe cl.exe</code> 用來檢查？</p>
+<ul>
+<li>A. Git 是否安裝</li>
+<li>B. Python 版本</li>
+<li>C. CUDA 版本</li>
+<li>D. MSVC 編譯器是否存在</li>
+</ul>
+</li>
+<li>
+<p>安裝 Anaconda 時，一般建議選擇？</p>
+<ul>
+<li>A. 所有使用者</li>
+<li>B. Just Me（僅本人）</li>
+<li>C. 不要安裝</li>
+<li>D. 只裝 Python</li>
+</ul>
+</li>
+<li>
+<p>安裝路徑含中文可能導致？</p>
+<ul>
+<li>A. 硬碟損壞</li>
+<li>B. 顯卡過熱</li>
+<li>C. 部分套件或指令出錯</li>
+<li>D. 網路變慢</li>
+</ul>
+</li>
+<li>
+<p>檢視 CUDA 相關環境變數的指令是？</p>
+<ul>
+<li>A. <code>Get-ChildItem Env: | Where-Object Name -like "CUDA*"</code></li>
+<li>B. <code>dir cuda</code></li>
+<li>C. <code>ping cuda</code></li>
+<li>D. <code>tasklist</code></li>
+</ul>
+</li>
+<li>
+<p><code>CUDA_PATH</code> 環境變數的用途是？</p>
+<ul>
+<li>A. 儲存 Python 版本</li>
+<li>B. 記錄 GPU 溫度</li>
+<li>C. 存放圖片</li>
+<li>D. 指向 CUDA 安裝根目錄</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="g3-第二部分cuda-與-cudnn第-2140-題">G.3 第二部分：CUDA 與 cuDNN（第 21–40 題）</h3>
+<ol start="21">
+<li>
+<p><code>nvcc --version</code> 顯示的是？</p>
+<ul>
+<li>A. 已安裝的 CUDA Toolkit 版本</li>
+<li>B. 顯卡驅動版本</li>
+<li>C. Python 版本</li>
+<li>D. Git 版本</li>
+</ul>
+</li>
+<li>
+<p>CUDA Toolkit 的預設安裝路徑大致是？</p>
+<ul>
+<li>A. <code>C:\Python\CUDA\</code></li>
+<li>B. <code>C:\Windows\CUDA\</code></li>
+<li>C. <code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\vXX.X\</code></li>
+<li>D. <code>C:\Users\Public\CUDA\</code></li>
+</ul>
+</li>
+<li>
+<p>安裝 CUDA Toolkit 時，至少要安裝哪些元件？</p>
+<ul>
+<li>A. 只要 Documentation</li>
+<li>B. CUDA（Runtime / Development）</li>
+<li>C. 只要 Samples</li>
+<li>D. 只要驅動</li>
+</ul>
+</li>
+<li>
+<p>cuDNN 是什麼？</p>
+<ul>
+<li>A. 一種程式語言</li>
+<li>B. 一種顯卡型號</li>
+<li>C. 一種檔案格式</li>
+<li>D. NVIDIA 的深度學習加速庫</li>
+</ul>
+</li>
+<li>
+<p>cuDNN 官方下載的格式通常是？</p>
+<ul>
+<li>A. zip 壓縮檔</li>
+<li>B. <code>.msi</code> 安裝檔</li>
+<li>C. <code>.deb</code> 套件</li>
+<li>D. <code>.exe</code> 安裝精靈</li>
+</ul>
+</li>
+<li>
+<p>cuDNN 版本必須對應什麼？</p>
+<ul>
+<li>A. Python 版本</li>
+<li>B. 螢幕解析度</li>
+<li>C. CUDA 主版本（如 cuda13）</li>
+<li>D. 硬碟容量</li>
+</ul>
+</li>
+<li>
+<p>cuDNN 解壓後通常包含哪三個資料夾？</p>
+<ul>
+<li>A. <code>src</code>、<code>test</code>、<code>doc</code></li>
+<li>B. <code>bin</code>、<code>include</code>、<code>lib\x64</code></li>
+<li>C. <code>app</code>、<code>data</code>、<code>cache</code></li>
+<li>D. <code>x86</code>、<code>arm</code>、<code>wasm</code></li>
+</ul>
+</li>
+<li>
+<p>cuDNN 的 <code>bin</code> 檔案要複製到哪？</p>
+<ul>
+<li>A. Python 安裝目錄</li>
+<li>B. Windows 系統資料夾</li>
+<li>C. 桌面</li>
+<li>D. CUDA 安裝目錄的 <code>bin\</code></li>
+</ul>
+</li>
+<li>
+<p>cuDNN 的 <code>lib\x64</code> 檔案要複製到哪？</p>
+<ul>
+<li>A. CUDA 安裝目錄的 <code>lib\x64\</code></li>
+<li>B. CUDA 安裝目錄的 <code>bin\</code></li>
+<li>C. Python 的 <code>site-packages</code></li>
+<li>D. 使用者文件夾</li>
+</ul>
+</li>
+<li>
+<p>cuDNN 的 <code>include</code> 檔案要複製到哪？</p>
+<ul>
+<li>A. <code>C:\Windows\System32</code></li>
+<li>B. 專案根目錄</li>
+<li>C. CUDA 安裝目錄的 <code>include\</code></li>
+<li>D. Anaconda 的 <code>Scripts</code></li>
+</ul>
+</li>
+<li>
+<p>只複製 cuDNN 的 <code>bin</code> 而漏了 <code>lib</code>，可能出現？</p>
+<ul>
+<li>A. 螢幕變黑</li>
+<li>B. 連結錯誤（LNK2019）</li>
+<li>C. 網路斷線</li>
+<li>D. 鍵盤失效</li>
+</ul>
+</li>
+<li>
+<p>執行時出現 <code>Could not locate cudnn_ops_infer64_9.dll</code> 代表？</p>
+<ul>
+<li>A. Python 版本太新</li>
+<li>B. Git 沒安裝</li>
+<li>C. 螢幕解析度不對</li>
+<li>D. cuDNN 的 <code>bin</code> 沒複製到 CUDA</li>
+</ul>
+</li>
+<li>
+<p>複製檔案到 <code>C:\Program Files\...</code> 需要什麼權限？</p>
+<ul>
+<li>A. 系統管理員</li>
+<li>B. 一般使用者</li>
+<li>C. 訪客</li>
+<li>D. 不需要權限</li>
+</ul>
+</li>
+<li>
+<p>CUDA 安裝目錄的 <code>bin\</code> 主要放什麼？</p>
+<ul>
+<li>A. 圖片</li>
+<li>B. 文件</li>
+<li>C. <code>nvcc.exe</code> 與 runtime DLL</li>
+<li>D. 範例專案</li>
+</ul>
+</li>
+<li>
+<p>版本一致性的原則是？</p>
+<ul>
+<li>A. 全部用最新版就好</li>
+<li>B. 驅動支援的 CUDA 上限 ≥ 要安裝的 CUDA 版本</li>
+<li>C. 版本隨便配</li>
+<li>D. 只要 Python 對就好</li>
+</ul>
+</li>
+<li>
+<p>正確的安裝順序是？</p>
+<ul>
+<li>A. PyTorch → CUDA → 驅動</li>
+<li>B. Anaconda → Git → 驅動</li>
+<li>C. 順序無所謂</li>
+<li>D. 驅動 → 編譯器 / Anaconda → CUDA / cuDNN → PyTorch</li>
+</ul>
+</li>
+<li>
+<p>「先裝 PyTorch 才發現 CUDA 版本不合」的後果是？</p>
+<ul>
+<li>A. 需要重裝對應 <code>cuXXX</code> 版本的 PyTorch</li>
+<li>B. 電腦會壞掉</li>
+<li>C. 無法開機</li>
+<li>D. 資料全部遺失</li>
+</ul>
+</li>
+<li>
+<p><code>CUDA_PATH_V13_4</code> 這種變數是？</p>
+<ul>
+<li>A. 使用者自訂</li>
+<li>B. PyTorch 建立的</li>
+<li>C. CUDA 安裝程式自動建立的版本專用變數</li>
+<li>D. 隨機產生</li>
+</ul>
+</li>
+<li>
+<p>下載 cuDNN 通常需要什麼？</p>
+<ul>
+<li>A. 付費訂閱</li>
+<li>B. 登入 NVIDIA 開發者帳號</li>
+<li>C. 學校信箱</li>
+<li>D. 不需要任何帳號</li>
+</ul>
+</li>
+<li>
+<p>CUDA Toolkit Archive 的用途是？</p>
+<ul>
+<li>A. 查詢 GPU 溫度</li>
+<li>B. 下載 Python</li>
+<li>C. 查詢螢幕規格</li>
+<li>D. 下載舊版／指定版本的 CUDA Toolkit</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="g4-第三部分工具pytorch-與排錯第-4160-題">G.4 第三部分：工具、PyTorch 與排錯（第 41–60 題）</h3>
+<ol start="41">
+<li>
+<p>VS Code 的命令列指令是？</p>
+<ul>
+<li>A. <code>vscode</code></li>
+<li>B. <code>code</code></li>
+<li>C. <code>editor</code></li>
+<li>D. <code>vs</code></li>
+</ul>
+</li>
+<li>
+<p>用 VS Code 寫 ML，建議安裝哪些擴充？</p>
+<ul>
+<li>A. 只要主題</li>
+<li>B. 只要圖示</li>
+<li>C. 只要拼字檢查</li>
+<li>D. Python 與 Jupyter</li>
+</ul>
+</li>
+<li>
+<p>安裝 Git 時會一併提供什麼？</p>
+<ul>
+<li>A. Git Bash</li>
+<li>B. CUDA</li>
+<li>C. Anaconda</li>
+<li>D. PyTorch</li>
+</ul>
+</li>
+<li>
+<p><code>git --version</code> 的用途是？</p>
+<ul>
+<li>A. 更新 Git</li>
+<li>B. 刪除 Git</li>
+<li>C. 驗證 Git 是否安裝成功</li>
+<li>D. 安裝 Git</li>
+</ul>
+</li>
+<li>
+<p>PyTorch GPU 版安裝檔的後綴是？</p>
+<ul>
+<li>A. <code>+gpu</code></li>
+<li>B. <code>+cuXXX</code></li>
+<li>C. <code>+cpu</code></li>
+<li>D. <code>+cuda</code></li>
+</ul>
+</li>
+<li>
+<p>如何判斷 PyTorch 是 GPU 版？</p>
+<ul>
+<li>A. 看檔名有沒有 gpu</li>
+<li>B. 看安裝時間</li>
+<li>C. 看檔案大小</li>
+<li>D. <code>torch.__version__</code> 是否含 <code>+cuXXX</code></li>
+</ul>
+</li>
+<li>
+<p><code>torch.cuda.is_available()</code> 回傳 <code>True</code> 代表？</p>
+<ul>
+<li>A. GPU 可用</li>
+<li>B. 只能使用 CPU</li>
+<li>C. 沒有安裝 PyTorch</li>
+<li>D. 驅動未安裝</li>
+</ul>
+</li>
+<li>
+<p><code>torch.cuda.device_count()</code> 回傳什麼？</p>
+<ul>
+<li>A. VRAM 大小</li>
+<li>B. CUDA 版本</li>
+<li>C. GPU 數量</li>
+<li>D. GPU 溫度</li>
+</ul>
+</li>
+<li>
+<p><code>torch.version.cuda</code> 代表什麼？</p>
+<ul>
+<li>A. 顯卡驅動版本</li>
+<li>B. PyTorch 編譯所用的 CUDA 版本</li>
+<li>C. cuDNN 版本</li>
+<li>D. Python 版本</li>
+</ul>
+</li>
+<li>
+<p><code>torch.cuda.is_available()</code> 回 <code>False</code>，最常見原因是？</p>
+<ul>
+<li>A. 螢幕壞了</li>
+<li>B. 沒裝 Git</li>
+<li>C. 沒裝瀏覽器</li>
+<li>D. 裝到 CPU 版或 CUDA 版本不符</li>
+</ul>
+</li>
+<li>
+<p>VS Code 明明裝了 PyTorch 卻用不到 GPU，最常見原因是？</p>
+<ul>
+<li>A. 選錯 Python Interpreter</li>
+<li>B. 鍵盤問題</li>
+<li>C. 螢幕太小</li>
+<li>D. 沒開音效</li>
+</ul>
+</li>
+<li>
+<p>VS Code 要選 Python 環境，命令是？</p>
+<ul>
+<li>A. <code>Python: Run</code></li>
+<li>B. <code>Python: Debug</code></li>
+<li>C. <code>Python: Select Interpreter</code></li>
+<li>D. <code>Python: Format</code></li>
+</ul>
+</li>
+<li>
+<p><code>OSError: [WinError 126] 找不到指定的模組</code> 常見原因是？</p>
+<ul>
+<li>A. 記憶體不足</li>
+<li>B. 缺 DLL（如 <code>anaconda3\Library\bin</code> 不在 PATH）</li>
+<li>C. 螢幕壞了</li>
+<li>D. 網路斷線</li>
+</ul>
+</li>
+<li>
+<p>遇到 <code>CUDA out of memory</code>，可以怎麼做？</p>
+<ul>
+<li>A. 重裝 Windows</li>
+<li>B. 換螢幕</li>
+<li>C. 刪除驅動</li>
+<li>D. 減小 batch size、關閉其他佔用 GPU 的程式</li>
+</ul>
+</li>
+<li>
+<p>安裝官方 Python 時務必勾選？</p>
+<ul>
+<li>A. Add python.exe to PATH</li>
+<li>B. 建立桌面捷徑</li>
+<li>C. 安裝到 D 槽</li>
+<li>D. 安裝所有語言</li>
+</ul>
+</li>
+<li>
+<p>建立虛擬環境（venv）的指令是？</p>
+<ul>
+<li>A. <code>python venv new</code></li>
+<li>B. <code>conda make venv</code></li>
+<li>C. <code>python -m venv .venv</code></li>
+<li>D. <code>venv create</code></li>
+</ul>
+</li>
+<li>
+<p>同時混用 Anaconda 與官方 Python 的風險是？</p>
+<ul>
+<li>A. 顯卡過熱</li>
+<li>B. <code>python</code> 與 <code>pip</code> 可能指向不同環境</li>
+<li>C. 無法上網</li>
+<li>D. 硬碟壞掉</li>
+</ul>
+</li>
+<li>
+<p>離線安裝 PyTorch 的作法之一是？</p>
+<ul>
+<li>A. 直接複製別人電腦的檔案</li>
+<li>B. 關掉網路安裝</li>
+<li>C. 用 Windows 商店</li>
+<li>D. <code>pip download</code> 後用 <code>pip install --no-index --find-links</code></li>
+</ul>
+</li>
+<li>
+<p>沒有 GPU 時的替代方案是？</p>
+<ul>
+<li>A. 用 CPU 版 PyTorch 或改用雲端 GPU（Colab/Kaggle）</li>
+<li>B. 放棄學習</li>
+<li>C. 只能買新電腦</li>
+<li>D. 無法執行任何 Python</li>
+</ul>
+</li>
+<li>
+<p>本筆記實測的 PyTorch 版本是？</p>
+<ul>
+<li>A. <code>1.0.0</code></li>
+<li>B. <code>2.0.0+cpu</code></li>
+<li>C. <code>2.14.1+cu132</code></li>
+<li>D. <code>3.0.0</code></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="g5-答案速查表">G.5 答案速查表</h3>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>B</td>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+<td>B</td>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+<td>C</td>
+<td>B</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+<th>16</th>
+<th>17</th>
+<th>18</th>
+<th>19</th>
+<th>20</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>A</td>
+<td>D</td>
+<td>B</td>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>21</th>
+<th>22</th>
+<th>23</th>
+<th>24</th>
+<th>25</th>
+<th>26</th>
+<th>27</th>
+<th>28</th>
+<th>29</th>
+<th>30</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>31</th>
+<th>32</th>
+<th>33</th>
+<th>34</th>
+<th>35</th>
+<th>36</th>
+<th>37</th>
+<th>38</th>
+<th>39</th>
+<th>40</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>41</th>
+<th>42</th>
+<th>43</th>
+<th>44</th>
+<th>45</th>
+<th>46</th>
+<th>47</th>
+<th>48</th>
+<th>49</th>
+<th>50</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>51</th>
+<th>52</th>
+<th>53</th>
+<th>54</th>
+<th>55</th>
+<th>56</th>
+<th>57</th>
+<th>58</th>
+<th>59</th>
+<th>60</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<p><strong>分數換算</strong>：每題 1 分，滿分 60 分。答錯題目請對照下方詳解回到章節重讀。</p>
+<h3 id="g6-逐題詳解">G.6 逐題詳解</h3>
+<p><strong>1. B</strong> —— <code>nvidia-smi</code> 檢查驅動與 GPU 狀態（§1）。
+<strong>2. C</strong> —— 裝完驅動建議重開機（§1.1）。
+<strong>3. A</strong> —— CUDA 在 Windows 需要 MSVC（§2）。
+<strong>4. D</strong> —— 勾「使用 C++ 的桌面開發」（§2.1）。
+<strong>5. B</strong> —— Anaconda 提供 conda 環境與套件管理（§3）。
+<strong>6. C</strong> —— 路徑不含中文與空白（§3.1）。
+<strong>7. A</strong> —— Anaconda Prompt 已設好 conda 環境變數（§4）。
+<strong>8. D</strong> —— 根目錄、<code>Scripts\</code>、<code>Library\bin\</code>（§5.1）。
+<strong>9. C</strong> —— <code>Library\bin</code> 放原生 DLL（§5.1）。
+<strong>10. B</strong> —— 改 PATH 後要重開終端（§5.2）。
+<strong>11. D</strong> —— <code>conda --version</code> 驗證 conda 是否可用（§3.2）。
+<strong>12. A</strong> —— 建立名為 myenv 的環境（§3.2）。
+<strong>13. C</strong> —— <code>conda activate</code> 切換環境（§4.2）。
+<strong>14. B</strong> —— conda 不在 PATH（§4.2）。
+<strong>15. A</strong> —— <code>nvidia-smi</code> 的 CUDA Version＝驅動支援上限（§1.2）。
+<strong>16. D</strong> —— 檢查 MSVC 編譯器（§2.2）。
+<strong>17. B</strong> —— 建議 Just Me（§3.1）。
+<strong>18. C</strong> —— 含中文可能導致套件／指令出錯（§3.1）。
+<strong>19. A</strong> —— 用 <code>Get-ChildItem Env:</code> 過濾 CUDA<em>（§12.2）。
+</em><em>20. D</em><em> —— <code>CUDA_PATH</code> 指向 CUDA 根目錄（§12.1）。
+</em><em>21. A</em><em> —— <code>nvcc --version</code>＝已裝的 CUDA Toolkit（§6.1）。
+</em><em>22. C</em><em> —— <code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\vXX.X\</code>（§8.2）。
+</em><em>23. B</em><em> —— 至少裝 CUDA Runtime / Development（§8.1）。
+</em><em>24. D</em><em> —— cuDNN 是深度學習加速庫（§9）。
+</em><em>25. A</em><em> —— cuDNN 下載 zip（§9.1）。
+</em><em>26. C</em><em> —— 要對應 CUDA 主版本（§9.1）。
+</em><em>27. B</em><em> —— <code>bin</code>、<code>include</code>、<code>lib\x64</code>（§9.1）。
+</em><em>28. D</em><em> —— 複製到 CUDA <code>bin\</code>（§10.1）。
+</em><em>29. A</em><em> —— 複製到 CUDA <code>lib\x64\</code>（§11.1）。
+</em><em>30. C</em>* —— 複製到 CUDA <code>include\</code>（§11.3）。</p>
+<p><strong>31. B</strong> —— 漏了 lib 會出現 LNK2019 連結錯誤（§11.4／附錄 B.2）。
+<strong>32. D</strong> —— 找不到 cudnn DLL＝bin 沒複製（§10.3／附錄 B.2）。
+<strong>33. A</strong> —— 需要系統管理員權限（§10.2）。
+<strong>34. C</strong> —— CUDA <code>bin\</code> 放 <code>nvcc.exe</code> 與 runtime DLL（§8.2）。
+<strong>35. B</strong> —— 驅動支援上限 ≥ 要裝的 CUDA（§7.2）。
+<strong>36. D</strong> —— 驅動 → 編譯器/Anaconda → CUDA/cuDNN → PyTorch（附錄 F）。
+<strong>37. A</strong> —— 需重裝對應 <code>cuXXX</code> 的 PyTorch（§7.2）。
+<strong>38. C</strong> —— CUDA 安裝程式建立的版本專用變數（§12.1）。
+<strong>39. B</strong> —— 需登入 NVIDIA 開發者帳號（§9.1／附錄 E.2）。
+<strong>40. D</strong> —— Archive 用來下載舊版／指定版本 CUDA（§8.1）。
+<strong>41. B</strong> —— VS Code 的 CLI 是 <code>code</code>（§13.2）。
+<strong>42. D</strong> —— 建議裝 Python 與 Jupyter 擴充（§13.1）。
+<strong>43. A</strong> —— Git 安裝一併提供 Git Bash（§14.2／§17）。
+<strong>44. C</strong> —— <code>git --version</code> 驗證安裝成功（§14.2）。
+<strong>45. B</strong> —— GPU 版後綴是 <code>+cuXXX</code>（§15.2）。
+<strong>46. D</strong> —— 看 <code>torch.__version__</code> 是否含 <code>+cuXXX</code>（§15.2）。
+<strong>47. A</strong> —— 回 <code>True</code>＝GPU 可用（§19.2）。
+<strong>48. C</strong> —— <code>device_count()</code> 回傳 GPU 數量（§19.2）。
+<strong>49. B</strong> —— <code>torch.version.cuda</code>＝PyTorch 編譯用的 CUDA 版本（§19.2）。
+<strong>50. D</strong> —— 裝到 CPU 版或版本不符（附錄 B.2）。
+<strong>51. A</strong> —— 選錯 Python Interpreter（§16.1）。
+<strong>52. C</strong> —— <code>Python: Select Interpreter</code>（§16.1）。
+<strong>53. B</strong> —— 缺 DLL（<code>Library\bin</code> 不在 PATH）（附錄 B.2）。
+<strong>54. D</strong> —— 減 batch size、關閉佔用 GPU 的程式（附錄 B.2）。
+<strong>55. A</strong> —— 勾 Add python.exe to PATH（§18.2）。
+<strong>56. C</strong> —— <code>python -m venv .venv</code>（§18.3）。
+<strong>57. B</strong> —— <code>python</code> 與 <code>pip</code> 可能指向不同環境（§18.3）。
+<strong>58. D</strong> —— <code>pip download</code> + <code>--no-index --find-links</code>（附錄 E.2）。
+<strong>59. A</strong> —— CPU 版 PyTorch 或雲端 GPU（附錄 E.3）。
+<strong>60. C</strong> —— 本機實測為 <code>2.14.1+cu132</code>（§15.2／附錄 F）。</p>
+<hr>
+<h2 id="附錄-h答錯題目--複習章節對照">附錄 H：答錯題目 → 複習章節對照</h2>
+<table>
+<thead>
+<tr>
+<th>答錯題號</th>
+<th>建議複習章節</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–2</td>
+<td>§1 Nvidia 驅動與 <code>nvidia-smi</code></td>
+</tr>
+<tr>
+<td>3–4</td>
+<td>§2 Visual Studio C++（MSVC）</td>
+</tr>
+<tr>
+<td>5–6</td>
+<td>§3 Anaconda 安裝</td>
+</tr>
+<tr>
+<td>7</td>
+<td>§4 Anaconda Prompt</td>
+</tr>
+<tr>
+<td>8–10</td>
+<td>§5 Anaconda PATH 設定</td>
+</tr>
+<tr>
+<td>11–14</td>
+<td>§3.2 / §4.2 conda 指令</td>
+</tr>
+<tr>
+<td>15–16</td>
+<td>§1.2 / §2.2 驗證指令</td>
+</tr>
+<tr>
+<td>17–18</td>
+<td>§3.1 安裝選項與路徑</td>
+</tr>
+<tr>
+<td>19–20</td>
+<td>§12 環境變數檢查</td>
+</tr>
+<tr>
+<td>21–23</td>
+<td>§6 / §8 CUDA Toolkit</td>
+</tr>
+<tr>
+<td>24–30</td>
+<td>§9–§11 cuDNN 與複製</td>
+</tr>
+<tr>
+<td>31–33</td>
+<td>§10–§11 複製與權限、附錄 B.2</td>
+</tr>
+<tr>
+<td>34–38</td>
+<td>§8.2 / §7.2 版本一致性</td>
+</tr>
+<tr>
+<td>39–40</td>
+<td>§9.1 / §8.1 下載來源</td>
+</tr>
+<tr>
+<td>41–44</td>
+<td>§13 / §14 VS Code 與 Git</td>
+</tr>
+<tr>
+<td>45–50</td>
+<td>§15 / §19 PyTorch 與 GPU 驗證</td>
+</tr>
+<tr>
+<td>51–54</td>
+<td>§16 Interpreter、附錄 B.2 排錯</td>
+</tr>
+<tr>
+<td>55–59</td>
+<td>§18 Python / venv、附錄 E 離線</td>
+</tr>
+<tr>
+<td>60</td>
+<td>§15.2 版本驗證</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。</em></p>
+</main>
+</div>
+</body>
+</html>
