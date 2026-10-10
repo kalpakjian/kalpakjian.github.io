@@ -1,5 +1,6 @@
 ---
 title: Using Local GPU for Machine Learning 學習筆記：IVDC 課程完整複習 + 60 題 MC 模擬試卷
+archive: true   # 已歸入「專題：IVDC電腦視覺課程」，不列在首頁
 date: 2026-10-10 23:00:00
 categories:
   - 學習資源
