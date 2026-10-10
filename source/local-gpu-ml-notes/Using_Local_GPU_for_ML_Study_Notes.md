@@ -6,7 +6,7 @@
 > 本筆記按 PDF 原稿每一個標題逐一填充內容，並補上實際指令、版本對照、常見錯誤、模擬試題。
 > 原稿為**安裝步驟截圖**（文字極少）；本筆記把每一步補上「要做什麼、用什麼指令、如何驗證」。
 > 本機實測環境（Windows）：**RTX 4090 / 驅動 617.42 / CUDA 13.4 / PyTorch 2.14.1+cu132**。
-> **附錄 G 另備一份 60 題的 MC 模擬試卷（含答案速查表與逐題詳解）**，適合考前完整計時練習。
+> 🖱️ **互動測驗（推薦）**：附錄 G 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
@@ -40,8 +40,8 @@
 | D | [附錄 D：教材頁面索引對照](#附錄-d教材頁面索引對照) | — |
 | E | [附錄 E：離線安裝提示](#附錄-e離線安裝提示) | — |
 | F | [附錄 F：一頁精華（考前 10 分鐘）](#附錄-f一頁精華考前-10-分鐘) | — |
-| G | [附錄 G：MC 模擬試卷（60 題）](#附錄-gmc-模擬試卷60-題) | — |
-| H | [附錄 H：答錯題目 → 複習章節對照](#附錄-h答錯題目--複習章節對照) | — |
+| G | [附錄 G：互動式線上測驗（60 題）](#附錄-g互動式線上測驗60-題) | — |
+| H | [附錄 H：互動測驗答錯題目 → 複習章節對照](#附錄-h互動測驗答錯題目--複習章節對照) | — |
 
 ---
 
@@ -1068,482 +1068,45 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
 
 ---
 
-## 附錄 G：MC 模擬試卷（60 題）
+## 附錄 G：互動式線上測驗（60 題）
 
-### G.1 作答說明與應試技巧
+> **60 題單選、滿分 60 分、建議 75 分鐘。**
+> 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不再收錄非互動的紙本題目**，避免與線上版重複。
 
-- **60 題單選**、滿分 60 分、建議 **75 分鐘**。
-- 分三部分：**安裝前置與環境（1–20）**、**CUDA 與 cuDNN（21–40）**、**工具、PyTorch 與排錯（41–60）**。
-- 答案分佈刻意打散（A/B/C/D 各 15 題），避免整排猜同一個字母。
-- 建議先做完整份再看答案；答錯的題目請用「逐題詳解」對應回章節重讀。
+### G.1 開始測驗
 
-### G.2 第一部分：安裝前置與環境（第 1–20 題）
+**👉 [開始 60 題線上測驗](mc-quiz.html)**
 
-1. `nvidia-smi` 主要用來檢查？
-   - A. Python 版本
-   - B. 顯卡驅動與 GPU 狀態
-   - C. Git 版本
-   - D. 磁碟空間
+線上版功能：
 
-2. 安裝 Nvidia 顯示驅動後，通常建議？
-   - A. 立刻重裝系統
-   - B. 關閉防火牆
-   - C. 重開機
-   - D. 刪除驅動
+- **點選答案**即自動計分，並即時顯示得分
+- **作答進度自動存在你的瀏覽器**（localStorage）——關掉網頁、隔天再開都能繼續
+- 可切換「只顯示未答」或「只顯示答錯」的題目，快速複習
+- 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
+- 需要紙本時，直接在該頁按列印即可
 
-3. 在 Windows 上編譯 CUDA 需要哪個編譯器？
-   - A. MSVC（Visual Studio C++）
-   - B. Java
-   - C. Go
-   - D. PHP
+### G.2 時間分配建議
 
-4. 安裝 Visual Studio 時要勾選哪個工作負載？
-   - A. .NET 桌面開發
-   - B. 遊戲開發（Unity）
-   - C. 行動裝置開發
-   - D. 使用 C++ 的桌面開發
+| 階段 | 時間 | 做什麼 |
+|---|---|---|
+| 第一輪 | 0–40 分鐘 | 快速作答有把握的題目，不確定先標記跳過 |
+| 第二輪 | 40–65 分鐘 | 回頭處理標記的難題 |
+| 第三輪 | 65–75 分鐘 | 檢查有沒有漏答 |
 
-5. Anaconda 主要提供什麼？
-   - A. 只有瀏覽器
-   - B. conda 環境與套件管理
-   - C. 顯卡驅動
-   - D. 防毒軟體
+### G.3 評分參考
 
-6. Anaconda 的安裝路徑建議？
-   - A. 越深越好
-   - B. 放在桌面
-   - C. 不含中文與空白
-   - D. 一定要在 D 槽
+| 分數 | 程度 | 建議 |
+|---|---|---|
+| 54–60 | 優異 | 直接看附錄 F 一頁精華即可上場 |
+| 45–53 | 良好 | 複習錯題所屬章節 |
+| 36–44 | 及格邊緣 | 重讀主要章節 + 附錄 A |
+| 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
-7. Anaconda Prompt 的特點是？
-   - A. 已預先設好 conda 環境變數
-   - B. 只能跑 Linux
-   - C. 不能執行 python
-   - D. 需要付費
-
-8. 設定 Anaconda PATH 時要加入哪三個資料夾？
-   - A. `bin\`、`lib\`、`docs\`
-   - B. `tools\`、`cache\`、`logs\`
-   - C. `include\`、`src\`、`test\`
-   - D. 根目錄、`Scripts\`、`Library\bin\`
-
-9. Anaconda 的 `Library\bin` 主要放什麼？
-   - A. 圖片
-   - B. 文件
-   - C. 原生 DLL
-   - D. 範例程式
-
-10. 修改 PATH 之後，要如何才能生效？
-    - A. 立刻生效
-    - B. 重開終端
-    - C. 重裝系統
-    - D. 不用管
-
-11. `conda --version` 用來驗證？
-    - A. GPU 型號
-    - B. CUDA 版本
-    - C. Python 套件數量
-    - D. conda 是否可用
-
-12. `conda create -n myenv python=3.11` 的作用是？
-    - A. 建立名為 myenv 的環境
-    - B. 刪除環境
-    - C. 安裝顯卡驅動
-    - D. 更新 Windows
-
-13. `conda activate myenv` 的作用是？
-    - A. 刪除環境
-    - B. 建立環境
-    - C. 切換到 myenv 環境
-    - D. 匯出環境
-
-14. 在一般 CMD 打 `conda` 出現「不是內部或外部命令」，代表？
-    - A. 沒裝 Anaconda
-    - B. conda 不在 PATH
-    - C. 電腦中毒
-    - D. 需要重開機
-
-15. `nvidia-smi` 顯示的「CUDA Version」代表？
-    - A. 驅動支援的 CUDA 上限
-    - B. 已安裝的 CUDA Toolkit
-    - C. PyTorch 的 CUDA 版本
-    - D. cuDNN 版本
-
-16. `where.exe cl.exe` 用來檢查？
-    - A. Git 是否安裝
-    - B. Python 版本
-    - C. CUDA 版本
-    - D. MSVC 編譯器是否存在
-
-17. 安裝 Anaconda 時，一般建議選擇？
-    - A. 所有使用者
-    - B. Just Me（僅本人）
-    - C. 不要安裝
-    - D. 只裝 Python
-
-18. 安裝路徑含中文可能導致？
-    - A. 硬碟損壞
-    - B. 顯卡過熱
-    - C. 部分套件或指令出錯
-    - D. 網路變慢
-
-19. 檢視 CUDA 相關環境變數的指令是？
-    - A. `Get-ChildItem Env: | Where-Object Name -like "CUDA*"`
-    - B. `dir cuda`
-    - C. `ping cuda`
-    - D. `tasklist`
-
-20. `CUDA_PATH` 環境變數的用途是？
-    - A. 儲存 Python 版本
-    - B. 記錄 GPU 溫度
-    - C. 存放圖片
-    - D. 指向 CUDA 安裝根目錄
+> 答錯的題目請對照〈附錄 H：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
 
 ---
 
-### G.3 第二部分：CUDA 與 cuDNN（第 21–40 題）
-
-21. `nvcc --version` 顯示的是？
-    - A. 已安裝的 CUDA Toolkit 版本
-    - B. 顯卡驅動版本
-    - C. Python 版本
-    - D. Git 版本
-
-22. CUDA Toolkit 的預設安裝路徑大致是？
-    - A. `C:\Python\CUDA\`
-    - B. `C:\Windows\CUDA\`
-    - C. `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\vXX.X\`
-    - D. `C:\Users\Public\CUDA\`
-
-23. 安裝 CUDA Toolkit 時，至少要安裝哪些元件？
-    - A. 只要 Documentation
-    - B. CUDA（Runtime / Development）
-    - C. 只要 Samples
-    - D. 只要驅動
-
-24. cuDNN 是什麼？
-    - A. 一種程式語言
-    - B. 一種顯卡型號
-    - C. 一種檔案格式
-    - D. NVIDIA 的深度學習加速庫
-
-25. cuDNN 官方下載的格式通常是？
-    - A. zip 壓縮檔
-    - B. `.msi` 安裝檔
-    - C. `.deb` 套件
-    - D. `.exe` 安裝精靈
-
-26. cuDNN 版本必須對應什麼？
-    - A. Python 版本
-    - B. 螢幕解析度
-    - C. CUDA 主版本（如 cuda13）
-    - D. 硬碟容量
-
-27. cuDNN 解壓後通常包含哪三個資料夾？
-    - A. `src`、`test`、`doc`
-    - B. `bin`、`include`、`lib\x64`
-    - C. `app`、`data`、`cache`
-    - D. `x86`、`arm`、`wasm`
-
-28. cuDNN 的 `bin` 檔案要複製到哪？
-    - A. Python 安裝目錄
-    - B. Windows 系統資料夾
-    - C. 桌面
-    - D. CUDA 安裝目錄的 `bin\`
-
-29. cuDNN 的 `lib\x64` 檔案要複製到哪？
-    - A. CUDA 安裝目錄的 `lib\x64\`
-    - B. CUDA 安裝目錄的 `bin\`
-    - C. Python 的 `site-packages`
-    - D. 使用者文件夾
-
-30. cuDNN 的 `include` 檔案要複製到哪？
-    - A. `C:\Windows\System32`
-    - B. 專案根目錄
-    - C. CUDA 安裝目錄的 `include\`
-    - D. Anaconda 的 `Scripts`
-
-31. 只複製 cuDNN 的 `bin` 而漏了 `lib`，可能出現？
-    - A. 螢幕變黑
-    - B. 連結錯誤（LNK2019）
-    - C. 網路斷線
-    - D. 鍵盤失效
-
-32. 執行時出現 `Could not locate cudnn_ops_infer64_9.dll` 代表？
-    - A. Python 版本太新
-    - B. Git 沒安裝
-    - C. 螢幕解析度不對
-    - D. cuDNN 的 `bin` 沒複製到 CUDA
-
-33. 複製檔案到 `C:\Program Files\...` 需要什麼權限？
-    - A. 系統管理員
-    - B. 一般使用者
-    - C. 訪客
-    - D. 不需要權限
-
-34. CUDA 安裝目錄的 `bin\` 主要放什麼？
-    - A. 圖片
-    - B. 文件
-    - C. `nvcc.exe` 與 runtime DLL
-    - D. 範例專案
-
-35. 版本一致性的原則是？
-    - A. 全部用最新版就好
-    - B. 驅動支援的 CUDA 上限 ≥ 要安裝的 CUDA 版本
-    - C. 版本隨便配
-    - D. 只要 Python 對就好
-
-36. 正確的安裝順序是？
-    - A. PyTorch → CUDA → 驅動
-    - B. Anaconda → Git → 驅動
-    - C. 順序無所謂
-    - D. 驅動 → 編譯器 / Anaconda → CUDA / cuDNN → PyTorch
-
-37. 「先裝 PyTorch 才發現 CUDA 版本不合」的後果是？
-    - A. 需要重裝對應 `cuXXX` 版本的 PyTorch
-    - B. 電腦會壞掉
-    - C. 無法開機
-    - D. 資料全部遺失
-
-38. `CUDA_PATH_V13_4` 這種變數是？
-    - A. 使用者自訂
-    - B. PyTorch 建立的
-    - C. CUDA 安裝程式自動建立的版本專用變數
-    - D. 隨機產生
-
-39. 下載 cuDNN 通常需要什麼？
-    - A. 付費訂閱
-    - B. 登入 NVIDIA 開發者帳號
-    - C. 學校信箱
-    - D. 不需要任何帳號
-
-40. CUDA Toolkit Archive 的用途是？
-    - A. 查詢 GPU 溫度
-    - B. 下載 Python
-    - C. 查詢螢幕規格
-    - D. 下載舊版／指定版本的 CUDA Toolkit
-
----
-
-### G.4 第三部分：工具、PyTorch 與排錯（第 41–60 題）
-
-41. VS Code 的命令列指令是？
-    - A. `vscode`
-    - B. `code`
-    - C. `editor`
-    - D. `vs`
-
-42. 用 VS Code 寫 ML，建議安裝哪些擴充？
-    - A. 只要主題
-    - B. 只要圖示
-    - C. 只要拼字檢查
-    - D. Python 與 Jupyter
-
-43. 安裝 Git 時會一併提供什麼？
-    - A. Git Bash
-    - B. CUDA
-    - C. Anaconda
-    - D. PyTorch
-
-44. `git --version` 的用途是？
-    - A. 更新 Git
-    - B. 刪除 Git
-    - C. 驗證 Git 是否安裝成功
-    - D. 安裝 Git
-
-45. PyTorch GPU 版安裝檔的後綴是？
-    - A. `+gpu`
-    - B. `+cuXXX`
-    - C. `+cpu`
-    - D. `+cuda`
-
-46. 如何判斷 PyTorch 是 GPU 版？
-    - A. 看檔名有沒有 gpu
-    - B. 看安裝時間
-    - C. 看檔案大小
-    - D. `torch.__version__` 是否含 `+cuXXX`
-
-47. `torch.cuda.is_available()` 回傳 `True` 代表？
-    - A. GPU 可用
-    - B. 只能使用 CPU
-    - C. 沒有安裝 PyTorch
-    - D. 驅動未安裝
-
-48. `torch.cuda.device_count()` 回傳什麼？
-    - A. VRAM 大小
-    - B. CUDA 版本
-    - C. GPU 數量
-    - D. GPU 溫度
-
-49. `torch.version.cuda` 代表什麼？
-    - A. 顯卡驅動版本
-    - B. PyTorch 編譯所用的 CUDA 版本
-    - C. cuDNN 版本
-    - D. Python 版本
-
-50. `torch.cuda.is_available()` 回 `False`，最常見原因是？
-    - A. 螢幕壞了
-    - B. 沒裝 Git
-    - C. 沒裝瀏覽器
-    - D. 裝到 CPU 版或 CUDA 版本不符
-
-51. VS Code 明明裝了 PyTorch 卻用不到 GPU，最常見原因是？
-    - A. 選錯 Python Interpreter
-    - B. 鍵盤問題
-    - C. 螢幕太小
-    - D. 沒開音效
-
-52. VS Code 要選 Python 環境，命令是？
-    - A. `Python: Run`
-    - B. `Python: Debug`
-    - C. `Python: Select Interpreter`
-    - D. `Python: Format`
-
-53. `OSError: [WinError 126] 找不到指定的模組` 常見原因是？
-    - A. 記憶體不足
-    - B. 缺 DLL（如 `anaconda3\Library\bin` 不在 PATH）
-    - C. 螢幕壞了
-    - D. 網路斷線
-
-54. 遇到 `CUDA out of memory`，可以怎麼做？
-    - A. 重裝 Windows
-    - B. 換螢幕
-    - C. 刪除驅動
-    - D. 減小 batch size、關閉其他佔用 GPU 的程式
-
-55. 安裝官方 Python 時務必勾選？
-    - A. Add python.exe to PATH
-    - B. 建立桌面捷徑
-    - C. 安裝到 D 槽
-    - D. 安裝所有語言
-
-56. 建立虛擬環境（venv）的指令是？
-    - A. `python venv new`
-    - B. `conda make venv`
-    - C. `python -m venv .venv`
-    - D. `venv create`
-
-57. 同時混用 Anaconda 與官方 Python 的風險是？
-    - A. 顯卡過熱
-    - B. `python` 與 `pip` 可能指向不同環境
-    - C. 無法上網
-    - D. 硬碟壞掉
-
-58. 離線安裝 PyTorch 的作法之一是？
-    - A. 直接複製別人電腦的檔案
-    - B. 關掉網路安裝
-    - C. 用 Windows 商店
-    - D. `pip download` 後用 `pip install --no-index --find-links`
-
-59. 沒有 GPU 時的替代方案是？
-    - A. 用 CPU 版 PyTorch 或改用雲端 GPU（Colab/Kaggle）
-    - B. 放棄學習
-    - C. 只能買新電腦
-    - D. 無法執行任何 Python
-
-60. 本筆記實測的 PyTorch 版本是？
-    - A. `1.0.0`
-    - B. `2.0.0+cpu`
-    - C. `2.14.1+cu132`
-    - D. `3.0.0`
-
----
-
-### G.5 答案速查表
-
-| 題 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 答 | B | C | A | D | B | C | A | D | C | B |
-
-| 題 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 答 | D | A | C | B | A | D | B | C | A | D |
-
-| 題 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 答 | A | C | B | D | A | C | B | D | A | C |
-
-| 題 | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 | 40 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 答 | B | D | A | C | B | D | A | C | B | D |
-
-| 題 | 41 | 42 | 43 | 44 | 45 | 46 | 47 | 48 | 49 | 50 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 答 | B | D | A | C | B | D | A | C | B | D |
-
-| 題 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 答 | A | C | B | D | A | C | B | D | A | C |
-
-**分數換算**：每題 1 分，滿分 60 分。答錯題目請對照下方詳解回到章節重讀。
-
-### G.6 逐題詳解
-
-**1. B** —— `nvidia-smi` 檢查驅動與 GPU 狀態（§1）。
-**2. C** —— 裝完驅動建議重開機（§1.1）。
-**3. A** —— CUDA 在 Windows 需要 MSVC（§2）。
-**4. D** —— 勾「使用 C++ 的桌面開發」（§2.1）。
-**5. B** —— Anaconda 提供 conda 環境與套件管理（§3）。
-**6. C** —— 路徑不含中文與空白（§3.1）。
-**7. A** —— Anaconda Prompt 已設好 conda 環境變數（§4）。
-**8. D** —— 根目錄、`Scripts\`、`Library\bin\`（§5.1）。
-**9. C** —— `Library\bin` 放原生 DLL（§5.1）。
-**10. B** —— 改 PATH 後要重開終端（§5.2）。
-**11. D** —— `conda --version` 驗證 conda 是否可用（§3.2）。
-**12. A** —— 建立名為 myenv 的環境（§3.2）。
-**13. C** —— `conda activate` 切換環境（§4.2）。
-**14. B** —— conda 不在 PATH（§4.2）。
-**15. A** —— `nvidia-smi` 的 CUDA Version＝驅動支援上限（§1.2）。
-**16. D** —— 檢查 MSVC 編譯器（§2.2）。
-**17. B** —— 建議 Just Me（§3.1）。
-**18. C** —— 含中文可能導致套件／指令出錯（§3.1）。
-**19. A** —— 用 `Get-ChildItem Env:` 過濾 CUDA*（§12.2）。
-**20. D** —— `CUDA_PATH` 指向 CUDA 根目錄（§12.1）。
-**21. A** —— `nvcc --version`＝已裝的 CUDA Toolkit（§6.1）。
-**22. C** —— `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\vXX.X\`（§8.2）。
-**23. B** —— 至少裝 CUDA Runtime / Development（§8.1）。
-**24. D** —— cuDNN 是深度學習加速庫（§9）。
-**25. A** —— cuDNN 下載 zip（§9.1）。
-**26. C** —— 要對應 CUDA 主版本（§9.1）。
-**27. B** —— `bin`、`include`、`lib\x64`（§9.1）。
-**28. D** —— 複製到 CUDA `bin\`（§10.1）。
-**29. A** —— 複製到 CUDA `lib\x64\`（§11.1）。
-**30. C** —— 複製到 CUDA `include\`（§11.3）。
-
-**31. B** —— 漏了 lib 會出現 LNK2019 連結錯誤（§11.4／附錄 B.2）。
-**32. D** —— 找不到 cudnn DLL＝bin 沒複製（§10.3／附錄 B.2）。
-**33. A** —— 需要系統管理員權限（§10.2）。
-**34. C** —— CUDA `bin\` 放 `nvcc.exe` 與 runtime DLL（§8.2）。
-**35. B** —— 驅動支援上限 ≥ 要裝的 CUDA（§7.2）。
-**36. D** —— 驅動 → 編譯器/Anaconda → CUDA/cuDNN → PyTorch（附錄 F）。
-**37. A** —— 需重裝對應 `cuXXX` 的 PyTorch（§7.2）。
-**38. C** —— CUDA 安裝程式建立的版本專用變數（§12.1）。
-**39. B** —— 需登入 NVIDIA 開發者帳號（§9.1／附錄 E.2）。
-**40. D** —— Archive 用來下載舊版／指定版本 CUDA（§8.1）。
-**41. B** —— VS Code 的 CLI 是 `code`（§13.2）。
-**42. D** —— 建議裝 Python 與 Jupyter 擴充（§13.1）。
-**43. A** —— Git 安裝一併提供 Git Bash（§14.2／§17）。
-**44. C** —— `git --version` 驗證安裝成功（§14.2）。
-**45. B** —— GPU 版後綴是 `+cuXXX`（§15.2）。
-**46. D** —— 看 `torch.__version__` 是否含 `+cuXXX`（§15.2）。
-**47. A** —— 回 `True`＝GPU 可用（§19.2）。
-**48. C** —— `device_count()` 回傳 GPU 數量（§19.2）。
-**49. B** —— `torch.version.cuda`＝PyTorch 編譯用的 CUDA 版本（§19.2）。
-**50. D** —— 裝到 CPU 版或版本不符（附錄 B.2）。
-**51. A** —— 選錯 Python Interpreter（§16.1）。
-**52. C** —— `Python: Select Interpreter`（§16.1）。
-**53. B** —— 缺 DLL（`Library\bin` 不在 PATH）（附錄 B.2）。
-**54. D** —— 減 batch size、關閉佔用 GPU 的程式（附錄 B.2）。
-**55. A** —— 勾 Add python.exe to PATH（§18.2）。
-**56. C** —— `python -m venv .venv`（§18.3）。
-**57. B** —— `python` 與 `pip` 可能指向不同環境（§18.3）。
-**58. D** —— `pip download` + `--no-index --find-links`（附錄 E.2）。
-**59. A** —— CPU 版 PyTorch 或雲端 GPU（附錄 E.3）。
-**60. C** —— 本機實測為 `2.14.1+cu132`（§15.2／附錄 F）。
-
----
-
-## 附錄 H：答錯題目 → 複習章節對照
+## 附錄 H：互動測驗答錯題目 → 複習章節對照
 
 | 答錯題號 | 建議複習章節 |
 |---|---|

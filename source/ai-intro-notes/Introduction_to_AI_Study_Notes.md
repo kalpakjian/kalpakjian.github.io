@@ -5,7 +5,7 @@
 > 教材來源：`1 IVDC_Introduction to AI (icebreaking).pptx` → PDF（34 頁）
 > 本筆記按 PDF 原稿每一個標題逐一填充內容，並補上定義、參數、常見錯誤、模擬試題。
 > 原稿多為投影片圖示，文字較少；本筆記補上「圖示背後的概念」與「考點」，方便理解與應試。
-> **附錄 G 另備一份 60 題的 MC 模擬試卷（含答案速查表與逐題詳解）**，適合考前完整計時練習。
+> 🖱️ **互動測驗（推薦）**：附錄 G 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
@@ -29,7 +29,7 @@
 | D | [附錄 D：教材頁面索引對照](#附錄-d教材頁面索引對照) | — |
 | E | [附錄 E：延伸資源與離線提示](#附錄-e延伸資源與離線提示) | — |
 | F | [附錄 F：一頁精華（考前 10 分鐘）](#附錄-f一頁精華考前-10-分鐘) | — |
-| G | [附錄 G：MC 模擬試卷（60 題）](#附錄-gmc-模擬試卷60-題) | — |
+| G | [附錄 G：互動式線上測驗（60 題）](#附錄-g互動式線上測驗60-題) | — |
 
 ---
 
@@ -769,482 +769,45 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ---
 
-## 附錄 G：MC 模擬試卷（60 題）
+## 附錄 G：互動式線上測驗（60 題）
 
-### G.1 作答說明與應試技巧
+> **60 題單選、滿分 60 分、建議 75 分鐘。**
+> 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不再收錄非互動的紙本題目**，避免與線上版重複。
 
-- **60 題單選**、滿分 60 分、建議 **75 分鐘**。
-- 分三部分：**基礎與 AI 概念（1–20）**、**影像與人臉辨識（21–40）**、**NLP／語音／強化學習／生成式（41–60）**。
-- 答案分佈刻意打散（A/B/C/D 各 15 題），避免整排猜同一個字母。
-- 建議先做完整份再看答案；答錯的題目請用「逐題詳解」對應回章節重讀。
+### G.1 開始測驗
 
-### G.2 第一部分：基礎與 AI 概念（第 1–20 題）
+**👉 [開始 60 題線上測驗](mc-quiz.html)**
 
-1. 人工智慧（AI）的本質是？
-   - A. 人類智慧
-   - B. 機器智慧（machine intelligence）
-   - C. 群體智慧
-   - D. 生物智慧
+線上版功能：
 
-2. 「Systems that think like humans」屬於哪個取徑？
-   - A. Ideal approach
-   - B. Rational approach
-   - C. Human approach
-   - D. Machine approach
+- **點選答案**即自動計分，並即時顯示得分
+- **作答進度自動存在你的瀏覽器**（localStorage）——關掉網頁、隔天再開都能繼續
+- 可切換「只顯示未答」或「只顯示答錯」的題目，快速複習
+- 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
+- 需要紙本時，直接在該頁按列印即可
 
-3. 下列何者最能描述 Ideal approach？
-   - A. 理性地思考與行動
-   - B. 像人一樣思考
-   - C. 模仿人類的偏誤
-   - D. 只做感知不做推理
+### G.2 時間分配建議
 
-4. AI 的子目標共有幾個？
-   - A. 3
-   - B. 4
-   - C. 6
-   - D. 5
+| 階段 | 時間 | 做什麼 |
+|---|---|---|
+| 第一輪 | 0–40 分鐘 | 快速作答有把握的題目，不確定先標記跳過 |
+| 第二輪 | 40–65 分鐘 | 回頭處理標記的難題 |
+| 第三輪 | 65–75 分鐘 | 檢查有沒有漏答 |
 
-5. 下列何者**不是** AI 的子目標？
-   - A. Navigate
-   - B. Perception
-   - C. Blockchain
-   - D. Reasoning
+### G.3 評分參考
 
-6. 「偵測假評論（fake review）」屬於哪一類 AI 應用？
-   - A. Education
-   - B. E-Commerce 的詐騙防治
-   - C. Daily life
-   - D. Healthcare
+| 分數 | 程度 | 建議 |
+|---|---|---|
+| 54–60 | 優異 | 直接看附錄 F 一頁精華即可上場 |
+| 45–53 | 良好 | 複習錯題所屬章節 |
+| 36–44 | 及格邊緣 | 重讀主要章節 + 附錄 A |
+| 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
-7. 「Grading paperwork」屬於哪一類 AI 應用？
-   - A. Education
-   - B. E-Commerce
-   - C. Daily life
-   - D. Manufacturing
-
-8. 下列何者屬於 Daily life 的 AI 應用？
-   - A. Managing enrollment
-   - B. Personalized shopping
-   - C. Fraud prevention
-   - D. Spam email filters
-
-9. 異常偵測（Anomaly Detection）主要在找？
-   - A. 最多的類別
-   - B. 平均值
-   - C. 不符合預期模式的 outlier
-   - D. 最大群組
-
-10. 評估異常偵測模型時，為何不宜只看 accuracy？
-    - A. 因為公式太複雜
-    - B. 因為異常樣本極少，全猜正常也會很高分
-    - C. 因為需要 GPU
-    - D. 因為 accuracy 沒有定義
-
-11. 原稿指出電腦視覺辨識的準確度？
-    - A. 一定低於人類
-    - B. 只能達到人類一半
-    - C. 無法比較
-    - D. 可達或超越人類水準
-
-12. 原稿列出的影像資料形式共有幾種？
-    - A. 4
-    - B. 3
-    - C. 5
-    - D. 2
-
-13. 「Views from multiple cameras」是指？
-    - A. 單張影像
-    - B. 視訊序列
-    - C. 多個 2D 視角
-    - D. 三維點雲
-
-14. 下列何者最適合代表「Three-dimensional data」？
-    - A. 一張 JPEG
-    - B. LiDAR／深度相機的點雲
-    - C. 一段 MP4
-    - D. 兩台相機的 2D 影像
-
-15. 電腦視覺任務的輸入／輸出介面是？
-    - A. 輸入影像 → 輸出描述影像的屬性
-    - B. 輸入文字 → 輸出影像
-    - C. 輸入聲音 → 輸出文字
-    - D. 輸入屬性 → 輸出影像
-
-16. 「Can Machines Think more than us?」在原稿中屬於？
-    - A. 期末考題
-    - B. 生成式 AI 定義
-    - C. 人臉辨識步驟
-    - D. 開場破冰引導
-
-17. 「AI-powered Assistants」屬於哪一類應用？
-    - A. Education
-    - B. E-Commerce
-    - C. Daily life
-    - D. Agriculture
-
-18. 「Navigation by GPS」屬於哪一類應用？
-    - A. E-Commerce
-    - B. Education
-    - C. Daily life
-    - D. Finance
-
-19. AI 子目標「Represent Knowledge」的意思是？
-    - A. 把知識用機器可處理的方式表示
-    - B. 從感測資料理解世界
-    - C. 規劃路徑
-    - D. 生成新內容
-
-20. AI 子目標「Reasoning」的意思是？
-    - A. 感測環境
-    - B. 產生語音
-    - C. 儲存影像
-    - D. 由已知推導出新結論
+> 答錯的題目請對照〈附錄 H：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
 
 ---
 
-### G.3 第二部分：影像與人臉辨識（第 21–40 題）
-
-21. 人臉辨識的三個步驟，正確順序是？
-    - A. Analysis → Detection → Recognition
-    - B. Detection → Recognition → Analysis
-    - C. Detection → Analysis → Recognition
-    - D. Recognition → Analysis → Detection
-
-22. 「Detection」在人臉辨識中的意思是？
-    - A. 在影像中找出人臉
-    - B. 比對兩個人的身份
-    - C. 生成人臉影像
-    - D. 儲存人臉資料庫
-
-23. 原稿指出 Detection 可偵測的臉部資料包含？
-    - A. 只有正面
-    - B. 只有側面
-    - C. 只有戴眼鏡的臉
-    - D. 正面與側面
-
-24. 「Analysis」這一步會做什麼？
-    - A. 下載人臉圖片
-    - B. 讀取臉部幾何與表情
-    - C. 刪除人臉資料
-    - D. 加密人臉檔案
-
-25. 下列何者**不是**原稿列出的 Analysis 量測項目？
-    - A. 兩眼之間的距離
-    - B. 顴骨形狀
-    - C. 髮色與身高的比例
-    - D. 眼窩深度
-
-26. 「眼窩深度」的英文是？
-    - A. Depth of the eye sockets
-    - B. Distance between the eyes
-    - C. Shape of the cheekbones
-    - D. Contour of the lips
-
-27. 「faceprint」是什麼？
-    - A. 一張列印出來的人臉照片
-    - B. 人臉的密碼
-    - C. 人臉的英文名稱
-    - D. 臉部資料轉成的數字或點串
-
-28. 原稿把 faceprint 比喻為？
-    - A. 身分證號
-    - B. 指紋（fingerprint）
-    - C. 車牌
-    - D. 條碼
-
-29. faceprint 資料「反向使用」可以做到？
-    - A. 數位重建一個人的臉
-    - B. 預測天氣
-    - C. 翻譯語言
-    - D. 壓縮影片
-
-30. 「Recognition」這一步的核心是？
-    - A. 偵測影像中是否有臉
-    - B. 分析臉部表情
-    - C. 比對兩張（或以上）影像中的臉，評估吻合可能性
-    - D. 把人臉轉成 3D 模型
-
-31. 下列何者是人臉辨識的日常應用例子？
-    - A. 垃圾郵件過濾
-    - B. GPS 導航
-    - C. 招生管理
-    - D. iPhone Face Unlock
-
-32. 「Video sequences」指的是哪一種影像資料形式？
-    - A. 單張影像
-    - B. 連續影格（視訊序列）
-    - C. 多鏡頭視角
-    - D. 三維資料
-
-33. 原稿指出電腦視覺能自動化處理影像資料的哪些面向？
-    - A. 擷取、分析、分類與理解
-    - B. 上傳、下載、備份、刪除
-    - C. 加密、解密、簽章、壓縮
-    - D. 列印、掃描、影印、傳真
-
-34. 下列何者屬於「Three-dimensional data」？
-    - A. 一張 PNG
-    - B. 一段 GIF
-    - C. 深度相機的點雲
-    - D. 一張身分證照片
-
-35. 人臉辨識最直接對應到 AI 的哪個子目標？
-    - A. Navigate
-    - B. Reasoning
-    - C. Represent Knowledge
-    - D. Perception
-
-36. Detection 主要依靠什麼技術在影像中找出人臉？
-    - A. 資料庫查詢
-    - B. 電腦視覺（computer vision）
-    - C. 語音辨識
-    - D. 隨機抽樣
-
-37. Analysis 找出能把臉與其他物件區分開的什麼？
-    - A. 臉部特徵點（facial landmarks）
-    - B. 指紋
-    - C. 車牌號碼
-    - D. 姓名
-
-38. 「額頭到下巴的距離」英文是？
-    - A. Distance between the eyes
-    - B. Depth of the eye sockets
-    - C. Distance from the forehead to the chin
-    - D. Shape of the cheekbones
-
-39. 用自拍比對政府證件照是否為同一人，屬於人臉辨識的哪一步？
-    - A. Detection
-    - B. Analysis
-    - C. Compression
-    - D. Recognition
-
-40. 人臉辨識中用來「評估吻合可能性」的步驟是？
-    - A. Detection
-    - B. Recognition
-    - C. Analysis
-    - D. Pre-processing
-
----
-
-### G.4 第三部分：NLP、語音、強化學習、生成式（第 41–60 題）
-
-41. 原稿用哪三件事概括 NLP？
-    - A. 講語言、懂語言、理解句子
-    - B. 讀、寫、算
-    - C. 拍照、剪片、上傳
-    - D. 加密、解密、壓縮
-
-42. NLP 中「make sense out of a sentence」指的是？
-    - A. 把句子唸出來
-    - B. 把句子翻譯成外語
-    - C. 從句子理解出意義（語意理解）
-    - D. 把句子刪掉
-
-43. 原稿指出大多數現代語音辨識系統依賴？
-    - A. Decision Tree
-    - B. Hidden Markov Model (HMM)
-    - C. K-means
-    - D. Random Forest
-
-44. HMM 的關鍵假設是：語音訊號在足夠短的時間尺度下可近似為？
-    - A. 週期訊號
-    - B. 隨機雜訊
-    - C. 線性函數
-    - D. 平穩過程（stationary process）
-
-45. HMM 通常把語音訊號切成多長的片段？
-    - A. 10 毫秒
-    - B. 1 毫秒
-    - C. 100 毫秒
-    - D. 1 秒
-
-46. 每個語音片段的功率頻譜會被映射成什麼？
-    - A. 一張圖片
-    - B. 一段文字
-    - C. cepstral coefficients（實數向量）
-    - D. 一組標籤
-
-47. 原稿提到 cepstral coefficients 向量的維度通常？
-    - A. 固定 512 維
-    - B. 約 10 至 32 維
-    - C. 只有 1 維
-    - D. 至少 1024 維
-
-48. HMM 的最終輸出是？
-    - A. 單一數字
-    - B. 一張頻譜圖
-    - C. 一段文字
-    - D. 一串向量的序列
-
-49. 原稿以 King / Queen / Man / Woman 示範的概念是？
-    - A. 詞向量（word embedding）
-    - B. 影像分割
-    - C. 物件偵測
-    - D. 語音合成
-
-50. Speechmatics 對非裔美國人語音的整體準確率約為？
-    - A. 45%
-    - B. 68.6%
-    - C. 82.8%
-    - D. 99%
-
-51. Google 與 Amazon 對非裔美國人語音的準確率約為？
-    - A. 82.8%
-    - B. 68.6%
-    - C. 45%
-    - D. 95%
-
-52. Speechmatics 的準確率提升相當於減少多少語音辨識錯誤？
-    - A. 10%
-    - B. 25%
-    - C. 68%
-    - D. 45%
-
-53. 原稿指出語音辨識的一大挑戰是？
-    - A. 大部分訓練資料需要人手分類，導致代表性不足
-    - B. 麥克風太貴
-    - C. 語音檔太大
-    - D. 沒有數學模型可用
-
-54. 強化學習中，agent 的第一步是？
-    - A. 得到獎勵
-    - B. 更新策略
-    - C. 觀察環境
-    - D. 結束任務
-
-55. 強化學習中 agent 學到的「最佳行動準則」稱為？
-    - A. Reward
-    - B. Policy
-    - C. Environment
-    - D. Dataset
-
-56. 強化學習的目標是？
-    - A. 單步獎勵最大化
-    - B. 讓動作越多越好
-    - C. 最小化觀察次數
-    - D. 長期累積獎勵最大化
-
-57. DeepMind 的 AlphaGo 擊敗了哪位世界冠軍？
-    - A. Lee Sedol（李世乭）
-    - B. Garry Kasparov
-    - C. Magnus Carlsen
-    - D. Ke Jie
-
-58. AlphaGo 是哪間公司（團隊）開發的？
-    - A. OpenAI
-    - B. IBM
-    - C. DeepMind
-    - D. Microsoft
-
-59. 原稿指出生成式 AI 可以生成下列哪些內容？
-    - A. 只能生成圖像
-    - B. 圖像、文字、音樂，甚至影片
-    - C. 只能生成文字
-    - D. 只能生成音樂
-
-60. 生成式 AI 生成新內容主要使用的技術是？
-    - A. 人工規則手寫
-    - B. 資料庫查詢
-    - C. 隨機亂數
-    - D. 機器學習，特別是深度學習
-
----
-
-### G.5 答案速查表
-
-| 題 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 答 | B | C | A | D | C | B | A | D | C | B |
-
-| 題 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 答 | D | A | C | B | A | D | B | C | A | D |
-
-| 題 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 答 | C | A | D | B | C | A | D | B | A | C |
-
-| 題 | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 | 40 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 答 | D | B | A | C | D | B | A | C | D | B |
-
-| 題 | 41 | 42 | 43 | 44 | 45 | 46 | 47 | 48 | 49 | 50 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 答 | A | C | B | D | A | C | B | D | A | C |
-
-| 題 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 答 | B | D | A | C | B | D | A | C | B | D |
-
-**分數換算**：每題 1 分，滿分 60 分。答錯題目請對照下方詳解回到章節重讀。
-
-### G.6 逐題詳解
-
-**1. B** —— AI 的通用理論：擁有類人智慧，但本質是**機器智慧**（§1）。
-**2. C** —— think like humans 屬 **Human approach**（§1）。
-**3. A** —— Ideal approach = 理性地思考與行動（think/act rationally）（§1）。
-**4. D** —— 五個：NLP、Navigate、Represent Knowledge、Reasoning、Perception（§2）。
-**5. C** —— Blockchain 不是 AI 子目標（§2）。
-**6. B** —— 假評論偵測屬 E-Commerce 的 Fraud Prevention（§3.1）。
-**7. A** —— Grading paperwork 屬 Education（§3.2）。
-**8. D** —— Spam email filters 屬 Daily life（§3.3）。
-**9. C** —— 異常偵測找 outlier（§4）。
-**10. B** —— 異常極少，全猜正常 accuracy 也高，應看 Precision/Recall/F1（§4）。
-**11. D** —— 電腦視覺準確度可達或超越人類（§5）。
-**12. A** —— 四種：單張／序列／多鏡頭／3D（§5.1）。
-**13. C** —— multiple cameras = 多個 2D 視角（§5.1）。
-**14. B** —— 3D data 如 LiDAR／深度相機點雲（§5.1）。
-**15. A** —— 輸入影像 → 輸出屬性（§5.2）。
-**16. D** —— 屬開場破冰引導（§1.1）。
-**17. B** —— AI-powered Assistants 屬 E-Commerce（§3.1）。
-**18. C** —— Navigation by GPS 屬 Daily life（§3.3）。
-**19. A** —— Represent Knowledge＝把知識用機器可處理方式表示（§2）。
-**20. D** —— Reasoning＝由已知推導新結論（§2）。
-**21. C** —— Detection → Analysis → Recognition（§6）。
-**22. A** —— Detection＝在影像中找出人臉（§6.1）。
-**23. D** —— 可偵測正面與側面（§6.1）。
-**24. B** —— Analysis 讀取臉部幾何與表情（§6.2）。
-**25. C** —— 髮色與身高比例不在量測項目（§6.2）。
-**26. A** —— 眼窩深度 = depth of the eye sockets（§6.2）。
-**27. D** —— faceprint＝臉部資料轉成的數字／點串（§6.3）。
-**28. B** —— 比喻為指紋 fingerprint（§6.3）。
-**29. A** —— 可反向數位重建人臉（§6.3）。
-**30. C** —— Recognition＝比對臉並評估吻合可能性（§6.3）。
-
-**31. D** —— iPhone Face Unlock 是人臉辨識的日常應用（§3.3／§6）。
-**32. B** —— Video sequences＝連續影格（§5.1）。
-**33. A** —— 擷取、分析、分類與理解（§5）。
-**34. C** —— 深度相機點雲屬 3D 資料（§5.1）。
-**35. D** —— 人臉辨識屬 Perception（§2／§6）。
-**36. B** —— Detection 由 computer vision 支援（§6.1）。
-**37. A** —— Analysis 找 facial landmarks（§6.2）。
-**38. C** —— 額到下巴 = distance from the forehead to the chin（§6.2）。
-**39. D** —— 自拍比對證件照屬 Recognition（§6.3）。
-**40. B** —— 評估吻合可能性＝Recognition（§6.3）。
-**41. A** —— NLP 三件事：講、懂、理解句子（§7.1）。
-**42. C** —— make sense out of a sentence＝語意理解（§7.1）。
-**43. B** —— 現代語音辨識依賴 HMM（§7.2）。
-**44. D** —— 近似為平穩過程 stationary process（§7.2）。
-**45. A** —— 切成 10 毫秒片段（§7.2）。
-**46. C** —— 映射成 cepstral coefficients（§7.2）。
-**47. B** —— 維度約 10 至 32（§7.2）。
-**48. D** —— 輸出為向量序列（§7.2）。
-**49. A** —— King/Queen/Man/Woman 示範 word embedding（§8.1）。
-**50. C** —— Speechmatics 準確率 82.8%（§8.2）。
-**51. B** —— Google/Amazon 準確率 68.6%（§8.2）。
-**52. D** —— 錯誤減少 45%（約 3 個字）（§8.2）。
-**53. A** —— 訓練資料需人手分類 → 代表性不足（§8.2）。
-**54. C** —— agent 先觀察環境（§9.2）。
-**55. B** —— 最佳行動準則＝policy（§9.2）。
-**56. D** —— 目標是長期累積獎勵最大化（§9.2）。
-**57. A** —— AlphaGo 擊敗 Lee Sedol（李世乭）（§9.3）。
-**58. C** —— AlphaGo 由 DeepMind 開發（§9.3）。
-**59. B** —— 圖像、文字、音樂，甚至影片（§10）。
-**60. D** —— 機器學習，特別是深度學習（§10）。
-
----
-
-## 附錄 H：答錯題目 → 複習章節對照
+## 附錄 H：互動測驗答錯題目 → 複習章節對照
 
 | 答錯題號 | 建議複習章節 |
 |---|---|
