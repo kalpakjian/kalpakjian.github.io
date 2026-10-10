@@ -1,0 +1,2472 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to AI 學習筆記（考試溫習版）</title>
+<style>
+:root { --fg:#1f2328; --bg:#ffffff; --muted:#59636e; --border:#d1d9e0;
+        --code-bg:#f6f8fa; --accent:#0969da; --quote:#f6f8fa; }
+@media (prefers-color-scheme: dark) {
+  :root { --fg:#e6edf3; --bg:#0d1117; --muted:#9198a1; --border:#30363d;
+          --code-bg:#161b22; --accent:#4493f8; --quote:#161b22; }
+}
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+       font-family:-apple-system,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif;
+       line-height:1.7; }
+main { max-width:900px; margin:0 auto; padding:2.5rem 1.25rem 6rem; }
+h1,h2,h3,h4 { line-height:1.3; font-weight:700; scroll-margin-top:1rem; }
+h1 { font-size:1.9rem; border-bottom:2px solid var(--border); padding-bottom:.4rem; }
+h2 { font-size:1.45rem; margin-top:2.4rem; border-bottom:1px solid var(--border); padding-bottom:.3rem; }
+h3 { font-size:1.15rem; margin-top:1.8rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { background:var(--code-bg); padding:.15em .35em; border-radius:4px;
+       font-family:"Cascadia Code",Consolas,"SFMono-Regular",monospace; font-size:.9em; }
+pre { background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+      padding:1rem; overflow:auto; }
+pre code { background:none; padding:0; }
+table { border-collapse:collapse; width:100%; margin:1rem 0; display:block; overflow-x:auto; }
+th,td { border:1px solid var(--border); padding:.5rem .75rem; text-align:left; }
+th { background:var(--code-bg); }
+blockquote { margin:1rem 0; padding:.6rem 1rem; border-left:4px solid var(--accent);
+             background:var(--quote); color:var(--muted); border-radius:0 6px 6px 0; }
+hr { border:none; border-top:1px solid var(--border); margin:2rem 0; }
+img { max-width:100%; }
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f8f8f8; }
+.codehilite .c { color: #3D7B7B; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #008000; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #9C6500 } /* Comment.Preproc */
+.codehilite .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #E40000 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #008400 } /* Generic.Inserted */
+.codehilite .go { color: #717171 } /* Generic.Output */
+.codehilite .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #008000 } /* Keyword.Pseudo */
+.codehilite .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #B00040 } /* Keyword.Type */
+.codehilite .m { color: #666 } /* Literal.Number */
+.codehilite .s { color: #BA2121 } /* Literal.String */
+.codehilite .na { color: #687822 } /* Name.Attribute */
+.codehilite .nb { color: #008000 } /* Name.Builtin */
+.codehilite .nc { color: #00F; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #800 } /* Name.Constant */
+.codehilite .nd { color: #A2F } /* Name.Decorator */
+.codehilite .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.codehilite .nf { color: #00F } /* Name.Function */
+.codehilite .nl { color: #767600 } /* Name.Label */
+.codehilite .nn { color: #00F; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #19177C } /* Name.Variable */
+.codehilite .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #666 } /* Literal.Number.Bin */
+.codehilite .mf { color: #666 } /* Literal.Number.Float */
+.codehilite .mh { color: #666 } /* Literal.Number.Hex */
+.codehilite .mi { color: #666 } /* Literal.Number.Integer */
+.codehilite .mo { color: #666 } /* Literal.Number.Oct */
+.codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
+.codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
+.codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+.codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
+.codehilite .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.codehilite .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.codehilite .sx { color: #008000 } /* Literal.String.Other */
+.codehilite .sr { color: #A45A77 } /* Literal.String.Regex */
+.codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
+.codehilite .ss { color: #19177C } /* Literal.String.Symbol */
+.codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #00F } /* Name.Function.Magic */
+.codehilite .vc { color: #19177C } /* Name.Variable.Class */
+.codehilite .vg { color: #19177C } /* Name.Variable.Global */
+.codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+.codehilite .vm { color: #19177C } /* Name.Variable.Magic */
+.codehilite .il { color: #666 } /* Literal.Number.Integer.Long */
+</style>
+</head>
+<body>
+<main>
+<h1 id="introduction-to-ai-學習筆記考試溫習版">Introduction to AI 學習筆記（考試溫習版）</h1>
+<blockquote>
+<p>課程：Certificate in Application of Computer Vision Technology (Part-time)
+機構：匯縱專業發展中心（IVDC）
+教材來源：<code>1 IVDC_Introduction to AI (icebreaking).pptx</code> → PDF（34 頁）
+本筆記按 PDF 原稿每一個標題逐一填充內容，並補上定義、參數、常見錯誤、模擬試題。
+原稿多為投影片圖示，文字較少；本筆記補上「圖示背後的概念」與「考點」，方便理解與應試。
+<strong>附錄 G 另備一份 60 題的 MC 模擬試卷（含答案速查表與逐題詳解）</strong>，適合考前完整計時練習。</p>
+</blockquote>
+<hr>
+<h2 id="目錄">目錄</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>章節</th>
+<th>PDF 頁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="#1-ai-是什麼定義與兩個取徑">AI 是什麼？定義與兩個取徑</a></td>
+<td>5–6</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#2-ai-的子目標sub-objectives-of-ai">AI 的子目標（Sub-objectives of AI）</a></td>
+<td>8</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#3-ai-應用與例子">AI 應用與例子</a></td>
+<td>7, 9</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#4-異常偵測-anomaly-detection">異常偵測 Anomaly Detection</a></td>
+<td>10</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="#5-影像視訊辨識-imagevideo-recognition">影像／視訊辨識 Image/Video Recognition</a></td>
+<td>11–12</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="#6-人臉辨識-facial-recognition">人臉辨識 Facial Recognition</a></td>
+<td>13–15</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="#7-自然語言處理-nlp">自然語言處理 NLP</a></td>
+<td>17–20, 22–23, 25–26</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="#8-語音辨識-speech-recognition">語音辨識 Speech Recognition</a></td>
+<td>21, 24, 27</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="#9-強化學習-reinforcement-learning">強化學習 Reinforcement Learning</a></td>
+<td>29–33</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="#10-生成式-ai-generative-ai">生成式 AI Generative AI</a></td>
+<td>34</td>
+</tr>
+<tr>
+<td>A</td>
+<td><a href="#附錄-aai-名詞速查表">附錄 A：AI 名詞速查表</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>B</td>
+<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>C</td>
+<td><a href="#附錄-c模擬試題連答案">附錄 C：模擬試題（連答案）</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>D</td>
+<td><a href="#附錄-d教材頁面索引對照">附錄 D：教材頁面索引對照</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>E</td>
+<td><a href="#附錄-e延伸資源與離線提示">附錄 E：延伸資源與離線提示</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>F</td>
+<td><a href="#附錄-f一頁精華考前-10-分鐘">附錄 F：一頁精華（考前 10 分鐘）</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>G</td>
+<td><a href="#附錄-gmc-模擬試卷60-題">附錄 G：MC 模擬試卷（60 題）</a></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</h2>
+<div class="codehilite"><pre><span></span><code>AI = 具人類式智慧的「機器智慧」
+  ├─ 取徑：Human approach（think/act like humans）
+  │        Ideal approach（think/act rationally）
+  ├─ 子目標：NLP、Navigate、Represent Knowledge、Reasoning、Perception
+  └─ 典型應用：
+       影像 → Image/Video Recognition → Facial Recognition（Detection→Analysis→Recognition）
+       語言 → NLP → Speech Recognition（HMM、cepstral coefficients）
+       決策 → Reinforcement Learning（agent、reward、policy）
+       生成 → Generative AI（deep learning 生成新內容）
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>你會用到的關鍵詞</th>
+<th>一句話記法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Artificial Intelligence</td>
+<td>機器展現出類人的智慧</td>
+</tr>
+<tr>
+<td>Human approach</td>
+<td>像人一樣思考／行動（think/act like humans）</td>
+</tr>
+<tr>
+<td>Ideal approach</td>
+<td>理性地思考／行動（think/act rationally）</td>
+</tr>
+<tr>
+<td>Sub-objectives</td>
+<td>NLP、Navigate、Represent Knowledge、Reasoning、Perception</td>
+</tr>
+<tr>
+<td>Facial Recognition</td>
+<td>三步：<strong>Detection → Analysis → Recognition</strong></td>
+</tr>
+<tr>
+<td>Faceprint</td>
+<td>把臉部資料轉成數字／點串，如指紋般獨一無二</td>
+</tr>
+<tr>
+<td>NLP</td>
+<td>讓機器「講得到、聽得明、理解句子」</td>
+</tr>
+<tr>
+<td>HMM</td>
+<td>語音辨識常用模型；10 毫秒為一段的平穩過程假設</td>
+</tr>
+<tr>
+<td>Cepstral coefficients</td>
+<td>每 10ms 片段的功率頻譜轉成的實數向量（常 10～32 維）</td>
+</tr>
+<tr>
+<td>Speech Recognition</td>
+<td>訓練資料偏頗 → 不同族群準確率有差</td>
+</tr>
+<tr>
+<td>Reinforcement Learning</td>
+<td>Agent 觀察→行動→獎勵/懲罰→學到最佳 policy</td>
+</tr>
+<tr>
+<td>AlphaGo</td>
+<td>DeepMind，擊敗圍棋世界冠軍 Lee Sedol</td>
+</tr>
+<tr>
+<td>Generative AI</td>
+<td>用深度學習生成新內容（圖、文、樂、影片）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="1-ai-是什麼定義與兩個取徑">1. AI 是什麼？定義與兩個取徑</h2>
+<p><strong>Artificial Intelligence（人工智慧）</strong> 的通用理論是：AI 擁有<strong>類人的智慧（human-like intelligence）</strong>，
+但本質上是<strong>機器智慧（machine intelligence）</strong> —— 智慧由機器展現，而不是人。</p>
+<p>原稿（p5–6）把 AI 的取徑分成兩大類、共四種：</p>
+<table>
+<thead>
+<tr>
+<th>取徑</th>
+<th>思考</th>
+<th>行動</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Human approach</strong>（以人為本）</td>
+<td>Systems that <strong>think</strong> like humans（像人一樣思考）</td>
+<td>Systems that <strong>act</strong> like humans（像人一樣行動）</td>
+</tr>
+<tr>
+<td><strong>Ideal approach</strong>（理想／理性）</td>
+<td>Systems that <strong>think</strong> rationally（理性地思考）</td>
+<td>Systems that <strong>act</strong> rationally（理性地行動）</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Human approach</strong>：模仿人類實際的思考與行為（含人類的偏誤與限制）。</li>
+<li><strong>Ideal approach</strong>：以「邏輯／理性」為標準，追求最佳解，不一定要像人。</li>
+</ul>
+<blockquote>
+<p><strong>考點</strong>：四個象限要能分辨 ——「think like humans / act like humans / think rationally / act rationally」。
+常見陷阱：把 Human approach 說成「理性」，或把 Ideal approach 說成「像人」。</p>
+</blockquote>
+<h3 id="11-開場破冰p24生活裡的-ai">1.1 開場破冰（p2–4）：生活裡的 AI</h3>
+<p>原稿用生活情境提問：</p>
+<ul>
+<li>「你喜歡用 App 在餐廳點餐嗎？當中有沒有 AI？」</li>
+<li>「Can Machines Think more than us?」（機器能比我們想得更多嗎？）</li>
+</ul>
+<p>這些是引導思考的暖場題，重點是建立「<strong>AI 已在日常之中</strong>」的認知，並非考點本身。</p>
+<blockquote>
+<p><strong>考點</strong>：AI 的定義關鍵詞是「<strong>machine intelligence</strong>」與「<strong>human-like intelligence</strong>」兩者並存。</p>
+</blockquote>
+<hr>
+<h2 id="2-ai-的子目標sub-objectives-of-ai">2. AI 的子目標（Sub-objectives of AI）</h2>
+<p>原稿 p8 用一張圖把 AI 拆成 5 個子目標：</p>
+<table>
+<thead>
+<tr>
+<th>子目標</th>
+<th>英文</th>
+<th>說明</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自然語言處理</td>
+<td>Natural Language Processing</td>
+<td>讓機器理解／產生人類語言</td>
+<td>語音助理、翻譯、聊天機械人</td>
+</tr>
+<tr>
+<td>導航</td>
+<td>Navigate</td>
+<td>在環境中定位與規劃路徑</td>
+<td>GPS 導航、自駕車</td>
+</tr>
+<tr>
+<td>知識表示</td>
+<td>Represent Knowledge</td>
+<td>把知識用機器可處理的方式儲存</td>
+<td>知識圖譜、ontology</td>
+</tr>
+<tr>
+<td>推理</td>
+<td>Reasoning</td>
+<td>由已知推導出新結論</td>
+<td>專家系統、定理證明</td>
+</tr>
+<tr>
+<td>感知</td>
+<td>Perception</td>
+<td>從感測資料理解世界</td>
+<td>電腦視覺、語音辨識</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>考點</strong>：五個子目標要背齊 —— <strong>NLP、Navigate、Represent Knowledge、Reasoning、Perception</strong>。
+這五者常作為 AI 的分類骨架出現在選擇題。</p>
+</blockquote>
+<hr>
+<h2 id="3-ai-應用與例子">3. AI 應用與例子</h2>
+<p>原稿 p9 把應用分成三大類，逐項列出：</p>
+<h3 id="31-電子商務-e-commerce">3.1 電子商務 E-Commerce</h3>
+<ul>
+<li><strong>個人化購物</strong>（Personalized Shopping）：依瀏覽／購買紀錄推薦商品。</li>
+<li><strong>AI 助理</strong>（AI-powered Assistants）：客服機械人、購物助手。</li>
+<li><strong>詐騙防治</strong>（Fraud Prevention）：偵測盜刷信用卡、假評論（fake review）。</li>
+</ul>
+<h3 id="32-教育-education">3.2 教育 Education</h3>
+<ul>
+<li>自動發送個人化訊息給學生（Automating personalized messages to students）。</li>
+<li>管理招生／註冊（Managing enrollment）。</li>
+<li>批改作業／文書（Grading paperwork）。</li>
+</ul>
+<h3 id="33-日常生活-daily-life">3.3 日常生活 Daily life</h3>
+<ul>
+<li><strong>自動駕駛</strong>（Autonomous Vehicles），例如 Tesla。</li>
+<li><strong>垃圾郵件過濾</strong>（Spam email filters）。</li>
+<li><strong>人臉辨識</strong>（Facial Recognition），例如 iPhone Face Unlock。</li>
+<li><strong>GPS 導航</strong>（Navigation by GPS）。</li>
+</ul>
+<blockquote>
+<p><strong>考點</strong>：能把例子歸類到正確領域。例如「fake review 偵測」屬 <strong>E-Commerce 的詐騙防治</strong>，
+「Grading paperwork」屬 <strong>Education</strong>，「Face Unlock」屬 <strong>Daily life 的人臉辨識</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="4-異常偵測-anomaly-detection">4. 異常偵測 Anomaly Detection</h2>
+<p>原稿 p10 只有標題「Anomaly Detection」與一張示意圖。<strong>異常偵測</strong>是指找出<strong>不符合預期模式</strong>的資料點
+（outlier），是 AI 在工業、金融、資安上的核心應用之一。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>內容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定義</td>
+<td>從大量資料中找出「罕見、異常、不尋常」的樣本</td>
+</tr>
+<tr>
+<td>目標</td>
+<td>找出 outlier / novelty，而非把資料分類成既有類別</td>
+</tr>
+<tr>
+<td>常見方法</td>
+<td>統計方法（z-score、IQR）、距離法（kNN）、密度法（LOF）、孤立森林（Isolation Forest）、Autoencoder 重建誤差</td>
+</tr>
+<tr>
+<td>典型應用</td>
+<td>信用卡盜刷、工業瑕疵檢測、網路入侵偵測、設備預測性維護、醫療異常</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>考點</strong>：異常偵測是<strong>找出少數的異常</strong>，常面對<strong>類別極不平衡</strong>（正常樣本遠多於異常）。
+因此<strong>準確率（accuracy）不是好指標</strong>，要看 <strong>Precision / Recall / F1</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="5-影像視訊辨識-imagevideo-recognition">5. 影像／視訊辨識 Image/Video Recognition</h2>
+<p>原稿 p11–12 的定義重點：</p>
+<blockquote>
+<p>機器用<strong>電腦視覺（computer vision）</strong>辨識影像中的人、地、物，<strong>準確度可達或超越人類水準</strong>，
+而且<strong>速度與效率遠勝人類</strong>。透過複雜的 AI 技術，電腦視覺把影像資料自動化地
+<strong>擷取（extraction）、分析（analysis）、分類（classification）與理解（understanding）</strong>。</p>
+</blockquote>
+<h3 id="51-影像資料的四種形式p11">5.1 影像資料的四種形式（p11）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>形式</th>
+<th>英文</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>單張影像</td>
+<td>Single images</td>
+<td>一張照片</td>
+</tr>
+<tr>
+<td>2</td>
+<td>視訊序列</td>
+<td>Video sequences</td>
+<td>連續影格</td>
+</tr>
+<tr>
+<td>3</td>
+<td>多鏡頭視角</td>
+<td>Views from multiple cameras</td>
+<td>環景、監控多機</td>
+</tr>
+<tr>
+<td>4</td>
+<td>三維資料</td>
+<td>Three-dimensional data</td>
+<td>LiDAR、深度相機、點雲</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-電腦視覺任務p12">5.2 電腦視覺任務（p12）</h3>
+<ul>
+<li>電腦視覺任務 = 辨識並<strong>分類</strong>影像／影片中的各種元素。</li>
+<li>AI 被訓練成：<strong>輸入一張影像 → 輸出描述該影像的屬性（attributes）</strong>。</li>
+</ul>
+<blockquote>
+<p><strong>考點</strong>：記住「<strong>輸入影像 → 輸出屬性</strong>」這個介面；以及四種影像資料形式（單張／序列／多鏡頭／3D）。
+常見混淆：把「多鏡頭視角」與「3D 資料」混為一談 —— 前者是多個 2D 視角，後者是帶深度的 3D 資料。</p>
+</blockquote>
+<hr>
+<h2 id="6-人臉辨識-facial-recognition">6. 人臉辨識 Facial Recognition</h2>
+<p>原稿 p13–15 是重點章節，明確指出人臉辨識<strong>分三個步驟</strong>：</p>
+<div class="codehilite"><pre><span></span><code>Detection（偵測） → Analysis（分析） → Recognition（辨識）
+</code></pre></div>
+
+<h3 id="61-detection-偵測p13">6.1 Detection 偵測（p13）</h3>
+<ul>
+<li><strong>定義</strong>：在影像中<strong>找出人臉</strong>的過程。</li>
+<li>由<strong>電腦視覺</strong>支援，可從「一張含一人或多人」的影像中偵測並找出<strong>個別人臉</strong>。</li>
+<li>可偵測<strong>正面（front）與側面（side profile）</strong>的臉部資料。</li>
+</ul>
+<h3 id="62-analysis-分析p14">6.2 Analysis 分析（p14）</h3>
+<p>系統接著<strong>分析</strong>人臉影像，<strong>測繪並讀取臉部幾何（face geometry）與表情（facial expressions）</strong>，
+找出能把臉與其他物件區分開的<strong>臉部特徵點（facial landmarks）</strong>。通常量測以下項目：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>量測項目</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>兩眼之間的距離（Distance between the eyes）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>額頭到下巴的距離（Distance from the forehead to the chin）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>鼻子到嘴巴的距離（Distance between the nose and mouth）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>眼窩深度（Depth of the eye sockets）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>顴骨形狀（Shape of the cheekbones）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>嘴唇、耳朵與下巴的輪廓（Contour of the lips, ears, and chin）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="63-recognition-辨識p15">6.3 Recognition 辨識（p15）</h3>
+<ul>
+<li>系統把臉部資料轉成一串數字或點，稱為 <strong>faceprint（臉紋）</strong>。</li>
+<li><strong>每個人的 faceprint 都是獨一無二的，就像指紋（fingerprint）一樣</strong>。</li>
+<li>這些資料<strong>可以反向使用</strong>，用來<strong>數位重建（digitally reconstruct）</strong>一個人的臉。</li>
+<li><strong>辨識方式</strong>：比對兩張（或以上）影像中的臉，評估<strong>吻合的可能性（likelihood of a face match）</strong>。</li>
+<li>例：比對手機自拍與證件照（駕照、護照）是否為同一人。</li>
+<li>也可用來確認「自拍的臉<strong>不在</strong>先前蒐集的人臉集合中」。</li>
+</ul>
+<blockquote>
+<p><strong>考點</strong>：三步骤順序 <strong>Detection → Analysis → Recognition</strong> 幾乎必考；
+「faceprint 像指紋般獨一無二」、「可反向重建人臉」是常考細節。</p>
+</blockquote>
+<hr>
+<h2 id="7-自然語言處理-nlp">7. 自然語言處理 NLP</h2>
+<h3 id="71-nlp-要解決的三件事p17">7.1 NLP 要解決的三件事（p17）</h3>
+<p>原稿用三個問題概括 NLP：</p>
+<ol>
+<li><strong>How to speak a language</strong> —— 如何「講」一種語言（語言生成）。</li>
+<li><strong>How to understand a language</strong> —— 如何「聽懂」一種語言（語言理解）。</li>
+<li><strong>How to make sense out of a sentence</strong> —— 如何從一個句子中「理解出意義」（語意理解）。</li>
+</ol>
+<blockquote>
+<p>一句話：NLP 就是讓機器能<strong>講得到、聽得明、理解句子</strong>。</p>
+</blockquote>
+<h3 id="72-語音辨識的模型hidden-markov-modelp1819">7.2 語音辨識的模型：Hidden Markov Model（p18–19）</h3>
+<p>原稿指出：<strong>大多數現代語音辨識系統依賴 Hidden Markov Model（HMM，隱馬可夫模型）</strong>。</p>
+<ul>
+<li><strong>核心假設</strong>：一段語音訊號，若用<strong>足夠短的時間尺度</strong>觀察（例如 <strong>10 毫秒</strong>），
+  可以合理地近似為一個<strong>平穩過程（stationary process）</strong> ——
+  即統計性質<strong>不隨時間改變</strong>的過程。</li>
+</ul>
+<p><strong>HMM 的處理流程（p19）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>步驟</th>
+<th>內容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>把語音訊號切成 <strong>10 毫秒</strong> 的片段（fragments）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>計算每個片段的<strong>功率頻譜（power spectrum）</strong>（訊號功率對頻率的關係圖）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>把功率頻譜映射成一個實數向量 → <strong>cepstral coefficients（倒頻譜係數）</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>該向量維度通常很小：<strong>有時低至 10 維</strong>；較精確的系統可達 <strong>32 維或以上</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>HMM 的最終輸出 = <strong>這些向量的序列（a sequence of these vectors）</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>考點</strong>：記住三個數字與名詞 —— <strong>10 毫秒</strong>、<strong>cepstral coefficients</strong>、<strong>維度 10～32</strong>，
+以及「HMM 輸出是<strong>向量序列</strong>」。</p>
+</blockquote>
+<h3 id="73-語意詞向量p21見第-8-節">7.3 語意／詞向量（p21，見第 8 節）</h3>
+<p>原稿 p21 用一組詞示範語意關係：<strong>King、Queen、Man、Woman、Royal</strong>，
+並標示兩個語意維度：<strong>Natural Understanding</strong> 與 <strong>Gender</strong>。
+這是<strong>詞向量（word embedding）</strong>的經典示意：語意相近的詞在向量空間中距離相近，
+並可表現如「King − Man + Woman ≈ Queen」的類比關係（詳見第 8.1 節）。</p>
+<h3 id="74-延伸資源p26">7.4 延伸資源（p26）</h3>
+<ul>
+<li>原稿提供探索 NLP 的官方連結：<code>https://aka.ms/explore-nlp</code></li>
+</ul>
+<blockquote>
+<p><strong>考點</strong>：NLP 三個問題（speak / understand / make sense）＋ HMM 假設（10ms 平穩）是本章重點。</p>
+</blockquote>
+<hr>
+<h2 id="8-語音辨識-speech-recognition">8. 語音辨識 Speech Recognition</h2>
+<h3 id="81-語意理解示意p21">8.1 語意理解示意（p21）</h3>
+<p>原稿以 <strong>King / Queen / Man / Woman / Royal</strong> 呈現兩個維度：</p>
+<table>
+<thead>
+<tr>
+<th>維度</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Natural Understanding（自然理解）</td>
+<td>詞的語意關聯強度</td>
+</tr>
+<tr>
+<td>Gender（性別）</td>
+<td>詞的性別屬性</td>
+</tr>
+</tbody>
+</table>
+<p>這正是<strong>詞向量（word embeddings）</strong>的概念：把詞映射到向量空間，
+使「語意相近」與「性別」等屬性可用向量運算表達。</p>
+<h3 id="82-訓練資料偏頗問題p27本章最重要">8.2 訓練資料偏頗問題（p27）——本章最重要</h3>
+<p>原稿指出語音辨識的一大挑戰是<strong>訓練模型（training model）</strong>：</p>
+<ul>
+<li><strong>大部分訓練資料需要人手分類（manually classified）</strong>。</li>
+<li>結果：<strong>高準確率往往只在一小群特定說話者上達成</strong>（而這群人往往正是最有價值的消費者）。</li>
+</ul>
+<p><strong>Speechmatics 的做法與數據</strong>（基於史丹福大學 "Racial Disparities in Speech Recognition" 研究所用的資料集）：</p>
+<table>
+<thead>
+<tr>
+<th>系統</th>
+<th>對非裔美國人（African American）語音的整體準確率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Speechmatics</strong></td>
+<td><strong>82.8%</strong></td>
+</tr>
+<tr>
+<td>Google</td>
+<td>68.6%</td>
+</tr>
+<tr>
+<td>Amazon</td>
+<td>68.6%</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Speechmatics 的準確率提升，相當於<strong>減少 45% 的語音辨識錯誤</strong> ——
+  以一句平均長度的句子來說，約等於<strong>少錯 3 個字（three words）</strong>。</li>
+</ul>
+<blockquote>
+<p><strong>考點</strong>：本章高頻考「<strong>訓練資料偏頗會造成不同族群準確率落差</strong>」，
+以及數字 <strong>82.8% vs 68.6%</strong>、<strong>45% 錯誤減少 / 約 3 個字</strong>。
+觀念延伸：這屬於 AI <strong>公平性（fairness）與代表性（representativeness）</strong>議題。</p>
+</blockquote>
+<hr>
+<h2 id="9-強化學習-reinforcement-learning">9. 強化學習 Reinforcement Learning</h2>
+<p>原稿 p29–33 聚焦「<strong>Reinforcement Learning in Robotic Control and Self-Driving</strong>」
+（強化學習在機械人控制與自動駕駛的應用）。</p>
+<h3 id="91-要解決的問題p29">9.1 要解決的問題（p29）</h3>
+<p>在真實世界中「規劃與導航」，需要回答一連串問題：</p>
+<ul>
+<li>如何在<strong>真實世界</strong>中規劃與導航（plan and navigate in the real world）？</li>
+<li>如何<strong>定位目的地</strong>（locate the destination）？</li>
+<li>如何<strong>選路徑</strong>（pick path）？</li>
+<li>如何<strong>選最短路徑</strong>（pick short path）？</li>
+<li>如何<strong>避開障礙物</strong>（avoid obstacles）？</li>
+<li>如何<strong>移動</strong>（move）？</li>
+</ul>
+<h3 id="92-學習系統代理人agent的運作p32核心考點">9.2 學習系統／代理人（Agent）的運作（p32）——核心考點</h3>
+<blockquote>
+<p>學習系統在此情境中扮演 <strong>agent（代理人）</strong>，它會：
+1. <strong>觀察環境</strong>（Observes the environment）
+2. <strong>選擇並執行動作</strong>（Selects and performs actions）
+3. <strong>得到獎勵或懲罰</strong>（Get rewards or penalties in return）
+4. <strong>自己學會</strong>在長期取得最多獎勵的<strong>最佳策略（policy）</strong></p>
+</blockquote>
+<p>用一句話概括：<strong>Agent 透過與環境互動的「獎勵／懲罰」回饋，自行學出最佳策略（policy）。</strong></p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>英文</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代理人</td>
+<td>Agent</td>
+<td>做決策的學習系統</td>
+</tr>
+<tr>
+<td>環境</td>
+<td>Environment</td>
+<td>agent 所處的世界</td>
+</tr>
+<tr>
+<td>動作</td>
+<td>Action</td>
+<td>agent 的選擇與行為</td>
+</tr>
+<tr>
+<td>獎勵／懲罰</td>
+<td>Reward / Penalty</td>
+<td>環境給的回饋訊號</td>
+</tr>
+<tr>
+<td>策略</td>
+<td>Policy</td>
+<td>agent 學到的「最佳行動準則」</td>
+</tr>
+<tr>
+<td>目標</td>
+<td>Maximize reward over time</td>
+<td>長期累積獎勵最大化（非單步）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="93-應用例子p33">9.3 應用例子（p33）</h3>
+<ul>
+<li><strong>機械人學走路</strong>（robots learn how to walk）。</li>
+<li><strong>DeepMind 的 AlphaGo</strong> —— 擊敗圍棋世界冠軍 <strong>Lee Sedol（李世乭）</strong>。</li>
+</ul>
+<blockquote>
+<p><strong>考點</strong>：RL 四步驟（<strong>observe → act → reward/penalty → learn best policy</strong>）幾乎必考；
+「<strong>AlphaGo + DeepMind + Lee Sedol + Go（圍棋）</strong>」是常考配對。
+常見混淆：把 RL 與「監督式學習」搞混 —— RL <strong>沒有現成正確答案</strong>，靠獎勵訊號試錯學習。</p>
+</blockquote>
+<hr>
+<h2 id="10-生成式-ai-generative-ai">10. 生成式 AI Generative AI</h2>
+<p>原稿 p34 給出定義：</p>
+<blockquote>
+<p><strong>Generative AI（生成式 AI）</strong> 指的是人工智慧中專注於<strong>建立能生成新內容的模型或系統</strong>的領域，
+生成的內容例如<strong>圖像、文字、音樂，甚至影片</strong>。這些模型使用<strong>機器學習技術，特別是深度學習（deep learning）</strong>，
+從<strong>既有資料</strong>中學習<strong>模式與結構（patterns and structures）</strong>，
+然後生成與<strong>訓練資料相似的新內容</strong>。</p>
+</blockquote>
+<p>重點拆解：</p>
+<table>
+<thead>
+<tr>
+<th>關鍵詞</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生成新內容</td>
+<td>圖像 / 文字 / 音樂 / 影片</td>
+</tr>
+<tr>
+<td>核心技術</td>
+<td>機器學習，<strong>特別是深度學習</strong></td>
+</tr>
+<tr>
+<td>學習方式</td>
+<td>從既有資料學「模式與結構」</td>
+</tr>
+<tr>
+<td>產出特性</td>
+<td>生成<strong>與訓練資料相似</strong>的新內容</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>考點</strong>：定義句中的「<strong>deep learning</strong>」與「<strong>generate new content similar to training data</strong>」是關鍵；
+生成式 AI ≠ 只能生成圖片，而是<strong>圖／文／樂／影片</strong>皆可。</p>
+</blockquote>
+<hr>
+<!-- 以下為附錄 -->
+
+<h2 id="附錄-aai-名詞速查表">附錄 A：AI 名詞速查表</h2>
+<h3 id="a1-核心概念">A.1 核心概念</h3>
+<table>
+<thead>
+<tr>
+<th>名詞</th>
+<th>英文</th>
+<th>一句話說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人工智慧</td>
+<td>Artificial Intelligence (AI)</td>
+<td>機器展現的類人智慧（machine intelligence）</td>
+</tr>
+<tr>
+<td>機器智慧</td>
+<td>Machine intelligence</td>
+<td>AI 的本質：由機器而非人展現的智慧</td>
+</tr>
+<tr>
+<td>人類取徑</td>
+<td>Human approach</td>
+<td>像人一樣思考／行動</td>
+</tr>
+<tr>
+<td>理想取徑</td>
+<td>Ideal approach</td>
+<td>理性地思考／行動</td>
+</tr>
+<tr>
+<td>電腦視覺</td>
+<td>Computer vision</td>
+<td>讓機器從影像／影片理解世界</td>
+</tr>
+<tr>
+<td>自然語言處理</td>
+<td>NLP</td>
+<td>讓機器講、聽、理解語言</td>
+</tr>
+<tr>
+<td>強化學習</td>
+<td>Reinforcement Learning</td>
+<td>靠獎勵／懲罰學出最佳策略</td>
+</tr>
+<tr>
+<td>生成式 AI</td>
+<td>Generative AI</td>
+<td>用深度學習生成新內容</td>
+</tr>
+<tr>
+<td>深度學習</td>
+<td>Deep learning</td>
+<td>以多層類神經網路學習資料的模式</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a2-ai-五個子目標">A.2 AI 五個子目標</h3>
+<table>
+<thead>
+<tr>
+<th>子目標</th>
+<th>英文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自然語言處理</td>
+<td>Natural Language Processing</td>
+</tr>
+<tr>
+<td>導航</td>
+<td>Navigate</td>
+</tr>
+<tr>
+<td>知識表示</td>
+<td>Represent Knowledge</td>
+</tr>
+<tr>
+<td>推理</td>
+<td>Reasoning</td>
+</tr>
+<tr>
+<td>感知</td>
+<td>Perception</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a3-影像與人臉辨識">A.3 影像與人臉辨識</h3>
+<table>
+<thead>
+<tr>
+<th>名詞</th>
+<th>英文</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>影像／視訊辨識</td>
+<td>Image/Video Recognition</td>
+<td>辨識並分類影像元素，輸入影像→輸出屬性</td>
+</tr>
+<tr>
+<td>人臉辨識</td>
+<td>Facial Recognition</td>
+<td>三步：Detection → Analysis → Recognition</td>
+</tr>
+<tr>
+<td>偵測</td>
+<td>Detection</td>
+<td>在影像中找出人臉（含正面／側面）</td>
+</tr>
+<tr>
+<td>分析</td>
+<td>Analysis</td>
+<td>讀取臉部幾何與表情，取 facial landmarks</td>
+</tr>
+<tr>
+<td>辨識</td>
+<td>Recognition</td>
+<td>比對臉並評估吻合可能性</td>
+</tr>
+<tr>
+<td>臉紋</td>
+<td>Faceprint</td>
+<td>臉部資料轉成的數字／點串，如指紋般獨一無二</td>
+</tr>
+<tr>
+<td>臉部特徵點</td>
+<td>Facial landmarks</td>
+<td>眼距、額到下巴、鼻到嘴、眼窩深度、顴骨、輪廓</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a4-語音與語言">A.4 語音與語言</h3>
+<table>
+<thead>
+<tr>
+<th>名詞</th>
+<th>英文</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>隱馬可夫模型</td>
+<td>Hidden Markov Model (HMM)</td>
+<td>現代語音辨識常用模型</td>
+</tr>
+<tr>
+<td>平穩過程</td>
+<td>Stationary process</td>
+<td>統計性質不隨時間改變的過程</td>
+</tr>
+<tr>
+<td>功率頻譜</td>
+<td>Power spectrum</td>
+<td>訊號功率對頻率的關係</td>
+</tr>
+<tr>
+<td>倒頻譜係數</td>
+<td>Cepstral coefficients</td>
+<td>功率頻譜映射成的實數向量（約 10～32 維）</td>
+</tr>
+<tr>
+<td>詞向量</td>
+<td>Word embedding</td>
+<td>把詞映射到向量空間（King/Queen/Man/Woman）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a5-強化學習">A.5 強化學習</h3>
+<table>
+<thead>
+<tr>
+<th>名詞</th>
+<th>英文</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代理人</td>
+<td>Agent</td>
+<td>做決策的學習系統</td>
+</tr>
+<tr>
+<td>策略</td>
+<td>Policy</td>
+<td>學到的最佳行動準則</td>
+</tr>
+<tr>
+<td>獎勵／懲罰</td>
+<td>Reward / Penalty</td>
+<td>環境給的回饋</td>
+</tr>
+<tr>
+<td>圍棋對局</td>
+<td>AlphaGo vs Lee Sedol</td>
+<td>DeepMind 擊敗世界冠軍</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</h2>
+<h3 id="b1-十大陷阱總表">B.1 十大陷阱總表</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>陷阱</th>
+<th>錯誤觀念</th>
+<th>正確觀念</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>AI 取徑混淆</td>
+<td>「Human approach 是理性的」</td>
+<td>Human = 像人；Ideal = 理性</td>
+</tr>
+<tr>
+<td>2</td>
+<td>AI 子目標漏項</td>
+<td>只記得 NLP、Perception</td>
+<td>五項：NLP、Navigate、Represent Knowledge、Reasoning、Perception</td>
+</tr>
+<tr>
+<td>3</td>
+<td>人臉辨識步驟順序</td>
+<td>Detection → Recognition → Analysis</td>
+<td><strong>Detection → Analysis → Recognition</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>faceprint 性質</td>
+<td>「每個人可以共用」</td>
+<td>每人獨一無二，如指紋；可反向重建人臉</td>
+</tr>
+<tr>
+<td>5</td>
+<td>異常偵測指標</td>
+<td>「看 accuracy 就好」</td>
+<td>類別極不平衡 → 看 Precision/Recall/F1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>影像資料形式</td>
+<td>把「多鏡頭」當「3D」</td>
+<td>多鏡頭＝多個 2D 視角；3D＝帶深度資料</td>
+</tr>
+<tr>
+<td>7</td>
+<td>HMM 時間尺度</td>
+<td>「用 1 秒一段」</td>
+<td>用 <strong>10 毫秒</strong> 近似為平穩過程</td>
+</tr>
+<tr>
+<td>8</td>
+<td>HMM 輸出</td>
+<td>「輸出一個向量」</td>
+<td>輸出<strong>向量的序列</strong>（sequence of vectors）</td>
+</tr>
+<tr>
+<td>9</td>
+<td>語音辨識偏頗</td>
+<td>「準確率是客觀中立的」</td>
+<td>訓練資料偏頗 → 不同族群準確率落差</td>
+</tr>
+<tr>
+<td>10</td>
+<td>強化學習本質</td>
+<td>「和監督式學習一樣有標準答案」</td>
+<td>沒有標準答案，靠獎勵／懲罰試錯學出 policy</td>
+</tr>
+</tbody>
+</table>
+<h3 id="b2-易混名詞對照">B.2 易混名詞對照</h3>
+<table>
+<thead>
+<tr>
+<th>名詞 A</th>
+<th>名詞 B</th>
+<th>分辨方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Human approach</td>
+<td>Ideal approach</td>
+<td>像人 vs 理性</td>
+</tr>
+<tr>
+<td>Think</td>
+<td>Act</td>
+<td>內部思考 vs 外部行為</td>
+</tr>
+<tr>
+<td>Detection</td>
+<td>Recognition</td>
+<td>找出臉 vs 比對身份</td>
+</tr>
+<tr>
+<td>NLP</td>
+<td>Speech Recognition</td>
+<td>處理語言（文字/語意） vs 處理語音訊號</td>
+</tr>
+<tr>
+<td>Generative AI</td>
+<td>一般辨識 AI</td>
+<td>生成新內容 vs 判斷既有內容</td>
+</tr>
+<tr>
+<td>Supervised learning</td>
+<td>Reinforcement learning</td>
+<td>有標籤答案 vs 靠獎勵訊號</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="附錄-c模擬試題連答案">附錄 C：模擬試題（連答案）</h2>
+<h3 id="c1-選擇題20-題">C.1 選擇題（20 題）</h3>
+<ol>
+<li>
+<p>AI 的本質是？
+   - A. 人類智慧
+   - B. 機器智慧（machine intelligence）
+   - C. 生物智慧
+   - D. 群體智慧</p>
+</li>
+<li>
+<p>「Systems that act rationally」屬於哪個取徑？
+   - A. Human approach
+   - B. Ideal approach
+   - C. Physical approach
+   - D. Emotional approach</p>
+</li>
+<li>
+<p>下列何者<strong>不是</strong> AI 的子目標？
+   - A. Natural Language Processing
+   - B. Navigate
+   - C. Blockchain
+   - D. Reasoning</p>
+</li>
+<li>
+<p>人臉辨識的三個步驟順序是？
+   - A. Analysis → Detection → Recognition
+   - B. Detection → Recognition → Analysis
+   - C. Detection → Analysis → Recognition
+   - D. Recognition → Analysis → Detection</p>
+</li>
+<li>
+<p>「faceprint」的特性是？
+   - A. 所有人共用
+   - B. 每人獨一無二，如指紋
+   - C. 只能儲存無法比對
+   - D. 只適用於正面臉</p>
+</li>
+<li>
+<p>影像資料的「views from multiple cameras」是指？
+   - A. 單張影像
+   - B. 視訊序列
+   - C. 多個 2D 視角
+   - D. 三維點雲</p>
+</li>
+<li>
+<p>現代語音辨識系統最常依賴的模型是？
+   - A. CNN
+   - B. Hidden Markov Model (HMM)
+   - C. Transformer
+   - D. Decision Tree</p>
+</li>
+<li>
+<p>HMM 假設語音訊號在足夠短的時間尺度下可近似為？
+   - A. 隨機雜訊
+   - B. 平穩過程（stationary process）
+   - C. 週期訊號
+   - D. 線性函數</p>
+</li>
+<li>
+<p>語音訊號在 HMM 中通常被切成多長的片段？
+   - A. 1 毫秒
+   - B. 10 毫秒
+   - C. 100 毫秒
+   - D. 1 秒</p>
+</li>
+<li>
+<p>每段語音片段的功率頻譜會被映射成？
+   - A. 圖片
+   - B. cepstral coefficients（實數向量）
+   - C. 文字
+   - D. 二進位碼</p>
+</li>
+<li>
+<p>HMM 的最終輸出是？
+   - A. 單一數值
+   - B. 一張圖
+   - C. 一串向量的序列
+   - D. 一段文字</p>
+</li>
+<li>
+<p>強化學習中，agent 取得最多獎勵的「最佳策略」稱為？
+   - A. Reward
+   - B. Policy
+   - C. Action
+   - D. Environment</p>
+</li>
+<li>
+<p>下列何者是強化學習的應用？
+   - A. AlphaGo 下圍棋
+   - B. 垃圾郵件過濾
+   - C. 網頁排版
+   - D. 檔案壓縮</p>
+</li>
+<li>
+<p>AlphaGo 由哪間公司開發，擊敗哪位世界冠軍？
+   - A. Google / Kasparov
+   - B. DeepMind / Lee Sedol
+   - C. IBM / Kasparov
+   - D. OpenAI / Lee Sedol</p>
+</li>
+<li>
+<p>生成式 AI 生成新內容主要依靠？
+   - A. 隨機亂數
+   - B. 機器學習，特別是深度學習
+   - C. 人工規則手寫
+   - D. 資料庫查詢</p>
+</li>
+<li>
+<p>生成式 AI 可生成的內容<strong>不包含</strong>下列何者？
+   - A. 圖像
+   - B. 文字
+   - C. 音樂
+   - D. 以上皆可生成</p>
+</li>
+<li>
+<p>異常偵測（Anomaly Detection）最常面對的資料特性是？
+   - A. 類別完全平衡
+   - B. 類別極不平衡
+   - C. 全部都是異常
+   - D. 沒有標籤</p>
+</li>
+<li>
+<p>異常偵測評估時，為何不宜只看 accuracy？
+   - A. 因為計算太慢
+   - B. 因為異常樣本極少，全猜正常也高分
+   - C. 因為沒有公式
+   - D. 因為需要 GPU</p>
+</li>
+<li>
+<p>Speechmatics 對非裔美國人語音的準確率約為？
+   - A. 68.6%
+   - B. 82.8%
+   - C. 45%
+   - D. 95%</p>
+</li>
+<li>
+<p>「AI 助理、個人化購物、假評論偵測」屬於哪一類應用？
+   - A. Education
+   - B. Daily life
+   - C. E-Commerce
+   - D. Healthcare</p>
+</li>
+</ol>
+<details><summary>C.1 答案</summary>
+
+1. **B** 2. **B** 3. **C** 4. **C** 5. **B** 6. **C** 7. **B** 8. **B** 9. **B** 10. **B**
+11. **C** 12. **B** 13. **A** 14. **B** 15. **B** 16. **D** 17. **B** 18. **B** 19. **B** 20. **C**
+
+</details>
+
+<h3 id="c2-填充題10-題">C.2 填充題（10 題）</h3>
+<ol>
+<li>AI 的通用理論是：人工智慧擁有 <strong><em>_</em>_ 智慧，但它是 </strong>____ 智慧。</li>
+<li>Human approach 包含「像人一樣 <strong><em>_</em>_」與「像人一樣 </strong>____」。</li>
+<li>AI 的五個子目標：NLP、<strong><em>_</em>_、Represent Knowledge、</strong>____、Perception。</li>
+<li>人臉辨識三步：Detection → <strong><em>_</em>_ → </strong>____。</li>
+<li>人臉資料轉成的數字／點串稱為 <strong><em>_</em>_，每人獨一無二，如 </strong>____。</li>
+<li>現代語音辨識常用 <strong><em>_</em>_（縮寫 </strong>____）模型。</li>
+<li>語音訊號被切成 10 毫秒片段後，功率頻譜映射成 <strong><em>_</em>_，其維度常為 </strong>____ 至 32。</li>
+<li>強化學習中，agent 觀察 <strong><em>_</em>_、執行動作、得到 </strong>____，再學出最佳 policy。</li>
+<li>DeepMind 的 <strong><em>_</em>_ 擊敗圍棋世界冠軍 </strong>____。</li>
+<li>生成式 AI 使用機器學習，特別是 ______，從既有資料學「模式與結構」。</li>
+</ol>
+<details><summary>C.2 答案</summary>
+
+1. 類人（human-like）；機器（machine）
+2. 思考（think）；行動（act）
+3. Navigate；Reasoning
+4. Analysis；Recognition
+5. faceprint（臉紋）；指紋（fingerprint）
+6. 隱馬可夫模型；HMM
+7. cepstral coefficients（倒頻譜係數）；10
+8. 環境（environment）；獎勵或懲罰（rewards/penalties）
+9. AlphaGo；Lee Sedol（李世乭）
+10. 深度學習（deep learning）
+
+</details>
+
+<h3 id="c3-簡答題6-題">C.3 簡答題（6 題）</h3>
+<ol>
+<li>試述 Human approach 與 Ideal approach 的差別。</li>
+<li>列出 AI 的五個子目標並各舉一例。</li>
+<li>詳述人臉辨識的三個步驟。</li>
+<li>說明 HMM 在語音辨識中的處理流程（含時間尺度與輸出）。</li>
+<li>為何語音辨識對不同族群的準確率會有落差？如何改善？</li>
+<li>強化學習與監督式學習有何本質差異？</li>
+</ol>
+<details><summary>C.3 參考答案</summary>
+
+1. **Human approach** 以「像人」為標準（think/act like humans）；**Ideal approach** 以「理性」為標準（think/act rationally），追求最佳解而非模仿人。
+2. NLP（語音助理）、Navigate（GPS）、Represent Knowledge（知識圖譜）、Reasoning（專家系統）、Perception（電腦視覺）。
+3. **Detection**：用電腦視覺在影像中找出人臉（含正／側面）；**Analysis**：讀取臉部幾何與表情，取 facial landmarks（眼距、額到下巴、鼻到嘴、眼窩深度、顴骨、輪廓）；**Recognition**：轉成 faceprint 並比對，評估吻合可能性。
+4. 把語音切成 **10 毫秒** 片段（近似平穩過程）→ 求各片段**功率頻譜** → 映射成 **cepstral coefficients**（約 10～32 維）→ HMM 輸出**向量序列**。
+5. 因為**大部分訓練資料需人手分類**，導致模型只在一小群說話者上準確；改善方向是使用**更具代表性的資料集**（如 Speechmatics 做法），使各族群準確率接近（例：非裔美國人語音 82.8% vs 68.6%）。
+6. 監督式學習有**正確答案標籤**；強化學習**沒有標準答案**，agent 靠與環境互動得到的**獎勵／懲罰**回饋，試錯學出最大化長期獎勵的 **policy**。
+
+</details>
+
+<hr>
+<h2 id="附錄-d教材頁面索引對照">附錄 D：教材頁面索引對照</h2>
+<table>
+<thead>
+<tr>
+<th>PDF 頁</th>
+<th>標題</th>
+<th>本筆記對應章節</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>封面：Introduction to AI</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2</td>
+<td>破冰：Do you actually like using an app to order food?</td>
+<td>第 1.1 節</td>
+</tr>
+<tr>
+<td>3</td>
+<td>（圖片）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Sharing of Theory and Concepts / Can Machines Think more than us?</td>
+<td>第 1.1 節</td>
+</tr>
+<tr>
+<td>5</td>
+<td>AI General Theory and Concepts</td>
+<td>第 1 節</td>
+</tr>
+<tr>
+<td>6</td>
+<td>AI General Theory and Concepts（四象限）</td>
+<td>第 1 節</td>
+</tr>
+<tr>
+<td>7</td>
+<td>AI Applications and Examples Sharing（章節頁）</td>
+<td>第 3 節</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Sub-objectives of AI</td>
+<td>第 2 節</td>
+</tr>
+<tr>
+<td>9</td>
+<td>AI Applications：E-Commerce / Education / Daily life</td>
+<td>第 3 節</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Anomaly Detection</td>
+<td>第 4 節</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Image/Video Recognition（定義＋四種資料形式）</td>
+<td>第 5.1 節</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Image/Video Recognition（電腦視覺任務）</td>
+<td>第 5.2 節</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Facial Recognition — Detection</td>
+<td>第 6.1 節</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Facial Recognition — Analysis</td>
+<td>第 6.2 節</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Facial Recognition — Recognition</td>
+<td>第 6.3 節</td>
+</tr>
+<tr>
+<td>16</td>
+<td>E channel（圖片）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>17</td>
+<td>NLP — 三個問題</td>
+<td>第 7.1 節</td>
+</tr>
+<tr>
+<td>18</td>
+<td>NLP — Hidden Markov Model</td>
+<td>第 7.2 節</td>
+</tr>
+<tr>
+<td>19</td>
+<td>NLP — HMM 流程</td>
+<td>第 7.2 節</td>
+</tr>
+<tr>
+<td>20</td>
+<td>NLP（圖）</td>
+<td>第 7 節</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Speech Recognition — King/Queen/Man/Woman/Royal</td>
+<td>第 8.1 節</td>
+</tr>
+<tr>
+<td>22</td>
+<td>NLP（圖）</td>
+<td>第 7 節</td>
+</tr>
+<tr>
+<td>23</td>
+<td>NLP（圖）</td>
+<td>第 7 節</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Speech Recognition（圖）</td>
+<td>第 8 節</td>
+</tr>
+<tr>
+<td>25</td>
+<td>NLP（圖）</td>
+<td>第 7 節</td>
+</tr>
+<tr>
+<td>26</td>
+<td>NLP — Explore（aka.ms/explore-nlp）</td>
+<td>第 7.4 節</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Speech Recognition — Speechmatics 數據</td>
+<td>第 8.2 節</td>
+</tr>
+<tr>
+<td>28</td>
+<td>（圖）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Reinforcement Learning — 要解決的問題</td>
+<td>第 9.1 節</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Reinforcement Learning（圖）</td>
+<td>第 9 節</td>
+</tr>
+<tr>
+<td>31</td>
+<td>Reinforcement Learning（圖）</td>
+<td>第 9 節</td>
+</tr>
+<tr>
+<td>32</td>
+<td>Reinforcement Learning — Agent 四步</td>
+<td>第 9.2 節</td>
+</tr>
+<tr>
+<td>33</td>
+<td>Reinforcement Learning — 應用（AlphaGo）</td>
+<td>第 9.3 節</td>
+</tr>
+<tr>
+<td>34</td>
+<td>Generative AI — 定義</td>
+<td>第 10 節</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>說明：原稿有多頁為純圖片／示意圖（如 p3、p16、p20、p22–25、p28、p30–31），
+這些頁面在筆記中對應到所屬章節的概念補充，不另設小節。</p>
+</blockquote>
+<hr>
+<h2 id="附錄-e延伸資源與離線提示">附錄 E：延伸資源與離線提示</h2>
+<h3 id="e1-原稿提供的連結">E.1 原稿提供的連結</h3>
+<table>
+<thead>
+<tr>
+<th>資源</th>
+<th>連結</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>探索 NLP</td>
+<td><code>https://aka.ms/explore-nlp</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="e2-沒有網路時怎麼複習">E.2 沒有網路時怎麼複習</h3>
+<p>本筆記本身即為<strong>離線可讀</strong>（Markdown 或單檔 HTML），不依賴任何外部資源。若要自行查找延伸資料：</p>
+<ul>
+<li>先看本筆記的附錄 A（名詞速查表）與附錄 F（一頁精華）。</li>
+<li>用附錄 C 的試題自測，把答錯的題目對應回章節重讀。</li>
+<li>需要圖解時，可用任何繪圖工具自行畫出：AI 子目標圖、人臉辨識三步圖、RL 迴圈圖。</li>
+</ul>
+<h3 id="e3-觀念延伸考綱外但常被問">E.3 觀念延伸（考綱外但常被問）</h3>
+<table>
+<thead>
+<tr>
+<th>主題</th>
+<th>一句話</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI 公平性</td>
+<td>訓練資料不具代表性 → 各族群表現落差（見 8.2）</td>
+</tr>
+<tr>
+<td>AI 倫理／隱私</td>
+<td>人臉資料可反向重建（見 6.3），涉及隱私</td>
+</tr>
+<tr>
+<td>監督式 vs 強化式</td>
+<td>有標籤 vs 靠獎勵（見附錄 B.2）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="附錄-f一頁精華考前-10-分鐘">附錄 F：一頁精華（考前 10 分鐘）</h2>
+<div class="codehilite"><pre><span></span><code>【1. AI 定義】
+  AI = 類人智慧(human-like) 但本質是機器智慧(machine intelligence)
+  取徑：Human(think/act like humans) | Ideal(think/act rationally)
+
+【2. AI 子目標（5 個）】
+  NLP / Navigate / Represent Knowledge / Reasoning / Perception
+
+【3. AI 應用】
+  E-Commerce：個人化購物、AI 助理、詐騙防治(假評論)
+  Education：個人化訊息、招生管理、批改
+  Daily life：自駕(Tesla)、垃圾郵件過濾、人臉辨識(Face Unlock)、GPS
+
+【4. 異常偵測】
+  找 outlier；類別極不平衡 → 看 Precision/Recall/F1，不看 accuracy
+
+【5. 影像/視訊辨識】
+  輸入影像 → 輸出屬性；資料形式：單張 / 序列 / 多鏡頭 / 3D
+
+【6. 人臉辨識（三步，必考）】
+  Detection → Analysis → Recognition
+  Analysis 量：眼距、額到下巴、鼻到嘴、眼窩深度、顴骨、唇耳下巴輪廓
+  faceprint = 每人獨一無二（如指紋），可反向重建人臉
+
+【7. NLP】
+  三件事：speak / understand / make sense
+  HMM：語音切 10ms → 功率頻譜 → cepstral coefficients(10~32維) → 向量序列
+
+【8. 語音辨識】
+  訓練資料需人手分類 → 族群落差
+  Speechmatics 82.8% vs Google/Amazon 68.6%（非裔美國人語音）
+  = 錯誤減少 45%（約 3 個字）
+
+【9. 強化學習】
+  Agent：observe → act → reward/penalty → 學最佳 policy（最大化長期獎勵）
+  應用：機械人學走路、DeepMind AlphaGo 擊敗 Lee Sedol（圍棋）
+
+【10. 生成式 AI】
+  用 ML/深度學習，從既有資料學模式與結構 → 生成相似新內容（圖/文/樂/影片）
+</code></pre></div>
+
+<hr>
+<h2 id="附錄-gmc-模擬試卷60-題">附錄 G：MC 模擬試卷（60 題）</h2>
+<h3 id="g1-作答說明與應試技巧">G.1 作答說明與應試技巧</h3>
+<ul>
+<li><strong>60 題單選</strong>、滿分 60 分、建議 <strong>75 分鐘</strong>。</li>
+<li>分三部分：<strong>基礎與 AI 概念（1–20）</strong>、<strong>影像與人臉辨識（21–40）</strong>、<strong>NLP／語音／強化學習／生成式（41–60）</strong>。</li>
+<li>答案分佈刻意打散（A/B/C/D 各 15 題），避免整排猜同一個字母。</li>
+<li>建議先做完整份再看答案；答錯的題目請用「逐題詳解」對應回章節重讀。</li>
+</ul>
+<h3 id="g2-第一部分基礎與-ai-概念第-120-題">G.2 第一部分：基礎與 AI 概念（第 1–20 題）</h3>
+<ol>
+<li>
+<p>人工智慧（AI）的本質是？
+   - A. 人類智慧
+   - B. 機器智慧（machine intelligence）
+   - C. 群體智慧
+   - D. 生物智慧</p>
+</li>
+<li>
+<p>「Systems that think like humans」屬於哪個取徑？
+   - A. Ideal approach
+   - B. Rational approach
+   - C. Human approach
+   - D. Machine approach</p>
+</li>
+<li>
+<p>下列何者最能描述 Ideal approach？
+   - A. 理性地思考與行動
+   - B. 像人一樣思考
+   - C. 模仿人類的偏誤
+   - D. 只做感知不做推理</p>
+</li>
+<li>
+<p>AI 的子目標共有幾個？
+   - A. 3
+   - B. 4
+   - C. 6
+   - D. 5</p>
+</li>
+<li>
+<p>下列何者<strong>不是</strong> AI 的子目標？
+   - A. Navigate
+   - B. Perception
+   - C. Blockchain
+   - D. Reasoning</p>
+</li>
+<li>
+<p>「偵測假評論（fake review）」屬於哪一類 AI 應用？
+   - A. Education
+   - B. E-Commerce 的詐騙防治
+   - C. Daily life
+   - D. Healthcare</p>
+</li>
+<li>
+<p>「Grading paperwork」屬於哪一類 AI 應用？
+   - A. Education
+   - B. E-Commerce
+   - C. Daily life
+   - D. Manufacturing</p>
+</li>
+<li>
+<p>下列何者屬於 Daily life 的 AI 應用？
+   - A. Managing enrollment
+   - B. Personalized shopping
+   - C. Fraud prevention
+   - D. Spam email filters</p>
+</li>
+<li>
+<p>異常偵測（Anomaly Detection）主要在找？
+   - A. 最多的類別
+   - B. 平均值
+   - C. 不符合預期模式的 outlier
+   - D. 最大群組</p>
+</li>
+<li>
+<p>評估異常偵測模型時，為何不宜只看 accuracy？</p>
+<ul>
+<li>A. 因為公式太複雜</li>
+<li>B. 因為異常樣本極少，全猜正常也會很高分</li>
+<li>C. 因為需要 GPU</li>
+<li>D. 因為 accuracy 沒有定義</li>
+</ul>
+</li>
+<li>
+<p>原稿指出電腦視覺辨識的準確度？</p>
+<ul>
+<li>A. 一定低於人類</li>
+<li>B. 只能達到人類一半</li>
+<li>C. 無法比較</li>
+<li>D. 可達或超越人類水準</li>
+</ul>
+</li>
+<li>
+<p>原稿列出的影像資料形式共有幾種？</p>
+<ul>
+<li>A. 4</li>
+<li>B. 3</li>
+<li>C. 5</li>
+<li>D. 2</li>
+</ul>
+</li>
+<li>
+<p>「Views from multiple cameras」是指？</p>
+<ul>
+<li>A. 單張影像</li>
+<li>B. 視訊序列</li>
+<li>C. 多個 2D 視角</li>
+<li>D. 三維點雲</li>
+</ul>
+</li>
+<li>
+<p>下列何者最適合代表「Three-dimensional data」？</p>
+<ul>
+<li>A. 一張 JPEG</li>
+<li>B. LiDAR／深度相機的點雲</li>
+<li>C. 一段 MP4</li>
+<li>D. 兩台相機的 2D 影像</li>
+</ul>
+</li>
+<li>
+<p>電腦視覺任務的輸入／輸出介面是？</p>
+<ul>
+<li>A. 輸入影像 → 輸出描述影像的屬性</li>
+<li>B. 輸入文字 → 輸出影像</li>
+<li>C. 輸入聲音 → 輸出文字</li>
+<li>D. 輸入屬性 → 輸出影像</li>
+</ul>
+</li>
+<li>
+<p>「Can Machines Think more than us?」在原稿中屬於？</p>
+<ul>
+<li>A. 期末考題</li>
+<li>B. 生成式 AI 定義</li>
+<li>C. 人臉辨識步驟</li>
+<li>D. 開場破冰引導</li>
+</ul>
+</li>
+<li>
+<p>「AI-powered Assistants」屬於哪一類應用？</p>
+<ul>
+<li>A. Education</li>
+<li>B. E-Commerce</li>
+<li>C. Daily life</li>
+<li>D. Agriculture</li>
+</ul>
+</li>
+<li>
+<p>「Navigation by GPS」屬於哪一類應用？</p>
+<ul>
+<li>A. E-Commerce</li>
+<li>B. Education</li>
+<li>C. Daily life</li>
+<li>D. Finance</li>
+</ul>
+</li>
+<li>
+<p>AI 子目標「Represent Knowledge」的意思是？</p>
+<ul>
+<li>A. 把知識用機器可處理的方式表示</li>
+<li>B. 從感測資料理解世界</li>
+<li>C. 規劃路徑</li>
+<li>D. 生成新內容</li>
+</ul>
+</li>
+<li>
+<p>AI 子目標「Reasoning」的意思是？</p>
+<ul>
+<li>A. 感測環境</li>
+<li>B. 產生語音</li>
+<li>C. 儲存影像</li>
+<li>D. 由已知推導出新結論</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="g3-第二部分影像與人臉辨識第-2140-題">G.3 第二部分：影像與人臉辨識（第 21–40 題）</h3>
+<ol start="21">
+<li>
+<p>人臉辨識的三個步驟，正確順序是？</p>
+<ul>
+<li>A. Analysis → Detection → Recognition</li>
+<li>B. Detection → Recognition → Analysis</li>
+<li>C. Detection → Analysis → Recognition</li>
+<li>D. Recognition → Analysis → Detection</li>
+</ul>
+</li>
+<li>
+<p>「Detection」在人臉辨識中的意思是？</p>
+<ul>
+<li>A. 在影像中找出人臉</li>
+<li>B. 比對兩個人的身份</li>
+<li>C. 生成人臉影像</li>
+<li>D. 儲存人臉資料庫</li>
+</ul>
+</li>
+<li>
+<p>原稿指出 Detection 可偵測的臉部資料包含？</p>
+<ul>
+<li>A. 只有正面</li>
+<li>B. 只有側面</li>
+<li>C. 只有戴眼鏡的臉</li>
+<li>D. 正面與側面</li>
+</ul>
+</li>
+<li>
+<p>「Analysis」這一步會做什麼？</p>
+<ul>
+<li>A. 下載人臉圖片</li>
+<li>B. 讀取臉部幾何與表情</li>
+<li>C. 刪除人臉資料</li>
+<li>D. 加密人臉檔案</li>
+</ul>
+</li>
+<li>
+<p>下列何者<strong>不是</strong>原稿列出的 Analysis 量測項目？</p>
+<ul>
+<li>A. 兩眼之間的距離</li>
+<li>B. 顴骨形狀</li>
+<li>C. 髮色與身高的比例</li>
+<li>D. 眼窩深度</li>
+</ul>
+</li>
+<li>
+<p>「眼窩深度」的英文是？</p>
+<ul>
+<li>A. Depth of the eye sockets</li>
+<li>B. Distance between the eyes</li>
+<li>C. Shape of the cheekbones</li>
+<li>D. Contour of the lips</li>
+</ul>
+</li>
+<li>
+<p>「faceprint」是什麼？</p>
+<ul>
+<li>A. 一張列印出來的人臉照片</li>
+<li>B. 人臉的密碼</li>
+<li>C. 人臉的英文名稱</li>
+<li>D. 臉部資料轉成的數字或點串</li>
+</ul>
+</li>
+<li>
+<p>原稿把 faceprint 比喻為？</p>
+<ul>
+<li>A. 身分證號</li>
+<li>B. 指紋（fingerprint）</li>
+<li>C. 車牌</li>
+<li>D. 條碼</li>
+</ul>
+</li>
+<li>
+<p>faceprint 資料「反向使用」可以做到？</p>
+<ul>
+<li>A. 數位重建一個人的臉</li>
+<li>B. 預測天氣</li>
+<li>C. 翻譯語言</li>
+<li>D. 壓縮影片</li>
+</ul>
+</li>
+<li>
+<p>「Recognition」這一步的核心是？</p>
+<ul>
+<li>A. 偵測影像中是否有臉</li>
+<li>B. 分析臉部表情</li>
+<li>C. 比對兩張（或以上）影像中的臉，評估吻合可能性</li>
+<li>D. 把人臉轉成 3D 模型</li>
+</ul>
+</li>
+<li>
+<p>下列何者是人臉辨識的日常應用例子？</p>
+<ul>
+<li>A. 垃圾郵件過濾</li>
+<li>B. GPS 導航</li>
+<li>C. 招生管理</li>
+<li>D. iPhone Face Unlock</li>
+</ul>
+</li>
+<li>
+<p>「Video sequences」指的是哪一種影像資料形式？</p>
+<ul>
+<li>A. 單張影像</li>
+<li>B. 連續影格（視訊序列）</li>
+<li>C. 多鏡頭視角</li>
+<li>D. 三維資料</li>
+</ul>
+</li>
+<li>
+<p>原稿指出電腦視覺能自動化處理影像資料的哪些面向？</p>
+<ul>
+<li>A. 擷取、分析、分類與理解</li>
+<li>B. 上傳、下載、備份、刪除</li>
+<li>C. 加密、解密、簽章、壓縮</li>
+<li>D. 列印、掃描、影印、傳真</li>
+</ul>
+</li>
+<li>
+<p>下列何者屬於「Three-dimensional data」？</p>
+<ul>
+<li>A. 一張 PNG</li>
+<li>B. 一段 GIF</li>
+<li>C. 深度相機的點雲</li>
+<li>D. 一張身分證照片</li>
+</ul>
+</li>
+<li>
+<p>人臉辨識最直接對應到 AI 的哪個子目標？</p>
+<ul>
+<li>A. Navigate</li>
+<li>B. Reasoning</li>
+<li>C. Represent Knowledge</li>
+<li>D. Perception</li>
+</ul>
+</li>
+<li>
+<p>Detection 主要依靠什麼技術在影像中找出人臉？</p>
+<ul>
+<li>A. 資料庫查詢</li>
+<li>B. 電腦視覺（computer vision）</li>
+<li>C. 語音辨識</li>
+<li>D. 隨機抽樣</li>
+</ul>
+</li>
+<li>
+<p>Analysis 找出能把臉與其他物件區分開的什麼？</p>
+<ul>
+<li>A. 臉部特徵點（facial landmarks）</li>
+<li>B. 指紋</li>
+<li>C. 車牌號碼</li>
+<li>D. 姓名</li>
+</ul>
+</li>
+<li>
+<p>「額頭到下巴的距離」英文是？</p>
+<ul>
+<li>A. Distance between the eyes</li>
+<li>B. Depth of the eye sockets</li>
+<li>C. Distance from the forehead to the chin</li>
+<li>D. Shape of the cheekbones</li>
+</ul>
+</li>
+<li>
+<p>用自拍比對政府證件照是否為同一人，屬於人臉辨識的哪一步？</p>
+<ul>
+<li>A. Detection</li>
+<li>B. Analysis</li>
+<li>C. Compression</li>
+<li>D. Recognition</li>
+</ul>
+</li>
+<li>
+<p>人臉辨識中用來「評估吻合可能性」的步驟是？</p>
+<ul>
+<li>A. Detection</li>
+<li>B. Recognition</li>
+<li>C. Analysis</li>
+<li>D. Pre-processing</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="g4-第三部分nlp語音強化學習生成式第-4160-題">G.4 第三部分：NLP、語音、強化學習、生成式（第 41–60 題）</h3>
+<ol start="41">
+<li>
+<p>原稿用哪三件事概括 NLP？</p>
+<ul>
+<li>A. 講語言、懂語言、理解句子</li>
+<li>B. 讀、寫、算</li>
+<li>C. 拍照、剪片、上傳</li>
+<li>D. 加密、解密、壓縮</li>
+</ul>
+</li>
+<li>
+<p>NLP 中「make sense out of a sentence」指的是？</p>
+<ul>
+<li>A. 把句子唸出來</li>
+<li>B. 把句子翻譯成外語</li>
+<li>C. 從句子理解出意義（語意理解）</li>
+<li>D. 把句子刪掉</li>
+</ul>
+</li>
+<li>
+<p>原稿指出大多數現代語音辨識系統依賴？</p>
+<ul>
+<li>A. Decision Tree</li>
+<li>B. Hidden Markov Model (HMM)</li>
+<li>C. K-means</li>
+<li>D. Random Forest</li>
+</ul>
+</li>
+<li>
+<p>HMM 的關鍵假設是：語音訊號在足夠短的時間尺度下可近似為？</p>
+<ul>
+<li>A. 週期訊號</li>
+<li>B. 隨機雜訊</li>
+<li>C. 線性函數</li>
+<li>D. 平穩過程（stationary process）</li>
+</ul>
+</li>
+<li>
+<p>HMM 通常把語音訊號切成多長的片段？</p>
+<ul>
+<li>A. 10 毫秒</li>
+<li>B. 1 毫秒</li>
+<li>C. 100 毫秒</li>
+<li>D. 1 秒</li>
+</ul>
+</li>
+<li>
+<p>每個語音片段的功率頻譜會被映射成什麼？</p>
+<ul>
+<li>A. 一張圖片</li>
+<li>B. 一段文字</li>
+<li>C. cepstral coefficients（實數向量）</li>
+<li>D. 一組標籤</li>
+</ul>
+</li>
+<li>
+<p>原稿提到 cepstral coefficients 向量的維度通常？</p>
+<ul>
+<li>A. 固定 512 維</li>
+<li>B. 約 10 至 32 維</li>
+<li>C. 只有 1 維</li>
+<li>D. 至少 1024 維</li>
+</ul>
+</li>
+<li>
+<p>HMM 的最終輸出是？</p>
+<ul>
+<li>A. 單一數字</li>
+<li>B. 一張頻譜圖</li>
+<li>C. 一段文字</li>
+<li>D. 一串向量的序列</li>
+</ul>
+</li>
+<li>
+<p>原稿以 King / Queen / Man / Woman 示範的概念是？</p>
+<ul>
+<li>A. 詞向量（word embedding）</li>
+<li>B. 影像分割</li>
+<li>C. 物件偵測</li>
+<li>D. 語音合成</li>
+</ul>
+</li>
+<li>
+<p>Speechmatics 對非裔美國人語音的整體準確率約為？</p>
+<ul>
+<li>A. 45%</li>
+<li>B. 68.6%</li>
+<li>C. 82.8%</li>
+<li>D. 99%</li>
+</ul>
+</li>
+<li>
+<p>Google 與 Amazon 對非裔美國人語音的準確率約為？</p>
+<ul>
+<li>A. 82.8%</li>
+<li>B. 68.6%</li>
+<li>C. 45%</li>
+<li>D. 95%</li>
+</ul>
+</li>
+<li>
+<p>Speechmatics 的準確率提升相當於減少多少語音辨識錯誤？</p>
+<ul>
+<li>A. 10%</li>
+<li>B. 25%</li>
+<li>C. 68%</li>
+<li>D. 45%</li>
+</ul>
+</li>
+<li>
+<p>原稿指出語音辨識的一大挑戰是？</p>
+<ul>
+<li>A. 大部分訓練資料需要人手分類，導致代表性不足</li>
+<li>B. 麥克風太貴</li>
+<li>C. 語音檔太大</li>
+<li>D. 沒有數學模型可用</li>
+</ul>
+</li>
+<li>
+<p>強化學習中，agent 的第一步是？</p>
+<ul>
+<li>A. 得到獎勵</li>
+<li>B. 更新策略</li>
+<li>C. 觀察環境</li>
+<li>D. 結束任務</li>
+</ul>
+</li>
+<li>
+<p>強化學習中 agent 學到的「最佳行動準則」稱為？</p>
+<ul>
+<li>A. Reward</li>
+<li>B. Policy</li>
+<li>C. Environment</li>
+<li>D. Dataset</li>
+</ul>
+</li>
+<li>
+<p>強化學習的目標是？</p>
+<ul>
+<li>A. 單步獎勵最大化</li>
+<li>B. 讓動作越多越好</li>
+<li>C. 最小化觀察次數</li>
+<li>D. 長期累積獎勵最大化</li>
+</ul>
+</li>
+<li>
+<p>DeepMind 的 AlphaGo 擊敗了哪位世界冠軍？</p>
+<ul>
+<li>A. Lee Sedol（李世乭）</li>
+<li>B. Garry Kasparov</li>
+<li>C. Magnus Carlsen</li>
+<li>D. Ke Jie</li>
+</ul>
+</li>
+<li>
+<p>AlphaGo 是哪間公司（團隊）開發的？</p>
+<ul>
+<li>A. OpenAI</li>
+<li>B. IBM</li>
+<li>C. DeepMind</li>
+<li>D. Microsoft</li>
+</ul>
+</li>
+<li>
+<p>原稿指出生成式 AI 可以生成下列哪些內容？</p>
+<ul>
+<li>A. 只能生成圖像</li>
+<li>B. 圖像、文字、音樂，甚至影片</li>
+<li>C. 只能生成文字</li>
+<li>D. 只能生成音樂</li>
+</ul>
+</li>
+<li>
+<p>生成式 AI 生成新內容主要使用的技術是？</p>
+<ul>
+<li>A. 人工規則手寫</li>
+<li>B. 資料庫查詢</li>
+<li>C. 隨機亂數</li>
+<li>D. 機器學習，特別是深度學習</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="g5-答案速查表">G.5 答案速查表</h3>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>B</td>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+<td>C</td>
+<td>B</td>
+<td>A</td>
+<td>D</td>
+<td>C</td>
+<td>B</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+<th>16</th>
+<th>17</th>
+<th>18</th>
+<th>19</th>
+<th>20</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>A</td>
+<td>D</td>
+<td>B</td>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>21</th>
+<th>22</th>
+<th>23</th>
+<th>24</th>
+<th>25</th>
+<th>26</th>
+<th>27</th>
+<th>28</th>
+<th>29</th>
+<th>30</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+<td>B</td>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+<td>B</td>
+<td>A</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>31</th>
+<th>32</th>
+<th>33</th>
+<th>34</th>
+<th>35</th>
+<th>36</th>
+<th>37</th>
+<th>38</th>
+<th>39</th>
+<th>40</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>D</td>
+<td>B</td>
+<td>A</td>
+<td>C</td>
+<td>D</td>
+<td>B</td>
+<td>A</td>
+<td>C</td>
+<td>D</td>
+<td>B</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>41</th>
+<th>42</th>
+<th>43</th>
+<th>44</th>
+<th>45</th>
+<th>46</th>
+<th>47</th>
+<th>48</th>
+<th>49</th>
+<th>50</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>51</th>
+<th>52</th>
+<th>53</th>
+<th>54</th>
+<th>55</th>
+<th>56</th>
+<th>57</th>
+<th>58</th>
+<th>59</th>
+<th>60</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<p><strong>分數換算</strong>：每題 1 分，滿分 60 分。答錯題目請對照下方詳解回到章節重讀。</p>
+<h3 id="g6-逐題詳解">G.6 逐題詳解</h3>
+<p><strong>1. B</strong> —— AI 的通用理論：擁有類人智慧，但本質是<strong>機器智慧</strong>（§1）。
+<strong>2. C</strong> —— think like humans 屬 <strong>Human approach</strong>（§1）。
+<strong>3. A</strong> —— Ideal approach = 理性地思考與行動（think/act rationally）（§1）。
+<strong>4. D</strong> —— 五個：NLP、Navigate、Represent Knowledge、Reasoning、Perception（§2）。
+<strong>5. C</strong> —— Blockchain 不是 AI 子目標（§2）。
+<strong>6. B</strong> —— 假評論偵測屬 E-Commerce 的 Fraud Prevention（§3.1）。
+<strong>7. A</strong> —— Grading paperwork 屬 Education（§3.2）。
+<strong>8. D</strong> —— Spam email filters 屬 Daily life（§3.3）。
+<strong>9. C</strong> —— 異常偵測找 outlier（§4）。
+<strong>10. B</strong> —— 異常極少，全猜正常 accuracy 也高，應看 Precision/Recall/F1（§4）。
+<strong>11. D</strong> —— 電腦視覺準確度可達或超越人類（§5）。
+<strong>12. A</strong> —— 四種：單張／序列／多鏡頭／3D（§5.1）。
+<strong>13. C</strong> —— multiple cameras = 多個 2D 視角（§5.1）。
+<strong>14. B</strong> —— 3D data 如 LiDAR／深度相機點雲（§5.1）。
+<strong>15. A</strong> —— 輸入影像 → 輸出屬性（§5.2）。
+<strong>16. D</strong> —— 屬開場破冰引導（§1.1）。
+<strong>17. B</strong> —— AI-powered Assistants 屬 E-Commerce（§3.1）。
+<strong>18. C</strong> —— Navigation by GPS 屬 Daily life（§3.3）。
+<strong>19. A</strong> —— Represent Knowledge＝把知識用機器可處理方式表示（§2）。
+<strong>20. D</strong> —— Reasoning＝由已知推導新結論（§2）。
+<strong>21. C</strong> —— Detection → Analysis → Recognition（§6）。
+<strong>22. A</strong> —— Detection＝在影像中找出人臉（§6.1）。
+<strong>23. D</strong> —— 可偵測正面與側面（§6.1）。
+<strong>24. B</strong> —— Analysis 讀取臉部幾何與表情（§6.2）。
+<strong>25. C</strong> —— 髮色與身高比例不在量測項目（§6.2）。
+<strong>26. A</strong> —— 眼窩深度 = depth of the eye sockets（§6.2）。
+<strong>27. D</strong> —— faceprint＝臉部資料轉成的數字／點串（§6.3）。
+<strong>28. B</strong> —— 比喻為指紋 fingerprint（§6.3）。
+<strong>29. A</strong> —— 可反向數位重建人臉（§6.3）。
+<strong>30. C</strong> —— Recognition＝比對臉並評估吻合可能性（§6.3）。</p>
+<p><strong>31. D</strong> —— iPhone Face Unlock 是人臉辨識的日常應用（§3.3／§6）。
+<strong>32. B</strong> —— Video sequences＝連續影格（§5.1）。
+<strong>33. A</strong> —— 擷取、分析、分類與理解（§5）。
+<strong>34. C</strong> —— 深度相機點雲屬 3D 資料（§5.1）。
+<strong>35. D</strong> —— 人臉辨識屬 Perception（§2／§6）。
+<strong>36. B</strong> —— Detection 由 computer vision 支援（§6.1）。
+<strong>37. A</strong> —— Analysis 找 facial landmarks（§6.2）。
+<strong>38. C</strong> —— 額到下巴 = distance from the forehead to the chin（§6.2）。
+<strong>39. D</strong> —— 自拍比對證件照屬 Recognition（§6.3）。
+<strong>40. B</strong> —— 評估吻合可能性＝Recognition（§6.3）。
+<strong>41. A</strong> —— NLP 三件事：講、懂、理解句子（§7.1）。
+<strong>42. C</strong> —— make sense out of a sentence＝語意理解（§7.1）。
+<strong>43. B</strong> —— 現代語音辨識依賴 HMM（§7.2）。
+<strong>44. D</strong> —— 近似為平穩過程 stationary process（§7.2）。
+<strong>45. A</strong> —— 切成 10 毫秒片段（§7.2）。
+<strong>46. C</strong> —— 映射成 cepstral coefficients（§7.2）。
+<strong>47. B</strong> —— 維度約 10 至 32（§7.2）。
+<strong>48. D</strong> —— 輸出為向量序列（§7.2）。
+<strong>49. A</strong> —— King/Queen/Man/Woman 示範 word embedding（§8.1）。
+<strong>50. C</strong> —— Speechmatics 準確率 82.8%（§8.2）。
+<strong>51. B</strong> —— Google/Amazon 準確率 68.6%（§8.2）。
+<strong>52. D</strong> —— 錯誤減少 45%（約 3 個字）（§8.2）。
+<strong>53. A</strong> —— 訓練資料需人手分類 → 代表性不足（§8.2）。
+<strong>54. C</strong> —— agent 先觀察環境（§9.2）。
+<strong>55. B</strong> —— 最佳行動準則＝policy（§9.2）。
+<strong>56. D</strong> —— 目標是長期累積獎勵最大化（§9.2）。
+<strong>57. A</strong> —— AlphaGo 擊敗 Lee Sedol（李世乭）（§9.3）。
+<strong>58. C</strong> —— AlphaGo 由 DeepMind 開發（§9.3）。
+<strong>59. B</strong> —— 圖像、文字、音樂，甚至影片（§10）。
+<strong>60. D</strong> —— 機器學習，特別是深度學習（§10）。</p>
+<hr>
+<h2 id="附錄-h答錯題目-複習章節對照">附錄 H：答錯題目 → 複習章節對照</h2>
+<table>
+<thead>
+<tr>
+<th>答錯題號</th>
+<th>建議複習章節</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–5</td>
+<td>§1 AI 定義與取徑、§2 子目標</td>
+</tr>
+<tr>
+<td>6–8</td>
+<td>§3 AI 應用分類</td>
+</tr>
+<tr>
+<td>9–10</td>
+<td>§4 異常偵測</td>
+</tr>
+<tr>
+<td>11–15</td>
+<td>§5 影像／視訊辨識</td>
+</tr>
+<tr>
+<td>16–20</td>
+<td>§1.1 破冰、§2 子目標</td>
+</tr>
+<tr>
+<td>21–30</td>
+<td>§6 人臉辨識（三步、faceprint）</td>
+</tr>
+<tr>
+<td>31–35</td>
+<td>§3 應用、§5 影像形式、§2 子目標</td>
+</tr>
+<tr>
+<td>36–40</td>
+<td>§6.1–6.3 人臉辨識細節</td>
+</tr>
+<tr>
+<td>41–48</td>
+<td>§7 NLP 與 HMM</td>
+</tr>
+<tr>
+<td>49–53</td>
+<td>§8 語音辨識與偏頗議題</td>
+</tr>
+<tr>
+<td>54–58</td>
+<td>§9 強化學習</td>
+</tr>
+<tr>
+<td>59–60</td>
+<td>§10 生成式 AI</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。</em></p>
+</main>
+</body>
+</html>

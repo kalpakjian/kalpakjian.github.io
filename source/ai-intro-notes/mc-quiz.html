@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to AI MC 模擬測驗（60 題）| AI Tech Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#e2e5ea; --txt:#1f2328; --dim:#5b636e;
+  --blue:#2563eb; --green:#15803d; --green-bg:#e8f6ec; --red:#b91c1c;
+  --red-bg:#fdeaea; --sel:#dbeafe; --sel-line:#2563eb;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",
+    "Microsoft JhengHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+a{color:var(--blue)}
+.topbar{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  padding:12px 20px 10px;
+}
+.topbar .row1{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px}
+.topbar h1{font-size:17px; margin:0; font-weight:700}
+.topbar .back{font-size:13px; color:var(--dim); text-decoration:none}
+.topbar .back:hover{color:var(--blue)}
+.stats{display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; font-size:14px; color:var(--dim)}
+.stats b{font-size:18px; color:var(--txt)}
+.stats .ok b{color:var(--green)}
+.stats .no b{color:var(--red)}
+.saved{font-size:12px; color:var(--green); opacity:0; transition:opacity .3s}
+.saved.on{opacity:1}
+.progress{height:6px; background:var(--line); border-radius:99px; margin-top:10px; overflow:hidden}
+.progress i{display:block; height:100%; width:0; background:var(--blue); border-radius:99px; transition:width .25s}
+.controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+button{
+  font:inherit; font-size:13px; padding:6px 13px; border-radius:8px;
+  border:1px solid var(--line); background:#fff; color:var(--txt); cursor:pointer;
+  transition:.15s;
+}
+button:hover{border-color:#b9c0c9; background:#fbfbfc}
+button.primary{background:var(--blue); border-color:var(--blue); color:#fff}
+button.primary:hover{background:#1d4ed8}
+button.active{background:var(--sel); border-color:var(--sel-line); color:#1e40af; font-weight:600}
+button.danger{color:var(--red); border-color:#f0c4c4}
+button.danger:hover{background:var(--red-bg)}
+.navwrap{padding:16px 20px 0}
+.navgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px}
+.navgrid button{padding:6px 0; font-size:13px; border-radius:7px; text-align:center; font-variant-numeric:tabular-nums}
+.navgrid button.done{background:#eef2ff; border-color:#c7d2fe; color:#3730a3}
+.navgrid button.right{background:var(--green-bg); border-color:#a7d7b6; color:var(--green); font-weight:700}
+.navgrid button.wrong{background:var(--red-bg); border-color:#eeb4b4; color:var(--red); font-weight:700}
+main{max-width:900px; margin:0 auto; padding:20px 20px 80px}
+.parttitle{
+  margin:34px 0 14px; font-size:15px; font-weight:700; color:var(--dim);
+  border-left:4px solid var(--blue); padding-left:10px;
+}
+.q{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px 18px; margin-bottom:14px;
+}
+.q.correct{border-color:#a7d7b6; background:var(--green-bg)}
+.q.incorrect{border-color:#eeb4b4; background:var(--red-bg)}
+.qhead{display:flex; gap:10px; align-items:flex-start}
+.num{
+  flex:0 0 auto; min-width:30px; height:26px; line-height:26px; text-align:center;
+  background:#eef1f5; border-radius:7px; font-size:13px; font-weight:700;
+  color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.qtext{margin:0; font-weight:600; font-size:16px}
+.opts{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:7px}
+.opt{
+  display:flex; gap:10px; align-items:flex-start; padding:9px 12px;
+  border:1px solid var(--line); border-radius:9px; background:#fff;
+  cursor:pointer; transition:.12s; user-select:none;
+}
+.opt:hover{border-color:#b9c0c9; background:#fbfbfc}
+.opt .lt{
+  flex:0 0 auto; width:22px; height:22px; line-height:22px; text-align:center;
+  border-radius:6px; background:#eef1f5; font-size:12px; font-weight:700; color:var(--dim);
+}
+.opt.picked{border-color:var(--sel-line); background:var(--sel)}
+.opt.picked .lt{background:var(--sel-line); color:#fff}
+.opt.right{border-color:#7cc08f; background:var(--green-bg)}
+.opt.right .lt{background:var(--green); color:#fff}
+.opt.wrong{border-color:#e39191; background:var(--red-bg)}
+.opt.wrong .lt{background:var(--red); color:#fff}
+.tag{font-size:11px; padding:1px 7px; border-radius:99px; margin-left:auto;
+     flex:0 0 auto; font-weight:700; align-self:center}
+.tag.right{background:var(--green); color:#fff}
+.tag.wrong{background:var(--red); color:#fff}
+.expl{
+  margin-top:12px; padding:11px 14px; background:#f8fafc; border-radius:9px;
+  border-left:3px solid var(--blue); font-size:14.5px; color:#333a44;
+}
+.expl b{color:var(--txt)}
+.empty{text-align:center; color:var(--dim); padding:50px 20px; font-size:15px}
+footer{
+  max-width:900px; margin:0 auto; padding:0 20px 60px; color:var(--dim);
+  font-size:13px; text-align:center;
+}
+@media print{
+  .topbar,.navwrap,footer,.controls{display:none !important}
+  body{background:#fff; font-size:12pt}
+  main{max-width:none; padding:0}
+  .q{break-inside:avoid; page-break-inside:avoid; border-color:#999}
+}
+@media (max-width:560px){
+  .topbar{padding:10px 14px 8px}
+  .topbar h1{font-size:15px}
+  main{padding:14px 14px 60px}
+  .navwrap{padding:12px 14px 0}
+  .q{padding:13px 14px}
+  .qtext{font-size:15px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="row1">
+    <h1>Introduction to AI 學習筆記 · MC 模擬測驗</h1>
+    <a class="back" href="index.html">&larr; 回到 Introduction to AI 學習筆記</a>
+    <span class="saved" id="saved">進度已儲存 &#10003;</span>
+  </div>
+  <div class="stats">
+    <span>已答 <b id="nAns">0</b> / 60</span>
+    <span class="ok">得分 <b id="nScore">0</b> / 60</span>
+    <span class="no">答錯 <b id="nWrong">0</b></span>
+    <span id="hint">作答進度自動存在此瀏覽器，關掉再回來可繼續</span>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <button id="btnReveal" class="primary">顯示答案</button>
+    <button id="btnAll" class="active">全部 60 題</button>
+    <button id="btnUnans">只看未答</button>
+    <button id="btnWrong">只看答錯</button>
+    <button id="btnTop">回到頂部</button>
+    <button id="btnReset" class="danger">重設全部</button>
+  </div>
+</header>
+
+<div class="navwrap">
+  <div class="navgrid" id="navgrid"></div>
+</div>
+
+<main id="quiz"></main>
+
+<footer>
+  <p>IVDC「Introduction to AI」課程個人學習筆記 · 只考基本理論</p>
+  <p>單一 HTML 檔、無外部資源，可離線使用</p>
+</footer>
+<script>
+const QUESTIONS = [{"q":"人工智慧（AI）的本質是？","o":["人類智慧","機器智慧（machine intelligence）","群體智慧","生物智慧"],"a":1,"e":"AI 的通用理論：擁有類人智慧，但本質是**機器智慧**。"},{"q":"「Systems that think like humans」屬於哪個取徑？","o":["Ideal approach","Rational approach","Human approach","Machine approach"],"a":2,"e":"think/act like humans 屬 **Human approach**。"},{"q":"下列何者最能描述 Ideal approach？","o":["理性地思考與行動","像人一樣思考","模仿人類的偏誤","只做感知不做推理"],"a":0,"e":"Ideal approach = think/act **rationally**。"},{"q":"AI 的子目標共有幾個？","o":["3","4","6","5"],"a":3,"e":"五個：NLP、Navigate、Represent Knowledge、Reasoning、Perception。"},{"q":"下列何者不是 AI 的子目標？","o":["Navigate","Perception","Blockchain","Reasoning"],"a":2,"e":"Blockchain（區塊鏈）不是 AI 子目標。"},{"q":"「偵測假評論（fake review）」屬於哪一類 AI 應用？","o":["Education","E-Commerce 的詐騙防治","Daily life","Healthcare"],"a":1,"e":"假評論偵測屬 E-Commerce 的 Fraud Prevention。"},{"q":"「Grading paperwork」屬於哪一類 AI 應用？","o":["Education","E-Commerce","Daily life","Manufacturing"],"a":0,"e":"批改作業屬 Education。"},{"q":"下列何者屬於 Daily life 的 AI 應用？","o":["Managing enrollment","Personalized shopping","Fraud prevention","Spam email filters"],"a":3,"e":"垃圾郵件過濾屬 Daily life。"},{"q":"異常偵測（Anomaly Detection）主要在找？","o":["最多的類別","平均值","不符合預期模式的 outlier","最大群組"],"a":2,"e":"異常偵測是找出 outlier（異常樣本）。"},{"q":"評估異常偵測模型時，為何不宜只看 accuracy？","o":["因為公式太複雜","因為異常樣本極少，全猜正常也會很高分","因為需要 GPU","因為 accuracy 沒有定義"],"a":1,"e":"異常極少 → 全猜正常 accuracy 也高，應看 **Precision/Recall/F1**。"},{"q":"原稿指出電腦視覺辨識的準確度？","o":["一定低於人類","只能達到人類一半","無法比較","可達或超越人類水準"],"a":3,"e":"電腦視覺準確度可**達或超越人類**，且速度效率更高。"},{"q":"原稿列出的影像資料形式共有幾種？","o":["4","3","5","2"],"a":0,"e":"四種：單張影像／視訊序列／多鏡頭視角／三維資料。"},{"q":"「Views from multiple cameras」是指？","o":["單張影像","視訊序列","多個 2D 視角","三維點雲"],"a":2,"e":"多鏡頭視角＝多個 2D 視角（非 3D 點雲）。"},{"q":"下列何者最適合代表「Three-dimensional data」？","o":["一張 JPEG","LiDAR／深度相機的點雲","一段 MP4","兩台相機的 2D 影像"],"a":1,"e":"3D 資料如 **LiDAR／深度相機點雲**。"},{"q":"電腦視覺任務的輸入／輸出介面是？","o":["輸入影像 → 輸出描述影像的屬性","輸入文字 → 輸出影像","輸入聲音 → 輸出文字","輸入屬性 → 輸出影像"],"a":0,"e":"AI 被訓練成**輸入影像 → 輸出屬性**。"},{"q":"「Can Machines Think more than us?」在原稿中屬於？","o":["期末考題","生成式 AI 定義","人臉辨識步驟","開場破冰引導"],"a":3,"e":"屬開場破冰（icebreaking）引導。"},{"q":"「AI-powered Assistants」屬於哪一類應用？","o":["Education","E-Commerce","Daily life","Agriculture"],"a":1,"e":"AI 助理屬 E-Commerce。"},{"q":"「Navigation by GPS」屬於哪一類應用？","o":["E-Commerce","Education","Daily life","Finance"],"a":2,"e":"GPS 導航屬 Daily life。"},{"q":"AI 子目標「Represent Knowledge」的意思是？","o":["把知識用機器可處理的方式表示","從感測資料理解世界","規劃路徑","生成新內容"],"a":0,"e":"Represent Knowledge＝把知識用機器可處理的方式表示。"},{"q":"AI 子目標「Reasoning」的意思是？","o":["感測環境","產生語音","儲存影像","由已知推導出新結論"],"a":3,"e":"Reasoning＝由已知推導新結論。"},{"q":"人臉辨識的三個步驟，正確順序是？","o":["Analysis → Detection → Recognition","Detection → Recognition → Analysis","Detection → Analysis → Recognition","Recognition → Analysis → Detection"],"a":2,"e":"三步：**Detection → Analysis → Recognition**。"},{"q":"「Detection」在人臉辨識中的意思是？","o":["在影像中找出人臉","比對兩個人的身份","生成人臉影像","儲存人臉資料庫"],"a":0,"e":"Detection＝在影像中找出人臉。"},{"q":"原稿指出 Detection 可偵測的臉部資料包含？","o":["只有正面","只有側面","只有戴眼鏡的臉","正面與側面"],"a":3,"e":"可偵測**正面與側面（front / side profile）**。"},{"q":"「Analysis」這一步會做什麼？","o":["下載人臉圖片","讀取臉部幾何與表情","刪除人臉資料","加密人臉檔案"],"a":1,"e":"Analysis 讀取臉部**幾何與表情**，取 facial landmarks。"},{"q":"下列何者不是原稿列出的 Analysis 量測項目？","o":["兩眼之間的距離","顴骨形狀","髮色與身高的比例","眼窩深度"],"a":2,"e":"髮色與身高比例不在量測項目中。"},{"q":"「眼窩深度」的英文是？","o":["Depth of the eye sockets","Distance between the eyes","Shape of the cheekbones","Contour of the lips"],"a":0,"e":"眼窩深度 = **depth of the eye sockets**。"},{"q":"「faceprint」是什麼？","o":["一張列印出來的人臉照片","人臉的密碼","人臉的英文名稱","臉部資料轉成的數字或點串"],"a":3,"e":"faceprint＝臉部資料轉成的數字／點串。"},{"q":"原稿把 faceprint 比喻為？","o":["身分證號","指紋（fingerprint）","車牌","條碼"],"a":1,"e":"faceprint 每人獨一無二，如**指紋**。"},{"q":"faceprint 資料「反向使用」可以做到？","o":["數位重建一個人的臉","預測天氣","翻譯語言","壓縮影片"],"a":0,"e":"可反向**數位重建（digitally reconstruct）**人臉。"},{"q":"「Recognition」這一步的核心是？","o":["偵測影像中是否有臉","分析臉部表情","比對兩張（或以上）影像中的臉，評估吻合可能性","把人臉轉成 3D 模型"],"a":2,"e":"Recognition＝比對臉並**評估吻合可能性**。"},{"q":"下列何者是人臉辨識的日常應用例子？","o":["垃圾郵件過濾","GPS 導航","招生管理","iPhone Face Unlock"],"a":3,"e":"iPhone Face Unlock 是人臉辨識應用。"},{"q":"「Video sequences」指的是哪一種影像資料形式？","o":["單張影像","連續影格（視訊序列）","多鏡頭視角","三維資料"],"a":1,"e":"Video sequences＝連續影格。"},{"q":"原稿指出電腦視覺能自動化處理影像資料的哪些面向？","o":["擷取、分析、分類與理解","上傳、下載、備份、刪除","加密、解密、簽章、壓縮","列印、掃描、影印、傳真"],"a":0,"e":"電腦視覺自動化**擷取、分析、分類與理解**。"},{"q":"下列何者屬於「Three-dimensional data」？","o":["一張 PNG","一段 GIF","深度相機的點雲","一張身分證照片"],"a":2,"e":"深度相機點雲屬 3D 資料。"},{"q":"人臉辨識最直接對應到 AI 的哪個子目標？","o":["Navigate","Reasoning","Represent Knowledge","Perception"],"a":3,"e":"人臉辨識屬 **Perception（感知）**。"},{"q":"Detection 主要依靠什麼技術在影像中找出人臉？","o":["資料庫查詢","電腦視覺（computer vision）","語音辨識","隨機抽樣"],"a":1,"e":"Detection 由 **computer vision** 支援。"},{"q":"Analysis 找出能把臉與其他物件區分開的什麼？","o":["臉部特徵點（facial landmarks）","指紋","車牌號碼","姓名"],"a":0,"e":"Analysis 找 **facial landmarks**。"},{"q":"「額頭到下巴的距離」英文是？","o":["Distance between the eyes","Depth of the eye sockets","Distance from the forehead to the chin","Shape of the cheekbones"],"a":2,"e":"額到下巴 = **distance from the forehead to the chin**。"},{"q":"用自拍比對政府證件照是否為同一人，屬於人臉辨識的哪一步？","o":["Detection","Analysis","Compression","Recognition"],"a":3,"e":"比對自拍與證件照屬 **Recognition**。"},{"q":"人臉辨識中用來「評估吻合可能性」的步驟是？","o":["Detection","Recognition","Analysis","Pre-processing"],"a":1,"e":"評估吻合可能性＝**Recognition**。"},{"q":"原稿用哪三件事概括 NLP？","o":["講語言、懂語言、理解句子","讀、寫、算","拍照、剪片、上傳","加密、解密、壓縮"],"a":0,"e":"NLP 三件事：speak / understand / make sense。"},{"q":"NLP 中「make sense out of a sentence」指的是？","o":["把句子唸出來","把句子翻譯成外語","從句子理解出意義（語意理解）","把句子刪掉"],"a":2,"e":"make sense out of a sentence＝**語意理解**。"},{"q":"原稿指出大多數現代語音辨識系統依賴？","o":["Decision Tree","Hidden Markov Model (HMM)","K-means","Random Forest"],"a":1,"e":"現代語音辨識依賴 **HMM**。"},{"q":"HMM 的關鍵假設是：語音訊號在足夠短的時間尺度下可近似為？","o":["週期訊號","隨機雜訊","線性函數","平穩過程（stationary process）"],"a":3,"e":"近似為**平穩過程**（統計性質不隨時間改變）。"},{"q":"HMM 通常把語音訊號切成多長的片段？","o":["10 毫秒","1 毫秒","100 毫秒","1 秒"],"a":0,"e":"切成 **10 毫秒**片段。"},{"q":"每個語音片段的功率頻譜會被映射成什麼？","o":["一張圖片","一段文字","cepstral coefficients（實數向量）","一組標籤"],"a":2,"e":"映射成 **cepstral coefficients**。"},{"q":"原稿提到 cepstral coefficients 向量的維度通常？","o":["固定 512 維","約 10 至 32 維","只有 1 維","至少 1024 維"],"a":1,"e":"維度約 **10 至 32**。"},{"q":"HMM 的最終輸出是？","o":["單一數字","一張頻譜圖","一段文字","一串向量的序列"],"a":3,"e":"輸出為**向量序列**。"},{"q":"原稿以 King / Queen / Man / Woman 示範的概念是？","o":["詞向量（word embedding）","影像分割","物件偵測","語音合成"],"a":0,"e":"示範 **word embedding**（詞向量）。"},{"q":"Speechmatics 對非裔美國人語音的整體準確率約為？","o":["45%","68.6%","82.8%","99%"],"a":2,"e":"Speechmatics 準確率 **82.8%**。"},{"q":"Google 與 Amazon 對非裔美國人語音的準確率約為？","o":["82.8%","68.6%","45%","95%"],"a":1,"e":"Google/Amazon 為 **68.6%**。"},{"q":"Speechmatics 的準確率提升相當於減少多少語音辨識錯誤？","o":["10%","25%","68%","45%"],"a":3,"e":"錯誤減少 **45%**（約 3 個字）。"},{"q":"原稿指出語音辨識的一大挑戰是？","o":["大部分訓練資料需要人手分類，導致代表性不足","麥克風太貴","語音檔太大","沒有數學模型可用"],"a":0,"e":"訓練資料需人手分類 → **代表性不足**。"},{"q":"強化學習中，agent 的第一步是？","o":["得到獎勵","更新策略","觀察環境","結束任務"],"a":2,"e":"agent 先**觀察環境**。"},{"q":"強化學習中 agent 學到的「最佳行動準則」稱為？","o":["Reward","Policy","Environment","Dataset"],"a":1,"e":"最佳行動準則＝**policy**。"},{"q":"強化學習的目標是？","o":["單步獎勵最大化","讓動作越多越好","最小化觀察次數","長期累積獎勵最大化"],"a":3,"e":"目標是**長期累積獎勵最大化**。"},{"q":"DeepMind 的 AlphaGo 擊敗了哪位世界冠軍？","o":["Lee Sedol（李世乭）","Garry Kasparov","Magnus Carlsen","Ke Jie"],"a":0,"e":"AlphaGo 擊敗 **Lee Sedol**。"},{"q":"AlphaGo 是哪間公司（團隊）開發的？","o":["OpenAI","IBM","DeepMind","Microsoft"],"a":2,"e":"AlphaGo 由 **DeepMind** 開發。"},{"q":"原稿指出生成式 AI 可以生成下列哪些內容？","o":["只能生成圖像","圖像、文字、音樂，甚至影片","只能生成文字","只能生成音樂"],"a":1,"e":"可生成**圖像、文字、音樂，甚至影片**。"},{"q":"生成式 AI 生成新內容主要使用的技術是？","o":["人工規則手寫","資料庫查詢","隨機亂數","機器學習，特別是深度學習"],"a":3,"e":"主要用**機器學習，特別是深度學習**。"}];
+
+const LET = 'ABCD';
+const KEY = 'ai-intro-mc-quiz-v1';
+const state = { answers:{}, revealed:false, filter:'all' };
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p && typeof p === 'object'){
+      state.answers = (p.answers && typeof p.answers === 'object') ? p.answers : {};
+      state.revealed = !!p.revealed;
+      state.filter = p.filter || 'all';
+    }
+  }catch(e){}
+}
+let savedTimer = null;
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const el = document.getElementById('saved');
+    if(el){ el.classList.add('on'); clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ el.classList.remove('on'); }, 1200); }
+  }catch(e){}
+}
+
+function tally(){
+  let answered = 0, score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    if(a !== undefined && a !== null){
+      answered++;
+      if(a === QUESTIONS[i].a) score++;
+    }
+  }
+  return { answered:answered, score:score, wrong:answered-score };
+}
+
+function isVisible(i){
+  const a = state.answers[i];
+  const has = (a !== undefined && a !== null);
+  if(state.filter === 'unanswered') return !has;
+  if(state.filter === 'wrong') return has && a !== QUESTIONS[i].a;
+  return true;
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdInline(s){
+  s = esc(s);
+  let out = '';
+  let bold = false;
+  let i = 0;
+  while(i < s.length){
+    if(s.charAt(i) === '*' && s.charAt(i + 1) === '*'){
+      bold = !bold;
+      out += bold ? '<b>' : '</b>';
+      i += 2;
+    } else {
+      out += s.charAt(i);
+      i++;
+    }
+  }
+  return out;
+}
+
+function renderStats(){
+  const t = tally();
+  document.getElementById('nAns').textContent = t.answered;
+  document.getElementById('nScore').textContent = t.score;
+  document.getElementById('nWrong').textContent = t.wrong;
+  document.getElementById('bar').style.width = (t.answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('btnReveal').textContent = state.revealed ? '隱藏答案' : '顯示答案';
+  document.getElementById('hint').textContent = state.revealed
+    ? '已顯示正解與解析'
+    : '作答進度自動存在此瀏覽器，關掉再回來可繼續';
+}
+
+function renderNav(){
+  const nav = document.getElementById('navgrid');
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    const has = (a !== undefined && a !== null);
+    let cls = '';
+    if(has) cls = 'done';
+    if(state.revealed && has) cls = (a === QUESTIONS[i].a) ? 'right' : 'wrong';
+    html += '<button class="' + cls + '" data-goto="' + i + '">' + (i+1) + '</button>';
+  }
+  nav.innerHTML = html;
+}
+
+function renderQuestions(){
+  const box = document.getElementById('quiz');
+  let html = '';
+  let shown = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(!isVisible(i)) continue;
+    shown++;
+    const q = QUESTIONS[i];
+    if(i === 0 || i === 20 || i === 40){
+      const label = i === 0 ? '第一部分：基礎與 AI 概念（1–20）'
+                  : i === 20 ? '第二部分：影像與人臉辨識（21–40）'
+                  : '第三部分：NLP、語音、強化學習、生成式（41–60）';
+      html += '<div class="parttitle">' + label + '</div>';
+    }
+    const picked = state.answers[i];
+    const hasPicked = (picked !== undefined && picked !== null);
+    let qcls = '';
+    if(state.revealed && hasPicked) qcls = (picked === q.a) ? 'correct' : 'incorrect';
+
+    html += '<article class="q ' + qcls + '" id="q' + (i+1) + '">';
+    html += '<div class="qhead"><span class="num">' + (i+1) + '</span>';
+    html += '<p class="qtext">' + mdInline(q.q) + '</p></div>';
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      let cls = 'opt';
+      if(hasPicked && picked === k) cls += ' picked';
+      let tag = '';
+      if(state.revealed){
+        if(k === q.a){ cls += ' right'; tag = '<span class="tag right">正解</span>'; }
+        else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
+      }
+      html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
+      html += '<span class="lt">' + LET[k] + '</span><span>' + esc(q.o[k]) + '</span>' + tag + '</li>';
+    }
+    html += '</ul>';
+    if(state.revealed){
+      html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
+    }
+    html += '</article>';
+  }
+  if(shown === 0){
+    html = '<div class="empty">目前篩選條件下沒有題目 &#128522;<br>換個篩選，或按「全部 60 題」。</div>';
+  }
+  box.innerHTML = html;
+}
+
+function renderAll(){ renderStats(); renderNav(); renderQuestions(); }
+
+document.addEventListener('click', function(ev){
+  const opt = ev.target.closest ? ev.target.closest('.opt') : null;
+  if(opt){
+    state.answers[parseInt(opt.getAttribute('data-q'), 10)] = parseInt(opt.getAttribute('data-k'), 10);
+    saveState();
+    renderAll();
+    return;
+  }
+  const go = ev.target.closest ? ev.target.closest('[data-goto]') : null;
+  if(go){
+    const idx = parseInt(go.getAttribute('data-goto'), 10);
+    if(state.filter !== 'all'){ state.filter = 'all'; syncFilterButtons(); renderAll(); }
+    const el = document.getElementById('q' + (idx + 1));
+    if(el){
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      el.style.transition = 'box-shadow .3s';
+      el.style.boxShadow = '0 0 0 3px rgba(37,99,235,.35)';
+      setTimeout(function(){ el.style.boxShadow = ''; }, 900);
+    }
+    saveState();
+  }
+});
+
+function syncFilterButtons(){
+  const map = { all:'btnAll', unanswered:'btnUnans', wrong:'btnWrong' };
+  for(const k in map){
+    const b = document.getElementById(map[k]);
+    if(b) b.classList.toggle('active', state.filter === k);
+  }
+}
+
+function setFilter(f){
+  state.filter = f;
+  syncFilterButtons();
+  saveState();
+  renderAll();
+}
+
+function bind(){
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.revealed = !state.revealed; saveState(); renderAll();
+  });
+  document.getElementById('btnAll').addEventListener('click', function(){ setFilter('all'); });
+  document.getElementById('btnUnans').addEventListener('click', function(){ setFilter('unanswered'); });
+  document.getElementById('btnWrong').addEventListener('click', function(){ setFilter('wrong'); });
+  document.getElementById('btnTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('確定要清除全部作答紀錄嗎？此動作無法復原。')) return;
+    state.answers = {}; state.revealed = false; state.filter = 'all';
+    saveState(); syncFilterButtons(); renderAll();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && state.revealed){ state.revealed = false; saveState(); renderAll(); }
+  });
+}
+
+loadState();
+syncFilterButtons();
+renderAll();
+bind();
+</script>
+</body>
+</html>
