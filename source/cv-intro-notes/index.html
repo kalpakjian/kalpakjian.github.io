@@ -1,0 +1,2310 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to Computer Vision and Application 學習筆記（考試溫習版）</title>
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+</style>
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/">← 回到 AI Tech Notes</a>
+  <h1>Introduction to CV 學習筆記</h1>
+  <div class="sub">IVDC · Certificate in Application of<br>Computer Vision Technology</div>
+  <div class="toc">
+<ul>
+<li><a href="#目錄">目錄</a>
+</li>
+<li><a href="#0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</a>
+</li>
+<li><a href="#1-商業領域的真實案例real-case-examples">1. 商業領域的真實案例（Real Case Examples）</a>
+<ul>
+<li><a href="#11-電腦視覺在商業上的六大類應用">1.1 電腦視覺在商業上的六大類應用</a>
+</li>
+<li><a href="#12-為什麼商業上要用電腦視覺">1.2 為什麼商業上要用電腦視覺</a>
+</li>
+</ul>
+</li>
+<li><a href="#2-中國大陸與香港的最新-ai-技術">2. 中國大陸與香港的最新 AI 技術</a>
+<ul>
+<li><a href="#21-世界機器人大會world-robot-conference-wrc">2.1 世界機器人大會（World Robot Conference, WRC）</a>
+</li>
+<li><a href="#22-圍棋為什麼是-ai-的經典試金石">2.2 圍棋為什麼是 AI 的經典試金石</a>
+</li>
+</ul>
+</li>
+<li><a href="#3-卷積神經網路-cnn-是什麼">3. 卷積神經網路 CNN 是什麼</a>
+<ul>
+<li><a href="#31-定義拆解">3.1 定義拆解</a>
+</li>
+<li><a href="#32-什麼是階層式特徵">3.2 什麼是「階層式」特徵</a>
+</li>
+</ul>
+</li>
+<li><a href="#4-cnn-為何是頂尖方法state-of-the-art">4. CNN 為何是頂尖方法（State-of-the-art）</a>
+<ul>
+<li><a href="#41-三個重點拆解">4.1 三個重點拆解</a>
+</li>
+<li><a href="#42-為什麼要逐漸變窄narrowing">4.2 為什麼要「逐漸變窄（narrowing）」</a>
+</li>
+</ul>
+</li>
+<li><a href="#5-關鍵概念參數重用re-use-parameters">5. 關鍵概念：參數重用（re-use parameters）</a>
+<ul>
+<li><a href="#51-什麼是參數重用共享">5.1 什麼是「參數重用／共享」</a>
+</li>
+<li><a href="#52-範例55-影像--33-卷積核">5.2 範例：5×5 影像 + 3×3 卷積核</a>
+</li>
+</ul>
+</li>
+<li><a href="#6-cnn-基本概念與影像辨識">6. CNN 基本概念與影像辨識</a>
+<ul>
+<li><a href="#61-cnn-的基本組成">6.1 CNN 的基本組成</a>
+</li>
+<li><a href="#62-一張圖走完-cnn影像辨識流程">6.2 一張圖走完 CNN（影像辨識流程）</a>
+</li>
+<li><a href="#63-為什麼-cnn-特別適合影像">6.3 為什麼 CNN 特別適合影像</a>
+</li>
+</ul>
+</li>
+<li><a href="#附錄-a名詞速查表">附錄 A：名詞速查表</a>
+<ul>
+<li><a href="#a1-電腦視覺與應用">A.1 電腦視覺與應用</a>
+</li>
+<li><a href="#a2-cnn-核心">A.2 CNN 核心</a>
+</li>
+<li><a href="#a3-卷積輸出尺寸公式">A.3 卷積輸出尺寸公式</a>
+</li>
+</ul>
+</li>
+<li><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a>
+<ul>
+<li><a href="#b1-十大陷阱總表">B.1 十大陷阱總表</a>
+</li>
+<li><a href="#b2-易混名詞對照">B.2 易混名詞對照</a>
+</li>
+</ul>
+</li>
+<li><a href="#附錄-c模擬試題連答案">附錄 C：模擬試題（連答案）</a>
+<ul>
+<li><a href="#c1-選擇題20-題">C.1 選擇題（20 題）</a>
+</li>
+<li><a href="#c2-填充題10-題">C.2 填充題（10 題）</a>
+</li>
+<li><a href="#c3-簡答題6-題">C.3 簡答題（6 題）</a>
+</li>
+</ul>
+</li>
+<li><a href="#附錄-d教材頁面索引對照">附錄 D：教材頁面索引對照</a>
+</li>
+<li><a href="#附錄-e延伸資源與離線提示">附錄 E：延伸資源與離線提示</a>
+<ul>
+<li><a href="#e1-沒有網路時怎麼複習">E.1 沒有網路時怎麼複習</a>
+</li>
+<li><a href="#e2-觀念延伸考綱外但常被問">E.2 觀念延伸（考綱外但常被問）</a>
+</li>
+</ul>
+</li>
+<li><a href="#附錄-f一頁精華考前-10-分鐘">附錄 F：一頁精華（考前 10 分鐘）</a>
+</li>
+<li><a href="#附錄-gmc-模擬試卷60-題">附錄 G：MC 模擬試卷（60 題）</a>
+<ul>
+<li><a href="#g1-作答說明與應試技巧">G.1 作答說明與應試技巧</a>
+</li>
+<li><a href="#g2-第一部分電腦視覺與商業應用第-120-題">G.2 第一部分：電腦視覺與商業應用（第 1–20 題）</a>
+</li>
+<li><a href="#g3-第二部分cnn-定義與架構第-2140-題">G.3 第二部分：CNN 定義與架構（第 21–40 題）</a>
+</li>
+<li><a href="#g4-第三部分卷積參數重用與綜合第-4160-題">G.4 第三部分：卷積、參數重用與綜合（第 41–60 題）</a>
+</li>
+<li><a href="#g5-答案速查表">G.5 答案速查表</a>
+</li>
+<li><a href="#g6-逐題詳解">G.6 逐題詳解</a>
+</li>
+</ul>
+</li>
+<li><a href="#附錄-h答錯題目--複習章節對照">附錄 H：答錯題目 → 複習章節對照</a>
+</li>
+</ul>
+</div>
+
+</nav>
+<main>
+<h1 id="introduction-to-computer-vision-and-application-學習筆記考試溫習版">Introduction to Computer Vision and Application 學習筆記（考試溫習版）</h1>
+<blockquote>
+<p>課程：Certificate in Application of Computer Vision Technology (Part-time)
+機構：匯縱專業發展中心（IVDC）
+教材來源：<code>2 IVDC_Introduction to Computer Vision and Application.pptx</code> → PDF（12 頁）
+本筆記按 PDF 原稿每一個標題逐一填充內容，並補上定義、關鍵數字、常見錯誤、模擬試題。
+原稿多為投影片圖示，文字較少；本筆記補上「圖示背後的概念」與「考點」，方便理解與應試。
+<strong>附錄 G 另備一份 60 題的 MC 模擬試卷（含答案速查表與逐題詳解）</strong>，適合考前完整計時練習。</p>
+</blockquote>
+<hr>
+<h2 id="目錄">目錄</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>章節</th>
+<th>PDF 頁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="#1-商業領域的真實案例real-case-examples">商業領域的真實案例（Real Case Examples）</a></td>
+<td>2–6</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#2-中國大陸與香港的最新-ai-技術">中國大陸與香港的最新 AI 技術</a></td>
+<td>7</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#3-卷積神經網路-cnn-是什麼">卷積神經網路 CNN 是什麼</a></td>
+<td>8</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#4-cnn-為何是頂尖方法state-of-the-art">CNN 為何是頂尖方法（State-of-the-art）</a></td>
+<td>9</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="#5-關鍵概念參數重用re-use-parameters">關鍵概念：參數重用（re-use parameters）</a></td>
+<td>10</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="#6-cnn-基本概念與影像辨識">CNN 基本概念與影像辨識</a></td>
+<td>11–12</td>
+</tr>
+<tr>
+<td>A</td>
+<td><a href="#附錄-a名詞速查表">附錄 A：名詞速查表</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>B</td>
+<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>C</td>
+<td><a href="#附錄-c模擬試題連答案">附錄 C：模擬試題（連答案）</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>D</td>
+<td><a href="#附錄-d教材頁面索引對照">附錄 D：教材頁面索引對照</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>E</td>
+<td><a href="#附錄-e延伸資源與離線提示">附錄 E：延伸資源與離線提示</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>F</td>
+<td><a href="#附錄-f一頁精華考前-10-分鐘">附錄 F：一頁精華（考前 10 分鐘）</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>G</td>
+<td><a href="#附錄-gmc-模擬試卷60-題">附錄 G：MC 模擬試卷（60 題）</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td>H</td>
+<td><a href="#附錄-h答錯題目--複習章節對照">附錄 H：答錯題目 → 複習章節對照</a></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</h2>
+<div class="codehilite"><pre><span></span><code>電腦視覺（Computer Vision）
+  ├─ 商業應用：零售、安防、工業檢測、醫療、自駕、農業…
+  ├─ 2024 世界機器人大會：超現實圍棋博弈（人機對弈展示）
+  └─ 核心技術：CNN（卷積神經網路）
+        ├─ 定義：處理「網格狀資料」（影像、音訊）的神經網路
+        ├─ 關鍵：卷積層自動學習「階層式特徵」（由低階到高階）
+        ├─ 架構：encoder（多個逐漸變窄的 block 堆疊 →「deep」）
+        └─ 核心思想：參數重用（parameter sharing）
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>你會用到的關鍵詞</th>
+<th>一句話記法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Computer Vision</td>
+<td>讓機器「看懂」影像與影片</td>
+</tr>
+<tr>
+<td>Commercial sectors</td>
+<td>零售、安防、工業、醫療、自駕等真實案例</td>
+</tr>
+<tr>
+<td>World Robot Conference</td>
+<td>2024 世界機器人大會（超現實圍棋博弈）</td>
+</tr>
+<tr>
+<td>CNN</td>
+<td>卷積神經網路，專為<strong>網格狀資料</strong>設計</td>
+</tr>
+<tr>
+<td>Grid-like structure</td>
+<td>影像（像素網格）、音訊（時頻網格）</td>
+</tr>
+<tr>
+<td>Convolutional layer</td>
+<td>自動學習階層式表徵、抽取特徵</td>
+</tr>
+<tr>
+<td>Hierarchical representations</td>
+<td>低階邊緣 → 中階紋理 → 高階物件</td>
+</tr>
+<tr>
+<td>Encoder</td>
+<td>由多個 block 堆疊，負責學統計模式</td>
+</tr>
+<tr>
+<td>Deep</td>
+<td>許多「逐漸變窄」的 block 堆疊而成</td>
+</tr>
+<tr>
+<td>Parameter sharing</td>
+<td>同一組卷積核在整張影像上重複使用（參數重用）</td>
+</tr>
+<tr>
+<td>3×3 convolution on 5×5 image</td>
+<td>經典示範：小核掃過大圖，共享權重</td>
+</tr>
+<tr>
+<td>State-of-the-art</td>
+<td>目前最佳方法；影像／影片辨識的骨幹</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="1-商業領域的真實案例real-case-examples">1. 商業領域的真實案例（Real Case Examples）</h2>
+<p>原稿 p2–6 標題為「<strong>Real Case Examples in Commercial Sectors</strong>」，逐頁以<strong>圖片</strong>展示電腦視覺在
+商業領域的實際應用（原稿文字極少，以下補上每類應用的技術與案例）。</p>
+<h3 id="11-電腦視覺在商業上的六大類應用">1.1 電腦視覺在商業上的六大類應用</h3>
+<table>
+<thead>
+<tr>
+<th>領域</th>
+<th>典型應用</th>
+<th>背後的 CV 技術</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>零售 Retail</td>
+<td>人流統計、貨架缺貨偵測、無人商店、顧客行為分析</td>
+<td>物件偵測、人體追蹤、影像分類</td>
+</tr>
+<tr>
+<td>安防／監控 Security</td>
+<td>人臉辨識門禁、異常行為偵測、車牌辨識（ANPR）</td>
+<td>人臉辨識、動作辨識、OCR</td>
+</tr>
+<tr>
+<td>工業／製造 Industry</td>
+<td>瑕疵檢測（defect detection）、尺寸量測、自動分揀</td>
+<td>影像分割、模板匹配、異常偵測</td>
+</tr>
+<tr>
+<td>醫療 Medical</td>
+<td>醫學影像判讀（X 光／CT／MRI）、病灶標註</td>
+<td>影像分類、語意分割</td>
+</tr>
+<tr>
+<td>交通／自駕 Autonomous</td>
+<td>車道線偵測、行人偵測、交通號誌辨識</td>
+<td>物件偵測、語意分割、光流</td>
+</tr>
+<tr>
+<td>農業 Agriculture</td>
+<td>病蟲害辨識、果實成熟度分級、無人機巡田</td>
+<td>影像分類、物件偵測</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-為什麼商業上要用電腦視覺">1.2 為什麼商業上要用電腦視覺</h3>
+<ul>
+<li><strong>速度與一致性</strong>：機器可 24 小時不間斷，且判斷標準一致（不會疲勞、不會情緒波動）。</li>
+<li><strong>準確度</strong>：在特定任務上可達或超越人類水準（例如瑕疵檢測）。</li>
+<li><strong>成本</strong>：長期可取代大量重複性的目視檢查人力。</li>
+<li><strong>可量化</strong>：所有判斷都有數據紀錄，便於追溯與改善。</li>
+</ul>
+<blockquote>
+<p><strong>考點</strong>：能判斷「某案例屬於哪一類商業應用」。例如：
+<strong>無人商店</strong> → 零售；<strong>車牌辨識</strong> → 安防；<strong>瑕疵檢測</strong> → 工業；<strong>X 光判讀</strong> → 醫療；
+<strong>車道線偵測</strong> → 自駕；<strong>果實分級</strong> → 農業。</p>
+</blockquote>
+<hr>
+<h2 id="2-中國大陸與香港的最新-ai-技術">2. 中國大陸與香港的最新 AI 技術</h2>
+<p>原稿 p7 標題為「<strong>Latest AI technologies in Mainland China and Hong Kong</strong>」，
+並以「<strong>Furthermore</strong>」帶出一個具體例子：</p>
+<blockquote>
+<p><strong>世界机器人大会：超现实围棋博弈 2024 World Robot Conference: Hyper-realistic Go Match</strong></p>
+</blockquote>
+<h3 id="21-世界機器人大會world-robot-conference-wrc">2.1 世界機器人大會（World Robot Conference, WRC）</h3>
+<ul>
+<li>在<strong>中國北京</strong>舉行的年度機器人與 AI 盛會，展示最新機器人與人工智慧技術。</li>
+<li>2024 年的展示包含「<strong>超現實圍棋博弈</strong>」（Hyper-realistic Go Match）——
+  由<strong>人形機器人</strong>與人（或機器人之間）對弈圍棋，展示感知、決策與精細動作控制能力。</li>
+</ul>
+<h3 id="22-圍棋為什麼是-ai-的經典試金石">2.2 圍棋為什麼是 AI 的經典試金石</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>複雜度</td>
+<td>圍棋的合法局面數遠超西洋棋，<strong>無法用暴力搜尋</strong>窮舉</td>
+</tr>
+<tr>
+<td>2016 里程碑</td>
+<td>DeepMind 的 <strong>AlphaGo</strong> 擊敗世界冠軍 <strong>Lee Sedol（李世乭）</strong></td>
+</tr>
+<tr>
+<td>2017</td>
+<td><strong>AlphaGo Zero</strong> 只靠自我對弈（self-play）就能超越人類</td>
+</tr>
+<tr>
+<td>2018+</td>
+<td>機械手臂 + 視覺系統讓「實體」機器人也能下棋（感知 + 控制）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>考點</strong>：記住「<strong>2024 World Robot Conference</strong>」與「<strong>Hyper-realistic Go Match</strong>」的對應；
+以及中國大陸／香港是 AI 與機器人技術的重要發展與展示地區。</p>
+</blockquote>
+<hr>
+<h2 id="3-卷積神經網路-cnn-是什麼">3. 卷積神經網路 CNN 是什麼</h2>
+<p>原稿 p8 給出定義（<strong>AI Basic Principles – Convolutional Neural Network</strong>）：</p>
+<blockquote>
+<p><strong>Convolutional Neural Network (CNN)</strong> 是一種<strong>專門為處理與分析「網格狀結構」（grid-like structure）
+資料</strong>（例如<strong>影像</strong>或<strong>音訊</strong>）而設計的神經網路。
+它使用<strong>卷積層（convolutional layers）</strong>來自動學習<strong>階層式表徵（hierarchical representations）</strong>
+並從輸入資料中<strong>抽取特徵（extract features）</strong>。</p>
+</blockquote>
+<h3 id="31-定義拆解">3.1 定義拆解</h3>
+<table>
+<thead>
+<tr>
+<th>關鍵詞</th>
+<th>英文</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>網格狀結構</td>
+<td>grid-like structure</td>
+<td>影像＝像素的 2D 網格；音訊＝時頻的 2D 網格</td>
+</tr>
+<tr>
+<td>卷積層</td>
+<td>convolutional layer</td>
+<td>CNN 的核心運算層，負責掃描與抽特徵</td>
+</tr>
+<tr>
+<td>階層式表徵</td>
+<td>hierarchical representations</td>
+<td>由低階到高階的特徵層次</td>
+</tr>
+<tr>
+<td>抽取特徵</td>
+<td>extract features</td>
+<td>不需人工設計特徵，模型自己學</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-什麼是階層式特徵">3.2 什麼是「階層式」特徵</h3>
+<div class="codehilite"><pre><span></span><code>輸入影像
+  └─ 低階特徵：邊緣、線條、角點
+        └─ 中階特徵：紋理、圓形、局部形狀
+              └─ 高階特徵：眼睛、車輪、人臉等「物件部件」
+                    └─ 整體：可辨識的物件類別
+</code></pre></div>
+
+<blockquote>
+<p><strong>考點</strong>：CNN 定義的兩個關鍵字是「<strong>grid-like structure</strong>」與「<strong>hierarchical representations</strong>」；
+常見陷阱：把 CNN 說成「只能處理影像」——原稿明講也包含<strong>音訊</strong>等網格狀資料。</p>
+</blockquote>
+<hr>
+<h2 id="4-cnn-為何是頂尖方法state-of-the-art">4. CNN 為何是頂尖方法（State-of-the-art）</h2>
+<p>原稿 p9 標題為「<strong>CNN</strong>」，內容是「<strong>AI Basic Principles – Convolutional Neural Network</strong>」的延伸：</p>
+<blockquote>
+<ul>
+<li><strong>State-of-the-art methods</strong> —— 使用<strong>神經網路</strong>來辨識影像與影片。</li>
+<li>適合影像辨識的<strong>深度學習架構</strong>，都是基於 <strong>CNN 的各種變體（variations）</strong>。</li>
+<li>一切從 <strong>encoder</strong> 開始：encoder 是<strong>由一層層「block」組成的模組</strong>，
+  負責學習<strong>影像像素中與待預測標籤相對應的統計模式</strong>。</li>
+<li>高效能的 encoder 設計，會把<strong>許多「逐漸變窄（narrowing）」的 block 堆疊起來</strong>，
+  這正是「<strong>深度神經網路（deep neural networks）</strong>」中「<strong>deep</strong>」的由來。</li>
+</ul>
+</blockquote>
+<h3 id="41-三個重點拆解">4.1 三個重點拆解</h3>
+<table>
+<thead>
+<tr>
+<th>重點</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主流方法</td>
+<td>影像／影片辨識的 SOTA 都是<strong>神經網路</strong>，且幾乎都是 <strong>CNN 的變體</strong></td>
+</tr>
+<tr>
+<td>Encoder 的角色</td>
+<td>學習<strong>像素 → 標籤</strong>之間的統計模式（即「抽特徵」）</td>
+</tr>
+<tr>
+<td>「Deep」的由來</td>
+<td><strong>許多 narrowing blocks 堆疊</strong>，層數越深、表徵越抽象</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-為什麼要逐漸變窄narrowing">4.2 為什麼要「逐漸變窄（narrowing）」</h3>
+<div class="codehilite"><pre><span></span><code>輸入影像 (H×W×3)
+  → block 1  (較大空間、較少通道)   例如 224×224×64
+  → block 2  (空間變小、通道變多)   例如 112×112×128
+  → block 3                         例如  56×56×256
+  → ...  空間持續縮小、通道持續增加（語意更抽象）
+  → 最後 → 分類器 → 標籤
+</code></pre></div>
+
+<ul>
+<li><strong>空間維度變小</strong>：把區域資訊「壓縮」成更抽象的概念。</li>
+<li><strong>通道維度變大</strong>：用更多「特徵圖」表達更豐富的語意。</li>
+</ul>
+<blockquote>
+<p><strong>考點</strong>：「<strong>deep</strong> 的定義＝許多逐漸變窄的 block 堆疊」、「encoder 學的是<strong>像素與標籤之間的統計模式</strong>」。</p>
+</blockquote>
+<hr>
+<h2 id="5-關鍵概念參數重用re-use-parameters">5. 關鍵概念：參數重用（re-use parameters）</h2>
+<p>原稿 p10 只有三行，但這是 CNN 的<strong>核心思想</strong>：</p>
+<blockquote>
+<ul>
+<li><strong>Key idea: re-use parameters</strong>（關鍵思想：參數重用）</li>
+<li><strong>Convolution shares parameters</strong>（卷積會共享參數）</li>
+<li><strong>Example: 3×3 convolution on a 5×5 image</strong>（範例：在 5×5 影像上做 3×3 卷積）</li>
+</ul>
+</blockquote>
+<h3 id="51-什麼是參數重用共享">5.1 什麼是「參數重用／共享」</h3>
+<p>同一個<strong>卷積核（kernel／filter）</strong>在整張影像上<strong>滑動</strong>，每個位置都用<strong>同一組權重</strong>計算。
+換句話說：<strong>一組參數，全圖共用</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>對比</th>
+<th>全連接層（Fully Connected）</th>
+<th>卷積層（Convolution）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>參數數量</td>
+<td>每個輸入像素 → 每個輸出都要一組權重（<strong>極多</strong>）</td>
+<td>只用<strong>一個小核</strong>的權重（<strong>極少</strong>）</td>
+</tr>
+<tr>
+<td>位置概念</td>
+<td>沒有（打平成一維）</td>
+<td>保留<strong>空間相鄰關係</strong></td>
+</tr>
+<tr>
+<td>平移不變性</td>
+<td>無</td>
+<td><strong>有</strong>（同一特徵出現在哪都認得）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-範例55-影像--33-卷積核">5.2 範例：5×5 影像 + 3×3 卷積核</h3>
+<div class="codehilite"><pre><span></span><code><span class="mf">5</span><span class="err">×</span><span class="mf">5</span><span class="w"> </span><span class="n">輸入影像</span><span class="w">            </span><span class="mf">3</span><span class="err">×</span><span class="mf">3</span><span class="w"> </span><span class="n">卷積核</span><span class="err">（</span><span class="mf">9</span><span class="w"> </span><span class="n">個權重</span><span class="err">，</span><span class="n">全圖共用</span><span class="err">）</span>
+<span class="mf">1</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="mf">1</span><span class="w">              </span><span class="mf">1</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="mf">1</span>
+<span class="mf">0</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="mf">1</span><span class="w">              </span><span class="mf">0</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="mf">0</span>
+<span class="mf">1</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="mf">0</span><span class="w">              </span><span class="mf">1</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="mf">1</span>
+<span class="mf">2</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="mf">2</span>
+<span class="mf">0</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="mf">0</span>
+</code></pre></div>
+
+<ul>
+<li>卷積核在影像上<strong>逐格滑動</strong>（stride＝1），每停一格就把重疊區域做<strong>逐元素相乘再相加</strong>。</li>
+<li>輸出尺寸（無 padding、stride＝1）：<strong>5 − 3 + 1 = 3</strong> → 得到 <strong>3×3</strong> 的特徵圖。</li>
+<li>整個過程<strong>只用 9 個權重</strong>（外加 1 個 bias），這就是「參數重用」的威力。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>參數</th>
+<th>公式（無 padding）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>輸出邊長</td>
+<td><code>(W − K) / S + 1</code>（W＝輸入邊長、K＝核邊長、S＝stride）</td>
+</tr>
+<tr>
+<td>本例</td>
+<td><code>(5 − 3) / 1 + 1 = 3</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>考點</strong>：CNN 的關鍵思想是「<strong>re-use parameters / share parameters</strong>」；
+能算出 5×5 影像經 3×3 卷積（stride 1、無 padding）得到 <strong>3×3</strong>。
+常見陷阱：誤以為卷積核每個位置都換一組權重（那是全連接層的做法）。</p>
+</blockquote>
+<hr>
+<h2 id="6-cnn-基本概念與影像辨識">6. CNN 基本概念與影像辨識</h2>
+<p>原稿 p11–12 標題為「<strong>Basic Concepts of CNN</strong>」：</p>
+<blockquote>
+<ul>
+<li>p11：<strong>AI Basic Principles – Image Recognition by CNN</strong> →「<strong>What is CNN?</strong>」</li>
+<li>p12：<strong>AI Basic Principles – Convolutional Neural Network</strong></li>
+</ul>
+</blockquote>
+<h3 id="61-cnn-的基本組成">6.1 CNN 的基本組成</h3>
+<table>
+<thead>
+<tr>
+<th>元件</th>
+<th>英文</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>卷積層</td>
+<td>Convolutional layer</td>
+<td>用卷積核抽特徵（共享參數）</td>
+</tr>
+<tr>
+<td>激活函數</td>
+<td>Activation（ReLU）</td>
+<td>加入非線性（負值歸零）</td>
+</tr>
+<tr>
+<td>池化層</td>
+<td>Pooling（Max / Average）</td>
+<td>降採樣、縮小尺寸、保留主要特徵</td>
+</tr>
+<tr>
+<td>全連接層</td>
+<td>Fully Connected</td>
+<td>把特徵整合成最終分類</td>
+</tr>
+<tr>
+<td>Softmax</td>
+<td>Softmax</td>
+<td>輸出各類別機率</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-一張圖走完-cnn影像辨識流程">6.2 一張圖走完 CNN（影像辨識流程）</h3>
+<div class="codehilite"><pre><span></span><code>輸入影像 → [卷積 → ReLU → 池化] × N → 展平 → 全連接 → Softmax → 類別機率
+             ↑ 抽特徵（低階→高階）              ↑ 分類
+</code></pre></div>
+
+<h3 id="63-為什麼-cnn-特別適合影像">6.3 為什麼 CNN 特別適合影像</h3>
+<ol>
+<li><strong>局部連接（local connectivity）</strong>：鄰近像素關係最強，卷積只看局部。</li>
+<li><strong>參數共享（parameter sharing）</strong>：同一特徵在影像各處都能被偵測到。</li>
+<li><strong>平移不變性（translation invariance）</strong>：物件左右移動仍能辨識。</li>
+<li><strong>階層式特徵（hierarchy）</strong>：自動從邊緣學到物件。</li>
+</ol>
+<blockquote>
+<p><strong>考點</strong>：CNN 的三大特性 —— <strong>局部連接、參數共享、平移不變性</strong>；
+能排出「卷積 → ReLU → 池化 → … → 全連接 → Softmax」的順序。</p>
+</blockquote>
+<hr>
+<h2 id="附錄-a名詞速查表">附錄 A：名詞速查表</h2>
+<h3 id="a1-電腦視覺與應用">A.1 電腦視覺與應用</h3>
+<table>
+<thead>
+<tr>
+<th>名詞</th>
+<th>英文</th>
+<th>一句話說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>電腦視覺</td>
+<td>Computer Vision (CV)</td>
+<td>讓機器從影像／影片理解世界</td>
+</tr>
+<tr>
+<td>商業領域</td>
+<td>Commercial sectors</td>
+<td>零售、安防、工業、醫療、自駕、農業等</td>
+</tr>
+<tr>
+<td>車牌辨識</td>
+<td>ANPR</td>
+<td>物件偵測 + OCR 讀出車牌</td>
+</tr>
+<tr>
+<td>瑕疵檢測</td>
+<td>Defect detection</td>
+<td>工業上找出產品外觀異常</td>
+</tr>
+<tr>
+<td>世界機器人大會</td>
+<td>World Robot Conference</td>
+<td>2024 展示「超現實圍棋博弈」</td>
+</tr>
+<tr>
+<td>超現實圍棋博弈</td>
+<td>Hyper-realistic Go Match</td>
+<td>人形機器人下圍棋的展示</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a2-cnn-核心">A.2 CNN 核心</h3>
+<table>
+<thead>
+<tr>
+<th>名詞</th>
+<th>英文</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>卷積神經網路</td>
+<td>Convolutional Neural Network (CNN)</td>
+<td>專為<strong>網格狀資料</strong>設計的神經網路</td>
+</tr>
+<tr>
+<td>網格狀結構</td>
+<td>Grid-like structure</td>
+<td>影像（像素網格）、音訊（時頻網格）</td>
+</tr>
+<tr>
+<td>卷積層</td>
+<td>Convolutional layer</td>
+<td>自動學習階層式表徵、抽取特徵</td>
+</tr>
+<tr>
+<td>階層式表徵</td>
+<td>Hierarchical representations</td>
+<td>低階邊緣 → 中階紋理 → 高階物件</td>
+</tr>
+<tr>
+<td>卷積核</td>
+<td>Kernel / Filter</td>
+<td>滑動的小權重窗（如 3×3）</td>
+</tr>
+<tr>
+<td>參數重用</td>
+<td>Re-use / share parameters</td>
+<td>同一組權重全圖共用（CNN 核心思想）</td>
+</tr>
+<tr>
+<td>編碼器</td>
+<td>Encoder</td>
+<td>由多個 block 堆疊，學像素↔標籤的統計模式</td>
+</tr>
+<tr>
+<td>深度</td>
+<td>Deep</td>
+<td>許多「逐漸變窄」的 block 堆疊而成</td>
+</tr>
+<tr>
+<td>池化</td>
+<td>Pooling</td>
+<td>降採樣（Max / Average）</td>
+</tr>
+<tr>
+<td>全連接層</td>
+<td>Fully Connected (FC)</td>
+<td>整合特徵做最終分類</td>
+</tr>
+<tr>
+<td>激活函數</td>
+<td>Activation (ReLU)</td>
+<td>加入非線性</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a3-卷積輸出尺寸公式">A.3 卷積輸出尺寸公式</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>公式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>輸出邊長（無 padding）</td>
+<td><code>(W − K) / S + 1</code></td>
+</tr>
+<tr>
+<td>5×5 影像 + 3×3 核 + stride 1</td>
+<td><code>(5 − 3)/1 + 1 = 3</code> → 3×3</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</h2>
+<h3 id="b1-十大陷阱總表">B.1 十大陷阱總表</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>陷阱</th>
+<th>錯誤觀念</th>
+<th>正確觀念</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>CNN 適用範圍</td>
+<td>「CNN 只能處理影像」</td>
+<td>也能處理<strong>音訊</strong>等<strong>網格狀資料</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>CNN 的目的</td>
+<td>「CNN 是為了壓縮圖片」</td>
+<td>CNN 是為了<strong>抽取特徵、做辨識</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>參數共享</td>
+<td>「每個位置用不同權重」</td>
+<td>卷積<strong>共享同一組權重</strong>（全連接層才不共享）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>「Deep」的意思</td>
+<td>「Deep 指圖片很大」</td>
+<td>Deep 指<strong>許多 narrowing block 堆疊</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Encoder 的作用</td>
+<td>「encoder 負責分類」</td>
+<td>encoder 負責<strong>學特徵</strong>（像素↔標籤的統計模式）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>卷積輸出尺寸</td>
+<td>「5×5 過 3×3 得 5×5」</td>
+<td>無 padding、stride 1 → <strong>3×3</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td>特徵層級</td>
+<td>「一次就學到物件」</td>
+<td>是<strong>階層式</strong>：邊緣→紋理→部件→物件</td>
+</tr>
+<tr>
+<td>8</td>
+<td>池化的作用</td>
+<td>「池化會增加參數」</td>
+<td>池化<strong>沒有參數</strong>，只是降採樣</td>
+</tr>
+<tr>
+<td>9</td>
+<td>圍棋的難點</td>
+<td>「圍棋靠暴力搜尋即可」</td>
+<td>局面數太大，<strong>無法窮舉</strong>，需學習型方法</td>
+</tr>
+<tr>
+<td>10</td>
+<td>SOTA 架構</td>
+<td>「影像辨識都用全連接網路」</td>
+<td>SOTA 幾乎都是 <strong>CNN 及其變體</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="b2-易混名詞對照">B.2 易混名詞對照</h3>
+<table>
+<thead>
+<tr>
+<th>名詞 A</th>
+<th>名詞 B</th>
+<th>分辨方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>卷積層</td>
+<td>全連接層</td>
+<td>共享參數 / 不共享；保留空間 / 打平</td>
+</tr>
+<tr>
+<td>卷積</td>
+<td>池化</td>
+<td>抽特徵（有參數） / 降採樣（無參數）</td>
+</tr>
+<tr>
+<td>電腦視覺</td>
+<td>影像處理</td>
+<td>理解語意 / 只做像素層操作</td>
+</tr>
+<tr>
+<td>Encoder</td>
+<td>分類器</td>
+<td>學特徵 / 出標籤</td>
+</tr>
+<tr>
+<td>CNN</td>
+<td>RNN</td>
+<td>網格狀空間資料 / 序列資料</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="附錄-c模擬試題連答案">附錄 C：模擬試題（連答案）</h2>
+<h3 id="c1-選擇題20-題">C.1 選擇題（20 題）</h3>
+<ol>
+<li>
+<p>CNN 最適合處理哪一類資料？
+   - A. 只有文字
+   - B. 網格狀結構的資料（影像、音訊）
+   - C. 只有表格
+   - D. 只有程式碼</p>
+</li>
+<li>
+<p>原稿中「Real Case Examples in Commercial Sectors」主要展示什麼？
+   - A. 電腦視覺在商業領域的真實案例
+   - B. 網頁設計
+   - C. 資料庫設計
+   - D. 電路設計</p>
+</li>
+<li>
+<p>2024 世界機器人大會展示的著名對弈是？
+   - A. 西洋棋
+   - B. 超現實圍棋博弈
+   - C. 象棋
+   - D. 五子棋</p>
+</li>
+<li>
+<p>CNN 的關鍵思想是？
+   - A. 隨機初始化
+   - B. 參數重用（共享參數）
+   - C. 刪除參數
+   - D. 每個位置換一組權重</p>
+</li>
+<li>
+<p>5×5 影像做 3×3 卷積（stride 1、無 padding）的輸出尺寸是？
+   - A. 5×5
+   - B. 3×3
+   - C. 2×2
+   - D. 1×1</p>
+</li>
+<li>
+<p>「deep」在「deep neural networks」中指的是？
+   - A. 圖片很大
+   - B. 許多逐漸變窄的 block 堆疊
+   - C. 參數很多且無結構
+   - D. 訓練時間很長</p>
+</li>
+<li>
+<p>Encoder 的主要工作是？
+   - A. 輸出最終標籤
+   - B. 學習像素與標籤之間的統計模式（抽特徵）
+   - C. 壓縮檔案
+   - D. 顯示圖片</p>
+</li>
+<li>
+<p>下列何者不是 CNN 的常見元件？
+   - A. 卷積層
+   - B. 池化層
+   - C. 全連接層
+   - D. 印表機驅動</p>
+</li>
+<li>
+<p>卷積相對於全連接層的主要優勢之一是？
+   - A. 參數更多
+   - B. 參數共享且保留空間關係
+   - C. 不需要訓練
+   - D. 不能處理影像</p>
+</li>
+<li>
+<p>「hierarchical representations」指的是？</p>
+<ul>
+<li>A. 隨機特徵</li>
+<li>B. 由低階到高階的特徵層次</li>
+<li>C. 只有一個特徵</li>
+<li>D. 儲存格式</li>
+</ul>
+</li>
+<li>
+<p>車牌辨識（ANPR）通常結合哪兩項技術？</p>
+<ul>
+<li>A. 物件偵測 + OCR</li>
+<li>B. 語音 + 音樂</li>
+<li>C. 資料庫 + 排版</li>
+<li>D. 加密 + 壓縮</li>
+</ul>
+</li>
+<li>
+<p>工業上的「瑕疵檢測」屬於哪一類應用？</p>
+<ul>
+<li>A. 零售</li>
+<li>B. 工業／製造</li>
+<li>C. 醫療</li>
+<li>D. 農業</li>
+</ul>
+</li>
+<li>
+<p>2016 年 AlphaGo 擊敗的世界冠軍是？</p>
+<ul>
+<li>A. Lee Sedol</li>
+<li>B. Kasparov</li>
+<li>C. Carlsen</li>
+<li>D. Ke Jie</li>
+</ul>
+</li>
+<li>
+<p>池化層（Pooling）的作用是？</p>
+<ul>
+<li>A. 增加參數</li>
+<li>B. 降採樣、縮小尺寸</li>
+<li>C. 輸出機率</li>
+<li>D. 儲存圖片</li>
+</ul>
+</li>
+<li>
+<p>影像在 CNN 中屬於什麼結構？</p>
+<ul>
+<li>A. 序列</li>
+<li>B. 圖形</li>
+<li>C. 網格狀（grid-like）</li>
+<li>D. 樹狀</li>
+</ul>
+</li>
+<li>
+<p>卷積核（kernel）又常被稱作？</p>
+<ul>
+<li>A. Filter</li>
+<li>B. Cache</li>
+<li>C. Buffer</li>
+<li>D. Index</li>
+</ul>
+</li>
+<li>
+<p>為什麼圍棋對 AI 是經典挑戰？</p>
+<ul>
+<li>A. 規則太簡單</li>
+<li>B. 局面數太大，無法暴力窮舉</li>
+<li>C. 沒有棋盤</li>
+<li>D. 只能兩人玩</li>
+</ul>
+</li>
+<li>
+<p>CNN 能自動學到特徵，代表？</p>
+<ul>
+<li>A. 需要人工設計每個特徵</li>
+<li>B. 不需人工設計特徵</li>
+<li>C. 完全不需要資料</li>
+<li>D. 只能辨識顏色</li>
+</ul>
+</li>
+<li>
+<p>高效能 encoder 的設計趨勢是？</p>
+<ul>
+<li>A. 只用一層</li>
+<li>B. 許多 narrowing blocks 堆疊</li>
+<li>C. 不使用卷積</li>
+<li>D. 隨機層數</li>
+</ul>
+</li>
+<li>
+<p>影像／影片辨識的 SOTA 方法幾乎都基於？</p>
+<ul>
+<li>A. 決策樹</li>
+<li>B. CNN 的各種變體</li>
+<li>C. 線性迴歸</li>
+<li>D. 排程演算法</li>
+</ul>
+</li>
+</ol>
+<details><summary>C.1 答案</summary>
+
+1. **B** 2. **A** 3. **B** 4. **B** 5. **B** 6. **B** 7. **B** 8. **D** 9. **B** 10. **B**
+11. **A** 12. **B** 13. **A** 14. **B** 15. **C** 16. **A** 17. **B** 18. **B** 19. **B** 20. **B**
+
+</details>
+
+<h3 id="c2-填充題10-題">C.2 填充題（10 題）</h3>
+<ol>
+<li>CNN 全名是 <strong><em>_</em>_（縮寫 </strong>____）。</li>
+<li>CNN 專為處理與分析 <strong><em>_</em>_ 結構的資料而設計，例如 </strong><strong><em>_ 或 </em></strong>___。</li>
+<li>CNN 使用 ______ 來自動學習階層式表徵並抽取特徵。</li>
+<li>CNN 的關鍵思想是「______」（re-use parameters）。</li>
+<li>5×5 影像做 3×3 卷積（stride 1、無 padding）得到 ______ 的特徵圖。</li>
+<li>「deep」指的是把許多 ______ 的 block 堆疊起來。</li>
+<li>Encoder 學習的是影像像素中與 ______ 相對應的統計模式。</li>
+<li>池化層的作用是 ______（降低解析度、保留主要特徵）。</li>
+<li>2024 世界機器人大會展示的是 ______。</li>
+<li>2016 年 DeepMind 的 <strong><em>_</em>_ 擊敗世界冠軍 </strong>____。</li>
+</ol>
+<details><summary>C.2 答案</summary>
+
+1. Convolutional Neural Network；CNN
+2. 網格狀（grid-like）；影像；音訊
+3. 卷積層（convolutional layers）
+4. 參數重用
+5. 3×3
+6. 逐漸變窄（narrowing）
+7. 待預測標籤（labels）
+8. 降採樣（downsampling）
+9. 超現實圍棋博弈（Hyper-realistic Go Match）
+10. AlphaGo；Lee Sedol（李世乭）
+
+</details>
+
+<h3 id="c3-簡答題6-題">C.3 簡答題（6 題）</h3>
+<ol>
+<li>寫出 CNN 的正式定義（含兩個關鍵詞）。</li>
+<li>解釋 CNN 的「參數重用」是什麼，並說明它相對全連接層的好處。</li>
+<li>舉出三個電腦視覺在商業領域的應用並說明所用技術。</li>
+<li>「deep neural networks」的「deep」由何而來？</li>
+<li>說明 encoder 在影像辨識中的角色。</li>
+<li>為什麼卷積特別適合影像資料？</li>
+</ol>
+<details><summary>C.3 參考答案</summary>
+
+1. CNN 是**專為處理與分析網格狀結構（grid-like structure）資料**（如影像、音訊）而設計的神經網路，使用**卷積層**自動學習**階層式表徵（hierarchical representations）**並抽取特徵。
+2. 同一組**卷積核權重**在整張影像上滑動並重複使用（全圖共用）。好處：**參數大幅減少**、保留**空間相鄰關係**、具**平移不變性**。
+3. 例：**零售**（人流統計／無人商店，物件偵測＋追蹤）；**工業**（瑕疵檢測，影像分割＋異常偵測）；**醫療**（X 光判讀，影像分類）。
+4. 因為高效能 encoder 由**許多「逐漸變窄（narrowing）」的 block 堆疊**而成，層數越深表徵越抽象，故稱「deep」。
+5. Encoder 負責**從影像像素中學習與待預測標籤相對應的統計模式**（即抽特徵），把原圖轉成有用的特徵表徵，再交給後續分類器。
+6. 因為影像具**局部相關性**，卷積以**局部連接 + 參數共享**有效抽特徵，並具**平移不變性**與**階層式特徵**能力。
+
+</details>
+
+<hr>
+<h2 id="附錄-d教材頁面索引對照">附錄 D：教材頁面索引對照</h2>
+<table>
+<thead>
+<tr>
+<th>PDF 頁</th>
+<th>標題</th>
+<th>本筆記對應章節</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>封面：Introduction to Computer Vision and Application</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Real Case Examples in Commercial Sectors（Computer Vision）</td>
+<td>第 1 節</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Real Case Examples in Commercial Sectors（圖）</td>
+<td>第 1 節</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Real Case Examples in Commercial Sectors（圖）</td>
+<td>第 1 節</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Computer Vision（圖）</td>
+<td>第 1 節</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Computer Vision（圖）</td>
+<td>第 1 節</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Latest AI technologies in Mainland China and Hong Kong / Furthermore（世界機器人大會）</td>
+<td>第 2 節</td>
+</tr>
+<tr>
+<td>8</td>
+<td>CNN — AI Basic Principles – Convolutional Neural Network（定義）</td>
+<td>第 3 節</td>
+</tr>
+<tr>
+<td>9</td>
+<td>CNN — State-of-the-art methods / Encoder</td>
+<td>第 4 節</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Key idea: re-use parameters（3×3 convolution on 5×5 image）</td>
+<td>第 5 節</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Basic Concepts of CNN — Image Recognition by CNN（What is CNN?）</td>
+<td>第 6 節</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Basic Concepts of CNN — AI Basic Principles – Convolutional Neural Network</td>
+<td>第 6 節</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>說明：原稿第 2–6 頁多為<strong>圖片</strong>（商業案例展示），第 11–12 頁亦以圖示說明 CNN 基本概念；
+這些頁面在筆記中對應到所屬章節的概念補充，不另設小節。</p>
+</blockquote>
+<hr>
+<h2 id="附錄-e延伸資源與離線提示">附錄 E：延伸資源與離線提示</h2>
+<h3 id="e1-沒有網路時怎麼複習">E.1 沒有網路時怎麼複習</h3>
+<p>本筆記本身即為<strong>離線可讀</strong>（Markdown 或單檔 HTML），不依賴任何外部資源。</p>
+<ul>
+<li>先看附錄 A（名詞速查表）與附錄 F（一頁精華）。</li>
+<li>用附錄 C 的試題自測，答錯的題目對應回章節重讀。</li>
+<li>需要圖解時，可自行畫出：<strong>CNN 階層式特徵圖</strong>、<strong>3×3 卷積在 5×5 影像上滑動的示意</strong>、
+  <strong>卷積 → ReLU → 池化 → 全連接 → Softmax 流程圖</strong>。</li>
+</ul>
+<h3 id="e2-觀念延伸考綱外但常被問">E.2 觀念延伸（考綱外但常被問）</h3>
+<table>
+<thead>
+<tr>
+<th>主題</th>
+<th>一句話</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CNN 的變體</td>
+<td>LeNet、AlexNet、VGG、ResNet、MobileNet 等，皆為 CNN 家族</td>
+</tr>
+<tr>
+<td>為何「參數共享」重要</td>
+<td>大幅降低參數量，讓模型能處理高解析度影像且不易過擬合</td>
+</tr>
+<tr>
+<td>資料增強</td>
+<td>旋轉／翻轉／裁切可提升 CNN 對位置變化的穩健性</td>
+</tr>
+<tr>
+<td>與傳統 CV 的差異</td>
+<td>傳統需人工設計特徵（SIFT/HOG）；CNN 自動學特徵</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="附錄-f一頁精華考前-10-分鐘">附錄 F：一頁精華（考前 10 分鐘）</h2>
+<div class="codehilite"><pre><span></span><code>【1. 商業案例（Real Case Examples in Commercial Sectors）】
+  零售：人流統計、無人商店（物件偵測＋追蹤）
+  安防：人臉辨識門禁、車牌辨識 ANPR（人臉＋OCR）
+  工業：瑕疵檢測（影像分割＋異常偵測）
+  醫療：X 光／CT 判讀（影像分類、語意分割）
+  自駕：車道線／行人偵測（物件偵測＋光流）
+  農業：病蟲害、果實分級（分類＋偵測）
+
+【2. 最新 AI 技術（中國大陸／香港）】
+  2024 World Robot Conference：Hyper-realistic Go Match（超現實圍棋博弈）
+  圍棋 = AI 試金石（局面數太大，無法窮舉）；AlphaGo 2016 擊敗 Lee Sedol
+
+【3. CNN 定義（必背）】
+  Convolutional Neural Network = 專為「網格狀結構(grid-like)」資料
+  （影像、音訊）設計的神經網路；用卷積層自動學「階層式表徵」並抽特徵
+
+【4. 為何 SOTA（State-of-the-art）】
+  影像/影片辨識的主流 = 神經網路，且幾乎都是 CNN 變體
+  從 encoder 開始 → 學「像素 ↔ 標籤」的統計模式
+  「deep」= 許多「逐漸變窄(narrowing)」的 block 堆疊
+
+【5. 關鍵思想：參數重用（re-use parameters）】
+  Convolution shares parameters（卷積共享參數，全圖共用同一組權重）
+  例：3×3 convolution on 5×5 image → 輸出 (5−3)/1+1 = 3 → 3×3
+  好處：參數少、保留空間關係、平移不變性
+
+【6. CNN 基本概念 / 影像辨識】
+  流程：輸入影像 → [卷積 → ReLU → 池化]×N → 展平 → 全連接 → Softmax → 類別
+  三大特性：局部連接、參數共享、平移不變性
+  階層式特徵：邊緣 → 紋理 → 部件 → 物件
+</code></pre></div>
+
+<hr>
+<h2 id="附錄-gmc-模擬試卷60-題">附錄 G：MC 模擬試卷（60 題）</h2>
+<h3 id="g1-作答說明與應試技巧">G.1 作答說明與應試技巧</h3>
+<ul>
+<li><strong>60 題單選</strong>、滿分 60 分、建議 <strong>75 分鐘</strong>。</li>
+<li>分三部分：<strong>電腦視覺與商業應用（1–20）</strong>、<strong>CNN 定義與架構（21–40）</strong>、<strong>卷積、參數重用與綜合（41–60）</strong>。</li>
+<li>答案分佈刻意打散（A/B/C/D 各 15 題），避免整排猜同一個字母。</li>
+<li>建議先做完整份再看答案；答錯的題目請用「逐題詳解」對應回章節重讀。</li>
+</ul>
+<h3 id="g2-第一部分電腦視覺與商業應用第-120-題">G.2 第一部分：電腦視覺與商業應用（第 1–20 題）</h3>
+<ol>
+<li>
+<p>「電腦視覺（Computer Vision）」的核心是？
+   - A. 讓機器打字
+   - B. 讓機器從影像／影片理解世界
+   - C. 讓機器播放音樂
+   - D. 讓機器壓縮檔案</p>
+</li>
+<li>
+<p>原稿「Real Case Examples in Commercial Sectors」的主題是？
+   - A. 網頁設計
+   - B. 資料庫正規化
+   - C. 電腦視覺在商業領域的真實案例
+   - D. 電路板佈局</p>
+</li>
+<li>
+<p>「無人商店」屬於哪一類商業應用？
+   - A. 零售
+   - B. 醫療
+   - C. 農業
+   - D. 工業</p>
+</li>
+<li>
+<p>車牌辨識（ANPR）通常結合哪兩項技術？
+   - A. 語音 + 音樂
+   - B. 加密 + 壓縮
+   - C. 排版 + 列印
+   - D. 物件偵測 + OCR</p>
+</li>
+<li>
+<p>產品「瑕疵檢測」屬於哪一類應用？
+   - A. 零售
+   - B. 工業／製造
+   - C. 醫療
+   - D. 農業</p>
+</li>
+<li>
+<p>X 光／CT 影像判讀最常用哪類技術？
+   - A. 語音辨識
+   - B. 文字摘要
+   - C. 影像分類與語意分割
+   - D. 排程最佳化</p>
+</li>
+<li>
+<p>2024 世界機器人大會展示的著名對弈是？
+   - A. 超現實圍棋博弈（Hyper-realistic Go Match）
+   - B. 西洋棋錦標賽
+   - C. 象棋快棋賽
+   - D. 五子棋表演</p>
+</li>
+<li>
+<p>「Hyper-realistic Go Match」對應的英文場合是？
+   - A. Olympics
+   - B. CES
+   - C. GTC
+   - D. World Robot Conference</p>
+</li>
+<li>
+<p>圍棋為什麼是 AI 的經典挑戰？
+   - A. 規則太簡單
+   - B. 局面數太大，無法暴力窮舉
+   - C. 棋盤太小
+   - D. 只能單人玩</p>
+</li>
+<li>
+<p>2016 年 AlphaGo 擊敗的世界冠軍是？</p>
+<ul>
+<li>A. Lee Sedol（李世乭）</li>
+<li>B. Kasparov</li>
+<li>C. Carlsen</li>
+<li>D. Ke Jie</li>
+</ul>
+</li>
+<li>
+<p>AlphaGo 是哪個團隊開發的？</p>
+<ul>
+<li>A. IBM</li>
+<li>B. Microsoft</li>
+<li>C. OpenAI</li>
+<li>D. DeepMind</li>
+</ul>
+</li>
+<li>
+<p>「ANPR」在 CV 領域指的是？</p>
+<ul>
+<li>A. 一種神經網路</li>
+<li>B. 一種影像格式</li>
+<li>C. 一種色彩空間</li>
+<li>D. 車牌自動辨識</li>
+</ul>
+</li>
+<li>
+<p>商業上採用電腦視覺的主要好處之一是？</p>
+<ul>
+<li>A. 完全不需要資料</li>
+<li>B. 可 24 小時運作且判斷標準一致</li>
+<li>C. 一定 100% 正確</li>
+<li>D. 不需要任何成本</li>
+</ul>
+</li>
+<li>
+<p>零售業的「人流統計」通常用什麼技術？</p>
+<ul>
+<li>A. 語音合成</li>
+<li>B. 文字翻譯</li>
+<li>C. 物件偵測與人體追蹤</li>
+<li>D. 檔案壓縮</li>
+</ul>
+</li>
+<li>
+<p>「果實成熟度分級」屬於哪一類應用？</p>
+<ul>
+<li>A. 農業</li>
+<li>B. 零售</li>
+<li>C. 安防</li>
+<li>D. 醫療</li>
+</ul>
+</li>
+<li>
+<p>自駕車的「車道線偵測」常用什麼技術？</p>
+<ul>
+<li>A. 語音辨識</li>
+<li>B. 資料庫查詢</li>
+<li>C. 邊緣偵測／物件偵測</li>
+<li>D. 檔案同步</li>
+</ul>
+</li>
+<li>
+<p>原稿「Latest AI technologies」提到哪兩個地區？</p>
+<ul>
+<li>A. 日本與韓國</li>
+<li>B. 中國大陸與香港</li>
+<li>C. 美國與加拿大</li>
+<li>D. 英國與德國</li>
+</ul>
+</li>
+<li>
+<p>「異常行為偵測」通常屬於哪一類應用？</p>
+<ul>
+<li>A. 農業</li>
+<li>B. 零售</li>
+<li>C. 安防／監控</li>
+<li>D. 醫療</li>
+</ul>
+</li>
+<li>
+<p>工業上的「尺寸量測」屬於哪一類應用？</p>
+<ul>
+<li>A. 工業／製造</li>
+<li>B. 零售</li>
+<li>C. 醫療</li>
+<li>D. 農業</li>
+</ul>
+</li>
+<li>
+<p>為何說電腦視覺的判斷比人工「更一致」？</p>
+<ul>
+<li>A. 因為它會隨情緒改變</li>
+<li>B. 因為它會疲勞</li>
+<li>C. 因為它每天標準不同</li>
+<li>D. 因為它不會疲勞、標準固定且可量化</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="g3-第二部分cnn-定義與架構第-2140-題">G.3 第二部分：CNN 定義與架構（第 21–40 題）</h3>
+<ol start="21">
+<li>
+<p>CNN 的全名是？</p>
+<ul>
+<li>A. Convolutional Neural Network</li>
+<li>B. Computer Network Node</li>
+<li>C. Central Neural Number</li>
+<li>D. Convolutional Numeric Node</li>
+</ul>
+</li>
+<li>
+<p>CNN 專為處理哪一類資料而設計？</p>
+<ul>
+<li>A. 只有純文字</li>
+<li>B. 只有關聯式表格</li>
+<li>C. 網格狀結構（如影像、音訊）</li>
+<li>D. 只有程式原始碼</li>
+</ul>
+</li>
+<li>
+<p>下列何者屬於「grid-like structure」？</p>
+<ul>
+<li>A. 一段語音轉成的純文字</li>
+<li>B. 影像（像素網格）</li>
+<li>C. 一份 CSV 清單</li>
+<li>D. 一段程式碼</li>
+</ul>
+</li>
+<li>
+<p>CNN 使用哪一種層來自動學習階層式表徵？</p>
+<ul>
+<li>A. 排序層</li>
+<li>B. 加密層</li>
+<li>C. 壓縮層</li>
+<li>D. 卷積層（convolutional layers）</li>
+</ul>
+</li>
+<li>
+<p>「hierarchical representations」的意思是？</p>
+<ul>
+<li>A. 由低階到高階的特徵層次</li>
+<li>B. 隨機產生的特徵</li>
+<li>C. 只有單一特徵</li>
+<li>D. 一種檔案格式</li>
+</ul>
+</li>
+<li>
+<p>原稿指出 CNN 也可用於哪種非影像資料？</p>
+<ul>
+<li>A. 樂譜紙本</li>
+<li>B. 紙本合約</li>
+<li>C. 音訊（audio）</li>
+<li>D. 實體棋盤</li>
+</ul>
+</li>
+<li>
+<p>影像／影片辨識的 SOTA 方法大多基於？</p>
+<ul>
+<li>A. 決策樹</li>
+<li>B. CNN 的各種變體</li>
+<li>C. 線性迴歸</li>
+<li>D. 排程演算法</li>
+</ul>
+</li>
+<li>
+<p>原稿說「一切從 encoder 開始」，encoder 是由什麼組成？</p>
+<ul>
+<li>A. 單一神經元</li>
+<li>B. 隨機雜訊</li>
+<li>C. 資料庫表格</li>
+<li>D. 一層層的 block</li>
+</ul>
+</li>
+<li>
+<p>Encoder 主要學習什麼？</p>
+<ul>
+<li>A. 影像像素中與待預測標籤相對應的統計模式</li>
+<li>B. 檔案的壓縮率</li>
+<li>C. 螢幕的解析度</li>
+<li>D. 使用者的密碼</li>
+</ul>
+</li>
+<li>
+<p>「deep neural networks」的「deep」由何而來？</p>
+<ul>
+<li>A. 圖片解析度很高</li>
+<li>B. 訓練時間很長</li>
+<li>C. 許多逐漸變窄的 block 堆疊</li>
+<li>D. 參數隨機排列</li>
+</ul>
+</li>
+<li>
+<p>高效能 encoder 的設計特徵是？</p>
+<ul>
+<li>A. 只用一層</li>
+<li>B. 許多 narrowing blocks 堆疊</li>
+<li>C. 不使用卷積</li>
+<li>D. 層數隨機</li>
+</ul>
+</li>
+<li>
+<p>影像辨識流程通常從哪裡開始？</p>
+<ul>
+<li>A. Softmax</li>
+<li>B. 全連接層</li>
+<li>C. 池化層</li>
+<li>D. Encoder（抽特徵）</li>
+</ul>
+</li>
+<li>
+<p>卷積層的主要作用是？</p>
+<ul>
+<li>A. 抽特徵（共享參數）</li>
+<li>B. 輸出類別機率</li>
+<li>C. 增加圖片解析度</li>
+<li>D. 儲存檔案</li>
+</ul>
+</li>
+<li>
+<p>池化層（Pooling）的主要作用是？</p>
+<ul>
+<li>A. 增加參數數量</li>
+<li>B. 輸出文字</li>
+<li>C. 降採樣、縮小尺寸</li>
+<li>D. 提高色彩飽和度</li>
+</ul>
+</li>
+<li>
+<p>全連接層（Fully Connected）的作用是？</p>
+<ul>
+<li>A. 抽局部邊緣</li>
+<li>B. 把特徵整合成最終分類</li>
+<li>C. 降採樣</li>
+<li>D. 增加圖片尺寸</li>
+</ul>
+</li>
+<li>
+<p>Softmax 的作用是？</p>
+<ul>
+<li>A. 降採樣</li>
+<li>B. 抽取邊緣</li>
+<li>C. 卷積運算</li>
+<li>D. 輸出各類別機率</li>
+</ul>
+</li>
+<li>
+<p>ReLU 的作用是？</p>
+<ul>
+<li>A. 加入非線性（負值歸零）</li>
+<li>B. 降低解析度</li>
+<li>C. 輸出機率</li>
+<li>D. 卷積運算</li>
+</ul>
+</li>
+<li>
+<p>下列何者「不是」CNN 的三大特性？</p>
+<ul>
+<li>A. 局部連接</li>
+<li>B. 參數共享</li>
+<li>C. 無需任何資料即可訓練</li>
+<li>D. 平移不變性</li>
+</ul>
+</li>
+<li>
+<p>「平移不變性（translation invariance）」的意思是？</p>
+<ul>
+<li>A. 圖片不能移動</li>
+<li>B. 物件左右移動仍能辨識</li>
+<li>C. 只能辨識中心物件</li>
+<li>D. 需要固定座標</li>
+</ul>
+</li>
+<li>
+<p>「局部連接（local connectivity）」的意思是？</p>
+<ul>
+<li>A. 只看整張圖的平均值</li>
+<li>B. 只看最亮的像素</li>
+<li>C. 隨機選像素</li>
+<li>D. 卷積只看鄰近區域</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="g4-第三部分卷積參數重用與綜合第-4160-題">G.4 第三部分：卷積、參數重用與綜合（第 41–60 題）</h3>
+<ol start="41">
+<li>
+<p>CNN 的關鍵思想（Key idea）是？</p>
+<ul>
+<li>A. 隨機初始化</li>
+<li>B. 參數重用（re-use parameters）</li>
+<li>C. 刪除所有參數</li>
+<li>D. 每個位置換一組權重</li>
+</ul>
+</li>
+<li>
+<p>「Convolution shares parameters」的意思是？</p>
+<ul>
+<li>A. 每個像素都有專屬權重</li>
+<li>B. 參數會被刪除</li>
+<li>C. 參數每次隨機改變</li>
+<li>D. 同一組權重在全圖共用</li>
+</ul>
+</li>
+<li>
+<p>5×5 影像做 3×3 卷積（stride 1、無 padding）的輸出尺寸是？</p>
+<ul>
+<li>A. 3×3</li>
+<li>B. 5×5</li>
+<li>C. 2×2</li>
+<li>D. 1×1</li>
+</ul>
+</li>
+<li>
+<p>卷積核（kernel）又常被稱作？</p>
+<ul>
+<li>A. Cache</li>
+<li>B. Buffer</li>
+<li>C. Filter</li>
+<li>D. Index</li>
+</ul>
+</li>
+<li>
+<p>卷積輸出邊長的公式（無 padding）是？</p>
+<ul>
+<li>A. <code>W + K + S</code></li>
+<li>B. <code>(W − K) / S + 1</code></li>
+<li>C. <code>W × K</code></li>
+<li>D. <code>W / K − 1</code></li>
+</ul>
+</li>
+<li>
+<p>卷積層相對全連接層的主要優勢是？</p>
+<ul>
+<li>A. 參數更多</li>
+<li>B. 完全不需要訓練</li>
+<li>C. 無法處理影像</li>
+<li>D. 參數共享且保留空間關係</li>
+</ul>
+</li>
+<li>
+<p>「參數共享」帶來的好處之一是？</p>
+<ul>
+<li>A. 參數大幅減少，不易過擬合</li>
+<li>B. 一定達到 100% 準確率</li>
+<li>C. 完全不需要資料</li>
+<li>D. 不需要激活函數</li>
+</ul>
+</li>
+<li>
+<p>卷積核在影像上做什麼動作？</p>
+<ul>
+<li>A. 隨機跳躍</li>
+<li>B. 只在中心計算一次</li>
+<li>C. 逐格滑動並做加權求和</li>
+<li>D. 只做旋轉</li>
+</ul>
+</li>
+<li>
+<p>卷積中的「stride」指的是？</p>
+<ul>
+<li>A. 卷積核的大小</li>
+<li>B. 卷積核每次移動的步長</li>
+<li>C. 圖片的張數</li>
+<li>D. 通道數</li>
+</ul>
+</li>
+<li>
+<p>卷積中的「padding」指的是？</p>
+<ul>
+<li>A. 刪除邊緣像素</li>
+<li>B. 增加卷積核大小</li>
+<li>C. 改變步長</li>
+<li>D. 在影像邊緣補值（常補 0）</li>
+</ul>
+</li>
+<li>
+<p>CNN 學到的特徵，其階層順序通常是？</p>
+<ul>
+<li>A. 邊緣 → 紋理 → 部件 → 物件</li>
+<li>B. 物件 → 部件 → 紋理 → 邊緣</li>
+<li>C. 隨機順序</li>
+<li>D. 只有顏色</li>
+</ul>
+</li>
+<li>
+<p>為什麼卷積特別適合影像資料？</p>
+<ul>
+<li>A. 因為影像很小</li>
+<li>B. 因為影像沒有規律</li>
+<li>C. 因為影像具局部相關性，且卷積具平移不變性</li>
+<li>D. 因為卷積不需要計算</li>
+</ul>
+</li>
+<li>
+<p>一個 3×3 卷積核（單通道）有多少個權重（不含 bias）？</p>
+<ul>
+<li>A. 3</li>
+<li>B. 9</li>
+<li>C. 6</li>
+<li>D. 27</li>
+</ul>
+</li>
+<li>
+<p>CNN「自動學習特徵」代表？</p>
+<ul>
+<li>A. 需要人工設計每個特徵</li>
+<li>B. 完全不需要資料</li>
+<li>C. 只能辨識顏色</li>
+<li>D. 不需人工設計特徵</li>
+</ul>
+</li>
+<li>
+<p>傳統電腦視覺方法（相對 CNN）通常需要？</p>
+<ul>
+<li>A. 人工設計特徵（如 SIFT、HOG）</li>
+<li>B. 完全不需要特徵</li>
+<li>C. 只靠資料庫查詢</li>
+<li>D. 只靠語音輸入</li>
+</ul>
+</li>
+<li>
+<p>下列何者是 CNN 家族的知名變體？</p>
+<ul>
+<li>A. Bubble Sort</li>
+<li>B. Quick Sort</li>
+<li>C. ResNet</li>
+<li>D. Dijkstra</li>
+</ul>
+</li>
+<li>
+<p>資料增強（如旋轉、翻轉、裁切）對 CNN 的作用是？</p>
+<ul>
+<li>A. 減少資料量</li>
+<li>B. 提升對位置變化的穩健性</li>
+<li>C. 取代卷積層</li>
+<li>D. 讓模型不用訓練</li>
+</ul>
+</li>
+<li>
+<p>「過擬合（overfitting）」指的是？</p>
+<ul>
+<li>A. 模型完全沒學到東西</li>
+<li>B. 資料太多</li>
+<li>C. 模型太小</li>
+<li>D. 模型在訓練集表現好、在新資料表現差</li>
+</ul>
+</li>
+<li>
+<p>影像在 CNN 中可視為？</p>
+<ul>
+<li>A. 像素值的二維網格</li>
+<li>B. 一串無序數字</li>
+<li>C. 一份文字文件</li>
+<li>D. 一個壓縮檔</li>
+</ul>
+</li>
+<li>
+<p>CNN 的核心運算層是？</p>
+<ul>
+<li>A. 排序層</li>
+<li>B. 加密層</li>
+<li>C. 卷積層</li>
+<li>D. 列印層</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="g5-答案速查表">G.5 答案速查表</h3>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>B</td>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+<td>B</td>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+<td>B</td>
+<td>A</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+<th>16</th>
+<th>17</th>
+<th>18</th>
+<th>19</th>
+<th>20</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>D</td>
+<td>D</td>
+<td>B</td>
+<td>C</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>21</th>
+<th>22</th>
+<th>23</th>
+<th>24</th>
+<th>25</th>
+<th>26</th>
+<th>27</th>
+<th>28</th>
+<th>29</th>
+<th>30</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>31</th>
+<th>32</th>
+<th>33</th>
+<th>34</th>
+<th>35</th>
+<th>36</th>
+<th>37</th>
+<th>38</th>
+<th>39</th>
+<th>40</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>41</th>
+<th>42</th>
+<th>43</th>
+<th>44</th>
+<th>45</th>
+<th>46</th>
+<th>47</th>
+<th>48</th>
+<th>49</th>
+<th>50</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>題</th>
+<th>51</th>
+<th>52</th>
+<th>53</th>
+<th>54</th>
+<th>55</th>
+<th>56</th>
+<th>57</th>
+<th>58</th>
+<th>59</th>
+<th>60</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>答</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>B</td>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<p><strong>分數換算</strong>：每題 1 分，滿分 60 分。答錯題目請對照下方詳解回到章節重讀。</p>
+<h3 id="g6-逐題詳解">G.6 逐題詳解</h3>
+<p><strong>1. B</strong> —— 電腦視覺是讓機器從影像／影片理解世界（§1）。
+<strong>2. C</strong> —— Real Case Examples 展示 CV 在商業領域的真實案例（§1）。
+<strong>3. A</strong> —— 無人商店屬零售（§1.1）。
+<strong>4. D</strong> —— ANPR ＝ 物件偵測 + OCR（§1.1）。
+<strong>5. B</strong> —— 瑕疵檢測屬工業／製造（§1.1）。
+<strong>6. C</strong> —— 醫療影像判讀用影像分類與語意分割（§1.1）。
+<strong>7. A</strong> —— 2024 世界機器人大會展示超現實圍棋博弈（§2.1）。
+<strong>8. D</strong> —— Hyper-realistic Go Match 對應 World Robot Conference（§2.1）。
+<strong>9. B</strong> —— 圍棋局面數太大，無法暴力窮舉（§2.2）。
+<strong>10. A</strong> —— AlphaGo 擊敗 Lee Sedol（§2.2）。
+<strong>11. D</strong> —— AlphaGo 由 DeepMind 開發（§2.2）。
+<strong>12. D</strong> —— ANPR＝車牌自動辨識（§1.1）。
+<strong>13. B</strong> —— 可 24 小時運作且判斷標準一致（§1.2）。
+<strong>14. C</strong> —— 人流統計用物件偵測與人體追蹤（§1.1）。
+<strong>15. A</strong> —— 果實分級屬農業（§1.1）。
+<strong>16. C</strong> —— 車道線偵測用邊緣偵測／物件偵測（§1.1）。
+<strong>17. B</strong> —— 原稿提到中國大陸與香港（§2）。
+<strong>18. C</strong> —— 異常行為偵測屬安防／監控（§1.1）。
+<strong>19. A</strong> —— 尺寸量測屬工業／製造（§1.1）。
+<strong>20. D</strong> —— 不會疲勞、標準固定且可量化（§1.2）。
+<strong>21. A</strong> —— CNN＝Convolutional Neural Network（§3）。
+<strong>22. C</strong> —— 專為網格狀結構（影像、音訊）設計（§3）。
+<strong>23. B</strong> —— 影像是像素網格（grid-like）（§3.1）。
+<strong>24. D</strong> —— 用卷積層學階層式表徵（§3）。
+<strong>25. A</strong> —— hierarchical＝由低階到高階的特徵層次（§3.2）。
+<strong>26. C</strong> —— 也包含音訊（audio）（§3）。
+<strong>27. B</strong> —— SOTA 幾乎都是 CNN 變體（§4）。
+<strong>28. D</strong> —— encoder 由一層層 block 組成（§4）。
+<strong>29. A</strong> —— encoder 學像素↔標籤的統計模式（§4.1）。
+<strong>30. C</strong> —— deep＝許多逐漸變窄的 block 堆疊（§4）。</p>
+<p><strong>31. B</strong> —— 高效能 encoder 用許多 narrowing blocks 堆疊（§4.2）。
+<strong>32. D</strong> —— 流程從 encoder（抽特徵）開始（§4.1／§6.2）。
+<strong>33. A</strong> —— 卷積層抽特徵（共享參數）（§6.1）。
+<strong>34. C</strong> —— 池化層降採樣、縮小尺寸（§6.1）。
+<strong>35. B</strong> —— 全連接層整合特徵做最終分類（§6.1）。
+<strong>36. D</strong> —— Softmax 輸出各類別機率（§6.1）。
+<strong>37. A</strong> —— ReLU 加入非線性（負值歸零）（§6.1）。
+<strong>38. C</strong> —— 「無需任何資料即可訓練」不是 CNN 特性（§6.3）。
+<strong>39. B</strong> —— 平移不變性＝物件移動仍能辨識（§6.3）。
+<strong>40. D</strong> —— 局部連接＝卷積只看鄰近區域（§6.3）。
+<strong>41. B</strong> —— 關鍵思想是參數重用（re-use parameters）（§5）。
+<strong>42. D</strong> —— 卷積共享參數＝同一組權重全圖共用（§5.1）。
+<strong>43. A</strong> —— (5−3)/1+1＝3 → 3×3（§5.2）。
+<strong>44. C</strong> —— 卷積核又稱 filter（§5.1）。
+<strong>45. B</strong> —— 輸出邊長＝<code>(W − K)/S + 1</code>（§5.2）。
+<strong>46. D</strong> —— 卷積共享參數且保留空間關係（§5.1）。
+<strong>47. A</strong> —— 參數大幅減少、不易過擬合（§5.1／附錄 E.2）。
+<strong>48. C</strong> —— 卷積核逐格滑動並做加權求和（§5.2）。
+<strong>49. B</strong> —— stride＝每次移動的步長（§5.2）。
+<strong>50. D</strong> —— padding＝在邊緣補值（常補 0）（§5.2）。
+<strong>51. A</strong> —— 階層順序：邊緣 → 紋理 → 部件 → 物件（§3.2）。
+<strong>52. C</strong> —— 影像具局部相關性 + 卷積具平移不變性（§6.3）。
+<strong>53. B</strong> —— 3×3＝9 個權重（不含 bias）（§5.2）。
+<strong>54. D</strong> —— 自動學特徵＝不需人工設計特徵（§3.1）。
+<strong>55. A</strong> —— 傳統 CV 需人工設計特徵（SIFT/HOG）（附錄 E.2）。
+<strong>56. C</strong> —— ResNet 是 CNN 家族變體（附錄 E.2）。
+<strong>57. B</strong> —— 資料增強提升對位置變化的穩健性（附錄 E.2）。
+<strong>58. D</strong> —— 過擬合＝訓練集好、新資料差（附錄 E.2）。
+<strong>59. A</strong> —— 影像＝像素值的二維網格（§3.1）。
+<strong>60. C</strong> —— CNN 的核心運算層是卷積層（§3／§6.1）。</p>
+<hr>
+<h2 id="附錄-h答錯題目--複習章節對照">附錄 H：答錯題目 → 複習章節對照</h2>
+<table>
+<thead>
+<tr>
+<th>答錯題號</th>
+<th>建議複習章節</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–5</td>
+<td>§1 商業案例（CV 定義與分類）</td>
+</tr>
+<tr>
+<td>6–10</td>
+<td>§1.1 六大應用、§2 世界機器人大會</td>
+</tr>
+<tr>
+<td>11–15</td>
+<td>§1.2 為何用 CV、§2.2 AlphaGo</td>
+</tr>
+<tr>
+<td>16–20</td>
+<td>§1.1 應用對照、§1.2 一致性</td>
+</tr>
+<tr>
+<td>21–26</td>
+<td>§3 CNN 定義與階層式表徵</td>
+</tr>
+<tr>
+<td>27–32</td>
+<td>§4 SOTA、encoder、deep</td>
+</tr>
+<tr>
+<td>33–40</td>
+<td>§6 CNN 元件與三大特性</td>
+</tr>
+<tr>
+<td>41–45</td>
+<td>§5 參數重用、卷積輸出尺寸</td>
+</tr>
+<tr>
+<td>46–50</td>
+<td>§5.1 卷積 vs 全連接、stride / padding</td>
+</tr>
+<tr>
+<td>51–55</td>
+<td>§3.2 特徵階層、附錄 E.2 觀念延伸</td>
+</tr>
+<tr>
+<td>56–60</td>
+<td>附錄 E.2 CNN 變體、過擬合、§3.1 網格資料</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。</em></p>
+</main>
+</div>
+</body>
+</html>

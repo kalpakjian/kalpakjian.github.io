@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to CV MC 模擬測驗（60 題）| AI Tech Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#e2e5ea; --txt:#1f2328; --dim:#5b636e;
+  --blue:#2563eb; --green:#15803d; --green-bg:#e8f6ec; --red:#b91c1c;
+  --red-bg:#fdeaea; --sel:#dbeafe; --sel-line:#2563eb;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",
+    "Microsoft JhengHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+a{color:var(--blue)}
+.topbar{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  padding:12px 20px 10px;
+}
+.topbar .row1{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px}
+.topbar h1{font-size:17px; margin:0; font-weight:700}
+.topbar .back{font-size:13px; color:var(--dim); text-decoration:none}
+.topbar .back:hover{color:var(--blue)}
+.stats{display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; font-size:14px; color:var(--dim)}
+.stats b{font-size:18px; color:var(--txt)}
+.stats .ok b{color:var(--green)}
+.stats .no b{color:var(--red)}
+.saved{font-size:12px; color:var(--green); opacity:0; transition:opacity .3s}
+.saved.on{opacity:1}
+.progress{height:6px; background:var(--line); border-radius:99px; margin-top:10px; overflow:hidden}
+.progress i{display:block; height:100%; width:0; background:var(--blue); border-radius:99px; transition:width .25s}
+.controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+button{
+  font:inherit; font-size:13px; padding:6px 13px; border-radius:8px;
+  border:1px solid var(--line); background:#fff; color:var(--txt); cursor:pointer;
+  transition:.15s;
+}
+button:hover{border-color:#b9c0c9; background:#fbfbfc}
+button.primary{background:var(--blue); border-color:var(--blue); color:#fff}
+button.primary:hover{background:#1d4ed8}
+button.active{background:var(--sel); border-color:var(--sel-line); color:#1e40af; font-weight:600}
+button.danger{color:var(--red); border-color:#f0c4c4}
+button.danger:hover{background:var(--red-bg)}
+.navwrap{padding:16px 20px 0}
+.navgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px}
+.navgrid button{padding:6px 0; font-size:13px; border-radius:7px; text-align:center; font-variant-numeric:tabular-nums}
+.navgrid button.done{background:#eef2ff; border-color:#c7d2fe; color:#3730a3}
+.navgrid button.right{background:var(--green-bg); border-color:#a7d7b6; color:var(--green); font-weight:700}
+.navgrid button.wrong{background:var(--red-bg); border-color:#eeb4b4; color:var(--red); font-weight:700}
+main{max-width:900px; margin:0 auto; padding:20px 20px 80px}
+.parttitle{
+  margin:34px 0 14px; font-size:15px; font-weight:700; color:var(--dim);
+  border-left:4px solid var(--blue); padding-left:10px;
+}
+.q{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px 18px; margin-bottom:14px;
+}
+.q.correct{border-color:#a7d7b6; background:var(--green-bg)}
+.q.incorrect{border-color:#eeb4b4; background:var(--red-bg)}
+.qhead{display:flex; gap:10px; align-items:flex-start}
+.num{
+  flex:0 0 auto; min-width:30px; height:26px; line-height:26px; text-align:center;
+  background:#eef1f5; border-radius:7px; font-size:13px; font-weight:700;
+  color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.qtext{margin:0; font-weight:600; font-size:16px}
+.opts{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:7px}
+.opt{
+  display:flex; gap:10px; align-items:flex-start; padding:9px 12px;
+  border:1px solid var(--line); border-radius:9px; background:#fff;
+  cursor:pointer; transition:.12s; user-select:none;
+}
+.opt:hover{border-color:#b9c0c9; background:#fbfbfc}
+.opt .lt{
+  flex:0 0 auto; width:22px; height:22px; line-height:22px; text-align:center;
+  border-radius:6px; background:#eef1f5; font-size:12px; font-weight:700; color:var(--dim);
+}
+.opt.picked{border-color:var(--sel-line); background:var(--sel)}
+.opt.picked .lt{background:var(--sel-line); color:#fff}
+.opt.right{border-color:#7cc08f; background:var(--green-bg)}
+.opt.right .lt{background:var(--green); color:#fff}
+.opt.wrong{border-color:#e39191; background:var(--red-bg)}
+.opt.wrong .lt{background:var(--red); color:#fff}
+.tag{font-size:11px; padding:1px 7px; border-radius:99px; margin-left:auto;
+     flex:0 0 auto; font-weight:700; align-self:center}
+.tag.right{background:var(--green); color:#fff}
+.tag.wrong{background:var(--red); color:#fff}
+.expl{
+  margin-top:12px; padding:11px 14px; background:#f8fafc; border-radius:9px;
+  border-left:3px solid var(--blue); font-size:14.5px; color:#333a44;
+}
+.expl b{color:var(--txt)}
+.empty{text-align:center; color:var(--dim); padding:50px 20px; font-size:15px}
+footer{
+  max-width:900px; margin:0 auto; padding:0 20px 60px; color:var(--dim);
+  font-size:13px; text-align:center;
+}
+@media print{
+  .topbar,.navwrap,footer,.controls{display:none !important}
+  body{background:#fff; font-size:12pt}
+  main{max-width:none; padding:0}
+  .q{break-inside:avoid; page-break-inside:avoid; border-color:#999}
+}
+@media (max-width:560px){
+  .topbar{padding:10px 14px 8px}
+  .topbar h1{font-size:15px}
+  main{padding:14px 14px 60px}
+  .navwrap{padding:12px 14px 0}
+  .q{padding:13px 14px}
+  .qtext{font-size:15px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="row1">
+    <h1>Introduction to CV 學習筆記 · MC 模擬測驗</h1>
+    <a class="back" href="index.html">&larr; 回到 Introduction to CV 學習筆記</a>
+    <span class="saved" id="saved">進度已儲存 &#10003;</span>
+  </div>
+  <div class="stats">
+    <span>已答 <b id="nAns">0</b> / 60</span>
+    <span class="ok">得分 <b id="nScore">0</b> / 60</span>
+    <span class="no">答錯 <b id="nWrong">0</b></span>
+    <span id="hint">作答進度自動存在此瀏覽器，關掉再回來可繼續</span>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <button id="btnReveal" class="primary">顯示答案</button>
+    <button id="btnAll" class="active">全部 60 題</button>
+    <button id="btnUnans">只看未答</button>
+    <button id="btnWrong">只看答錯</button>
+    <button id="btnTop">回到頂部</button>
+    <button id="btnReset" class="danger">重設全部</button>
+  </div>
+</header>
+
+<div class="navwrap">
+  <div class="navgrid" id="navgrid"></div>
+</div>
+
+<main id="quiz"></main>
+
+<footer>
+  <p>IVDC「Introduction to Computer Vision」課程個人學習筆記 · 只考基本理論</p>
+  <p>單一 HTML 檔、無外部資源，可離線使用</p>
+</footer>
+<script>
+const QUESTIONS = [{"q":"「電腦視覺（Computer Vision）」的核心是？","o":["讓機器打字","讓機器從影像／影片理解世界","讓機器播放音樂","讓機器壓縮檔案"],"a":1,"e":"電腦視覺的核心是讓機器**從影像／影片理解世界**。"},{"q":"原稿「Real Case Examples in Commercial Sectors」的主題是？","o":["網頁設計","資料庫正規化","電腦視覺在商業領域的真實案例","電路板佈局"],"a":2,"e":"該節展示 **CV 在商業領域的真實案例**。"},{"q":"「無人商店」屬於哪一類商業應用？","o":["零售","醫療","農業","工業"],"a":0,"e":"無人商店屬 **零售**。"},{"q":"車牌辨識（ANPR）通常結合哪兩項技術？","o":["語音 + 音樂","加密 + 壓縮","排版 + 列印","物件偵測 + OCR"],"a":3,"e":"ANPR ＝ **物件偵測 + OCR**。"},{"q":"產品「瑕疵檢測」屬於哪一類應用？","o":["零售","工業／製造","醫療","農業"],"a":1,"e":"瑕疵檢測屬 **工業／製造**。"},{"q":"X 光／CT 影像判讀最常用哪類技術？","o":["語音辨識","文字摘要","影像分類與語意分割","排程最佳化"],"a":2,"e":"醫學影像判讀用 **影像分類與語意分割**。"},{"q":"2024 世界機器人大會展示的著名對弈是？","o":["超現實圍棋博弈（Hyper-realistic Go Match）","西洋棋錦標賽","象棋快棋賽","五子棋表演"],"a":0,"e":"2024 世界機器人大會展示 **超現實圍棋博弈**。"},{"q":"「Hyper-realistic Go Match」對應的英文場合是？","o":["Olympics","CES","GTC","World Robot Conference"],"a":3,"e":"對應 **World Robot Conference**。"},{"q":"圍棋為什麼是 AI 的經典挑戰？","o":["規則太簡單","局面數太大，無法暴力窮舉","棋盤太小","只能單人玩"],"a":1,"e":"圍棋**局面數太大，無法暴力窮舉**。"},{"q":"2016 年 AlphaGo 擊敗的世界冠軍是？","o":["Lee Sedol（李世乭）","Kasparov","Carlsen","Ke Jie"],"a":0,"e":"AlphaGo 擊敗 **Lee Sedol**。"},{"q":"AlphaGo 是哪個團隊開發的？","o":["IBM","Microsoft","OpenAI","DeepMind"],"a":3,"e":"AlphaGo 由 **DeepMind** 開發。"},{"q":"「ANPR」在 CV 領域指的是？","o":["一種神經網路","一種影像格式","一種色彩空間","車牌自動辨識"],"a":3,"e":"ANPR ＝ **車牌自動辨識**。"},{"q":"商業上採用電腦視覺的主要好處之一是？","o":["完全不需要資料","可 24 小時運作且判斷標準一致","一定 100% 正確","不需要任何成本"],"a":1,"e":"可 **24 小時運作且判斷標準一致**。"},{"q":"零售業的「人流統計」通常用什麼技術？","o":["語音合成","文字翻譯","物件偵測與人體追蹤","檔案壓縮"],"a":2,"e":"人流統計用 **物件偵測與人體追蹤**。"},{"q":"「果實成熟度分級」屬於哪一類應用？","o":["農業","零售","安防","醫療"],"a":0,"e":"果實分級屬 **農業**。"},{"q":"自駕車的「車道線偵測」常用什麼技術？","o":["語音辨識","資料庫查詢","邊緣偵測／物件偵測","檔案同步"],"a":2,"e":"車道線偵測用 **邊緣偵測／物件偵測**。"},{"q":"原稿「Latest AI technologies」提到哪兩個地區？","o":["日本與韓國","中國大陸與香港","美國與加拿大","英國與德國"],"a":1,"e":"提到 **中國大陸與香港**。"},{"q":"「異常行為偵測」通常屬於哪一類應用？","o":["農業","零售","安防／監控","醫療"],"a":2,"e":"異常行為偵測屬 **安防／監控**。"},{"q":"工業上的「尺寸量測」屬於哪一類應用？","o":["工業／製造","零售","醫療","農業"],"a":0,"e":"尺寸量測屬 **工業／製造**。"},{"q":"為何說電腦視覺的判斷比人工「更一致」？","o":["因為它會隨情緒改變","因為它會疲勞","因為它每天標準不同","因為它不會疲勞、標準固定且可量化"],"a":3,"e":"因為**不會疲勞、標準固定且可量化**。"},{"q":"CNN 的全名是？","o":["Convolutional Neural Network","Computer Network Node","Central Neural Number","Convolutional Numeric Node"],"a":0,"e":"CNN ＝ **Convolutional Neural Network**。"},{"q":"CNN 專為處理哪一類資料而設計？","o":["只有純文字","只有關聯式表格","網格狀結構（如影像、音訊）","只有程式原始碼"],"a":2,"e":"專為**網格狀結構（grid-like）**資料設計。"},{"q":"下列何者屬於「grid-like structure」？","o":["一段語音轉成的純文字","影像（像素網格）","一份 CSV 清單","一段程式碼"],"a":1,"e":"影像是**像素網格**（grid-like）。"},{"q":"CNN 使用哪一種層來自動學習階層式表徵？","o":["排序層","加密層","壓縮層","卷積層（convolutional layers）"],"a":3,"e":"用**卷積層**自動學習階層式表徵。"},{"q":"「hierarchical representations」的意思是？","o":["由低階到高階的特徵層次","隨機產生的特徵","只有單一特徵","一種檔案格式"],"a":0,"e":"指**由低階到高階的特徵層次**。"},{"q":"原稿指出 CNN 也可用於哪種非影像資料？","o":["樂譜紙本","紙本合約","音訊（audio）","實體棋盤"],"a":2,"e":"原稿明講也包含**音訊（audio）**。"},{"q":"影像／影片辨識的 SOTA 方法大多基於？","o":["決策樹","CNN 的各種變體","線性迴歸","排程演算法"],"a":1,"e":"SOTA 幾乎都是 **CNN 的變體**。"},{"q":"原稿說「一切從 encoder 開始」，encoder 是由什麼組成？","o":["單一神經元","隨機雜訊","資料庫表格","一層層的 block"],"a":3,"e":"encoder 由**一層層的 block** 組成。"},{"q":"Encoder 主要學習什麼？","o":["影像像素中與待預測標籤相對應的統計模式","檔案的壓縮率","螢幕的解析度","使用者的密碼"],"a":0,"e":"學**像素與待預測標籤相對應的統計模式**。"},{"q":"「deep neural networks」的「deep」由何而來？","o":["圖片解析度很高","訓練時間很長","許多逐漸變窄的 block 堆疊","參數隨機排列"],"a":2,"e":"來自**許多逐漸變窄（narrowing）的 block 堆疊**。"},{"q":"高效能 encoder 的設計特徵是？","o":["只用一層","許多 narrowing blocks 堆疊","不使用卷積","層數隨機"],"a":1,"e":"**許多 narrowing blocks 堆疊**。"},{"q":"影像辨識流程通常從哪裡開始？","o":["Softmax","全連接層","池化層","Encoder（抽特徵）"],"a":3,"e":"從 **encoder（抽特徵）**開始。"},{"q":"卷積層的主要作用是？","o":["抽特徵（共享參數）","輸出類別機率","增加圖片解析度","儲存檔案"],"a":0,"e":"卷積層負責**抽特徵（共享參數）**。"},{"q":"池化層（Pooling）的主要作用是？","o":["增加參數數量","輸出文字","降採樣、縮小尺寸","提高色彩飽和度"],"a":2,"e":"池化層負責**降採樣、縮小尺寸**。"},{"q":"全連接層（Fully Connected）的作用是？","o":["抽局部邊緣","把特徵整合成最終分類","降採樣","增加圖片尺寸"],"a":1,"e":"全連接層**整合特徵做最終分類**。"},{"q":"Softmax 的作用是？","o":["降採樣","抽取邊緣","卷積運算","輸出各類別機率"],"a":3,"e":"Softmax **輸出各類別機率**。"},{"q":"ReLU 的作用是？","o":["加入非線性（負值歸零）","降低解析度","輸出機率","卷積運算"],"a":0,"e":"ReLU **加入非線性（負值歸零）**。"},{"q":"下列何者「不是」CNN 的三大特性？","o":["局部連接","參數共享","無需任何資料即可訓練","平移不變性"],"a":2,"e":"「無需任何資料即可訓練」不是 CNN 特性。"},{"q":"「平移不變性（translation invariance）」的意思是？","o":["圖片不能移動","物件左右移動仍能辨識","只能辨識中心物件","需要固定座標"],"a":1,"e":"物件**移動仍能辨識**。"},{"q":"「局部連接（local connectivity）」的意思是？","o":["只看整張圖的平均值","只看最亮的像素","隨機選像素","卷積只看鄰近區域"],"a":3,"e":"卷積**只看鄰近區域**。"},{"q":"CNN 的關鍵思想（Key idea）是？","o":["隨機初始化","參數重用（re-use parameters）","刪除所有參數","每個位置換一組權重"],"a":1,"e":"關鍵思想是**參數重用（re-use parameters）**。"},{"q":"「Convolution shares parameters」的意思是？","o":["每個像素都有專屬權重","參數會被刪除","參數每次隨機改變","同一組權重在全圖共用"],"a":3,"e":"**同一組權重在全圖共用**。"},{"q":"5×5 影像做 3×3 卷積（stride 1、無 padding）的輸出尺寸是？","o":["3×3","5×5","2×2","1×1"],"a":0,"e":"(5−3)/1+1 = 3 → **3×3**。"},{"q":"卷積核（kernel）又常被稱作？","o":["Cache","Buffer","Filter","Index"],"a":2,"e":"卷積核又稱 **filter**。"},{"q":"卷積輸出邊長的公式（無 padding）是？","o":["`W + K + S`","`(W − K) / S + 1`","`W × K`","`W / K − 1`"],"a":1,"e":"輸出邊長 = **`(W − K) / S + 1`**。"},{"q":"卷積層相對全連接層的主要優勢是？","o":["參數更多","完全不需要訓練","無法處理影像","參數共享且保留空間關係"],"a":3,"e":"**參數共享且保留空間關係**。"},{"q":"「參數共享」帶來的好處之一是？","o":["參數大幅減少，不易過擬合","一定達到 100% 準確率","完全不需要資料","不需要激活函數"],"a":0,"e":"**參數大幅減少，不易過擬合**。"},{"q":"卷積核在影像上做什麼動作？","o":["隨機跳躍","只在中心計算一次","逐格滑動並做加權求和","只做旋轉"],"a":2,"e":"**逐格滑動並做加權求和**。"},{"q":"卷積中的「stride」指的是？","o":["卷積核的大小","卷積核每次移動的步長","圖片的張數","通道數"],"a":1,"e":"stride ＝ **每次移動的步長**。"},{"q":"卷積中的「padding」指的是？","o":["刪除邊緣像素","增加卷積核大小","改變步長","在影像邊緣補值（常補 0）"],"a":3,"e":"padding ＝ **在邊緣補值（常補 0）**。"},{"q":"CNN 學到的特徵，其階層順序通常是？","o":["邊緣 → 紋理 → 部件 → 物件","物件 → 部件 → 紋理 → 邊緣","隨機順序","只有顏色"],"a":0,"e":"**邊緣 → 紋理 → 部件 → 物件**。"},{"q":"為什麼卷積特別適合影像資料？","o":["因為影像很小","因為影像沒有規律","因為影像具局部相關性，且卷積具平移不變性","因為卷積不需要計算"],"a":2,"e":"影像具**局部相關性**，卷積具**平移不變性**。"},{"q":"一個 3×3 卷積核（單通道）有多少個權重（不含 bias）？","o":["3","9","6","27"],"a":1,"e":"3×3 = **9** 個權重。"},{"q":"CNN「自動學習特徵」代表？","o":["需要人工設計每個特徵","完全不需要資料","只能辨識顏色","不需人工設計特徵"],"a":3,"e":"**不需人工設計特徵**。"},{"q":"傳統電腦視覺方法（相對 CNN）通常需要？","o":["人工設計特徵（如 SIFT、HOG）","完全不需要特徵","只靠資料庫查詢","只靠語音輸入"],"a":0,"e":"傳統方法需**人工設計特徵（SIFT、HOG）**。"},{"q":"下列何者是 CNN 家族的知名變體？","o":["Bubble Sort","Quick Sort","ResNet","Dijkstra"],"a":2,"e":"**ResNet** 是 CNN 家族變體。"},{"q":"資料增強（如旋轉、翻轉、裁切）對 CNN 的作用是？","o":["減少資料量","提升對位置變化的穩健性","取代卷積層","讓模型不用訓練"],"a":1,"e":"**提升對位置變化的穩健性**。"},{"q":"「過擬合（overfitting）」指的是？","o":["模型完全沒學到東西","資料太多","模型太小","模型在訓練集表現好、在新資料表現差"],"a":3,"e":"**訓練集表現好、新資料表現差**。"},{"q":"影像在 CNN 中可視為？","o":["像素值的二維網格","一串無序數字","一份文字文件","一個壓縮檔"],"a":0,"e":"影像＝**像素值的二維網格**。"},{"q":"CNN 的核心運算層是？","o":["排序層","加密層","卷積層","列印層"],"a":2,"e":"核心運算層是**卷積層**。"}];
+
+const LET = 'ABCD';
+const KEY = 'cv-intro-mc-quiz-v1';
+const state = { answers:{}, revealed:false, filter:'all' };
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p && typeof p === 'object'){
+      state.answers = (p.answers && typeof p.answers === 'object') ? p.answers : {};
+      state.revealed = !!p.revealed;
+      state.filter = p.filter || 'all';
+    }
+  }catch(e){}
+}
+let savedTimer = null;
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const el = document.getElementById('saved');
+    if(el){ el.classList.add('on'); clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ el.classList.remove('on'); }, 1200); }
+  }catch(e){}
+}
+
+function tally(){
+  let answered = 0, score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    if(a !== undefined && a !== null){
+      answered++;
+      if(a === QUESTIONS[i].a) score++;
+    }
+  }
+  return { answered:answered, score:score, wrong:answered-score };
+}
+
+function isVisible(i){
+  const a = state.answers[i];
+  const has = (a !== undefined && a !== null);
+  if(state.filter === 'unanswered') return !has;
+  if(state.filter === 'wrong') return has && a !== QUESTIONS[i].a;
+  return true;
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdInline(s){
+  s = esc(s);
+  let out = '';
+  let bold = false;
+  let i = 0;
+  while(i < s.length){
+    if(s.charAt(i) === '*' && s.charAt(i + 1) === '*'){
+      bold = !bold;
+      out += bold ? '<b>' : '</b>';
+      i += 2;
+    } else {
+      out += s.charAt(i);
+      i++;
+    }
+  }
+  return out;
+}
+
+function renderStats(){
+  const t = tally();
+  document.getElementById('nAns').textContent = t.answered;
+  document.getElementById('nScore').textContent = t.score;
+  document.getElementById('nWrong').textContent = t.wrong;
+  document.getElementById('bar').style.width = (t.answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('btnReveal').textContent = state.revealed ? '隱藏答案' : '顯示答案';
+  document.getElementById('hint').textContent = state.revealed
+    ? '已顯示正解與解析'
+    : '作答進度自動存在此瀏覽器，關掉再回來可繼續';
+}
+
+function renderNav(){
+  const nav = document.getElementById('navgrid');
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    const has = (a !== undefined && a !== null);
+    let cls = '';
+    if(has) cls = 'done';
+    if(state.revealed && has) cls = (a === QUESTIONS[i].a) ? 'right' : 'wrong';
+    html += '<button class="' + cls + '" data-goto="' + i + '">' + (i+1) + '</button>';
+  }
+  nav.innerHTML = html;
+}
+
+function renderQuestions(){
+  const box = document.getElementById('quiz');
+  let html = '';
+  let shown = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(!isVisible(i)) continue;
+    shown++;
+    const q = QUESTIONS[i];
+    if(i === 0 || i === 20 || i === 40){
+      const label = i === 0 ? '第一部分：電腦視覺與商業應用（1–20）'
+                  : i === 20 ? '第二部分：CNN 定義與架構（21–40）'
+                  : '第三部分：卷積、參數重用與綜合（41–60）';
+      html += '<div class="parttitle">' + label + '</div>';
+    }
+    const picked = state.answers[i];
+    const hasPicked = (picked !== undefined && picked !== null);
+    let qcls = '';
+    if(state.revealed && hasPicked) qcls = (picked === q.a) ? 'correct' : 'incorrect';
+
+    html += '<article class="q ' + qcls + '" id="q' + (i+1) + '">';
+    html += '<div class="qhead"><span class="num">' + (i+1) + '</span>';
+    html += '<p class="qtext">' + mdInline(q.q) + '</p></div>';
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      let cls = 'opt';
+      if(hasPicked && picked === k) cls += ' picked';
+      let tag = '';
+      if(state.revealed){
+        if(k === q.a){ cls += ' right'; tag = '<span class="tag right">正解</span>'; }
+        else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
+      }
+      html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
+      html += '<span class="lt">' + LET[k] + '</span><span>' + esc(q.o[k]) + '</span>' + tag + '</li>';
+    }
+    html += '</ul>';
+    if(state.revealed){
+      html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
+    }
+    html += '</article>';
+  }
+  if(shown === 0){
+    html = '<div class="empty">目前篩選條件下沒有題目 &#128522;<br>換個篩選，或按「全部 60 題」。</div>';
+  }
+  box.innerHTML = html;
+}
+
+function renderAll(){ renderStats(); renderNav(); renderQuestions(); }
+
+document.addEventListener('click', function(ev){
+  const opt = ev.target.closest ? ev.target.closest('.opt') : null;
+  if(opt){
+    state.answers[parseInt(opt.getAttribute('data-q'), 10)] = parseInt(opt.getAttribute('data-k'), 10);
+    saveState();
+    renderAll();
+    return;
+  }
+  const go = ev.target.closest ? ev.target.closest('[data-goto]') : null;
+  if(go){
+    const idx = parseInt(go.getAttribute('data-goto'), 10);
+    if(state.filter !== 'all'){ state.filter = 'all'; syncFilterButtons(); renderAll(); }
+    const el = document.getElementById('q' + (idx + 1));
+    if(el){
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      el.style.transition = 'box-shadow .3s';
+      el.style.boxShadow = '0 0 0 3px rgba(37,99,235,.35)';
+      setTimeout(function(){ el.style.boxShadow = ''; }, 900);
+    }
+    saveState();
+  }
+});
+
+function syncFilterButtons(){
+  const map = { all:'btnAll', unanswered:'btnUnans', wrong:'btnWrong' };
+  for(const k in map){
+    const b = document.getElementById(map[k]);
+    if(b) b.classList.toggle('active', state.filter === k);
+  }
+}
+
+function setFilter(f){
+  state.filter = f;
+  syncFilterButtons();
+  saveState();
+  renderAll();
+}
+
+function bind(){
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.revealed = !state.revealed; saveState(); renderAll();
+  });
+  document.getElementById('btnAll').addEventListener('click', function(){ setFilter('all'); });
+  document.getElementById('btnUnans').addEventListener('click', function(){ setFilter('unanswered'); });
+  document.getElementById('btnWrong').addEventListener('click', function(){ setFilter('wrong'); });
+  document.getElementById('btnTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('確定要清除全部作答紀錄嗎？此動作無法復原。')) return;
+    state.answers = {}; state.revealed = false; state.filter = 'all';
+    saveState(); syncFilterButtons(); renderAll();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && state.revealed){ state.revealed = false; saveState(); renderAll(); }
+  });
+}
+
+loadState();
+syncFilterButtons();
+renderAll();
+bind();
+</script>
+</body>
+</html>
