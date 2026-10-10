@@ -4,7 +4,7 @@
 > 機構：匯縱專業發展中心（IVDC）
 > 教材來源：`3 IVDC OpenCV.pdf`（29 頁）
 > 本筆記按 PDF 原稿每一個標題逐一填充內容，並補上 API 簽名、參數說明、常見錯誤、模擬試題。
-> 🖱️ **互動測驗（推薦）**：附錄 G 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
+> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
@@ -29,11 +29,10 @@
 | 15 | [Summary](#15-summary) | 29 |
 | A | [附錄 A：API 速查表](#附錄-aapi-速查表) | — |
 | B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) | — |
-| C | [附錄 C：模擬試題（連答案）](#附錄-c模擬試題連答案) | — |
-| D | [附錄 D：教材頁面索引對照](#附錄-d教材頁面索引對照) | — |
-| E | [附錄 E：離線執行提示](#附錄-e離線執行提示) | — |
-| F | [附錄 F：一頁精華（考前 10 分鐘）](#附錄-f一頁精華考前-10-分鐘) | — |
-| G | [附錄 G：互動式線上測驗（60 題）](#附錄-g互動式線上測驗60-題) | — |
+| C | [附錄 C：教材頁面索引對照](#附錄-c教材頁面索引對照) | — |
+| D | [附錄 D：離線執行提示](#附錄-d離線執行提示) | — |
+| E | [附錄 E：一頁精華（考前 10 分鐘）](#附錄-e一頁精華考前-10-分鐘) | — |
+| F | [附錄 F：互動式線上測驗（60 題）](#附錄-f互動式線上測驗60-題) | — |
 
 ---
 
@@ -2181,286 +2180,7 @@ img = cv2.imdecode(np.fromfile(path, dtype=np.uint8), cv2.IMREAD_COLOR)
 
 ---
 
-## 附錄 C：模擬試題（連答案）
-
-### C.1 選擇題（20 題）
-
-> **想完整模擬考試？** 本節是「隨讀隨測」的 20 題。若要一份**完整計時模擬試卷**（60 題、即時計分），請直接做 [附錄 G：互動式線上測驗（60 題）](mc-quiz.html)。
-
-**1. OpenCV 預設讀入影像的色彩通道順序是？**
-A. RGB　B. BGR　C. HSV　D. Gray
-<details><summary>答案</summary>**B. BGR**</details>
-
-**2. OpenCV 由哪家公司發起？**
-A. Google　B. Microsoft　C. Intel　D. NVIDIA
-<details><summary>答案</summary>**C. Intel**</details>
-
-**3. OpenCV 內含多少個以上的最佳化演算法？**
-A. 250　B. 800　C. 2500　D. 10000
-<details><summary>答案</summary>**C. 2500+**</details>
-
-**4. 下列哪個色彩空間把「顏色」與「亮度」分離？**
-A. BGR　B. RGB　C. HSV　D. Gray
-<details><summary>答案</summary>**C. HSV**</details>
-
-**5. 在 OpenCV 中 HSV 的 Hue 範圍是？**
-A. 0–255　B. 0–360　C. 0–179　D. 0–100
-<details><summary>答案</summary>**C. 0–179**</details>
-
-**6. 哪個色彩空間是「感知均勻（perceptually uniform）」的？**
-A. RGB　B. LAB　C. HSV　D. Gray
-<details><summary>答案</summary>**B. LAB**</details>
-
-**7. 要把 BGR 影像轉成灰階，code 應填？**
-A. `COLOR_BGR2RGB`　B. `COLOR_BGR2HSV`　C. `COLOR_BGR2GRAY`　D. `COLOR_GRAY2BGR`
-<details><summary>答案</summary>**C. `cv2.COLOR_BGR2GRAY`**</details>
-
-**8. 若 `image.shape` 是 `(480, 640, 3)`，`cv2.resize(image, (320, 240))` 之後的 shape 是？**
-A. `(320, 240, 3)`　B. `(240, 320, 3)`　C. `(480, 640, 3)`　D. `(640, 320, 3)`
-<details><summary>答案</summary>**B. `(240, 320, 3)`** —— dsize 是 (W, H)</details>
-
-**9. 取出第 100–200 列、第 50–150 行的 ROI，正確寫法是？**
-A. `image[50:150, 100:200]`　B. `image[100:200, 50:150]`　C. `image[:, 100:200]`　D. `image[100:200]`
-<details><summary>答案</summary>**B. `image[100:200, 50:150]`**</details>
-
-**10. `cv2.rectangle()` 中 `thickness = -1` 代表？**
-A. 不畫　B. 填滿　C. 最細線　D. 錯誤
-<details><summary>答案</summary>**B. 填滿**</details>
-
-**11. `cv2.addWeighted(a, 0.6, b, 0.4, 0)` 的計算公式是？**
-A. `a*0.4 + b*0.6`　B. `a*0.6 + b*0.4`　C. `(a+b)*0.6`　D. `a+b`
-<details><summary>答案</summary>**B. `a*0.6 + b*0.4`**</details>
-
-**12. `np.uint8` 的陣列 `200 + 100` 會得到？**
-A. 255　B. 300　C. 44　D. 錯誤
-<details><summary>答案</summary>**C. 44**（300 % 256 = 44，溢位）</details>
-
-**13. 哪種濾波器最能保留邊緣？**
-A. Average Blur　B. Gaussian Blur　C. Median Blur　D. Bilateral Filter
-<details><summary>答案</summary>**D. Bilateral Filter**</details>
-
-**14. 移除椒鹽雜訊（salt-and-pepper noise）應該用？**
-A. `cv2.blur`　B. `cv2.medianBlur`　C. `cv2.GaussianBlur`　D. `cv2.bilateralFilter`
-<details><summary>答案</summary>**B. `cv2.medianBlur`**</details>
-
-**15. 下列哪個 kernel 大小是合法的？**
-A. `(10, 10)`　B. `(0, 0)`　C. `(21, 21)`　D. `(4, 6)`
-<details><summary>答案</summary>**C. `(21, 21)`**（正奇數）</details>
-
-**16. Canny 的 `threshold2`（高門檻）的作用是？**
-A. 決定低於多少的梯度被丟棄　B. 決定高於多少的梯度確定為邊緣　C. 決定 kernel 大小　D. 決定模糊強度
-<details><summary>答案</summary>**B. 高於 high threshold 的梯度確定為邊緣**</details>
-
-**17. 開運算（Opening）的順序是？**
-A. 先膨脹再侵蝕　B. 先侵蝕再膨脹　C. 只膨脹　D. 只侵蝕
-<details><summary>答案</summary>**B. 先侵蝕再膨脹**（用於移除背景小白點）</details>
-
-**18. ORB 的描述子應搭配哪種距離度量？**
-A. `cv2.NORM_L2`　B. `cv2.NORM_L1`　C. `cv2.NORM_HAMMING`　D. 餘弦相似度
-<details><summary>答案</summary>**C. `cv2.NORM_HAMMING`**（ORB 是 binary 描述子）</details>
-
-**19. 下列哪個演算法最快且授權免費？**
-A. SIFT　B. SURF　C. ORB　D. 以上皆非
-<details><summary>答案</summary>**C. ORB**</details>
-
-**20. RANSAC 在特徵匹配中的主要作用是？**
-A. 加快匹配速度　B. 剔除錯誤匹配（outliers）　C. 產生描述子　D. 增強對比
-<details><summary>答案</summary>**B. 剔除錯誤匹配（outliers）**</details>
-
-### C.2 填充題（10 題）
-
-1. OpenCV 的全名是 ____________________。
-   > **Open Source Computer Vision Library**
-
-2. 影像在 Python 中是以 __________ 套件的 __________（資料型別）儲存的。
-   > **NumPy / ndarray（陣列）**
-
-3. `cv2.cvtColor(image, cv2.COLOR_BGR2HSV)` 會把影像轉成 __________ 色彩空間。
-   > **HSV**
-
-4. 取出 ROI 的切片語法是 `image[__:__, __:__]`，順序是先 ____ 後 ____。
-   > **`image[startY:endY, startX:endX]`，先 Y（列）後 X（行）**
-
-5. 高斯模糊的 kernel 大小必須是 __________。
-   > **正奇數（positive odd numbers）**
-
-6. 形態學的 __________ 運算 = 先侵蝕再膨脹，可用來移除背景雜點。
-   > **開運算（Opening）**
-
-7. `cv2.Canny()` 的輸入必須是 __________ 通道的 8-bit 影像。
-   > **單（1）通道（灰階）**
-
-8. ORB 的關鍵點偵測部分基於 __________ 演算法，描述子部分基於 __________。
-   > **FAST / BRIEF**
-
-9. ORB 描述子的長度是 __________ bytes = __________ bits。
-   > **32 / 256**
-
-10. `cv2.findHomography()` 回傳的 H 是一個 __________ 大小的矩陣。
-    > **3×3**
-
-
-### C.3 簡答題（8 題）
-
-**1. 為什麼 OpenCV 要用 BGR 而不是 RGB？**
-> 歷史原因：OpenCV 早期由 Intel 開發，當時的相機 SDK 與影像擷取硬體採用 BGR 位元組順序。因為已有大量程式碼依賴此約定，為保持向後相容性就一直沿用至今。使用時只要在顯示（Matplotlib / PIL）前做 `cvtColor(..., COLOR_BGR2RGB)` 即可。
-
-**2. 為什麼做 Canny 之前建議先做 Gaussian Blur？**
-> Canny 是基於**梯度（微分）**的演算法，微分會放大高頻雜訊。如果先不模糊，雜訊點也會產生很大的梯度，被誤判成邊緣。Gaussian Blur 是低通濾波，能移除高頻雜訊，讓邊緣偵測只保留真正的結構邊界。
-
-**3. 解釋 Canny 的雙門檻 + 遲滯（hysteresis）機制。**
-> 梯度 > high threshold 的像素標為「強邊緣」直接保留；梯度 < low threshold 的丟棄；介於兩者之間的「弱邊緣」只有在**與強邊緣相連**時才保留。這樣可以同時避免漏掉真實邊緣（弱邊緣被救回）與誤檢雜訊（孤立的弱邊緣被丟棄）。
-
-**4. Average Blur、Gaussian Blur、Median Blur、Bilateral Filter 有何不同？**
-> - **Average**：kernel 內所有像素等權重平均，最快，但邊緣會糊。
-> - **Gaussian**：依距離給權重（中央最大），結果較自然，是最常用的前處理。
-> - **Median**：取中位數而非平均，對極端值（椒鹽雜訊）不敏感，是移除黑白斑點的最佳選擇。
-> - **Bilateral**：同時考慮「空間距離」與「顏色相似度」，只模糊顏色相近的鄰域，因此能**保留邊緣**，但速度最慢。
-
-**5. 說明 `warpAffine` 與 `warpPerspective` 的差異。**
-> - `warpAffine` 使用 **2×3** 矩陣，需 **3 對**對應點，屬於仿射變換（平移、旋轉、縮放、切變），**平行線仍保持平行**。
-> - `warpPerspective` 使用 **3×3** 矩陣，需 **4 對**對應點，屬於投影變換，**平行線不一定保持平行**，可以修正拍攝視角（如把斜拍的文件拉正）。
-
-**6. 為什麼 ORB 適合即時應用？它有什麼缺點？**
-> **優點**：FAST 角點偵測極快；BRIEF 描述子是二元的（256 bits = 32 bytes），記憶體小且可用 Hamming 距離做極快的 XOR + popcount 比較；完全無專利、免費。
-> **缺點**：準確度與穩健性不如 SIFT/SURF，對大尺度變化與嚴重模糊較不敏感；不具備 SIFT 的完整尺度不變性；對光照劇變的容忍度較低。
-
-**7. RANSAC 的運作步驟是什麼？**
-> 1. 隨機選取最小數量的匹配點（估 Homography 需 4 點）。
-> 2. 用這些點計算一個模型（H 矩陣）。
-> 3. 計算所有其他匹配點的重投影誤差，誤差 < 門檻者算 inlier。
-> 4. 記錄 inlier 數量，重複 1–3 多次迭代。
-> 5. 取 inlier 最多（最佳）的模型，用它重新計算最終 H，並把 outlier 剔除。
-
-**8. 請描述一個完整的物件辨識（Object Recognition）流程。**
-> 1. **讀圖 + 前處理**：`imread` → `cvtColor` 灰階 → `GaussianBlur` 去雜訊。
-> 2. **特徵擷取**：`cv2.ORB_create(nfeatures=500)` → `detectAndCompute()` 取得 keypoints 與 descriptors。
-> 3. **特徵匹配**：`cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)` → `match()`，再依 `distance` 排序。
-> 4. **過濾誤配**：Lowe's ratio test（`knnMatch` + `0.75 * n.distance`）。
-> 5. **估幾何變換**：`cv2.findHomography(..., cv2.RANSAC, 5.0)` 取得 H 與 inlier mask。
-> 6. **定位目標**：用 `cv2.perspectiveTransform()` 把目標的四個角點投影到場景中。
-> 7. **標註輸出**：`cv2.polylines()` / `rectangle()` 畫出目標位置。
-
-### C.4 程式題（5 題）
-
-**1. 讀入圖片 → 灰階 → 縮小到 320×320 → 5×5 高斯模糊 → 二值化。**
-
-```python
-import cv2
-
-image_bgr = cv2.imread("photo.jpg")
-gray      = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2GRAY)
-small     = cv2.resize(gray, (320, 320))
-blurred   = cv2.GaussianBlur(small, (5, 5), 0)
-_, binary = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY)
-```
-
-**2. 在圖上畫紅色邊界框（100, 80）到（250, 280），並在框上方寫「Target」。**
-
-```python
-import cv2
-
-image = cv2.imread("photo.jpg")
-cv2.rectangle(image, (100, 80), (250, 280), (0, 0, 255), 2)     # 紅色（BGR）
-cv2.putText(image, "Target", (100, 70),
-            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2, cv2.LINE_AA)
-```
-
-**3. 把影像繞中心旋轉 45 度（不縮放）。**
-
-```python
-import cv2
-
-image = cv2.imread("photo.jpg")
-h, w = image.shape[:2]
-center = (w // 2, h // 2)
-M = cv2.getRotationMatrix2D(center, angle=45, scale=1.0)
-rotated = cv2.warpAffine(image, M, (w, h))
-```
-
-**4. 用 ORB + BFMatcher 匹配兩張圖，畫出前 20 個匹配。**
-
-```python
-import cv2
-
-img1 = cv2.imread("a.jpg")
-img2 = cv2.imread("b.jpg")
-g1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
-g2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
-
-orb = cv2.ORB_create(nfeatures=500)
-kp1, des1 = orb.detectAndCompute(g1, None)
-kp2, des2 = orb.detectAndCompute(g2, None)
-
-bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-matches = sorted(bf.match(des1, des2), key=lambda m: m.distance)
-
-out = cv2.drawMatches(img1, kp1, img2, kp2, matches[:20], None,
-                      flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-cv2.imshow("Matches", out)
-cv2.waitKey(0)
-```
-
-**5. 用 HSV 抓出畫面中的「藍色」區域。**
-
-```python
-import cv2
-import numpy as np
-
-image_bgr = cv2.imread("photo.jpg")
-hsv = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2HSV)
-
-lower_blue = np.array([100, 100, 100])
-upper_blue = np.array([130, 255, 255])
-
-mask = cv2.inRange(hsv, lower_blue, upper_blue)
-result = cv2.bitwise_and(image_bgr, image_bgr, mask=mask)
-
-cv2.imshow("Blue Objects", result)
-cv2.waitKey(0)
-```
-
-### C.5 名詞中英對照表
-
-| 英文 | 中文 |
-|------|------|
-| Color Space | 色彩空間 |
-| Grayscale | 灰階 |
-| Hue / Saturation / Value | 色相 / 飽和度 / 明度 |
-| Pre-processing | 前處理 |
-| Thresholding | 二值化 / 門檻處理 |
-| Segmentation | 影像分割 |
-| Region of Interest (ROI) | 感興趣區域 |
-| Bitwise Operation | 位元運算 |
-| Mask | 遮罩 |
-| Blending | 混合 |
-| Translation / Rotation / Scaling | 平移 / 旋轉 / 縮放 |
-| Affine Transformation | 仿射變換 |
-| Perspective Transformation | 透視變換 |
-| Convolution / Kernel | 卷積 / 卷積核 |
-| Blur / Filter | 模糊 / 濾波器 |
-| Erosion / Dilation | 侵蝕 / 膨脹 |
-| Opening / Closing | 開運算 / 閉運算 |
-| Gradient | 梯度 |
-| Edge Detection | 邊緣偵測 |
-| Contour | 輪廓 |
-| Bounding Box | 邊界框 |
-| Keypoint | 關鍵點 |
-| Descriptor | 描述子 |
-| Feature Matching | 特徵匹配 |
-| Nearest Neighbor | 最近鄰 |
-| Brute-Force | 暴力（逐一）比對 |
-| Homography | 單應性（矩陣） |
-| Outlier / Inlier | 離群值 / 內點 |
-| Panorama / Stitching | 全景 / 影像拼接 |
-| SLAM | 同時定位與建圖 |
-| Augmented Reality (AR) | 擴增實境 |
-| Quality Control | 品質控制 |
-
-
----
-
-## 附錄 D：教材頁面索引對照
+## 附錄 C：教材頁面索引對照
 
 | PDF 頁 | 標題 | 本筆記對應章節 |
 |--------|------|---------------|
@@ -2488,7 +2208,7 @@ cv2.waitKey(0)
 
 ---
 
-## 附錄 E：離線執行提示
+## 附錄 D：離線執行提示
 
 課程範例都靠 `urllib.request.urlretrieve()` 從 GitHub 下載 `smarties.png`。
 **考試環境若沒有網路**，可改用下列任一種方式：
@@ -2510,7 +2230,7 @@ cv2.circle(image_bgr, (200, 300), 60, (255, 0, 0), -1)     # 藍球
 
 > **注意**：`cv2.imshow()` 在無圖形介面的環境（如部分伺服器 / Colab）會失敗，請改用 `matplotlib.pyplot` 顯示。
 
-### E.1 無網路環境的替代下載點
+### D.1 無網路環境的替代下載點
 
 若考試機有網路但 GitHub 被封鎖，可用 OpenCV 官方 CDN 鏡像或本機圖片替代：
 
@@ -2526,7 +2246,7 @@ else:
 
 ---
 
-## 附錄 F：一頁精華（考前 10 分鐘）
+## 附錄 E：一頁精華（考前 10 分鐘）
 
 ```python
 import cv2
@@ -2609,12 +2329,12 @@ ORB 配 Hamming、SIFT 配 L2
 
 <a id="mc-exam"></a>
 
-## 附錄 G：互動式線上測驗（60 題）
+## 附錄 F：互動式線上測驗（60 題）
 
 > **60 題單選、滿分 60 分、建議 75 分鐘。**
 > 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不再收錄非互動的紙本題目**，避免與線上版重複。
 
-### G.1 開始測驗
+### F.1 開始測驗
 
 **👉 [開始 60 題線上測驗](mc-quiz.html)**
 
@@ -2626,7 +2346,7 @@ ORB 配 Hamming、SIFT 配 L2
 - 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
 - 需要紙本時，直接在該頁按列印即可
 
-### G.2 時間分配建議
+### F.2 時間分配建議
 
 | 階段 | 時間 | 做什麼 |
 |---|---|---|
@@ -2634,11 +2354,11 @@ ORB 配 Hamming、SIFT 配 L2
 | 第二輪 | 40–65 分鐘 | 回頭處理標記的難題 |
 | 第三輪 | 65–75 分鐘 | 檢查有沒有漏答 |
 
-### G.3 評分參考
+### F.3 評分參考
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 54–60 | 優異 | 直接看附錄 F 一頁精華即可上場 |
+| 54–60 | 優異 | 直接看附錄 E 一頁精華即可上場 |
 | 45–53 | 良好 | 複習錯題所屬章節 |
 | 36–44 | 及格邊緣 | 重讀主要章節 + 附錄 A |
 | 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
@@ -2648,6 +2368,6 @@ ORB 配 Hamming、SIFT 配 L2
 ---
 
 *本學習筆記依據 `3 IVDC OpenCV.pdf`（29 頁）編寫，涵蓋原稿全部標題與程式範例，並補充 API 參數、常見錯誤與模擬試題。*
-*模擬試題共兩份：附錄 C（隨讀隨測 43 題）與附錄 G（線上互動測驗 60 題）。*
+*模擬試題為附錄 F 的線上互動測驗（60 題）。*
 *所有程式碼已於本機 OpenCV 5.0.0 / NumPy 2.4.6 / Matplotlib 3.11.2 環境實測通過。*
 
