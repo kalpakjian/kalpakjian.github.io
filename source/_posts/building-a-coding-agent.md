@@ -16,8 +16,11 @@ tags:
   - 護欄
   - 本地 LLM
   - Cline
+  - Pi
   - MCP
   - Ollama
+  - TypeScript
+  - 擴展性
   - 開源工具
   - Python
 toc: true
@@ -25,7 +28,7 @@ index_img: /img/covers/building-a-coding-agent.png
 banner_img: /img/covers/building-a-coding-agent.png
 ---
 
-> <strong>整理說明</strong>：本文的起點是 Geoffrey Huntley〈Replaced〉一文引發的爭論——「2026 年的資深工程師應該能重建 Claude Code 這類最基本的 agent」——以及 Shopify CEO Tobi Lütke 把 AI 使用納入績效與資源分配考量的內部備忘錄。前半先把那句話「合理」與「過頭」的部分分開；後半把它落地成一份可以照著做的實作指南：六個零件、一個迴圈，以及一支約 90 行、真的能跑起來的 Python 骨架。文章後段再拿 <a href="https://cline.bot/cli">Cline CLI</a> 這個開源 harness 當對照組，看同一組零件在生產級產品上長成什麼樣子。相關論點與連結見文末「參考來源」。
+> <strong>整理說明</strong>：本文的起點是 Geoffrey Huntley〈Replaced〉一文引發的爭論——「2026 年的資深工程師應該能重建 Claude Code 這類最基本的 agent」——以及 Shopify CEO Tobi Lütke 把 AI 使用納入績效與資源分配考量的內部備忘錄。前半先把那句話「合理」與「過頭」的部分分開；後半把它落地成一份可以照著做的實作指南：六個零件、一個迴圈，以及一支約 90 行、真的能跑起來的 Python 骨架。文章後段再把兩個開源 harness 當對照組：<a href="https://cline.bot/cli">Cline CLI</a>（把六個零件做滿的一端）與 <a href="https://github.com/earendil-works/pi">Pi</a>（把核心拆到最小的另一端），看同一組零件在不同設計哲學下長成什麼樣子。相關論點與連結見文末「參考來源」。
 
 <!-- more -->
 
@@ -35,7 +38,7 @@ banner_img: /img/covers/building-a-coding-agent.png
 
 換個說法：<strong>agent = 模型 + harness</strong>。模型提供智能，harness（外殼）負責把智能變成真實世界裡的工作。這篇文章講的是 harness。
 
-但反過來也要說清楚：<strong>harness 完整，並不保證等於強 agent</strong>。像 Cline CLI 這樣功能齊全的開源 harness，能給你 agent 的骨架、工具、審批與自動化，卻不能給你判斷力——它的智能上限，等於<strong>你接的模型</strong>加上<strong>你設計的驗證迴路</strong>。這是第八節要展開的對照。
+但反過來也要說清楚：<strong>harness 完整，並不保證等於強 agent</strong>。像 Cline CLI 這樣功能齊全的開源 harness，能給你 agent 的骨架、工具、審批與自動化，卻不能給你判斷力——它的智能上限，等於<strong>你接的模型</strong>加上<strong>你設計的驗證迴路</strong>。這是第八、九節要展開的對照。
 
 ---
 
@@ -72,7 +75,7 @@ Tobi Lütke 的立場則更接近管理層面的要求：AI 不再只是個人�
 
 不管是一百行的研究原型，還是百萬行的產品，拆開來都是同樣六個零件。前五個是**內層 agent**（Claude Code 本體），第六個加上「規格檔 + 每輪單一任務」就是**外層 Ralph 迴圈**。
 
-這不是紙上分類。市面上已經有把六個零件全部做出來的成品——例如 <a href="https://cline.bot/cli">Cline CLI</a>。第八節會拿它逐一對照，看同一組零件在生產級規模上長成什麼樣子。
+這不是紙上分類。市面上已經有把六個零件全部做出來的成品——例如 <a href="https://cline.bot/cli">Cline CLI</a>；也有反過來只保留最小核心的 <a href="https://github.com/earendil-works/pi">Pi</a>。第八、九節會拿這兩個開源 harness 逐一對照，看同一組零件在兩種相反的設計哲學下長成什麼樣子。
 
 | # | 零件 | 作用 | 對應文章中的說法 |
 | --- | --- | --- | --- |
@@ -309,7 +312,7 @@ python mini_agent.py "幫我找出 utils.py 裡的 bug 並修好，修完跑 pyt
 
 ---
 
-## 八、生產級對照：Cline CLI 把同一組零件做到什麼程度
+## 八、光譜的一端：Cline CLI（把六個零件做到生產級）
 
 前面七節你手上已經有一個 90 行、能跑的最小版本。現在把鏡頭拉遠，看一個已經上線的開源 harness 把同一組零件做到什麼程度——**Cline CLI**。
 
@@ -341,7 +344,7 @@ Cline 原本以 VS Code 擴充聞名；CLI 2.0 之後，它把同一套 agent ru
 
 看完這張表，最該注意到的不是「它工具比較多」，而是：你的四個工具只是它工具層的一個**子集**。真正的差距在<strong>零件 4 與 5 的成熟度</strong>，以及<strong>零件 1 可替換的廣度</strong>——這三格，才是「能跑」與「能上線」之間的距離。
 
-### 能力盤點
+### 能力盤點：Cline CLI
 
 | 能力 | Cline CLI 的程度 |
 | --- | --- |
@@ -395,14 +398,114 @@ Cline CLI 的 agent 能力要分兩層看：
 
 > **Cline CLI 是「開源、模型自由、可審查」的 Claude Code 替代品；作為 agent harness 已達生產可用級，但它的智能上限等於你所選的模型，加上你設計的驗證迴路。**
 
+但 Cline 只是光譜的一端。它把六個零件<strong>全部做滿</strong>，代價是核心很大、你很難一眼看穿它。如果把方向反過來——**只留最小的核心，其餘全部交還給使用者**——會得到什麼？那是第九節要看的另一個極端：Pi。
+
+---
+
+## 九、光譜的另一端：Pi（把核心拆到最小）
+
+如果說 Cline CLI 是「把六個零件全部做滿」的一端，<a href="https://github.com/earendil-works/pi">Pi</a> 就是另一端：**極簡核心 ＋ 高度可擴展**的終端 coding agent harness。它的能力不是靠內建大量功能，而是靠一個很小的核心迴圈、少數原子工具，以及 TypeScript extension／SDK 讓你自行補齊工作流。
+
+> **Pi 是一個輕量、透明、可嵌入、可自我擴展的 agent harness；它把「agent 該怎麼做」的很多決定交還給使用者。**
+
+它不是單純 chatbot，也不是全托管產品。核心具備讀檔、寫檔、編輯、執行 bash 等工具，能完成真實的 coding 任務；但 sub-agents、plan mode、複雜權限彈窗等，傳統上不是核心必備，而是透過 extension、skills 或外部流程補上。
+
+以 Huntley 的標準看，它比 Cline 更接近「可研究、可改造的 harness」，但開箱即用的工程保障也相應較少。
+
+### 它幾乎就是第七節那份骨架
+
+這裡有一個很值得停下來的巧合：Pi 的預設原子工具是 `read`、`write`、`edit`、`bash`——**和你在第七節寫的那四個工具幾乎一模一樣**。
+
+換句話說，Pi 不是「另一種產品」，而是<strong>把本文第七節那個最小迴圈，認真做成一個可以每天使用的工具</strong>。這也解釋了它為什麼特別適合拿來研究：你已經自己寫過一次，再看一次就看得懂。
+
+### 能力盤點：Pi
+
+| 面向 | Pi 的程度 | 說明 |
+| --- | --- | --- |
+| 基本 coding agent | 高 | 內建 `read`、`write`、`edit`、`bash` 等原子工具，可讀專案、改檔、跑指令 |
+| 模型自由度 | 很高 | 支援 Anthropic、OpenAI、Google、Ollama、OpenRouter 等多 provider，並可在會話中切換模型 |
+| 可嵌入性 | 很高 | 有 TypeScript SDK、print／JSON mode、RPC mode，適合放進 CLI、CI 或自己的產品 |
+| 可觀察性 | 很高 | 系統 prompt 極小、架構模組化，容易研究 context、工具呼叫與 session 狀態 |
+| 自我擴展 | 很高 | agent 可閱讀本機文件與範例，撰寫並載入 TypeScript extension，修改工具、UI、provider、context 與壓縮行為 |
+| 開箱即用 | 中等 | 預設工具少、部分進階功能需自行配置；適合願意動手的人 |
+| 安全治理 | 中等偏低 | 權限與沙箱邊界較依賴使用者配置；直接跑 bash 時尤其要小心 |
+
+把這張表和第八節那張並排，會看到一組很乾淨的對稱：
+
+| | Cline CLI | Pi |
+| --- | --- | --- |
+| 開箱即用 | 高 | 中等 |
+| 可觀察性／可拆解 | 中 | 很高 |
+| 預設安全治理 | 高（逐步審批） | 中等偏低（自己配） |
+
+**你付出多少「自己動手」，就換到多少「看得懂」。** 這條線幾乎是所有 harness 的共同取捨。
+
+### 三者放在同一張表上
+
+| 面向 | Pi | Cline CLI | Claude Code |
+| --- | --- | --- | --- |
+| 設計哲學 | 最小核心，使用者組裝 | 開源、模型自由、功能較完整 | 官方整合、開箱即用、終端體驗最佳化 |
+| 預設工具 | 約四個原子工具 | 較完整：檔案、shell、MCP、Plan／Act | 內建工具、sub-agents、teams、plan mode 等 |
+| 模型選擇 | 20+ provider、300+ 模型，可中途切換 | 多 provider 與本地模型 | 主要為 Claude 模型最佳化 |
+| 擴展深度 | TypeScript extension 可改 agent 行為與 runtime 事件 | MCP、SDK、hooks、tool policies | plugins、hooks、skills、MCP |
+| Token 效率 | 很高；system prompt 極小，context 工程空間大 | 中等 | 較重，但功能與引導較完整 |
+| 適合誰 | 想研究 harness、自建工作流、控制 token 成本的人 | 想要開源但接近成品體驗的人 | 想要最少設定、追求單一廠商最佳體驗的人 |
+
+注意 **Token 效率**那一列。Pi 的系統 prompt 極小，代表它把大部分的 context 預算留給你——這在接本地小模型時是決定性的優勢，因為小模型的 context window 本來就窄。相對地，Claude Code 的「較重」換來的是更完整的引導與更少的設定負擔。
+
+### 最特別的地方：agent 可以擴展 agent 本身
+
+Pi 最大的特色是<strong>「agent 可以擴展 agent 本身」</strong>。它可以把使用者需求轉成 TypeScript extension：新增工具、改變模型路由、調整 context 壓縮、加入 UI 或 slash command，然後載入繼續使用。
+
+官方也展示過「virtual model」概念：例如讓一個模型負責規劃、另一個負責執行，再由分類模型決定切換時機。這代表 Pi 不只是「接不同模型」，而是允許你改變<strong>模型之間如何協作</strong>。
+
+它的 **Code Mode** 也值得注意：遇到需要大量篩選、彙整或批次操作時，agent 可產生一段在 QuickJS 沙箱執行的 JavaScript，用程式邏輯處理工具結果，只把必要結論帶回 context。
+
 <div class="callout">
-  <div class="callout-title">換個角度看這張對照表</div>
-  <p>如果你只想「用」agent，Cline CLI 可以現在就裝。但如果你想「懂」agent，這張表反而是一份<strong>閱讀清單</strong>：零件 4 的 checkpoint 怎麼存、零件 5 的 auto-approve 規則怎麼寫、零件 2 的 MCP 工具怎麼註冊。把這幾處讀完，你就不是在猜 harness 在做什麼，而是在驗證它。</p>
+  <div class="callout-title">Code Mode 其實就是第四節的解藥</div>
+  <p>回想第四節的三個鐵則：工具輸出要截斷、檔案用 grep 定位、超預算就摘要。Code Mode 是同一件事的更激進版本——<strong>與其把 200 行 grep 結果塞進 context 讓模型自己讀，不如讓模型寫一段程式去讀，只回傳結論</strong>。這是「用程式碼管理 context」，而不是「用 prompt 管理 context」。</p>
+</div>
+
+### 它的弱點：極簡是雙面刃
+
+- **預設保障少**：沒有像 Claude Code 那樣完整的 sub-agents、plan mode、權限彈窗與內建任務管理。
+- **安全要自己做**：bash 工具通常以啟動 Pi 的使用者權限執行；若要跑不可信任務，應放在容器、VM 或受限工作區。
+- **品質依賴模型**：核心很小，代表規劃、工具選擇、錯誤恢復更多取決於模型本身與你寫的 skills／rules。
+- **跨模型有成本**：多模型路由雖然靈活，但會帶來 context 容量、快取失效與額外請求延遲。
+
+<div class="callout">
+  <div class="callout-title">這正好驗證了第五節的鐵則</div>
+  <p>Pi 把護欄交還給使用者，所以第五節那句「<strong>M5 沒做完就不要進 M6</strong>」在它身上是字面成立的：沒有路徑白名單、沒有指令黑名單、沒有步數上限，就直接把 bash 交給模型，等於把第五個零件整格留空。<strong>極簡 harness 不是沒有護欄，而是護欄變成你的責任。</strong></p>
+</div>
+
+### 建議用法：把它當成 harness 實驗台
+
+如果目標是「搞懂 agent 為什麼會動」，Pi 的六步練法很值得照做：
+
+1. 先用預設四工具處理一個小型 Python 專案
+2. 觀察它的 tool call、context 增長與 session 結構
+3. 寫一個最小 extension，加入 `run_tests` 工具
+4. 強制規則：每次改 code 後必須跑測試，失敗則繼續修正
+5. 把模型換成 Ollama 本地模型，比較規劃與工具呼叫可靠性
+6. 最後用 Pi SDK 或 raw API，自己重寫一個 200 行左右的迷你 harness
+
+這六步的順序，其實就是本文的結構：第 1～2 步對應第三、四節（工具與 context），第 3～4 步對應第五、六節（護欄與驗證迴路），第 6 步對應第七節（從零寫骨架）。**Pi 只是把這條路徑變成一個現成的練習場。**
+
+### 該選哪一個？
+
+以本地模型、開源、可自訂與成本控制為優先，Pi 和 Cline 是兩種不同的答案：
+
+- 要「**今天裝好、明天穩定處理正式專案**」→ Cline CLI 或 Claude Code 更省事
+- 要「**搞懂 agent 為什麼會動，並做出自己的工作流**」→ Pi 是三者中最像<strong>可拆解的教具與工程底座</strong>
+
+<div class="callout">
+  <div class="callout-title">換個角度看待這兩張對照表</div>
+  <p>如果你只想「用」agent，Cline CLI 現在就能裝。但如果你想「懂」agent，這兩張表反而是一份<strong>閱讀清單</strong>：零件 2 的工具怎麼註冊、零件 4 的 checkpoint 與 compaction 怎麼做、零件 5 的審批規則怎麼寫。<strong>Pi 的價值在於它小到你能整份讀完；Cline 的價值在於它大到你能看見每一格的極限。</strong>兩者相加，剛好覆蓋「可讀」與「可驗」兩個學習維度。</p>
 </div>
 
 ---
 
-## 九、漸進式里程碑：不要一次做完
+## 十、漸進式里程碑：不要一次做完
 
 | 階段 | 目標 | 驗收標準 |
 | --- | --- | --- |
@@ -420,7 +523,7 @@ Cline CLI 的 agent 能力要分兩層看：
 
 ---
 
-## 十、內層 agent vs 外層 Ralph 迴圈
+## 十一、內層 agent vs 外層 Ralph 迴圈
 
 這兩個名詞常被混用，但職責完全不同：
 
@@ -450,7 +553,7 @@ while not spec_satisfied():
 
 ---
 
-## 十一、常見陷阱
+## 十二、常見陷阱
 
 1. **一開始就想做 multi-agent 或自主規劃** → 先讓單一 agent 跑得穩。
 2. **沒有測試就讓它自動跑** → 你得到的不是生產力，是高產能的破壞者。
@@ -478,7 +581,9 @@ while not spec_satisfied():
 
 回到實作層面：**做一個 coding agent，就是做一個「有嚴格工具介面、有預算限制的 context 管理器，外面套一層可驗證的迴圈」。** 把 context 預算、工具權限、驗證與回滾做對，你就已經做出 Claude Code 的核心骨架，也才真的符合那個「能設計與駕馭工作迴路」的標準。
 
-而 Cline CLI 正好從另一個方向證明了同一件事：它把六個零件都做到了生產級，所以你<strong>不需要從零造一個</strong>；但如果你不清楚那六個零件在做什麼，你也就無法判斷它的輸出該不該信、該在哪一步插手。**harness 可以下載，判斷力不行。**
+而 Cline CLI 與 Pi 正好從兩個方向證明了同一件事：Cline 把六個零件都做到了生產級，Pi 把核心拆到只剩四個原子工具——所以你<strong>不需要從零造一個</strong>；但如果你不清楚那六個零件在做什麼，你既看不懂 Cline 的黑箱，也配不出 Pi 的護欄。**harness 可以下載，判斷力不行。**
+
+這也是為什麼第九節要把 Pi 的六步練法接回本文結構：它給的不是一條新路，而是同一條路的三層視角——<strong>怎麼用 agent、怎麼擴展 agent、怎麼從零重建 agent</strong>。三層都走過一次，你才算真的把 harness 變成自己的能力，而不是把某個產品的操作手冊背下來。
 
 延伸閱讀：本站另一篇〈[剖開 11 個主流 coding agent 的原始碼](/2026/10/09/harness-engineering-eleven-coding-agents/)〉整理了 11 個生產級系統的 7 個標準子系統與 18 條設計建議，可以當作本文的架構對照表。
 
@@ -502,5 +607,17 @@ while not spec_satisfied():
 - 〈Best Open-Source AI Coding Tools 2026〉（Frontman）：<https://frontman.sh/blog/best-open-source-ai-coding-tools-2026/>
 - 〈Cline Guide〉（DeployHQ）：<https://www.deployhq.com/guides/cline>
 - 〈Claude Code vs Cline〉（CodePick）：<https://codepick.dev/zh/compare/claude-code-vs-cline/>
+
+**Pi Coding Agent（第九節對照對象）**
+
+- Pi 原始碼（GitHub）：<https://github.com/earendil-works/pi>
+- Pi 官方網站：<https://pi.dev/>
+- 〈Pi Agent Harness：可組合的 coding agent〉（AI-Chain）：<https://ai-chain.tw/zh-cn/blog/pi-agent-harness-composable-coding-agent/>
+- 〈Pi Agent 深入解析 2026〉（KSPL Academy）：<https://academy.kspl.tech/blog/2026-06-05-pi-agent-deep-dive-2026>
+- 〈Pi Agent vs Claude Code〉（Composio）：<https://composio.dev/content/pi-agent-vs-claude-code>
+- 〈Pi Coding Agent 導讀〉：<https://xerichen.github.io/posts/pi-coding-agent-guide/>
+- 〈Pi Agent Harness 筆記〉：<https://zwt0204.github.io/llm/2026/07/03/pi-agent-harness/>
+- 〈Pi vs Claude Code vs Cline〉：<https://andrew.ooo/answers/pi-coding-agent-vs-claude-code-vs-cline-may-2026/>
+- 〈Pi Agent 深度分析〉（網易）：<https://www.163.com/dy/article/L8S2RLRH05566SCS.html>
 
 > 本文為學習整理用途，程式碼骨架為原創示例，可直接取用修改。內容觀點部分來自上述來源，版權屬原作者所有。
