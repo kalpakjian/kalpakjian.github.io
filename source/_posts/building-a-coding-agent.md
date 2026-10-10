@@ -15,13 +15,17 @@ tags:
   - 驗證迴路
   - 護欄
   - 本地 LLM
+  - Cline
+  - MCP
+  - Ollama
+  - 開源工具
   - Python
 toc: true
 index_img: /img/covers/building-a-coding-agent.png
 banner_img: /img/covers/building-a-coding-agent.png
 ---
 
-> <strong>整理說明</strong>：本文的起點是 Geoffrey Huntley〈Replaced〉一文引發的爭論——「2026 年的資深工程師應該能重建 Claude Code 這類最基本的 agent」——以及 Shopify CEO Tobi Lütke 把 AI 使用納入績效與資源分配考量的內部備忘錄。前半先把那句話「合理」與「過頭」的部分分開；後半把它落地成一份可以照著做的實作指南：六個零件、一個迴圈，以及一支約 90 行、真的能跑起來的 Python 骨架。相關論點與連結見文末「參考來源」。
+> <strong>整理說明</strong>：本文的起點是 Geoffrey Huntley〈Replaced〉一文引發的爭論——「2026 年的資深工程師應該能重建 Claude Code 這類最基本的 agent」——以及 Shopify CEO Tobi Lütke 把 AI 使用納入績效與資源分配考量的內部備忘錄。前半先把那句話「合理」與「過頭」的部分分開；後半把它落地成一份可以照著做的實作指南：六個零件、一個迴圈，以及一支約 90 行、真的能跑起來的 Python 骨架。文章後段再拿 <a href="https://cline.bot/cli">Cline CLI</a> 這個開源 harness 當對照組，看同一組零件在生產級產品上長成什麼樣子。相關論點與連結見文末「參考來源」。
 
 <!-- more -->
 
@@ -30,6 +34,8 @@ banner_img: /img/covers/building-a-coding-agent.png
 > 做一個 coding agent，難的從來不是模型，而是<strong>context 管理、工具權限、驗證迴路與失敗恢復</strong>。把這四件事做對，你就已經做出 Claude Code 的核心骨架——模型只是隨時可以換掉的零件。
 
 換個說法：<strong>agent = 模型 + harness</strong>。模型提供智能，harness（外殼）負責把智能變成真實世界裡的工作。這篇文章講的是 harness。
+
+但反過來也要說清楚：<strong>harness 完整，並不保證等於強 agent</strong>。像 Cline CLI 這樣功能齊全的開源 harness，能給你 agent 的骨架、工具、審批與自動化，卻不能給你判斷力——它的智能上限，等於<strong>你接的模型</strong>加上<strong>你設計的驗證迴路</strong>。這是第八節要展開的對照。
 
 ---
 
@@ -65,6 +71,8 @@ Tobi Lütke 的立場則更接近管理層面的要求：AI 不再只是個人�
 ## 一、一個 coding agent 只有六個零件
 
 不管是一百行的研究原型，還是百萬行的產品，拆開來都是同樣六個零件。前五個是**內層 agent**（Claude Code 本體），第六個加上「規格檔 + 每輪單一任務」就是**外層 Ralph 迴圈**。
+
+這不是紙上分類。市面上已經有把六個零件全部做出來的成品——例如 <a href="https://cline.bot/cli">Cline CLI</a>。第八節會拿它逐一對照，看同一組零件在生產級規模上長成什麼樣子。
 
 | # | 零件 | 作用 | 對應文章中的說法 |
 | --- | --- | --- | --- |
@@ -154,6 +162,8 @@ Context 不是「把東西都塞進去」，而是**每一輪重新組裝**：
 - **三重硬上限**：步數、token、單指令時間。三者都要有，否則就是一個無限迴圈燒錢機。
 - **動工前先快照**：`git commit` 或 `git stash`，讓「回滾」是一個指令，而不是一場災難。
 - **dry-run 模式**：寫入與刪除類工具先印出 diff 給人看，確認後才落地。
+
+生產級 harness 也是這樣設計的：Cline CLI 預設就是<strong>逐步審批</strong>——每一處檔案修改與指令執行都要你點頭，diff 攤在眼前；auto-approve 可以開，但那是你主動交出的權限，不是預設值。這種「預設安全、主動放權」的順序，值得直接抄進自己的骨架。
 
 <div class="callout">
   <div class="callout-title">順序很重要</div>
@@ -299,7 +309,100 @@ python mini_agent.py "幫我找出 utils.py 裡的 bug 並修好，修完跑 pyt
 
 ---
 
-## 八、漸進式里程碑：不要一次做完
+## 八、生產級對照：Cline CLI 把同一組零件做到什麼程度
+
+前面七節你手上已經有一個 90 行、能跑的最小版本。現在把鏡頭拉遠，看一個已經上線的開源 harness 把同一組零件做到什麼程度——**Cline CLI**。
+
+Cline 原本以 VS Code 擴充聞名；CLI 2.0 之後，它把同一套 agent runtime 帶進終端機，支援 headless、CI／CD、script 與管線使用。用 Huntley 那套標準看，它大約落在：
+
+> **一個可直接使用、可自訂、可接本地模型的通用 coding agent harness**——能力接近 Claude Code，但設計哲學更偏「開放模型選擇 ＋ 明確審批」。
+
+它已經具備 agent 的核心迴路：
+
+- 讀取專案結構與相關檔案，建立任務 context
+- 建立、修改、刪除檔案，並以 diff 呈現變更
+- 執行 shell 指令，即時觀察 stdout／stderr
+- 根據 linter、compiler、測試輸出除錯並重試
+- 透過 MCP 接資料庫、API、瀏覽器、基礎設施等外部工具
+- 支援 Plan／Act：先規劃，確認後才執行
+
+所以它不是「會建議程式碼的工具」，而是能<strong>自己完成一連串工程動作</strong>的 agent。
+
+### 同一組零件，兩種規模
+
+| # | 零件 | 你的 90 行版本 | Cline CLI |
+| --- | --- | --- | --- |
+| 1 | 模型 | 一個 OpenAI 相容端點 | 幾乎任意：雲端 API、OpenAI-compatible endpoint、Ollama／LM Studio 本地模型 |
+| 2 | 工具 | 四個（`read_file`／`grep`／`edit_file`／`run_shell`） | 檔案增刪改（diff 呈現）、shell、MCP servers、SDK 自訂工具與 lifecycle hooks |
+| 3 | 迴圈 | 單層 `while`，25 步上限 | 完整 agent runtime，另可放進 cron／CI／script，stdin／stdout 可串接 Unix 工具 |
+| 4 | Context | 手動截斷工具輸出 | Plan／Act、checkpoint、task 狀態 |
+| 5 | 護欄 | 路徑白名單、指令黑名單、步數上限 | 預設逐步審批（可開 auto-approve），diff 可見 |
+| 6 | 驗證器 | 你自己指定的測試指令 | 讀 linter／compiler／測試輸出後自行重試 |
+
+看完這張表，最該注意到的不是「它工具比較多」，而是：你的四個工具只是它工具層的一個**子集**。真正的差距在<strong>零件 4 與 5 的成熟度</strong>，以及<strong>零件 1 可替換的廣度</strong>——這三格，才是「能跑」與「能上線」之間的距離。
+
+### 能力盤點
+
+| 能力 | Cline CLI 的程度 |
+| --- | --- |
+| 單一任務自主完成 | 強：可讀檔、改檔、跑指令、依錯誤修正 |
+| 人類控制 | 強：預設可逐步批准檔案修改與指令；也可開 auto-approve |
+| 模型自由度 | 很強：支援多家 API、OpenAI-compatible endpoint、Ollama／LM Studio 等本地模型 |
+| 工具擴充 | 強：MCP servers、SDK、自訂工具與 lifecycle hooks |
+| 自動化整合 | 強：可放進 cron、CI、script，stdin／stdout 可串接 Unix 工具 |
+| 多 agent 協作 | 中等偏新：Cline Kanban 可平行跑多個 agent，各自用獨立 git worktree |
+| 長任務記憶與 context 管理 | 中等：有 Plan／Act、checkpoint、task 狀態，但複雜長跑任務仍很依賴規格與人工拆解 |
+
+這張表裡最誠實的一格是<strong>最後一格</strong>。Context 管理是公認最難的零件，連生產級產品都還在做「中等」——你在第四節看到的那三個鐵則（截斷輸出、grep 定位、摘要舊輪次），就是這個難題的最小解。
+
+### 和 Claude Code 的定位差異
+
+| 面向 | Cline CLI | Claude Code |
+| --- | --- | --- |
+| 定位 | 開源、可自選模型的 agent harness | Anthropic 官方、深度整合 Claude 模型的終端 agent |
+| 模型 | 幾乎任意：雲端 API、本地 Ollama／LM Studio | 主要鎖定 Claude 模型 |
+| 使用介面 | VS Code／JetBrains／CLI／SDK，IDE 體驗特別強 | 終端機原生體驗 |
+| 控制方式 | 預設逐步審批，diff 可見，適合想保留控制權的人 | 也有審批與權限機制，但整體更偏流暢的終端工作流 |
+| 多 agent | Kanban 平行任務、git worktree 隔離 | Agent Teams／sub-agents 較成熟 |
+| 適合誰 | 想用本地模型、控制成本、重視開放性與可審查性的人 | 想要最少設定、追求 Claude 生態最佳整合的人 |
+
+這張表的目的不是排名。它們在光譜上位置不同：**Cline 把選擇權交給你**（模型、成本、審批粒度），**Claude Code 把整合度做到最高**。要選哪一邊，取決於你更在意「可替換」還是「少設定」。
+
+### 真正的上限：harness 能力 ≠ 實際表現
+
+Cline CLI 的 agent 能力要分兩層看：
+
+1. **Harness 能力**：已經很完整——檔案操作、shell、MCP、Plan／Act、審批、headless 執行。
+2. **實際表現**：主要由你接的模型決定。接 Claude Opus／Sonnet 時可接近 Claude Code；接較小或較弱的本地模型時，規劃、長 context、工具呼叫與除錯能力會明顯下降。
+
+<div class="callout">
+  <div class="callout-title">這正是本文的核心論點</div>
+  <p><strong>Cline 是很好的 harness，但不保證等於強 agent。</strong>它給你 agent 的骨架；模型、rules、MCP 工具、測試與任務拆解，才決定它能走多遠。反過來說——這也正是為什麼本文花七節講 harness：骨架是你唯一能控制的部分。</p>
+</div>
+
+### 如果你想親手驗證 Huntley 那句話
+
+以本地模型、開源、可自訂與成本控制為優先，Cline CLI 比 Claude Code 更適合當主要實驗平台：
+
+- 用 Ollama／LM Studio 接本地模型，測試**不同模型在同一個 harness** 下的表現差異——這是理解「模型是可替換零件」最快的實驗
+- 用 MCP 把 PDF／OCR、檔案整理、Git、Python 腳本接進工作流
+- 在 CLI 或 CI 中跑重複性任務：批次整理文件、生成測試、檢查專案結構
+- 用 Plan／Act 與逐步審批，配合「先理解底層、再逐步放手」的節奏
+
+但要<strong>真正理解</strong> harness，建議再往下讀一層：它的 tool-call 格式、system prompt、context 組裝與 auto-approve 邏輯。最有效的練習，是用它的 SDK 寫一個只有「讀檔、寫檔、跑 Python、跑測試」四個工具的迷你版——那其實就是本文第七節那份骨架，只是換成 SDK 的形狀。
+
+### 一句話評價
+
+> **Cline CLI 是「開源、模型自由、可審查」的 Claude Code 替代品；作為 agent harness 已達生產可用級，但它的智能上限等於你所選的模型，加上你設計的驗證迴路。**
+
+<div class="callout">
+  <div class="callout-title">換個角度看這張對照表</div>
+  <p>如果你只想「用」agent，Cline CLI 可以現在就裝。但如果你想「懂」agent，這張表反而是一份<strong>閱讀清單</strong>：零件 4 的 checkpoint 怎麼存、零件 5 的 auto-approve 規則怎麼寫、零件 2 的 MCP 工具怎麼註冊。把這幾處讀完，你就不是在猜 harness 在做什麼，而是在驗證它。</p>
+</div>
+
+---
+
+## 九、漸進式里程碑：不要一次做完
 
 | 階段 | 目標 | 驗收標準 |
 | --- | --- | --- |
@@ -317,7 +420,7 @@ python mini_agent.py "幫我找出 utils.py 裡的 bug 並修好，修完跑 pyt
 
 ---
 
-## 九、內層 agent vs 外層 Ralph 迴圈
+## 十、內層 agent vs 外層 Ralph 迴圈
 
 這兩個名詞常被混用，但職責完全不同：
 
@@ -347,7 +450,7 @@ while not spec_satisfied():
 
 ---
 
-## 十、常見陷阱
+## 十一、常見陷阱
 
 1. **一開始就想做 multi-agent 或自主規劃** → 先讓單一 agent 跑得穩。
 2. **沒有測試就讓它自動跑** → 你得到的不是生產力，是高產能的破壞者。
@@ -375,6 +478,8 @@ while not spec_satisfied():
 
 回到實作層面：**做一個 coding agent，就是做一個「有嚴格工具介面、有預算限制的 context 管理器，外面套一層可驗證的迴圈」。** 把 context 預算、工具權限、驗證與回滾做對，你就已經做出 Claude Code 的核心骨架，也才真的符合那個「能設計與駕馭工作迴路」的標準。
 
+而 Cline CLI 正好從另一個方向證明了同一件事：它把六個零件都做到了生產級，所以你<strong>不需要從零造一個</strong>；但如果你不清楚那六個零件在做什麼，你也就無法判斷它的輸出該不該信、該在哪一步插手。**harness 可以下載，判斷力不行。**
+
 延伸閱讀：本站另一篇〈[剖開 11 個主流 coding agent 的原始碼](/2026/10/09/harness-engineering-eleven-coding-agents/)〉整理了 11 個生產級系統的 7 個標準子系統與 18 條設計建議，可以當作本文的架構對照表。
 
 ---
@@ -386,5 +491,16 @@ while not spec_satisfied():
 - snarktank/ralph（Ralph 實作）：<https://github.com/snarktank/ralph>
 - Tobi Lütke 的 Shopify AI 內部備忘錄整理：<https://www.thefoundersreport.com/tobi-lutke-shopify-ai-mandate-public-memo>
 - Codacy Blog, 〈What Everyone Gets Wrong About the Ralph Loop〉：<https://blog.codacy.com/what-everyone-gets-wrong-about-the-ralph-loop>
+
+**Cline CLI（第八節對照對象）**
+
+- Cline 官方網站：<https://cline.bot/>
+- Cline CLI 產品頁：<https://cline.bot/cli>
+- Cline 原始碼（GitHub）：<https://github.com/cline/cline>
+- Cline CLI 官方文件：<https://docs.cline.bot/usage/cli-overview>
+- 〈Cline vs Claude Code〉（Morph）：<https://www.morphllm.com/comparisons/cline-vs-claude-code>
+- 〈Best Open-Source AI Coding Tools 2026〉（Frontman）：<https://frontman.sh/blog/best-open-source-ai-coding-tools-2026/>
+- 〈Cline Guide〉（DeployHQ）：<https://www.deployhq.com/guides/cline>
+- 〈Claude Code vs Cline〉（CodePick）：<https://codepick.dev/zh/compare/claude-code-vs-cline/>
 
 > 本文為學習整理用途，程式碼骨架為原創示例，可直接取用修改。內容觀點部分來自上述來源，版權屬原作者所有。
