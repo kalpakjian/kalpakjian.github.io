@@ -27,6 +27,21 @@ banner_img: /img/covers/openai-math-repo-fact-check.png
 
 更準確的說法是：這是「AI 開始能系統性參與數學研究」的重大訊號，但不是 AGI 已經被證明出現的證據。
 
+## 用一個比喻講清楚
+
+> AI 像一個讀書很多、寫數學作業超快的學生：它一次交了幾百份「可能正確」的研究報告，老師還未全部改完，所以不能說它已經解決了所有難題，更不能說它已經變成什麼都會的超級智能。
+
+換成考試的場景：
+
+1. <strong>一次交了大量作業</strong>：一晚交出 722 份又長又難的數學報告（後來因錯誤撤回 3 份，目錄變成 719 份）。
+2. <strong>部分作業有「自動改卷機」檢查</strong>：其中一部分用 <strong>Lean</strong> 這種電腦語言寫成證明。Lean 像一台很嚴格的自動改卷機，每一步推理都合規則，它才會說「這一步沒有錯」。
+3. <strong>但改卷機不能代替老師</strong>：Lean 只能檢查「證明的邏輯有沒有錯」，無法確定題目有沒有被理解錯、證出來的東西是不是原本要證的那一個，以及這個結果是否真的重要。
+4. <strong>已經發現有錯</strong>：OpenAI 後來撤回 3 篇、修訂 14 篇，所以「AI 寫了」不等於「AI 全部做對了」。
+
+一句話總結這個比喻：
+
+> <strong>AI 交了一份很驚人的數學功課，部分已經被電腦檢查，部分還要人類老師慢慢驗證；它很厲害，但還未證明它已經變成 AGI。</strong>
+
 ## 事實核對速查表
 
 先把結論攤開：這輪查核的核心修正都成立，方向比多數中文流傳版本嚴謹。真正的重點不是「722 篇已經解決數百個難題」，而是 OpenAI 公開了一批處於不同驗證階段的 AI 生成數學手稿，而且數量還在變動。
@@ -71,7 +86,7 @@ banner_img: /img/covers/openai-math-repo-fact-check.png
 
 ## FFT 突破是真是假？
 
-公開目錄中確實有這個條目。<code>overview.tex</code> 條目 130 的原文是：
+公開目錄中確實有這個條目。FFT 是處理大量數據時常用的快速演算法，音樂、圖片與訊號處理都會用到。<code>overview.tex</code> 條目 130 的原文是：
 
 > <strong>Fourier transforms below $n\log n$.</strong> Gives a deterministic length-$n$ discrete Fourier transform algorithm using $O(n(\log n)^{1-\delta})$ operations for every $n$, with explicit $\delta=10^{-13}$. The model uses <strong>exact complex arithmetic, unrestricted coefficients and a supplied root of unity</strong>, and counts scalar preparation and logarithmic-word indexing.
 
@@ -83,7 +98,7 @@ $$n\log n$$
 
 $$\frac{n(\log n)^{1-10^{-13}}}{n\log n} = (\log n)^{-10^{-13}}$$
 
-除非 $n$ 大到天文數字，否則這個因子幾乎等於 1，差距也超不過常數因素、記憶體存取、平行化與實作成本；再加上模型假設<strong>精確複數運算、不受限係數與特定單位根</strong>，並把 scalar preparation 與 logarithmic-word indexing 都計入計算模型，這些都是理論計算模型下的設定。所以它是<strong>理論計算複雜度上的突破，不是工程上的 FFT 革命</strong>，也不是「明天 NumPy／FFTW 會變快」。
+除非 $n$ 大到天文數字，否則這個因子幾乎等於 1。打個比方：原本走樓梯要 100 步，新方法要 99.99999999999 步——帳面上少了一點，實際走起來完全不會覺得快。差距同樣超不過常數因素、記憶體存取、平行化與實作成本；再加上模型假設<strong>精確複數運算、不受限係數與特定單位根</strong>，並把 scalar preparation 與 logarithmic-word indexing 都計入計算模型，這些都是理論計算模型下的設定。所以它是<strong>理論計算複雜度上的突破，不是工程上的 FFT 革命</strong>，也不是「明天 NumPy／FFTW 會變快」。
 
 ## Lean 到底證明了什麼：一個被多數報導搞反的細節
 
@@ -171,7 +186,7 @@ repo 自己已說明：
 2. <strong>已有實際撤稿</strong>：官方 <code>history.md</code>（10 月 7 日；媒體多記為 10 月 8 日）已記錄撤回 3 篇、修訂 14 篇、更新 13 篇引用，詳見〈其他結果應如何看〉。
 3. <strong>未經正常學術檢驗</strong>：這些是手稿與證明工件，不是已通過同行評審、被社群充分覆核的定論，附了 Lean 代碼也不例外；「人類數學協會」（AHM）甚至公開呼籲停止與 OpenAI 合作。
 
-原因是「數學能力很強」只是 AGI 的一個面向。AGI 通常還需要同時具備：長期自主規劃、穩定處理開放式現實任務、跨領域遷移能力、自己發現重要問題而不只是批量嘗試既有問題、可靠地分辨正確與錯誤和無意義的結果、持續實驗修正驗證並與人類協作、在陌生環境中具備一般化能力。
+更根本的原因是，「數學能力很強」只是 AGI 的一個面向——白話說，AGI 指的是「像人一樣，能在各種不同領域自己學習、計劃、解決新問題」的通用智能，而不只是某個領域特別強。AGI 通常還需要同時具備：長期自主規劃、穩定處理開放式現實任務、跨領域遷移能力、自己發現重要問題而不只是批量嘗試既有問題、可靠地分辨正確與錯誤和無意義的結果、持續實驗修正驗證並與人類協作、在陌生環境中具備一般化能力。
 
 這次展示最驚人的地方，未必是「一夜解決數百題」，而是它可能已經形成一個相當有效的研究流水線：
 
