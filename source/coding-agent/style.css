@@ -46,9 +46,6 @@ body {
 }
 .nav a:hover { color: var(--accent); }
 .nav a.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
-/* 回部落格：與專題內部導覽區隔 */
-.nav a.back-blog { color: var(--accent-dark); font-weight: 700; }
-.nav a.back-blog:hover { color: var(--accent); }
 
 /* ---- Hero ---- */
 .hero { padding: 64px 0 40px; }
@@ -198,6 +195,7 @@ table.compare tr:nth-child(even) td { background: #fbfaf8; }
   padding: 28px 0 40px; color: var(--muted); font-size: 14px;
 }
 .site-footer a { color: var(--accent); text-decoration: none; }
+.site-footer .to-home { text-align: right; margin: 14px 0 0; }
 .pager { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin: 48px 0 24px; }
 .pager a {
   flex: 1 1 220px; text-decoration: none; color: var(--ink); background: var(--card);
