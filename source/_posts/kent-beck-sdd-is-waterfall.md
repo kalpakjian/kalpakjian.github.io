@@ -9,7 +9,7 @@ tags:
   - SDD
   - 敏捷
   - AI Agent
-  - waterfall 模型
+  - Waterfall Model
   - 軟體工藝
   - 度量
 toc: true
