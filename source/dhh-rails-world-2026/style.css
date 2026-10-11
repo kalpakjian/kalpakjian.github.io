@@ -1,5 +1,6 @@
 ﻿/* ===== DHH Rails World 2026 專題 — 共用樣式 ===== */
 :root {
+  color-scheme: only light;
   --bg: #faf8f5;
   --card: #ffffff;
   --ink: #22262b;
