@@ -46,6 +46,9 @@ body {
 }
 .nav a:hover { color: var(--accent); }
 .nav a.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+/* 回部落格：與專題內部導覽區隔 */
+.nav a.back-blog { color: var(--accent-dark); font-weight: 700; }
+.nav a.back-blog:hover { color: var(--accent); }
 
 /* ---- Hero ---- */
 .hero { padding: 64px 0 40px; }
