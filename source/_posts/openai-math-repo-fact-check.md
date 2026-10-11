@@ -81,7 +81,7 @@ banner_img: /img/covers/openai-math-repo-fact-check.png
 
 - 「722 篇」是發布初期數字：以初始 commit `adc7f124`（2026-10-06）驗證，當時的 README 確實寫的是 722 manuscripts / 372 families。
 - 「719 篇」是目前 repo 顯示的數字（3 篇差額見〈其他結果應如何看〉）。
-- 「235 個附 Lean」不宜理解為「235 篇完整論文已被 Lean 證明」；現行 repo 改以百分比表述，且 <code>history.md</code> 明確寫成 <code>300 / 719 = ~42%</code>——分母是<strong>手稿數</strong>，不是 372 個 family。
+- 「235 個附 Lean」不宜理解為「235 篇完整論文已被 Lean 證明」；現行 repo 改以百分比表述，且 <code>history.md</code> 明確寫成 <code>300 / 719 = ~42%</code>——分母是<strong>手稿數</strong>，不是 372 個 family。若改看 <code>lean/formalization.yaml</code>，其中列出的形式化條目為 173 筆：兩種數字量的不是同一件事，但都與流傳的 235 不符。
 - Lean 只能檢查「形式化後的證明是否由公理和定理正確推出」，不能自動保證模型把問題定義對、定理表述對，或證明的結果真的具有原先宣稱的數學意義。
 
 ## FFT 突破是真是假？
@@ -158,7 +158,7 @@ repo 自己已說明：
 - Algebraicity of Kuga–Satake Correspondences for K3 Surfaces
 - The rational Hodge conjecture for products of K3 surfaces
 
-同批還修了另外 14 篇、並更新 13 篇引用。這三篇的 README 與路徑皆已 404——也就是說<strong>三篇已從 repo 完全移除</strong>，只剩 <code>history.md</code> 的文字記錄，這正好解釋了 722 → 719 的帳。
+同批還修了另外 14 篇、並更新 13 篇引用。三篇的目錄其實仍留在 <code>preprints/</code>，只是 README 已換成撤回說明，並附上撤回前的封存 PDF（指向初始 commit <code>adc7f124</code>）。說明指出錯誤出在 stabilization-trace 論證的正負號：更正後雙點計數為 $-2m$、不等於 0，使 Eliashberg–Murphy 抵消定理的前提不成立，因此未建立所宣稱的代數性定理；但同時聲明「<strong>此撤回只針對證明，並未主張該數學命題為假</strong>」。撤回說明自記日期為 10 月 6 日，<code>history.md</code> 則記 10 月 7 日。目錄仍保留，但已從手稿清單除名，這正好解釋了 722 → 719 的帳。
 
 ## Unique Games 和「數百個定理」呢？
 
@@ -174,6 +174,26 @@ repo 自己已說明：
 
 例如矩陣乘法指數 $\omega \le 9/4$ 即使成立，也代表矩陣乘法的漸近上界改善，不等於所有 AI、GPU 或線性代數程式會即時變快；實際演算法還要考慮常數、記憶體、平行性及適用矩陣大小。
 
+## 學界反應與發布方式的爭議
+
+技術問題之外，發布方式本身也引發爭議，而學界立場並不一致。
+
+<strong>AGMAI：諮詢不等於背書。</strong>設於高等研究院（IAS）的獨立顧問組 AGMAI（Advisory Group on Mathematics and Artificial Intelligence），成員包括 Timothy Gowers、Martin Hairer、Edward Witten、Ravi Vakil、Melanie Matchett Wood 等。該組 9 月 29 日發布「負責任發布 AI 生成數學成果」的一般指引（問卷回收超過六百份），並於 10 月 6 日針對這次發布聲明：
+
+> AGMAI's advisory role should not be interpreted as a judgment of the impact of these results or an endorsement of the process by which OpenAI obtained them.
+
+聲明強調「Making this work public is a first step. This release is the beginning, not the completion, of the process of human understanding」——公開只是理解的開始，不是完成；並指出數學研究不能只剩下「理解 AI 產出的結果」，數學家必須能自己提問、自己開方向，因此工具的公平取用與算力資源至關重要。
+
+<strong>陶哲軒的「Math 2.0」。</strong>菲爾茲獎得主陶哲軒 10 月 6 日在 Mathstodon 提出：
+
+> "Math 1.0" placed a premium on being the first to solve an open problem, even if the solution was not initially well understood. Now that this goal has been optimized to the point of unsustainability, "Math 2.0" will need to decenter the role of raw problem solving and value mathematical progress more holistically - for instance by elevating the role of exposition, but also that of community building and opening up new directions of study.
+
+換句話說，當「誰先解出」被優化到不可持續，評價標準也該跟著調整：把證明講清楚、建立社群、開拓新方向，同樣是數學工作。
+
+<strong>更早的一條線：Navier–Stokes 優先權爭議。</strong>9 月 8 日 OpenAI 宣稱解出 Navier–Stokes 存在性與光滑性問題（該次約 88 小時、據報導約 1,500 萬美元）。但在公布前約 12 小時，數學家 Tristan Buckmaster 與 Levent Alpöge 表示，他們關於 Euler 方程（N–S 的特例）的近期進展在數日前被洩漏給 OpenAI，可能影響了其 agent 的 prompt；OpenAI 否認直接使用，稱 Euler 情形的證明方法「有顯著差異」。這項爭議目前仍是各說各話，不宜視為已證實的結論，但它解釋了為何這次發布會面對「先講清楚方法與資料來源」的強烈要求。Buckmaster 10 月 8 日也在 CNBC 談到，這種一次性公開可能讓年輕研究者既有的研究計畫失去意義。
+
+<strong>評價分歧。</strong>同一批材料，評價可以相差很遠：Rutgers 數學教授（現任系主任）Alex Kontorovich 談到準黎曼猜想相關結果時說，「如果這是人類做的，會立即拿到菲爾茲獎，毫無疑問」；另一邊，「人類數學協會」（AHM）則公開呼籲停止與 OpenAI 合作。分歧的根源在於，「結果有多重要」與「用什麼方式取得結果」是兩件不同的事。
+
 ## 是否代表 AGI 已至？
 
 判斷如下：
@@ -184,7 +204,7 @@ repo 自己已說明：
 
 1. <strong>驗證未完成</strong>：約 42% 頂層結果已形式化，其餘未必有 Lean 證明。
 2. <strong>已有實際撤稿</strong>：官方 <code>history.md</code>（10 月 7 日；媒體多記為 10 月 8 日）已記錄撤回 3 篇、修訂 14 篇、更新 13 篇引用，詳見〈其他結果應如何看〉。
-3. <strong>未經正常學術檢驗</strong>：這些是手稿與證明工件，不是已通過同行評審、被社群充分覆核的定論，附了 Lean 代碼也不例外；「人類數學協會」（AHM）甚至公開呼籲停止與 OpenAI 合作。
+3. <strong>未經正常學術檢驗</strong>：這些是手稿與證明工件，不是已通過同行評審、被社群充分覆核的定論，附了 Lean 代碼也不例外（學界的分歧見上一節）。
 
 更根本的原因是，「數學能力很強」只是 AGI 的一個面向——白話說，AGI 指的是「像人一樣，能在各種不同領域自己學習、計劃、解決新問題」的通用智能，而不只是某個領域特別強。AGI 通常還需要同時具備：長期自主規劃、穩定處理開放式現實任務、跨領域遷移能力、自己發現重要問題而不只是批量嘗試既有問題、可靠地分辨正確與錯誤和無意義的結果、持續實驗修正驗證並與人類協作、在陌生環境中具備一般化能力。
 
@@ -245,13 +265,19 @@ Invoke-WebRequest .../lean/ComparatorChallenges/ExactFourier.lean
 - <a href="https://github.com/openai/math/blob/main/lean/docs/130.md">lean/docs/130.md</a>（FFT 形式化範圍）
 - <a href="https://github.com/openai/math/blob/main/lean/ComparatorChallenges/ExactFourier.lean">ComparatorChallenges/ExactFourier.lean</a>（弱化版，含 <code>sorry</code>）
 
-### 二手來源（流傳版本與後續報導）
+### 其他來源（官方聲明、後續報導與二手整理）
 
 - <a href="https://rits.shanghai.nyu.edu/ai/openai-drops-722-math-manuscripts-from-an-unreleased-model/">NYU Shanghai RITS — OpenAI Drops 722 Math Manuscripts From an Unreleased Model</a>（722 / 372、撤稿與修訂、約 42% 形式化）
 - <a href="https://finance.sina.com.cn/jjxw/2026-10-10/doc-iniutqmf6048244.shtml">新浪財經（轉載機器之心）</a>（約 4,000 題、每項平均 3 小時、300 項核心結果 ≈ 42%）
 - <a href="https://finance.sina.cn/stock/jdts/2026-10-10/detail-iniutqmf2041717.d.html">21 世紀經濟報導（新浪轉載）</a>（撤回 3 篇、修訂 14 篇、更新 13 篇引用）
 - <a href="https://aidiscoveries.io/openai-releases-722-math-manuscripts-from-an-unreleased-ai-model-what-what-it-means-for-mathematics/">AI Discoveries — OpenAI Releases 722 Math Manuscripts From an Unreleased AI Model</a>（722 不等於 722 項獨立驗證的突破）
 - <a href="https://ascendants.in/industry_events/openai-722-ai-math-papers-boycott-lean-proof-verification/">The Ascendants — OpenAI's 722 Math Papers Spark Boycott Calls</a>（Lean 驗證的界限與學界抵制爭議）
+- <a href="https://agmai.org/">AGMAI（Advisory Group on Mathematics and Artificial Intelligence）</a>（9 月 29 日一般指引、10 月 6 日對本次發布的聲明）
+- <a href="https://openai.com/index/advisory-group-on-mathematics-and-ai/">OpenAI — Advisory Group on Mathematics and Artificial Intelligence</a>（2026-09-21，成員名單與該組定位）
+- <a href="https://www.techspot.com/news/114127-openai-publishes-722-ai-generated-math-papers-researchers.html">TechSpot — OpenAI publishes 722 AI-generated math papers as researchers challenge its closed model</a>（10 月 7 日）
+- <a href="https://www.cnbc.com/video/2026/10/08/nyus-tristan-buckmaster-on-the-controversy-over-openais-math-findings.html">CNBC — NYU's Tristan Buckmaster on the controversy over OpenAI's math findings</a>（10 月 8 日）
+- <a href="https://en.wikipedia.org/wiki/Navier%E2%80%93Stokes_priority_controversy">Wikipedia — Navier–Stokes priority controversy</a>
+- <a href="https://www.newscientist.com/article/2592684-openai-has-dumped-722-maths-papers-now-it-must-clean-up-the-mess/">New Scientist — OpenAI has dumped 722 maths papers – now it must clean up the mess</a>（10 月 7 日）
 
 ### 影片來源
 
