@@ -1,5 +1,5 @@
 ---
-title: Spec-Driven Development 就是瀑布？——Kent Beck 的 AI 時代九個不中聽真相
+title: Spec-Driven Development 就是 waterfall？——Kent Beck 的 AI 時代九個不中聽真相
 date: 2026-10-08 20:00:00
 categories:
   - 軟體工程
@@ -9,7 +9,7 @@ tags:
   - SDD
   - 敏捷
   - AI Agent
-  - 瀑布模型
+  - waterfall 模型
   - 軟體工藝
   - 度量
 toc: true
@@ -125,15 +125,15 @@ Beck 寫過至少三本可歸類為「工藝導向」的書，他說這三本現
 
 <strong>Ward Cunningham 關機的故事</strong>：Ward 是 Wiki 的發明人、Beck 畢業後的導師，他說這是人生最大的運氣。兩人花一下午寫出「大概能動但感覺怪怪的」程式碼，Ward 直接伸手關機；Beck 氣沖沖回家，隔天早上 15 分鐘重寫完畢，清晰且完全理解——那是他的頓悟時刻：<strong>這是一個學習過程，軟體是副產品。</strong>
 
-### 真相 6：Spec-Driven Development 就是瀑布，而且 Royce 當年就說過行不通
+### 真相 6：Spec-Driven Development 就是 waterfall，而且 Royce 當年就說過行不通
 
 | | 一次成形（one-shot） | 迭代（iterative） |
 |---|---|---|
 | <strong>做法</strong> | 我寫一份規格，精靈產出軟體，規格夠好軟體就夠好；不夠好？那把規格寫得更大更複雜 | 軟體部署在真實世界產生價值 → 改 → 更多價值 → 再改 |
 
-他直言<strong>規格驅動開發（spec-driven development, SDD）就是瀑布式開發（waterfall）</strong>——從來沒成功過。
+他直言<strong>規格驅動開發（spec-driven development, SDD）就是 waterfall 式開發</strong>——從來沒成功過。
 
-<strong>歷史註腳</strong>：Winston Royce 1970 年的原始論文裡，瀑布圖的同一頁就寫著「這當然行不通，因為後面的決策會回頭改變前面的決策」，下一頁就畫了往上的回饋箭頭。但<strong>圖像的力量太強</strong>，所有人只記得那條瀑布，夢想著「只要 spec 夠好軟體就完成了」。這也是他提醒：解釋事情時要非常小心。
+<strong>歷史註腳</strong>：Winston Royce 1970 年的原始論文裡，waterfall 圖的同一頁就寫著「這當然行不通，因為後面的決策會回頭改變前面的決策」，下一頁就畫了往上的回饋箭頭。但<strong>圖像的力量太強</strong>，所有人只記得那條 waterfall，夢想著「只要 spec 夠好軟體就完成了」。這也是他提醒：解釋事情時要非常小心。
 
 <strong>適用邊界</strong>：寫個小 app，one-shot 沒問題；他自己在寫的「內嵌程式語言的圖資料庫虛擬機」就不可能。有十億使用者、大量流量的系統，會有<strong>連續性（continuity）</strong>和<strong>資料遷移（data migration）</strong>問題，「one-shot 一次、糟糕、再 one-shot 一次」根本行不通——不如一開始就假設全程迭代。
 
@@ -208,7 +208,7 @@ Beck 寫過至少三本可歸類為「工藝導向」的書，他說這三本現
 
 ## 延伸閱讀
 
-- 原始整理文章：[Spec-Driven Development 就是瀑布——Kent Beck 的九個不中聽真相（敏捷三叔公）](https://agile3uncles.com/2026/10/06/sdd-is-waterfall-kent-becks-9-hard-truths/)
+- 原始整理文章：[Spec-Driven Development 就是 waterfall——Kent Beck 的九個不中聽真相（敏捷三叔公）](https://agile3uncles.com/2026/10/06/sdd-is-waterfall-kent-becks-9-hard-truths/)
 - 演講影片：[Kent Beck — Software Engineering in the Age of AI | Prodacity 2026](https://www.youtube.com/watch?v=F8fBgDCf2Y4)
 
 ---
