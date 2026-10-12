@@ -21,7 +21,7 @@ date: 2026-10-10 23:40:00
 | **Lesson 3** | OpenCV | ✅ [OpenCV 學習筆記](/opencv-notes/) |
 | **Lesson 4** | Responsible AI | ⏳ 待補 |
 | **Lesson 4** | Test | — |
-| **Lesson 5** | Neural Network, Activation Function and Machine Learning | ⏳ 待補 |
+| **Lesson 5** | Neural Network, Activation Function and Machine Learning | ✅ [Neural Network &amp; ML 學習筆記](/neural-network-notes/) |
 | **Lesson 6** | Convolutional Neural Network (CNN) 1 | ⏳ 待補 |
 | **Lesson 7** | CNN 2 | ⏳ 待補 |
 | **Lesson 8** | Tensorflow and Pytorch for Object Detection and CNN | ⏳ 待補 |
@@ -64,6 +64,16 @@ date: 2026-10-10 23:40:00
 
 - **涵蓋**：OpenCV 全 15 節（色彩空間、前處理、矩陣運算、繪圖函式、幾何變換、濾波、邊緣偵測、特徵擷取與匹配、實務專案），**所有程式碼皆本機實測**
 - **👉 [看筆記](/opencv-notes/)** ｜ [互動測驗 60 題](/opencv-notes/mc-quiz.html)
+
+---
+
+## 5 · Lesson 5 — Neural Network, Activation Function and Machine Learning
+
+![Neural Network & ML 學習筆記](/img/covers/neural-network-notes-ivdc.png)
+
+- **涵蓋**：生物神經元（樹突／軸突／突觸／動作電位）、ANN 三層結構與前向／反向傳播、ANN vs DNN 與網路拓撲、激勵函數（**TLU／ReLU／Sigmoid／Softmax**）、問題類型對應、機器學習基本概念與**十個步驟**、Data/AI Landscape、監督式／非監督式學習、混淆矩陣與指標、迴歸、分群
+- **特別之處**：原稿後半幾乎都是圖（p9–p16、p25–p26、p29–p30 抽不出文字），筆記**把 22 張圖全部重畫成內嵌 SVG**，公式曲線與數字都是算出來的
+- **👉 [看筆記](/neural-network-notes/)** ｜ [互動測驗 60 題](/neural-network-notes/mc-quiz.html)
 
 ---
 
