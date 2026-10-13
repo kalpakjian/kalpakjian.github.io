@@ -451,7 +451,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#174-優缺點">17.4 優缺點</a>
 </li>
-<li><a href="#175-的分類問題albert-與-xlnet">17.5 ⚠️  的分類問題：ALBERT 與 XLNet</a>
+<li><a href="#175-的分類問題albert-與-xlnet">17.5 ⚠️ 分類問題：ALBERT 與 XLNet</a>
 </li>
 <li><a href="#176-考點整理">17.6 考點整理</a>
 </li>
@@ -3628,7 +3628,7 @@ Use <code>##</code> prefix to mark continuation subwords (BERT style).
 <p>💡 <strong>考點</strong>：<strong>「需要 whitespace 預處理」是 WordPiece 最大的限制</strong>，
 也是 SentencePiece 被發明的原因（§19）。</p>
 </blockquote>
-<h3 id="175-的分類問題albert-與-xlnet">17.5 ⚠️  的分類問題：ALBERT 與 XLNet</h3>
+<h3 id="175-的分類問題albert-與-xlnet">17.5 ⚠️ 分類問題：ALBERT 與 XLNet</h3>
 <p>原文：</p>
 <blockquote>
 <p><strong>Used in: BERT, DistilBERT, ALBERT, XLNet</strong></p>
@@ -4947,7 +4947,7 @@ After PEFT
 </tbody>
 </table>
 <p><strong>縮放公式</strong>：實際注入的修正量是 <span class="math" title="\frac{\alpha}{r} \cdot (A \times B)"><svg role="img" focusable="false" style="vertical-align: -0.798ex;" xmlns="http://www.w3.org/2000/svg" width="11.594ex" height="2.495ex" role="img" focusable="false" viewBox="0 -750 5124.4 1102.8" xmlns:xlink="http://www.w3.org/1999/xlink"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mi" transform="translate(220,394) scale(0.707)"><use data-c="1D6FC" xlink:href="#MJX-TEX-I-1D6FC"></use></g><g data-mml-node="mi" transform="translate(286.8,-345) scale(0.707)"><use data-c="1D45F" xlink:href="#MJX-TEX-I-1D45F"></use></g><rect width="652.5" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(1114.8,0)"><use data-c="22C5" xlink:href="#MJX-TEX-N-22C5"></use></g><g data-mml-node="mo" transform="translate(1615,0)"><use data-c="28" xlink:href="#MJX-TEX-N-28"></use></g><g data-mml-node="mi" transform="translate(2004,0)"><use data-c="1D434" xlink:href="#MJX-TEX-I-1D434"></use></g><g data-mml-node="mo" transform="translate(2976.2,0)"><use data-c="D7" xlink:href="#MJX-TEX-N-D7"></use></g><g data-mml-node="mi" transform="translate(3976.4,0)"><use data-c="1D435" xlink:href="#MJX-TEX-I-1D435"></use></g><g data-mml-node="mo" transform="translate(4735.4,0)"><use data-c="29" xlink:href="#MJX-TEX-N-29"></use></g></g></g></svg></span>。
-本節 <code>alpha=16, r=8</code> → 縮放倍率 = <strong>2</strong>。</p>
+這裡 <code>alpha=16, r=8</code> → 縮放倍率 = <strong>2</strong>。</p>
 <hr>
 <h3 id="236-實作陷阱target-modulesc-attn-不可攜">23.6 ⚠️ 實作陷阱：<code>target_modules=["c_attn"]</code> 不可攜</h3>
 <p>本節寫 <code>target_modules=["c_attn"]</code>。<strong><code>c_attn</code> 是 GPT-2 專屬的模組名稱</strong>（<code>Conv1D</code> 型別）。</p>
@@ -5033,7 +5033,7 @@ generate: 0.21 s
 <tbody>
 <tr>
 <td>LoRA 全名？</td>
-<td><strong>Low-Rank Adaptation</strong>（本節寫 <code>Low Rank Adaptation</code>）</td>
+<td><strong>Low-Rank Adaptation</strong>（課程寫 <code>Low Rank Adaptation</code>）</td>
 </tr>
 <tr>
 <td>核心公式？</td>
@@ -5212,7 +5212,7 @@ footprint, allowing fine-tuning of huge models on smaller GPUs.
 <tbody>
 <tr>
 <td>QLoRA 全名？</td>
-<td><strong>Quantized Low-Rank Adaptation</strong>（本節誤寫 Low Rank Adaptation）</td>
+<td><strong>Quantized Low-Rank Adaptation</strong>（課程誤寫 Low Rank Adaptation）</td>
 </tr>
 <tr>
 <td>與 LoRA 的差別？</td>

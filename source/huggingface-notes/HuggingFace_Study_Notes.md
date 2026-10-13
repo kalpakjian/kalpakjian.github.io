@@ -2261,7 +2261,7 @@ model = get_peft_model(model, LoraConfig(r=16, lora_alpha=32, task_type="CAUSAL_
 
 | 問題 | 答案 |
 |---|---|
-| QLoRA 全名？ | **Quantized Low-Rank Adaptation**（本節誤寫 Low Rank Adaptation） |
+| QLoRA 全名？ | **Quantized Low-Rank Adaptation**（課程誤寫 Low Rank Adaptation） |
 | 與 LoRA 的差別？ | **基礎模型用 4-bit 量化** |
 | 用哪兩種量化技術？ | **NF4** 與 **double quantization** |
 | Adapter 是幾 bit？ | **16-bit**（不量化） |
