@@ -11,6 +11,7 @@ navbar:
     - { key: '專題：DHH退休', link: '/dhh-rails-world-2026/index.html', icon: 'iconfont icon-bookmark' }
     - { key: '專題：Coding Agent', link: '/coding-agent/', icon: 'iconfont icon-bookmark' }
     - { key: '專題：IVDC電腦視覺課程', link: '/cv-course/', icon: 'iconfont icon-bookmark' }
+    - { key: '專題：IVDC LLM課程', link: '/llm-course/', icon: 'iconfont icon-bookmark' }
     - { key: 'about', link: '/about/', icon: 'iconfont icon-user-fill' }
 
 index:

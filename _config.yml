@@ -35,6 +35,7 @@ skip_render:
   - 'local-gpu-ml-notes/**'
   - 'neural-network-notes/**'
   - 'responsible-ai-notes/**'
+  - 'llm-intro-notes/**'
 
 # Writing
 new_post_name: :title.md
