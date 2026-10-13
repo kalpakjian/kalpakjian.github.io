@@ -3845,9 +3845,37 @@ python -m pip uninstall -y torchaudio
 | 方案 | 說明 | 評價 |
 |---|---|---|
 | **移除 torchaudio** | `pip uninstall -y torchaudio` | ✅ **推薦**（本 Lab 不需要） |
-| **安裝相符版本** | 安裝與 torch CUDA 版本一致的 torchaudio | ⚠️ 不一定有對應版本 |
-| **降級 torch** | 降到與 torchaudio 相符的版本 | ❌ 影響太大 |
+| **降級 torch 到 cu130** | 安裝 `torch 2.14.1+cu130`，就能配 `torchaudio 2.11.0+cu130` | ⚠️ 可行但影響大 |
+| **安裝「相符版本」的 torchaudio** | ❌ **不可行——cu132 版根本不存在**（見下） | ❌ |
 | **設 `TRANSFORMERS_NO_ADVISORY_WARNINGS`** | 無效（這不是警告，是例外） | ❌ |
+
+##### ⚠️ 為什麼「安裝相符版本」不可行（2026-10 實查）
+
+**torchaudio 沒有 2.14.1，也沒有任何 cu132 建置。** 實查證據：
+
+| 查詢 | 結果 |
+|---|---|
+| `pip index versions torchaudio` | **最新就是 `2.11.0`**（沒有 2.12／2.13／2.14） |
+| `pip download torchaudio==2.14.1` | ❌ **版本不存在** |
+| PyPI releases | `… 2.9.1, 2.10.0, **2.11.0**`（止於此） |
+| `download.pytorch.org/whl/**cu132**/torchaudio/` | **最高只到 `2.2.0`**（完全沒有新版） |
+| `…/whl/**cu130**/torchaudio/` | **最高 `2.11.0`** ← 正是本機裝的那個 |
+| `…/whl/cu128`／`cu126` | 最高也都是 `2.11.0` |
+| `…/whl/cu124` | 最高 `2.6.0` |
+| `…/whl/cu132/torch/` | **有 `2.14.1`** ✅ |
+
+> 💡 **關鍵結論**：**torch 與 torchaudio 的版本號已經脫鉤。**
+> `torch` 走到 **2.14.1**（有 cu132 建置），但 `torchaudio` 停在 **2.11.0**，
+> 而它的 CUDA 建置**最高只到 13.0（cu130）**。
+>
+> 所以本機的 `torch 2.14.1+cu132` 配 `torchaudio 2.11.0+cu130` **不是「裝錯」，
+> 而是「只能這樣裝」**——pip 找不到 cu132 的 torchaudio 可裝。
+> 這也解釋了為什麼 `_check_cuda_version()` 一定會失敗。
+>
+> **可選的兩條路**：
+> ① **移除 torchaudio**（推薦，本課不需要音訊套件）；
+> ② **把 torch 降回 `2.14.1+cu130`**（`torch` 確實有 cu130 建置），
+> 這樣兩邊都是 CUDA 13.0，檢查就會通過。
 
 ### 39.3 兩個缺陷的比較
 
@@ -4234,7 +4262,7 @@ Repository id must be 'namespace/name', got 'ag_news'.
 | diffusers | 0.40.0 | OK |
 | bitsandbytes | 0.49.2 | OK |
 | torchvision | 0.29.1+cu132 | OK |
-| **torchaudio** | ~~2.11.0+cu130~~ | ❌ **CUDA 版本不符 → 已移除** |
+| **torchaudio** | ~~2.11.0+cu130~~ | ❌ **CUDA 版本不符 → 已移除**（**cu132 版不存在**，見 §39.2） |
 | **optimum** | — | ❌ **未安裝**（Lab 沒用到） |
 
 | 硬體 | 值 |
@@ -4552,7 +4580,7 @@ Setting fan_in_fan_out to True.
 | 9 | 拿 ImageNet 分類器認名畫 | 選對任務的模型 | 模型只會輸出訓練過的類別 |
 | 10 | 看到 12.9% 信心度當成成功 | 信心度 < 30% 要警覺 | 低信心 = 模型不確定 |
 | 11 | 以為 `audio-classification` 輸出文字 | 那是 **ASR** 的輸出 | 兩者是不同 task |
-| 12 | 相信「裝了 torchaudio 就能用」 | 檢查 **CUDA 版本是否與 torch 相符** | 裝了但匯入失敗會拖垮 `peft` |
+| 12 | 相信「裝了 torchaudio 就能用」 | 檢查 **CUDA 版本是否與 torch 相符**；**不符時直接移除**（cu132 版不存在） | 裝了但匯入失敗會拖垮 `peft` |
 | 13 | 直接 `ds.select()` 當作訓練集 | **先 `shuffle()` 再切分** | 資料可能按類別排序 |
 | 14 | 用 `torch.save` 存權重 | 用 **`safetensors`** | pickle 可執行任意程式碼 |
 

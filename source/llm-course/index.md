@@ -104,7 +104,7 @@ date: 2026-10-13 09:00:00
 - **本機實測完全複現原稿數字**（RTX 4090）：LoRA 的 **`147,456 / 82,060,032 / 0.1797%`**、影像的 **`book jacket 12.9%`**、音訊的 **`Ding 55.9%`**——證明教材**技術內容正確**
 - **抓到原稿缺陷共 14 項**，其中三個最嚴重：
   - **`target_modules=["c_attn"]` 只對 GPT-2 有效**——換成 Llama／Qwen 會直接 **`ValueError`**（可攜寫法是 `"all-linear"`）
-  - **`peft` 因為 `torchaudio` CUDA 版本不符而完全無法匯入**，錯誤訊息卻指向 `BloomPreTrainedModel`，**完全誤導**；解法是 `pip uninstall -y torchaudio`
+  - **`peft` 因為 `torchaudio` CUDA 版本不符而完全無法匯入**，錯誤訊息卻指向 `BloomPreTrainedModel`，**完全誤導**；解法是 `pip uninstall -y torchaudio`（**實查確認：torchaudio 根本沒有 cu132 建置**，最高只到 2.11.0+cu130，所以這不是裝錯、是只能這樣裝）
   - **講義用兩頁教 Streaming，三個 Lab 一次都沒用**——實測串流取 200 筆 **0.002 秒** vs 完整下載 **12.58 秒**
   - 其餘包括：**p34 ＝ p35 整頁重複**、**註解說 DeiT 卻用 ViT**、**說用 wav2vec2 卻用 AST**、**熱連結新聞站裁切圖導致 12.9% 的失敗預測卻不加說明**、**Tiny ImageNet 已按類別排序使「找魚」示範失效**、**`Adaptors` 拼錯**、**QLoRA 全名誤植**、**p39 空項目符號**、**`LoRA.txt` 的 `matrics`**
 - 另有 **43 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）

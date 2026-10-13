@@ -176,6 +176,14 @@ peft 完全無法匯入 —— 即使你根本不用音訊
 
 **解法**：`pip uninstall -y torchaudio` → `peft` **立刻恢復**（實測 `0.19.1`）。
 
+> ⚠️ **補充查證**：**torchaudio 沒有 2.14.1，也沒有任何 cu132 建置**——
+> `pip index versions torchaudio` 最新只到 **2.11.0**，而 `download.pytorch.org/whl/cu132/torchaudio/`
+> 最高只到 **2.2.0**。也就是說 **torch 與 torchaudio 的版本號已經脫鉤**：
+> `torch` 走到 2.14.1（有 cu132），`torchaudio` 停在 2.11.0（CUDA 建置最高只到 13.0）。
+>
+> 所以 `torch 2.14.1+cu132` 配 `torchaudio 2.11.0+cu130` **不是「裝錯」，而是「只能這樣裝」**。
+> 想兩邊都對，唯一的路是把 **torch 降回 `2.14.1+cu130`**（torch 確實有 cu130 建置）。
+
 #### ③ 講義用兩頁教 Streaming，三個 Lab 一次都沒用
 
 | 做法 | 取得第 1 筆 | 再取 200 筆 | 快取增量 |

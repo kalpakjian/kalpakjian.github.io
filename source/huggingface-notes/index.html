@@ -7894,14 +7894,14 @@ output: &quot;The Hugging Face Hub is a great way to get your hands on a new fac
 <td>✅ <strong>推薦</strong>（本 Lab 不需要）</td>
 </tr>
 <tr>
-<td><strong>安裝相符版本</strong></td>
-<td>安裝與 torch CUDA 版本一致的 torchaudio</td>
-<td>⚠️ 不一定有對應版本</td>
+<td><strong>降級 torch 到 cu130</strong></td>
+<td>安裝 <code>torch 2.14.1+cu130</code>，就能配 <code>torchaudio 2.11.0+cu130</code></td>
+<td>⚠️ 可行但影響大</td>
 </tr>
 <tr>
-<td><strong>降級 torch</strong></td>
-<td>降到與 torchaudio 相符的版本</td>
-<td>❌ 影響太大</td>
+<td><strong>安裝「相符版本」的 torchaudio</strong></td>
+<td>❌ <strong>不可行——cu132 版根本不存在</strong>（見下）</td>
+<td>❌</td>
 </tr>
 <tr>
 <td><strong>設 <code>TRANSFORMERS_NO_ADVISORY_WARNINGS</code></strong></td>
@@ -7910,6 +7910,62 @@ output: &quot;The Hugging Face Hub is a great way to get your hands on a new fac
 </tr>
 </tbody>
 </table>
+<h5 id="-為什麼安裝相符版本不可行2026-10-實查">⚠️ 為什麼「安裝相符版本」不可行（2026-10 實查）</h5>
+<p><strong>torchaudio 沒有 2.14.1，也沒有任何 cu132 建置。</strong> 實查證據：</p>
+<table>
+<thead>
+<tr>
+<th>查詢</th>
+<th>結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pip index versions torchaudio</code></td>
+<td><strong>最新就是 <code>2.11.0</code></strong>（沒有 2.12／2.13／2.14）</td>
+</tr>
+<tr>
+<td><code>pip download torchaudio==2.14.1</code></td>
+<td>❌ <strong>版本不存在</strong></td>
+</tr>
+<tr>
+<td>PyPI releases</td>
+<td><code>… 2.9.1, 2.10.0, **2.11.0**</code>（止於此）</td>
+</tr>
+<tr>
+<td><code>download.pytorch.org/whl/**cu132**/torchaudio/</code></td>
+<td><strong>最高只到 <code>2.2.0</code></strong>（完全沒有新版）</td>
+</tr>
+<tr>
+<td><code>…/whl/**cu130**/torchaudio/</code></td>
+<td><strong>最高 <code>2.11.0</code></strong> ← 正是本機裝的那個</td>
+</tr>
+<tr>
+<td><code>…/whl/cu128</code>／<code>cu126</code></td>
+<td>最高也都是 <code>2.11.0</code></td>
+</tr>
+<tr>
+<td><code>…/whl/cu124</code></td>
+<td>最高 <code>2.6.0</code></td>
+</tr>
+<tr>
+<td><code>…/whl/cu132/torch/</code></td>
+<td><strong>有 <code>2.14.1</code></strong> ✅</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>關鍵結論</strong>：<strong>torch 與 torchaudio 的版本號已經脫鉤。</strong>
+<code>torch</code> 走到 <strong>2.14.1</strong>（有 cu132 建置），但 <code>torchaudio</code> 停在 <strong>2.11.0</strong>，
+而它的 CUDA 建置<strong>最高只到 13.0（cu130）</strong>。</p>
+<p>所以本機的 <code>torch 2.14.1+cu132</code> 配 <code>torchaudio 2.11.0+cu130</code> <strong>不是「裝錯」，
+而是「只能這樣裝」</strong>——pip 找不到 cu132 的 torchaudio 可裝。
+這也解釋了為什麼 <code>_check_cuda_version()</code> 一定會失敗。</p>
+<p><strong>可選的兩條路</strong>：
+① <strong>移除 torchaudio</strong>（推薦，本課不需要音訊套件）；
+② <strong>把 torch 降回 <code>2.14.1+cu130</code></strong>（<code>torch</code> 確實有 cu130 建置），
+這樣兩邊都是 CUDA 13.0，檢查就會通過。</p>
+</blockquote>
 <h3 id="393-兩個缺陷的比較">39.3 兩個缺陷的比較</h3>
 <table>
 <thead>
@@ -8629,7 +8685,7 @@ cache after : 237.0 MB
 <tr>
 <td><strong>torchaudio</strong></td>
 <td>~~2.11.0+cu130~~</td>
-<td>❌ <strong>CUDA 版本不符 → 已移除</strong></td>
+<td>❌ <strong>CUDA 版本不符 → 已移除</strong>（<strong>cu132 版不存在</strong>，見 §39.2）</td>
 </tr>
 <tr>
 <td><strong>optimum</strong></td>
@@ -9624,7 +9680,7 @@ cache after : 237.0 MB
 <tr>
 <td>12</td>
 <td>相信「裝了 torchaudio 就能用」</td>
-<td>檢查 <strong>CUDA 版本是否與 torch 相符</strong></td>
+<td>檢查 <strong>CUDA 版本是否與 torch 相符</strong>；<strong>不符時直接移除</strong>（cu132 版不存在）</td>
 <td>裝了但匯入失敗會拖垮 <code>peft</code></td>
 </tr>
 <tr>
