@@ -6,6 +6,11 @@
 > 本筆記按原稿每一個標題逐一填充內容，並補上定義、參數說明、常見錯誤與考點。
 > 與 Lesson 7 不同，本課**原稿文字層完整**（46 頁中 39 頁有實質文字，全份 9,225 字元），因此筆記忠實度較高；僅 p9–p14、p17、p19 為截圖頁，由筆記逐張判讀補齊。
 > 所有程式碼與數字都在本機實測（Python 3.11.15／transformers 5.17.0／datasets 5.0.0／peft 0.19.1／RTX 4090），實測輸出直接寫進內文。
+> ⚠️ **版本時效**：以上是**本機實測當時**的版本（2026-10）。PyPI 上的最新版已經前進
+> （**`huggingface_hub` 已到 2.2.0**、`transformers` 已到 5.19.0、`peft` 已到 0.21.2），
+> 完整對照表見 **§42.1**。要完全重現本筆記的數字，請鎖定上述版號。
+> ⚠️ **平台數字時效**：原稿說 Model Hub 有「**300k+** 模型」，**2026-10 實查已達 `2M+`**（Datasets `500k+`）——
+> 見 **§7.4**。
 > 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
@@ -78,7 +83,7 @@ Hugging Face = 一個公司 + 一個社群 + 一整套工具鏈
   ③ Inference       TGI, Inference Endpoints, Optimum, Accelerate
 
 必背數字
-  Model Hub  300k+ 模型
+  Model Hub  300k+ 模型（原稿；2026-10 實查已 2M+）
   Hub 四件套 Model Hub / Dataset Hub / Spaces / 文件與版控
 
 三種 Tokenizer（考最多）
@@ -274,7 +279,7 @@ pipeline("text-generation",      model="distilgpt2")                     # 文�
 
 | 解法 | 機制 | 效果 |
 |---|---|---|
-| **統一倉庫** | Model Hub（30 萬+ 模型） | 一個 `repo id` 就能定位任何模型 |
+| **統一倉庫** | Model Hub（原稿 30 萬+；**2026-10 實查已 2M+**） | 一個 `repo id` 就能定位任何模型 |
 | **統一介面** | `from_pretrained()` ＋ `AutoModel`／`AutoTokenizer` | **同一段程式碼**可以換任何模型 |
 | **統一說明** | Model Cards（p43） | 標準化的用途／限制／評估結果 |
 
@@ -465,7 +470,7 @@ tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
 
 | 組成 | 內容 | 章節 |
 |---|---|---|
-| **Model Hub** | 模型倉庫（30 萬+） | §7 |
+| **Model Hub** | 模型倉庫（原稿 30 萬+；**實查 2M+**） | §7 |
 | **Dataset Hub** | 資料集倉庫 | §8 |
 | **Spaces** | 免費的 Demo 託管 | §9 |
 | **Documentation and version control** | 文件 ＋ 以 Git 為基礎的版本控制 | 本節 §6.2 |
@@ -576,12 +581,25 @@ Repository id must be 'namespace/name', got 'ag_news'.
 > 💡 **實務技巧**：搜尋時加上 `-GGUF` 或 `-4bit` 可以找到**已量化**的版本，
 > 大幅降低 VRAM 需求（與 Lesson 7 的 `Q4_K_M` 是同一件事）。
 
-### 7.4 ⚠️ 原稿的資料可能已過時
+### 7.4 ⚠️ 原稿的數字已嚴重過時（2026-10 實查）
 
-原稿寫「**300k+ models**」。這個數字是教材撰寫當時的快照，Hub 上的模型數量成長很快。
+原稿寫「**300k+ models**」（30 萬+）。**實際查證結果：**
 
-> **教學點**：引用平台數字時要標註**查詢日期**，因為這類數字每季都在變。
-> 筆記保留原稿數字以便對照，但要知道它只是**量級**（十萬級），不是精確值。
+| 項目 | 原稿（教材撰寫時） | **2026-10 實查** | 倍數 |
+|---|---|---|---|
+| **Models** | **300k+** | **2M+** | **約 6.7 倍** |
+| **Datasets** | 未給數字 | **500k+** | — |
+
+**查證方式**：`https://huggingface.co/` 首頁統計區直接顯示 `2M+ models` 與 `500k+ datasets`。
+
+> ⚠️ **這是本課最明顯的過時資訊**——原稿的「300k+」與現況差了**將近一個數量級**。
+>
+> **但考試要怎麼答？** 如果題目問「原稿說 Model Hub 有多少模型」，
+> **標準答案仍是 300k+**（因為考的是教材內容）。
+> 但你要知道**實際已經超過 200 萬**——這才是「讀懂教材而不是背教材」。
+>
+> **教學點**：引用平台數字時**一定要標註查詢日期**。這類數字每季都在變，
+> 「300k+」在教材撰寫當時是對的，現在已經過時。
 
 ---
 
@@ -908,8 +926,8 @@ pipeline("image-classification", model="facebook/deit-base-distilled-patch16-224
 
 | 項目 | 原稿 Lab 預期 | 本機實測 |
 |---|---|---|
-| transformers | 4.x（Colab 當時版本） | **5.17.0** |
-| datasets | 4.x | **5.0.0** |
+| transformers | 4.x（Colab 當時版本） | **5.17.0**（最新 **5.19.0**） |
+| datasets | 4.x | **5.0.0**（最新 **5.1.0**） |
 | 主要影響 | — | **`load_dataset("ag_news")` 簡名失效**（§6.4） |
 
 > ⚠️ **實務提醒**：Hugging Face 的套件**版號前進很快**，且**大版本會有破壞性變更**。
@@ -2805,25 +2823,58 @@ print(info.downloads, info.likes, info.tags)
 
 ### 31.3 命令列工具 `hf`
 
+本機實測（`hf --help`）。**注意 CLI 名稱**：`0.x` 時代叫 `huggingface-cli`，
+**`1.x` 之後改名為 `hf`**——網路上的舊教學多半還寫舊名字。
+
 ```bash
 hf auth login                       # 登入（存 token）
 hf download distilgpt2              # 下載
 hf upload my-user/my-model .        # 上傳整個資料夾
-hf cache scan                       # 檢查本機快取佔用
+hf cache list                       # 列出快取（alias: hf cache ls）
+hf cache prune                      # 清掉未完成的下载
+hf cache verify gpt2                # 驗證 checksum
 ```
+
+**完整子指令清單**（實測共 25+ 個）：
+
+| 分類 | 子指令 |
+|---|---|
+| **認證／版本** | `auth`、`version`、`env`、`update` |
+| **模型／資料／Space** | `models`、`datasets`、`spaces`、`papers` |
+| **檔案傳輸** | `download`、`upload`、`cp`、`sync`、`buckets` |
+| **快取** | `cache`（子指令 `list`／`prune`／`rm`／`verify`） |
+| **repo 管理** | `repos`、`collections`、`discussions`、`webhooks` |
+| **服務** | `endpoints`、`jobs`、`sandbox` |
+| **擴充** | `extensions`、`skills` |
+
+> ⚠️ **常見錯誤**：網路教學常寫 **`hf cache scan`**——**這個子指令不存在**。
+> 要列出快取內容請用 **`hf cache list`**（或 `hf cache ls`）。
 
 > **教學點**：`hf` CLI 是**離線環境準備的好幫手**——你可以在有網路的機器上
 > `hf download` 好模型，再把整個 `~/.cache/huggingface` 複製到離線機器（見附錄 D）。
 
-### 31.4 本機實測版本
+### 31.4 版本：本機 1.24.0，但最新已是 **2.2.0**
 
 ```
-huggingface_hub 1.24.0
+本機安裝  : huggingface_hub 1.24.0
+PyPI 最新 : huggingface_hub 2.2.0      ← 跨了大版本
 ```
 
-> ⚠️ **注意版號**：`1.24.0` 是 **1.x 系列**。
-> 許多舊教學寫的是 `0.x` 的 API（例如 `HfApi().model_info()` 的回傳欄位有差異）。
-> 這再次說明**鎖定版號**的重要性。
+`hf` CLI 自己也會提示：
+
+```
+Hint: A new version of huggingface_hub (2.2.0) is available! You are using version 1.24.0.
+```
+
+| 世代 | CLI 名稱 | 說明 |
+|---|---|---|
+| **`0.x`** | `huggingface-cli` | 舊教學寫的 |
+| **`1.x`** | **`hf`** | CLI 改名；**本機是這一代** |
+| **`2.x`** | **`hf`** | **最新**（API 有變動） |
+
+> ⚠️ **這是本課落差最大的一個套件**（1.x → 2.x）。
+> `HfApi().model_info()` 的回傳欄位在不同世代間有差異。
+> 這再次說明**鎖定版號**的重要性——`huggingface_hub` 短時間內跨了三個世代。
 
 ---
 
@@ -3011,7 +3062,7 @@ metrics:
 
 | 原稿句子 | 對應層 | 具體內容 |
 |---|---|---|
-| **A huge Hub for AI assets** | ① Hub | Model Hub（30 萬+）／Dataset Hub／Spaces |
+| **A huge Hub for AI assets** | ① Hub | Model Hub（原稿 30 萬+；**實查 2M+**）／Dataset Hub（**500k+**）／Spaces |
 | **Powerful ML libraries** | ② Core Libraries | `transformers`／`datasets`／`tokenizers`／`diffusers`／`peft` |
 | **Reliable deployment tools** | ③ Inference & Deployment | TGI／Endpoints／Optimum／Accelerate／safetensors |
 
@@ -4246,7 +4297,7 @@ Repository id must be 'namespace/name', got 'ag_news'.
 
 ### 42.1 環境版本
 
-| 套件 | 版本 | 狀態 |
+| 套件 | 本機版本 | 狀態 |
 |---|---|---|
 | **torch** | **2.14.1+cu132** | OK |
 | **transformers** | **5.17.0** | OK |
@@ -4258,12 +4309,37 @@ Repository id must be 'namespace/name', got 'ag_news'.
 | **sentencepiece** | **0.2.1** | OK |
 | **tokenizers** | **0.23.2** | OK |
 | **safetensors** | **0.8.0** | OK |
-| **huggingface_hub** | **1.24.0** | OK |
+| **huggingface_hub** | **1.24.0** | ⚠️ **最新已是 2.2.0**（見下） |
 | diffusers | 0.40.0 | OK |
 | bitsandbytes | 0.49.2 | OK |
 | torchvision | 0.29.1+cu132 | OK |
 | **torchaudio** | ~~2.11.0+cu130~~ | ❌ **CUDA 版本不符 → 已移除**（**cu132 版不存在**，見 §39.2） |
-| **optimum** | — | ❌ **未安裝**（Lab 沒用到） |
+| **optimum** | — | ❌ **未安裝**（Lab 沒用到；最新 2.3.0） |
+
+#### 本機版本 vs 最新版本（2026-10 實查）
+
+> ⚠️ **本筆記的實測數字都是在「本機版本」那一欄的環境下得到的。**
+> 下表列出**同一時間點 PyPI 上的最新版本**，方便你判斷哪些已經落後。
+
+| 套件 | 本機 | **最新** | 落後 |
+|---|---|---|---|
+| torch | 2.14.1+cu132 | 2.14.1 | ✅ 同步 |
+| **transformers** | 5.17.0 | **5.19.0** | ⚠️ 2 個 minor |
+| **datasets** | 5.0.0 | **5.1.0** | ⚠️ 1 個 minor |
+| **peft** | 0.19.1 | **0.21.2** | ⚠️ 2 個 minor |
+| accelerate | 1.14.0 | **1.15.0** | ⚠️ 1 個 minor |
+| **diffusers** | 0.40.0 | **0.41.0** | ⚠️ 1 個 minor |
+| tokenizers | 0.23.2 | **0.23.3** | ⚠️ patch |
+| safetensors | 0.8.0 | 0.8.0 | ✅ 同步 |
+| sentencepiece | 0.2.1 | **0.2.2** | ⚠️ patch |
+| **huggingface_hub** | **1.24.0** | **2.2.0** | ❌ **跨大版本** |
+| optimum | 未安裝 | 2.3.0 | — |
+| bitsandbytes | 0.49.2 | 0.50.2 | ⚠️ 1 個 minor |
+
+> 💡 **教學點**：**本筆記的實測數字是「可重現」的，不是「最新」的。**
+> 如果你照著 §D.1 的 `pip install` 指令做，會裝到比本機更新的版本——
+> **有些數字（尤其是 `trainable%`、推論時間）可能會有小幅差異**。
+> 要完全重現本筆記的數字，請鎖定上表「本機」欄的版號。
 
 | 硬體 | 值 |
 |---|---|
@@ -4407,7 +4483,7 @@ Setting fan_in_fan_out to True.
 
 | 項目 | 數字 |
 |---|---|
-| **Model Hub 模型數** | **300k+** |
+| **Model Hub 模型數（原稿）** | **300k+**（**2026-10 實查已 2M+**） |
 | **Hub 四件套** | **Model Hub／Dataset Hub／Spaces／文件與版控** |
 | **生態系三層** | **Hub／Core ML Libraries／Inference & Deployment** |
 | **AG News** | **4 類、12 萬筆** |
@@ -4471,6 +4547,10 @@ Setting fan_in_fan_out to True.
 | **`load_dataset` 的 repo id 格式？** | **必須 `namespace/name`** |
 | **`peft` 匯入失敗的根因？** | **`torchaudio` CUDA 版本不符**（不是 Bloom） |
 | **Model Card 是什麼檔案？** | **repo 裡的 `README.md`**（含 YAML frontmatter） |
+| **原稿說 Model Hub 有多少模型？實況呢？** | **原稿 300k+**；**2026-10 實查已 2M+**（Datasets 500k+） |
+| **`hf cache` 的子指令？** | **`list`／`prune`／`rm`／`verify`**（**沒有 `scan`**） |
+| **`huggingface_hub` 最新版？** | **2.2.0**（本機實測用 1.24.0） |
+| **`torchaudio` 有 cu132 版嗎？** | **沒有**——最高只到 2.11.0+cu130 |
 
 ### 43.6 考前 10 分鐘速記
 
@@ -4583,6 +4663,9 @@ Setting fan_in_fan_out to True.
 | 12 | 相信「裝了 torchaudio 就能用」 | 檢查 **CUDA 版本是否與 torch 相符**；**不符時直接移除**（cu132 版不存在） | 裝了但匯入失敗會拖垮 `peft` |
 | 13 | 直接 `ds.select()` 當作訓練集 | **先 `shuffle()` 再切分** | 資料可能按類別排序 |
 | 14 | 用 `torch.save` 存權重 | 用 **`safetensors`** | pickle 可執行任意程式碼 |
+| 15 | `hf cache scan` | **`hf cache list`**（或 `hf cache ls`） | **`scan` 這個子指令不存在** |
+| 16 | 引用「300k+ models」當成現況 | 標註查詢日期（**2026-10 實查為 2M+**） | 平台數字每季都在變 |
+| 17 | 用 `huggingface-cli`（舊名） | **`hf`**（1.x 之後改名） | 舊教學的指令已失效 |
 
 ### 錯誤訊息對照表
 
@@ -4667,8 +4750,10 @@ Setting fan_in_fan_out to True.
 ### D.1 一次性準備（有網路時）
 
 ```powershell
-# ① 安裝套件（鎖定版號）
-pip install "transformers==5.17.0" "datasets==5.0.0" "peft==0.19.1" accelerate sentencepiece safetensors torch
+# ① 安裝套件（鎖定版號 = 完全重現本筆記的數字）
+pip install "transformers==5.17.0" "datasets==5.0.0" "peft==0.19.1" "huggingface_hub==1.24.0" accelerate sentencepiece safetensors torch
+# 若只要最新版（數字可能與本筆記有小差異）：
+#   pip install transformers datasets peft huggingface_hub accelerate sentencepiece safetensors torch
 
 # ② 預先下載模型（存到 ~/.cache/huggingface/hub）
 hf download distilgpt2

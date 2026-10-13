@@ -319,7 +319,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#73-怎麼在-hub-上找模型">7.3 怎麼在 Hub 上找模型</a>
 </li>
-<li><a href="#74--原稿的資料可能已過時">7.4 ⚠️ 原稿的資料可能已過時</a>
+<li><a href="#74--原稿的數字已嚴重過時2026-10-實查">7.4 ⚠️ 原稿的數字已嚴重過時（2026-10 實查）</a>
 </li>
 </ul>
 </li>
@@ -647,7 +647,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#313-命令列工具-hf">31.3 命令列工具 hf</a>
 </li>
-<li><a href="#314-本機實測版本">31.4 本機實測版本</a>
+<li><a href="#314-版本本機-1240但最新已是-220">31.4 版本：本機 1.24.0，但最新已是 2.2.0</a>
 </li>
 </ul>
 </li>
@@ -894,6 +894,11 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 本筆記按原稿每一個標題逐一填充內容，並補上定義、參數說明、常見錯誤與考點。
 與 Lesson 7 不同，本課<strong>原稿文字層完整</strong>（46 頁中 39 頁有實質文字，全份 9,225 字元），因此筆記忠實度較高；僅 p9–p14、p17、p19 為截圖頁，由筆記逐張判讀補齊。
 所有程式碼與數字都在本機實測（Python 3.11.15／transformers 5.17.0／datasets 5.0.0／peft 0.19.1／RTX 4090），實測輸出直接寫進內文。
+⚠️ <strong>版本時效</strong>：以上是<strong>本機實測當時</strong>的版本（2026-10）。PyPI 上的最新版已經前進
+（<strong><code>huggingface_hub</code> 已到 2.2.0</strong>、<code>transformers</code> 已到 5.19.0、<code>peft</code> 已到 0.21.2），
+完整對照表見 <strong>§42.1</strong>。要完全重現本筆記的數字，請鎖定上述版號。
+⚠️ <strong>平台數字時效</strong>：原稿說 Model Hub 有「<strong>300k+</strong> 模型」，<strong>2026-10 實查已達 <code>2M+</code></strong>（Datasets <code>500k+</code>）——
+見 <strong>§7.4</strong>。
 🖱️ <strong>互動測驗（推薦）</strong>：附錄 F 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
 </blockquote>
 <hr>
@@ -1169,7 +1174,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <span class="w">  </span><span class="err">③</span><span class="w"> </span><span class="n">Inference</span><span class="w">       </span><span class="n">TGI</span><span class="p">,</span><span class="w"> </span><span class="n">Inference</span><span class="w"> </span><span class="n">Endpoints</span><span class="p">,</span><span class="w"> </span><span class="n">Optimum</span><span class="p">,</span><span class="w"> </span><span class="n">Accelerate</span>
 
 <span class="err">必背數字</span>
-<span class="w">  </span><span class="n">Model</span><span class="w"> </span><span class="n">Hub</span><span class="w">  </span><span class="mi">300</span><span class="n">k</span><span class="o">+</span><span class="w"> </span><span class="err">模型</span>
+<span class="w">  </span><span class="n">Model</span><span class="w"> </span><span class="n">Hub</span><span class="w">  </span><span class="mi">300</span><span class="n">k</span><span class="o">+</span><span class="w"> </span><span class="err">模型（原稿；</span><span class="mi">2026</span><span class="o">-</span><span class="mi">10</span><span class="w"> </span><span class="err">實查已</span><span class="w"> </span><span class="mi">2</span><span class="n">M</span><span class="o">+</span><span class="err">）</span>
 <span class="w">  </span><span class="n">Hub</span><span class="w"> </span><span class="err">四件套</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">Hub</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Dataset</span><span class="w"> </span><span class="n">Hub</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Spaces</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="err">文件與版控</span>
 
 <span class="err">三種</span><span class="w"> </span><span class="n">Tokenizer</span><span class="err">（考最多）</span>
@@ -1525,7 +1530,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <tbody>
 <tr>
 <td><strong>統一倉庫</strong></td>
-<td>Model Hub（30 萬+ 模型）</td>
+<td>Model Hub（原稿 30 萬+；<strong>2026-10 實查已 2M+</strong>）</td>
 <td>一個 <code>repo id</code> 就能定位任何模型</td>
 </tr>
 <tr>
@@ -1869,7 +1874,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <tbody>
 <tr>
 <td><strong>Model Hub</strong></td>
-<td>模型倉庫（30 萬+）</td>
+<td>模型倉庫（原稿 30 萬+；<strong>實查 2M+</strong>）</td>
 <td>§7</td>
 </tr>
 <tr>
@@ -2100,11 +2105,40 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <p>💡 <strong>實務技巧</strong>：搜尋時加上 <code>-GGUF</code> 或 <code>-4bit</code> 可以找到<strong>已量化</strong>的版本，
 大幅降低 VRAM 需求（與 Lesson 7 的 <code>Q4_K_M</code> 是同一件事）。</p>
 </blockquote>
-<h3 id="74--原稿的資料可能已過時">7.4 ⚠️ 原稿的資料可能已過時</h3>
-<p>原稿寫「<strong>300k+ models</strong>」。這個數字是教材撰寫當時的快照，Hub 上的模型數量成長很快。</p>
+<h3 id="74--原稿的數字已嚴重過時2026-10-實查">7.4 ⚠️ 原稿的數字已嚴重過時（2026-10 實查）</h3>
+<p>原稿寫「<strong>300k+ models</strong>」（30 萬+）。<strong>實際查證結果：</strong></p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>原稿（教材撰寫時）</th>
+<th><strong>2026-10 實查</strong></th>
+<th>倍數</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Models</strong></td>
+<td><strong>300k+</strong></td>
+<td><strong>2M+</strong></td>
+<td><strong>約 6.7 倍</strong></td>
+</tr>
+<tr>
+<td><strong>Datasets</strong></td>
+<td>未給數字</td>
+<td><strong>500k+</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>查證方式</strong>：<code>https://huggingface.co/</code> 首頁統計區直接顯示 <code>2M+ models</code> 與 <code>500k+ datasets</code>。</p>
 <blockquote>
-<p><strong>教學點</strong>：引用平台數字時要標註<strong>查詢日期</strong>，因為這類數字每季都在變。
-筆記保留原稿數字以便對照，但要知道它只是<strong>量級</strong>（十萬級），不是精確值。</p>
+<p>⚠️ <strong>這是本課最明顯的過時資訊</strong>——原稿的「300k+」與現況差了<strong>將近一個數量級</strong>。</p>
+<p><strong>但考試要怎麼答？</strong> 如果題目問「原稿說 Model Hub 有多少模型」，
+<strong>標準答案仍是 300k+</strong>（因為考的是教材內容）。
+但你要知道<strong>實際已經超過 200 萬</strong>——這才是「讀懂教材而不是背教材」。</p>
+<p><strong>教學點</strong>：引用平台數字時<strong>一定要標註查詢日期</strong>。這類數字每季都在變，
+「300k+」在教材撰寫當時是對的，現在已經過時。</p>
 </blockquote>
 <hr>
 <h2 id="8-dataset-hub">8. Dataset Hub</h2>
@@ -2721,12 +2755,12 @@ pipeline(&quot;image-classification&quot;, model=&quot;facebook/deit-base-distil
 <tr>
 <td>transformers</td>
 <td>4.x（Colab 當時版本）</td>
-<td><strong>5.17.0</strong></td>
+<td><strong>5.17.0</strong>（最新 <strong>5.19.0</strong>）</td>
 </tr>
 <tr>
 <td>datasets</td>
 <td>4.x</td>
-<td><strong>5.0.0</strong></td>
+<td><strong>5.0.0</strong>（最新 <strong>5.1.0</strong>）</td>
 </tr>
 <tr>
 <td>主要影響</td>
@@ -6210,24 +6244,100 @@ Python tools to access the Hub:
 </code></pre></div>
 
 <h3 id="313-命令列工具-hf">31.3 命令列工具 <code>hf</code></h3>
+<p>本機實測（<code>hf --help</code>）。<strong>注意 CLI 名稱</strong>：<code>0.x</code> 時代叫 <code>huggingface-cli</code>，
+<strong><code>1.x</code> 之後改名為 <code>hf</code></strong>——網路上的舊教學多半還寫舊名字。</p>
 <div class="codehilite"><pre><span></span><code>hf<span class="w"> </span>auth<span class="w"> </span>login<span class="w">                       </span><span class="c1"># 登入（存 token）</span>
 hf<span class="w"> </span>download<span class="w"> </span>distilgpt2<span class="w">              </span><span class="c1"># 下載</span>
 hf<span class="w"> </span>upload<span class="w"> </span>my-user/my-model<span class="w"> </span>.<span class="w">        </span><span class="c1"># 上傳整個資料夾</span>
-hf<span class="w"> </span>cache<span class="w"> </span>scan<span class="w">                       </span><span class="c1"># 檢查本機快取佔用</span>
+hf<span class="w"> </span>cache<span class="w"> </span>list<span class="w">                       </span><span class="c1"># 列出快取（alias: hf cache ls）</span>
+hf<span class="w"> </span>cache<span class="w"> </span>prune<span class="w">                      </span><span class="c1"># 清掉未完成的下载</span>
+hf<span class="w"> </span>cache<span class="w"> </span>verify<span class="w"> </span>gpt2<span class="w">                </span><span class="c1"># 驗證 checksum</span>
 </code></pre></div>
 
+<p><strong>完整子指令清單</strong>（實測共 25+ 個）：</p>
+<table>
+<thead>
+<tr>
+<th>分類</th>
+<th>子指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>認證／版本</strong></td>
+<td><code>auth</code>、<code>version</code>、<code>env</code>、<code>update</code></td>
+</tr>
+<tr>
+<td><strong>模型／資料／Space</strong></td>
+<td><code>models</code>、<code>datasets</code>、<code>spaces</code>、<code>papers</code></td>
+</tr>
+<tr>
+<td><strong>檔案傳輸</strong></td>
+<td><code>download</code>、<code>upload</code>、<code>cp</code>、<code>sync</code>、<code>buckets</code></td>
+</tr>
+<tr>
+<td><strong>快取</strong></td>
+<td><code>cache</code>（子指令 <code>list</code>／<code>prune</code>／<code>rm</code>／<code>verify</code>）</td>
+</tr>
+<tr>
+<td><strong>repo 管理</strong></td>
+<td><code>repos</code>、<code>collections</code>、<code>discussions</code>、<code>webhooks</code></td>
+</tr>
+<tr>
+<td><strong>服務</strong></td>
+<td><code>endpoints</code>、<code>jobs</code>、<code>sandbox</code></td>
+</tr>
+<tr>
+<td><strong>擴充</strong></td>
+<td><code>extensions</code>、<code>skills</code></td>
+</tr>
+</tbody>
+</table>
 <blockquote>
+<p>⚠️ <strong>常見錯誤</strong>：網路教學常寫 <strong><code>hf cache scan</code></strong>——<strong>這個子指令不存在</strong>。
+要列出快取內容請用 <strong><code>hf cache list</code></strong>（或 <code>hf cache ls</code>）。</p>
 <p><strong>教學點</strong>：<code>hf</code> CLI 是<strong>離線環境準備的好幫手</strong>——你可以在有網路的機器上
 <code>hf download</code> 好模型，再把整個 <code>~/.cache/huggingface</code> 複製到離線機器（見附錄 D）。</p>
 </blockquote>
-<h3 id="314-本機實測版本">31.4 本機實測版本</h3>
-<div class="codehilite"><pre><span></span><code>huggingface_hub 1.24.0
+<h3 id="314-版本本機-1240但最新已是-220">31.4 版本：本機 1.24.0，但最新已是 <strong>2.2.0</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="err">本機安裝</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">huggingface_hub</span><span class="w"> </span><span class="mf">1.24</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">PyPI</span><span class="w"> </span><span class="err">最新</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">huggingface_hub</span><span class="w"> </span><span class="mf">2.2</span><span class="o">.</span><span class="mi">0</span><span class="w">      </span><span class="err">←</span><span class="w"> </span><span class="err">跨了大版本</span>
 </code></pre></div>
 
+<p><code>hf</code> CLI 自己也會提示：</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Hint</span><span class="o">:</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">huggingface_hub</span><span class="w"> </span><span class="o">(</span><span class="mf">2.2</span><span class="o">.</span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">available</span><span class="o">!</span><span class="w"> </span><span class="n">You</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="mf">1.24</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>世代</th>
+<th>CLI 名稱</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>0.x</code></strong></td>
+<td><code>huggingface-cli</code></td>
+<td>舊教學寫的</td>
+</tr>
+<tr>
+<td><strong><code>1.x</code></strong></td>
+<td><strong><code>hf</code></strong></td>
+<td>CLI 改名；<strong>本機是這一代</strong></td>
+</tr>
+<tr>
+<td><strong><code>2.x</code></strong></td>
+<td><strong><code>hf</code></strong></td>
+<td><strong>最新</strong>（API 有變動）</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
-<p>⚠️ <strong>注意版號</strong>：<code>1.24.0</code> 是 <strong>1.x 系列</strong>。
-許多舊教學寫的是 <code>0.x</code> 的 API（例如 <code>HfApi().model_info()</code> 的回傳欄位有差異）。
-這再次說明<strong>鎖定版號</strong>的重要性。</p>
+<p>⚠️ <strong>這是本課落差最大的一個套件</strong>（1.x → 2.x）。
+<code>HfApi().model_info()</code> 的回傳欄位在不同世代間有差異。
+這再次說明<strong>鎖定版號</strong>的重要性——<code>huggingface_hub</code> 短時間內跨了三個世代。</p>
 </blockquote>
 <hr>
 <h2 id="32-model-cards">32. Model Cards</h2>
@@ -6539,7 +6649,7 @@ Lesson 7 的 <code>LangIndex.ipynb</code> 用的 <code>sentence-transformers/all
 <tr>
 <td><strong>A huge Hub for AI assets</strong></td>
 <td>① Hub</td>
-<td>Model Hub（30 萬+）／Dataset Hub／Spaces</td>
+<td>Model Hub（原稿 30 萬+；<strong>實查 2M+</strong>）／Dataset Hub（<strong>500k+</strong>）／Spaces</td>
 </tr>
 <tr>
 <td><strong>Powerful ML libraries</strong></td>
@@ -8607,7 +8717,7 @@ cache after : 237.0 MB
 <thead>
 <tr>
 <th>套件</th>
-<th>版本</th>
+<th>本機版本</th>
 <th>狀態</th>
 </tr>
 </thead>
@@ -8665,7 +8775,7 @@ cache after : 237.0 MB
 <tr>
 <td><strong>huggingface_hub</strong></td>
 <td><strong>1.24.0</strong></td>
-<td>OK</td>
+<td>⚠️ <strong>最新已是 2.2.0</strong>（見下）</td>
 </tr>
 <tr>
 <td>diffusers</td>
@@ -8690,10 +8800,105 @@ cache after : 237.0 MB
 <tr>
 <td><strong>optimum</strong></td>
 <td>—</td>
-<td>❌ <strong>未安裝</strong>（Lab 沒用到）</td>
+<td>❌ <strong>未安裝</strong>（Lab 沒用到；最新 2.3.0）</td>
 </tr>
 </tbody>
 </table>
+<h4 id="本機版本-vs-最新版本2026-10-實查">本機版本 vs 最新版本（2026-10 實查）</h4>
+<blockquote>
+<p>⚠️ <strong>本筆記的實測數字都是在「本機版本」那一欄的環境下得到的。</strong>
+下表列出<strong>同一時間點 PyPI 上的最新版本</strong>，方便你判斷哪些已經落後。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>套件</th>
+<th>本機</th>
+<th><strong>最新</strong></th>
+<th>落後</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>torch</td>
+<td>2.14.1+cu132</td>
+<td>2.14.1</td>
+<td>✅ 同步</td>
+</tr>
+<tr>
+<td><strong>transformers</strong></td>
+<td>5.17.0</td>
+<td><strong>5.19.0</strong></td>
+<td>⚠️ 2 個 minor</td>
+</tr>
+<tr>
+<td><strong>datasets</strong></td>
+<td>5.0.0</td>
+<td><strong>5.1.0</strong></td>
+<td>⚠️ 1 個 minor</td>
+</tr>
+<tr>
+<td><strong>peft</strong></td>
+<td>0.19.1</td>
+<td><strong>0.21.2</strong></td>
+<td>⚠️ 2 個 minor</td>
+</tr>
+<tr>
+<td>accelerate</td>
+<td>1.14.0</td>
+<td><strong>1.15.0</strong></td>
+<td>⚠️ 1 個 minor</td>
+</tr>
+<tr>
+<td><strong>diffusers</strong></td>
+<td>0.40.0</td>
+<td><strong>0.41.0</strong></td>
+<td>⚠️ 1 個 minor</td>
+</tr>
+<tr>
+<td>tokenizers</td>
+<td>0.23.2</td>
+<td><strong>0.23.3</strong></td>
+<td>⚠️ patch</td>
+</tr>
+<tr>
+<td>safetensors</td>
+<td>0.8.0</td>
+<td>0.8.0</td>
+<td>✅ 同步</td>
+</tr>
+<tr>
+<td>sentencepiece</td>
+<td>0.2.1</td>
+<td><strong>0.2.2</strong></td>
+<td>⚠️ patch</td>
+</tr>
+<tr>
+<td><strong>huggingface_hub</strong></td>
+<td><strong>1.24.0</strong></td>
+<td><strong>2.2.0</strong></td>
+<td>❌ <strong>跨大版本</strong></td>
+</tr>
+<tr>
+<td>optimum</td>
+<td>未安裝</td>
+<td>2.3.0</td>
+<td>—</td>
+</tr>
+<tr>
+<td>bitsandbytes</td>
+<td>0.49.2</td>
+<td>0.50.2</td>
+<td>⚠️ 1 個 minor</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>教學點</strong>：<strong>本筆記的實測數字是「可重現」的，不是「最新」的。</strong>
+如果你照著 §D.1 的 <code>pip install</code> 指令做，會裝到比本機更新的版本——
+<strong>有些數字（尤其是 <code>trainable%</code>、推論時間）可能會有小幅差異</strong>。
+要完全重現本筆記的數字，請鎖定上表「本機」欄的版號。</p>
+</blockquote>
 <table>
 <thead>
 <tr>
@@ -9107,8 +9312,8 @@ cache after : 237.0 MB
 </thead>
 <tbody>
 <tr>
-<td><strong>Model Hub 模型數</strong></td>
-<td><strong>300k+</strong></td>
+<td><strong>Model Hub 模型數（原稿）</strong></td>
+<td><strong>300k+</strong>（<strong>2026-10 實查已 2M+</strong>）</td>
 </tr>
 <tr>
 <td><strong>Hub 四件套</strong></td>
@@ -9349,6 +9554,22 @@ cache after : 237.0 MB
 <tr>
 <td><strong>Model Card 是什麼檔案？</strong></td>
 <td><strong>repo 裡的 <code>README.md</code></strong>（含 YAML frontmatter）</td>
+</tr>
+<tr>
+<td><strong>原稿說 Model Hub 有多少模型？實況呢？</strong></td>
+<td><strong>原稿 300k+</strong>；<strong>2026-10 實查已 2M+</strong>（Datasets 500k+）</td>
+</tr>
+<tr>
+<td><strong><code>hf cache</code> 的子指令？</strong></td>
+<td><strong><code>list</code>／<code>prune</code>／<code>rm</code>／<code>verify</code></strong>（<strong>沒有 <code>scan</code></strong>）</td>
+</tr>
+<tr>
+<td><strong><code>huggingface_hub</code> 最新版？</strong></td>
+<td><strong>2.2.0</strong>（本機實測用 1.24.0）</td>
+</tr>
+<tr>
+<td><strong><code>torchaudio</code> 有 cu132 版嗎？</strong></td>
+<td><strong>沒有</strong>——最高只到 2.11.0+cu130</td>
 </tr>
 </tbody>
 </table>
@@ -9695,6 +9916,24 @@ cache after : 237.0 MB
 <td>用 <strong><code>safetensors</code></strong></td>
 <td>pickle 可執行任意程式碼</td>
 </tr>
+<tr>
+<td>15</td>
+<td><code>hf cache scan</code></td>
+<td><strong><code>hf cache list</code></strong>（或 <code>hf cache ls</code>）</td>
+<td><strong><code>scan</code> 這個子指令不存在</strong></td>
+</tr>
+<tr>
+<td>16</td>
+<td>引用「300k+ models」當成現況</td>
+<td>標註查詢日期（<strong>2026-10 實查為 2M+</strong>）</td>
+<td>平台數字每季都在變</td>
+</tr>
+<tr>
+<td>17</td>
+<td>用 <code>huggingface-cli</code>（舊名）</td>
+<td><strong><code>hf</code></strong>（1.x 之後改名）</td>
+<td>舊教學的指令已失效</td>
+</tr>
 </tbody>
 </table>
 <h3 id="錯誤訊息對照表">錯誤訊息對照表</h3>
@@ -10008,8 +10247,10 @@ cache after : 237.0 MB
 <hr>
 <h2 id="附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</h2>
 <h3 id="d1-一次性準備有網路時">D.1 一次性準備（有網路時）</h3>
-<div class="codehilite"><pre><span></span><code><span class="c"># ① 安裝套件（鎖定版號）</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;transformers==5.17.0&quot;</span> <span class="s2">&quot;datasets==5.0.0&quot;</span> <span class="s2">&quot;peft==0.19.1&quot;</span> <span class="n">accelerate</span> <span class="n">sentencepiece</span> <span class="n">safetensors</span> <span class="n">torch</span>
+<div class="codehilite"><pre><span></span><code><span class="c"># ① 安裝套件（鎖定版號 = 完全重現本筆記的數字）</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;transformers==5.17.0&quot;</span> <span class="s2">&quot;datasets==5.0.0&quot;</span> <span class="s2">&quot;peft==0.19.1&quot;</span> <span class="s2">&quot;huggingface_hub==1.24.0&quot;</span> <span class="n">accelerate</span> <span class="n">sentencepiece</span> <span class="n">safetensors</span> <span class="n">torch</span>
+<span class="c"># 若只要最新版（數字可能與本筆記有小差異）：</span>
+<span class="c">#   pip install transformers datasets peft huggingface_hub accelerate sentencepiece safetensors torch</span>
 
 <span class="c"># ② 預先下載模型（存到 ~/.cache/huggingface/hub）</span>
 <span class="n">hf</span> <span class="n">download</span> <span class="n">distilgpt2</span>
