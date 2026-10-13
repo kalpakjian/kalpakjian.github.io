@@ -23,7 +23,7 @@ date: 2026-10-13 09:00:00
 | **Lesson 4** | Test | — |
 | **Lesson 5** | Prompt Engineering | ✅ [Prompt Engineering 學習筆記](/prompt-engineering-notes/) |
 | **Lesson 6** | Hugging Face for LLM | ⏳ 待補 |
-| **Lesson 7** | Local LLM Apps | ⏳ 待補 |
+| **Lesson 7** | Local LLM Apps | ✅ [Local LLM Apps 學習筆記](/local-llm-notes/) |
 | **Lesson 8** | LiteLLM | ✅ [LiteLLM 學習筆記](/litellm-notes/) |
 | **Lesson 9** | Streamlit and Flask | ✅ [Streamlit and Flask 學習筆記](/streamlit-flask-notes/) |
 | **Lesson 10** | Exam | — |
@@ -88,7 +88,35 @@ date: 2026-10-13 09:00:00
 
 ---
 
-## 4 · Lesson 8 — LiteLLM
+## 4 · Lesson 7 — Local LLM Apps
+
+![Local LLM Apps 學習筆記](/img/covers/local-llm-notes-ivdc.png)
+
+- **涵蓋**：原稿 **44 頁**、**39 個章節**——四個桌面 App 各一段操作手冊，再加上 Lab 與 NLP 補充：
+  - **LM Studio**：下載安裝 → 首跑引導（`google/gemma-3-4b`，3.34 GB）→ **`GPU Offload`／`Context Length`** → 從 Hugging Face 抓 **`TheBloke/deepseek-llm-7B-base-GGUF`（`Q4_K_S`，4.03 GB）** → **附加檔案問答**
+  - **Ollama**：`ollama run` → **模型選擇表**（六個模型的參數與大小）→ `list`／`serve`／**埠 11434** → 用 Python 打 REST API
+  - **AnythingLLM**：工作區（Workspace）與 **provider 清單**（含 **Ollama／LM Studio**）
+  - **GPT4All**：**My Documents**、允許的副檔名 `docx,pdf,txt,md,rst`、**對自己的檔案提問**
+  - **Lab**：`testollama.py`、`app_web.py`、`LangChain.ipynb`、`LangIndex.ipynb`、`RAG.ipynb`、`train.py`、`Modelfile`
+  - **NLP 補充**（95 頁 deck）：Tokenizing／停用詞／Stemming／Lemmatizing／POS／Chunking／NER／文字分類／**Extractive vs Abstractive 摘要**
+- **特別之處**：原稿 **44 頁中有 43 頁是純截圖**（全份文字層只有約 2,705 字元，唯一有實質內容的是 p20 的模型表），
+  筆記逐頁補上「**這一步在做什麼、為什麼**」，並在每節標明對應 PDF 頁碼
+- **抓到的原稿缺陷共 14 項**，其中兩個最嚴重：
+  - **`testollama.py` 寫死 `"model": "llama3"`**——**不在講義自己的模型表裡**，照著做一定 **HTTP 404**
+  - **`LangIndex.ipynb` 把真實的 Groq API key 寫死在程式碼裡**，而且**沒有那把 key 的學員根本跑不動** →
+    筆記提供「**改用 `llama-index-llms-ollama`**」的替代路徑（只需改 3 個地方），並在本機實測跑通
+  - 其餘包括：`train.jsonl` **73 行只有 1 個唯一樣本**、`train.py` **教 LoRA 卻是全參數微調**、
+    `Modelfile` 的 **`TEMPLATE {{ .Prompt }}` 沒有角色標記**、`RAG.ipynb` 的 **`max_length` 誤用**、
+    `torch.tensor([ord(c)…])` **假嵌入**、`GTP4ALL`／`Imstudio` 拼字錯誤、`phi3` **三種寫法**、
+    `ReadMe.txt` 沿用講師帳號路徑
+- **本機實測數據**（Ollama 0.40.3）：`smollm` 對話 **1.38 秒**、RAG 建索引 **0.10 秒**／查詢 **0.43 秒**、
+  **模型不存在回 404**、`mymodel` 其實是 **GPT-2 124M**
+- 另有 **39 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **👉 [看筆記](/local-llm-notes/)** ｜ [互動測驗 60 題](/local-llm-notes/mc-quiz.html)
+
+---
+
+## 5 · Lesson 8 — LiteLLM
 
 ![LiteLLM 學習筆記](/img/covers/litellm-notes-ivdc.png)
 
@@ -105,7 +133,7 @@ date: 2026-10-13 09:00:00
 
 ---
 
-## 5 · Lesson 9 — Streamlit and Flask
+## 6 · Lesson 9 — Streamlit and Flask
 
 ![Streamlit and Flask 學習筆記](/img/covers/streamlit-flask-notes-ivdc.png)
 
