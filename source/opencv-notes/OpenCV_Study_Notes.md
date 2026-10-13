@@ -92,6 +92,27 @@ import urllib.request           # 下載範例圖片
 > **考點**：`cv2` 是套件名稱；`pip install opencv-python`（要完整功能可裝 `opencv-contrib-python`）。
 > `cv2.__version__` 可查版本（本機環境為 5.0.0，PDF 舊寫法在 4.x / 5.x 都適用）。
 
+### 1.4 最小可執行範例
+
+```python
+import cv2
+
+image = cv2.imread("photo.jpg")          # 讀取（BGR 順序）
+print(type(image))                        # <class 'numpy.ndarray'>
+print(image.shape)                        # (height, width, 3)  → 注意是 H, W 不是 W, H
+cv2.imshow("Window", image)               # 開視窗顯示
+cv2.waitKey(0)                            # 等待按鍵（0 = 無限等待）
+cv2.destroyAllWindows()                   # 關閉所有視窗
+```
+
+**三個必記事實**
+
+1. 影像是 **NumPy 陣列**，形狀是 `(rows/height, cols/width, channels)`。
+2. 通道順序預設是 **BGR**（不是 RGB）。
+3. `cv2.imshow()` 後一定要 `cv2.waitKey()`，否則視窗不會更新。
+
+---
+
 ## 2. OpenCV Applications
 
 PDF 列出六大應用，以下逐一補充「用什麼技術做」：
@@ -357,7 +378,7 @@ binary = cv2.adaptiveThreshold(gray, 255,
                                cv2.THRESH_BINARY, 11, 2)
 ```
 
-### 5.6 的前處理三步
+### 5.6 前處理三步
 
 1. **Fix the Colors（修正顏色）**
    OpenCV 預設以 BGR 讀入照片，轉成 RGB 才能正常顯示顏色。
@@ -1192,7 +1213,7 @@ print("Inliers:", int(mask.sum()), "/", len(matches))
 
 **用途**：物件辨識（找出目標在畫面中的位置）、影像拼接、AR 平面疊圖。
 
-### 12.8 的四個重點
+### 12.8 四個重點
 
 1. **BFMatcher 直接比較描述子**（brute-force，逐一比對）。
 2. **FLANN 提供快速最近鄰搜尋**（approximate nearest neighbor）。
@@ -1893,7 +1914,7 @@ if len(good) > 10:
 
 ## 15. Summary
 
-### 15.1 的五點總結
+### 15.1 五點總結
 
 | # | 原文 | 中文解釋 |
 |---|------|---------|

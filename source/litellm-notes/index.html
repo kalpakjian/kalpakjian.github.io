@@ -268,7 +268,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <ul>
 <li><a href="#51-意圖">5.1 意圖</a>
 </li>
-<li><a href="#52--本機實測本節這個寫法在-litellm-1912-已經會失敗">5.2 ⚠️ 本機實測：本節這個寫法在 litellm 1.91.2 已經會失敗</a>
+<li><a href="#52--本機實測本節這個寫法在-litellm-1912-已經會失敗">5.2 ⚠️ 本機實測：本節這個寫法在 litellm 1.91.2 <strong>已經會失敗</strong></a>
 </li>
 <li><a href="#53-正確寫法">5.3 正確寫法</a>
 </li>
@@ -280,21 +280,21 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#62-把版本雜湊抽出來管理">6.2 把版本雜湊抽出來管理</a>
 </li>
-<li><a href="#63-get_llm_provider-實測">6.3 get_llm_provider() 實測</a>
+<li><a href="#63-get_llm_provider-實測">6.3 <code>get_llm_provider()</code> 實測</a>
 </li>
 </ul>
 </li>
 <li><a href="#7-call-command-nightly--cohere">7. Call Command-Nightly — Cohere</a>
 <ul>
-<li><a href="#71-command-nightly-是什麼">7.1 command-nightly 是什麼</a>
+<li><a href="#71-command-nightly-是什麼">7.1 <code>command-nightly</code> 是什麼</a>
 </li>
 <li><a href="#72-一樣沒有前綴為什麼這次可以">7.2 一樣沒有前綴，為什麼這次可以？</a>
 </li>
 </ul>
 </li>
-<li><a href="#8-call-azure-openai--azure-前綴與-deployment-id">8. Call Azure OpenAI — azure/ 前綴與 deployment-id</a>
+<li><a href="#8-call-azure-openai--azure-前綴與-deployment-id">8. Call Azure OpenAI — <code>azure/</code> 前綴與 deployment-id</a>
 <ul>
-<li><a href="#81-azure-的關鍵差異model-放的是部署名稱">8.1 Azure 的關鍵差異：model 放的是「部署名稱」</a>
+<li><a href="#81-azure-的關鍵差異model-放的是部署名稱">8.1 Azure 的關鍵差異：<code>model</code> 放的是「部署名稱」</a>
 </li>
 <li><a href="#82-三個必填環境變數">8.2 三個必填環境變數</a>
 </li>
@@ -304,13 +304,13 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 </ul>
 </li>
-<li><a href="#9-本機模型ollamalitepy-逐行">9. 本機模型：Ollama（lite.py 逐行）</a>
+<li><a href="#9-本機模型ollamalitepy-逐行">9. 本機模型：Ollama（<code>lite.py</code> 逐行）</a>
 <ul>
 <li><a href="#91-完整原始碼">9.1 完整原始碼</a>
 </li>
 <li><a href="#92-逐行說明">9.2 逐行說明</a>
 </li>
-<li><a href="#93-為什麼一定要-api_base">9.3 為什麼一定要 api_base</a>
+<li><a href="#93-為什麼一定要-api_base">9.3 為什麼一定要 <code>api_base</code></a>
 </li>
 <li><a href="#94-本機實測逐字照跑的真實輸出">9.4 本機實測：逐字照跑的真實輸出</a>
 </li>
@@ -320,7 +320,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#10-模型命名規則與供應商前綴總表">10. 模型命名規則與供應商前綴總表</a>
 <ul>
-<li><a href="#101-規則供應商模型只認第一個斜線">10.1 規則：&lt;供應商&gt;/&lt;模型&gt;，只認第一個斜線</a>
+<li><a href="#101-規則供應商模型只認第一個斜線">10.1 規則：<code><供應商>/<模型></code>，只認第一個斜線</a>
 </li>
 <li><a href="#102-有前綴-vs-無前綴">10.2 有前綴 vs 無前綴</a>
 </li>
@@ -328,29 +328,29 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 </ul>
 </li>
-<li><a href="#11-completion-的統一-io-契約">11. completion() 的統一 I/O 契約</a>
+<li><a href="#11-completion-的統一-io-契約">11. <code>completion()</code> 的統一 I/O 契約</a>
 <ul>
 <li><a href="#111-輸入openai-chat-格式">11.1 輸入：OpenAI chat 格式</a>
 </li>
-<li><a href="#112-輸出modelresponse">11.2 輸出：ModelResponse</a>
+<li><a href="#112-輸出modelresponse">11.2 輸出：<code>ModelResponse</code></a>
 </li>
 <li><a href="#113-完整回應-json本機實測原樣貼上">11.3 完整回應 JSON（本機實測，原樣貼上）</a>
 </li>
 </ul>
 </li>
-<li><a href="#12-messages-的三種角色">12. messages 的三種角色</a>
+<li><a href="#12-messages-的三種角色">12. <code>messages</code> 的三種角色</a>
 <ul>
 <li><a href="#121-三種-role">12.1 三種 role</a>
 </li>
 <li><a href="#122-多輪對話就是把歷史全部塞回去">12.2 多輪對話就是「把歷史全部塞回去」</a>
 </li>
-<li><a href="#123-system-訊息的位置與數量">12.3 system 訊息的位置與數量</a>
+<li><a href="#123-system-訊息的位置與數量">12.3 <code>system</code> 訊息的位置與數量</a>
 </li>
 </ul>
 </li>
 <li><a href="#13-常用參數速查">13. 常用參數速查</a>
 </li>
-<li><a href="#14-串流輸出-streamtrue">14. 串流輸出 stream=True</a>
+<li><a href="#14-串流輸出-streamtrue">14. 串流輸出 <code>stream=True</code></a>
 <ul>
 <li><a href="#141-為什麼要串流">14.1 為什麼要串流</a>
 </li>
@@ -366,7 +366,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#15-錯誤處理與例外類別">15. 錯誤處理與例外類別</a>
 <ul>
-<li><a href="#151-例外階層全部繼承自-openai-的例外">15.1 例外階層：全部繼承自 openai 的例外</a>
+<li><a href="#151-例外階層全部繼承自-openai-的例外">15.1 例外階層：全部繼承自 <code>openai</code> 的例外</a>
 </li>
 <li><a href="#152-本機實測五種常見錯誤分別丟什麼">15.2 本機實測：五種常見錯誤分別丟什麼</a>
 </li>
@@ -376,7 +376,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 </ul>
 </li>
-<li><a href="#16-能力查詢supports_">16. 能力查詢：supports_*</a>
+<li><a href="#16-能力查詢supports_">16. 能力查詢：<code>supports_*</code></a>
 <ul>
 <li><a href="#161-為什麼需要">16.1 為什麼需要</a>
 </li>
@@ -390,19 +390,19 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 </ul>
 </li>
-<li><a href="#17-token-計數-token_counter">17. Token 計數 token_counter()</a>
+<li><a href="#17-token-計數-token_counter">17. Token 計數 <code>token_counter()</code></a>
 <ul>
 <li><a href="#171-為什麼要數-token">17.1 為什麼要數 token</a>
 </li>
 <li><a href="#172-本機實測">17.2 本機實測</a>
 </li>
-<li><a href="#173--最大的陷阱model-只決定用哪個分詞器">17.3 ⚠️ 最大的陷阱：model= 只決定「用哪個分詞器」</a>
+<li><a href="#173--最大的陷阱model-只決定用哪個分詞器">17.3 ⚠️ 最大的陷阱：<code>model=</code> 只決定「用哪個分詞器」</a>
 </li>
-<li><a href="#174-要準確數字就用-api-回的-usage">17.4 要準確數字就用 API 回的 usage</a>
+<li><a href="#174-要準確數字就用-api-回的-usage">17.4 要準確數字就用 API 回的 <code>usage</code></a>
 </li>
 </ul>
 </li>
-<li><a href="#18-成本追蹤-completion_cost-與內建成本表">18. 成本追蹤 completion_cost() 與內建成本表</a>
+<li><a href="#18-成本追蹤-completion_cost-與內建成本表">18. 成本追蹤 <code>completion_cost()</code> 與內建成本表</a>
 <ul>
 <li><a href="#181-寫法">18.1 寫法</a>
 </li>
@@ -595,11 +595,11 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tr>
 <tr>
 <td>8</td>
-<td><a href="#8-call-azure-openai--azure-前綴與-deployment-id">Call Azure OpenAI — <code>azure/</code> 前綴與 deployment-id</a></td>
+<td><a href="#8-call-azure-openai--azure-前綴與-deployment-id">8. Call Azure OpenAI — <code>azure/</code> 前綴與 deployment-id</a></td>
 </tr>
 <tr>
 <td>9</td>
-<td><a href="#9-本機模型ollamalitepy-逐行">本機模型：Ollama（<code>lite.py</code> 逐行）</a></td>
+<td><a href="#9-本機模型ollamalitepy-逐行">9. 本機模型：Ollama（<code>lite.py</code> 逐行）</a></td>
 </tr>
 <tr>
 <td>10</td>
@@ -607,11 +607,11 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tr>
 <tr>
 <td>11</td>
-<td><a href="#11-completion-的統一-io-契約"><code>completion()</code> 的統一 I/O 契約</a></td>
+<td><a href="#11-completion-的統一-io-契約">11. <code>completion()</code> 的統一 I/O 契約</a></td>
 </tr>
 <tr>
 <td>12</td>
-<td><a href="#12-messages-的三種角色"><code>messages</code> 的三種角色</a></td>
+<td><a href="#12-messages-的三種角色">12. <code>messages</code> 的三種角色</a></td>
 </tr>
 <tr>
 <td>13</td>
@@ -619,7 +619,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tr>
 <tr>
 <td>14</td>
-<td><a href="#14-串流輸出-streamtrue">串流輸出 <code>stream=True</code></a></td>
+<td><a href="#14-串流輸出-streamtrue">14. 串流輸出 <code>stream=True</code></a></td>
 </tr>
 <tr>
 <td>15</td>
@@ -627,15 +627,15 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tr>
 <tr>
 <td>16</td>
-<td><a href="#16-能力查詢supports_">能力查詢：<code>supports_*</code></a></td>
+<td><a href="#16-能力查詢supports_">16. 能力查詢：<code>supports_*</code></a></td>
 </tr>
 <tr>
 <td>17</td>
-<td><a href="#17-token-計數-token_counter">Token 計數 <code>token_counter()</code></a></td>
+<td><a href="#17-token-計數-token_counter">17. Token 計數 <code>token_counter()</code></a></td>
 </tr>
 <tr>
 <td>18</td>
-<td><a href="#18-成本追蹤-completion_cost-與內建成本表">成本追蹤 <code>completion_cost()</code> 與內建成本表</a></td>
+<td><a href="#18-成本追蹤-completion_cost-與內建成本表">18. 成本追蹤 <code>completion_cost()</code> 與內建成本表</a></td>
 </tr>
 <tr>
 <td>19</td>
@@ -1567,7 +1567,7 @@ message.content = &#39;RAG stands for Ragged Alligators, a fictional species of
 </figure>
 <!-- /FIGURE -->
 
-<h3 id="101-規則供應商模型只認第一個斜線">10.1 規則：<code>&lt;供應商&gt;/&lt;模型&gt;</code>，只認第一個斜線</h3>
+<h3 id="101-規則供應商模型只認第一個斜線">10.1 規則：<code><供應商>/<模型></code>，只認第一個斜線</h3>
 <div class="codehilite"><pre><span></span><code>ollama/smollm                     provider=ollama            model=smollm
 azure/chatgpt-v-2                 provider=azure             model=chatgpt-v-2
 bedrock/anthropic.claude-v2       provider=bedrock           model=anthropic.claude-v2
