@@ -64,7 +64,7 @@
 ```
 Prompt Engineering = 設計並最佳化「餵給語言模型的指令與上下文」，讓同一個模型產出你要的結果
 
-  一堂課的四個 Part（本節分章）
+  一堂課的四個 Part（課程分章）
   ├─ Part 1  基礎：prompt 元素 → 解碼參數 → 六大任務 → 七大類技術
   │     基礎技術：Zero-Shot／Few-Shot／Clear Instructions
   │     上下文與角色：System／Role／Contextual／Markdown
@@ -127,7 +127,7 @@ Prompt Engineering = 設計並最佳化「餵給語言模型的指令與上下�
 
 ## 1. Prerequisites & Objectives
 
-> 本節是課程的「先修與目標」頁。看起來像行政資訊，但它定義了這堂課的**範圍**：
+> 本節（先修與目標）看似行政資訊，但它定義了這堂課的**範圍**：
 > 你要會 Python、懂一點語言模型與深度學習／ML 概念，才吃得下後面的技術。
 > 考試很愛考「這堂課的**三個目標**」與「**先修條件**」。
 
@@ -178,7 +178,7 @@ Prompt Engineering = 設計並最佳化「餵給語言模型的指令與上下�
 
 ### 2.2 補充說明
 
-本節在頁面另外放了一段補充：prompt engineering 是「創造一組 prompts（或問題）」的過程，
+本節另外補充：prompt engineering 是「創造一組 prompts（或問題）」的過程，
 用來把使用者引導到想要的結果；它是設計師用來打造**易用、直覺**使用者體驗的有效工具，
 常用於互動設計與軟體開發，因為它讓使用者容易理解如何與系統或產品互動。
 
@@ -189,7 +189,7 @@ Prompt Engineering = 設計並最佳化「餵給語言模型的指令與上下�
 
 ## 3. Why Prompt Engineering?
 
->  回答「為什麼要學」。三點理由，並引用了一份 Anthropic 的招聘啟事當佐證。
+> 本節回答「為什麼要學」。三點理由，並引用了一份 Anthropic 的招聘啟事當佐證。
 
 <!-- FIGURE:ch03-why-prompt-engineering -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -257,7 +257,7 @@ Prompt Engineering = 設計並最佳化「餵給語言模型的指令與上下�
 
 ## 5. Elements of a Prompt
 
-> 本節給出 prompt 的**四個組成要素**。這是全份本節最常被直接考的清單之一。
+> 本節給出 prompt 的**四個組成要素**。這是整份筆記最常被直接考的清單之一。
 
 <!-- FIGURE:ch05-elements-of-a-prompt -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -299,7 +299,7 @@ Sentiment:                                              ← Output indicator（�
 
 ## 6. Settings to keep in mind: temperature 與 top_p
 
->  提醒：**同樣的 prompt，換設定會得到完全不同的結果**。
+> 本節提醒：**同樣的 prompt，換設定會得到完全不同的結果**。
 > 其中最重要的兩顆旋鈕就是 temperature 與 top_p。
 
 <!-- FIGURE:ch06-temperature-top-p -->
@@ -471,8 +471,8 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。
 
 ## 8. Prompt Engineering 技術地圖（七大類）
 
->  給出「技術清單」，p18 把它分成**七大類**，p19 先展開第一類。
-> 之後 p27／p40／p50／p59 又各展開一類。本筆記把**五張總覽頁**合併成這一章，
+> 本節給出「技術清單」，分成**七大類**，先展開第一類。
+> 之後其餘各類也各有一頁展開。本筆記把**五張總覽頁**合併成這一章，
 > 讓你先看到全貌，再逐章（Ch. 9–Ch. 32）展開每一種技術。
 
 <!-- FIGURE:ch08-technique-map -->
@@ -482,7 +482,7 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。
 </figure>
 <!-- /FIGURE -->
 
-### 8.1 七大類技術（）
+### 8.1 七大類技術
 
 | # | 類別 | 英文 | 本筆記對應章節 |
 |:--:|---|---|---|
@@ -546,8 +546,8 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。
 | **Predictive Prompting** | Ask the model to **anticipate outcomes**. |
 
 > **考點**：七大類的**名稱與順序**是常考的表格題。最容易漏的是第 5、6 兩類
-> （**Style, Tone & Persona** 與 **Iterative Improvement & Refinement**）——因為本節沒有替這兩類
-> 單獨做展開頁，只在總表出現。
+> （**Style, Tone & Persona** 與 **Iterative Improvement & Refinement**）——因為這兩類沒有
+> 單獨的展開頁，只在總表出現。
 
 ---
 
@@ -649,7 +649,7 @@ Expected Output:  gas
 
 ## 11. Clear Instructions and Task Framing
 
-> 前面給定義，這裡給「弱 prompt vs 強 prompt」對照表（**本課最實用的一頁**），p26 給練習。
+> 前面給定義，這裡給「弱 prompt vs 強 prompt」對照表（**本課最實用的一頁**），接著是練習。
 > 這一章講的是：**把話講清楚**本身就是一種技術。
 
 <!-- FIGURE:ch11-clear-instructions -->
@@ -719,7 +719,7 @@ Clear Instruction (framed):
 | 輸出範圍 | 沒說 | **Output only the tagline**（禁止廢話） |
 
 > **考點**：六要素（Task／Format／Length／Tone／Constraints／Context）要能默寫；
->  的四組弱／強對照要能配對。最常考「強 prompt 比弱 prompt 多了什麼限制」。
+> 四組弱／強對照要能配對。最常考「強 prompt 比弱 prompt 多了什麼限制」。
 
 ---
 
@@ -1014,7 +1014,7 @@ Clear Instruction (framed):
 
 **With 版本把七個欄位全部指定**——這七欄就是本節示範的 decision matrix 骨架。
 
-> ⚠️  的「With」欄位裡混入了一段上一頁（CoT 練習）的殘留文字
+> ⚠️ 「With」欄位裡混入了一段上一頁（CoT 練習）的殘留文字
 > （`My student cannot run a Python notebook in class...`）——那是排版失誤。
 > 本筆記只保留該頁真正要示範的內容（七欄表格）。
 
@@ -1620,7 +1620,7 @@ Clear Instruction (framed):
 
 > **考點**：① 兩階段名稱（generate knowledge → knowledge-augmented answering）；
 > ② 最後用 **highest-confidence prediction**；③ 這個高爾夫球例子的正解是 **No**
-> （ Knowledge 1 才是對的，Knowledge 2 是**低信心／錯誤**的那條）。
+> （Knowledge 1 才是對的，Knowledge 2 是**低信心／錯誤**的那條）。
 
 ---
 
@@ -1723,7 +1723,7 @@ Observation（觀察：工具回傳了什麼？）            │
 
 ## 33. Tools & IDEs
 
-> 本節是 Part 3 的第一頁。它不講技術，只講**生態**：
+> 本節是 Part 3 的開頭。它不講技術，只講**生態**：
 > 有一大堆工具、函式庫、平台，各自有不同的能力。
 
 <!-- FIGURE:ch33-tools-ides -->
