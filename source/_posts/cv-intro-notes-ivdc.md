@@ -15,7 +15,7 @@ index_img: /img/covers/cv-intro-notes-ivdc.png
 banner_img: /img/covers/cv-intro-notes-ivdc.png
 ---
 
-最近為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程第二份教材《2 IVDC_Introduction to Computer Vision and Application.pptx》（12 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
+最近為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程第二份本節《2 IVDC_Introduction to Computer Vision and Application.pptx》（12 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
 筆記已發佈成獨立專題頁面：
 
@@ -38,7 +38,7 @@ banner_img: /img/covers/cv-intro-notes-ivdc.png
 | 5 | 關鍵概念：參數重用（re-use parameters，3×3 卷積在 5×5 影像） |
 | 6 | CNN 基本概念與影像辨識（卷積／池化／全連接／Softmax） |
 
-另外補了 7 個附錄：**名詞速查表**、**常見錯誤與陷阱**、**教材頁面索引對照**、**延伸資源與離線提示**、**一頁精華（考前 10 分鐘）**、**60 題 MC 互動測驗**、**答錯題目 → 複習章節對照**。
+另外補了 7 個附錄：**名詞速查表**、**常見錯誤與陷阱**、**本節頁面索引對照**、**延伸資源與離線提示**、**一頁精華（考前 10 分鐘）**、**60 題 MC 互動測驗**、**答錯題目 → 複習章節對照**。
 
 ---
 
@@ -68,8 +68,8 @@ banner_img: /img/covers/cv-intro-notes-ivdc.png
 ---
 
 
-這份教材是 PowerPoint 匯出的 PDF，多頁只有示意圖（商業案例照片、CNN 架構圖、卷積示意圖）。
-筆記除了忠實保留教材文字，還補上每張圖背後的**定義、公式與考點**，讓沒有圖也能讀懂、能應試。
+這份本節是 PowerPoint 匯出的 PDF，多頁只有示意圖（商業案例照片、CNN 架構圖、卷積示意圖）。
+筆記除了忠實保留本節文字，還補上每張圖背後的**定義、公式與考點**，讓沒有圖也能讀懂、能應試。
 
 ---
 

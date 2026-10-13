@@ -67,7 +67,7 @@ AI = 具人類式智慧的「機器智慧」
 **Artificial Intelligence（人工智慧）** 的通用理論是：AI 擁有**類人的智慧（human-like intelligence）**，
 但本質上是**機器智慧（machine intelligence）** —— 智慧由機器展現，而不是人。
 
-教材（p5–6）把 AI 的取徑分成兩大類、共四種：
+本節把 AI 的取徑分成兩大類、共四種：
 
 | 取徑 | 思考 | 行動 |
 |------|------|------|
@@ -80,9 +80,9 @@ AI = 具人類式智慧的「機器智慧」
 > **考點**：四個象限要能分辨 ——「think like humans / act like humans / think rationally / act rationally」。
 > 常見陷阱：把 Human approach 說成「理性」，或把 Ideal approach 說成「像人」。
 
-### 1.1 開場破冰（p2–4）：生活裡的 AI
+### 1.1 開場破冰：生活裡的 AI
 
-教材用生活情境提問：
+本節用生活情境提問：
 
 - 「你喜歡用 App 在餐廳點餐嗎？當中有沒有 AI？」
 - 「Can Machines Think more than us?」（機器能比我們想得更多嗎？）
@@ -95,7 +95,7 @@ AI = 具人類式智慧的「機器智慧」
 
 ## 2. AI 的子目標（Sub-objectives of AI）
 
-教材 p8 用一張圖把 AI 拆成 5 個子目標：
+本節用一張圖把 AI 拆成 5 個子目標：
 
 | 子目標 | 英文 | 說明 | 例子 |
 |--------|------|------|------|
@@ -112,7 +112,7 @@ AI = 具人類式智慧的「機器智慧」
 
 ## 3. AI 應用與例子
 
-教材 p9 把應用分成三大類，逐項列出：
+本節把應用分成三大類，逐項列出：
 
 ### 3.1 電子商務 E-Commerce
 
@@ -140,7 +140,7 @@ AI = 具人類式智慧的「機器智慧」
 
 ## 4. 異常偵測 Anomaly Detection
 
-教材 p10 只有標題「Anomaly Detection」與一張示意圖。**異常偵測**是指找出**不符合預期模式**的資料點
+本節只有標題「Anomaly Detection」與一張示意圖。**異常偵測**是指找出**不符合預期模式**的資料點
 （outlier），是 AI 在工業、金融、資安上的核心應用之一。
 
 | 項目 | 內容 |
@@ -157,13 +157,13 @@ AI = 具人類式智慧的「機器智慧」
 
 ## 5. 影像／視訊辨識 Image/Video Recognition
 
-教材 p11–12 的定義重點：
+ 的定義重點：
 
 > 機器用**電腦視覺（computer vision）**辨識影像中的人、地、物，**準確度可達或超越人類水準**，
 > 而且**速度與效率遠勝人類**。透過複雜的 AI 技術，電腦視覺把影像資料自動化地
 > **擷取（extraction）、分析（analysis）、分類（classification）與理解（understanding）**。
 
-### 5.1 影像資料的四種形式（p11）
+### 5.1 影像資料的四種形式
 
 | # | 形式 | 英文 | 例子 |
 |---|------|------|------|
@@ -172,7 +172,7 @@ AI = 具人類式智慧的「機器智慧」
 | 3 | 多鏡頭視角 | Views from multiple cameras | 環景、監控多機 |
 | 4 | 三維資料 | Three-dimensional data | LiDAR、深度相機、點雲 |
 
-### 5.2 電腦視覺任務（p12）
+### 5.2 電腦視覺任務
 
 - 電腦視覺任務 = 辨識並**分類**影像／影片中的各種元素。
 - AI 被訓練成：**輸入一張影像 → 輸出描述該影像的屬性（attributes）**。
@@ -184,19 +184,19 @@ AI = 具人類式智慧的「機器智慧」
 
 ## 6. 人臉辨識 Facial Recognition
 
-教材 p13–15 是重點章節，明確指出人臉辨識**分三個步驟**：
+ 是重點章節，明確指出人臉辨識**分三個步驟**：
 
 ```
 Detection（偵測） → Analysis（分析） → Recognition（辨識）
 ```
 
-### 6.1 Detection 偵測（p13）
+### 6.1 Detection 偵測
 
 - **定義**：在影像中**找出人臉**的過程。
 - 由**電腦視覺**支援，可從「一張含一人或多人」的影像中偵測並找出**個別人臉**。
 - 可偵測**正面（front）與側面（side profile）**的臉部資料。
 
-### 6.2 Analysis 分析（p14）
+### 6.2 Analysis 分析
 
 系統接著**分析**人臉影像，**測繪並讀取臉部幾何（face geometry）與表情（facial expressions）**，
 找出能把臉與其他物件區分開的**臉部特徵點（facial landmarks）**。通常量測以下項目：
@@ -210,7 +210,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 | 5 | 顴骨形狀（Shape of the cheekbones） |
 | 6 | 嘴唇、耳朵與下巴的輪廓（Contour of the lips, ears, and chin） |
 
-### 6.3 Recognition 辨識（p15）
+### 6.3 Recognition 辨識
 
 - 系統把臉部資料轉成一串數字或點，稱為 **faceprint（臉紋）**。
 - **每個人的 faceprint 都是獨一無二的，就像指紋（fingerprint）一樣**。
@@ -226,9 +226,9 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ## 7. 自然語言處理 NLP
 
-### 7.1 NLP 要解決的三件事（p17）
+### 7.1 NLP 要解決的三件事
 
-教材用三個問題概括 NLP：
+本節用三個問題概括 NLP：
 
 1. **How to speak a language** —— 如何「講」一種語言（語言生成）。
 2. **How to understand a language** —— 如何「聽懂」一種語言（語言理解）。
@@ -236,15 +236,15 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 > 一句話：NLP 就是讓機器能**講得到、聽得明、理解句子**。
 
-### 7.2 語音辨識的模型：Hidden Markov Model（p18–19）
+### 7.2 語音辨識的模型：Hidden Markov Model
 
-教材指出：**大多數現代語音辨識系統依賴 Hidden Markov Model（HMM，隱馬可夫模型）**。
+本節指出：**大多數現代語音辨識系統依賴 Hidden Markov Model（HMM，隱馬可夫模型）**。
 
 - **核心假設**：一段語音訊號，若用**足夠短的時間尺度**觀察（例如 **10 毫秒**），
   可以合理地近似為一個**平穩過程（stationary process）** ——
   即統計性質**不隨時間改變**的過程。
 
-**HMM 的處理流程（p19）**：
+**HMM 的處理流程**：
 
 | 步驟 | 內容 |
 |------|------|
@@ -257,16 +257,16 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 > **考點**：記住三個數字與名詞 —— **10 毫秒**、**cepstral coefficients**、**維度 10～32**，
 > 以及「HMM 輸出是**向量序列**」。
 
-### 7.3 語意／詞向量（p21，見第 8 節）
+### 7.3 語意／詞向量
 
-教材 p21 用一組詞示範語意關係：**King、Queen、Man、Woman、Royal**，
+本節用一組詞示範語意關係：**King、Queen、Man、Woman、Royal**，
 並標示兩個語意維度：**Natural Understanding** 與 **Gender**。
 這是**詞向量（word embedding）**的經典示意：語意相近的詞在向量空間中距離相近，
 並可表現如「King − Man + Woman ≈ Queen」的類比關係（詳見第 8.1 節）。
 
-### 7.4 延伸資源（p26）
+### 7.4 延伸資源
 
-- 教材提供探索 NLP 的官方連結：`https://aka.ms/explore-nlp`
+- 本節提供探索 NLP 的官方連結：`https://aka.ms/explore-nlp`
 
 > **考點**：NLP 三個問題（speak / understand / make sense）＋ HMM 假設（10ms 平穩）是本章重點。
 
@@ -274,9 +274,9 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ## 8. 語音辨識 Speech Recognition
 
-### 8.1 語意理解示意（p21）
+### 8.1 語意理解示意
 
-教材以 **King / Queen / Man / Woman / Royal** 呈現兩個維度：
+本節以 **King / Queen / Man / Woman / Royal** 呈現兩個維度：
 
 | 維度 | 說明 |
 |------|------|
@@ -286,9 +286,9 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 這正是**詞向量（word embeddings）**的概念：把詞映射到向量空間，
 使「語意相近」與「性別」等屬性可用向量運算表達。
 
-### 8.2 訓練資料偏頗問題（p27）——本章最重要
+### 8.2 訓練資料偏頗問題——本章最重要
 
-教材指出語音辨識的一大挑戰是**訓練模型（training model）**：
+本節指出語音辨識的一大挑戰是**訓練模型（training model）**：
 
 - **大部分訓練資料需要人手分類（manually classified）**。
 - 結果：**高準確率往往只在一小群特定說話者上達成**（而這群人往往正是最有價值的消費者）。
@@ -312,10 +312,10 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ## 9. 強化學習 Reinforcement Learning
 
-教材 p29–33 聚焦「**Reinforcement Learning in Robotic Control and Self-Driving**」
+ 聚焦「**Reinforcement Learning in Robotic Control and Self-Driving**」
 （強化學習在機械人控制與自動駕駛的應用）。
 
-### 9.1 要解決的問題（p29）
+### 9.1 要解決的問題
 
 在真實世界中「規劃與導航」，需要回答一連串問題：
 
@@ -326,7 +326,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 - 如何**避開障礙物**（avoid obstacles）？
 - 如何**移動**（move）？
 
-### 9.2 學習系統／代理人（Agent）的運作（p32）——核心考點
+### 9.2 學習系統／代理人（Agent）的運作——核心考點
 
 > 學習系統在此情境中扮演 **agent（代理人）**，它會：
 > 1. **觀察環境**（Observes the environment）
@@ -345,7 +345,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 | 策略 | Policy | agent 學到的「最佳行動準則」 |
 | 目標 | Maximize reward over time | 長期累積獎勵最大化（非單步） |
 
-### 9.3 應用例子（p33）
+### 9.3 應用例子
 
 - **機械人學走路**（robots learn how to walk）。
 - **DeepMind 的 AlphaGo** —— 擊敗圍棋世界冠軍 **Lee Sedol（李世乭）**。
@@ -358,7 +358,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ## 10. 生成式 AI Generative AI
 
-教材 p34 給出定義：
+本節給出定義：
 
 > **Generative AI（生成式 AI）** 指的是人工智慧中專注於**建立能生成新內容的模型或系統**的領域，
 > 生成的內容例如**圖像、文字、音樂，甚至影片**。這些模型使用**機器學習技術，特別是深度學習（deep learning）**，
@@ -472,7 +472,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ## 附錄 C：延伸資源與離線提示
 
-### C.1 教材提供的連結
+### C.1 本節提供的連結
 
 | 資源 | 連結 |
 |------|------|

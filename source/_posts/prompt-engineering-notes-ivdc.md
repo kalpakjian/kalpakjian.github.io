@@ -19,7 +19,7 @@ index_img: /img/covers/prompt-engineering-notes-ivdc.png
 banner_img: /img/covers/prompt-engineering-notes-ivdc.png
 ---
 
-為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Large Language Model (LLM)」的考試，我把課程第五份教材《9 IVDC_Prompt_Engineering (adjusted).pdf》（**92 頁**）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
+為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Large Language Model (LLM)」的考試，我把課程第五份本節《9 IVDC_Prompt_Engineering (adjusted).pdf》（**92 頁**）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
 筆記已發佈成獨立專題頁面：
 
@@ -32,8 +32,8 @@ banner_img: /img/covers/prompt-engineering-notes-ivdc.png
 ## 這一份是「方法論大全」：92 頁、38 個章節、30 多種技術
 
 Lesson 3 講的是「LLM 是什麼、怎麼運作」；Lesson 5 講的是「**怎麼跟它講話**」。
-教材把數十種提示技術收斂成**七大類**，我把每一類底下的每一種技術都展開成一章，
-每一章都保留教材的 `Classroom Exercise`（**同一題目、有／沒有用該技術**的成對示範），
+本節把數十種提示技術收斂成**七大類**，我把每一類底下的每一種技術都展開成一章，
+每一章都保留`Classroom Exercise`（**同一題目、有／沒有用該技術**的成對示範），
 並補上可以直接複製的 prompt 範本。
 
 ---
@@ -44,7 +44,7 @@ Lesson 3 講的是「LLM 是什麼、怎麼運作」；Lesson 5 講的是「**�
 |---|---|
 | §1–§6 | 課程先修與目標、prompt 與 prompt engineering 的定義、第一個範例、**prompt 四大要素**、temperature 與 top_p |
 | §7 | **六大任務**：摘要／問答／分類／角色扮演／程式生成／推理（各一組完整 prompt 範本） |
-| §8 | **七大類技術地圖**（全份教材的索引） |
+| §8 | **七大類技術地圖**（全份索引） |
 | §9–§11 | 基礎技術：Zero-Shot／Few-Shot（In-Context Learning）／Clear Instructions |
 | §12–§15 | 上下文與角色：System／Role／Contextual／Markdown Prompting |
 | §16–§19 | 推理與規劃：CoT／Tabular CoT／Skeleton-of-Thought／Step-Back |
@@ -54,7 +54,7 @@ Lesson 3 講的是「LLM 是什麼、怎麼運作」；Lesson 5 講的是「**�
 | §33–§34 | 工具與應用：Tools & IDEs、LLM + 外部工具三元件、Data-Augmented Generation |
 | §35–§38 | 安全與對齊：Model Safety、Prompt Injection／Leaking／Jailbreaking、RLHF |
 
-另外補了 7 個附錄：**Prompt 元素與參數速查表**、**常見錯誤與陷阱**、**教材頁面索引對照**、
+另外補了 7 個附錄：**Prompt 元素與參數速查表**、**常見錯誤與陷阱**、**本節頁面索引對照**、
 **離線執行／安裝提示**、**一頁精華（考前 10 分鐘）**、**60 題 MC 互動測驗**、**答錯題目 → 複習章節對照**。
 
 ---
@@ -64,12 +64,12 @@ Lesson 3 講的是「LLM 是什麼、怎麼運作」；Lesson 5 講的是「**�
 **🖱️ [開始 60 題線上測驗](/prompt-engineering-notes/mc-quiz.html)**
 
 - 60 題單選、滿分 60 分、建議 75 分鐘
-- 分四個部分、依教材章節順序排列
+- 分四個部分、依本節章節順序排列
 - 答案分佈刻意打散（A/B/C/D 各 15 題）
 - 點選即時計分、進度存在 localStorage、可切換「只看未答／只看答錯」
 
 > 出題率最高的考點包括：**prompt 是名詞／prompt engineering 是動詞**、
-> **四大要素中哪一個在教材範例裡缺席（Context）**、
+> **四大要素中哪一個在本節範例裡缺席（Context）**、
 > **temperature／top_p：精確就調低、多樣就調高**、
 > **few-shot 的別名是 In-Context Learning，且不改權重**、
 > **「The sky is ___」在 zero-shot 答 Blue、在 few-shot 答 gas**、
@@ -87,7 +87,7 @@ Lesson 3 講的是「LLM 是什麼、怎麼運作」；Lesson 5 講的是「**�
 
 ## 最容易混淆的幾組技術
 
-這份筆記花了整整一個附錄（B.2）在做「易混淆技術對照」——因為教材的技術太多，考試最愛考「差在哪」：
+這份筆記花了整整一個附錄（B.2）在做「易混淆技術對照」——因為技術太多，考試最愛考「差在哪」：
 
 | 常被混淆的一對 | 一句話記法 |
 |---|---|

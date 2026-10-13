@@ -16,9 +16,9 @@ index_img: /img/covers/neural-network-notes-ivdc.png
 banner_img: /img/covers/neural-network-notes-ivdc.png
 ---
 
-IVDC「Certificate in Application of Computer Vision Technology」課程的第 5 份教材《Neural Network, Activation Function and Machine Learning》（30 頁），我把它完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
+IVDC「Certificate in Application of Computer Vision Technology」課程的第 5 份本節《Neural Network, Activation Function and Machine Learning》（30 頁），我把它完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
-這份教材的投影片**圖比字多**——p9–p16、p25–p26、p29–p30 幾乎沒有可抽取的文字，全部都是圖。所以這次除了照教材每個標題逐一重寫之外，我還做了兩種圖：**22 張精確圖表**（用程式畫成內嵌 SVG，數字全部算過）＋ **16 張 AI 專屬插圖**（用本機 ComfyUI 跑 **Qwen-Image 2.1**，依每個章節的內容逐張生成）。全部內嵌在單一 HTML 裡，離線可看。另外把全篇 **104 條公式**從等寬假公式改寫成 **LaTeX**，建置時用 MathJax 預渲染成內嵌 SVG（一樣離線、一樣零外部資源）。
+這份投影片**圖比字多**——p9–p16、p25–p26、p29–p30 幾乎沒有可抽取的文字，全部都是圖。所以這次除了照本節每個標題逐一重寫之外，我還做了兩種圖：**22 張精確圖表**（用程式畫成內嵌 SVG，數字全部算過）＋ **16 張 AI 專屬插圖**（用本機 ComfyUI 跑 **Qwen-Image 2.1**，依每個章節的內容逐張生成）。全部內嵌在單一 HTML 裡，離線可看。另外把全篇 **104 條公式**從等寬假公式改寫成 **LaTeX**，建置時用 MathJax 預渲染成內嵌 SVG（一樣離線、一樣零外部資源）。
 
 筆記已發佈成獨立頁面：
 
@@ -30,7 +30,7 @@ IVDC「Certificate in Application of Computer Vision Technology」課程的第 5
 
 ## 這份筆記包含什麼
 
-按 PDF 教材的每一個標題逐一填充，共 22 節、涵蓋兩大主題：
+按 的每一個標題逐一填充，共 22 節、涵蓋兩大主題：
 
 | 章節 | 主題 |
 |---|---|
@@ -43,13 +43,13 @@ IVDC「Certificate in Application of Computer Vision Technology」課程的第 5
 | 18–19 | 監督式學習、混淆矩陣與指標計算、迴歸實例 f(x) = 35 + 1.5x |
 | 20–22 | 非監督式學習、Clustering 的兩個距離目標、分群實例 |
 
-另外補了 7 個附錄：**名詞速查表**、**常見錯誤與陷阱**、**教材頁面索引對照（p1–p30）**、**離線提示與插圖產生方式**、**一頁精華（考前 10 分鐘）**、**互動式線上測驗（60 題）**、**答錯題目 → 複習章節對照**。
+另外補了 7 個附錄：**名詞速查表**、**常見錯誤與陷阱**、**本節頁面索引對照**、**離線提示與插圖產生方式**、**一頁精華（考前 10 分鐘）**、**互動式線上測驗（60 題）**、**答錯題目 → 複習章節對照**。
 
 ---
 
 ## 38 張圖：22 張精確圖表 + 16 張 Qwen-Image 專屬插圖
 
-教材最麻煩的地方是「只有圖、沒有字」，光看投影片很難複習。所以我把每一頁的圖都重畫成向量圖：
+本節最麻煩的地方是「只有圖、沒有字」，光看投影片很難複習。所以我把每一頁的圖都重畫成向量圖：
 
 | 重畫的圖 |
 |---|

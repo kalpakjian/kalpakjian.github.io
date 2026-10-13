@@ -90,7 +90,7 @@ import urllib.request           # 下載範例圖片
 ```
 
 > **考點**：`cv2` 是套件名稱；`pip install opencv-python`（要完整功能可裝 `opencv-contrib-python`）。
-> `cv2.__version__` 可查版本（本機環境為 5.0.0，PDF 教材寫法在 4.x / 5.x 都適用）。
+> `cv2.__version__` 可查版本（本機環境為 5.0.0，PDF 舊寫法在 4.x / 5.x 都適用）。
 
 ## 2. OpenCV Applications
 
@@ -357,7 +357,7 @@ binary = cv2.adaptiveThreshold(gray, 255,
                                cv2.THRESH_BINARY, 11, 2)
 ```
 
-### 5.6 PDF 教材的前處理三步（第 17 頁原文重點）
+### 5.6 的前處理三步
 
 1. **Fix the Colors（修正顏色）**
    OpenCV 預設以 BGR 讀入照片，轉成 RGB 才能正常顯示顏色。
@@ -1278,7 +1278,7 @@ print(cv2.__version__)     # 例如 5.0.0 或 4.10.0
 | OpenCV 視窗 | `cv2.imshow()` + `cv2.waitKey(0)` | 原生、快 | 一次只能看一張，不能排版 |
 | Matplotlib | `plt.subplot()` + `plt.imshow()` | **可並排對比多張圖、可存檔** | 需注意 BGR→RGB |
 
-> **PDF 教材全部用 Matplotlib 的 `plt.subplot` 做並排對比** —— 因為教學上要同時看到「處理前 vs 處理後」。
+> **全部用 Matplotlib 的 `plt.subplot` 做並排對比** —— 因為教學上要同時看到「處理前 vs 處理後」。
 
 **Matplotlib 顯示的三個必記細節**
 

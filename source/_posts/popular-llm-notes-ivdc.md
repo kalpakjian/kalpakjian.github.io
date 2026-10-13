@@ -25,7 +25,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 —
 
 ## 這份筆記有什麼
 
-- **教材 77 頁逐頁重寫**，33 個章節 + 7 個附錄
+- **逐節重寫**，33 個章節 + 7 個附錄
 - **四支 Lab 全部在本機實測**（Python 3.11.15／torch 2.14.1+cu132／transformers 5.17.0／RTX 4090），真實輸出直接寫進內文
 - 九個對話式生成式 AI 逐一拆解：ChatGPT／Gemini／Copilot／Llama／Grok／Perplexity／Kimi／Tongyi／DeepSeek
 - GAN 與 Diffusion 的訓練機制完整展開（含「判別器 50% 準確率才是收斂」這個反直覺考點）
@@ -36,7 +36,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 —
 
 | # | 章節 |
 |---|------|
-| 1 | 課程地圖：這份教材的三條主線 |
+| 1 | 課程地圖：這份三條主線 |
 | 2 | 什麼是生成式 AI |
 | 3 | 熱門 LLM 總覽：六個對話式生成式 AI |
 | 4 | ChatGPT：介面與用途 |
@@ -79,7 +79,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 —
 **🖱️ [開始 60 題線上測驗](/popular-llm-notes/mc-quiz.html)**
 
 - 60 題單選、滿分 60 分、建議 75 分鐘
-- 分四個部分、依教材頁碼順序排列
+- 分四個部分、依本節頁碼順序排列
 - 答案分佈刻意打散（A/B/C/D 各 15 題）
 - 點選即時計分、進度存在 localStorage、可切換「只看未答／只看答錯」
 
@@ -90,7 +90,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 —
 > **Diffusion 只有 Reverse 需要訓練**、
 > **RAG 不訓練任何模型權重**、
 > **LLM 可離線／RAG 不可離線**，
-> 以及**教材 SD 的預設值 20 步 / guidance 7.5**。
+> 以及**本節 SD 的預設值 20 步 / guidance 7.5**。
 
 ---
 
@@ -99,7 +99,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 —
 | 寫法 | 實測結果 |
 |---|---|
 | `generator(prompt, max_length=50, ...)`（`RAG.ipynb`） | ❌ prompt 已 153 token → `ValueError`，要改 **`max_new_tokens=50`** |
-| 「SD 生成 may take **30-60 seconds**」 | 本機 RTX 4090 只要 **0.61 秒**（教材數字來自 Colab T4） |
+| 「SD 生成 may take **30-60 seconds**」 | 本機 RTX 4090 只要 **0.61 秒**（數字來自 Colab T4） |
 
 還有一個環境陷阱：本機 `torchaudio`（CUDA 13.0）與 `torch`（CUDA 13.2）版本不符，
 會讓**所有** transformers 模型載不進來（連 `from transformers import pipeline` 都失敗）——

@@ -16,7 +16,7 @@ index_img: /img/covers/responsible-ai-notes-ivdc.png
 banner_img: /img/covers/responsible-ai-notes-ivdc.png
 ---
 
-為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程第四份教材《4 IVDC_Responsible AI.pptx》（24 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
+為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程第四份本節《4 IVDC_Responsible AI.pptx》（24 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
 這一份和前三份（Introduction to AI、Local GPU、Computer Vision、OpenCV）性質不同：**它幾乎沒有程式碼，全部都是觀念、原則與法規**——但正因為如此，考題更容易出「配對題」與「數字題」，反而更需要精確記憶。
 
@@ -47,7 +47,7 @@ banner_img: /img/covers/responsible-ai-notes-ivdc.png
 | 11–16 | 社會影響五項（公共安全／醫療／就業／不平等／行為） |
 | 17–18 | 六項倫理使用建議與結論 |
 
-另外補了 7 個附錄：**名詞與法規速查表**、**常見錯誤與陷阱**、**教材頁面索引對照**、**離線使用與延伸資源**、**一頁精華（考前 10 分鐘）**、**60 題 MC 互動測驗**、**答錯題目 → 複習章節對照**。
+另外補了 7 個附錄：**名詞與法規速查表**、**常見錯誤與陷阱**、**本節頁面索引對照**、**離線使用與延伸資源**、**一頁精華（考前 10 分鐘）**、**60 題 MC 互動測驗**、**答錯題目 → 複習章節對照**。
 
 ---
 
@@ -68,7 +68,7 @@ banner_img: /img/covers/responsible-ai-notes-ivdc.png
 **試卷設計**
 
 - 60 題單選、滿分 60 分、建議 50 分鐘
-- 分十二個區塊（每 5 題一組），依教材章節順序排列
+- 分十二個區塊（每 5 題一組），依本節章節順序排列
 - 答案分佈刻意打散（A/B/C/D 各 15 題），避免整排猜同一個字母
 - 每題詳解都附「答錯題目 → 對應複習章節」對照，方便回頭補強
 
@@ -78,7 +78,7 @@ banner_img: /img/covers/responsible-ai-notes-ivdc.png
 
 ## 我補上了一個可執行的偏見量測範例
 
-「偏見與歧視」那一頁教材只有兩段文字。我補了一個**本機實測**的 Python 範例，用混淆矩陣算出兩個族群的 FNR／FPR：
+「偏見與歧視」那一頁本節只有兩段文字。我補了一個**本機實測**的 Python 範例，用混淆矩陣算出兩個族群的 FNR／FPR：
 
 ```
 族群                樣本       FNR       FPR    Accuracy
@@ -88,7 +88,7 @@ B（少數族群）         2000    12.0%     10.0%      89.0%
 機會均等差異 (Equal Opportunity Difference, FNR gap) = 6.0%
 ```
 
-重點是：**整體準確率看起來 95% 很漂亮，但少數族群「該通過卻被擋下」的機率是多數族群的 2 倍**——這正好對應教材說的「資料集不夠多元或不具代表性」。只報整體準確率會完全掩蓋這個落差。
+重點是：**整體準確率看起來 95% 很漂亮，但少數族群「該通過卻被擋下」的機率是多數族群的 2 倍**——這正好對應本節說的「資料集不夠多元或不具代表性」。只報整體準確率會完全掩蓋這個落差。
 
 ---
 

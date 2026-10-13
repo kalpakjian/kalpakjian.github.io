@@ -19,7 +19,7 @@ index_img: /img/covers/llm-intro-notes-ivdc.png
 banner_img: /img/covers/llm-intro-notes-ivdc.png
 ---
 
-為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Large Language Model (LLM)」的考試，我把課程第三份教材《3 IVDC_Introduction to LLM (adjusted).pdf》（**47 頁**）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
+為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Large Language Model (LLM)」的考試，我把課程第三份本節《3 IVDC_Introduction to LLM (adjusted).pdf》（**47 頁**）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
 筆記已發佈成獨立專題頁面：
 
@@ -29,11 +29,11 @@ banner_img: /img/covers/llm-intro-notes-ivdc.png
 
 ---
 
-## 這一份的難度比前幾份高：教材有 21 頁「沒有文字」
+## 這一份的難度比前幾份高：本節有 21 頁「沒有文字」
 
-打開 PDF 只看得到圖或程式碼截圖（p7、p8、p11、p13、p18、p21、p22、p29–p40、p43）。
+打開 PDF 只看得到圖或程式碼截圖。
 
-如果只靠 PDF 的文字抽取，**會漏掉將近一半的教材**。所以這份筆記做了兩件額外的事：
+如果只靠 PDF 的文字抽取，**會漏掉將近一半的本節**。所以這份筆記做了兩件額外的事：
 
 1. **把關鍵圖重畫成 12 張內嵌 SVG**（預訓練／微調流程、Transformer 架構、self-attention 權重、
    BERT vs GPT、GPT-3 規模、自迴歸迴圈、滑動視窗、DataLoader 的 x/y、embedding 查表、輸入管線…）
@@ -43,7 +43,7 @@ banner_img: /img/covers/llm-intro-notes-ivdc.png
 
 ## 這份筆記包含什麼
 
-按 PDF 教材的每一個標題逐一填充，共 **30 個章節**：
+按 的每一個標題逐一填充，共 **30 個章節**：
 
 | 章節 | 主題 |
 |---|---|
@@ -55,7 +55,7 @@ banner_img: /img/covers/llm-intro-notes-ivdc.png
 | §20–§24 | **實作**：分詞正則、vocabulary 與 token ID、SimpleTokenizer V1/V2、特殊 token、文件邊界 |
 | §25–§30 | **實作**：滑動視窗、DataLoader、stride、embedding 查表、位置編碼、完整輸入管線 |
 
-另外補了 7 個附錄：**名詞與架構速查表**、**常見錯誤與陷阱**、**教材頁面索引對照**、**離線執行／安裝提示**、**一頁精華（考前 10 分鐘）**、**60 題 MC 互動測驗**、**答錯題目 → 複習章節對照**。
+另外補了 7 個附錄：**名詞與架構速查表**、**常見錯誤與陷阱**、**本節頁面索引對照**、**離線執行／安裝提示**、**一頁精華（考前 10 分鐘）**、**60 題 MC 互動測驗**、**答錯題目 → 複習章節對照**。
 
 ---
 
@@ -64,7 +64,7 @@ banner_img: /img/covers/llm-intro-notes-ivdc.png
 **🖱️ [開始 60 題線上測驗](/llm-intro-notes/mc-quiz.html)**
 
 - 60 題單選、滿分 60 分、建議 50 分鐘
-- 分四個部分、依教材章節順序排列
+- 分四個部分、依本節章節順序排列
 - 答案分佈刻意打散（A/B/C/D 各 15 題）
 - 點選即時計分、進度存在 localStorage、可切換「只看未答／只看答錯」
 
@@ -85,7 +85,7 @@ banner_img: /img/covers/llm-intro-notes-ivdc.png
 
 ## 後半的程式碼我全部跑過一遍
 
-教材後半（p34–p47）是「動手建 LLM 的輸入管線」，全部都是程式碼截圖。我把每一段都實作並實測：
+後半段是「動手建 LLM 的輸入管線」，全部都是程式碼截圖。我把每一段都實作並實測：
 
 | 主題 | 本機實測結果 |
 |---|---|

@@ -15,7 +15,7 @@ index_img: /img/covers/local-gpu-ml-notes-ivdc.png
 banner_img: /img/covers/local-gpu-ml-notes-ivdc.png
 ---
 
-最近為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程教材《IVDC_Using Local GPU for ML.pptx》（26 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
+最近為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程本節《IVDC_Using Local GPU for ML.pptx》（26 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
 筆記已發佈成獨立專題頁面：
 
@@ -42,13 +42,13 @@ banner_img: /img/covers/local-gpu-ml-notes-ivdc.png
 | 19 | **Check GPU（PyTorch 程式碼）** |
 | 20 | 補 PATH |
 
-另外補了 7 個附錄：**指令速查表**、**常見錯誤與陷阱**、**教材頁面索引對照**、**離線安裝提示**、**一頁精華（考前 10 分鐘）**、**60 題 MC 互動測驗**、**答錯題目 → 複習章節對照**。
+另外補了 7 個附錄：**指令速查表**、**常見錯誤與陷阱**、**本節頁面索引對照**、**離線安裝提示**、**一頁精華（考前 10 分鐘）**、**60 題 MC 互動測驗**、**答錯題目 → 複習章節對照**。
 
 ---
 
-## 教材幾乎全是截圖，筆記補上「指令與驗證」
+## 本節幾乎全是截圖，筆記補上「指令與驗證」
 
-這份教材是 PowerPoint 匯出的 PDF，**幾乎每頁都是安裝精靈的截圖**（只有第 25 頁有程式碼）。
+這份本節是 PowerPoint 匯出的 PDF，**幾乎每頁都是安裝精靈的截圖**（只有第 25 頁有程式碼）。
 筆記把每一步補上「**目的、要做什麼、用什麼指令、如何驗證**」，讓沒有截圖也能照著做。
 
 **本機實測環境（Windows）**：

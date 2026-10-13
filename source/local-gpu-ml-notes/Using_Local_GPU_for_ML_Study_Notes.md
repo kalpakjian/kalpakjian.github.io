@@ -622,9 +622,9 @@ python -m venv .venv
 
 ## 19. Check GPU
 
-**目的**：用 PyTorch 確認 GPU 是否真的可用（**本章是教材唯一的程式碼**，p25）。
+**目的**：用 PyTorch 確認 GPU 是否真的可用（**本章是本節唯一的程式碼**）。
 
-### 19.1 教材程式碼（實測通過）
+### 19.1 本節程式碼（實測通過）
 
 ```python
 import torch
@@ -823,7 +823,7 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
   nvcc --version        → 已裝的 CUDA Toolkit 版本
   conda --version       → conda 是否可用
 
-【PyTorch GPU 檢查（p25 教材程式碼）】
+【PyTorch GPU 檢查】
   import torch
   if torch.cuda.is_available():
       print(torch.cuda.device_count()); print(torch.cuda.get_device_name())
