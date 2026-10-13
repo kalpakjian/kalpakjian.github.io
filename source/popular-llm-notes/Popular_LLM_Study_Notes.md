@@ -13,7 +13,7 @@
 
 | # | 章節 |
 |---|------|
-| 1 | [課程地圖：這份三條主線](#1-課程地圖這份三條主線) |
+| 1 | [課程地圖：三條主線](#1-課程地圖這份三條主線) |
 | 2 | [什麼是生成式 AI（Generative Artificial Intelligence）](#2-什麼是生成式-aigenerative-artificial-intelligence) |
 | 3 | [熱門 LLM 總覽：六個對話式生成式 AI](#3-熱門-llm-總覽六個對話式生成式-ai) |
 | 4 | [ChatGPT：介面與用途](#4-chatgpt介面與用途) |
@@ -61,7 +61,7 @@
 【一句話】這一課把「生成式 AI 的家族」拆成三塊：熱門 LLM 產品、
           預測式 AI vs 生成式 AI 的原理對照、以及 LLM 與 RAG 的取捨。
 
-三條主線（ 明列）
+三條主線
   ① Popular LLM                      → 有哪些產品、各自屬於誰
   ② Predictive AI vs Generative AI   → 一個「預測」、一個「創造」
   ③ LLM vs RAG                       → 靠訓練記憶 vs 靠外部檢索
@@ -93,13 +93,13 @@
 | **`temperature`** | 越大越隨機；`0.7` 一般、`1.5` 已經開始胡言亂語 |
 | **`guidance_scale`** | 擴散模型的「聽話程度」，SD 預設 **7.5** |
 | **`num_inference_steps`** | 去噪步數，SD 預設 **20**；步數↑品質↑時間↑ |
-| **all-MiniLM-L6-v2** | 本節 RAG 章節舉例的嵌入模型（384 維） |
+| **all-MiniLM-L6-v2** | 本課 RAG 章節舉例的嵌入模型（384 維） |
 | **distilbert-base-uncased** | Lab `RAG.ipynb` 實際用的嵌入模型（**768 維**） |
 
 ---
 
 
-## 1. 課程地圖：這份三條主線
+## 1. 課程地圖：三條主線
 
 
 <!-- FIGURE:ch01-course-map -->
@@ -109,7 +109,7 @@
 </figure>
 <!-- /FIGURE -->
 
-把整份本節切成三個主題，這三個主題就是本課的骨架：
+本節把整份內容切成三個主題，這三個主題就是本課的骨架：
 
 | # | 主題 | 白話 | 本筆記章節 |
 |---|---|---|---|
@@ -119,7 +119,7 @@
 
 ### 1.1 為什麼要學「產品」而不只學「原理」
 
-本節花了整整 20 頁逐一介紹 ChatGPT、Gemini、Copilot、Llama、Grok、Perplexity、
+本節逐一介紹 ChatGPT、Gemini、Copilot、Llama、Grok、Perplexity、
 Kimi、通義、DeepSeek、第三方聚合 App 與 AI 偵測器。原因是：
 
 - 這一課的**考題幾乎都出自「誰做的／屬於哪一類」**——例如 Perplexity 是「AI 搜尋引擎」而非通用聊天機器人、
@@ -141,7 +141,7 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 四支 Lab 程式（§32）
 ```
 
-> **考點**： 的三個 bullet 就是三個主題名稱，考題常直接問「本課三大主題為何」。
+> **考點**：三個 bullet 就是三個主題名稱，考題常直接問「本課三大主題為何」。
 > 注意第二個主題是 **Predictive AI vs Generative AI**（不是「AI vs ML」），第三個是
 > **LLM vs RAG**（不是「LLM vs GAN」）。
 
@@ -167,7 +167,7 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 
 ### 2.1 拆解成四個要素
 
-| 要素 | 說法 | 說明 |
+| 要素 | 定義 | 說明 |
 |---|---|---|
 | **產出** | images, text, music, videos | 多模態：不只文字 |
 | **方法** | machine learning，特別是 **deep learning** | 不是規則式系統 |
@@ -207,7 +207,7 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 </figure>
 <!-- /FIGURE -->
 
-本節列出的清單，括號內是本節自己的說明：
+本節列出的清單（括號內是官方定位）：
 
 | 產品 | 說明 | 開發者 | 定位 |
 |---|---|---|---|
@@ -218,9 +218,9 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 | **Grok** | by Elon Musk | xAI | 綁定 X（Twitter）平台（§10） |
 | **Perplexity** | AI Search Engine | Perplexity AI | **搜尋引擎**，不是純聊天（§11） |
 
-### 3.1 本節留下的那個問題：「與 Google 搜尋有何不同？」
+### 3.1 一個關鍵問題：「與 Google 搜尋有何不同？」
 
- 最後一行寫著：
+本節最後一行寫著：
 
 > • **What is the different with Google Search?**
 
@@ -234,7 +234,7 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 | 出錯方式 | 找不到就沒有結果 | 會**一本正經地編造**（hallucination） |
 | 可追溯性 | 每個結果都有來源網址 | 通常沒有（→ 這正是 **RAG** 要解決的，見 §29） |
 
-> **考點**：Perplexity 之所以被本節特別標成 **"AI Search Engine"**，就是因為它把上面兩欄合起來——
+> **考點**：Perplexity 之所以被標成 **"AI Search Engine"**，就是因為它把上面兩欄合起來——
 > 用 LLM 生成答案，同時附上**來源引用**。考題很愛問「哪一個是 AI 搜尋引擎」。
 
 ### 3.2 六個產品的三個分類維度
@@ -257,23 +257,23 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 </figure>
 <!-- /FIGURE -->
 
-本節用四頁示範 ChatGPT 的介面與用途：
+本節示範 ChatGPT 的介面與用途：
 
-| 標題 | 內容 |
+| 主題 | 重點 |
 |---|---|
-| ChatGPT | 產品主視覺（附外部圖片來源連結） |
-| Sample usage of ChatGPT — **Main screen** | 舊版主畫面截圖 |
-| **New ChatGPT** — Main screen | 改版後的主畫面 |
-| Sample usage of ChatGPT — **Writing a resume** | 用 ChatGPT 寫履歷的示範 |
+| ChatGPT 主畫面 | 產品主視覺與外部圖片來源 |
+| 舊版主畫面（Main screen） | 早期的對話介面 |
+| 新版主畫面（New ChatGPT） | 改版後的介面 |
+| 寫履歷示範（Writing a resume） | 用 ChatGPT 產出一份結構化長文件 |
 
 ### 4.1 為什麼要示範「寫履歷」
 
 因為那是最能體現 LLM 價值的**文字生成任務**：輸入是一段不完整的需求，
-輸出是一份結構化的長文件。本節用這一頁說明「生成式 AI 直接產出成品，而不是給你搜尋結果」。
+輸出是一份結構化的長文件。本節以此說明「生成式 AI 直接產出成品，而不是給你搜尋結果」。
 
 ### 4.2 介面兩個版本的教育意義
 
-本節刻意放了「舊版主畫面」與「New ChatGPT 主畫面」兩張截圖。要讀出的訊息是：
+本節對比「舊版主畫面」與「New ChatGPT 主畫面」。要讀出的訊息是：
 
 - **同一個產品會一直改版**：模型版本、介面、功能都會變。
 - **但「輸入 prompt → 取得文字回覆」這個互動模型沒有變**。
@@ -360,7 +360,7 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 - 要人類**排序**（這個比那個好）**一致得多**。
 - 所以獎勵模型學的是「哪個回覆比較好」這個**相對**判斷。
 
-### 5.5  的 LLM 定義
+### 5.5 LLM 的定義
 
 本節給出本課對 LLM 的正式定義：
 
@@ -385,12 +385,12 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 
 ### 5.6 本機實測：把「預訓練模型不會聽指令」親眼看到
 
-四支 Lab 裡，`LLM/LLM.ipynb` 用的就是**沒有經過 RLHF 的原始預訓練模型**
+本課的四支 Lab 裡，`LLM/LLM.ipynb` 用的就是**沒有經過 RLHF 的原始預訓練模型**
 （`distilgpt2`，GPT-2 的蒸餾小模型）。它的行為正好可以驗證 §5.3 的說法——
 **它只會「接龍」，不會「回答」**：
 
 ```python
-# 本節 LLM/LLM.ipynb 的核心（已移除 ipywidgets 互動層）
+# LLM/LLM.ipynb 的核心（已移除 ipywidgets 互動層）
 import os, sys
 sys.path.insert(0, "_shim")          # 見附錄 B：繞過本機 torchaudio 的 CUDA 版本問題
 import torch
@@ -424,8 +424,8 @@ Write a story about a curious robot, a robot with a very advanced sense of humor
 三個可以直接寫進考卷的觀察：
 
 1. **`distilgpt2` 只有 81.9 M 參數**——和「Large」Language Model 的「大」形成強烈對比，
-   也解釋了為什麼它的輸出品質這麼差（本節選它是因為**不需要任何 API token、可在 Colab 免費跑**）。
-2. **它沒有回答指令，只是接龍**： prompt 是 "Write a story about a curious robot"，
+   也解釋了為什麼它的輸出品質這麼差（選它是因為**不需要任何 API token、可在 Colab 免費跑**）。
+2. **它沒有回答指令，只是接龍**：示範的 prompt 是 "Write a story about a curious robot"，
    模型的續寫是「…, a robot with a very advanced sense of humor」——**它把指令當成句子的一部分**，
    而不是當成「請你寫一個故事」的要求。這正是**沒有經過 RLHF 的預訓練模型**的典型行為。
 3. **`max_length=50` 是「總長度」**：prompt 佔 7 個 token，所以最多只能再生成 43 個；
@@ -458,7 +458,7 @@ at a baby boy's heart. Photo Credit: Wendytale - All images can be saved via the
 </figure>
 <!-- /FIGURE -->
 
-清單裡寫的是 **"Gemini / Bard (by Google)"**——這個「雙名」本身就是考點。
+清單裡寫的是  **"Gemini / Bard (by Google)"**——這個「雙名」本身就是考點。
 
 ### 6.1 為什麼有兩個名字
 
@@ -472,10 +472,10 @@ at a baby boy's heart. Photo Credit: Wendytale - All images can be saved via the
 1. **模型家族**：Gemini Ultra／Pro／Nano 等不同規模的模型
 2. **產品介面**：gemini.google.com 那個聊天視窗
 
-> **考點**：本節寫「Gemini / Bard」是因為本節要涵蓋改名前的舊稱。
+> **考點**：之所以寫「Gemini / Bard」，是為了涵蓋改名前的舊稱。
 > 考題若問「Google 的對話式 AI 叫什麼」，**Bard 與 Gemini 都算對**（Bard 是舊名）。
 
-### 6.2 與 ChatGPT 的對照（本節要你注意的差異）
+### 6.2 與 ChatGPT 的對照（要特別注意的差異）
 
 | 比較項 | ChatGPT（OpenAI） | Gemini（Google） |
 |---|---|---|
@@ -501,7 +501,7 @@ Gemini 屬於「**輸入端也支援多模態**」的那一類，這是它與早
 </figure>
 <!-- /FIGURE -->
 
-這一頁在本節裡是「用 prompt 換取不同輸出」的示範。它其實是 **Lesson 5（Prompt Engineering）**
+本節用一個例子示範「用 prompt 換取不同輸出」。它其實是 **Lesson 5（Prompt Engineering）**
 的前導——那一課會把 prompt 拆成四大要素與七大類技術。
 
 ### 7.1 這一頁要你記住的最小觀念
@@ -533,7 +533,7 @@ Gemini 屬於「**輸入端也支援多模態**」的那一類，這是它與早
 </figure>
 <!-- /FIGURE -->
 
-清單上寫的是  **"Copilot (by Microsoft)"**。
+清單上寫的是   **"Copilot (by Microsoft)"**。
 
 ### 8.1 「Copilot」不是一個模型，是一個角色
 
@@ -548,7 +548,7 @@ Gemini 屬於「**輸入端也支援多模態**」的那一類，這是它與早
 
 ### 8.2 「Copilot（副駕駛）」這個命名的含義
 
-本節選這個詞是有意義的——**副駕駛不負責開飛機**：
+選這個詞是有意義的——**副駕駛不負責開飛機**：
 
 - 它**輔助**你，不取代你
 - 最終決策與責任仍在**人類**身上
@@ -570,7 +570,7 @@ Gemini 屬於「**輸入端也支援多模態**」的那一類，這是它與早
 </figure>
 <!-- /FIGURE -->
 
-清單上寫的是  **"Llama / Meta (by Meta / Facebook)"**。
+清單上寫的是   **"Llama / Meta (by Meta / Facebook)"**。
 
 ### 9.1 三個名字指同一件事的不同層次
 
@@ -614,17 +614,17 @@ Gemini 屬於「**輸入端也支援多模態**」的那一類，這是它與早
 </figure>
 <!-- /FIGURE -->
 
-清單上寫的是  **"Grok (by Elon Musk)"**。
+清單上寫的是   **"Grok (by Elon Musk)"**。
 
 ### 10.1 開發者要寫對
 
 | 項目 | 正確答案 |
 |---|---|
 | 開發者 | **xAI**（Elon Musk 創辦的 AI 公司） |
-| 說法 | by **Elon Musk**（用創辦人代表公司） |
+| 寫法 | by **Elon Musk**（用創辦人代表公司） |
 | 深度整合的平台 | **X**（前 Twitter） |
 
-> **考點**：本節用「Elon Musk」代表這家公司，但正式名稱是 **xAI**。
+> **考點**：這裡用「Elon Musk」代表這家公司，但正式名稱是 **xAI**。
 > 選項若同時出現「xAI」與「Elon Musk」，**xAI 是公司名、Elon Musk 是創辦人**，兩者不衝突。
 
 ### 10.2 Grok 的差異化定位
@@ -644,7 +644,7 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 </figure>
 <!-- /FIGURE -->
 
-清單上寫的是  **"Perplexity (AI Search Engine)"**——括號裡的定位就是考點。
+清單上寫的是   **"Perplexity (AI Search Engine)"**——括號裡的定位就是考點。
 
 ### 11.1 它為什麼不叫「聊天機器人」
 
@@ -680,7 +680,7 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 </figure>
 <!-- /FIGURE -->
 
-標題是  **Conversational Generative AI (China)**，列出三個：
+標題是   **Conversational Generative AI (China)**，列出三個：
 
 | 產品 | 舊寫法 | 開發者 | 一句話定位 |
 |---|---|---|---|
@@ -688,7 +688,7 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 | **通義** | Tongyi | 阿里巴巴 | 阿里雲的模型家族（通義千問 Qwen） |
 | **DeepSeek** | DeepSeek | 深度求索 | **開放權重**、推理能力強，可本機跑 |
 
-### 12.1 為什麼要獨立開一頁講中國的 LLM
+### 12.1 為什麼要獨立一節講中國的 LLM
 
 因為這三個都是**在全球榜上有名、且部分開放權重**的模型。
 特別是 **DeepSeek**——它同時是「中國模型」與「可下載到本機跑的模型」，
@@ -869,7 +869,7 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 </figure>
 <!-- /FIGURE -->
 
-本節是第二條主線的**目錄頁**，四個 bullet：
+本節是第二條主線的**總覽**，四個 bullet：
 
 |  bullet | 中文 | 本筆記章節 |
 |---|---|---|
@@ -899,7 +899,7 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 所以 §23–§24 花了很多頁講 GAN，接著 §25 才講 Diffusion（另一個主流實現）。
 
-> **考點**： 這頁的**四個 bullet 順序**常被當成配對題：
+> **考點**：四個 bullet 的**順序**常被當成配對題：
 > **Recap → GAN → Underlying Technologies → Hybrid**。
 
 ---
@@ -961,7 +961,7 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 </figure>
 <!-- /FIGURE -->
 
-本節用五個 bullet 給出預測式 AI 的**標準流程**，順序必須記牢：
+預測式 AI 的**標準流程**有五步，順序必須記牢：
 
 ```
 ① Data Collection        蒐集資料
@@ -994,7 +994,7 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 ### 18.3 本機實測：完整跑一次這五步
 
-Lab `GenAI/Predictive AI.ipynb` 就是把這五步寫成程式。本機實測
+本課的 Lab `GenAI/Predictive AI.ipynb` 就是把這五步寫成程式。本機實測
 （numpy 2.4.6／pandas 3.0.6／scikit-learn，RTX 4090）：
 
 ```python
@@ -1004,7 +1004,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
 
-np.random.seed(42)                      # 本節把這行註解掉了 → 每次跑結果都不同
+np.random.seed(42)                      # 這行被註解掉了 → 每次跑結果都不同
 n = 100
 size = np.random.randint(500, 3500, n)          # 坪數
 rooms = np.random.randint(1, 6, n)              # 房間數
@@ -1081,7 +1081,7 @@ intercept_ = -1,617.09
 樣本少導致波動大（另一次不設 seed 的實測是 **9,466**）。
 
 > **考點**：`train_test_split(test_size=0.2)` 在 n=100 時**測試集只有 20 筆**。
-> 樣本這麼少時，MAE 每次都會明顯跳動——這也是本節「故意不設 seed」想讓你看到的現象。
+> 樣本這麼少時，MAE 每次都會明顯跳動——這也是「故意不設 seed」想讓你看到的現象。
 
 ---
 
@@ -1097,7 +1097,7 @@ intercept_ = -1,617.09
 
 ### 19.1 第二次定義（對比式）
 
- 這個定義比前一個更完整，因為它加上了**與 Predictive AI 的對比**：
+這個定義比前一個更完整，因為它加上了**與 Predictive AI 的對比**：
 
 > Generative AI refers to artificial intelligence systems that **create new content**,
 > such as text, images, audio, video, or code, **by learning patterns from existing data**.
@@ -1136,9 +1136,9 @@ intercept_ = -1,617.09
 > 因為 ChatGPT 的 **T** 就是 Transformer。考題常問「下列何者**不是**生成式 AI 的核心技術」，
 > 而 Transformer 很容易被誤認為只是「NLP 的東西」。
 
-### 19.3 本節舉的產品對應
+### 19.3 產品對應舉例
 
-| 寫的例子 | 屬於哪一類 | 開發者 |
+| 例子 | 屬於哪一類 | 開發者 |
 |---|---|---|
 | **DALL·E** | Diffusion（影像） | OpenAI |
 | **Stable Diffusion** | Diffusion（影像） | Stability AI |
@@ -1179,7 +1179,7 @@ intercept_ = -1,617.09
 
 ### 20.2 三步使用者流程（Process）
 
- 從**使用者視角**再講一次流程：
+從**使用者視角**再講一次流程：
 
 ```
 ① Input a prompt or seed         輸入提示或種子
@@ -1205,7 +1205,7 @@ intercept_ = -1,617.09
 
 ### 20.4 本機實測：完整跑一次「生成」流程
 
-Lab `GenAI/Gen AI.ipynb` 用 **Stable Diffusion 1.5** 實作這個流程。
+本課的 Lab `GenAI/Gen AI.ipynb` 用 **Stable Diffusion 1.5** 實作這個流程。
 本機實測（diffusers／RTX 4090）：
 
 ```python
@@ -1222,7 +1222,7 @@ img = pipe(
     "A curious robot exploring a futuristic city",
     num_inference_steps=20,      # 滑桿範圍 10–50，預設 20
     guidance_scale=7.5,          # 滑桿範圍 1.0–20.0，預設 7.5
-    height=512, width=512,       # 本節固定 512×512
+    height=512, width=512,       # 固定 512×512
 ).images[0]
 img.save("robot.png")
 ```
@@ -1245,7 +1245,7 @@ steps=20  guidance=15.0 ->  0.60 s
 
 三個可以直接寫進考卷的觀察：
 
-1. **本節說「may take 30-60 seconds」，在本機 4090 上只要 0.6–0.8 秒**——
+1. **本課標示的「may take 30-60 seconds」是 Colab 免費 GPU（T4 等級）的體感，在本機 4090 上只要 0.6–0.8 秒**——
    數字是 **Google Colab 免費 GPU（T4 等級）** 的體感。
    **同一個模型、同一組參數，硬體不同就差 50 倍**。
 2. **步數從 10 增加到 30，時間幾乎沒變**（0.78 → 0.81 秒）。
@@ -1254,7 +1254,7 @@ steps=20  guidance=15.0 ->  0.60 s
 3. **峰值 VRAM 只要 5.13 GB**——`float16` 是關鍵（寫法正確）。
    如果改成 `float32`，記憶體需求大約會翻倍。
 
-> **考點**：`guidance_scale` 與 `num_inference_steps` 的**本節預設值**是
+> **考點**：`guidance_scale` 與 `num_inference_steps` 的**預設值**是
 > **7.5** 與 **20**，範圍是 **1.0–20.0** 與 **10–50**。這組數字常被直接考出來。
 
 ---
@@ -1272,7 +1272,7 @@ steps=20  guidance=15.0 ->  0.60 s
 
 本節用左右兩欄做總結對照，這是本科**最高頻的考題來源**。
 
-### 21.1 兩欄
+### 21.1 左右兩欄的對照
 
 | | **Predictive AI** | **Generative AI** |
 |---|---|---|
@@ -1456,7 +1456,7 @@ steps=20  guidance=15.0 ->  0.60 s
 | **Discriminator** | learns to identify the **subtle differences** between real and fake data |
 | **Adversarial training** | continues **until** the generator becomes proficient at producing data that the discriminator **can't distinguish** from real data |
 
-### 23.5 GAN 能做出什麼（ 的補充）
+### 23.5 GAN 能做出什麼
 
 本節特別舉了兩類成果：
 
@@ -1482,7 +1482,7 @@ steps=20  guidance=15.0 ->  0.60 s
 </figure>
 <!-- /FIGURE -->
 
-本節用 12 頁展開 GAN 的訓練機制，是本科**最技術**的一段。
+本節用相當篇幅展開 GAN 的訓練機制，是本科**最技術**的一段。
 
 ### 24.1 兩個網路怎麼接起來
 
@@ -1551,7 +1551,7 @@ steps=20  guidance=15.0 ->  0.60 s
 | **輸入** | 隨機雜訊（random noise） | 真資料**或**生成資料 |
 | **輸出** | 合成資料（synthetic data，如圖片） | 「真」或「假」的預測 |
 | **目標** | 騙過判別器 | 正確分辨真假 |
-| **原文** | Takes random noise as input and generates synthetic data | Takes real or generated data and predicts whether it's real or fake |
+| **定義** | Takes random noise as input and generates synthetic data | Takes real or generated data and predicts whether it's real or fake |
 
 ### 24.5 交替訓練（alternating periods）
 
@@ -1564,7 +1564,7 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ### 24.6 收斂（Convergence）與崩壞
 
-這是本節最重要的一段，本節原文：
+這是本節最重要的一段，原文：
 
 > As the generator improves with training, the discriminator performance **gets worse**
 > because the discriminator can't easily tell the difference between real and fake.
@@ -1615,7 +1615,7 @@ steps=20  guidance=15.0 ->  0.60 s
 </figure>
 <!-- /FIGURE -->
 
-本節用六頁介紹擴散模型，這是**目前影像生成的主流技術**（Stable Diffusion、DALL·E 都屬於此類）。
+本節介紹擴散模型，這是**目前影像生成的主流技術**（Stable Diffusion、DALL·E 都屬於此類）。
 
 ### 25.1 定義與雙相機制
 
@@ -1689,12 +1689,12 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ### 25.7 本機實測：`num_inference_steps` 就是「Reverse 的步數」
 
- 說「取樣慢是因為 iterative steps」，這句話可以**用 §20.4 的實測直接驗證**：
+本節說「取樣慢是因為 iterative steps」，這句話可以**用 §20.4 的實測直接驗證**：
 
-| 參數 | 就是本節說的 | 本機實測（SD 1.5，512×512，RTX 4090） |
+| 參數 | 對應的說明 | 本機實測（SD 1.5，512×512，RTX 4090） |
 |---|---|---|
 | `num_inference_steps=10` | 去噪 **10 步** | 0.78 秒 |
-| `num_inference_steps=20` | 去噪 **20 步**（本節預設） | 0.61 秒 |
+| `num_inference_steps=20` | 去噪 **20 步**（預設） | 0.61 秒 |
 | `num_inference_steps=30` | 去噪 **30 步** | 0.81 秒 |
 
 **在 512×512 這個尺寸下，步數從 10 增加到 30，時間幾乎不變**——
@@ -1718,7 +1718,7 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ### 26.1 GAN vs Diffusion 的六個維度
 
-本節用三頁做對照（截圖）。把 §23–§25 的內容整理成可直接背的表：
+把 §23–§25 的內容整理成可直接背的表：
 
 | 比較項 | **GAN** | **Diffusion** |
 |---|---|---|
@@ -1741,7 +1741,7 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ### 26.3 其他兩種生成模型
 
- 補了兩個不在 §19.2 清單裡的模型：
+另有兩個不在 §19.2 清單裡的模型：
 
 | 模型 | 定義 | 中文 |
 |---|---|---|
@@ -1813,7 +1813,7 @@ p65 把它寫得更明確：
 
 ### 27.2 另一種「混合」——符號式 + 次符號式
 
- 給的是**另一組**混合定義（不是預測 vs 生成，而是**規則 vs 學習**）：
+本節另有**另一組**混合定義（不是預測 vs 生成，而是**規則 vs 學習**）：
 
 > Hybrid AI (Hybrid Artificial Intelligence) refers to the integration of different AI
 > paradigms within a single system to **leverage their individual strengths and compensate
@@ -1832,7 +1832,7 @@ p65 把它寫得更明確：
 
 > **考點**：**Hybrid AI 有兩種定義**，考題要看清問的是哪一種：
 > ① **Predictive + Generative**
-> ② **Symbolic + Sub-symbolic**（）
+> ② **Symbolic + Sub-symbolic**
 > 兩者都是 Hybrid AI，但講的是不同的「混合」。
 
 ### 27.3 為什麼「可解釋性」是混合式的核心賣點
@@ -1854,7 +1854,7 @@ p65 把它寫得更明確：
 </figure>
 <!-- /FIGURE -->
 
-本節用三頁給出三個產業的**同一個模式**：Predictive 負責判斷、Generative 負責產出內容、
+本節給出三個產業的**同一個模式**：Predictive 負責判斷、Generative 負責產出內容、
 Hybrid 負責把兩者接起來。
 
 ### 28.1 Healthcare Diagnostics（醫療診斷）
@@ -1935,7 +1935,7 @@ Hybrid 負責把兩者接起來。
 ```
 ① 檔案        .txt / .pdf / .docx
         ↓  用 embedding model 轉成向量
-② 向量        all-MiniLM-L6-v2（本節舉例）
+② 向量        all-MiniLM-L6-v2（舉例）
         ↓  存進向量資料庫
 ③ 向量庫      Chroma / LanceDB
         ↓  查詢時做相似度檢索
@@ -1944,7 +1944,7 @@ Hybrid 負責把兩者接起來。
 
 ### 29.3 三個必須記住的細節
 
-| 細節 | 本節說法 | 為什麼重要 |
+| 細節 | 說明 | 為什麼重要 |
 |---|---|---|
 | **嵌入模型是固定的** | "isn't trained or modified"、"a fixed model" | RAG **不訓練任何模型權重** |
 | **索引是一次性成本** | "one-time computational task" | 建好之後查詢很快 |
@@ -1996,7 +1996,7 @@ Hybrid 負責把兩者接起來。
 
 這是第 ③ 條主線的核心，也是本科**最實用**的一段。
 
-### 30.1 五個維度的對照（本節表格）
+### 30.1 五個維度的對照（對照表）
 
 | **Feature** | **RAG** (Retrieval-Augmented Generation) | **LLM** (Large Language Model) |
 |---|---|---|
@@ -2006,7 +2006,7 @@ Hybrid 負責把兩者接起來。
 | **Complexity** | **Needs retrieval pipeline** | **Simpler to deploy** |
 | **Offline Capability** | **No** (needs data access) | **Yes** |
 
-> **考點**：**Offline Capability 這一列最容易答錯**——本節寫的是
+> **考點**：**Offline Capability 這一列最容易答錯**——對照表寫的是
 > **LLM: Yes／RAG: No**。因為 RAG 需要「資料存取」這一環，
 > 而純 LLM 的權重就在本機，斷網也能跑。
 
@@ -2019,7 +2019,7 @@ Hybrid 負責把兩者接起來。
 | **Strengths** | • Works **offline**<br>• **Fast generation**<br>• Great for **creative tasks** | • **Up-to-date** info<br>• **Source-grounded** answers<br>• Better for **compliance-critical** domains |
 | **Weaknesses** | • **Outdated** knowledge<br>• **Higher hallucination risk** | • **More complex setup**<br>• **Slightly slower** |
 
-### 30.3 五個情境的選擇（本節表格）
+### 30.3 五個情境的選擇（對照表）
 
 | **Scenario** | **Best Fit** | **Reason** |
 |---|---|---|
@@ -2040,13 +2040,13 @@ Hybrid 負責把兩者接起來。
 | 需要**離線** | **LLM** |
 | 需要**速度** | **LLM** |
 
-> **考點**：**Language translation → LLM** 是本節裡最反直覺的一格
+> **考點**：**Language translation → LLM** 是本表裡最反直覺的一格
 > （你可能會以為翻譯需要查字典，但理由是「relies on learned patterns」）。
 > 另外 **Medical research → RAG** 的理由是 **citable（可引用）**，不是「比較準」。
 
 ### 30.5 本機實測：親手做一次最小的 RAG
 
-Lab `LLM/RAG.ipynb` 就是一個**不依賴任何向量資料庫**的極簡 RAG。
+本課的 Lab `LLM/RAG.ipynb` 就是一個**不依賴任何向量資料庫**的極簡 RAG。
 本機實測（transformers 5.17.0／RTX 4090，用`sample.txt`）：
 
 ```python
@@ -2106,7 +2106,7 @@ result = generator(prompt, max_length=50, num_return_sequences=1,
 **本機實測直接重現了錯誤**：
 
 ```
-[重現本節問題] ValueError: Input length of input_ids is 153, but `max_length` is set to 50.
+[重現問題] ValueError: Input length of input_ids is 153, but `max_length` is set to 50.
 ```
 
 **為什麼會爆**：`max_length` 在現代 `transformers` 裡是「**輸入 + 輸出**的總長度上限」，
@@ -2168,7 +2168,7 @@ Context: curious robots at a STEM workshop to help students brainstorm ideas.
 </figure>
 <!-- /FIGURE -->
 
-本節是全份本節**唯一的哲學討論**，但因為情境鮮明，很容易出題。
+本節是整份筆記**唯一的哲學討論**，但因為情境鮮明，很容易出題。
 
 ### 31.1 完整敘述
 
@@ -2235,7 +2235,7 @@ GPT-4 必須同時掌握三件事才答得出來：
 </figure>
 <!-- /FIGURE -->
 
-本節把四支 Lab 分成兩頁指派：
+本節把四支 Lab 分成兩組指派：
 
 | 指令 | Lab 檔案 |
 |---|---|
@@ -2421,7 +2421,7 @@ GPT-4 必須同時掌握三件事才答得出來：
 |---|---|---|---|
 | **`distilgpt2`** | 文字生成 | **81.9 M** | GPT-2 的蒸餾版，免 token |
 | **`distilbert-base-uncased`** | 句子嵌入 | **768 維** | `RAG.ipynb` 用來檢索 |
-| **`all-MiniLM-L6-v2`** | 句子嵌入 | 384 維 | ** 舉例**用 |
+| **`all-MiniLM-L6-v2`** | 句子嵌入 | 384 維 | 本課舉例用 |
 | **`runwayml/stable-diffusion-v1-5`** | 影像生成 | **859.5 M**（U-Net） | 512×512 |
 
 ---
@@ -2439,7 +2439,7 @@ GPT-4 必須同時掌握三件事才答得出來：
 | 5 | **`float32` 跑 SD** | `pipe.to("cuda")` 不指定 dtype | `.to(dtype=torch.float16)`（省一半 VRAM） |
 | 6 | **忘了 `pad_token_id`** | `distilgpt2` 直接生成 → 警告 | `model.config.pad_token_id = model.config.eos_token_id` |
 | 7 | **以為 RAG 會訓練模型** | 「RAG 是把模型微調到你的資料上」 | RAG **只建索引**，權重不變 |
-| 8 | **以為 RAG 需要連網** | 「RAG 是離線方案」 | 本節寫 **RAG: No／LLM: Yes**（離線能力） |
+| 8 | **以為 RAG 需要連網** | 「RAG 是離線方案」 | 表中寫 **RAG: No／LLM: Yes**（離線能力） |
 | 9 | **把 `R²=1.00` 當成模型很好** | 「R² 接近 1 所以模型最棒」 | 因為**資料是線性公式生成的** |
 | 10 | **`guidance_scale` 調太高** | `guidance_scale=20` 追求品質 | 預設 **7.5**；太高會出現過飽和／失真 |
 
