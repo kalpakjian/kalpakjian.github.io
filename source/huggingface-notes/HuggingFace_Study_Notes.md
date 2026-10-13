@@ -812,7 +812,6 @@ res = vision(image)     # 自動做 resize / normalize / softmax
 
 ## 11. Transformers 的實際介面
 
-> 這 6 頁是全份內容唯一的「純截圖區」，本節依圖判讀補齊。
 
 <!-- FIGURE:ch11-transformers-interface -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">

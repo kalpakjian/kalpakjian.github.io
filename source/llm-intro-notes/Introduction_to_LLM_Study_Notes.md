@@ -199,7 +199,7 @@ LLM（GPT-3 級）    ──  數千億個參數（175 B）＋ 兆級 token 的�
 
 ## 3. Applications of LLMs
 
-> 本節是一張純圖（無文字層）。本節依本節圖示的分類，補上每一類應用的技術內涵與代表案例。
+> 本節以一張圖呈現。以下依圖中的分類，補上每一類應用的技術內涵與代表案例。
 
 <!-- FIGURE:ch03-applications -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
