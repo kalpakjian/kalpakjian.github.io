@@ -481,7 +481,7 @@ combo  = cv2.bitwise_or(img1, img2)                     # 合成
 
 > 遮罩（mask）必須是 **單通道 uint8**，白色（255）= 保留，黑色（0）= 排除。
 
-### 6.6 翻轉與旋轉（PDF 第 20 頁「Flip & Rotate」）
+### 6.6 翻轉與旋轉
 
 ```python
 flipped_h = cv2.flip(image, 1)    # 1 = 水平鏡像（左右翻）
@@ -502,7 +502,7 @@ side_by_side = cv2.hconcat([img1, img2])      # OpenCV 版本
 reshaped = image.reshape(-1)                  # 攤平成 1D（做統計 / ML 特徵）
 ```
 
-### 6.8 PDF 第 20 頁四大操作對照表
+### 6.8 四大操作對照表
 
 | PDF 標題 | 說明 | API |
 |---------|------|-----|
@@ -518,7 +518,7 @@ reshaped = image.reshape(-1)                  # 攤平成 1D（做統計 / ML �
 
 > **用途**：在影像上「畫標註」—— 邊界框、中心點、文字標籤。工業檢測與 AR 顯示必用。
 
-### 7.1 五大繪圖函式（PDF 第 9 頁）
+### 7.1 五大繪圖函式
 
 | 函式 | 畫什麼 | 簽名 |
 |------|--------|------|
@@ -760,7 +760,7 @@ Kernel = 1/9 * [[1,1,1],
 - 總和 > 1 → 變亮；< 1 → 變暗。
 - 二階微分核（Laplacian）總和 = 0 → 找邊緣。
 
-### 9.6 形態學濾波（Morphological Operations）—— PDF 第 25 頁程式碼重點
+### 9.6 形態學濾波（Morphological Operations）——程式碼重點
 
 處理**二值圖（binary mask）**的形狀運算：
 
@@ -797,7 +797,7 @@ opened_mask  = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
 | 二值 mask 去雜點 | `cv2.morphologyEx(..., MORPH_OPEN, ...)` |
 | 二值 mask 補洞 | `cv2.morphologyEx(..., MORPH_CLOSE, ...)` |
 
-### 9.8 PDF 第 11 頁總結
+### 9.8 總結
 
 > **Filtering improves image quality** —— 濾波能提升影像品質，是後續邊緣偵測與特徵擷取成功的關鍵前提。
 
@@ -863,7 +863,7 @@ edges = cv2.Canny(image, threshold1=100, threshold2=200)
 
 **建議比例**：`threshold2 : threshold1 ≈ 2:1` 或 `3:1`。
 
-**完整 Canny 流程（PDF 第 24 頁程式碼，本機實測通過）**
+**完整 Canny 流程**
 
 ```python
 import cv2
@@ -889,7 +889,7 @@ plt.subplot(1, 2, 2); plt.imshow(edges, cmap="gray"); plt.title("Canny Edge Outl
 plt.show()
 ```
 
-### 10.5 邊緣偵測後：找輪廓（Find Contours）—— PDF 第 23 頁
+### 10.5 邊緣偵測後：找輪廓（Find Contours）——
 
 ```python
 contours, hierarchy = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -926,7 +926,7 @@ cv2.drawContours(mask, [largest_contour], -1, 255, thickness=-1)   # 填滿輪�
 isolated = cv2.bitwise_and(image, image, mask=mask)                # 只留下目標
 ```
 
-### 10.6 PDF 第 12 頁總結
+### 10.6 總結
 
 > **Edges help identify object boundaries** —— 邊緣幫助辨識物件邊界，是分割、量測、追蹤的基礎。
 
@@ -946,7 +946,7 @@ isolated = cv2.bitwise_and(image, image, mask=mask)                # 只留下�
 | **SURF** | Speeded-Up Robust Features | **比 SIFT 更快**的近似版本 | 專利仍在，需 `opencv-contrib-python` 且常需編譯 `NONFREE` |
 | **ORB** | Oriented FAST and Rotated BRIEF | **效率高且授權友善**（完全免費），速度快，適合即時應用 | 免費、無專利（**本課程用 ORB**） |
 
-### 11.2 名詞定義（PDF 第 26 頁）
+### 11.2 名詞定義
 
 | 名詞 | 說明 |
 |------|------|
@@ -963,7 +963,7 @@ isolated = cv2.bitwise_and(image, image, mask=mask)                # 只留下�
 - **Rotated**：把 BRIEF 的取樣點旋轉到主方向 → 具旋轉不變性。
 - **描述子維度**：ORB 預設 **32 bytes = 256 bits** → 所以 `descriptors.shape` 是 `(keypoints, 32)`。
 
-**完整範例（PDF 第 27 頁，本機實測通過）**
+**完整範例**
 
 ```python
 import cv2
@@ -1033,7 +1033,7 @@ descriptors: (493, 32)
 | 專利 / 授權 | 已到期 | 仍有 | **完全免費** |
 | 適用 | 高精度離線任務 | 需較快又較準 | **即時 / 手機 / 嵌入式** |
 
-### 11.6 PDF 第 13 頁總結
+### 11.6 總結
 
 > **Features represent unique image patterns** —— 特徵代表影像中獨特的圖案，是把「像素」轉換成「可比較的數學描述」的橋樑。
 
@@ -1102,7 +1102,7 @@ matches = flann.knnMatch(des1, des2, k=2)
 
 > ⚠️ **FLANN + ORB 要注意**：ORB 是 binary 描述子，KD-tree 不適用，需用 LSH（Locality Sensitive Hashing）。
 
-### 12.5 完整範例：ORB + BFMatcher（PDF 第 28 頁，本機實測通過）
+### 12.5 完整範例：ORB + BFMatcher
 
 ```python
 import cv2
@@ -1173,7 +1173,7 @@ cv2.drawMatches(img1, kp1, img2, kp2, matches, outImg, matchColor, singlePointCo
 | `cv2.DrawMatchesFlags_DEFAULT` | 畫所有關鍵點 |
 | `cv2.DrawMatchesFlags_DRAW_RICH_KEYPOINTS` | 顯示大小與方向 |
 
-### 12.7 Homography 與 RANSAC（PDF 第 26 頁，進階必懂）
+### 12.7 Homography 與 RANSAC
 
 ```python
 src_pts = np.float32([kp1[m.queryIdx].pt for m in matches]).reshape(-1, 1, 2)
@@ -1192,7 +1192,7 @@ print("Inliers:", int(mask.sum()), "/", len(matches))
 
 **用途**：物件辨識（找出目標在畫面中的位置）、影像拼接、AR 平面疊圖。
 
-### 12.8 PDF 第 14 頁的四個重點
+### 12.8 的四個重點
 
 1. **BFMatcher 直接比較描述子**（brute-force，逐一比對）。
 2. **FLANN 提供快速最近鄰搜尋**（approximate nearest neighbor）。
@@ -1204,7 +1204,7 @@ print("Inliers:", int(mask.sum()), "/", len(matches))
 
 ## 13. Real-World Projects
 
-PDF 第 15 頁列出五個實戰專案，以下補充實作要點：
+本節列出五個實戰專案，以下補充實作要點：
 
 ### 13.1 Panorama Generation（全景圖生成）
 
@@ -1253,7 +1253,7 @@ PDF 第 15 頁列出五個實戰專案，以下補充實作要點：
 
 ## 14. OpenCV Programming Examples（程式範例）
 
-> 本章完整收錄 PDF 第 17–28 頁的程式碼，並加上逐行解釋。
+> 本章完整收錄 本節的程式碼，並加上逐行解釋。
 > **本機驗證**：以下所有程式碼已在 OpenCV 5.0.0 / NumPy 2.4.6 / Matplotlib 3.11.2 環境實際執行通過。
 
 ### 14.0 環境安裝與通用設定
@@ -1288,9 +1288,9 @@ print(cv2.__version__)     # 例如 5.0.0 或 4.10.0
 
 ---
 
-### 14.1 Pre-processing（PDF 第 17–19 頁）
+### 14.1 Pre-processing
 
-#### 14.1.1 概念（PDF 第 17 頁原文）
+#### 14.1.1 概念
 
 | 步驟 | 英文 | 內容 |
 |------|------|------|
@@ -1298,7 +1298,7 @@ print(cv2.__version__)     # 例如 5.0.0 或 4.10.0
 | **簡化影像** | Simplify Image | 移除顏色通道產生 **Grayscale**，並縮小像素尺寸以**加快處理時間**。 |
 | **清理與濾波** | Clean & Filter | 套用 **Blurring** 消除不必要雜訊，用 **Thresholding** 取出乾淨的黑白形狀。 |
 
-#### 14.1.2 範例一：顏色順序 BGR vs RGB（PDF 第 18 頁）
+#### 14.1.2 範例一：顏色順序 BGR vs RGB
 
 ```python
 import cv2
@@ -1344,7 +1344,7 @@ plt.show()
 
 > **結論**：同一個陣列 `(0,0,255)`，在 OpenCV 眼中是紅色，在 Matplotlib 眼中是藍色 —— 這就是「Wrong Color」的原因。
 
-#### 14.1.3 範例二：高斯模糊（PDF 第 19 頁）
+#### 14.1.3 範例二：高斯模糊
 
 ```python
 # 套用高斯模糊
@@ -1388,9 +1388,9 @@ _, binary = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY)  # 4. 二值化
 
 ---
 
-### 14.2 Matrix Operations（PDF 第 20–22 頁）
+### 14.2 Matrix Operations
 
-#### 14.2.1 概念（PDF 第 20 頁原文）
+#### 14.2.1 概念
 
 | 操作 | 英文 | 說明 |
 |------|------|------|
@@ -1399,7 +1399,7 @@ _, binary = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY)  # 4. 二值化
 | **翻轉與旋轉** | Flip & Rotate | **重新索引像素位置**，做水平鏡像或順時針旋轉像素網格 |
 | **矩陣混合** | Matrix Blending | 用**加權加法數學**合併兩個影像矩陣，做出半透明疊圖 |
 
-#### 14.2.2 範例一：ROI 裁剪（PDF 第 21 頁）
+#### 14.2.2 範例一：ROI 裁剪
 
 ```python
 import cv2
@@ -1441,7 +1441,7 @@ plt.show()
 - 原始圖片實際尺寸為 **413×356**（寬×高），但這是一張設計好的教學圖，所以切片後是乾淨的 200×200 區域。
 - ROI 是**視圖（view）**，改它會改到原圖。
 
-#### 14.2.3 範例二：矩陣混合 / 藍色疊圖（PDF 第 22 頁）
+#### 14.2.3 範例二：矩陣混合 / 藍色疊圖
 
 ```python
 # 1. 建立一張形狀相同的深藍色疊加層矩陣
@@ -1488,7 +1488,7 @@ B = 50*0.7  + 220*0.3 + 0 = 35 + 66 = 101
 → 結果像素 = (140, 70, 101)
 ```
 
-#### 14.2.4 補充：繪圖疊加與翻轉旋轉（PDF 第 20 頁「Draw Overlays」與「Flip & Rotate」）
+#### 14.2.4 補充：繪圖疊加與翻轉旋轉
 
 ```python
 # --- Draw Overlays：直接在矩陣上覆寫像素 ---
@@ -1521,9 +1521,9 @@ plt.show()
 
 ---
 
-### 14.3 Transformation and Filtering（PDF 第 23–25 頁）
+### 14.3 Transformation and Filtering
 
-#### 14.3.1 概念（PDF 第 23 頁原文）
+#### 14.3.1 概念
 
 | 操作 | 英文 | 說明 |
 |------|------|------|
@@ -1532,7 +1532,7 @@ plt.show()
 | **邊界框** | Bounding Boxes | 在獨立目標周圍套上**軸對齊矩形**或**最小面積包圍形狀** |
 | **形狀遮罩** | Shape Masking | 把向量形狀畫到**二值遮罩**上，從整個畫面中裁出並隔離目標物件 |
 
-#### 14.3.2 範例一：Canny 邊緣偵測（PDF 第 24 頁）
+#### 14.3.2 範例一：Canny 邊緣偵測
 
 ```python
 import cv2
@@ -1576,7 +1576,7 @@ plt.show()
 - 結果：每個糖果球的**白色圓形外框**被畫出來（黑底白線）。
 - 本機實測：邊緣像素數 = **3157** 個。
 
-#### 14.3.3 範例二：形態學運算（PDF 第 25 頁）
+#### 14.3.3 範例二：形態學運算
 
 ```python
 # 1. 建立一個 5x5 的全 1 網格（用來塑形的「刷子」/ kernel）
@@ -1639,7 +1639,7 @@ _, mask = cv2.threshold(gray, 200, 255, cv2.THRESH_BINARY)
 - `iterations=1`：重複次數；**次數越多，效果越強**。
 - `cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)` = `dilate(erode(mask))`。
 
-#### 14.3.4 補充：找輪廓 + 邊界框 + 形狀遮罩（PDF 第 23 頁完整流程）
+#### 14.3.4 補充：找輪廓 + 邊界框 + 形狀遮罩
 
 ```python
 # --- 1. Edge Detection ---
@@ -1701,9 +1701,9 @@ plt.show()
 
 ---
 
-### 14.4 Feature Extraction and Matching（PDF 第 26–28 頁）
+### 14.4 Feature Extraction and Matching
 
-#### 14.4.1 概念（PDF 第 26 頁原文）
+#### 14.4.1 概念
 
 | 步驟 | 英文 | 說明 |
 |------|------|------|
@@ -1712,7 +1712,7 @@ plt.show()
 | **描述子匹配** | Descriptor Matching | 用**距離度量**（如 Hamming 或 Euclidean 距離）比對兩張圖的描述子向量 |
 | **單應性與 RANSAC** | Homography & RANSAC | 估計 **3×3 幾何空間變換**，並過濾掉錯誤的匹配離群值 |
 
-#### 14.4.2 範例一：ORB 關鍵點偵測（PDF 第 27 頁）
+#### 14.4.2 範例一：ORB 關鍵點偵測
 
 ```python
 import cv2
@@ -1772,7 +1772,7 @@ Descriptors matrix shape (keypoints count, fingerprint size): (493, 32)
 | `cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS` | **畫圓圈，圓大小 = 特徵尺度，含方向線**（教學用最清楚） |
 | `cv2.DRAW_MATCHES_FLAGS_DEFAULT` | 只畫小圓點 |
 
-#### 14.4.3 範例二：ORB + BFMatcher 特徵匹配（PDF 第 28 頁）
+#### 14.4.3 範例二：ORB + BFMatcher 特徵匹配
 
 ```python
 # 1. 建立一張旋轉版本作為「目標照片」
@@ -1893,7 +1893,7 @@ if len(good) > 10:
 
 ## 15. Summary
 
-### 15.1 PDF 第 29 頁的五點總結
+### 15.1 的五點總結
 
 | # | 原文 | 中文解釋 |
 |---|------|---------|

@@ -18,7 +18,7 @@ banner_img: /img/covers/neural-network-notes-ivdc.png
 
 IVDC「Certificate in Application of Computer Vision Technology」課程的第 5 份本節《Neural Network, Activation Function and Machine Learning》（30 頁），我把它完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
-這份投影片**圖比字多**——p9–p16、p25–p26、p29–p30 幾乎沒有可抽取的文字，全部都是圖。所以這次除了照本節每個標題逐一重寫之外，我還做了兩種圖：**22 張精確圖表**（用程式畫成內嵌 SVG，數字全部算過）＋ **16 張 AI 專屬插圖**（用本機 ComfyUI 跑 **Qwen-Image 2.1**，依每個章節的內容逐張生成）。全部內嵌在單一 HTML 裡，離線可看。另外把全篇 **104 條公式**從等寬假公式改寫成 **LaTeX**，建置時用 MathJax 預渲染成內嵌 SVG（一樣離線、一樣零外部資源）。
+這份投影片**圖比字多**——p9、p25、p29 幾乎沒有可抽取的文字，全部都是圖。所以這次除了照本節每個標題逐一重寫之外，我還做了兩種圖：**22 張精確圖表**（用程式畫成內嵌 SVG，數字全部算過）＋ **16 張 AI 專屬插圖**（用本機 ComfyUI 跑 **Qwen-Image 2.1**，依每個章節的內容逐張生成）。全部內嵌在單一 HTML 裡，離線可看。另外把全篇 **104 條公式**從等寬假公式改寫成 **LaTeX**，建置時用 MathJax 預渲染成內嵌 SVG（一樣離線、一樣零外部資源）。
 
 筆記已發佈成獨立頁面：
 

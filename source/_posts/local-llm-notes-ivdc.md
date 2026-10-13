@@ -86,7 +86,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 —
 | 38 | 本機實測總表（真實數據） |
 | 39 | 考試重點整理 |
 
-另有 **7 個附錄**：指令與 API 速查表、常見錯誤與陷阱、離線執行／安裝提示、一頁精華（考前 10 分鐘）、60 題 MC 互動測驗、答錯題目 → 複習章節對照。
+另有 **7 個附錄**：指令與 API 速查表、常見錯誤與陷阱、離線執行／安裝提示、一頁精華（考前 10 分鐘）、60 題 MC 互動測驗、答錯題目 → 複習章節
 
 ---
 
@@ -123,8 +123,8 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 —
 | **`RAG.ipynb`** | **`max_length`** 誤用（它是輸入＋輸出的總長，應改用 `max_new_tokens`） |
 | **`testollama.py`** | `torch.tensor([ord(c)…])` 是**假嵌入**，只是 ASCII 碼、沒有語意 |
 | **p36／p37** | `GPT4All` 被拼成 **`GTP4ALL`／`GTP4All`** |
-| **p16** | `lmstudio` 被拼成 **`Imstudio`** |
-| **p20** | 同一列 `phi3:3.8b` vs `ollama run phi3`；`app_web.py` 又出現第三種 `phi3:mini` |
+| **這兩頁** | `lmstudio` 被拼成 **`Imstudio`** |
+| **這兩頁** | 同一列 `phi3:3.8b` vs `ollama run phi3`；`app_web.py` 又出現第三種 `phi3:mini` |
 | **`ReadMe.txt`** | 路徑寫 **`C:\Users\Teacher\...`**（講師的帳號） |
 | **`run.txt`** | `accelerate` 出現兩次；`peft` 裝了卻沒用 |
 | **`LoRA.txt`** | `matrics` 應為 `matrices` |

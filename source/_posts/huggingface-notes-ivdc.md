@@ -96,7 +96,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 6 —
 | 42 | 本機實測總表（真實數據） |
 | 43 | 考試重點整理 |
 
-另有 **7 個附錄**：指令與 API 速查表、常見錯誤與陷阱、離線執行／安裝提示、一頁精華（考前 10 分鐘）、60 題 MC 互動測驗、答錯題目 → 複習章節對照。
+另有 **7 個附錄**：指令與 API 速查表、常見錯誤與陷阱、離線執行／安裝提示、一頁精華（考前 10 分鐘）、60 題 MC 互動測驗、答錯題目 → 複習章節
 
 ---
 
@@ -128,8 +128,8 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 6 —
 | **p36 標題** | **`Adaptors`**（應為 `Adapters`），且同頁內文寫 `An Adapter is…`——標題與內文自己不一致 |
 | **p34／p35 標題** | **`QLoRA (Low Rank Adaptation)`**——直接複製 LoRA 的展開；正確是 **Quantized** Low-Rank Adaptation |
 | **p22 vs p28** | **ALBERT 同時被列在 WordPiece 與 SentencePiece 底下**，兩頁互相矛盾（實際上用的是 SentencePiece） |
-| **p39** | `Text Generation Inference` 出現 **`• •` 空項目符號** |
-| **p42** | 標題寫 `Huggingface_hub SDK`（實際套件名是全小寫 `huggingface_hub`） |
+| **這兩頁** | `Text Generation Inference` 出現 **`• •` 空項目符號** |
+| **這兩頁** | 標題寫 `Huggingface_hub SDK`（實際套件名是全小寫 `huggingface_hub`） |
 | **`HF_LLM.ipynb`** | **`target_modules=["c_attn"]` 只對 GPT-2 有效**——換成 Llama／Qwen 直接 **`ValueError`** |
 | **`HF_LLM.ipynb`** | **只數參數、完全沒有 forward／backward**，卻把「套上 LoRA」當成「微調完成」 |
 | **`HF_transformer.ipynb`** | 註解說 `Google's DeiT model`，**程式實際載入 ViT** |

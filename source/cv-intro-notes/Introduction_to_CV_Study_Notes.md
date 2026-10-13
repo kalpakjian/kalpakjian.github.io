@@ -231,8 +231,8 @@
 
  標題為「**Basic Concepts of CNN**」：
 
-> - p11：**AI Basic Principles – Image Recognition by CNN** →「**What is CNN?**」
-> - p12：**AI Basic Principles – Convolutional Neural Network**
+**AI Basic Principles – Image Recognition by CNN** →「**What is CNN?**」
+**AI Basic Principles – Convolutional Neural Network**
 
 ### 6.1 CNN 的基本組成
 
