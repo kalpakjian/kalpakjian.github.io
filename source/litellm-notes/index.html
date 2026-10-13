@@ -217,7 +217,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <nav class="sidebar">
   <a class="home" href="/">← 回到 AI Tech Notes</a>
   <a class="home" href="/llm-course/">📚 課程專題</a>
-  <a class="quiz" href="mc-quiz.html">🖱️ 互動測驗（68 題）</a>
+  <a class="quiz" href="mc-quiz.html">🖱️ 互動測驗（60 題）</a>
   <h1>LiteLLM</h1>
   <div class="sub">IVDC · Certificate in Application of Large Language Model (LLM)<br>Lesson 8 · LiteLLM</div>
   <div class="toc">
@@ -569,6 +569,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 本筆記按原稿每一格逐一填充內容，並補上定義、參數說明、常見錯誤與考點。
 <strong>§21 與附錄 H 來自課堂講義</strong>，補上 notebook 沒有的 gateway 概念與企業治理面。
 所有程式碼與數字都在本機實測（litellm 1.91.2／Python 3.11.15／Ollama），實測輸出直接寫進內文。
+⚠️ <strong>版本時效（2026-10 實查）</strong>：本筆記實測用的是 <strong>litellm 1.91.2</strong>，但最新已到 <strong>1.105.0</strong>，
+且底層 <code>openai</code> 依賴已從 2.x <strong>跨到 3.x</strong>。完整對照表見 <strong>§2.1</strong>。
 🖱️ <strong>互動測驗（推薦）</strong>：附錄 F 提供 <strong>68 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
 </blockquote>
 <hr>
@@ -878,8 +880,17 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">litellm</span><span class="o">.</span><span class="n">provider_list</span><span class="p">))</span>     <span class="c1"># 146</span>
 </code></pre></div>
 
-<p>原稿寫「50+」，本機 <strong>litellm 1.91.2</strong> 實測 <code>litellm.provider_list</code> 共 <strong>146 個</strong>。
-其中與本課相關的幾個：</p>
+<p>原稿寫「50+」，本機 <strong>litellm 1.91.2</strong> 實測 <code>litellm.provider_list</code> 共 <strong>146 個</strong>。</p>
+<blockquote>
+<p>⚠️ <strong>兩個數字要分清楚</strong>：
+| 來源 | 數字 | 說明 |
+|---|---|---|
+| <strong>官方說明（2026-10 實查 GitHub）</strong> | <strong>「100+ LLM APIs」</strong> | 保守的對外說法 |
+| <strong>本機實測 <code>len(litellm.provider_list)</code></strong> | <strong>146</strong> | 精確的程式內清單 |</p>
+<p>考試若問「LiteLLM 支援多少供應商」，<strong>原稿的「50+」與官方的「100+」都算對</strong>；
+但要知道<strong>程式內實際有 146 個</strong>（1.91.2 實測）。最新版（1.105.0）的數量可能又更多。</p>
+</blockquote>
+<p>其中與本課相關的幾個：</p>
 <table>
 <thead>
 <tr>
@@ -934,6 +945,70 @@ openai  2.24.0      ← LiteLLM 底層沿用 openai 的型別與例外階層
 python  3.11.15
 </code></pre></div>
 
+<h4 id="-版本時效2026-10-實查">⚠️ 版本時效（2026-10 實查）</h4>
+<table>
+<thead>
+<tr>
+<th>套件</th>
+<th>本機實測</th>
+<th><strong>最新</strong></th>
+<th>落後</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>litellm</strong></td>
+<td>1.91.2</td>
+<td><strong>1.105.0</strong></td>
+<td>⚠️ <strong>14 個 minor</strong></td>
+</tr>
+<tr>
+<td><strong>openai</strong></td>
+<td>2.24.0</td>
+<td><strong>3.29.0</strong></td>
+<td>❌ <strong>跨大版本</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong><code>openai</code> 從 2.x 跨到 3.x 是重大變動</strong>。LiteLLM 底層沿用 <code>openai</code> 的型別與例外階層
+（見 §14 的例外對照），所以<strong>大版本升級時要注意例外類別是否改名</strong>。
+要完全重現本筆記的實測行為，請鎖定 <code>litellm==1.91.2</code>＋<code>openai==2.24.0</code>。</p>
+</blockquote>
+<h4 id="-litellm-已改為rust-core--python-sdk">⚠️ LiteLLM 已改為「Rust core ＋ Python SDK」</h4>
+<p><strong>2026-10 實查 GitHub repo 說明</strong>，LiteLLM 的官方定位已經改變：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>本筆記描述</th>
+<th><strong>官方現況（2026-10）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>架構</td>
+<td>純 Python 套件 ＋ Proxy</td>
+<td><strong>「Rust core with Python SDK」</strong></td>
+</tr>
+<tr>
+<td>repo 目錄</td>
+<td><code>litellm/</code></td>
+<td>新增 <strong><code>litellm-rust/</code></strong></td>
+</tr>
+<tr>
+<td>定位</td>
+<td>LLM API 統一介面</td>
+<td><strong>「The fastest, litest AI Gateway」</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>教學點</strong>：<code>from litellm import completion</code> 這個 <strong>Python API 沒有變</strong>（本課教的東西仍然有效），
+但<strong>底層推論核心已經改用 Rust 重寫</strong>以追求速度。
+考試若問「LiteLLM 是什麼」，<strong>原稿的答案（統一介面／Proxy）仍然正確</strong>；
+但要知道它現在的官方定位是「<strong>AI Gateway</strong>」，而且有了 Rust 核心。</p>
+</blockquote>
 <h3 id="22-匯入">2.2 匯入</h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">litellm</span><span class="w"> </span><span class="kn">import</span> <span class="n">completion</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>

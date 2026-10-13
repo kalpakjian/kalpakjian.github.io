@@ -142,6 +142,8 @@ date: 2026-10-13 09:00:00
 - **本機實測數據**（Ollama 0.40.3）：`smollm` 對話 **1.38 秒**、RAG 建索引 **0.10 秒**／查詢 **0.43 秒**、
   **模型不存在回 404**、`mymodel` 其實是 **GPT-2 124M**
 - 另有 **39 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **⚠️ 版本時效已查證（2026-10）**：**Ollama 0.40.3 查證後仍是目前最新版**（2026-10-11 發布），所以全部 Ollama 實測數字仍然有效；
+  但 **LM Studio 已到 `0.4.26`**（原稿截圖是 0.4.6，落後 20 個 patch），且 **`huggingface_hub[cli]` 這個 extra 已被移除**（CLI 指令是 `hf`，不是 `huggingface-cli`）。見筆記 **§38.9**
 - **👉 [看筆記](/local-llm-notes/)** ｜ [互動測驗 60 題](/local-llm-notes/mc-quiz.html)
 
 ---
@@ -159,6 +161,9 @@ date: 2026-10-13 09:00:00
   - 原稿寫「50+ LLM APIs」，實測 `provider_list` 已有 **146** 個
   - 原稿用 `OpenAIObject` 描述回應，現為 LiteLLM 的 **`ModelResponse`**
 - 另有 **22 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **⚠️ 版本時效已查證（2026-10）**：**`litellm 1.91.2` → 最新 `1.105.0`**（落後 14 個 minor），
+  底層 **`openai` 已從 2.x 跨到 `3.29.0`**（大版本，例外階層可能改名）；
+  且官方現在定位為「**Rust core ＋ Python SDK** 的 AI Gateway」（支援 **100+** LLM API，程式內 `provider_list` 實測 **146**）。見筆記 **§2.1**
 - **👉 [看筆記](/litellm-notes/)** ｜ [互動測驗 60 題](/litellm-notes/mc-quiz.html)
 
 ---
@@ -175,6 +180,8 @@ date: 2026-10-13 09:00:00
 - **特別之處**：找出原稿裡**會直接讓使用者看到 500 錯誤的三個真實缺陷**並給出正確改法，
   其中最關鍵的是 **`dict.get(k, default)` 的 `default` 只在 key 不存在時生效**——所以 `{"name": null}` 會回出 `"Hello, None ..."`
 - 另有 **22 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **⚠️ 版本時效已查證（2026-10）**：**Flask 3.1.3 查證後仍是目前最新版**，所以全部 Flask 實測數字仍然有效；
+  但 **Streamlit 已到 `1.65.0`**（實測用 1.59.1，落後 6 個 minor）。見筆記 **§20.6**
 - **👉 [看筆記](/streamlit-flask-notes/)** ｜ [互動測驗 60 題](/streamlit-flask-notes/mc-quiz.html)
 
 ---

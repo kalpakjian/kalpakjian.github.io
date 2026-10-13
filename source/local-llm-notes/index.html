@@ -751,7 +751,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#388-資料檔與講義檔案實測">38.8 資料檔與講義檔案實測</a>
 </li>
-<li><a href="#389-一句話總結">38.9 一句話總結</a>
+<li><a href="#389-本機版本-vs-最新版本2026-10-實查">38.9 本機版本 vs 最新版本（2026-10 實查）</a>
+</li>
+<li><a href="#3810-一句話總結">38.10 一句話總結</a>
 </li>
 </ul>
 </li>
@@ -859,6 +861,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 ⚠️ 原稿 44 頁中<strong>有 43 頁是純截圖</strong>（全份文字層只有 2,705 字元），本質是一份<strong>逐步操作手冊</strong>；
 因此筆記逐頁補上「<strong>這一步在做什麼、為什麼</strong>」，並在每節標明對應的 PDF 頁碼。
 所有程式碼與數字都在本機實測（Python 3.11.15／Ollama 0.40.3／llama-index 0.14.25），實測輸出直接寫進內文。
+⚠️ <strong>版本時效（2026-10 實查）</strong>：完整「本機實測 vs 最新」對照表見 <strong>§38.9</strong>。
+好消息是 <strong>Ollama 0.40.3 查證後仍是目前最新版</strong>，所以本課的 Ollama 實測數字全部有效；
+但 <strong>LM Studio 已到 0.4.26</strong>（原稿截圖是 0.4.6），且 <strong><code>huggingface_hub[cli]</code> 這個 extra 已被移除</strong>。
 🖱️ <strong>互動測驗（推薦）</strong>：附錄 F 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
 </blockquote>
 <hr>
@@ -1774,8 +1779,9 @@ LM Studio 有 Windows／macOS／Linux 三平台，而 Windows 上又分 <strong>
 再加上版本號——<strong>選錯平台會裝不起來</strong>。</p>
 <blockquote>
 <p>⚠️ <strong>版本落差</strong>：原稿截圖是 <strong>0.4.6</strong>。這個版本號會一直更新，
-考試時請認「<strong>官網當下顯示的版本</strong>」，不要死背 0.4.6。
-截圖的價值在於<strong>版面配置</strong>（三個下拉的位置），不在版本號。</p>
+<strong>2026-10 實查官網下載頁已是 <code>0.4.26</code></strong>（落後 20 個 patch）。
+考試時請認「<strong>官網當下顯示的版本</strong>」，不要死背任何版本號。
+截圖的價值在於<strong>版面配置</strong>（三個下拉的位置），不在版本號。見 §38.9。</p>
 </blockquote>
 <h3 id="53-p4執行安裝檔">5.3 p4：執行安裝檔</h3>
 <table>
@@ -8704,7 +8710,128 @@ ML 用 <strong>bag of words</strong>（<strong>丟掉詞序</strong>）。
 </tr>
 </tbody>
 </table>
-<h3 id="389-一句話總結">38.9 一句話總結</h3>
+<h3 id="389-本機版本-vs-最新版本2026-10-實查">38.9 本機版本 vs 最新版本（2026-10 實查）</h3>
+<blockquote>
+<p>⚠️ <strong>本筆記的實測數字用的是 §38.1 的版號。</strong> 下表是<strong>同一時間點</strong>查證的最新版本，
+方便你判斷哪些已經落後。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>本機實測</th>
+<th><strong>最新（2026-10 實查）</strong></th>
+<th>狀態</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ollama</strong></td>
+<td>0.40.3</td>
+<td><strong>v0.40.3</strong>（2026-10-11 發布）</td>
+<td>✅ <strong>就是最新版</strong></td>
+</tr>
+<tr>
+<td><strong>LM Studio</strong></td>
+<td>原稿截圖 0.4.6</td>
+<td><strong>0.4.26</strong></td>
+<td>⚠️ 原稿落後 <strong>20 個 patch</strong></td>
+</tr>
+<tr>
+<td><code>ollama</code>（python 套件）</td>
+<td>0.6.2</td>
+<td><strong>0.6.3</strong></td>
+<td>⚠️ 落後 1 個 patch</td>
+</tr>
+<tr>
+<td><code>llama-index-core</code></td>
+<td>0.14.25</td>
+<td>0.14.25</td>
+<td>✅ 同步</td>
+</tr>
+<tr>
+<td><code>llama-index-llms-ollama</code></td>
+<td>0.11.0</td>
+<td>0.11.0</td>
+<td>✅ 同步</td>
+</tr>
+<tr>
+<td><code>llama-index-embeddings-huggingface</code></td>
+<td>0.8.0</td>
+<td>0.8.0</td>
+<td>✅ 同步</td>
+</tr>
+<tr>
+<td><code>sentence-transformers</code></td>
+<td>6.1.0</td>
+<td>6.1.0</td>
+<td>✅ 同步</td>
+</tr>
+<tr>
+<td><code>transformers</code></td>
+<td>5.17.0</td>
+<td><strong>5.19.0</strong></td>
+<td>⚠️ 落後 2 個 minor</td>
+</tr>
+<tr>
+<td><code>torch</code></td>
+<td>2.14.1+cu132</td>
+<td>2.14.1</td>
+<td>✅ 同步</td>
+</tr>
+<tr>
+<td><strong><code>huggingface_hub</code></strong></td>
+<td>1.24.0</td>
+<td><strong>2.2.0</strong></td>
+<td>❌ 跨大版本</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>好消息</strong>：<strong><code>Ollama 0.40.3</code> 查證後就是目前最新版</strong>（2026-10-11 發布），
+所以本筆記所有 Ollama 相關的實測數字（埠 11434、<code>smollm</code> 1.38 秒…）<strong>全部仍然有效</strong>。</p>
+</blockquote>
+<h4 id="-兩項過時寫法">⚠️ 兩項過時寫法</h4>
+<p><strong>① <code>huggingface_hub[cli]</code> 這個 extra 已經不存在</strong></p>
+<p>原稿 Lab 的 <code>pip install</code> 指令裡有：</p>
+<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>...<span class="w"> </span><span class="s2">&quot;huggingface_hub[cli]&quot;</span><span class="w"> </span>-q<span class="w">      </span><span class="c1"># ⚠️ [cli] extra 已被移除</span>
+</code></pre></div>
+
+<p><strong>實查 PyPI metadata（<code>huggingface_hub 1.24.0</code>）</strong>：<code>requires_dist</code> 裡<strong>沒有任何 <code>extra == "cli"</code></strong>，
+<code>click</code>（CLI 的依賴）已經是<strong>核心依賴</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>世代</th>
+<th>安裝寫法</th>
+<th>CLI 指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>舊（<code>0.x</code>）</td>
+<td><code>pip install "huggingface_hub[cli]"</code></td>
+<td><code>huggingface-cli</code></td>
+</tr>
+<tr>
+<td><strong>現在（<code>1.x</code>＋）</strong></td>
+<td><strong><code>pip install huggingface_hub</code></strong></td>
+<td><strong><code>hf</code></strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>結論</strong>：<code>[cli]</code> 這個 extra 現在是多餘的（pip 只會給一個警告，仍會安裝），
+但<strong>正確寫法是直接 <code>pip install huggingface_hub</code></strong>，CLI 指令是 <strong><code>hf</code></strong>（不是 <code>huggingface-cli</code>）。</p>
+</blockquote>
+<p><strong>② LM Studio 的版本落差比原稿更大</strong></p>
+<p>原稿截圖是 <strong>0.4.6</strong>，本筆記當時只提醒「版本號會一直更新」。
+<strong>2026-10 實查官網下載頁顯示 <code>0.4.26</code></strong> —— 原稿已經落後 <strong>20 個 patch 版本</strong>。</p>
+<blockquote>
+<p><strong>考試仍然請認「官網當下顯示的版本」</strong>，不要死背任何數字。
+截圖的價值在<strong>版面配置</strong>（三個下拉的位置），不在版本號。</p>
+</blockquote>
+<h3 id="3810-一句話總結">38.10 一句話總結</h3>
 <blockquote>
 <p><strong>本機 LLM 的一切都「能跑」，但每一個環節都有坑</strong>：
 模型名稱要對（否則 404）、環境變數要對（否則連不上）、
