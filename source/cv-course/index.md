@@ -19,7 +19,7 @@ date: 2026-10-10 23:40:00
 | **Lesson 2** | Using Local GPU for ML | ✅ [Using Local GPU for ML 學習筆記](/local-gpu-ml-notes/) |
 | **Lesson 2** | Introduction to Computer Vision and Application | ✅ [Introduction to Computer Vision 學習筆記](/cv-intro-notes/) |
 | **Lesson 3** | OpenCV | ✅ [OpenCV 學習筆記](/opencv-notes/) |
-| **Lesson 4** | Responsible AI | ⏳ 待補 |
+| **Lesson 4** | Responsible AI | ✅ [Responsible AI 學習筆記](/responsible-ai-notes/) |
 | **Lesson 4** | Test | — |
 | **Lesson 5** | Neural Network, Activation Function and Machine Learning | ✅ [Neural Network &amp; ML 學習筆記](/neural-network-notes/) |
 | **Lesson 6** | Convolutional Neural Network (CNN) 1 | ⏳ 待補 |
@@ -67,7 +67,17 @@ date: 2026-10-10 23:40:00
 
 ---
 
-## 5 · Lesson 5 — Neural Network, Activation Function and Machine Learning
+## 5 · Lesson 4 — Responsible AI
+
+![Responsible AI 學習筆記](/img/covers/responsible-ai-notes-ivdc.png)
+
+- **涵蓋**：Responsible AI 定義與 Challenges on AI、**12 項倫理原則**、AI Practice Guide **6 階段**、四大倫理議題（隱私與監控／偏見與歧視／資料安全與同意／問責與透明）、香港 **PDPO《個人資料（私隱）條例》**（Cap. 486、1996/12/20 生效）與**六項保護原則 DPP1–DPP6**、社會影響五項、六項倫理使用建議與結論
+- 附**本機實測**的偏見量測程式（混淆矩陣 → FNR／FPR／Equal Opportunity Difference，多數族群 95% vs 少數族群 89%）
+- **👉 [看筆記](/responsible-ai-notes/)** ｜ [互動測驗 60 題](/responsible-ai-notes/mc-quiz.html)
+
+---
+
+## 6 · Lesson 5 — Neural Network, Activation Function and Machine Learning
 
 ![Neural Network & ML 學習筆記](/img/covers/neural-network-notes-ivdc.png)
 
