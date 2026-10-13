@@ -22,7 +22,7 @@ date: 2026-10-13 09:00:00
 | **Lesson 4** | Responsible LLM | ✅ [Responsible AI 學習筆記](/responsible-ai-notes/) |
 | **Lesson 4** | Test | — |
 | **Lesson 5** | Prompt Engineering | ✅ [Prompt Engineering 學習筆記](/prompt-engineering-notes/) |
-| **Lesson 6** | Hugging Face for LLM | ⏳ 待補 |
+| **Lesson 6** | Hugging Face for LLM | ✅ [Hugging Face for LLM 學習筆記](/huggingface-notes/) |
 | **Lesson 7** | Local LLM Apps | ✅ [Local LLM Apps 學習筆記](/local-llm-notes/) |
 | **Lesson 8** | LiteLLM | ✅ [LiteLLM 學習筆記](/litellm-notes/) |
 | **Lesson 9** | Streamlit and Flask | ✅ [Streamlit and Flask 學習筆記](/streamlit-flask-notes/) |
@@ -88,7 +88,31 @@ date: 2026-10-13 09:00:00
 
 ---
 
-## 4 · Lesson 7 — Local LLM Apps
+## 4 · Lesson 6 — Hugging Face for LLM
+
+![Hugging Face for LLM 學習筆記](/img/covers/huggingface-notes-ivdc.png)
+
+- **涵蓋**：原稿 **46 頁**、**43 個章節**——從「模型從哪裡來」一路講到「怎麼改、怎麼上線」：
+  - **生態系三層架構**（原稿骨架）：**① Hub ② Core ML Libraries ③ Inference & Deployment**
+  - **Hub 四件套**：Model Hub（**300k+ 模型**）／Dataset Hub／**Spaces**（Gradio／Streamlit／Static／Docker）／文件與版控
+  - **核心函式庫**：`transformers`／`datasets`／`tokenizers`／`diffusers`／**`peft`**
+  - **三種 Tokenizer 深入對比**（原稿用 **10 頁**講這個，是全課考題最密集處）：
+    **WordPiece**（`##`、最大似然合併、BERT 系）／**BPE**（byte-level、貪婪合併、GPT 系）／**SentencePiece**（`▁`、BPE 或 Unigram、T5／LLaMA）
+  - **微調技術**：**PEFT = LoRA／QLoRA／Adapters**，LoRA 公式 **`W' = W + A × B`**、QLoRA = LoRA ＋ **4-bit（NF4 ＋ double quantization）**
+  - **部署工具鏈**：Accelerate／Optimum／**TGI**／**Inference Endpoints**／**Safetensors**／`huggingface_hub`／Model Cards
+- **三個 Lab 逐格拆解**：`HF_transformer.ipynb`（11 格，**ViT 影像 ＋ AST 音訊**）、`HF_LLM.ipynb`（**PEFT／LoRA**）、`HF_dataset.ipynb`（**AG News ＋ Tiny ImageNet**）
+- **本機實測完全複現原稿數字**（RTX 4090）：LoRA 的 **`147,456 / 82,060,032 / 0.1797%`**、影像的 **`book jacket 12.9%`**、音訊的 **`Ding 55.9%`**——證明教材**技術內容正確**
+- **抓到原稿缺陷共 14 項**，其中三個最嚴重：
+  - **`target_modules=["c_attn"]` 只對 GPT-2 有效**——換成 Llama／Qwen 會直接 **`ValueError`**（可攜寫法是 `"all-linear"`）
+  - **`peft` 因為 `torchaudio` CUDA 版本不符而完全無法匯入**，錯誤訊息卻指向 `BloomPreTrainedModel`，**完全誤導**；解法是 `pip uninstall -y torchaudio`
+  - **講義用兩頁教 Streaming，三個 Lab 一次都沒用**——實測串流取 200 筆 **0.002 秒** vs 完整下載 **12.58 秒**
+  - 其餘包括：**p34 ＝ p35 整頁重複**、**註解說 DeiT 卻用 ViT**、**說用 wav2vec2 卻用 AST**、**熱連結新聞站裁切圖導致 12.9% 的失敗預測卻不加說明**、**Tiny ImageNet 已按類別排序使「找魚」示範失效**、**`Adaptors` 拼錯**、**QLoRA 全名誤植**、**p39 空項目符號**、**`LoRA.txt` 的 `matrics`**
+- 另有 **43 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **👉 [看筆記](/huggingface-notes/)** ｜ [互動測驗 60 題](/huggingface-notes/mc-quiz.html)
+
+---
+
+## 5 · Lesson 7 — Local LLM Apps
 
 ![Local LLM Apps 學習筆記](/img/covers/local-llm-notes-ivdc.png)
 
@@ -116,7 +140,7 @@ date: 2026-10-13 09:00:00
 
 ---
 
-## 5 · Lesson 8 — LiteLLM
+## 6 · Lesson 8 — LiteLLM
 
 ![LiteLLM 學習筆記](/img/covers/litellm-notes-ivdc.png)
 
@@ -133,7 +157,7 @@ date: 2026-10-13 09:00:00
 
 ---
 
-## 6 · Lesson 9 — Streamlit and Flask
+## 7 · Lesson 9 — Streamlit and Flask
 
 ![Streamlit and Flask 學習筆記](/img/covers/streamlit-flask-notes-ivdc.png)
 
