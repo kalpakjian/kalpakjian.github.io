@@ -3,8 +3,8 @@
 > 課程：Certificate in Application of Computer Vision Technology (Part-time)
 > 機構：匯縱專業發展中心（IVDC）
 > 教材來源：`IVDC_Using Local GPU for ML.pptx` → PDF（26 頁）
-> 本筆記按 PDF 原稿每一個標題逐一填充內容，並補上實際指令、版本對照、常見錯誤、模擬試題。
-> 原稿為**安裝步驟截圖**（文字極少）；本筆記把每一步補上「要做什麼、用什麼指令、如何驗證」。
+> 本筆記依課程大綱每一個標題逐一填充內容，並補上實際指令、版本對照、常見錯誤、模擬試題。
+> 教材為**安裝步驟截圖**（文字極少）；本筆記把每一步補上「要做什麼、用什麼指令、如何驗證」。
 > 本機實測環境（Windows）：**RTX 4090 / 驅動 617.42 / CUDA 13.4 / PyTorch 2.14.1+cu132**。
 > 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
@@ -625,9 +625,9 @@ python -m venv .venv
 
 ## 19. Check GPU
 
-**目的**：用 PyTorch 確認 GPU 是否真的可用（**本章是原稿唯一的程式碼**，p25）。
+**目的**：用 PyTorch 確認 GPU 是否真的可用（**本章是教材唯一的程式碼**，p25）。
 
-### 19.1 原稿程式碼（實測通過）
+### 19.1 教材程式碼（實測通過）
 
 ```python
 import torch
@@ -810,7 +810,7 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
 | 25 | Check GPU（含 PyTorch 程式碼） | 第 19 節 |
 | 26 | Set Path (if needed) | 第 20 節 |
 
-> 說明：原稿幾乎每頁都是**安裝精靈截圖**，只有 **p25** 含實際程式碼（PyTorch GPU 檢查）；
+> 說明：教材幾乎每頁都是**安裝精靈截圖**，只有 **p25** 含實際程式碼（PyTorch GPU 檢查）；
 > 本筆記把每一步補上「目的、指令、驗證方式」，讓沒有截圖也能照著做。
 
 ---
@@ -862,7 +862,7 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
   nvcc --version        → 已裝的 CUDA Toolkit 版本
   conda --version       → conda 是否可用
 
-【PyTorch GPU 檢查（p25 原稿程式碼）】
+【PyTorch GPU 檢查（p25 教材程式碼）】
   import torch
   if torch.cuda.is_available():
       print(torch.cuda.device_count()); print(torch.cuda.get_device_name())

@@ -3,8 +3,8 @@
 > 課程：Certificate in Application of Computer Vision Technology (Part-time)
 > 機構：匯縱專業發展中心（IVDC）
 > 教材來源：`2 IVDC_Introduction to Computer Vision and Application.pptx` → PDF（12 頁）
-> 本筆記按 PDF 原稿每一個標題逐一填充內容，並補上定義、關鍵數字、常見錯誤、模擬試題。
-> 原稿多為投影片圖示，文字較少；本筆記補上「圖示背後的概念」與「考點」，方便理解與應試。
+> 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、關鍵數字、常見錯誤、模擬試題。
+> 教材多為投影片圖示，文字較少；本筆記補上「圖示背後的概念」與「考點」，方便理解與應試。
 > 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
@@ -61,8 +61,8 @@
 
 ## 1. 商業領域的真實案例（Real Case Examples）
 
-原稿 p2–6 標題為「**Real Case Examples in Commercial Sectors**」，逐頁以**圖片**展示電腦視覺在
-商業領域的實際應用（原稿文字極少，以下補上每類應用的技術與案例）。
+教材 p2–6 標題為「**Real Case Examples in Commercial Sectors**」，逐頁以**圖片**展示電腦視覺在
+商業領域的實際應用（教材文字極少，以下補上每類應用的技術與案例）。
 
 ### 1.1 電腦視覺在商業上的六大類應用
 
@@ -90,7 +90,7 @@
 
 ## 2. 中國大陸與香港的最新 AI 技術
 
-原稿 p7 標題為「**Latest AI technologies in Mainland China and Hong Kong**」，
+教材 p7 標題為「**Latest AI technologies in Mainland China and Hong Kong**」，
 並以「**Furthermore**」帶出一個具體例子：
 
 > **世界机器人大会：超现实围棋博弈 2024 World Robot Conference: Hyper-realistic Go Match**
@@ -117,7 +117,7 @@
 
 ## 3. 卷積神經網路 CNN 是什麼
 
-原稿 p8 給出定義（**AI Basic Principles – Convolutional Neural Network**）：
+教材 p8 給出定義（**AI Basic Principles – Convolutional Neural Network**）：
 
 > **Convolutional Neural Network (CNN)** 是一種**專門為處理與分析「網格狀結構」（grid-like structure）
 > 資料**（例如**影像**或**音訊**）而設計的神經網路。
@@ -144,13 +144,13 @@
 ```
 
 > **考點**：CNN 定義的兩個關鍵字是「**grid-like structure**」與「**hierarchical representations**」；
-> 常見陷阱：把 CNN 說成「只能處理影像」——原稿明講也包含**音訊**等網格狀資料。
+> 常見陷阱：把 CNN 說成「只能處理影像」——教材明講也包含**音訊**等網格狀資料。
 
 ---
 
 ## 4. CNN 為何是頂尖方法（State-of-the-art）
 
-原稿 p9 標題為「**CNN**」，內容是「**AI Basic Principles – Convolutional Neural Network**」的延伸：
+教材 p9 標題為「**CNN**」，內容是「**AI Basic Principles – Convolutional Neural Network**」的延伸：
 
 > - **State-of-the-art methods** —— 使用**神經網路**來辨識影像與影片。
 > - 適合影像辨識的**深度學習架構**，都是基於 **CNN 的各種變體（variations）**。
@@ -187,7 +187,7 @@
 
 ## 5. 關鍵概念：參數重用（re-use parameters）
 
-原稿 p10 只有三行，但這是 CNN 的**核心思想**：
+教材 p10 只有三行，但這是 CNN 的**核心思想**：
 
 > - **Key idea: re-use parameters**（關鍵思想：參數重用）
 > - **Convolution shares parameters**（卷積會共享參數）
@@ -232,7 +232,7 @@
 
 ## 6. CNN 基本概念與影像辨識
 
-原稿 p11–12 標題為「**Basic Concepts of CNN**」：
+教材 p11–12 標題為「**Basic Concepts of CNN**」：
 
 > - p11：**AI Basic Principles – Image Recognition by CNN** →「**What is CNN?**」
 > - p12：**AI Basic Principles – Convolutional Neural Network**
@@ -350,7 +350,7 @@
 | 11 | Basic Concepts of CNN — Image Recognition by CNN（What is CNN?） | 第 6 節 |
 | 12 | Basic Concepts of CNN — AI Basic Principles – Convolutional Neural Network | 第 6 節 |
 
-> 說明：原稿第 2–6 頁多為**圖片**（商業案例展示），第 11–12 頁亦以圖示說明 CNN 基本概念；
+> 說明：教材第 2–6 頁多為**圖片**（商業案例展示），第 11–12 頁亦以圖示說明 CNN 基本概念；
 > 這些頁面在筆記中對應到所屬章節的概念補充，不另設小節。
 
 ---

@@ -21,13 +21,13 @@ archive: true
 
 IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 9 — Streamlit and Flask** 的完整學習筆記。
 
-這課把前面幾課串起來：**Streamlit 做前端畫面、Flask 做後端 API、LiteLLM 呼叫本機 Ollama**。原稿只有兩支加起來 58 行的程式，但裡面藏了 **兩個會直接回 500 的真實漏洞**。
+這課把前面幾課串起來：**Streamlit 做前端畫面、Flask 做後端 API、LiteLLM 呼叫本機 Ollama**。教材只有兩支加起來 58 行的程式，但裡面藏了 **兩個會直接回 500 的真實漏洞**。
 
 <!-- more -->
 
 ## 這份筆記有什麼
 
-- **原稿 `server.py`（12 行）、`app.py`（46 行）逐行重寫**，並補上 `README.md`／`ReadMe.txt` 的架構與啟動說明
+- **教材 `server.py`（12 行）、`app.py`（46 行）逐行重寫**，並補上 `README.md`／`ReadMe.txt` 的架構與啟動說明
 - **所有程式碼都在本機實測**（Flask 3.1.3／Werkzeug 3.1.8／Streamlit 1.59.1／requests 2.33.0），實測輸出直接寫進內文
 - **22 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
 - **60 題互動 MC 測驗**（點選即時計分、進度自動存 localStorage）
@@ -68,7 +68,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 9 —
 **🖱️ [開始 60 題線上測驗](/streamlit-flask-notes/mc-quiz.html)**
 
 - 60 題單選、滿分 60 分、建議 75 分鐘
-- 分四個部分、依原稿檔案與行號順序排列
+- 分四個部分、依教材檔案與行號順序排列
 - 答案分佈刻意打散（A/B/C/D 各 15 題）
 - 點選即時計分、進度存在 localStorage、可切換「只看未答／只看答錯」
 
@@ -83,9 +83,9 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 9 —
 
 ---
 
-## ⚠️ 原稿的兩個真實漏洞
+## ⚠️ 兩個真實漏洞
 
-這份筆記最有價值的地方，是把原稿裡**會直接讓使用者看到 500 錯誤**的地方找出來並給出正確改法：
+這份筆記最有價值的地方，是把教材裡**會直接讓使用者看到 500 錯誤**的地方找出來並給出正確改法：
 
 | 位置 | 問題 | 正確做法 |
 |---|---|---|

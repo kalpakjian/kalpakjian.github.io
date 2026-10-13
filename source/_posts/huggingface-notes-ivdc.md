@@ -31,11 +31,11 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 6 —
 
 ## 這份筆記有什麼
 
-- **講義 46 頁逐頁重寫**，順序與原稿一致。這一課的原稿**文字層完整**（39 / 46 頁有實質文字），
+- **教材 46 頁逐頁重寫**。這一課的教材**文字層完整**（39 / 46 頁有實質文字），
   只有 p9–p14、p17、p19 共 8 頁是截圖，由筆記逐張判讀補齊
 - **生態系三層架構**（全課骨架）：**① Hub → ② Core ML Libraries → ③ Inference & Deployment**
 - **Hub 四件套**：Model Hub（300k+）／Dataset Hub／**Spaces**／文件與版控
-- **三種 Tokenizer 深入對比**（原稿用 **10 頁**講這個，考題最密集）：
+- **三種 Tokenizer 深入對比**（教材用 **10 頁**講這個，考題最密集）：
   - **WordPiece**：`##` 標記、**最大似然**合併、BERT 系、**需要空白前處理**
   - **BPE**：byte-level、**貪婪**合併最頻繁對、GPT 系、**永不出現 `<unk>`**
   - **SentencePiece**：`▁` 標記、BPE 或 **Unigram**、T5／LLaMA、**不需空白前處理**
@@ -122,7 +122,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 6 —
 ---
 
 
-## ⚠️ 這份筆記最有價值的部分：原稿的 14 個真實缺陷
+## ⚠️ 這份筆記最有價值的部分：14 個實作陷阱與教材勘誤
 
 | 位置 | 缺陷 |
 |---|---|
@@ -138,7 +138,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 6 —
 | **`HF_transformer.ipynb`** | 註解說 `Google's DeiT model`，**程式實際載入 ViT** |
 | **`HF_transformer.ipynb`** | **熱連結新聞站 CDN 的裁切圖**（862×485），預測明顯失敗（**12.9%**）卻**不加任何說明** |
 | **`HF_transformer.ipynb`** | markdown 說用 `facebook/wav2vec2-base-960h`，**程式用的是 AST**；且把分類輸出說成「Text tokens」 |
-| **`HF_dataset.ipynb`** | **Tiny ImageNet 已按類別排序**，原稿的「找魚」迴圈其實只跑了 3 次就 break |
+| **`HF_dataset.ipynb`** | **Tiny ImageNet 已按類別排序**，教材的「找魚」迴圈其實只跑了 3 次就 break |
 | **`LoRA.txt`** | `matrices` 拼成 **`matrics`**（與 Lesson 7 §32 是同一個檔案、同一個錯字） |
 
 ### 三個最嚴重的缺陷
@@ -153,7 +153,7 @@ ValueError: Target modules {'c_attn'} not found in the base model.
 
 | 寫法 | 可訓練參數 | trainable% | Llama 上能跑嗎 |
 |---|---|---|---|
-| `["c_attn"]`（原稿） | 147,456 | 0.1797% | ❌ |
+| `["c_attn"]`（教材） | 147,456 | 0.1797% | ❌ |
 | **`"all-linear"`（建議）** | 589,824 | 0.7149% | ✅ |
 
 #### ② `peft` 因為 `torchaudio` 而完全無法匯入
@@ -184,11 +184,11 @@ peft 完全無法匯入 —— 即使你根本不用音訊
 > 所以 `torch 2.14.1+cu132` 配 `torchaudio 2.11.0+cu130` **不是「裝錯」，而是「只能這樣裝」**。
 > 想兩邊都對，唯一的路是把 **torch 降回 `2.14.1+cu130`**（torch 確實有 cu130 建置）。
 
-#### ③ 講義用兩頁教 Streaming，三個 Lab 一次都沒用
+#### ③ 教材用兩頁教 Streaming，三個 Lab 一次都沒用
 
 | 做法 | 取得第 1 筆 | 再取 200 筆 | 快取增量 |
 |---|---|---|---|
-| 完整下載（原稿寫法） | **12.58 秒** | — | **+235 MB** |
+| 完整下載（教材寫法） | **12.58 秒** | — | **+235 MB** |
 | **串流 `streaming=True`** | 6.162 秒 | **0.002 秒** | **0 MB** |
 
 而且**串流回傳的是 `IterableDataset`**——不能用 `len()`、不能索引、不能用 `select()`。
@@ -197,7 +197,7 @@ peft 完全無法匯入 —— 即使你根本不用音訊
 
 ## ⚠️ 過時資訊更正（2026-10 實查）
 
-除了原稿本身的缺陷，教材與網路教學裡還有一批**已過時的資訊**。我把每一項都查證後更正：
+除了教材本身的問題，教材與網路教學裡還有一批**已過時的資訊**。我把每一項都查證後更正：
 
 | # | 原本寫的 | **實查結果** | 位置 |
 |---|---|---|---|
@@ -215,12 +215,12 @@ peft 完全無法匯入 —— 即使你根本不用音訊
 **① Model Hub 的模型數差了近一個數量級**
 
 ```
-原稿（教材撰寫時）  : 300k+ models
+教材（撰寫時）  : 300k+ models
 2026-10 實查       : 2M+ models      ← 約 6.7 倍
                     500k+ datasets
 ```
 
-> **考試怎麼答？** 題目問「原稿說有多少模型」→ **答 300k+**（考的是教材）。
+> **考試怎麼答？** 題目問「教材說有多少模型」→ **答 300k+**（考的是教材）。
 > 但你要知道**實際已經超過 200 萬**。
 
 **② `hf cache scan` 是錯的指令**
@@ -260,14 +260,14 @@ hf cache scan       # ❌ 沒有這個子指令
 | forward ＋ backward | **0.035 秒** |
 | `google/vit-base-patch16-224` 載入 | **16.0 秒** |
 | ViT 模型類別 | **`ViTForImageClassification`**（不是 DeiT） |
-| 原稿裁切圖的預測 | **`book jacket 12.9%`**（失敗） |
-| AST 音訊分類 | **`Ding 55.9%`**（與原稿 56% 一致） |
+| 教材裁切圖的預測 | **`book jacket 12.9%`**（失敗） |
+| AST 音訊分類 | **`Ding 55.9%`**（與教材 56% 一致） |
 | wav2vec2 ASR 對同一段正弦 | **`{'text': ''}`**（空字串） |
 | AG News | **120,000 筆、4 類** |
 | Tiny ImageNet（clean） | **98,179 筆** |
 | 快取增量 | **1.9 MB → 237.0 MB** |
 
-> ✅ **三個 Lab 的技術內容全部可複現**——原稿的數字在本機一字不差。
+> ✅ **三個 Lab 的技術內容全部可複現**——教材的數字在本機一字不差。
 > 問題不在程式能不能跑，而在**註解與示範的教學品質**。
 
 ---
@@ -286,11 +286,11 @@ hf cache scan       # ❌ 沒有這個子指令
 
 1. 先讀 §1–§5（定位與三層架構），建立整體座標
 2. 讀 §6–§11（Hub 與 Transformers Library）
-3. 讀 §12–§15（Datasets：Streaming／Caching／Preprocessing）——**這三節原稿講了但 Lab 沒做**
+3. 讀 §12–§15（Datasets：Streaming／Caching／Preprocessing）——**這三節教材講了但 Lab 沒做**
 4. **重點複習 §16–§20（三種 Tokenizer）**，這是考題最密集的區域
 5. 讀 §21–§25（Diffusers、PEFT、LoRA、QLoRA、Adapters）
 6. 讀 §26–§34（部署工具鏈與收尾）
-7. 進 Lab：§36–§41，**邊讀邊對照原稿的缺陷**
+7. 進 Lab：§36–§41，**邊讀邊對照教材的缺陷**
 8. 找個安靜的 75 分鐘，完整做一次**附錄 F 的 60 題線上互動測驗**
 9. 考前 10 分鐘只看**附錄 E 一頁精華**
 

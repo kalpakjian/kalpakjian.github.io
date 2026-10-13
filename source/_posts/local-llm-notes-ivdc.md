@@ -24,13 +24,13 @@ archive: true
 
 IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 — Local LLM Apps** 的完整學習筆記。
 
-這一課的主題很單純：**把 LLM 裝在自己的電腦上跑**。講義用四個桌面應用程式走完一遍——LM Studio、Ollama、AnythingLLM、GPT4All——然後課程附的 Lab 資料夾再把同一件事**用程式重做一次**。
+這一課的主題很單純：**把 LLM 裝在自己的電腦上跑**。教材用四個桌面應用程式走完一遍——LM Studio、Ollama、AnythingLLM、GPT4All——然後課程附的 Lab 資料夾再把同一件事**用程式重做一次**。
 
 <!-- more -->
 
 ## 這份筆記有什麼
 
-- **講義 44 頁逐頁重寫**，順序與原稿一致。⚠️ 但原稿 **43 頁是純截圖**（全份文字層只有約 2,705 字元），
+- **教材 44 頁逐頁重寫**。⚠️ 但教材 **43 頁是純截圖**（全份文字層只有約 2,705 字元），
   所以筆記逐頁補上「**這一步在做什麼、為什麼**」，並在每節標明對應的 PDF 頁碼
 - **四個 App 完整拆解**：
   - **LM Studio**：下載 → 首跑引導 → **GPU Offload 與 Context Length** → 從 Hugging Face 抓 GGUF → 附加檔案問答
@@ -57,11 +57,11 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 —
 | 8 | LM Studio：換模型（從 Hugging Face 直接抓） | p12–p14 |
 | 9 | LM Studio：上傳檔案並提問（本機 RAG 的第一次現身） | p16 |
 | 10 | Ollama：下載與安裝 | p18–p19 |
-| 11 | Ollama：模型選擇表（原稿唯一的實質內容頁） | p20 |
+| 11 | Ollama：模型選擇表（教材唯一的實質內容頁） | p20 |
 | 12 | Ollama：`ollama run` 安裝模型與對話 | p21–p24 |
 | 13 | Ollama：`ollama list`、`ollama serve` 與埠號 | p25–p26 |
 | 14 | `testollama.py` 逐行拆解 | `testollama.py` |
-| 15 | ⚠️ 原稿把 LLM 輸出硬轉成 tensor 的問題 | `testollama.py` |
+| 15 | ⚠️ 教材把 LLM 輸出硬轉成 tensor 的問題 | `testollama.py` |
 | 16 | AnythingLLM：安裝與歡迎頁 | p27–p30 |
 | 17 | AnythingLLM：選擇 LLM 模型與換模型 | p31–p34 |
 | 18 | AnythingLLM：提問 | p35 |
@@ -96,7 +96,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 —
 **🖱️ [開始 60 題線上測驗](/local-llm-notes/mc-quiz.html)**
 
 - 60 題單選、滿分 60 分、建議 75 分鐘
-- 分五個部分各 12 題、依講義與 Lab 順序排列
+- 分五個部分各 12 題、依教材與 Lab 順序排列
 - 答案分佈刻意打散（A/B/C/D 各 15 題）
 - 點選即時計分、進度存在 localStorage、可切換「只看未答／只看答錯」
 
@@ -111,16 +111,16 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 —
 
 ---
 
-## ⚠️ 這份筆記最有價值的部分：原稿的 14 個真實缺陷
+## ⚠️ 這份筆記最有價值的部分：14 個實作陷阱與教材勘誤
 
-照著原稿做**會直接失敗**的地方，筆記全部標出來了：
+照著教材做**會直接失敗**的地方，筆記全部標出來了：
 
 | 位置 | 缺陷 |
 |---|---|
-| **`testollama.py`** | 寫死 **`"model": "llama3"`**——**不在講義自己的模型表裡**，照著做一定 **404** |
+| **`testollama.py`** | 寫死 **`"model": "llama3"`**——**不在教材自己的模型表裡**，照著做一定 **404** |
 | **`LangIndex.ipynb`** | 把**真實可用的 Groq API key 寫死在程式碼裡**；而且**沒有那把 key 的學員根本跑不動** |
 | **`train.jsonl`** | **73 行全部相同**（唯一樣本數 ＝ 1），樣本本身還是佔位字串 |
-| **`train.py`** | 講義教 **LoRA**，但腳本實際是**全參數微調**，**完全沒有使用 `peft`** |
+| **`train.py`** | 教材教 **LoRA**，但腳本實際是**全參數微調**，**完全沒有使用 `peft`** |
 | **`Modelfile`** | **`TEMPLATE {{ .Prompt }}`** 沒有角色標記 → `/api/chat` 送進去的 `messages` 被丟掉 |
 | **`RAG.ipynb`** | **`max_length`** 誤用（它是輸入＋輸出的總長，應改用 `max_new_tokens`） |
 | **`testollama.py`** | `torch.tensor([ord(c)…])` 是**假嵌入**，只是 ASCII 碼、沒有語意 |
@@ -142,7 +142,7 @@ from llama_index.llms.ollama import Ollama
 
 Settings.llm = Ollama(
     model="llama3.2:1b",
-    base_url="http://127.0.0.1:11434",   # 講義說「可能要改 port」就是改這個
+    base_url="http://127.0.0.1:11434",   # 教材說「可能要改 port」就是改這個
     request_timeout=180.0,
 )
 Settings.embed_model = HuggingFaceEmbedding(
@@ -192,7 +192,7 @@ sources: [{'topic': 'overview'}, {'topic': 'RAG'}]
 ## 建議使用順序
 
 1. 先讀 §1–§4（定位、為什麼跑本機、GGUF 與量化），建立整體座標
-2. 依原稿順序讀 §5–§22，**四個 App 都動手裝一次**
+2. 依教材順序讀 §5–§22，**四個 App 都動手裝一次**
 3. 讀 §23–§24（對照表與決策樹），確認自己該用哪一個
 4. 進 Lab：§25–§31，**把 `app_web.py` 跑起來、把 RAG 管線看懂**
 5. 讀 §32–§34（LoRA／微調／轉 GGUF），理解「自己造模型」的完整鏈路

@@ -379,7 +379,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#19-check-gpu">19. Check GPU</a>
 <ul>
-<li><a href="#191-原稿程式碼實測通過">19.1 原稿程式碼（實測通過）</a>
+<li><a href="#191-教材程式碼實測通過">19.1 教材程式碼（實測通過）</a>
 </li>
 <li><a href="#192-更完整的檢查">19.2 更完整的檢查</a>
 </li>
@@ -449,8 +449,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <p>課程：Certificate in Application of Computer Vision Technology (Part-time)
 機構：匯縱專業發展中心（IVDC）
 教材來源：<code>IVDC_Using Local GPU for ML.pptx</code> → PDF（26 頁）
-本筆記按 PDF 原稿每一個標題逐一填充內容，並補上實際指令、版本對照、常見錯誤、模擬試題。
-原稿為<strong>安裝步驟截圖</strong>（文字極少）；本筆記把每一步補上「要做什麼、用什麼指令、如何驗證」。
+本筆記依課程大綱每一個標題逐一填充內容，並補上實際指令、版本對照、常見錯誤、模擬試題。
+教材為<strong>安裝步驟截圖</strong>（文字極少）；本筆記把每一步補上「要做什麼、用什麼指令、如何驗證」。
 本機實測環境（Windows）：<strong>RTX 4090 / 驅動 617.42 / CUDA 13.4 / PyTorch 2.14.1+cu132</strong>。
 🖱️ <strong>互動測驗（推薦）</strong>：附錄 F 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
 </blockquote>
@@ -1202,8 +1202,8 @@ python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;i
 </blockquote>
 <hr>
 <h2 id="19-check-gpu">19. Check GPU</h2>
-<p><strong>目的</strong>：用 PyTorch 確認 GPU 是否真的可用（<strong>本章是原稿唯一的程式碼</strong>，p25）。</p>
-<h3 id="191-原稿程式碼實測通過">19.1 原稿程式碼（實測通過）</h3>
+<p><strong>目的</strong>：用 PyTorch 確認 GPU 是否真的可用（<strong>本章是教材唯一的程式碼</strong>，p25）。</p>
+<h3 id="191-教材程式碼實測通過">19.1 教材程式碼（實測通過）</h3>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
     <span class="c1"># Get the number of available GPUs</span>
@@ -1680,7 +1680,7 @@ device name    : NVIDIA GeForce RTX 4090
 </tbody>
 </table>
 <blockquote>
-<p>說明：原稿幾乎每頁都是<strong>安裝精靈截圖</strong>，只有 <strong>p25</strong> 含實際程式碼（PyTorch GPU 檢查）；
+<p>說明：教材幾乎每頁都是<strong>安裝精靈截圖</strong>，只有 <strong>p25</strong> 含實際程式碼（PyTorch GPU 檢查）；
 本筆記把每一步補上「目的、指令、驗證方式」，讓沒有截圖也能照著做。</p>
 </blockquote>
 <hr>
@@ -1761,7 +1761,7 @@ device name    : NVIDIA GeForce RTX 4090
   nvcc --version        → 已裝的 CUDA Toolkit 版本
   conda --version       → conda 是否可用
 
-【PyTorch GPU 檢查（p25 原稿程式碼）】
+【PyTorch GPU 檢查（p25 教材程式碼）】
   import torch
   if torch.cuda.is_available():
       print(torch.cuda.device_count()); print(torch.cuda.get_device_name())

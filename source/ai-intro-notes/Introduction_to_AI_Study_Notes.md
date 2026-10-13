@@ -3,8 +3,8 @@
 > 課程：Certificate in Application of Computer Vision Technology (Part-time)
 > 機構：匯縱專業發展中心（IVDC）
 > 教材來源：`1 IVDC_Introduction to AI (icebreaking).pptx` → PDF（34 頁）
-> 本筆記按 PDF 原稿每一個標題逐一填充內容，並補上定義、參數、常見錯誤、模擬試題。
-> 原稿多為投影片圖示，文字較少；本筆記補上「圖示背後的概念」與「考點」，方便理解與應試。
+> 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、參數、常見錯誤、模擬試題。
+> 教材多為投影片圖示，文字較少；本筆記補上「圖示背後的概念」與「考點」，方便理解與應試。
 > 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
@@ -70,7 +70,7 @@ AI = 具人類式智慧的「機器智慧」
 **Artificial Intelligence（人工智慧）** 的通用理論是：AI 擁有**類人的智慧（human-like intelligence）**，
 但本質上是**機器智慧（machine intelligence）** —— 智慧由機器展現，而不是人。
 
-原稿（p5–6）把 AI 的取徑分成兩大類、共四種：
+教材（p5–6）把 AI 的取徑分成兩大類、共四種：
 
 | 取徑 | 思考 | 行動 |
 |------|------|------|
@@ -85,7 +85,7 @@ AI = 具人類式智慧的「機器智慧」
 
 ### 1.1 開場破冰（p2–4）：生活裡的 AI
 
-原稿用生活情境提問：
+教材用生活情境提問：
 
 - 「你喜歡用 App 在餐廳點餐嗎？當中有沒有 AI？」
 - 「Can Machines Think more than us?」（機器能比我們想得更多嗎？）
@@ -98,7 +98,7 @@ AI = 具人類式智慧的「機器智慧」
 
 ## 2. AI 的子目標（Sub-objectives of AI）
 
-原稿 p8 用一張圖把 AI 拆成 5 個子目標：
+教材 p8 用一張圖把 AI 拆成 5 個子目標：
 
 | 子目標 | 英文 | 說明 | 例子 |
 |--------|------|------|------|
@@ -115,7 +115,7 @@ AI = 具人類式智慧的「機器智慧」
 
 ## 3. AI 應用與例子
 
-原稿 p9 把應用分成三大類，逐項列出：
+教材 p9 把應用分成三大類，逐項列出：
 
 ### 3.1 電子商務 E-Commerce
 
@@ -143,7 +143,7 @@ AI = 具人類式智慧的「機器智慧」
 
 ## 4. 異常偵測 Anomaly Detection
 
-原稿 p10 只有標題「Anomaly Detection」與一張示意圖。**異常偵測**是指找出**不符合預期模式**的資料點
+教材 p10 只有標題「Anomaly Detection」與一張示意圖。**異常偵測**是指找出**不符合預期模式**的資料點
 （outlier），是 AI 在工業、金融、資安上的核心應用之一。
 
 | 項目 | 內容 |
@@ -160,7 +160,7 @@ AI = 具人類式智慧的「機器智慧」
 
 ## 5. 影像／視訊辨識 Image/Video Recognition
 
-原稿 p11–12 的定義重點：
+教材 p11–12 的定義重點：
 
 > 機器用**電腦視覺（computer vision）**辨識影像中的人、地、物，**準確度可達或超越人類水準**，
 > 而且**速度與效率遠勝人類**。透過複雜的 AI 技術，電腦視覺把影像資料自動化地
@@ -187,7 +187,7 @@ AI = 具人類式智慧的「機器智慧」
 
 ## 6. 人臉辨識 Facial Recognition
 
-原稿 p13–15 是重點章節，明確指出人臉辨識**分三個步驟**：
+教材 p13–15 是重點章節，明確指出人臉辨識**分三個步驟**：
 
 ```
 Detection（偵測） → Analysis（分析） → Recognition（辨識）
@@ -231,7 +231,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ### 7.1 NLP 要解決的三件事（p17）
 
-原稿用三個問題概括 NLP：
+教材用三個問題概括 NLP：
 
 1. **How to speak a language** —— 如何「講」一種語言（語言生成）。
 2. **How to understand a language** —— 如何「聽懂」一種語言（語言理解）。
@@ -241,7 +241,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ### 7.2 語音辨識的模型：Hidden Markov Model（p18–19）
 
-原稿指出：**大多數現代語音辨識系統依賴 Hidden Markov Model（HMM，隱馬可夫模型）**。
+教材指出：**大多數現代語音辨識系統依賴 Hidden Markov Model（HMM，隱馬可夫模型）**。
 
 - **核心假設**：一段語音訊號，若用**足夠短的時間尺度**觀察（例如 **10 毫秒**），
   可以合理地近似為一個**平穩過程（stationary process）** ——
@@ -262,14 +262,14 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ### 7.3 語意／詞向量（p21，見第 8 節）
 
-原稿 p21 用一組詞示範語意關係：**King、Queen、Man、Woman、Royal**，
+教材 p21 用一組詞示範語意關係：**King、Queen、Man、Woman、Royal**，
 並標示兩個語意維度：**Natural Understanding** 與 **Gender**。
 這是**詞向量（word embedding）**的經典示意：語意相近的詞在向量空間中距離相近，
 並可表現如「King − Man + Woman ≈ Queen」的類比關係（詳見第 8.1 節）。
 
 ### 7.4 延伸資源（p26）
 
-- 原稿提供探索 NLP 的官方連結：`https://aka.ms/explore-nlp`
+- 教材提供探索 NLP 的官方連結：`https://aka.ms/explore-nlp`
 
 > **考點**：NLP 三個問題（speak / understand / make sense）＋ HMM 假設（10ms 平穩）是本章重點。
 
@@ -279,7 +279,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ### 8.1 語意理解示意（p21）
 
-原稿以 **King / Queen / Man / Woman / Royal** 呈現兩個維度：
+教材以 **King / Queen / Man / Woman / Royal** 呈現兩個維度：
 
 | 維度 | 說明 |
 |------|------|
@@ -291,7 +291,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ### 8.2 訓練資料偏頗問題（p27）——本章最重要
 
-原稿指出語音辨識的一大挑戰是**訓練模型（training model）**：
+教材指出語音辨識的一大挑戰是**訓練模型（training model）**：
 
 - **大部分訓練資料需要人手分類（manually classified）**。
 - 結果：**高準確率往往只在一小群特定說話者上達成**（而這群人往往正是最有價值的消費者）。
@@ -315,7 +315,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ## 9. 強化學習 Reinforcement Learning
 
-原稿 p29–33 聚焦「**Reinforcement Learning in Robotic Control and Self-Driving**」
+教材 p29–33 聚焦「**Reinforcement Learning in Robotic Control and Self-Driving**」
 （強化學習在機械人控制與自動駕駛的應用）。
 
 ### 9.1 要解決的問題（p29）
@@ -361,7 +361,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ## 10. 生成式 AI Generative AI
 
-原稿 p34 給出定義：
+教材 p34 給出定義：
 
 > **Generative AI（生成式 AI）** 指的是人工智慧中專注於**建立能生成新內容的模型或系統**的領域，
 > 生成的內容例如**圖像、文字、音樂，甚至影片**。這些模型使用**機器學習技術，特別是深度學習（deep learning）**，
@@ -512,14 +512,14 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 | 33 | Reinforcement Learning — 應用（AlphaGo） | 第 9.3 節 |
 | 34 | Generative AI — 定義 | 第 10 節 |
 
-> 說明：原稿有多頁為純圖片／示意圖（如 p3、p16、p20、p22–25、p28、p30–31），
+> 說明：教材有多頁為純圖片／示意圖（如 p3、p16、p20、p22–25、p28、p30–31），
 > 這些頁面在筆記中對應到所屬章節的概念補充，不另設小節。
 
 ---
 
 ## 附錄 D：延伸資源與離線提示
 
-### D.1 原稿提供的連結
+### D.1 教材提供的連結
 
 | 資源 | 連結 |
 |------|------|

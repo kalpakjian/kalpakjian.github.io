@@ -3,7 +3,7 @@
 > 課程：Certificate in Application of Computer Vision Technology (Part-time)
 > 機構：匯縱專業發展中心（IVDC）
 > 教材來源：`3 IVDC OpenCV.pdf`（29 頁）
-> 本筆記按 PDF 原稿每一個標題逐一填充內容，並補上 API 簽名、參數說明、常見錯誤、模擬試題。
+> 本筆記依課程大綱每一個標題逐一填充內容，並補上 API 簽名、參數說明、常見錯誤、模擬試題。
 > 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
@@ -2367,7 +2367,7 @@ ORB 配 Hamming、SIFT 配 L2
 
 ---
 
-*本學習筆記依據 `3 IVDC OpenCV.pdf`（29 頁）編寫，涵蓋原稿全部標題與程式範例，並補充 API 參數、常見錯誤與模擬試題。*
+*本學習筆記依據 `3 IVDC OpenCV.pdf`（29 頁）編寫，涵蓋教材全部標題與程式範例，並補充 API 參數、常見錯誤與模擬試題。*
 *模擬試題為附錄 F 的線上互動測驗（60 題）。*
 *所有程式碼已於本機 OpenCV 5.0.0 / NumPy 2.4.6 / Matplotlib 3.11.2 環境實測通過。*
 
