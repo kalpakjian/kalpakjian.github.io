@@ -24,8 +24,8 @@ date: 2026-10-13 09:00:00
 | **Lesson 5** | Prompt Engineering | ✅ [Prompt Engineering 學習筆記](/prompt-engineering-notes/) |
 | **Lesson 6** | Hugging Face for LLM | ⏳ 待補 |
 | **Lesson 7** | Local LLM Apps | ⏳ 待補 |
-| **Lesson 8** | LiteLLM | ⏳ 待補 |
-| **Lesson 9** | Streamlit and Flask | ⏳ 待補 |
+| **Lesson 8** | LiteLLM | ✅ [LiteLLM 學習筆記](/litellm-notes/) |
+| **Lesson 9** | Streamlit and Flask | ✅ [Streamlit and Flask 學習筆記](/streamlit-flask-notes/) |
 | **Lesson 10** | Exam | — |
 
 > 📌 **Lesson 1 與 Lesson 2 的前半（Using Local GPU for ML）** 與
@@ -61,6 +61,39 @@ date: 2026-10-13 09:00:00
   筆記逐題保留這個對照，並補上**可直接複製的 prompt 範本**與「**易混淆技術對照表**」（CoT vs ToT vs PAL vs ReAct、CAI vs RLHF…）
 - 另有 **38 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
 - **👉 [看筆記](/prompt-engineering-notes/)** ｜ [互動測驗 60 題](/prompt-engineering-notes/mc-quiz.html)
+
+---
+
+## 3 · Lesson 8 — LiteLLM
+
+![LiteLLM 學習筆記](/img/covers/litellm-notes-ivdc.png)
+
+- **涵蓋**：原稿 **18 格 notebook ＋ `lite.py`**、**22 個章節**——從 LiteLLM 的定位（**用 OpenAI chat 格式統一呼叫 146 個供應商**）、安裝與 API Key 管理，到原稿的五個供應商呼叫逐一拆解：
+  - **五大供應商**：ChatGPT（`gpt-3.5-turbo`）／Claude-2（`claude-2`）／llama2 on Replicate（含 64 字元版本雜湊）／Command-Nightly（Cohere）／Azure OpenAI（`azure/` 前綴與 deployment-id）
+  - **本機模型**：`lite.py` 逐行拆解——`api_base` 為什麼是「critical for local Ollama」、`temperature=0` 與 `top_p=1` 的意義
+  - **補充章節**：模型命名規則與前綴總表、統一 I/O 契約、`messages` 三種角色、參數速查、串流輸出、例外類別、能力查詢、Token 計數、成本追蹤、Router／Fallbacks、LiteLLM Proxy
+- **特別之處**：所有程式碼都在本機實測（litellm 1.91.2／openai 2.24.0／Ollama `smollm`），並把**「原稿當時正確、現在已失效」的三個落差**標出來：
+  - `completion(model="claude-2", ...)` 在 1.91.2 會丟 `BadRequestError`，必須改 `anthropic/claude-2`
+  - 原稿寫「50+ LLM APIs」，實測 `provider_list` 已有 **146** 個
+  - 原稿用 `OpenAIObject` 描述回應，現為 LiteLLM 的 **`ModelResponse`**
+- 另有 **22 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **👉 [看筆記](/litellm-notes/)** ｜ [互動測驗 60 題](/litellm-notes/mc-quiz.html)
+
+---
+
+## 4 · Lesson 9 — Streamlit and Flask
+
+![Streamlit and Flask 學習筆記](/img/covers/streamlit-flask-notes-ivdc.png)
+
+- **涵蓋**：原稿 `server.py`（12 行）＋ `app.py`（46 行）＋ `README.md`／`ReadMe.txt`、**22 個章節**——把三課串成一條線：
+  - **Flask 後端**：微框架、`@app.route` 與 `methods`（不寫就只有 GET）、`request.get_json()`、`jsonify()` 的中文編碼、400／404／405／415／500 六個狀態碼
+  - **測試**：`test_client`（不開埠號）與 `requests`／`curl`（真實網路）三種方式的取捨
+  - **Streamlit 前端**：**每次互動重跑整支腳本**（最重要的觀念）、`st.session_state` 與 `@st.cache_data`、常用元件、`st.button` 的事件機制、label 重複陷阱
+  - **整合**：`app.py` 的**兩個獨立區塊**——區塊 1 走 Flask、區塊 2 直連 LiteLLM→Ollama；啟動順序與三個埠號（5000／8501／11434）
+- **特別之處**：找出原稿裡**會直接讓使用者看到 500 錯誤的三個真實缺陷**並給出正確改法，
+  其中最關鍵的是 **`dict.get(k, default)` 的 `default` 只在 key 不存在時生效**——所以 `{"name": null}` 會回出 `"Hello, None ..."`
+- 另有 **22 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **👉 [看筆記](/streamlit-flask-notes/)** ｜ [互動測驗 60 題](/streamlit-flask-notes/mc-quiz.html)
 
 ---
 
