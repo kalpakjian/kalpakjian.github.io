@@ -336,7 +336,7 @@ tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
 | **datasets** | Dataset Hub | §8 |
 | **demos** | **Spaces**（免費託管 Gradio／Streamlit App） | §9 |
 
-> 💡 **考點**：`demos` 這個字對應的是 **Spaces**，不是「範例程式碼」。這是本節用詞容易誤解的地方。
+> 💡 **考點**：`demos` 這個字對應的是 **Spaces**，不是「範例程式碼」。這是課程用詞容易誤解的地方。
 
 ### 4.4 「Central platform for modern AI development」的實際意義
 
@@ -401,7 +401,7 @@ tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
 | ② Core Libraries | Transformers Library、Datasets Library、Tokenizers、Diffusers、PEFT |
 | ③ Inference & Deployment | Accelerate、Optimum、Text Generation Inference、Inference Endpoints、Safetensors、huggingface_hub SDK |
 
-> 💡 **考點**：本節只列了三層的**名字**，沒有列出成員。考試常考「**某個套件屬於哪一層**」——
+> 💡 **考點**：課程只列了三層的**名字**，沒有列出成員。考試常考「**某個套件屬於哪一層**」——
 > 例如 **`safetensors` 屬於第 ③ 層**（部署用的權重格式），不是第 ② 層；
 > **`peft` 屬於第 ② 層**（在程式裡做微調）。
 
@@ -1170,7 +1170,7 @@ ds = load_dataset("fancyzhx/ag_news", split="train",
                   revision="eb185aade064a813bc0b7f42de02595523103ca4")
 ```
 
-> **教學點**：本節說快取「**Version-aware: tracks dataset revisions**」。
+> **教學點**：課程說快取「**Version-aware: tracks dataset revisions**」。
 > 這代表**同一份資料集在不同時間可能載入到不同內容**——除非你鎖定 `revision`。
 > 論文與正式專案應該鎖 commit hash。
 
@@ -2066,7 +2066,7 @@ B: 8 × 4096
 > ⚠️ **拼字缺陷**：`matrics` 應為 **`matrices`**。
 > 這與 Lesson 7 §32 抓到的是**同一個檔案、同一個錯字**（兩課共用 `LoRA.txt`）。
 
-### 23.4 本機實測：與本節完全一致的數字
+### 23.4 本機實測：與課程完全一致的數字
 
 用 `distilgpt2` ＋ `LoraConfig(r=8, lora_alpha=16, target_modules=["c_attn"], lora_dropout=0.1, bias="none", task_type="CAUSAL_LM")`：
 
@@ -2097,7 +2097,7 @@ After PEFT
 | 參數 | 意義 | 典型值 |
 |---|---|---|
 | **`r`** | 低秩的秩（越大容量越大） | **8**／16／32 |
-| **`lora_alpha`** | 縮放係數 | 通常 `2r`（本節 r=8 → alpha=16） |
+| **`lora_alpha`** | 縮放係數 | 通常 `2r`（r=8 → alpha=16） |
 | **`lora_dropout`** | dropout 機率 | 0.1 |
 | **`target_modules`** | **要加在哪幾層** | **依模型架構而異** ⚠️ |
 | **`bias`** | 是否訓練 bias | `"none"` |
@@ -2156,7 +2156,7 @@ generate: 0.21 s
 ```
 
 > **教學點**：`loss = 6.1742` 是**未經訓練**的水準。
-> 本節把「套上 LoRA 後參數量變少」當成「微調完成」，**這是概念上的誤導**——
+> 課程把「套上 LoRA 後參數量變少」當成「微調完成」，**這是概念上的誤導**——
 > 套上 LoRA 只是「**準備好可以微調**」，離「微調完成」還差整個訓練迴圈。
 
 ### 23.8 考點整理
@@ -2212,7 +2212,7 @@ generate: 0.21 s
 | 訓練速度 | 較快 | 較慢（需反量化） |
 
 > 💡 **考點**：**QLoRA 的關鍵是「基礎模型 4-bit、adapter 16-bit」的混合精度。**
-> 本節第 2 條 bullet「Still achieves high accuracy because LoRA adapters remain in 16-bit」
+> 課程第 2 條 bullet「Still achieves high accuracy because LoRA adapters remain in 16-bit」
 > 就是這個意思——**量化的是被凍結的 `W`，不是被訓練的 `A`、`B`**。
 
 ### 24.2 兩個關鍵技術
@@ -2304,7 +2304,7 @@ model = get_peft_model(model, LoraConfig(r=16, lora_alpha=32, task_type="CAUSAL_
 | **訓練** | **只訓練這些小模組**，原模型凍結 |
 | **推論** | 模組會**留在模型裡**（不像 LoRA 可以合併回權重） |
 
-### 25.2 Adapter 與 LoRA 的關係（本節最重要的一句）
+### 25.2 Adapter 與 LoRA 的關係（最重要的一句）
 
 本節最後寫：
 
@@ -3403,7 +3403,7 @@ https://live-production.wcms.abc-cdn.net.au/83da7a8cc3fd6519fabf7cebdb11a12d
 **這是一個明顯失敗的預測**：
 - `book jacket`（書衣）、`vestment`（法衣）、`overskirt`（罩裙）——**都不是畫作**
 - **最高信心度只有 12.9%**（模型幾乎等於在亂猜）
-- 本節把這個結果**原封不動貼出來，不加任何說明**
+- 課程把這個結果**原封不動貼出來，不加任何說明**
 
 **補做實驗：換成置中正方形裁切**
 
@@ -3470,7 +3470,7 @@ pipeline("audio-classification", model="MIT/ast-finetuned-audioset-10-10-0.4593"
 ```
 
 > ⚠️ **注意**：**輸出是空字串**——因為 1 kHz 正弦**不是語音**，ASR 沒東西可轉。
-> 這反過來證明了：**本節用合成正弦當「speech-like」是錯的**（見 §36.4）。
+> 這反過來證明了：**課程用合成正弦當「speech-like」是錯的**（見 §36.4）。
 
 ### 37.4 三個缺陷總表
 
@@ -3655,7 +3655,7 @@ output: "The Hugging Face Hub is a great way to get your hands on a new face.
 
 > ⚠️ **重要提醒**：`loss = 6.1742` 是**未經訓練**的水準；
 > 生成的文字也是**未微調的 distilgpt2** 的原始行為（會鬼打牆重複）。
-> **本節把「套上 LoRA」當成「完成微調」是概念錯誤**——
+> **課程把「套上 LoRA」當成「完成微調」是概念錯誤**——
 > 套上 LoRA 只是**準備好可以微調**。
 
 ### 38.6 ⚠️ 模型選擇與本節論述不符
@@ -3873,7 +3873,7 @@ python -m pip uninstall -y torchaudio
 | **觸發條件** | 換成非 GPT-2 架構 | **本機環境 torchaudio 版本不符** |
 | **錯誤訊息** | `Target modules {'c_attn'} not found` | `Could not import module 'BloomPreTrainedModel'` |
 | **訊息準確度** | ✅ 尚可（有指出模組名） | ❌ **完全誤導** |
-| **本節是否提到** | ❌ 沒有 | ❌ 沒有（Colab 環境沒這個問題） |
+| **課程是否提到** | ❌ 沒有 | ❌ 沒有（Colab 環境沒這個問題） |
 | **對學員的影響** | 換大模型就爆 | **完全無法開始** |
 
 ### 39.4 這一節的考點
@@ -3948,7 +3948,7 @@ small[0] = {'text': 'Wall St. Bears Claw Back Into the Black (Reuters) Reuters -
 | **`select(range(32))`** | zero-copy view，**不複製資料** |
 
 > 💡 **考點**：**AG News 是 4 分類（World／Sports／Business／Sci-Tech）、12 萬筆訓練資料。**
-> 本節只取前 32 筆，`label: 2` 對應 **Business**（因為那則是華爾街新聞）。
+> 課程只取前 32 筆，`label: 2` 對應 **Business**（因為那則是華爾街新聞）。
 
 ### 40.2 cell[1]：Tiny ImageNet 影像資料集
 
@@ -4062,7 +4062,7 @@ shuffled = img_ds.shuffle(seed=42)
 | **所以 `# Fish` 是對的** | tench 確實是魚 |
 | **但 `label != 0` 不等於「非魚」** | ImageNet-1k 裡還有很多其他魚類 |
 
-> ⚠️ **精確度問題**：本節寫 `# Not fish` 是**不準確的**——
+> ⚠️ **精確度問題**：課程寫 `# Not fish` 是**不準確的**——
 > 正確說法是「**不是 tench（class 0）**」。本機實測顯示 index 500–505 的 label 是
 > **1**，對應 ImageNet-1k 的 **goldfish**（金魚）——**那也是魚**。
 
@@ -4186,7 +4186,7 @@ Repository id must be 'namespace/name', got 'ag_news'.
 | 事實 | 說明 |
 |---|---|
 | **`datasets 5.0.0` 要求 `namespace/name`** | 舊教學的 `load_dataset("ag_news")` 已失效 |
-| **本節用 `fancyzhx/ag_news` 反而正確** | 有 namespace，所以能跑 |
+| **用 `fancyzhx/ag_news` 反而正確** | 有 namespace，所以能跑 |
 | **錯誤訊息透露內部 URI** | `hf://datasets/...` 顯示了 Dataset Hub 的解析方式 |
 
 > 💡 **考點**：**這個錯誤訊息本身就是考點**——
@@ -4480,7 +4480,7 @@ Setting fan_in_fan_out to True.
 | **`load_dataset` 的 repo id 格式？** | **必須 `namespace/name`** |
 | **`peft` 匯入失敗的根因？** | **`torchaudio` CUDA 版本不符**（不是 Bloom） |
 | **Model Card 是什麼檔案？** | **repo 裡的 `README.md`**（含 YAML frontmatter） |
-| **本節說 Model Hub 有多少模型？實況呢？** | **本節 300k+**；**2026-10 實查已 2M+**（Datasets 500k+） |
+| **課程說 Model Hub 有多少模型？實況呢？** | **課程 300k+**；**2026-10 實查已 2M+**（Datasets 500k+） |
 | **`hf cache` 的子指令？** | **`list`／`prune`／`rm`／`verify`**（**沒有 `scan`**） |
 | **`huggingface_hub` 最新版？** | **2.2.0**（本機實測用 1.24.0） |
 | **`torchaudio` 有 cu132 版嗎？** | **沒有**——最高只到 2.11.0+cu130 |
@@ -4750,7 +4750,7 @@ for m in ["torch", "transformers", "datasets", "peft", "tokenizers",
 | **題數** | **60 題**單選 |
 | **滿分** | 60 分 |
 | **建議時間** | **75 分鐘** |
-| **分布** | 五個部分各 12 題，依本節與 Lab 順序排列 |
+| **分布** | 五個部分各 12 題，依課程與 Lab 順序排列 |
 | **答案分布** | A／B／C／D 各 15 題 |
 | **功能** | 點選即時計分、進度存 localStorage、可切換「只看未答／只看答錯」、可列印 |
 
