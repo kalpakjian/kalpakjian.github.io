@@ -389,7 +389,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <ul>
 <li><a href="#131-一行開啟串流">13.1 一行開啟串流</a>
 </li>
-<li><a href="#132-最大落差本節專門教-streaminglab-卻完全沒用">13.2 ⚠️ 最大落差：本節專門教 Streaming，Lab 卻完全沒用</a>
+<li><a href="#132-最大落差課程專門教-streaminglab-卻完全沒用">13.2 ⚠️ 最大落差：課程專門教 Streaming，Lab 卻完全沒用</a>
 </li>
 <li><a href="#133-串流的適用場景">13.3 串流的適用場景</a>
 </li>
@@ -409,7 +409,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#144-可重現性快取-revision">14.4 可重現性：快取 ＋ revision</a>
 </li>
-<li><a href="#145-落差-說works-offline-once-cached但-lab-從未示範">14.5 ⚠️ 落差： 說「Works offline once cached」，但 Lab 從未示範</a>
+<li><a href="#145-落差課程說works-offline-once-cached但-lab-從未示範">14.5 ⚠️ 落差：課程說「Works offline once cached」，但 Lab 從未示範</a>
 </li>
 </ul>
 </li>
@@ -485,7 +485,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#195-兩種演算法bpe-vs-unigram">19.5 兩種演算法：BPE vs Unigram</a>
 </li>
-<li><a href="#196-與-p22-的說法不一致">19.6 ⚠️  與 p22 的說法不一致</a>
+<li><a href="#196-兩處的說法不一致">19.6 ⚠️ 兩處的說法不一致</a>
 </li>
 <li><a href="#197-考點整理">19.7 考點整理</a>
 </li>
@@ -887,7 +887,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 ⚠️ <strong>版本時效</strong>：以上是<strong>本機實測當時</strong>的版本（2026-10）。PyPI 上的最新版已經前進
 （<strong><code>huggingface_hub</code> 已到 2.2.0</strong>、<code>transformers</code> 已到 5.19.0、<code>peft</code> 已到 0.21.2），
 完整對照表見 <strong>§42.1</strong>。要完全重現本筆記的數字，請鎖定上述版號。
-⚠️ <strong>平台數字時效</strong>：本節說 Model Hub 有「<strong>300k+</strong> 模型」，<strong>2026-10 實查已達 <code>2M+</code></strong>（Datasets <code>500k+</code>）——
+⚠️ <strong>平台數字時效</strong>：課程標示 Model Hub 有「<strong>300k+</strong> 模型」，<strong>2026-10 實查已達 <code>2M+</code></strong>（Datasets <code>500k+</code>）——
 見 <strong>§7.4</strong>。
 🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
 </blockquote>
@@ -1343,7 +1343,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tbody>
 </table>
 <blockquote>
-<p>💡 <strong>考點</strong>：<strong>ViT 把影像當成「一串 patch token」處理</strong>——這是 2020 年 ViT 論文的關鍵洞見，也是Lab 的教學重點。
+<p>💡 <strong>考點</strong>：<strong>ViT 把影像當成「一串 patch token」處理</strong>——這是 2020 年 ViT 論文的關鍵洞見，也是 Lab 的教學重點。
 型號名稱 <code>vit-base-**patch16**-224</code> 直接編碼了參數：<strong>patch = 16×16、輸入 = 224×224</strong>。</p>
 </blockquote>
 <h3 id="23-為什麼這件事對-lesson-6-重要">2.3 為什麼這件事對 Lesson 6 重要</h3>
@@ -1415,7 +1415,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <tbody>
 <tr>
 <td><strong>統一倉庫</strong></td>
-<td>Model Hub（早期文件寫 30 萬++；<strong>2026-10 實查已 2M+</strong>）</td>
+<td>Model Hub（課程標示 30 萬+；<strong>2026-10 實查已 2M+</strong>）</td>
 <td>一個 <code>repo id</code> 就能定位任何模型</td>
 </tr>
 <tr>
@@ -1690,12 +1690,12 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tbody>
 </table>
 <blockquote>
-<p>💡 <strong>考點</strong>： 只列了三層的<strong>名字</strong>，沒有列出成員。考試常考「<strong>某個套件屬於哪一層</strong>」——
+<p>💡 <strong>考點</strong>：本節只列了三層的<strong>名字</strong>，沒有列出成員。考試常考「<strong>某個套件屬於哪一層</strong>」——
 例如 <strong><code>safetensors</code> 屬於第 ③ 層</strong>（部署用的權重格式），不是第 ② 層；
 <strong><code>peft</code> 屬於第 ② 層</strong>（在程式裡做微調）。</p>
 </blockquote>
 <h3 id="54-三層之外的第四個東西model-cards">5.4 三層之外的第四個東西：Model Cards</h3>
-<p>本節把 Model Cards 放在 屬於第 ③ 層附近，但嚴格說它是<strong>橫跨三層的文件規範</strong>：</p>
+<p>本節把 Model Cards 放在第 ③ 層附近，但嚴格說它是<strong>橫跨三層的文件規範</strong>：</p>
 <table>
 <thead>
 <tr>
@@ -1752,7 +1752,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <tbody>
 <tr>
 <td><strong>Model Hub</strong></td>
-<td>模型倉庫（早期文件寫 30 萬++；<strong>實查 2M+</strong>）</td>
+<td>模型倉庫（課程標示 30 萬+；<strong>實查 2M+</strong>）</td>
 <td>§7</td>
 </tr>
 <tr>
@@ -1855,7 +1855,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <blockquote>
 <p><strong>教學點</strong>：<code>datasets</code> 5.x 把 repo id <strong>強制要求 <code>namespace/name</code> 格式</strong>。
 舊教學文裡的 <code>load_dataset("ag_news")</code> 在新版本已經不能用了。
-這也是為什麼本節選社群鏡像 <code>fancyzhx/ag_news</code> 反而<strong>能跑</strong>。</p>
+這也是為什麼要選社群鏡像 <code>fancyzhx/ag_news</code> 反而<strong>能跑</strong>。</p>
 </blockquote>
 <hr>
 <h2 id="7-model-hub">7. Model Hub</h2>
@@ -2011,11 +2011,11 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <p><strong>查證方式</strong>：<code>https://huggingface.co/</code> 首頁統計區直接顯示 <code>2M+ models</code> 與 <code>500k+ datasets</code>。</p>
 <blockquote>
 <p>⚠️ <strong>這是本課最明顯的過時資訊</strong>——「300k+」與現況差了<strong>將近一個數量級</strong>。</p>
-<p><strong>但考試要怎麼答？</strong> 如果題目問「本節說 Model Hub 有多少模型」，
-<strong>標準答案仍是 300k+</strong>（因為考的是本節內容）。
-但你要知道<strong>實際已經超過 200 萬</strong>——這才是「讀懂本節而不是背本節」。</p>
+<p><strong>但考試要怎麼答？</strong> 如果題目問「課程標示 Model Hub 有多少模型」，
+<strong>標準答案仍是 300k+</strong>（因為考的是課程內容）。
+但你要知道<strong>實際已經超過 200 萬</strong>——這才是「讀懂課程而不是背課程」。</p>
 <p><strong>教學點</strong>：引用平台數字時<strong>一定要標註查詢日期</strong>。這類數字每季都在變，
-「300k+」在本節撰寫當時是對的，現在已經過時。</p>
+「300k+」在課程撰寫當時是對的，現在已經過時。</p>
 </blockquote>
 <hr>
 <h2 id="8-dataset-hub">8. Dataset Hub</h2>
@@ -2143,7 +2143,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <span class="nb">print</span><span class="p">(</span><span class="n">small_ds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>       <span class="c1"># {&#39;text&#39;: &#39;Wall St. Bears Claw Back...&#39;, &#39;label&#39;: 2}</span>
 </code></pre></div>
 
-<p><code>select()</code> 是<strong>取索引</strong>（zero-copy view），不是複製。所以即使底層有 12 萬筆，取 32 筆幾乎不花時間——<strong>這也是本節示範「小資料集」的正確做法</strong>。</p>
+<p><code>select()</code> 是<strong>取索引</strong>（zero-copy view），不是複製。所以即使底層有 12 萬筆，取 32 筆幾乎不花時間——<strong>這也是示範「小資料集」的正確做法</strong>。</p>
 <hr>
 <h2 id="9-spaces免費的-demo-託管">9. Spaces：免費的 Demo 託管</h2>
 <blockquote>
@@ -2392,7 +2392,7 @@ Lesson 9  包成 Web App（Streamlit） → 可以部署到 Spaces
 實務上就是選 PyTorch（本機實測：<code>torch 2.14.1+cu132</code>）。</p>
 </blockquote>
 <h3 id="104-本筆記補充pipeline">10.4 ⚠️ 本筆記補充：<code>pipeline()</code></h3>
-<p><strong> 到 p32 完全沒有提到 <code>pipeline()</code></strong>，但：</p>
+<p><strong>本節完全沒有提到 <code>pipeline()</code></strong>，但：</p>
 <table>
 <thead>
 <tr>
@@ -2757,7 +2757,7 @@ pipeline(&quot;image-classification&quot;, model=&quot;facebook/deit-base-distil
 <blockquote>
 <p>💡 <strong>考點</strong>：<code>datasets</code> 底層用 <strong>Apache Arrow</strong> 格式 ＋ <strong>記憶體映射</strong>，
 所以「<strong>載入 98,179 筆的 Tiny ImageNet 不會把 RAM 吃爆</strong>」。
-這也是 提到「Arrow-optimized for speed」的原因。</p>
+這也是它提到「Arrow-optimized for speed」的原因。</p>
 </blockquote>
 <h3 id="124-實測repo-id-必須有-namespace">12.4 ⚠️ 實測：<code>repo id</code> 必須有 namespace</h3>
 <p>見 §6.4。<code>load_dataset("ag_news")</code> 在 <code>datasets 5.0.0</code> 會失敗：</p>
@@ -2796,7 +2796,7 @@ pipeline(&quot;image-classification&quot;, model=&quot;facebook/deit-base-distil
 <span class="n">first</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>    <span class="c1"># 立刻拿到第一筆，不必等整個資料集下載完</span>
 </code></pre></div>
 
-<h3 id="132-最大落差本節專門教-streaminglab-卻完全沒用">13.2 ⚠️ 最大落差：本節專門教 Streaming，Lab 卻完全沒用</h3>
+<h3 id="132-最大落差課程專門教-streaminglab-卻完全沒用">13.2 ⚠️ 最大落差：課程專門教 Streaming，Lab 卻完全沒用</h3>
 <p>這是本課<strong>最值得注意的教學落差</strong>：</p>
 <table>
 <thead>
@@ -3042,7 +3042,7 @@ cache after : 237.0 MB
 <tbody>
 <tr>
 <td><strong>未認證也能下載公開模型</strong></td>
-<td>所以Lab 確實跑得動</td>
+<td>所以 Lab 確實跑得動</td>
 </tr>
 <tr>
 <td><strong>但會被限流</strong></td>
@@ -3069,7 +3069,7 @@ cache after : 237.0 MB
 這代表<strong>同一份資料集在不同時間可能載入到不同內容</strong>——除非你鎖定 <code>revision</code>。
 論文與正式專案應該鎖 commit hash。</p>
 </blockquote>
-<h3 id="145-落差-說works-offline-once-cached但-lab-從未示範">14.5 ⚠️ 落差： 說「Works offline once cached」，但 Lab 從未示範</h3>
+<h3 id="145-落差課程說works-offline-once-cached但-lab-從未示範">14.5 ⚠️ 落差：課程說「Works offline once cached」，但 Lab 從未示範</h3>
 <table>
 <thead>
 <tr>
@@ -3550,7 +3550,7 @@ Use <code>##</code> prefix to mark continuation subwords (BERT style).
 </table>
 <blockquote>
 <p>💡 <strong>考點（高頻）</strong>：<strong>WordPiece 的合併準則是「最大似然」，BPE 是「貪婪最頻繁對」。</strong>
-這是兩者最核心的差別， 與 p27 各強調一次。</p>
+這是兩者最核心的差別，兩處各強調一次。</p>
 </blockquote>
 <h3 id="173-為什麼是似然而不是頻率">17.3 為什麼是「似然」而不是「頻率」</h3>
 <table>
@@ -3633,11 +3633,11 @@ Use <code>##</code> prefix to mark continuation subwords (BERT style).
 <blockquote>
 <p><strong>Used in: BERT, DistilBERT, ALBERT, XLNet</strong></p>
 </blockquote>
-<p>但本節 <strong>p28 自己寫</strong>：</p>
+<p>但本節 <strong>後面又寫</strong>：</p>
 <blockquote>
 <p><strong>SentencePiece (Google, used in T5, ALBERT multilingual, LLaMA)</strong></p>
 </blockquote>
-<p><strong>ALBERT 同時被列在 WordPiece與 SentencePiece底下——兩頁互相矛盾。</strong></p>
+<p><strong>ALBERT 同時被列在 WordPiece 與 SentencePiece 底下——兩處互相矛盾。</strong></p>
 <table>
 <thead>
 <tr>
@@ -3665,7 +3665,7 @@ Use <code>##</code> prefix to mark continuation subwords (BERT style).
 </tbody>
 </table>
 <blockquote>
-<p>⚠️ <strong>這是一個可驗證的本節缺陷</strong>：把 <code>from_pretrained("albert-base-v2")</code> 載入後
+<p>⚠️ <strong>這是一個可驗證的課程缺陷</strong>：把 <code>from_pretrained("albert-base-v2")</code> 載入後
 看 <code>tokenizer_class</code> 就會發現它用的是 SentencePiece 系列，不是 WordPiece。</p>
 </blockquote>
 <h3 id="176-考點整理">17.6 考點整理</h3>
@@ -3881,7 +3881,7 @@ Use <code>##</code> prefix to mark continuation subwords (BERT style).
 因為 byte-level 保證<strong>任何輸入（含 emoji、罕見字、亂碼）都能編碼</strong>，不會出現 <code>&lt;unk&gt;</code>。</p>
 </blockquote>
 <h3 id="185-byte-level-bpegpt-2-的關鍵改良">18.5 Byte-level BPE：GPT-2 的關鍵改良</h3>
-<p>本節括號裡的「(GPT tokenizers are byte-based, so actual tokens differ)」其實很重要：</p>
+<p>括號裡的「(GPT tokenizers are byte-based, so actual tokens differ)」其實很重要：</p>
 <table>
 <thead>
 <tr>
@@ -4140,7 +4140,7 @@ Use <code>##</code> prefix to mark continuation subwords (BERT style).
 <p>💡 <strong>考點</strong>：<strong>SentencePiece 不是一種演算法，而是一個「框架」</strong>——
 它可以用 BPE 或 Unigram。這是它與 WordPiece／BPE 最大的分類差異。</p>
 </blockquote>
-<h3 id="196-與-p22-的說法不一致">19.6 ⚠️  與 p22 的說法不一致</h3>
+<h3 id="196-兩處的說法不一致">19.6 ⚠️ 兩處的說法不一致</h3>
 <table>
 <thead>
 <tr>
@@ -4159,7 +4159,7 @@ Use <code>##</code> prefix to mark continuation subwords (BERT style).
 <p><strong>ALBERT 同時出現在兩頁底下。</strong> 實際情況：<strong>ALBERT 用的是 SentencePiece</strong>。
 XLNet 同樣用的是 SentencePiece。</p>
 <blockquote>
-<p>⚠️ <strong>可驗證的本節缺陷</strong>：載入 <code>albert-base-v2</code> 的分詞器，檢查它的類別就會看到
+<p>⚠️ <strong>可驗證的課程缺陷</strong>：載入 <code>albert-base-v2</code> 的分詞器，檢查它的類別就會看到
 屬於 SentencePiece 家族，而不是 WordPiece。</p>
 </blockquote>
 <h3 id="197-考點整理">19.7 考點整理</h3>
@@ -5070,7 +5070,7 @@ generate: 0.21 s
 
 <!-- FIGURE:ch24-qlora -->
 
-<p>／p35 的原文（兩頁一字不差）：</p>
+<p>後面那一頁的原文（兩頁一字不差）：</p>
 <blockquote>
 <p><strong>QLoRA (Low Rank Adaptation)</strong>
 An improved version of LoRA that uses 4-bit quantization to further reduce memory
@@ -5178,7 +5178,7 @@ footprint, allowing fine-tuning of huge models on smaller GPUs.
 </tbody>
 </table>
 <blockquote>
-<p><strong>教學點</strong>：本節說「Fine-tune a 33B model on a single 24GB GPU」。
+<p><strong>教學點</strong>：課程說「Fine-tune a 33B model on a single 24GB GPU」。
 33B 在 4-bit 下約 16.5 GB，加上 adapter 與啟動值，<strong>24GB 剛好夠</strong>。</p>
 </blockquote>
 <h3 id="244-程式寫法">24.4 程式寫法</h3>
@@ -5197,7 +5197,7 @@ footprint, allowing fine-tuning of huge models on smaller GPUs.
 </code></pre></div>
 
 <blockquote>
-<p>⚠️ <strong>本筆記補充這段程式碼</strong>。p34／p35 是<strong>純文字 bullet</strong>，
+<p>⚠️ <strong>本筆記補充這段程式碼</strong>。這一節是<strong>純文字 bullet</strong>，
 而且<strong>沒有提到 <code>bitsandbytes</code></strong> 這個真正實作 4-bit 量化的套件。
 本機實測版本：<code>bitsandbytes 0.49.2</code>（已安裝）。</p>
 </blockquote>
@@ -6486,7 +6486,7 @@ Lesson 7 的 <code>LangIndex.ipynb</code> 用的 <code>sentence-transformers/all
 <tr>
 <td><strong>A huge Hub for AI assets</strong></td>
 <td>① Hub</td>
-<td>Model Hub（早期文件寫 30 萬++；<strong>實查 2M+</strong>）／Dataset Hub（<strong>500k+</strong>）／Spaces</td>
+<td>Model Hub（課程標示 30 萬+；<strong>實查 2M+</strong>）／Dataset Hub（<strong>500k+</strong>）／Spaces</td>
 </tr>
 <tr>
 <td><strong>Powerful ML libraries</strong></td>
@@ -7497,7 +7497,7 @@ trainable params: 147,456 || all params: 82,060,032 || trainable%: 0.1797
 <table>
 <thead>
 <tr>
-<th> p33 說的 LoRA 優點</th>
+<th>本節說的 LoRA 優點</th>
 <th>Lab 有沒有驗證</th>
 </tr>
 </thead>
@@ -8175,7 +8175,7 @@ Non-fish indices: [500, 501, 502]
 <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">img_ds</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]</span>
 <span class="k">assert</span> <span class="n">labels</span> <span class="o">!=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">labels</span><span class="p">),</span> <span class="s2">&quot;資料已排序，搜尋示範會失去意義&quot;</span>
 
-<span class="c1"># ② 或者用 filter()（datasets 的正規做法，也順便示範 p20 教的東西）</span>
+<span class="c1"># ② 或者用 filter()（datasets 的正規做法）</span>
 <span class="n">fish_ds</span> <span class="o">=</span> <span class="n">img_ds</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 
 <span class="c1"># ③ 或者先 shuffle</span>

@@ -7,7 +7,7 @@
 > ⚠️ **版本時效**：以上是**本機實測當時**的版本（2026-10）。PyPI 上的最新版已經前進
 > （**`huggingface_hub` 已到 2.2.0**、`transformers` 已到 5.19.0、`peft` 已到 0.21.2），
 > 完整對照表見 **§42.1**。要完全重現本筆記的數字，請鎖定上述版號。
-> ⚠️ **平台數字時效**：本節說 Model Hub 有「**300k+** 模型」，**2026-10 實查已達 `2M+`**（Datasets `500k+`）——
+> ⚠️ **平台數字時效**：課程標示 Model Hub 有「**300k+** 模型」，**2026-10 實查已達 `2M+`**（Datasets `500k+`）——
 > 見 **§7.4**。
 > 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
@@ -80,7 +80,7 @@ Hugging Face = 一個公司 + 一個社群 + 一整套工具鏈
   ③ Inference       TGI, Inference Endpoints, Optimum, Accelerate
 
 必背數字
-  Model Hub  300k+ 模型（本節；2026-10 實查已 2M+）
+  Model Hub  300k+ 模型（課程標示；2026-10 實查已 2M+）
   Hub 四件套 Model Hub / Dataset Hub / Spaces / 文件與版控
 
 三種 Tokenizer（考最多）
@@ -125,7 +125,12 @@ Hugging Face 這家公司在整個 LLM 生態裡的位置很特別：**它不訓
 
 | 段落 | 主題 | 本筆記章節 |
 |---|---|---|
-| **定位** | Hugging Face 是什麼、生態系三層架構 | §4–§5 |\r\n| **Hub** | Model Hub／Dataset Hub／Spaces | §6–§9 |\r\n| **核心函式庫** | Transformers、Datasets、Tokenizers、Diffusers、PEFT | §10–§25 |\r\n| **部署與工具鏈** | Accelerate、Optimum、TGI、Endpoints、Safetensors、SDK、Model Cards | §26–§32 |\r\n| **收尾與實作** | Use Cases、Summary、Hands-On | §33–§35 |\r\n
+| **定位** | Hugging Face 是什麼、生態系三層架構 | §4–§5 |
+| **Hub** | Model Hub／Dataset Hub／Spaces | §6–§9 |
+| **核心函式庫** | Transformers、Datasets、Tokenizers、Diffusers、PEFT | §10–§25 |
+| **部署與工具鏈** | Accelerate、Optimum、TGI、Endpoints、Safetensors、SDK、Model Cards | §26–§32 |
+| **收尾與實作** | Use Cases、Summary、Hands-On | §33–§35 |
+
 ### 1.2 三個層次
 
 本節把整個生態系拆成三層，這是**本課最重要的心智模型**：
@@ -176,7 +181,7 @@ Transformer 在 2017 年原本是為**文字**設計的（Attention Is All You N
 | **影像** | 切成 patch（ViT 用 16×16） | 線性投影成 768 維 | ＋前饋網路 |
 | **音訊** | 切時間框（frame） | log-mel 頻譜 → CNN 捲積 | ＋LayerNorm／殘差 |
 
-Lab 的 cell 10 把這張圖印出來，是整份本節**最清楚的一張架構圖**：
+Lab 的 cell 10 把這張圖印出來，是整份筆記**最清楚的一張架構圖**：
 
 ```
 Input Data
@@ -203,7 +208,7 @@ Input Data
 | **Spectrogram** | 音訊的「頻率隨時間變化圖」，把 1 維波形變成 2 維圖 | AST 前處理 |
 | **Head** | 接在 Transformer 最後的分類／生成層，**不同任務換不同 head** | `image-classification`／`text-generation` |
 
-> 💡 **考點**：**ViT 把影像當成「一串 patch token」處理**——這是 2020 年 ViT 論文的關鍵洞見，也是Lab 的教學重點。
+> 💡 **考點**：**ViT 把影像當成「一串 patch token」處理**——這是 2020 年 ViT 論文的關鍵洞見，也是 Lab 的教學重點。
 > 型號名稱 `vit-base-**patch16**-224` 直接編碼了參數：**patch = 16×16、輸入 = 224×224**。
 
 ### 2.3 為什麼這件事對 Lesson 6 重要
@@ -252,7 +257,7 @@ pipeline("text-generation",      model="distilgpt2")                     # 文�
 
 | 解法 | 機制 | 效果 |
 |---|---|---|
-| **統一倉庫** | Model Hub（早期文件寫 30 萬++；**2026-10 實查已 2M+**） | 一個 `repo id` 就能定位任何模型 |
+| **統一倉庫** | Model Hub（課程標示 30 萬+；**2026-10 實查已 2M+**） | 一個 `repo id` 就能定位任何模型 |
 | **統一介面** | `from_pretrained()` ＋ `AutoModel`／`AutoTokenizer` | **同一段程式碼**可以換任何模型 |
 | **統一說明** | Model Cards | 標準化的用途／限制／評估結果 |
 
@@ -294,7 +299,7 @@ tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
 
 ## 4. What is Hugging Face?
 
-> 本節全文只有四行，本節把它展開成「公司／社群／工具」三個角度。
+> 本節全文只有四行，以下展開成「公司／社群／工具」三個角度。
 
 <!-- FIGURE:ch04-what-is-hf -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -370,7 +375,7 @@ tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
 
 ### 5.1 三層展開
 
-| 層 | 本節名稱 | 內容 | 對應章節 |
+| 層 | 名稱 | 內容 | 對應章節 |
 |---|---|---|---|
 | ① | **Hugging Face Hub** | Model Hub／Dataset Hub／Spaces／文件與版控 | §6–§9 |
 | ② | **Core ML Libraries** | `transformers`／`datasets`／`tokenizers`／`diffusers`／`peft` | §10–§25 |
@@ -396,13 +401,13 @@ tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
 | ② Core Libraries | Transformers Library、Datasets Library、Tokenizers、Diffusers、PEFT |
 | ③ Inference & Deployment | Accelerate、Optimum、Text Generation Inference、Inference Endpoints、Safetensors、huggingface_hub SDK |
 
-> 💡 **考點**： 只列了三層的**名字**，沒有列出成員。考試常考「**某個套件屬於哪一層**」——
+> 💡 **考點**：本節只列了三層的**名字**，沒有列出成員。考試常考「**某個套件屬於哪一層**」——
 > 例如 **`safetensors` 屬於第 ③ 層**（部署用的權重格式），不是第 ② 層；
 > **`peft` 屬於第 ② 層**（在程式裡做微調）。
 
 ### 5.4 三層之外的第四個東西：Model Cards
 
-本節把 Model Cards 放在 屬於第 ③ 層附近，但嚴格說它是**橫跨三層的文件規範**：
+本節把 Model Cards 放在第 ③ 層附近，但嚴格說它是**橫跨三層的文件規範**：
 
 | 對象 | Model Cards 的作用 |
 |---|---|
@@ -439,7 +444,7 @@ tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
 
 | 組成 | 內容 | 章節 |
 |---|---|---|
-| **Model Hub** | 模型倉庫（早期文件寫 30 萬++；**實查 2M+**） | §7 |
+| **Model Hub** | 模型倉庫（課程標示 30 萬+；**實查 2M+**） | §7 |
 | **Dataset Hub** | 資料集倉庫 | §8 |
 | **Spaces** | 免費的 Demo 託管 | §9 |
 | **Documentation and version control** | 文件 ＋ 以 Git 為基礎的版本控制 | 本節 §6.2 |
@@ -488,7 +493,7 @@ Repository id must be 'namespace/name', got 'ag_news'.
 
 > **教學點**：`datasets` 5.x 把 repo id **強制要求 `namespace/name` 格式**。
 > 舊教學文裡的 `load_dataset("ag_news")` 在新版本已經不能用了。
-> 這也是為什麼本節選社群鏡像 `fancyzhx/ag_news` 反而**能跑**。
+> 這也是為什麼要選社群鏡像 `fancyzhx/ag_news` 反而**能跑**。
 
 ---
 
@@ -549,11 +554,11 @@ Repository id must be 'namespace/name', got 'ag_news'.
 > 💡 **實務技巧**：搜尋時加上 `-GGUF` 或 `-4bit` 可以找到**已量化**的版本，
 > 大幅降低 VRAM 需求（與 Lesson 7 的 `Q4_K_M` 是同一件事）。
 
-### 7.4 ⚠️ 本節數字已過時（2026-10 實查）
+### 7.4 ⚠️ 課程數字已過時（2026-10 實查）
 
-本節寫「**300k+ models**」（30 萬+）。**實際查證結果：**
+課程寫「**300k+ models**」（30 萬+）。**實際查證結果：**
 
-| 項目 | 本節（撰寫時） | **2026-10 實查** | 倍數 |
+| 項目 | 課程（撰寫時） | **2026-10 實查** | 倍數 |
 |---|---|---|---|
 | **Models** | **300k+** | **2M+** | **約 6.7 倍** |
 | **Datasets** | 未給數字 | **500k+** | — |
@@ -562,12 +567,12 @@ Repository id must be 'namespace/name', got 'ag_news'.
 
 > ⚠️ **這是本課最明顯的過時資訊**——「300k+」與現況差了**將近一個數量級**。
 >
-> **但考試要怎麼答？** 如果題目問「本節說 Model Hub 有多少模型」，
-> **標準答案仍是 300k+**（因為考的是本節內容）。
-> 但你要知道**實際已經超過 200 萬**——這才是「讀懂本節而不是背本節」。
+> **但考試要怎麼答？** 如果題目問「課程標示 Model Hub 有多少模型」，
+> **標準答案仍是 300k+**（因為考的是課程內容）。
+> 但你要知道**實際已經超過 200 萬**——這才是「讀懂課程而不是背課程」。
 >
 > **教學點**：引用平台數字時**一定要標註查詢日期**。這類數字每季都在變，
-> 「300k+」在本節撰寫當時是對的，現在已經過時。
+> 「300k+」在課程撰寫當時是對的，現在已經過時。
 
 ---
 
@@ -598,11 +603,11 @@ Repository id must be 'namespace/name', got 'ag_news'.
 |---|---|---|
 | **NLP datasets** | `fancyzhx/ag_news`（新聞分類，12 萬筆） | 文字分類 |
 | **Computer vision datasets** | `slegroux/tiny-imagenet-200-clean`（98,179 筆） | 影像分類 |
-| **Audio datasets** | 本節**沒有用到**（Lab 改用合成訊號） | 語音 |
-| **Tabular and scientific** | 本節沒有用到 | 表格／科學 |
+| **Audio datasets** | **沒有用到**（Lab 改用合成訊號） | 語音 |
+| **Tabular and scientific** | 沒有用到 | 表格／科學 |
 
 > 💡 **考點**：`ag_news` 有 **4 個類別**（World／Sports／Business／Sci-Tech）、**12 萬筆訓練資料**；
-> 本節只取前 **32 筆**做示範。這兩個數字常考。
+> 只取前 **32 筆**做示範。這兩個數字常考。
 
 ### 8.2 Dataset Hub 與 Model Hub 的差異
 
@@ -630,7 +635,7 @@ ds_all = load_dataset("fancyzhx/ag_news")              # 取得 DatasetDict（�
 
 ### 8.4 ⚠️ 實測：`select()` 不會複製資料
 
-本節用 `dataset.select(range(32))` 取前 32 筆：
+用 `dataset.select(range(32))` 取前 32 筆：
 
 ```python
 small_ds = dataset.select(range(32))
@@ -638,7 +643,7 @@ print(len(small_ds))     # 32
 print(small_ds[0])       # {'text': 'Wall St. Bears Claw Back...', 'label': 2}
 ```
 
-`select()` 是**取索引**（zero-copy view），不是複製。所以即使底層有 12 萬筆，取 32 筆幾乎不花時間——**這也是本節示範「小資料集」的正確做法**。
+`select()` 是**取索引**（zero-copy view），不是複製。所以即使底層有 12 萬筆，取 32 筆幾乎不花時間——**這也是示範「小資料集」的正確做法**。
 
 ---
 
@@ -774,7 +779,7 @@ model = AutoModelForCausalLM.from_pretrained(
 
 ### 10.4 ⚠️ 本筆記補充：`pipeline()`
 
-** 到 p32 完全沒有提到 `pipeline()`**，但：
+**本節完全沒有提到 `pipeline()`**，但：
 
 | 事實 | 說明 |
 |---|---|
@@ -824,7 +829,7 @@ res = vision(image)     # 自動做 resize / normalize / softmax
 
 ### 11.1 這 6 頁在展示什麼
 
-本節把 Hugging Face 官網 `transformers` 的文件頁截圖連續貼了 6 頁，展示的是**同一件事的不同角度**：
+本節整理了 Hugging Face 官網 `transformers` 的文件頁，連續 6 頁展示的是**同一件事的不同角度**：
 
 | 內容 | 重點 |
 |---|---|
@@ -956,7 +961,7 @@ print(ds[0])          # {'text': 'Wall St. Bears Claw Back...', 'label': 2}
 
 > 💡 **考點**：`datasets` 底層用 **Apache Arrow** 格式 ＋ **記憶體映射**，
 > 所以「**載入 98,179 筆的 Tiny ImageNet 不會把 RAM 吃爆**」。
-> 這也是 提到「Arrow-optimized for speed」的原因。
+> 這也是它提到「Arrow-optimized for speed」的原因。
 
 ### 12.4 ⚠️ 實測：`repo id` 必須有 namespace
 
@@ -1000,7 +1005,7 @@ it = iter(ds)
 first = next(it)    # 立刻拿到第一筆，不必等整個資料集下載完
 ```
 
-### 13.2 ⚠️ 最大落差：本節專門教 Streaming，Lab 卻完全沒用
+### 13.2 ⚠️ 最大落差：課程專門教 Streaming，Lab 卻完全沒用
 
 這是本課**最值得注意的教學落差**：
 
@@ -1052,7 +1057,7 @@ train = load_dataset("fancyzhx/ag_news", split="train")
 ```
 
 > **教學點**：串流不是「取代」完整下載，而是**多一個選項**。
-> 本節只講了它，卻沒讓學生實際用一次——這是這份 Lab 最可惜的地方。
+> 課程只講了它，卻沒讓學生實際用一次——這是這份 Lab 最可惜的地方。
 
 ---
 
@@ -1150,7 +1155,7 @@ Please set a HF_TOKEN to enable higher rate limits and faster downloads.
 
 | 事實 | 說明 |
 |---|---|
-| **未認證也能下載公開模型** | 所以Lab 確實跑得動 |
+| **未認證也能下載公開模型** | 所以 Lab 確實跑得動 |
 | **但會被限流** | 匿名請求的 rate limit 低很多 |
 | **本機實測踩到** | Wikimedia 對照圖回 **HTTP 429（Too Many Requests）**，就是限流的實例 |
 
@@ -1165,11 +1170,11 @@ ds = load_dataset("fancyzhx/ag_news", split="train",
                   revision="eb185aade064a813bc0b7f42de02595523103ca4")
 ```
 
-> **教學點**： 說快取「**Version-aware: tracks dataset revisions**」。
+> **教學點**：本節說快取「**Version-aware: tracks dataset revisions**」。
 > 這代表**同一份資料集在不同時間可能載入到不同內容**——除非你鎖定 `revision`。
 > 論文與正式專案應該鎖 commit hash。
 
-### 14.5 ⚠️ 落差： 說「Works offline once cached」，但 Lab 從未示範
+### 14.5 ⚠️ 落差：課程說「Works offline once cached」，但 Lab 從未示範
 
 | 課程說明 | Lab 實際 |
 |---|---|
@@ -1242,7 +1247,7 @@ tokenized = tokenized.remove_columns(["text"])
 | **`num_proc=N`** | 多行程平行 | 進一步加速 |
 
 > 💡 **考點**：**`batched=True` 是 `map()` 最重要的參數**。
->  特別寫「**Efficient batching**」就是指這個。
+> 本節特別寫「**Efficient batching**」就是指這個。
 
 ### 15.3 「Arrow-optimized for speed」是什麼意思
 
@@ -1269,17 +1274,17 @@ tokenized = tokenized.remove_columns(["text"])
 可以餵給模型
 ```
 
-### 15.5 ⚠️ 本節是截圖，且 Lab 完全沒用 `map()`
+### 15.5 ⚠️ 這一節是截圖，且 Lab 完全沒用 `map()`
 
 | 位置 | 有沒有用 |
 |---|---|
-| **** | ✅ 列出 `map()`／`filter()`／`shuffle()` |
+| **這兩頁** | ✅ 列出 `map()`／`filter()`／`shuffle()` |
 | **`HF_dataset.ipynb`** | ❌ 只用 `select()` 和索引 |
 | **`HF_transformer.ipynb`** | ❌ 用 `pipeline()` 跳過前處理 |
 | **`HF_LLM.ipynb`** | ❌ 只做參數量統計 |
 
 > **教學點**：`map()` 是**實務上最常用的 `datasets` 方法**（幾乎每個訓練腳本都有），
-> 但Lab 一次都沒用。這是**必考但沒實作**的知識點。
+> 但 Lab 一次都沒用。這是**必考但沒實作**的知識點。
 
 ---
 
@@ -1429,7 +1434,7 @@ tok.train(files=["corpus.txt"], trainer=BpeTrainer(vocab_size=30000))
 | ④ 用 **`##` 前綴**標記接續子詞 | BERT 風格 |
 
 > 💡 **考點（高頻）**：**WordPiece 的合併準則是「最大似然」，BPE 是「貪婪最頻繁對」。**
-> 這是兩者最核心的差別， 與 p27 各強調一次。
+> 這是兩者最核心的差別，兩處各強調一次。
 
 ### 17.3 為什麼是「似然」而不是「頻率」
 
@@ -1458,17 +1463,17 @@ tok.train(files=["corpus.txt"], trainer=BpeTrainer(vocab_size=30000))
 > 💡 **考點**：**「需要 whitespace 預處理」是 WordPiece 最大的限制**，
 > 也是 SentencePiece 被發明的原因（§19）。
 
-### 17.5 ⚠️  的分類問題：ALBERT 與 XLNet
+### 17.5 ⚠️ 分類問題：ALBERT 與 XLNet
 
 原文：
 
 > **Used in: BERT, DistilBERT, ALBERT, XLNet**
 
-但本節 **p28 自己寫**：
+但本節 **後面又寫**：
 
 > **SentencePiece (Google, used in T5, ALBERT multilingual, LLaMA)**
 
-**ALBERT 同時被列在 WordPiece與 SentencePiece底下——兩頁互相矛盾。**
+**ALBERT 同時被列在 WordPiece 與 SentencePiece 底下——兩處互相矛盾。**
 
 | 模型 | 實際用的分詞器 |
 |---|---|
@@ -1477,7 +1482,7 @@ tok.train(files=["corpus.txt"], trainer=BpeTrainer(vocab_size=30000))
 | **ALBERT** | **SentencePiece** ❌ |
 | **XLNet** | **SentencePiece**（unigram）❌ |
 
-> ⚠️ **這是一個可驗證的本節缺陷**：把 `from_pretrained("albert-base-v2")` 載入後
+> ⚠️ **這是一個可驗證的課程缺陷**：把 `from_pretrained("albert-base-v2")` 載入後
 > 看 `tokenizer_class` 就會發現它用的是 SentencePiece 系列，不是 WordPiece。
 
 ### 17.6 考點整理
@@ -1580,7 +1585,7 @@ tok.train(files=["corpus.txt"], trainer=BpeTrainer(vocab_size=30000))
 
 ### 18.5 Byte-level BPE：GPT-2 的關鍵改良
 
-本節括號裡的「(GPT tokenizers are byte-based, so actual tokens differ)」其實很重要：
+括號裡的「(GPT tokenizers are byte-based, so actual tokens differ)」其實很重要：
 
 | | 原始 BPE | **Byte-level BPE（GPT-2）** |
 |---|---|---|
@@ -1691,7 +1696,7 @@ tok.train(files=["corpus.txt"], trainer=BpeTrainer(vocab_size=30000))
 > 💡 **考點**：**SentencePiece 不是一種演算法，而是一個「框架」**——
 > 它可以用 BPE 或 Unigram。這是它與 WordPiece／BPE 最大的分類差異。
 
-### 19.6 ⚠️  與 p22 的說法不一致
+### 19.6 ⚠️ 兩處的說法不一致
 
 | 說法 |
 |---|
@@ -1701,7 +1706,7 @@ tok.train(files=["corpus.txt"], trainer=BpeTrainer(vocab_size=30000))
 **ALBERT 同時出現在兩頁底下。** 實際情況：**ALBERT 用的是 SentencePiece**。
 XLNet 同樣用的是 SentencePiece。
 
-> ⚠️ **可驗證的本節缺陷**：載入 `albert-base-v2` 的分詞器，檢查它的類別就會看到
+> ⚠️ **可驗證的課程缺陷**：載入 `albert-base-v2` 的分詞器，檢查它的類別就會看到
 > 屬於 SentencePiece 家族，而不是 WordPiece。
 
 ### 19.7 考點整理
@@ -2106,7 +2111,7 @@ After PEFT
 
 ### 23.6 ⚠️ 實作陷阱：`target_modules=["c_attn"]` 不可攜
 
-本節寫 `target_modules=["c_attn"]`。**`c_attn` 是 GPT-2 專屬的模組名稱**（`Conv1D` 型別）。
+課程寫 `target_modules=["c_attn"]`。**`c_attn` 是 GPT-2 專屬的模組名稱**（`Conv1D` 型別）。
 
 本機實測：同一個設定套在 **Llama 架構**上會**直接失敗**：
 
@@ -2137,7 +2142,7 @@ config = LoraConfig(r=8, lora_alpha=16, target_modules="all-linear", ...)
 > ⚠️ **這是本 Lab 最嚴重的缺陷**：照著這樣做，只要換成 Llama／Qwen 就**直接爆錯**，
 > 而且錯誤訊息不會告訴你「因為 `c_attn` 是 GPT-2 專屬」。
 
-### 23.7 ⚠️ 本節只「數參數」沒有「真的訓練」
+### 23.7 ⚠️ 只「數參數」沒有「真的訓練」
 
 `HF_LLM.ipynb` 只做三件事：載入模型 → 套 LoRA → 印參數量。
 **沒有任何一次 forward／backward**，所以「Faster training」這個優點完全沒被驗證。
@@ -2158,7 +2163,7 @@ generate: 0.21 s
 
 | 問題 | 答案 |
 |---|---|
-| LoRA 全名？ | **Low-Rank Adaptation**（本節寫 `Low Rank Adaptation`） |
+| LoRA 全名？ | **Low-Rank Adaptation**（課程寫 `Low Rank Adaptation`） |
 | 核心公式？ | **`W' = W + A × B`** |
 | `W` 會更新嗎？ | **不會，凍結** |
 | 可訓練參數變多還是變少？ | **變少**（但總參數變多） |
@@ -2179,7 +2184,7 @@ generate: 0.21 s
 
 <!-- FIGURE:ch24-qlora -->
 
-／p35 的原文（兩頁一字不差）：
+後面那一頁的原文（兩頁一字不差）：
 
 > **QLoRA (Low Rank Adaptation)**
 > An improved version of LoRA that uses 4-bit quantization to further reduce memory
@@ -2228,7 +2233,7 @@ generate: 0.21 s
 | FP16 | 14 GB | ⚠️ 勉強（含梯度／最佳化器會爆） |
 | **4-bit（QLoRA）** | **約 3.5 GB** | ✅ **輕鬆** |
 
-> **教學點**：本節說「Fine-tune a 33B model on a single 24GB GPU」。
+> **教學點**：課程說「Fine-tune a 33B model on a single 24GB GPU」。
 > 33B 在 4-bit 下約 16.5 GB，加上 adapter 與啟動值，**24GB 剛好夠**。
 
 ### 24.4 程式寫法
@@ -2248,7 +2253,7 @@ model = prepare_model_for_kbit_training(model)
 model = get_peft_model(model, LoraConfig(r=16, lora_alpha=32, task_type="CAUSAL_LM"))
 ```
 
-> ⚠️ **本筆記補充這段程式碼**。p34／p35 是**純文字 bullet**，
+> ⚠️ **本筆記補充這段程式碼**。這一節是**純文字 bullet**，
 > 而且**沒有提到 `bitsandbytes`** 這個真正實作 4-bit 量化的套件。
 > 本機實測版本：`bitsandbytes 0.49.2`（已安裝）。
 
@@ -2971,7 +2976,7 @@ metrics:
 | **翻譯／摘要** | `transformers` seq2seq |
 | **程式碼生成** | Hub 上的 code LLM |
 
-> 💡 **考點**：本節只列了四項並以「…」結尾。
+> 💡 **考點**：課程只列了四項並以「…」結尾。
 > 但**核心訊息是「Hugging Face 是通用平台」**，不是只做聊天機器人。
 
 ---
@@ -3000,7 +3005,7 @@ metrics:
 
 | 句子 | 對應層 | 具體內容 |
 |---|---|---|
-| **A huge Hub for AI assets** | ① Hub | Model Hub（早期文件寫 30 萬++；**實查 2M+**）／Dataset Hub（**500k+**）／Spaces |
+| **A huge Hub for AI assets** | ① Hub | Model Hub（課程標示 30 萬+；**實查 2M+**）／Dataset Hub（**500k+**）／Spaces |
 | **Powerful ML libraries** | ② Core Libraries | `transformers`／`datasets`／`tokenizers`／`diffusers`／`peft` |
 | **Reliable deployment tools** | ③ Inference & Deployment | TGI／Endpoints／Optimum／Accelerate／safetensors |
 
@@ -3623,7 +3628,7 @@ WARNING:torchao:Failed to load .../torchao/_C_cutlass_90a.abi3.so:
 
 **整份 notebook 只有 2 格**：安裝 ＋ 載入模型數參數。
 
-|  p33 說的 LoRA 優點 | Lab 有沒有驗證 |
+| 本節說的 LoRA 優點 | Lab 有沒有驗證 |
 |---|---|
 | Reduces the number of trainable parameters drastically | ✅ 有（印出 0.1797%） |
 | Freezes the original model weights | ⚠️ 隱含（但沒印 `requires_grad`） |
@@ -4035,7 +4040,7 @@ for i in range(2000):
 labels = [img_ds[i]["label"] for i in range(1000)]
 assert labels != sorted(labels), "資料已排序，搜尋示範會失去意義"
 
-# ② 或者用 filter()（datasets 的正規做法，也順便示範 p20 教的東西）
+# ② 或者用 filter()（datasets 的正規做法）
 fish_ds = img_ds.filter(lambda x: x["label"] == 0).select(range(3))
 
 # ③ 或者先 shuffle
