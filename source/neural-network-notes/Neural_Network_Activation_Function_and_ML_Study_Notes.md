@@ -11,34 +11,34 @@
 | # | 章節 |
 |---|------|
 | 0 | [0. 30 秒總複習（考前最後掃描）](#0-30-秒總複習考前最後掃描) |
-| 1 | [1. 課程資訊](#1-課程資訊pdf-p1) |
-| 2 | [2. Neural Network：AI 基本原則與生物神經元](#2-neural-networkai-基本原則與生物神經元pdf-p2p3) |
-| 3 | [3. Neural Network：神經網路的組成](#3-neural-network神經網路的組成pdf-p4) |
-| 4 | [4. Artificial Neural Network：三層結構與傳播方向](#4-artificial-neural-network三層結構與傳播方向pdf-p5) |
-| 5 | [5. Artificial Neural Network：ANN 與 DNN 的定義](#5-artificial-neural-networkann-與-dnn-的定義pdf-p6) |
-| 6 | [6. Deep Neural Network：網路拓撲 Network Topology](#6-deep-neural-network網路拓撲-network-topologypdf-p7) |
-| 7 | [7. Activation Function：激勵函數是什麼](#7-activation-function激勵函數是什麼pdf-p8) |
-| 8 | [8. Threshold Logic Unit（TLU）](#8-threshold-logic-unittlupdf-p9p10) |
-| 9 | [9. Rectified Linear Units（ReLU）](#9-rectified-linear-unitsrelupdf-p11p12) |
-| 10 | [10. Sigmoid Function](#10-sigmoid-functionpdf-p13p14) |
-| 11 | [11. Softmax Function](#11-softmax-functionpdf-p15p16) |
-| 12 | [12. 問題類型與激勵函數的對應](#12-問題類型與激勵函數的對應pdf-p17) |
-| 13 | [13. Machine Learning：Analytics and Machine Learning](#13-machine-learninganalytics-and-machine-learningpdf-p18) |
-| 14 | [14. Machine Learning：基本概念 Basic Concepts](#14-machine-learning基本概念-basic-conceptspdf-p19) |
-| 15 | [15. 機器學習解決方案的十個步驟 Ten Steps](#15-機器學習解決方案的十個步驟-ten-stepspdf-p20) |
-| 16 | [16. Machine Learning：The Data/AI Landscape](#16-machine-learningthe-dataai-landscapepdf-p21) |
-| 17 | [17. Machine Learning：Types 機器學習的類型](#17-machine-learningtypes-機器學習的類型pdf-p22p24p27) |
-| 18 | [18. 監督式學習 Supervised Learning](#18-監督式學習-supervised-learningpdf-p23) |
-| 19 | [19. 監督式學習實例：分類與迴歸](#19-監督式學習實例分類與迴歸pdf-p25p26) |
-| 20 | [20. 非監督式學習 Unsupervised Learning](#20-非監督式學習-unsupervised-learningpdf-p28) |
-| 21 | [21. Clustering：分群的兩個距離目標](#21-clustering分群的兩個距離目標pdf-p29) |
-| 22 | [22. Clustering：分群實例](#22-clustering分群實例pdf-p30) |
+| 1 | [1. 課程資訊](#1-課程資訊) |
+| 2 | [2. Neural Network：AI 基本原則與生物神經元](#2-neural-networkai-基本原則與生物神經元) |
+| 3 | [3. Neural Network：神經網路的組成](#3-neural-network神經網路的組成) |
+| 4 | [4. Artificial Neural Network：三層結構與傳播方向](#4-artificial-neural-network三層結構與傳播方向) |
+| 5 | [5. Artificial Neural Network：ANN 與 DNN 的定義](#5-artificial-neural-networkann-與-dnn-的定義) |
+| 6 | [6. Deep Neural Network：網路拓撲 Network Topology](#6-deep-neural-network網路拓撲-network-topology) |
+| 7 | [7. Activation Function：激勵函數是什麼](#7-activation-function激勵函數是什麼) |
+| 8 | [8. Threshold Logic Unit（TLU）](#8-threshold-logic-unittlu) |
+| 9 | [9. Rectified Linear Units（ReLU）](#9-rectified-linear-unitsrelu) |
+| 10 | [10. Sigmoid Function](#10-sigmoid-function) |
+| 11 | [11. Softmax Function](#11-softmax-function) |
+| 12 | [12. 問題類型與激勵函數的對應](#12-問題類型與激勵函數的對應) |
+| 13 | [13. Machine Learning：Analytics and Machine Learning](#13-machine-learninganalytics-and-machine-learning) |
+| 14 | [14. Machine Learning：基本概念 Basic Concepts](#14-machine-learning基本概念-basic-concepts) |
+| 15 | [15. 機器學習解決方案的十個步驟 Ten Steps](#15-機器學習解決方案的十個步驟-ten-steps) |
+| 16 | [16. Machine Learning：The Data/AI Landscape](#16-machine-learningthe-dataai-landscape) |
+| 17 | [17. Machine Learning：Types 機器學習的類型](#17-machine-learningtypes-機器學習的類型) |
+| 18 | [18. 監督式學習 Supervised Learning](#18-監督式學習-supervised-learning) |
+| 19 | [19. 監督式學習實例：分類與迴歸](#19-監督式學習實例分類與迴歸) |
+| 20 | [20. 非監督式學習 Unsupervised Learning](#20-非監督式學習-unsupervised-learning) |
+| 21 | [21. Clustering：分群的兩個距離目標](#21-clustering分群的兩個距離目標) |
+| 22 | [22. Clustering：分群實例](#22-clustering分群實例) |
 | A | [附錄 A：名詞速查表](#附錄-a名詞速查表) |
 | B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
 | C | [附錄 C：延伸資源與離線提示](#附錄-c延伸資源與離線提示) |
 | D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
 | E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
 
 ---
 

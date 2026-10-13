@@ -18,11 +18,11 @@
 | 2 | [Flask 是什麼：最小應用](#2-flask-是什麼最小應用) |
 | 3 | [路由與 HTTP 方法（`@app.route`）](#3-路由與-http-方法approute) |
 | 4 | [第一個端點 `/greet`（`server.py` 逐行）](#4-第一個端點-greetserverpy-逐行) |
-| 5 | [`request.get_json()` 與它的危險邊界](#5-requestget_json-與它的危險邊界) |
+| 5 | [`request.get_json()` 與它的危險邊界](#5-requestget-json-與它的危險邊界) |
 | 6 | [`jsonify()` 與中文編碼](#6-jsonify-與中文編碼) |
 | 7 | [錯誤狀態碼總表](#7-錯誤狀態碼總表) |
-| 8 | [用 `test_client` 測 Flask（不必開埠號）](#8-用-test_client-測-flask不必開埠號) |
-| 9 | [用 `requests` / `curl` 測真實 HTTP](#9-用-requests--curl-測真實-http) |
+| 8 | [用 `test_client` 測 Flask（不必開埠號）](#8-用-test-client-測-flask不必開埠號) |
+| 9 | [用 `requests` / `curl` 測真實 HTTP](#9-用-requests-curl-測真實-http) |
 | 10 | [Streamlit 是什麼：最小應用](#10-streamlit-是什麼最小應用) |
 | 11 | [Streamlit 的執行模型：每次互動重跑整個腳本](#11-streamlit-的執行模型每次互動重跑整個腳本) |
 | 12 | [常用 Streamlit 元件](#12-常用-streamlit-元件) |
@@ -30,7 +30,7 @@
 | 14 | [呼叫後端：`requests.post`（`app.py` 逐行）](#14-呼叫後端requestspostapppy-逐行) |
 | 15 | [錯誤處理與使用者回饋](#15-錯誤處理與使用者回饋) |
 | 16 | [`st.spinner` 與等待體驗](#16-stspinner-與等待體驗) |
-| 17 | [整合 LiteLLM + Ollama：讓前端有 LLM 能力](#17-整合-litellm--ollama讓前端有-llm-能力) |
+| 17 | [整合 LiteLLM + Ollama：讓前端有 LLM 能力](#17-整合-litellm-ollama讓前端有-llm-能力) |
 | 18 | [啟動順序與連接埠](#18-啟動順序與連接埠) |
 | 19 | [完整架構圖與資料流](#19-完整架構圖與資料流) |
 | 20 | [本機實測總表（真實數據）](#20-本機實測總表真實數據) |
@@ -41,7 +41,7 @@
 | C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
 | D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
 | E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
 
 ---
 

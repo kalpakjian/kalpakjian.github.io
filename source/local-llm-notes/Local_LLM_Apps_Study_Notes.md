@@ -26,11 +26,11 @@
 | 8 | [LM Studio：換模型（從 Hugging Face 直接抓）](#8-lm-studio換模型從-hugging-face-直接抓) |
 | 9 | [LM Studio：上傳檔案並提問（本機 RAG 的第一次現身）](#9-lm-studio上傳檔案並提問本機-rag-的第一次現身) |
 | 10 | [Ollama：下載與安裝](#10-ollama下載與安裝) |
-| 11 | [Ollama：模型選擇表](#11-ollama模型選擇表本節唯一的實質內容頁) |
+| 11 | [Ollama：模型選擇表](#11-ollama模型選擇表) |
 | 12 | [Ollama：`ollama run` 安裝模型與對話](#12-ollamaollama-run-安裝模型與對話) |
 | 13 | [Ollama：`ollama list`、`ollama serve` 與埠號](#13-ollamaollama-listollama-serve-與埠號) |
 | 14 | [`testollama.py` 逐行拆解（Lab）](#14-testollamapy-逐行拆解lab) |
-| 15 | [⚠️ 本節把 LLM 輸出硬轉成 tensor 的問題](#15--本節把-llm-輸出硬轉成-tensor-的問題) |
+| 15 | [⚠️ 本節把 LLM 輸出硬轉成 tensor 的問題](#15-本節把-llm-輸出硬轉成-tensor-的問題) |
 | 16 | [AnythingLLM：安裝與歡迎頁](#16-anythingllm安裝與歡迎頁) |
 | 17 | [AnythingLLM：選擇 LLM 模型與換模型](#17-anythingllm選擇-llm-模型與換模型) |
 | 18 | [AnythingLLM：提問](#18-anythingllm提問) |
@@ -41,14 +41,14 @@
 | 23 | [四個 App 對照總表](#23-四個-app-對照總表) |
 | 24 | [怎麼選：決策樹](#24-怎麼選決策樹) |
 | 25 | [Open WebUI 與 Streamlit：為什麼要自己寫](#25-open-webui-與-streamlit為什麼要自己寫) |
-| 26 | [`app_web.py` 逐行拆解（Lab）](#26-app_webpy-逐行拆解lab) |
-| 27 | [LangChain ＋ LlamaCpp：在 Python 裡直接跑 GGUF](#27-langchain--llamacpp在-python-裡直接跑-gguf) |
+| 26 | [`app_web.py` 逐行拆解（Lab）](#26-app-webpy-逐行拆解lab) |
+| 27 | [LangChain ＋ LlamaCpp：在 Python 裡直接跑 GGUF](#27-langchain-llamacpp在-python-裡直接跑-gguf) |
 | 28 | [RAG 概念：關鍵字 RAG vs 向量 RAG](#28-rag-概念關鍵字-rag-vs-向量-rag) |
-| 29 | [⚠️ `RAG.ipynb` 的 `max_length` 陷阱](#29--ragipynb-的-max_length-陷阱) |
-| 30 | [LlamaIndex ＋ Groq：雲端 LLM ＋ 本機嵌入](#30-llamaindex--groq雲端-llm--本機嵌入) |
-| 31 | [⚠️ Groq API Key 寫死 ＋ 本機替代路徑](#31--groq-api-key-寫死--本機替代路徑) |
+| 29 | [⚠️ `RAG.ipynb` 的 `max_length` 陷阱](#29-ragipynb-的-max-length-陷阱) |
+| 30 | [LlamaIndex ＋ Groq：雲端 LLM ＋ 本機嵌入](#30-llamaindex-groq雲端-llm-本機嵌入) |
+| 31 | [⚠️ Groq API Key 寫死 ＋ 本機替代路徑](#31-groq-api-key-寫死-本機替代路徑) |
 | 32 | [LoRA 與本機微調（`train.py`）](#32-lora-與本機微調trainpy) |
-| 33 | [⚠️ `train.jsonl`：73 行只有 1 個唯一樣本](#33--trainjsonl73-行只有-1-個唯一樣本) |
+| 33 | [⚠️ `train.jsonl`：73 行只有 1 個唯一樣本](#33-trainjsonl73-行只有-1-個唯一樣本) |
 | 34 | [轉 GGUF 與 `ollama create`](#34-轉-gguf-與-ollama-create) |
 | 35 | [DQN 迷宮：強化學習補充](#35-dqn-迷宮強化學習補充) |
 | 36 | [NLP 基礎（一）：Tokenizing、停用詞、Stemming 與 Lemmatizing](#36-nlp-基礎一tokenizing停用詞stemming-與-lemmatizing) |
@@ -60,7 +60,7 @@
 | C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
 | D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
 | E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
 
 ---
 

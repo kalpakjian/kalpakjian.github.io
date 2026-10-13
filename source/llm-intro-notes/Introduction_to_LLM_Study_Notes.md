@@ -17,7 +17,7 @@
 | 3 | [Applications of LLMs](#3-applications-of-llms) |
 | 4 | [Custom-built LLMs](#4-custom-built-llms) |
 | 5 | [Pretraining vs Finetuning](#5-pretraining-vs-finetuning) |
-| 6 | [Instruction-finetuning and Finetuning for classification tasks](#6-instruction-finetuning-and-finetuning-for-classification-tasks) |
+| 6 | [Instruction-finetuning and Finetuning for classification tasks](#6-instruction-finetuning-and-finetuning-for-classification-t) |
 | 7 | [Transformer Architecture](#7-transformer-architecture) |
 | 8 | [Self-attention mechanism](#8-self-attention-mechanism) |
 | 9 | [BERT vs GPT](#9-bert-vs-gpt) |
@@ -47,7 +47,7 @@
 | C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
 | D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
 | E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
 
 > 另外本節有 **p27 / p29 兩頁同名**「Autoregressive Models」（中間夾著 p28 GPT-3），
 > 本筆記依本節順序拆成 §15、§17 兩章。

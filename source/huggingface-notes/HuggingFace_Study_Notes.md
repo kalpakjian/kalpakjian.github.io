@@ -27,7 +27,7 @@
 | 8 | [Dataset Hub](#8-dataset-hub) |
 | 9 | [Spaces：免費的 Demo 託管](#9-spaces免費的-demo-託管) |
 | 10 | [Transformers Library](#10-transformers-library) |
-| 11 | [Transformers 的實際介面](#11-transformers-的實際介面p9p14-截圖判讀) |
+| 11 | [Transformers 的實際介面](#11-transformers-的實際介面) |
 | 12 | [Datasets Library](#12-datasets-library) |
 | 13 | [Streaming Access：不落地就能讀](#13-streaming-access不落地就能讀) |
 | 14 | [Automatic Caching](#14-automatic-caching) |
@@ -47,17 +47,17 @@
 | 28 | [Text Generation Inference（TGI）](#28-text-generation-inferencetgi) |
 | 29 | [Inference Endpoints](#29-inference-endpoints) |
 | 30 | [Safetensors](#30-safetensors) |
-| 31 | [`huggingface_hub` SDK](#31-huggingface_hub-sdk) |
+| 31 | [`huggingface_hub` SDK](#31-huggingface-hub-sdk) |
 | 32 | [Model Cards](#32-model-cards) |
 | 33 | [Use Cases](#33-use-cases) |
 | 34 | [Summary](#34-summary) |
 | 35 | [Hands-On：三個 Lab 總覽](#35-hands-on三個-lab-總覽) |
-| 36 | [`HF_transformer.ipynb` 逐格拆解](#36-hf_transformeripynb-逐格拆解) |
-| 37 | [⚠️ `HF_transformer.ipynb` 的三個缺陷](#37--hf_transformeripynb-的三個缺陷) |
-| 38 | [`HF_LLM.ipynb` 逐格拆解](#38-hf_llmipynb-逐格拆解) |
-| 39 | [⚠️ `HF_LLM.ipynb` 的兩個缺陷](#39--hf_llmipynb-的兩個缺陷) |
-| 40 | [`HF_dataset.ipynb` 逐格拆解](#40-hf_datasetipynb-逐格拆解) |
-| 41 | [⚠️ `HF_dataset.ipynb`：教 Streaming 卻不用 Streaming](#41--hf_datasetipynb教-streaming-卻不用-streaming) |
+| 36 | [`HF_transformer.ipynb` 逐格拆解](#36-hf-transformeripynb-逐格拆解) |
+| 37 | [⚠️ `HF_transformer.ipynb` 的三個缺陷](#37-hf-transformeripynb-的三個缺陷) |
+| 38 | [`HF_LLM.ipynb` 逐格拆解](#38-hf-llmipynb-逐格拆解) |
+| 39 | [⚠️ `HF_LLM.ipynb` 的兩個缺陷](#39-hf-llmipynb-的兩個缺陷) |
+| 40 | [`HF_dataset.ipynb` 逐格拆解](#40-hf-datasetipynb-逐格拆解) |
+| 41 | [⚠️ `HF_dataset.ipynb`：教 Streaming 卻不用 Streaming](#41-hf-datasetipynb教-streaming-卻不用-streaming) |
 | 42 | [本機實測總表（真實數據）](#42-本機實測總表真實數據) |
 | 43 | [考試重點整理](#43-考試重點整理) |
 | A | [附錄 A：指令與 API 速查表](#附錄-a指令與-api-速查表) |
@@ -65,7 +65,7 @@
 | C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
 | D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
 | E | [附錄 E：互動式線上測驗](#附錄-e互動式線上測驗) |
-| F | [附錄 F：答錯題目 → 複習章節對照](#附錄-f答錯題目--複習章節對照) |
+| F | [附錄 F：答錯題目 → 複習章節對照](#附錄-f答錯題目-複習章節對照) |
 
 ---
 

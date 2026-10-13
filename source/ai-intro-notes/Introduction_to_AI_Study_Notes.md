@@ -26,7 +26,7 @@
 | C | [附錄 C：延伸資源與離線提示](#附錄-c延伸資源與離線提示) |
 | D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
 | E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
 
 ---
 
@@ -157,7 +157,7 @@ AI = 具人類式智慧的「機器智慧」
 
 ## 5. 影像／視訊辨識 Image/Video Recognition
 
- 的定義重點：
+本節的定義重點：
 
 > 機器用**電腦視覺（computer vision）**辨識影像中的人、地、物，**準確度可達或超越人類水準**，
 > 而且**速度與效率遠勝人類**。透過複雜的 AI 技術，電腦視覺把影像資料自動化地
@@ -184,7 +184,7 @@ AI = 具人類式智慧的「機器智慧」
 
 ## 6. 人臉辨識 Facial Recognition
 
- 是重點章節，明確指出人臉辨識**分三個步驟**：
+本節是重點章節，明確指出人臉辨識**分三個步驟**：
 
 ```
 Detection（偵測） → Analysis（分析） → Recognition（辨識）
@@ -312,7 +312,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ## 9. 強化學習 Reinforcement Learning
 
- 聚焦「**Reinforcement Learning in Robotic Control and Self-Driving**」
+本節聚焦「**Reinforcement Learning in Robotic Control and Self-Driving**」
 （強化學習在機械人控制與自動駕駛的應用）。
 
 ### 9.1 要解決的問題

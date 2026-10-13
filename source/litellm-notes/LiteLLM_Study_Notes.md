@@ -18,11 +18,11 @@
 | 1 | [什麼是 LiteLLM：一個介面，146 個供應商](#1-什麼是-litellm一個介面146-個供應商) |
 | 2 | [安裝與設定（Installation and setting Params）](#2-安裝與設定installation-and-setting-params) |
 | 3 | [API Key 管理（Set your API keys）](#3-api-key-管理set-your-api-keys) |
-| 4 | [Call chatGPT — 最小可用範例](#4-call-chatgpt--最小可用範例) |
-| 5 | [Call Claude-2 — 第二個供應商，同一段程式](#5-call-claude-2--第二個供應商同一段程式) |
-| 6 | [Call llama2 on replicate — 開源模型走 Replicate](#6-call-llama2-on-replicate--開源模型走-replicate) |
-| 7 | [Call Command-Nightly — Cohere](#7-call-command-nightly--cohere) |
-| 8 | [Call Azure OpenAI — `azure/` 前綴與 deployment-id](#8-call-azure-openai--azure-前綴與-deployment-id) |
+| 4 | [Call chatGPT — 最小可用範例](#4-call-chatgpt-最小可用範例) |
+| 5 | [Call Claude-2 — 第二個供應商，同一段程式](#5-call-claude-2-第二個供應商同一段程式) |
+| 6 | [Call llama2 on replicate — 開源模型走 Replicate](#6-call-llama2-on-replicate-開源模型走-replicate) |
+| 7 | [Call Command-Nightly — Cohere](#7-call-command-nightly-cohere) |
+| 8 | [Call Azure OpenAI — `azure/` 前綴與 deployment-id](#8-call-azure-openai-azure-前綴與-deployment-id) |
 | 9 | [本機模型：Ollama（`lite.py` 逐行）](#9-本機模型ollamalitepy-逐行) |
 | 10 | [模型命名規則與供應商前綴總表](#10-模型命名規則與供應商前綴總表) |
 | 11 | [`completion()` 的統一 I/O 契約](#11-completion-的統一-io-契約) |
@@ -30,9 +30,9 @@
 | 13 | [常用參數速查](#13-常用參數速查) |
 | 14 | [串流輸出 `stream=True`](#14-串流輸出-streamtrue) |
 | 15 | [錯誤處理與例外類別](#15-錯誤處理與例外類別) |
-| 16 | [能力查詢：`supports_*`](#16-能力查詢supports_) |
-| 17 | [Token 計數 `token_counter()`](#17-token-計數-token_counter) |
-| 18 | [成本追蹤 `completion_cost()` 與內建成本表](#18-成本追蹤-completion_cost-與內建成本表) |
+| 16 | [能力查詢：`supports_*`](#16-能力查詢supports) |
+| 17 | [Token 計數 `token_counter()`](#17-token-計數-token-counter) |
+| 18 | [成本追蹤 `completion_cost()` 與內建成本表](#18-成本追蹤-completion-cost-與內建成本表) |
 | 19 | [進階：Router、Fallbacks 與重試](#19-進階routerfallbacks-與重試) |
 | 20 | [LiteLLM Proxy：把 146 個供應商變成一個 OpenAI 端點](#20-litellm-proxy把-146-個供應商變成一個-openai-端點) |
 | 21 | [LiteLLM 作為 LLM Gateway：企業級治理與架構](#21-litellm-作為-llm-gateway企業級治理與架構) |
@@ -43,7 +43,7 @@
 | C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
 | D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
 | E | [附錄 E：互動式線上測驗（68 題）](#附錄-e互動式線上測驗68-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
 
 ---
 

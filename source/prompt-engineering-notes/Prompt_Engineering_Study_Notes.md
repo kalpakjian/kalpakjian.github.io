@@ -12,12 +12,12 @@
 
 | # | 章節 |
 |---|------|
-| 1 | [Prerequisites & Objectives](#1-prerequisites--objectives) |
+| 1 | [Prerequisites & Objectives](#1-prerequisites-objectives) |
 | 2 | [What are prompts?](#2-what-are-prompts) |
 | 3 | [Why Prompt Engineering?](#3-why-prompt-engineering) |
 | 4 | [First Basic Prompt](#4-first-basic-prompt) |
 | 5 | [Elements of a Prompt](#5-elements-of-a-prompt) |
-| 6 | [Settings to keep in mind: temperature 與 top_p](#6-settings-to-keep-in-mind-temperature-與-top_p) |
+| 6 | [Settings to keep in mind: temperature 與 top_p](#6-settings-to-keep-in-mind-temperature-與-top-p) |
 | 7 | [Designing Prompts for Different Tasks（六大任務）](#7-designing-prompts-for-different-tasks六大任務) |
 | 8 | [Prompt Engineering 技術地圖（七大類）](#8-prompt-engineering-技術地圖七大類) |
 | 9 | [Zero-Shot Prompting](#9-zero-shot-prompting) |
@@ -44,7 +44,7 @@
 | 30 | [Generate Knowledge Prompting](#30-generate-knowledge-prompting) |
 | 31 | [Program-aided Language Model (PAL)](#31-program-aided-language-model-pal) |
 | 32 | [ReAct](#32-react) |
-| 33 | [Tools & IDEs](#33-tools--ides) |
+| 33 | [Tools & IDEs](#33-tools-ides) |
 | 34 | [Applications（外部工具與資料增強生成）](#34-applications外部工具與資料增強生成) |
 | 35 | [Opportunities and Future Directions](#35-opportunities-and-future-directions) |
 | 36 | [Model Safety](#36-model-safety) |
@@ -55,7 +55,7 @@
 | C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
 | D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
 | E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
 
 ---
 

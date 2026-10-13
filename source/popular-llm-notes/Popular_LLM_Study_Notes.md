@@ -13,7 +13,7 @@
 
 | # | 章節 |
 |---|------|
-| 1 | [課程地圖：三條主線](#1-課程地圖這份三條主線) |
+| 1 | [課程地圖：三條主線](#1-課程地圖三條主線) |
 | 2 | [什麼是生成式 AI（Generative Artificial Intelligence）](#2-什麼是生成式-aigenerative-artificial-intelligence) |
 | 3 | [熱門 LLM 總覽：六個對話式生成式 AI](#3-熱門-llm-總覽六個對話式生成式-ai) |
 | 4 | [ChatGPT：介面與用途](#4-chatgpt介面與用途) |
@@ -34,7 +34,7 @@
 | 19 | [Generative AI 深入：定義與核心技術](#19-generative-ai-深入定義與核心技術) |
 | 20 | [Generative AI 的運作方式與生成流程](#20-generative-ai-的運作方式與生成流程) |
 | 21 | [對照總表：Predictive AI vs Generative AI](#21-對照總表predictive-ai-vs-generative-ai) |
-| 22 | [AI → ML → DL → Generative AI 的層次，與 AIGC](#22-ai--ml--dl--generative-ai-的層次與-aigc) |
+| 22 | [AI → ML → DL → Generative AI 的層次，與 AIGC](#22-ai-ml-dl-generative-ai-的層次與-aigc) |
 | 23 | [GAN 基礎概念](#23-gan-基礎概念) |
 | 24 | [GAN 的底層技術與演算法](#24-gan-的底層技術與演算法) |
 | 25 | [Diffusion Model](#25-diffusion-model) |
@@ -51,7 +51,7 @@
 | C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
 | D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
 | E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
 
 ---
 
