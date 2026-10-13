@@ -111,8 +111,6 @@ LLM = Large Language Model（大型語言模型）
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch01-understanding-llms}}
-
 ### 1.1 LLM 的能力，與「理解」的準確意思
 
 原稿第一頁的重點是：LLM 具備理解（understand）、生成（generate）、詮釋（interpret）人類語言的
@@ -161,8 +159,6 @@ tasks）而設計的**。那些早期模型在各自的窄領域（narrow applic
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：「Large」的兩層意義：<strong>參數量</strong>（數十億～數千億）與<strong>訓練資料量</strong>同時變大，缺一不可。對照 PDF 第 5–7 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch02-what-is-an-llm}}
 
 ### 2.1 定義
 
@@ -217,8 +213,6 @@ LLM（GPT-3 級）    ──  數千億個參數（175 B）＋ 兆級 token 的�
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch03-applications}}
-
 ### 3.1 八大類應用
 
 | 領域 | 典型任務 | 背後的 LLM 能力 |
@@ -253,8 +247,6 @@ wide range of NLP tasks」的具體展現。
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 4：客製化 LLM 勝過通用模型：<strong>BloombergGPT（金融）</strong>與醫療問答是原稿舉的兩個例子。對照 PDF 第 9 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch04-custom-built-llms}}
 
 ### 4.1 核心論點
 
@@ -293,8 +285,6 @@ wide range of NLP tasks」的具體展現。
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 5：預訓練是「大而雜」，微調是「小而專」——前者產出 base／foundation model，後者把它拉向特定任務。對照 PDF 第 10–11 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch05-pretraining-vs-finetuning}}
 
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg viewBox="0 0 880 430" width="100%" style="max-width:880px;height:auto" role="img" aria-label="預訓練與微調的兩階段流程，以及兩種微調方式"><rect x="0" y="0" width="880" height="430" rx="8" fill="#111a26"/><defs><marker id="ar-pf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4da3ff"/></marker></defs><defs><marker id="ar-pf2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3fd07a"/></marker></defs><rect x="30" y="40" width="250" height="104" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.6"/><text x="155.0" y="66" font-size="14" fill="#4da3ff" text-anchor="middle" font-weight="bold">① 預訓練 Pretraining</text><text x="155.0" y="88" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">大型、多樣（diverse）資料集</text><text x="155.0" y="106" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">學到「語言的廣泛理解」</text><text x="155.0" y="124" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">產物 = base／foundation model</text><text x="30" y="168" font-size="12" fill="#93a1b1" text-anchor="start" font-weight="normal">「pre」＝最初階段，先學會語言的通用規律</text><line x1="288" y1="92" x2="356" y2="92" stroke="#93a1b1" stroke-width="2.4" marker-end="url(#ar-pf)"/><text x="322" y="80" font-size="12" fill="#93a1b1" text-anchor="middle" font-weight="normal">微調</text><rect x="364" y="40" width="250" height="104" rx="8" fill="#1b2534" stroke="#3fd07a" stroke-width="1.6"/><text x="489.0" y="66" font-size="14" fill="#3fd07a" text-anchor="middle" font-weight="bold">② 微調 Finetuning</text><text x="489.0" y="88" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">較小、聚焦特定任務／領域</text><text x="489.0" y="106" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">資料集更 narrow、更 specific</text><text x="489.0" y="124" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">產物 = 任務專用模型</text><text x="30" y="216" font-size="14" fill="#e6edf3" text-anchor="start" font-weight="bold">兩種最常見的微調類別（原稿 p12）</text><rect x="30" y="232" width="400" height="128" rx="8" fill="#1b2534" stroke="#f5a524" stroke-width="1.6"/><text x="230.0" y="258" font-size="14" fill="#f5a524" text-anchor="middle" font-weight="bold">Instruction-finetuning（指令微調）</text><text x="230.0" y="280" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">標註資料 = （instruction, answer）配對</text><text x="230.0" y="298" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">例：要求翻譯一段文字 + 正確譯文</text><text x="230.0" y="316" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">學會「聽指令做事」→ 對話、問答</text><rect x="450" y="232" width="400" height="128" rx="8" fill="#1b2534" stroke="#b98cff" stroke-width="1.6"/><text x="650.0" y="258" font-size="14" fill="#b98cff" text-anchor="middle" font-weight="bold">Classification finetuning（分類微調）</text><text x="650.0" y="280" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">標註資料 = （text, class label）配對</text><text x="650.0" y="298" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">例：email 標成 spam／non-spam</text><text x="650.0" y="316" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">輸出是「類別」而不是生成文字</text><text x="30" y="390" font-size="12.5" fill="#2fd4c4" text-anchor="start" font-weight="normal">口訣：預訓練學「語言」→ 微調學「任務」；指令微調學「怎麼回答」，分類微調學「分到哪一類」。</text></svg>
@@ -343,8 +333,6 @@ resource）**，可以再透過 finetuning 進一步精煉——而 finetuning �
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch06-instruction-vs-classification}}
-
 ### 6.1 兩大類微調
 
 原稿明確指出：**最受歡迎的兩種 finetuning 類別**是
@@ -385,8 +373,6 @@ resource）**，可以再透過 finetuning 進一步精煉——而 finetuning �
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 8：Transformer 的兩個子模組：<strong>encoder</strong> 把輸入編成帶上下文的向量，<strong>decoder</strong> 再由向量生成輸出。對照 PDF 第 13–15 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch07-transformer-architecture}}
 
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg viewBox="0 0 880 400" width="100%" style="max-width:880px;height:auto" role="img" aria-label="Transformer 的 encoder 與 decoder 兩個子模組"><rect x="0" y="0" width="880" height="400" rx="8" fill="#111a26"/><defs><marker id="ar-tf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4da3ff"/></marker></defs><text x="440" y="30" font-size="14" fill="#e6edf3" text-anchor="middle" font-weight="bold">Transformer = encoder 子模組 + decoder 子模組（由許多層堆疊）</text><rect x="60" y="56" width="250" height="250" rx="10" fill="#13294a" stroke="#4da3ff" stroke-width="1.8"/><text x="185" y="84" font-size="14" fill="#4da3ff" text-anchor="middle" font-weight="bold">Encoder（編碼器）</text><rect x="88" y="100" width="194" height="34" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.3"/><text x="185" y="122" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">self-attention + 前饋層</text><rect x="88" y="146" width="194" height="34" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.3"/><text x="185" y="168" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">self-attention + 前饋層</text><rect x="88" y="192" width="194" height="34" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.3"/><text x="185" y="214" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">self-attention + 前饋層</text><text x="185" y="296" font-size="12" fill="#93a1b1" text-anchor="middle" font-weight="normal">把輸入文字編碼成向量序列</text><line x1="316" y1="180" x2="366" y2="180" stroke="#93a1b1" stroke-width="2.4" marker-end="url(#ar-tf)"/><text x="341" y="168" font-size="12" fill="#93a1b1" text-anchor="middle" font-weight="normal">向量</text><rect x="374" y="56" width="250" height="250" rx="10" fill="#0f2e1d" stroke="#3fd07a" stroke-width="1.8"/><text x="499" y="84" font-size="14" fill="#3fd07a" text-anchor="middle" font-weight="bold">Decoder（解碼器）</text><rect x="402" y="100" width="194" height="34" rx="6" fill="#1b2534" stroke="#3fd07a" stroke-width="1.3"/><text x="499" y="122" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">self-attention + 前饋層</text><rect x="402" y="146" width="194" height="34" rx="6" fill="#1b2534" stroke="#3fd07a" stroke-width="1.3"/><text x="499" y="168" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">self-attention + 前饋層</text><rect x="402" y="192" width="194" height="34" rx="6" fill="#1b2534" stroke="#3fd07a" stroke-width="1.3"/><text x="499" y="214" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">self-attention + 前饋層</text><text x="499" y="296" font-size="12" fill="#93a1b1" text-anchor="middle" font-weight="normal">由向量生成輸出文字</text><rect x="650" y="100" width="200" height="118" rx="8" fill="#1b2534" stroke="#f5a524" stroke-width="1.6"/><text x="750.0" y="126" font-size="13" fill="#f5a524" text-anchor="middle" font-weight="bold">翻譯任務範例</text><text x="750.0" y="148" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">輸入：source language</text><text x="750.0" y="166" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">encoder → 向量</text><text x="750.0" y="184" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">decoder → target language</text><text x="60" y="340" font-size="12.5" fill="#2fd4c4" text-anchor="start" font-weight="normal">兩邊都靠「self-attention」把層與層連起來：輸入文字 → 向量 → 輸出文字；每個 token 都會去「看」序列中其他 token。</text><text x="60" y="366" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">考點：encoder 負責「讀懂輸入」，decoder 負責「生成輸出」；翻譯任務是最典型的例子。</text></svg>
@@ -441,8 +427,6 @@ self-attention 機制（self-attention mechanism）連接。**
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch08-self-attention}}
-
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg viewBox="0 0 880 380" width="100%" style="max-width:880px;height:auto" role="img" aria-label="self-attention 讓每個 token 對序列中其他 token 加權"><rect x="0" y="0" width="880" height="380" rx="8" fill="#111a26"/><defs><marker id="ar-sa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4da3ff"/></marker></defs><rect x="86" y="48" width="68" height="44" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.4"/><text x="120" y="76" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">The</text><rect x="202" y="48" width="68" height="44" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.4"/><text x="236" y="76" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">cat</text><rect x="318" y="48" width="68" height="44" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.4"/><text x="352" y="76" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">sat</text><rect x="434" y="48" width="68" height="44" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.4"/><text x="468" y="76" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">on</text><rect x="550" y="48" width="68" height="44" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.4"/><text x="584" y="76" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">the</text><rect x="666" y="48" width="68" height="44" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.4"/><text x="700" y="76" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">mat</text><text x="80" y="130" font-size="13" fill="#e6edf3" text-anchor="start" font-weight="bold">以 “sat” 為查詢，對其他 token 的注意力權重：</text><rect x="98" y="315" width="44" height="15" rx="4" fill="#4da3ff" stroke="#4da3ff" stroke-width="1.0"/><text x="120" y="350" font-size="11.5" fill="#93a1b1" text-anchor="middle" font-weight="normal">0.10</text><rect x="214" y="195" width="44" height="135" rx="4" fill="#f5a524" stroke="#f5a524" stroke-width="1.0"/><text x="236" y="350" font-size="11.5" fill="#93a1b1" text-anchor="middle" font-weight="normal">0.90</text><rect x="330" y="180" width="44" height="150" rx="4" fill="#ff6b5e" stroke="#ff6b5e" stroke-width="1.0"/><text x="352" y="350" font-size="11.5" fill="#93a1b1" text-anchor="middle" font-weight="normal">1.00</text><rect x="446" y="225" width="44" height="105" rx="4" fill="#f5a524" stroke="#f5a524" stroke-width="1.0"/><text x="468" y="350" font-size="11.5" fill="#93a1b1" text-anchor="middle" font-weight="normal">0.70</text><rect x="562" y="308" width="44" height="22" rx="4" fill="#4da3ff" stroke="#4da3ff" stroke-width="1.0"/><text x="584" y="350" font-size="11.5" fill="#93a1b1" text-anchor="middle" font-weight="normal">0.15</text><rect x="678" y="263" width="44" height="67" rx="4" fill="#4da3ff" stroke="#4da3ff" stroke-width="1.0"/><text x="700" y="350" font-size="11.5" fill="#93a1b1" text-anchor="middle" font-weight="normal">0.45</text><text x="80" y="160" font-size="12.5" fill="#2fd4c4" text-anchor="start" font-weight="normal">權重越大 → 生成下一個字時越「參考」那個 token</text><text x="80" y="378" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">這就是「長距離依賴（long-range dependencies）」與上下文關係的來源。</text></svg>
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 11：<strong>self-attention 機制</strong>：序列中每個 token 都會去「衡量」其他 token 的重要性（權重），因此模型能捕捉<strong>長距離依賴</strong>與上下文關係，產出連貫且切題的文字。上圖以 “sat” 為例：它對 “cat” 與 “on” 的權重最高。對照 PDF 第 16 頁。</figcaption>
@@ -488,8 +472,6 @@ contextually relevant output）**的能力。
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 12：BERT（encoder、遮字填空、擅長分類）與 GPT（decoder、預測下一字、擅長生成）的分工。對照 PDF 第 17–21 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch09-bert-vs-gpt}}
 
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg viewBox="0 0 880 400" width="100%" style="max-width:880px;height:auto" role="img" aria-label="原始 Transformer、BERT 與 GPT 的架構取用方式比較"><rect x="0" y="0" width="880" height="400" rx="8" fill="#111a26"/><defs><marker id="ar-bg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#93a1b1"/></marker></defs><rect x="24" y="44" width="258" height="150" rx="8" fill="#1b2534" stroke="#93a1b1" stroke-width="1.6"/><text x="153.0" y="70" font-size="13" fill="#93a1b1" text-anchor="middle" font-weight="bold">原始 Transformer</text><text x="153.0" y="92" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">encoder + decoder 都用</text><text x="153.0" y="110" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">為「序列到序列」而設計</text><text x="153.0" y="128" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">例：翻譯</text><rect x="306" y="44" width="258" height="150" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.6"/><text x="435.0" y="70" font-size="13" fill="#4da3ff" text-anchor="middle" font-weight="bold">BERT（只用 encoder）</text><text x="435.0" y="92" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">masked word prediction</text><text x="435.0" y="110" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">預測被遮住的字（雙向）</text><text x="435.0" y="128" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">擅長：分類、情感、文件分類</text><rect x="588" y="44" width="268" height="150" rx="8" fill="#1b2534" stroke="#3fd07a" stroke-width="1.6"/><text x="722.0" y="70" font-size="13" fill="#3fd07a" text-anchor="middle" font-weight="bold">GPT（只用 decoder）</text><text x="722.0" y="92" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">generative／文字生成</text><text x="722.0" y="110" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">自迴歸：一次預測一個字</text><text x="722.0" y="128" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">擅長：翻譯、摘要、寫程式</text><text x="24" y="232" font-size="14" fill="#e6edf3" text-anchor="start" font-weight="bold">原稿 p17–21 的對比重點</text><text x="24" y="252" font-size="12.5" fill="#2fd4c4" text-anchor="start" font-weight="bold">項目</text><text x="180" y="252" font-size="12.5" fill="#4da3ff" text-anchor="start" font-weight="bold">BERT</text><text x="560" y="252" font-size="12.5" fill="#3fd07a" text-anchor="start" font-weight="bold">GPT</text><line x1="24" y1="260" x2="856" y2="260" stroke="#2a3442" stroke-width="1.2"/><text x="24" y="290" font-size="12.5" fill="#e6edf3" text-anchor="start" font-weight="bold">訓練目標</text><text x="180" y="290" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">masked word prediction（遮字填空）</text><text x="560" y="290" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">next-word prediction（預測下一個字）</text><text x="24" y="320" font-size="12.5" fill="#e6edf3" text-anchor="start" font-weight="bold">方向性</text><text x="180" y="320" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">雙向（同時看左右文）</text><text x="560" y="320" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">單向（只能看前面的字）</text><text x="24" y="350" font-size="12.5" fill="#e6edf3" text-anchor="start" font-weight="bold">強項</text><text x="180" y="350" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">文字分類：情感預測、文件分類</text><text x="560" y="350" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">生成：翻譯、摘要、寫小說、寫程式</text><text x="24" y="380" font-size="12.5" fill="#e6edf3" text-anchor="start" font-weight="bold">實例</text><text x="180" y="380" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">Twitter 用它偵測 toxic content</text><text x="560" y="380" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">zero-shot／few-shot 學習</text></svg>
@@ -553,8 +535,6 @@ contextually relevant output）**的能力。
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch10-gpt-datasets}}
-
 ### 10.1 各代 GPT 的訓練語料（本筆記補充）
 
 | 模型 | 主要資料集 | 說明 |
@@ -586,8 +566,6 @@ contextually relevant output）**的能力。
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 15：token 是模型讀取的文字單位；token 數 ≈ <strong>單詞數 ＋ 標點字元數</strong>。對照 PDF 第 23 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch11-tokens}}
 
 ### 11.1 定義
 
@@ -640,8 +618,6 @@ print([(enc.decode([i]), i) for i in ids])
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch12-pretraining-cost}}
-
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg viewBox="0 0 880 300" width="100%" style="max-width:880px;height:auto" role="img" aria-label="原始 Transformer 與 GPT-3 的層數與參數量比較"><rect x="0" y="0" width="880" height="300" rx="8" fill="#111a26"/><rect x="140" y="190" width="150" height="60" rx="4" fill="#4da3ff" stroke="#4da3ff" stroke-width="1.2"/><text x="215" y="274" font-size="12.5" fill="#4da3ff" text-anchor="middle" font-weight="bold">原始 Transformer</text><text x="215" y="294" font-size="11.5" fill="#93a1b1" text-anchor="middle" font-weight="normal">encoder／decoder 各重複 6 次</text><rect x="430" y="30" width="150" height="220" rx="4" fill="#f5a524" stroke="#f5a524" stroke-width="1.2"/><text x="505" y="4" font-size="13" fill="#f5a524" text-anchor="middle" font-weight="bold">175 B 參數</text><text x="505" y="274" font-size="12.5" fill="#f5a524" text-anchor="middle" font-weight="bold">GPT-3</text><text x="505" y="294" font-size="11.5" fill="#93a1b1" text-anchor="middle" font-weight="normal">96 層 transformer</text><line x1="300" y1="190" x2="420" y2="190" stroke="#93a1b1" stroke-width="1.4" stroke-dasharray="4 4"/><line x1="300" y1="30" x2="420" y2="30" stroke="#93a1b1" stroke-width="1.4" stroke-dasharray="4 4"/><text x="360" y="22" font-size="12" fill="#93a1b1" text-anchor="middle" font-weight="normal">16 倍層數</text><text x="650" y="120" font-size="19" fill="#f5a524" text-anchor="start" font-weight="bold">175,000,000,000</text><text x="650" y="146" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">個可調參數（weights）</text><text x="650" y="182" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">GPT-3 預訓練成本估計</text><text x="650" y="208" font-size="16" fill="#ff6b5e" text-anchor="start" font-weight="bold">$4.6 million</text><text x="650" y="230" font-size="11.5" fill="#93a1b1" text-anchor="start" font-weight="normal">（雲端算力計價）</text></svg>
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 17：<strong>GPT-3 的規模</strong>：原始 Transformer 的 encoder／decoder 各只重複 <strong>6 次</strong>，GPT-3 則有 <strong>96 層</strong> transformer、共 <strong>1750 億（175 B）</strong> 個參數；而 GPT-3 的預訓練成本估計約 <strong>460 萬美元</strong>（以雲端算力計價）。對照 PDF 第 24、28 頁。</figcaption>
@@ -684,8 +660,6 @@ print([(enc.decode([i]), i) for i in ids])
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch13-pretrained-llms}}
-
 ### 13.1 兩個好消息
 
 原稿給出兩點：
@@ -724,8 +698,6 @@ print([(enc.decode([i]), i) for i in ids])
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 19：next-word prediction 的標籤來自資料本身——這是<strong>自我監督學習（self-labelling）</strong>的核心。對照 PDF 第 26 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch14-next-word-prediction}}
 
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg viewBox="0 0 880 300" width="100%" style="max-width:880px;height:auto" role="img" aria-label="下一個字預測：標籤直接從資料本身產生"><rect x="0" y="0" width="880" height="300" rx="8" fill="#111a26"/><defs><marker id="ar-nw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f5a524"/></marker></defs><rect x="60" y="64" width="108" height="50" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.5"/><text x="114" y="96" font-size="14" fill="#e6edf3" text-anchor="middle" font-weight="bold">The</text><rect x="188" y="64" width="108" height="50" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.5"/><text x="242" y="96" font-size="14" fill="#e6edf3" text-anchor="middle" font-weight="bold">cat</text><rect x="316" y="64" width="108" height="50" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.5"/><text x="370" y="96" font-size="14" fill="#e6edf3" text-anchor="middle" font-weight="bold">sat</text><rect x="444" y="64" width="108" height="50" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.5"/><text x="498" y="96" font-size="14" fill="#e6edf3" text-anchor="middle" font-weight="bold">on</text><rect x="572" y="64" width="108" height="50" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.5"/><text x="626" y="96" font-size="14" fill="#e6edf3" text-anchor="middle" font-weight="bold">the</text><rect x="700" y="64" width="108" height="50" rx="8" fill="#3a2810" stroke="#f5a524" stroke-width="2.0"/><text x="754" y="96" font-size="14" fill="#f5a524" text-anchor="middle" font-weight="bold">mat</text><text x="60" y="140" font-size="12.5" fill="#4da3ff" text-anchor="start" font-weight="bold">輸入（context）</text><text x="700" y="140" font-size="12.5" fill="#f5a524" text-anchor="start" font-weight="bold">標籤（label）</text><line x1="680" y1="186" x2="700" y2="186" stroke="#f5a524" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#ar-nw)"/><text x="60" y="210" font-size="13.5" fill="#e6edf3" text-anchor="start" font-weight="bold">自我監督（self-supervised）＝ 自我標註（self-labelling）：</text><text x="60" y="236" font-size="13" fill="#93a1b1" text-anchor="start" font-weight="normal">不用另外人工收集標籤，直接拿「句子裡的下一個字」當標準答案。</text><text x="60" y="266" font-size="13" fill="#2fd4c4" text-anchor="start" font-weight="normal">這是 LLM 能用「整個網路的公開文字」訓練的關鍵——資料本身就是標籤。</text></svg>
@@ -773,8 +745,6 @@ print([(enc.decode([i]), i) for i in ids])
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch15-autoregressive}}
-
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg viewBox="0 0 880 330" width="100%" style="max-width:880px;height:auto" role="img" aria-label="自迴歸模型：把前一次輸出接回輸入，一次生成一個字"><rect x="0" y="0" width="880" height="330" rx="8" fill="#111a26"/><defs><marker id="ar-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3fd07a"/></marker></defs><rect x="40" y="60" width="240" height="92" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.6"/><text x="160.0" y="86" font-size="14" fill="#4da3ff" text-anchor="middle" font-weight="bold">① 目前序列</text><text x="160.0" y="108" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">The cat sat</text><line x1="288" y1="106" x2="356" y2="106" stroke="#93a1b1" stroke-width="2.4" marker-end="url(#ar-ar)"/><rect x="364" y="60" width="200" height="92" rx="8" fill="#1b2534" stroke="#b98cff" stroke-width="1.6"/><text x="464.0" y="86" font-size="14" fill="#b98cff" text-anchor="middle" font-weight="bold">② 模型</text><text x="464.0" y="108" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">預測下一個字</text><line x1="572" y1="106" x2="640" y2="106" stroke="#93a1b1" stroke-width="2.4" marker-end="url(#ar-ar)"/><rect x="648" y="60" width="200" height="92" rx="8" fill="#1b2534" stroke="#3fd07a" stroke-width="1.6"/><text x="748.0" y="86" font-size="14" fill="#3fd07a" text-anchor="middle" font-weight="bold">③ 輸出</text><text x="748.0" y="108" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">on</text><polyline points="748,156 748,232 160,232 160,158" fill="none" stroke="#3fd07a" stroke-width="2.0" stroke-dasharray="7 5" marker-end="url(#ar-ar)"/><text x="454" y="254" font-size="13" fill="#3fd07a" text-anchor="middle" font-weight="normal">把輸出接回輸入 → 下一輪：The cat sat on → 再預測下一個字</text><text x="40" y="296" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">因為每個新字都根據「它前面的整串序列」決定，所以文字會越來越連貫；缺點是錯誤會被累積放大。</text></svg>
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 22：<strong>自迴歸模型（autoregressive）</strong>：decoder 式模型（如 GPT）一次只預測一個字，並把<strong>先前的輸出當成未來的輸入</strong>，所以每個新字都取決於它前面的序列，連貫性因此提升。GPT 的架構比原始 Transformer 單純（只用 decoder）。對照 PDF 第 27、29 頁。</figcaption>
@@ -818,8 +788,6 @@ outputs as inputs for future predictions）**。因此在 GPT 中，**每一個�
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch16-gpt3}}
-
 ### 16.1 原文
 
 > Architectures such as GPT-3 are also significantly larger than the original transformer model.
@@ -860,8 +828,6 @@ GPT-3          ：96 層   █████████████████�
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch17-autoregressive-generation}}
-
 ### 17.1 為什麼原稿會有兩頁同名
 
 因為 §15 講的是**「自迴歸是什麼」（定義）**，而 p29 這張圖要表達的是
@@ -898,8 +864,6 @@ GPT-3          ：96 層   █████████████████�
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 25：「Building an LLM」＝把模型拆成一條可以動手實作的資料處理管線，而不是一個黑箱。對照 PDF 第 30–31 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch18-building-an-llm}}
 
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg viewBox="0 0 880 300" width="100%" style="max-width:880px;height:auto" role="img" aria-label="建構 LLM 的三個階段：預訓練、一般微調、指令微調"><rect x="0" y="0" width="880" height="300" rx="8" fill="#111a26"/><defs><marker id="ar-bp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4da3ff"/></marker></defs><rect x="40" y="56" width="248" height="122" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.6"/><text x="164.0" y="82" font-size="14" fill="#4da3ff" text-anchor="middle" font-weight="bold">① Pretraining</text><text x="164.0" y="104" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">海量未標註文字</text><text x="164.0" y="122" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">next-word prediction</text><text x="164.0" y="140" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">→ base model</text><rect x="316" y="56" width="248" height="122" rx="8" fill="#1b2534" stroke="#3fd07a" stroke-width="1.6"/><text x="440.0" y="82" font-size="14" fill="#3fd07a" text-anchor="middle" font-weight="bold">② Finetuning</text><text x="440.0" y="104" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">特定任務／領域</text><text x="440.0" y="122" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">較小資料集</text><text x="440.0" y="140" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">→ 專用模型</text><rect x="592" y="56" width="248" height="122" rx="8" fill="#1b2534" stroke="#f5a524" stroke-width="1.6"/><text x="716.0" y="82" font-size="14" fill="#f5a524" text-anchor="middle" font-weight="bold">③ Instruction FT</text><text x="716.0" y="104" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">instruction + answer</text><text x="716.0" y="122" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">學會聽指令</text><text x="716.0" y="140" font-size="12" fill="#e6edf3" text-anchor="middle" font-weight="normal">→ 對話助手</text><line x1="292" y1="117" x2="312" y2="117" stroke="#93a1b1" stroke-width="2.4" marker-end="url(#ar-bp)"/><line x1="568" y1="117" x2="588" y2="117" stroke="#93a1b1" stroke-width="2.4" marker-end="url(#ar-bp)"/><text x="40" y="224" font-size="13.5" fill="#e6edf3" text-anchor="start" font-weight="bold">原稿後半（p32–47）＝把①的「輸入處理管線」拆開來實作：</text><text x="40" y="252" font-size="13" fill="#2fd4c4" text-anchor="start" font-weight="normal">文字 → tokenize → token ID → embedding → 加上 positional embedding → 送進主要 LLM 層</text></svg>
@@ -955,8 +919,6 @@ p30 與 p31 都只有標題「Building an LLM」，是**章節分隔頁**：把�
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch19-word-embeddings}}
-
 ### 19.1 什麼是 word embedding
 
 **Word embedding（詞嵌入）** 就是把一個 token（詞）**映射到一串固定長度的實數向量**。
@@ -998,8 +960,6 @@ p30 與 p31 都只有標題「Building an LLM」，是**章節分隔頁**：把�
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 28：Tokenizing text：用正則把文字切成一塊塊 token，標點也要保留成獨立的 token。對照 PDF 第 34 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch20-tokenizing-text}}
 
 ### 20.1 做法：用正則表達式切開文字
 
@@ -1052,8 +1012,6 @@ print(preprocessed)
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 29：建立 vocabulary：token ↔ ID 的對應帳本，用 <strong>sorted(set(...))</strong> 保證 ID 可重現。對照 PDF 第 35–36 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch21-token-ids}}
 
 ### 21.1 建立詞彙表（vocabulary）
 
@@ -1126,8 +1084,6 @@ decode 回文字: Thecatsat
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch22-simple-tokenizer}}
-
 ### 22.1 完整類別
 
 ```python
@@ -1190,8 +1146,6 @@ class SimpleTokenizerV1:
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 31：特殊 token 是兩個閃亮的標記：<strong>&lt;|unk|&gt;</strong> 代表未知詞、<strong>&lt;|endoftext|&gt;</strong> 代表文本邊界。對照 PDF 第 38 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch23-special-tokens}}
 
 ### 23.1 兩種特殊 token
 
@@ -1261,8 +1215,6 @@ class SimpleTokenizerV2:
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch24-start-end-of-text}}
-
 ### 24.1 為什麼需要文件邊界
 
 訓練語料通常是**很多份不相關的文件**串接而成（例如：一整本小說 + 一篇新聞 + 一段程式碼）。
@@ -1310,8 +1262,6 @@ class SimpleTokenizerV2:
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 33：滑動視窗取樣：視窗沿著文字滑動，stride 決定樣本重疊的程度。對照 PDF 第 40 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch25-sliding-window-sampling}}
 
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg viewBox="0 0 880 330" width="100%" style="max-width:880px;height:auto" role="img" aria-label="用滑動視窗把長文本切成重疊或互不重疊的訓練樣本"><rect x="0" y="0" width="880" height="330" rx="8" fill="#111a26"/><defs><marker id="ar-sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f5a524"/></marker></defs><rect x="40" y="58" width="74" height="44" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.2"/><text x="77" y="86" font-size="11.5" fill="#e6edf3" text-anchor="middle" font-weight="normal">In</text><rect x="124" y="58" width="74" height="44" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.2"/><text x="161" y="86" font-size="11.5" fill="#e6edf3" text-anchor="middle" font-weight="normal">the</text><rect x="208" y="58" width="74" height="44" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.2"/><text x="245" y="86" font-size="11.5" fill="#e6edf3" text-anchor="middle" font-weight="normal">heart</text><rect x="292" y="58" width="74" height="44" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.2"/><text x="329" y="86" font-size="11.5" fill="#e6edf3" text-anchor="middle" font-weight="normal">of</text><rect x="376" y="58" width="74" height="44" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.2"/><text x="413" y="86" font-size="11.5" fill="#e6edf3" text-anchor="middle" font-weight="normal">the</text><rect x="460" y="58" width="74" height="44" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.2"/><text x="497" y="86" font-size="11.5" fill="#e6edf3" text-anchor="middle" font-weight="normal">city</text><rect x="544" y="58" width="74" height="44" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.2"/><text x="581" y="86" font-size="11.5" fill="#e6edf3" text-anchor="middle" font-weight="normal">a</text><rect x="628" y="58" width="74" height="44" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.2"/><text x="665" y="86" font-size="11.5" fill="#e6edf3" text-anchor="middle" font-weight="normal">small</text><rect x="712" y="58" width="74" height="44" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.2"/><text x="749" y="86" font-size="11.5" fill="#e6edf3" text-anchor="middle" font-weight="normal">café</text><rect x="796" y="58" width="74" height="44" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.2"/><text x="833" y="86" font-size="11.5" fill="#e6edf3" text-anchor="middle" font-weight="normal">stood</text><text x="40" y="150" font-size="13" fill="#e6edf3" text-anchor="start" font-weight="bold">stride = 1（每次只移 1 格 → 樣本高度重疊）</text><rect x="40" y="168" width="242" height="22" rx="5" fill="#3a2810" stroke="#f5a524" stroke-width="1.4"/><text x="370" y="184" font-size="11.5" fill="#93a1b1" text-anchor="start" font-weight="normal">batch 1</text><rect x="124" y="198" width="242" height="22" rx="5" fill="#3a2810" stroke="#f5a524" stroke-width="1.4"/><text x="454" y="214" font-size="11.5" fill="#93a1b1" text-anchor="start" font-weight="normal">batch 2</text><rect x="208" y="228" width="242" height="22" rx="5" fill="#3a2810" stroke="#f5a524" stroke-width="1.4"/><text x="538" y="244" font-size="11.5" fill="#93a1b1" text-anchor="start" font-weight="normal">batch 3</text><text x="40" y="268" font-size="13" fill="#e6edf3" text-anchor="start" font-weight="bold">stride = 視窗大小（批次之間完全不重疊）</text><rect x="40" y="282" width="242" height="22" rx="5" fill="#0c2e2b" stroke="#2fd4c4" stroke-width="1.4"/><rect x="292" y="282" width="242" height="22" rx="5" fill="#0c2e2b" stroke="#2fd4c4" stroke-width="1.4"/><rect x="544" y="282" width="242" height="22" rx="5" fill="#0c2e2b" stroke="#2fd4c4" stroke-width="1.4"/></svg>
@@ -1393,8 +1343,6 @@ max_length=4 stride=1 -> 產生 2 個樣本
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch26-data-loaders}}
-
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg viewBox="0 0 880 300" width="100%" style="max-width:880px;height:auto" role="img" aria-label="輸入張量 x 與目標張量 y：把輸入往左平移一位"><rect x="0" y="0" width="880" height="300" rx="8" fill="#111a26"/><defs><marker id="ar-dl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b98cff"/></marker></defs><rect x="60" y="56" width="108" height="46" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.4"/><text x="114" y="86" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">In</text><rect x="188" y="56" width="108" height="46" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.4"/><text x="242" y="86" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">the</text><rect x="316" y="56" width="108" height="46" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.4"/><text x="370" y="86" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">heart</text><rect x="444" y="56" width="108" height="46" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.4"/><text x="498" y="86" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">of</text><rect x="572" y="56" width="108" height="46" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.4"/><text x="626" y="86" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">the</text><rect x="700" y="56" width="108" height="46" rx="6" fill="#1b2534" stroke="#4da3ff" stroke-width="1.4"/><text x="754" y="86" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">city</text><text x="60" y="132" font-size="13" fill="#4da3ff" text-anchor="start" font-weight="bold">x（input context）</text><rect x="60" y="166" width="108" height="46" rx="6" fill="#1b2534" stroke="#3fd07a" stroke-width="1.4"/><text x="114" y="196" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">the</text><rect x="188" y="166" width="108" height="46" rx="6" fill="#1b2534" stroke="#3fd07a" stroke-width="1.4"/><text x="242" y="196" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">heart</text><rect x="316" y="166" width="108" height="46" rx="6" fill="#1b2534" stroke="#3fd07a" stroke-width="1.4"/><text x="370" y="196" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">of</text><rect x="444" y="166" width="108" height="46" rx="6" fill="#1b2534" stroke="#3fd07a" stroke-width="1.4"/><text x="498" y="196" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">the</text><rect x="572" y="166" width="108" height="46" rx="6" fill="#1b2534" stroke="#3fd07a" stroke-width="1.4"/><text x="626" y="196" font-size="13" fill="#e6edf3" text-anchor="middle" font-weight="bold">city</text><rect x="700" y="166" width="108" height="46" rx="6" fill="#3a1714" stroke="#ff6b5e" stroke-width="1.4"/><text x="754" y="196" font-size="13" fill="#ff6b5e" text-anchor="middle" font-weight="bold">…</text><text x="60" y="240" font-size="13" fill="#3fd07a" text-anchor="start" font-weight="bold">y（targets = 下一個字，由 x 平移一位而來）</text><line x1="700" y1="128" x2="700" y2="158" stroke="#b98cff" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ar-dl)"/><text x="60" y="278" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">x 的每一列代表一個輸入 context；y 是對應的預測目標。訓練時模型學的是「看 x 那一列，輸出 y 那一列」。</text></svg>
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 36：<strong>Data Loader 的 x 與 y</strong>：把所有輸入收集成張量 <strong>x</strong>（每一列 = 一個輸入 context），另一個張量 <strong>y</strong> 放對應的預測目標（下一個字），而 y 就是把輸入<strong>往左平移一位</strong>（shift by one）得到的。對照 PDF 第 41 頁。</figcaption>
@@ -1460,8 +1408,6 @@ DataLoader batch y shape: (2, 4) -> [[4, 11, 9, 13], [11, 9, 13, 8]]
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch27-sliding-window}}
-
 ### 27.1 原文
 
 > When creating multiple batches from the input dataset, we slide an input window across the text.
@@ -1514,8 +1460,6 @@ stride = 3（不重疊）
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 38：embedding layer 的查表：token ID 5 直接取出權重矩陣的<strong>第 6 列</strong>（Python 從 0 開始數）。對照 PDF 第 44–45 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch28-embedding-layers}}
 
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg viewBox="0 0 880 340" width="100%" style="max-width:880px;height:auto" role="img" aria-label="Embedding layer 的查表運算與 positional embedding 的相加"><rect x="0" y="0" width="880" height="340" rx="8" fill="#111a26"/><defs><marker id="ar-el" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2fd4c4"/></marker></defs><text x="30" y="40" font-size="13.5" fill="#e6edf3" text-anchor="start" font-weight="bold">① Embedding layer = 查表（look-up）</text><rect x="30" y="56" width="150" height="22" rx="4" fill="#1b2534" stroke="#2a3442" stroke-width="1.3"/><text x="38" y="72" font-size="11" fill="#93a1b1" text-anchor="start" font-weight="normal">row 0</text><rect x="30" y="82" width="150" height="22" rx="4" fill="#1b2534" stroke="#2a3442" stroke-width="1.3"/><text x="38" y="98" font-size="11" fill="#93a1b1" text-anchor="start" font-weight="normal">row 1</text><rect x="30" y="108" width="150" height="22" rx="4" fill="#1b2534" stroke="#2a3442" stroke-width="1.3"/><text x="38" y="124" font-size="11" fill="#93a1b1" text-anchor="start" font-weight="normal">row 2</text><rect x="30" y="134" width="150" height="22" rx="4" fill="#1b2534" stroke="#2a3442" stroke-width="1.3"/><text x="38" y="150" font-size="11" fill="#93a1b1" text-anchor="start" font-weight="normal">row 3</text><rect x="30" y="160" width="150" height="22" rx="4" fill="#1b2534" stroke="#2a3442" stroke-width="1.3"/><text x="38" y="176" font-size="11" fill="#93a1b1" text-anchor="start" font-weight="normal">row 4</text><rect x="30" y="186" width="150" height="22" rx="4" fill="#ff6b5e" stroke="#ff6b5e" stroke-width="1.3"/><text x="38" y="202" font-size="11" fill="#111a26" text-anchor="start" font-weight="bold">row 5</text><rect x="30" y="212" width="150" height="22" rx="4" fill="#1b2534" stroke="#2a3442" stroke-width="1.3"/><text x="38" y="228" font-size="11" fill="#93a1b1" text-anchor="start" font-weight="normal">row 6</text><text x="192" y="190" font-size="12" fill="#ff6b5e" text-anchor="start" font-weight="normal">← token ID 5 的向量</text><text x="192" y="208" font-size="11.5" fill="#93a1b1" text-anchor="start" font-weight="normal">（第 6 列，因為 Python 從 0 開始數）</text><text x="30" y="250" font-size="11.5" fill="#93a1b1" text-anchor="start" font-weight="normal">權重矩陣（vocabulary × embedding dim）</text><text x="470" y="40" font-size="13.5" fill="#e6edf3" text-anchor="start" font-weight="bold">② token embedding + positional embedding</text><rect x="470" y="56" width="170" height="74" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.6"/><text x="555.0" y="82" font-size="13" fill="#4da3ff" text-anchor="middle" font-weight="bold">token embedding</text><text x="555.0" y="104" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">[1, 0, 0, 0]</text><text x="652" y="98" font-size="20" fill="#e6edf3" text-anchor="middle" font-weight="bold">+</text><rect x="676" y="56" width="170" height="74" rx="8" fill="#1b2534" stroke="#f5a524" stroke-width="1.6"/><text x="761.0" y="82" font-size="13" fill="#f5a524" text-anchor="middle" font-weight="bold">positional</text><text x="761.0" y="104" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">[0.1, 0.3, 0.2, 0.4]</text><line x1="738" y1="140" x2="738" y2="168" stroke="#2fd4c4" stroke-width="2.0" marker-end="url(#ar-el)"/><rect x="600" y="176" width="246" height="74" rx="8" fill="#1b2534" stroke="#2fd4c4" stroke-width="1.6"/><text x="723.0" y="202" font-size="13" fill="#2fd4c4" text-anchor="middle" font-weight="bold">input embedding</text><text x="723.0" y="224" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">= 送進 LLM 主層的向量</text><text x="430" y="282" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">同一 token ID 不論在第 1 或第 3 個位置，查到的向量都相同；</text><text x="430" y="304" font-size="12.5" fill="#2fd4c4" text-anchor="start" font-weight="normal">位置資訊要靠 positional embedding 加進去。</text></svg>
@@ -1585,8 +1529,6 @@ print(torch.equal(emb(inp)[0], emb.weight[5]))   # 是否等於第 6 列？
 </figure>
 <!-- /FIGURE -->
 
-{{AIART:ch29-positional-embeddings}}
-
 ### 29.1 原文
 
 > Positional embeddings are **added to** the token embedding vector to create the **input
@@ -1649,8 +1591,6 @@ print((tok_emb + pos_emb(pos)))
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 41：完整的輸入處理管線：文字 → token → token ID → embedding → ＋位置編碼 → 送進 LLM 主層。對照 PDF 第 47 頁。｜Qwen-Image 2.1 生成插圖</figcaption>
 </figure>
 <!-- /FIGURE -->
-
-{{AIART:ch30-input-pipeline}}
 
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg viewBox="0 0 880 300" width="100%" style="max-width:880px;height:auto" role="img" aria-label="輸入處理管線：文字 → token → token ID → embedding → 主層"><rect x="0" y="0" width="880" height="300" rx="8" fill="#111a26"/><defs><marker id="ar-tp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4da3ff"/></marker></defs><rect x="30" y="60" width="150" height="104" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.6"/><text x="105.0" y="86" font-size="13" fill="#4da3ff" text-anchor="middle" font-weight="bold">① 原始文字</text><text x="105.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">"Hello, world!"</text><text x="105.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">text</text><rect x="196" y="60" width="156" height="104" rx="8" fill="#1b2534" stroke="#b98cff" stroke-width="1.6"/><text x="274.0" y="86" font-size="13" fill="#b98cff" text-anchor="middle" font-weight="bold">② Tokenize</text><text x="274.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">["Hello", ",", " world", "!"]</text><text x="274.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">tokens</text><rect x="368" y="60" width="168" height="104" rx="8" fill="#1b2534" stroke="#f5a524" stroke-width="1.6"/><text x="452.0" y="86" font-size="13" fill="#f5a524" text-anchor="middle" font-weight="bold">③ Token ID</text><text x="452.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">[15496, 11, 995, 0]</text><text x="452.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">IDs（靠 vocabulary）</text><rect x="552" y="60" width="150" height="104" rx="8" fill="#1b2534" stroke="#2fd4c4" stroke-width="1.6"/><text x="627.0" y="86" font-size="13" fill="#2fd4c4" text-anchor="middle" font-weight="bold">④ Embedding</text><text x="627.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">[[0.1, …], …]</text><text x="627.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">向量</text><rect x="718" y="60" width="140" height="104" rx="8" fill="#1b2534" stroke="#3fd07a" stroke-width="1.6"/><text x="788.0" y="86" font-size="13" fill="#3fd07a" text-anchor="middle" font-weight="bold">⑤ + Position</text><text x="788.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">input embeddings</text><text x="788.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">→ 主 LLM 層</text><line x1="184" y1="112" x2="202" y2="112" stroke="#93a1b1" stroke-width="2.2" marker-end="url(#ar-tp)"/><line x1="356" y1="112" x2="374" y2="112" stroke="#93a1b1" stroke-width="2.2" marker-end="url(#ar-tp)"/><line x1="540" y1="112" x2="558" y2="112" stroke="#93a1b1" stroke-width="2.2" marker-end="url(#ar-tp)"/><line x1="706" y1="112" x2="724" y2="112" stroke="#93a1b1" stroke-width="2.2" marker-end="url(#ar-tp)"/><text x="30" y="210" font-size="13" fill="#2fd4c4" text-anchor="start" font-weight="normal">重點順序：先切 token → 用 vocabulary 轉成 ID → 轉成 embedding 向量 → 加上位置編碼 → 才是 LLM 主層的輸入。</text><text x="30" y="238" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">「token 數」約等於「字數 + 標點數」；這是估算訓練成本與 context 長度的基準。</text><text x="30" y="268" font-size="12.5" fill="#e6edf3" text-anchor="start" font-weight="normal">考點：p47 這一頁就是整份教材後半的總結，五個步驟的順序不能顛倒。</text></svg>

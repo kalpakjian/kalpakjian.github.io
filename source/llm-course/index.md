@@ -21,7 +21,7 @@ date: 2026-10-13 09:00:00
 | **Lesson 3** | Introduction to LLM (Theory) | ✅ [Introduction to LLM 學習筆記](/llm-intro-notes/) |
 | **Lesson 4** | Responsible LLM | ⏳ 待補 |
 | **Lesson 4** | Test | — |
-| **Lesson 5** | Prompt Engineering | ⏳ 待補 |
+| **Lesson 5** | Prompt Engineering | ✅ [Prompt Engineering 學習筆記](/prompt-engineering-notes/) |
 | **Lesson 6** | Hugging Face for LLM | ⏳ 待補 |
 | **Lesson 7** | Local LLM Apps | ⏳ 待補 |
 | **Lesson 8** | LiteLLM | ⏳ 待補 |
@@ -42,6 +42,25 @@ date: 2026-10-13 09:00:00
   並把後半的程式碼**在本機實測**（PyTorch 2.14.1+cu132、tiktoken GPT-2）後把真實輸出寫進筆記
 - 另有 **30 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
 - **👉 [看筆記](/llm-intro-notes/)** ｜ [互動測驗 60 題](/llm-intro-notes/mc-quiz.html)
+
+---
+
+## 2 · Lesson 5 — Prompt Engineering
+
+![Prompt Engineering 學習筆記](/img/covers/prompt-engineering-notes-ivdc.png)
+
+- **涵蓋**：原稿 92 頁、**38 個章節**——從 prompt 的定義與四大要素（Instructions／Context／Input data／Output indicator）、temperature 與 top_p 兩顆確定性旋鈕、**六大任務**（摘要／問答／分類／角色扮演／程式生成／推理），到原稿分出的**七大類技術**逐一展開：
+  - **基礎**：Zero-Shot／Few-Shot（In-Context Learning）／Clear Instructions
+  - **上下文與角色**：System／Role／Contextual／Markdown Prompting
+  - **推理與規劃**：CoT／Tabular CoT／Skeleton-of-Thought／Step-Back
+  - **進階編排**：Least-to-Most／Tree-of-Thoughts／Interactive ToT／Self-Generated ICL
+  - **專業與前沿**：Constitutional AI／Perspective-Taking／Analogical／Multi-Modal／Persona Consistency／Predictive
+  - **知識與工具**：Generate Knowledge／PAL／ReAct
+  - **應用與安全**：LLM + 外部工具三元件、Data-Augmented Generation、Model Safety、Prompt Injection／Leaking／Jailbreaking、RLHF
+- **特別之處**：原稿把 20 幾頁 `Classroom Exercise` 寫成「**同一題目、有／沒有用該技術**」的成對示範，
+  筆記逐題保留這個對照，並補上**可直接複製的 prompt 範本**與「**易混淆技術對照表**」（CoT vs ToT vs PAL vs ReAct、CAI vs RLHF…）
+- 另有 **38 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **👉 [看筆記](/prompt-engineering-notes/)** ｜ [互動測驗 60 題](/prompt-engineering-notes/mc-quiz.html)
 
 ---
 
