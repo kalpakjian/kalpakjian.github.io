@@ -1454,7 +1454,7 @@ CPU / GPU（CUDA / Metal / ROCm）
 </tbody>
 </table>
 <blockquote>
-<p> 示範的就是從 Hugging Face 抓 GGUF 檔：
+<p>本節示範的就是從 Hugging Face 抓 GGUF 檔：
 <code>https://huggingface.co/TheBloke/deepseek-llm-7B-base-GGUF</code></p>
 </blockquote>
 <h3 id="33-量化quantization為什麼模型可以從-14-gb-變成-4-gb">3.3 量化（Quantization）：為什麼模型可以從 14 GB 變成 4 GB</h3>
@@ -2354,7 +2354,7 @@ https://huggingface.co/TheBloke/deepseek-llm-7B-base-GGUF
 正式環境建議用「下載安裝檔」的方式，或先下載腳本、看過內容再跑。</p>
 </blockquote>
 <h3 id="102-安裝">10.2 安裝</h3>
-<p> 標題為 "Installation"，是 Windows 安裝精靈的截圖（與 §5.4 的 LM Studio 同理）。
+<p>本節標題為 "Installation"，是 Windows 安裝精靈的截圖（與 §5.4 的 LM Studio 同理）。
 安裝完成後，<strong>Ollama 會常駐在系統匣</strong>，並在背景提供 API 服務。</p>
 <h3 id="103-安裝後的驗證">10.3 安裝後的驗證</h3>
 <p>打開 PowerShell／終端機，輸入：</p>
@@ -4713,7 +4713,7 @@ RAG 的優點是<strong>便宜、資料好更新</strong>。</p>
 這裡先知道「<strong>重跑</strong>」與「<strong><code>session_state</code></strong>」兩個關鍵字即可。</p>
 </blockquote>
 <h3 id="253-依賴清單">25.3 依賴清單</h3>
-<p> <code>requirements_web.txt</code> 只有三行：</p>
+<p><code>requirements_web.txt</code> 只有三行：</p>
 <div class="codehilite"><pre><span></span><code>ollama
 requests
 streamlit
@@ -6484,7 +6484,7 @@ capabilities     completion
 <!-- /FIGURE -->
 
 <h3 id="321-先看-lora-的數學loratxt-全文">32.1 先看 LoRA 的數學（<code>LoRA.txt</code> 全文）</h3>
-<p> <code>LoRA.txt</code> 只有幾行，但把 LoRA 的核心講完了：</p>
+<p><code>LoRA.txt</code> 只有幾行，但把 LoRA 的核心講完了：</p>
 <div class="codehilite"><pre><span></span><code><span class="mf">7</span><span class="w"> </span><span class="n">billion</span><span class="w"> </span><span class="n">parameters</span>
 
 <span class="n">add</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="n">matrics</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">B</span><span class="w">          </span><span class="err">←</span><span class="w"> </span><span class="err">⚠️</span><span class="w"> </span><span class="s">&quot;matrics&quot;</span><span class="w"> </span><span class="n">是</span><span class="w"> </span><span class="s">&quot;matrices&quot;</span><span class="w"> </span><span class="n">的錯字</span>

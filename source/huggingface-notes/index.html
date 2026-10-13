@@ -3196,7 +3196,7 @@ cache after : 237.0 MB
 </table>
 <blockquote>
 <p>💡 <strong>考點</strong>：<strong><code>batched=True</code> 是 <code>map()</code> 最重要的參數</strong>。
- 特別寫「<strong>Efficient batching</strong>」就是指這個。</p>
+本節特別寫「<strong>Efficient batching</strong>」就是指這個。</p>
 </blockquote>
 <h3 id="153-arrow-optimized-for-speed是什麼意思">15.3 「Arrow-optimized for speed」是什麼意思</h3>
 <table>
@@ -4210,7 +4210,7 @@ XLNet 同樣用的是 SentencePiece。</p>
 
 <!-- FIGURE:ch20-tokenizer-comparison -->
 
-<p> 的表格（欄位順序為 <code>Special Features / Used in / Algorithm / Tokenizer</code>）：</p>
+<p>本節的表格（欄位順序為 <code>Special Features / Used in / Algorithm / Tokenizer</code>）：</p>
 <table>
 <thead>
 <tr>
@@ -4798,7 +4798,7 @@ A parameter-efficient fine-tuning method that updates only small, trainable
 </table>
 <blockquote>
 <p>💡 <strong>考點</strong>：<strong>LoRA 不改變 <code>W</code>，而是加上一個低秩修正項 <code>A × B</code>。</strong>
- <code>LoRA.txt</code> 就是在算這個（見 §23.3）。</p>
+本節的 <code>LoRA.txt</code> 就是在算這個（見 §23.3）。</p>
 </blockquote>
 <h3 id="232-為什麼這樣能省">23.2 為什麼這樣能省</h3>
 <p>以 <code>4096 × 4096</code> 的權重矩陣、<code>r = 8</code> 為例（<strong>本節 <code>LoRA.txt</code> 的實際數字</strong>）：</p>
@@ -5009,7 +5009,7 @@ After PEFT
 而且錯誤訊息不會告訴你「因為 <code>c_attn</code> 是 GPT-2 專屬」。</p>
 </blockquote>
 <h3 id="237-本節只數參數沒有真的訓練">23.7 ⚠️ 本節只「數參數」沒有「真的訓練」</h3>
-<p> <code>HF_LLM.ipynb</code> 只做三件事：載入模型 → 套 LoRA → 印參數量。
+<p><code>HF_LLM.ipynb</code> 只做三件事：載入模型 → 套 LoRA → 印參數量。
 <strong>沒有任何一次 forward／backward</strong>，所以「Faster training」這個優點完全沒被驗證。</p>
 <p>本機補做（同一個設定）：</p>
 <div class="codehilite"><pre><span></span><code>forward+backward: 0.035 s   loss=6.1742
@@ -5288,7 +5288,7 @@ these small add-on modules.
 </tbody>
 </table>
 <h3 id="252-adapter-與-lora-的關係本節最重要的一句">25.2 Adapter 與 LoRA 的關係（本節最重要的一句）</h3>
-<p> 最後寫：</p>
+<p>本節最後寫：</p>
 <blockquote>
 <p><strong>Adapters are the core idea behind: LoRA, QLoRA</strong></p>
 </blockquote>

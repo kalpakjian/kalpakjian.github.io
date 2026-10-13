@@ -1730,7 +1730,7 @@ XLNet 同樣用的是 SentencePiece。
 
 <!-- FIGURE:ch20-tokenizer-comparison -->
 
- 的表格（欄位順序為 `Special Features / Used in / Algorithm / Tokenizer`）：
+本節的表格（欄位順序為 `Special Features / Used in / Algorithm / Tokenizer`）：
 
 | Special Features | Used in | Algorithm | Tokenizer |
 |---|---|---|---|
@@ -2301,7 +2301,7 @@ model = get_peft_model(model, LoraConfig(r=16, lora_alpha=32, task_type="CAUSAL_
 
 ### 25.2 Adapter 與 LoRA 的關係（本節最重要的一句）
 
- 最後寫：
+本節最後寫：
 
 > **Adapters are the core idea behind: LoRA, QLoRA**
 

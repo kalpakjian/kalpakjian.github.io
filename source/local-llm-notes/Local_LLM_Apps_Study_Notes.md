@@ -744,7 +744,7 @@ LM Studio 會**自己判斷**該用哪一種，並在畫面上告訴你它的選
 
 ### 10.2 安裝
 
- 標題為 "Installation"，是 Windows 安裝精靈的截圖（與 §5.4 的 LM Studio 同理）。
+本節標題為 "Installation"，是 Windows 安裝精靈的截圖（與 §5.4 的 LM Studio 同理）。
 安裝完成後，**Ollama 會常駐在系統匣**，並在背景提供 API 服務。
 
 ### 10.3 安裝後的驗證

@@ -58,7 +58,7 @@
 
 ## 1. 商業領域的真實案例（Real Case Examples）
 
- 標題為「**Real Case Examples in Commercial Sectors**」，逐頁以**圖片**展示電腦視覺在
+本節標題為「**Real Case Examples in Commercial Sectors**」，逐頁以**圖片**展示電腦視覺在
 商業領域的實際應用（本節文字極少，以下補上每類應用的技術與案例）。
 
 ### 1.1 電腦視覺在商業上的六大類應用
@@ -87,7 +87,7 @@
 
 ## 2. 中國大陸與香港的最新 AI 技術
 
- 標題為「**Latest AI technologies in Mainland China and Hong Kong**」，
+本節標題為「**Latest AI technologies in Mainland China and Hong Kong**」，
 並以「**Furthermore**」帶出一個具體例子：
 
 > **世界机器人大会：超现实围棋博弈 2024 World Robot Conference: Hyper-realistic Go Match**
@@ -147,7 +147,7 @@
 
 ## 4. CNN 為何是頂尖方法（State-of-the-art）
 
- 標題為「**CNN**」，內容是「**AI Basic Principles – Convolutional Neural Network**」的延伸：
+本節標題為「**CNN**」，內容是「**AI Basic Principles – Convolutional Neural Network**」的延伸：
 
 > - **State-of-the-art methods** —— 使用**神經網路**來辨識影像與影片。
 > - 適合影像辨識的**深度學習架構**，都是基於 **CNN 的各種變體（variations）**。
@@ -229,7 +229,7 @@
 
 ## 6. CNN 基本概念與影像辨識
 
- 標題為「**Basic Concepts of CNN**」：
+本節標題為「**Basic Concepts of CNN**」：
 
 **AI Basic Principles – Image Recognition by CNN** →「**What is CNN?**」
 **AI Basic Principles – Convolutional Neural Network**
