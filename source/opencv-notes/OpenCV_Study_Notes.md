@@ -2,37 +2,35 @@
 
 > 課程：Certificate in Application of Computer Vision Technology (Part-time)
 > 機構：匯縱專業發展中心（IVDC）
-> 教材來源：`3 IVDC OpenCV.pdf`（29 頁）
 > 本筆記依課程大綱每一個標題逐一填充內容，並補上 API 簽名、參數說明、常見錯誤、模擬試題。
-> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
+> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
 ## 目錄
 
-| # | 章節 | PDF 頁 |
-|---|------|--------|
-| 1 | [What is OpenCV?](#1-what-is-opencv) | 3 |
-| 2 | [OpenCV Applications](#2-opencv-applications) | 4 |
-| 3 | [Color Spaces](#3-color-spaces) | 5 |
-| 4 | [Color Space Conversion](#4-color-space-conversion) | 6 |
-| 5 | [Image Pre-processing](#5-image-pre-processing) | 7 |
-| 6 | [Matrix Operations](#6-matrix-operations) | 8 |
-| 7 | [Drawing Functions](#7-drawing-functions) | 9 |
-| 8 | [Transformations](#8-transformations) | 10 |
-| 9 | [Filtering Techniques](#9-filtering-techniques) | 11 |
-| 10 | [Edge Detection](#10-edge-detection) | 12 |
-| 11 | [Feature Extraction](#11-feature-extraction) | 13 |
-| 12 | [Feature Matching](#12-feature-matching) | 14 |
-| 13 | [Real-World Projects](#13-real-world-projects) | 15 |
-| 14 | [OpenCV Programming Examples（程式範例）](#14-opencv-programming-examples程式範例) | 16–28 |
-| 15 | [Summary](#15-summary) | 29 |
-| A | [附錄 A：API 速查表](#附錄-aapi-速查表) | — |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) | — |
-| C | [附錄 C：教材頁面索引對照](#附錄-c教材頁面索引對照) | — |
-| D | [附錄 D：離線執行提示](#附錄-d離線執行提示) | — |
-| E | [附錄 E：一頁精華（考前 10 分鐘）](#附錄-e一頁精華考前-10-分鐘) | — |
-| F | [附錄 F：互動式線上測驗（60 題）](#附錄-f互動式線上測驗60-題) | — |
+| # | 章節 |
+|---|------|
+| 1 | [What is OpenCV?](#1-what-is-opencv) |
+| 2 | [OpenCV Applications](#2-opencv-applications) |
+| 3 | [Color Spaces](#3-color-spaces) |
+| 4 | [Color Space Conversion](#4-color-space-conversion) |
+| 5 | [Image Pre-processing](#5-image-pre-processing) |
+| 6 | [Matrix Operations](#6-matrix-operations) |
+| 7 | [Drawing Functions](#7-drawing-functions) |
+| 8 | [Transformations](#8-transformations) |
+| 9 | [Filtering Techniques](#9-filtering-techniques) |
+| 10 | [Edge Detection](#10-edge-detection) |
+| 11 | [Feature Extraction](#11-feature-extraction) |
+| 12 | [Feature Matching](#12-feature-matching) |
+| 13 | [Real-World Projects](#13-real-world-projects) |
+| 14 | [OpenCV Programming Examples（程式範例）](#14-opencv-programming-examples程式範例) |
+| 15 | [Summary](#15-summary) |
+| A | [附錄 A：API 速查表](#附錄-aapi-速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線執行提示](#附錄-c離線執行提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
 
 ---
 
@@ -93,27 +91,6 @@ import urllib.request           # 下載範例圖片
 
 > **考點**：`cv2` 是套件名稱；`pip install opencv-python`（要完整功能可裝 `opencv-contrib-python`）。
 > `cv2.__version__` 可查版本（本機環境為 5.0.0，PDF 教材寫法在 4.x / 5.x 都適用）。
-
-### 1.4 最小可執行範例
-
-```python
-import cv2
-
-image = cv2.imread("photo.jpg")          # 讀取（BGR 順序）
-print(type(image))                        # <class 'numpy.ndarray'>
-print(image.shape)                        # (height, width, 3)  → 注意是 H, W 不是 W, H
-cv2.imshow("Window", image)               # 開視窗顯示
-cv2.waitKey(0)                            # 等待按鍵（0 = 無限等待）
-cv2.destroyAllWindows()                   # 關閉所有視窗
-```
-
-**三個必記事實**
-
-1. 影像是 **NumPy 陣列**，形狀是 `(rows/height, cols/width, channels)`。
-2. 通道順序預設是 **BGR**（不是 RGB）。
-3. `cv2.imshow()` 後一定要 `cv2.waitKey()`，否則視窗不會更新。
-
----
 
 ## 2. OpenCV Applications
 
@@ -2180,35 +2157,7 @@ img = cv2.imdecode(np.fromfile(path, dtype=np.uint8), cv2.IMREAD_COLOR)
 
 ---
 
-## 附錄 C：教材頁面索引對照
-
-| PDF 頁 | 標題 | 本筆記對應章節 |
-|--------|------|---------------|
-| 1 | 封面 | — |
-| 2 | Agenda | 目錄 |
-| 3 | What is OpenCV? | 第 1 節 |
-| 4 | OpenCV Applications | 第 2 節 |
-| 5 | Color Spaces | 第 3 節 |
-| 6 | Color Space Conversion | 第 4 節 |
-| 7 | Image Pre-processing | 第 5 節 |
-| 8 | Matrix Operations | 第 6 節 |
-| 9 | Drawing Functions | 第 7 節 |
-| 10 | Transformations | 第 8 節 |
-| 11 | Filtering Techniques | 第 9 節 |
-| 12 | Edge Detection | 第 10 節 |
-| 13 | Feature Extraction | 第 11 節 |
-| 14 | Feature Matching | 第 12 節 |
-| 15 | Real-World Projects | 第 13 節 |
-| 16 | OpenCV Programming Examples | 第 14 節 |
-| 17–19 | Pre-processing（程式） | 第 14.1 節 |
-| 20–22 | Matrix Operations（程式） | 第 14.2 節 |
-| 23–25 | Transformation and Filtering（程式） | 第 14.3 節 |
-| 26–28 | Feature Extraction and Matching（程式） | 第 14.4 節 |
-| 29 | Summary | 第 15 節 |
-
----
-
-## 附錄 D：離線執行提示
+## 附錄 C：離線執行提示
 
 課程範例都靠 `urllib.request.urlretrieve()` 從 GitHub 下載 `smarties.png`。
 **考試環境若沒有網路**，可改用下列任一種方式：
@@ -2230,7 +2179,7 @@ cv2.circle(image_bgr, (200, 300), 60, (255, 0, 0), -1)     # 藍球
 
 > **注意**：`cv2.imshow()` 在無圖形介面的環境（如部分伺服器 / Colab）會失敗，請改用 `matplotlib.pyplot` 顯示。
 
-### D.1 無網路環境的替代下載點
+### C.1 無網路環境的替代下載點
 
 若考試機有網路但 GitHub 被封鎖，可用 OpenCV 官方 CDN 鏡像或本機圖片替代：
 
@@ -2246,7 +2195,7 @@ else:
 
 ---
 
-## 附錄 E：一頁精華（考前 10 分鐘）
+## 附錄 D：一頁精華（考前 10 分鐘）
 
 ```python
 import cv2
@@ -2329,12 +2278,12 @@ ORB 配 Hamming、SIFT 配 L2
 
 <a id="mc-exam"></a>
 
-## 附錄 F：互動式線上測驗（60 題）
+## 附錄 E：互動式線上測驗（60 題）
 
 > **60 題單選、滿分 60 分、建議 75 分鐘。**
 > 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不再收錄非互動的紙本題目**，避免與線上版重複。
 
-### F.1 開始測驗
+### E.1 開始測驗
 
 **👉 [開始 60 題線上測驗](mc-quiz.html)**
 
@@ -2346,7 +2295,7 @@ ORB 配 Hamming、SIFT 配 L2
 - 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
 - 需要紙本時，直接在該頁按列印即可
 
-### F.2 時間分配建議
+### E.2 時間分配建議
 
 | 階段 | 時間 | 做什麼 |
 |---|---|---|
@@ -2354,11 +2303,11 @@ ORB 配 Hamming、SIFT 配 L2
 | 第二輪 | 40–65 分鐘 | 回頭處理標記的難題 |
 | 第三輪 | 65–75 分鐘 | 檢查有沒有漏答 |
 
-### F.3 評分參考
+### E.3 評分參考
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 54–60 | 優異 | 直接看附錄 E 一頁精華即可上場 |
+| 54–60 | 優異 | 直接看附錄 D 一頁精華即可上場 |
 | 45–53 | 良好 | 複習錯題所屬章節 |
 | 36–44 | 及格邊緣 | 重讀主要章節 + 附錄 A |
 | 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
@@ -2367,7 +2316,7 @@ ORB 配 Hamming、SIFT 配 L2
 
 ---
 
-*本學習筆記依據 `3 IVDC OpenCV.pdf`（29 頁）編寫，涵蓋教材全部標題與程式範例，並補充 API 參數、常見錯誤與模擬試題。*
-*模擬試題為附錄 F 的線上互動測驗（60 題）。*
+*本學習筆記涵蓋全部主題與程式範例，並補充 API 參數、常見錯誤與模擬試題。*
+*模擬試題為附錄 E 的線上互動測驗（60 題）。*
 *所有程式碼已於本機 OpenCV 5.0.0 / NumPy 2.4.6 / Matplotlib 3.11.2 環境實測通過。*
 

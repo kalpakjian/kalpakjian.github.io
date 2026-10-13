@@ -31,37 +31,37 @@ LiteLLM 解決的問題很單純：**N 個供應商 × M 個應用 = N×M 套整
 - 五大供應商呼叫逐一拆解：ChatGPT／Claude-2／llama2 on Replicate／Command-Nightly／Azure OpenAI
 - **23 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
 - **68 題互動 MC 測驗**（點選即時計分、進度自動存 localStorage）
-- **課堂教材 `IVDC_LiteLLM.pptx`（11 頁）已整併**為 §21 ＋ 附錄 H：LLM Gateway 概念、虛擬金鑰／RBAC、多租戶成本治理、真實架構（Postgres／MCP），以及教材自己列出的限制
+- **課堂教材 `IVDC_LiteLLM.pptx`（11 頁）已整併**為 §21 ＋ 附錄 G：LLM Gateway 概念、虛擬金鑰／RBAC、多租戶成本治理、真實架構（Postgres／MCP），以及教材自己列出的限制
 
 ## 章節
 
-| # | 章節 | 教材來源 |
-|---|------|--------|
-| 1 | 什麼是 LiteLLM：一個介面，146 個供應商 | nb c0 |
-| 2 | 安裝與設定 | nb c1–c3 |
-| 3 | API Key 管理 | nb c4–c5 |
-| 4 | Call chatGPT — 最小可用範例 | nb c6–c7 |
-| 5 | Call Claude-2 — 第二個供應商，同一段程式 | nb c8–c9 |
-| 6 | Call llama2 on replicate — 開源模型走 Replicate | nb c10–c11 |
-| 7 | Call Command-Nightly — Cohere | nb c12–c13 |
-| 8 | Call Azure OpenAI — `azure/` 前綴與 deployment-id | nb c14–c16 |
-| 9 | 本機模型：Ollama（`lite.py` 逐行） | `lite.py` |
-| 10 | 模型命名規則與供應商前綴總表 | 補充 |
-| 11 | `completion()` 的統一 I/O 契約 | 補充 |
-| 12 | `messages` 的三種角色 | 補充 |
-| 13 | 常用參數速查 | 補充 |
-| 14 | 串流輸出 `stream=True` | 補充 |
-| 15 | 錯誤處理與例外類別 | 補充 |
-| 16 | 能力查詢：`supports_*` | 補充 |
-| 17 | Token 計數 `token_counter()` | 補充 |
-| 18 | 成本追蹤 `completion_cost()` 與內建成本表 | 補充 |
-| 19 | 進階：Router、Fallbacks 與重試 | 補充 |
-| 20 | LiteLLM Proxy | 補充 |
-| 21 | LiteLLM 作為 LLM Gateway：企業級治理與架構 | 教材 |
-| 22 | 本機實測總表（真實數據） | 實測 |
-| 23 | 考試重點整理 | 整理 |
+| # | 章節 |
+|---|------|
+| 1 | 什麼是 LiteLLM：一個介面，146 個供應商 |
+| 2 | 安裝與設定 |
+| 3 | API Key 管理 |
+| 4 | Call chatGPT — 最小可用範例 |
+| 5 | Call Claude-2 — 第二個供應商，同一段程式 |
+| 6 | Call llama2 on replicate — 開源模型走 Replicate |
+| 7 | Call Command-Nightly — Cohere |
+| 8 | Call Azure OpenAI — `azure/` 前綴與 deployment-id |
+| 9 | 本機模型：Ollama（`lite.py` 逐行） |
+| 10 | 模型命名規則與供應商前綴總表 |
+| 11 | `completion()` 的統一 I/O 契約 |
+| 12 | `messages` 的三種角色 |
+| 13 | 常用參數速查 |
+| 14 | 串流輸出 `stream=True` |
+| 15 | 錯誤處理與例外類別 |
+| 16 | 能力查詢：`supports_*` |
+| 17 | Token 計數 `token_counter()` |
+| 18 | 成本追蹤 `completion_cost()` 與內建成本表 |
+| 19 | 進階：Router、Fallbacks 與重試 |
+| 20 | LiteLLM Proxy |
+| 21 | LiteLLM 作為 LLM Gateway：企業級治理與架構 |
+| 22 | 本機實測總表（真實數據） |
+| 23 | 考試重點整理 |
 
-另有 **8 個附錄**：API 速查表、常見錯誤與陷阱、教材頁面索引對照、離線執行／安裝提示、一頁精華（考前 10 分鐘）、68 題 MC 互動測驗、答錯題目 → 複習章節對照、**Lesson 8 教材頁面索引對照**。
+另有 **8 個附錄**：API 速查表、常見錯誤與陷阱、離線執行／安裝提示、一頁精華（考前 10 分鐘）、68 題 MC 互動測驗、答錯題目 → 複習章節對照、。
 
 ---
 
@@ -90,7 +90,7 @@ LiteLLM 解決的問題很單純：**N 個供應商 × M 個應用 = N×M 套整
 
 這份筆記最有價值的地方，是**把「教材當時正確、現在已失效」的寫法標出來**：
 
-| 教材寫法 | litellm 1.91.2 實況 |
+| 寫法 | litellm 1.91.2 實況 |
 |---|---|
 | `completion(model="claude-2", ...)` | ❌ `BadRequestError`，需改 `anthropic/claude-2` |
 | 「50+ LLM APIs」 | 現為 **146** 個 provider |
@@ -137,11 +137,11 @@ LiteLLM 解決的問題很單純：**N 個供應商 × M 個應用 = N×M 套整
 4. 優先背熟：**§10 命名規則**、**§11 I/O 契約**、**§14 串流**、**§15 例外**
 5. 讀 §16–§20（能力、token、成本、Router、Proxy）
 6. 讀 §21（LLM Gateway）—— 這節來自**課堂教材**，是 notebook 完全沒有的架構視角
-7. 找個安靜的 85 分鐘，完整做一次**附錄 F 的 68 題線上互動測驗**
-8. 考前 10 分鐘只看**附錄 E 一頁精華**
+7. 找個安靜的 85 分鐘，完整做一次**附錄 E 的 68 題線上互動測驗**
+8. 考前 10 分鐘只看**附錄 D 一頁精華**
 
 祝考試順利。
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*

@@ -2,34 +2,31 @@
 
 > 課程：Certificate in Application of Computer Vision Technology (Part-time)
 > 機構：匯縱專業發展中心（IVDC）
-> 教材來源：`1 IVDC_Introduction to AI (icebreaking).pptx` → PDF（34 頁）
 > 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、參數、常見錯誤、模擬試題。
-> 教材多為投影片圖示，文字較少；本筆記補上「圖示背後的概念」與「考點」，方便理解與應試。
-> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
+> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
 ## 目錄
 
-| # | 章節 | PDF 頁 |
-|---|------|--------|
-| 1 | [AI 是什麼？定義與兩個取徑](#1-ai-是什麼定義與兩個取徑) | 5–6 |
-| 2 | [AI 的子目標（Sub-objectives of AI）](#2-ai-的子目標sub-objectives-of-ai) | 8 |
-| 3 | [AI 應用與例子](#3-ai-應用與例子) | 7, 9 |
-| 4 | [異常偵測 Anomaly Detection](#4-異常偵測-anomaly-detection) | 10 |
-| 5 | [影像／視訊辨識 Image/Video Recognition](#5-影像視訊辨識-imagevideo-recognition) | 11–12 |
-| 6 | [人臉辨識 Facial Recognition](#6-人臉辨識-facial-recognition) | 13–15 |
-| 7 | [自然語言處理 NLP](#7-自然語言處理-nlp) | 17–20, 22–23, 25–26 |
-| 8 | [語音辨識 Speech Recognition](#8-語音辨識-speech-recognition) | 21, 24, 27 |
-| 9 | [強化學習 Reinforcement Learning](#9-強化學習-reinforcement-learning) | 29–33 |
-| 10 | [生成式 AI Generative AI](#10-生成式-ai-generative-ai) | 34 |
-| A | [附錄 A：AI 名詞速查表](#附錄-aai-名詞速查表) | — |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) | — |
-| C | [附錄 C：教材頁面索引對照](#附錄-c教材頁面索引對照) | — |
-| D | [附錄 D：延伸資源與離線提示](#附錄-d延伸資源與離線提示) | — |
-| E | [附錄 E：一頁精華（考前 10 分鐘）](#附錄-e一頁精華考前-10-分鐘) | — |
-| F | [附錄 F：互動式線上測驗（60 題）](#附錄-f互動式線上測驗60-題) | — |
-| G | [附錄 G：互動測驗答錯題目 → 複習章節對照](#附錄-g互動測驗答錯題目--複習章節對照) | — |
+| # | 章節 |
+|---|------|
+| 1 | [AI 是什麼？定義與兩個取徑](#1-ai-是什麼定義與兩個取徑) |
+| 2 | [AI 的子目標（Sub-objectives of AI）](#2-ai-的子目標sub-objectives-of-ai) |
+| 3 | [AI 應用與例子](#3-ai-應用與例子) |
+| 4 | [異常偵測 Anomaly Detection](#4-異常偵測-anomaly-detection) |
+| 5 | [影像／視訊辨識 Image/Video Recognition](#5-影像視訊辨識-imagevideo-recognition) |
+| 6 | [人臉辨識 Facial Recognition](#6-人臉辨識-facial-recognition) |
+| 7 | [自然語言處理 NLP](#7-自然語言處理-nlp) |
+| 8 | [語音辨識 Speech Recognition](#8-語音辨識-speech-recognition) |
+| 9 | [強化學習 Reinforcement Learning](#9-強化學習-reinforcement-learning) |
+| 10 | [生成式 AI Generative AI](#10-生成式-ai-generative-ai) |
+| A | [附錄 A：AI 名詞速查表](#附錄-aai-名詞速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：延伸資源與離線提示](#附錄-c延伸資源與離線提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
 
 ---
 
@@ -473,67 +470,23 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ---
 
-## 附錄 C：教材頁面索引對照
+## 附錄 C：延伸資源與離線提示
 
-| PDF 頁 | 標題 | 本筆記對應章節 |
-|--------|------|---------------|
-| 1 | 封面：Introduction to AI | — |
-| 2 | 破冰：Do you actually like using an app to order food? | 第 1.1 節 |
-| 3 | （圖片） | — |
-| 4 | Sharing of Theory and Concepts / Can Machines Think more than us? | 第 1.1 節 |
-| 5 | AI General Theory and Concepts | 第 1 節 |
-| 6 | AI General Theory and Concepts（四象限） | 第 1 節 |
-| 7 | AI Applications and Examples Sharing（章節頁） | 第 3 節 |
-| 8 | Sub-objectives of AI | 第 2 節 |
-| 9 | AI Applications：E-Commerce / Education / Daily life | 第 3 節 |
-| 10 | Anomaly Detection | 第 4 節 |
-| 11 | Image/Video Recognition（定義＋四種資料形式） | 第 5.1 節 |
-| 12 | Image/Video Recognition（電腦視覺任務） | 第 5.2 節 |
-| 13 | Facial Recognition — Detection | 第 6.1 節 |
-| 14 | Facial Recognition — Analysis | 第 6.2 節 |
-| 15 | Facial Recognition — Recognition | 第 6.3 節 |
-| 16 | E channel（圖片） | — |
-| 17 | NLP — 三個問題 | 第 7.1 節 |
-| 18 | NLP — Hidden Markov Model | 第 7.2 節 |
-| 19 | NLP — HMM 流程 | 第 7.2 節 |
-| 20 | NLP（圖） | 第 7 節 |
-| 21 | Speech Recognition — King/Queen/Man/Woman/Royal | 第 8.1 節 |
-| 22 | NLP（圖） | 第 7 節 |
-| 23 | NLP（圖） | 第 7 節 |
-| 24 | Speech Recognition（圖） | 第 8 節 |
-| 25 | NLP（圖） | 第 7 節 |
-| 26 | NLP — Explore（aka.ms/explore-nlp） | 第 7.4 節 |
-| 27 | Speech Recognition — Speechmatics 數據 | 第 8.2 節 |
-| 28 | （圖） | — |
-| 29 | Reinforcement Learning — 要解決的問題 | 第 9.1 節 |
-| 30 | Reinforcement Learning（圖） | 第 9 節 |
-| 31 | Reinforcement Learning（圖） | 第 9 節 |
-| 32 | Reinforcement Learning — Agent 四步 | 第 9.2 節 |
-| 33 | Reinforcement Learning — 應用（AlphaGo） | 第 9.3 節 |
-| 34 | Generative AI — 定義 | 第 10 節 |
-
-> 說明：教材有多頁為純圖片／示意圖（如 p3、p16、p20、p22–25、p28、p30–31），
-> 這些頁面在筆記中對應到所屬章節的概念補充，不另設小節。
-
----
-
-## 附錄 D：延伸資源與離線提示
-
-### D.1 教材提供的連結
+### C.1 教材提供的連結
 
 | 資源 | 連結 |
 |------|------|
 | 探索 NLP | `https://aka.ms/explore-nlp` |
 
-### D.2 沒有網路時怎麼複習
+### C.2 沒有網路時怎麼複習
 
 本筆記本身即為**離線可讀**（Markdown 或單檔 HTML），不依賴任何外部資源。若要自行查找延伸資料：
 
-- 先看本筆記的附錄 A（名詞速查表）與附錄 E（一頁精華）。
-- 用附錄 F 的線上互動測驗自測，答錯的題目對應回章節重讀。
+- 先看本筆記的附錄 A（名詞速查表）與附錄 D（一頁精華）。
+- 用附錄 E 的線上互動測驗自測，答錯的題目對應回章節重讀。
 - 需要圖解時，可用任何繪圖工具自行畫出：AI 子目標圖、人臉辨識三步圖、RL 迴圈圖。
 
-### D.3 觀念延伸（考綱外但常被問）
+### C.3 觀念延伸（考綱外但常被問）
 
 | 主題 | 一句話 |
 |------|--------|
@@ -543,7 +496,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ---
 
-## 附錄 E：一頁精華（考前 10 分鐘）
+## 附錄 D：一頁精華（考前 10 分鐘）
 
 ```text
 【1. AI 定義】
@@ -588,12 +541,12 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ---
 
-## 附錄 F：互動式線上測驗（60 題）
+## 附錄 E：互動式線上測驗（60 題）
 
 > **60 題單選、滿分 60 分、建議 75 分鐘。**
 > 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不再收錄非互動的紙本題目**，避免與線上版重複。
 
-### F.1 開始測驗
+### E.1 開始測驗
 
 **👉 [開始 60 題線上測驗](mc-quiz.html)**
 
@@ -605,7 +558,7 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 - 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
 - 需要紙本時，直接在該頁按列印即可
 
-### F.2 時間分配建議
+### E.2 時間分配建議
 
 | 階段 | 時間 | 做什麼 |
 |---|---|---|
@@ -613,20 +566,20 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 | 第二輪 | 40–65 分鐘 | 回頭處理標記的難題 |
 | 第三輪 | 65–75 分鐘 | 檢查有沒有漏答 |
 
-### F.3 評分參考
+### E.3 評分參考
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 54–60 | 優異 | 直接看附錄 E 一頁精華即可上場 |
+| 54–60 | 優異 | 直接看附錄 D 一頁精華即可上場 |
 | 45–53 | 良好 | 複習錯題所屬章節 |
 | 36–44 | 及格邊緣 | 重讀主要章節 + 附錄 A |
 | 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
-> 答錯的題目請對照〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
+> 答錯的題目請對照〈附錄 F：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
 
 ---
 
-## 附錄 G：互動測驗答錯題目 → 複習章節對照
+## 附錄 F：互動測驗答錯題目 → 複習章節對照
 
 | 答錯題號 | 建議複習章節 |
 |---|---|
@@ -645,4 +598,4 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*

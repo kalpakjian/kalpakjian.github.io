@@ -51,53 +51,53 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 6 —
 
 ## 章節
 
-| # | 章節 | 教材來源 |
-|---|------|--------|
-| 1 | 課程地圖：Lesson 6 在教什麼 | p1 |
-| 2 | 前置知識：Transformer 與「三種輸入」的世界 | 補充 |
-| 3 | 為什麼需要 Hugging Face | 補充 |
-| 4 | What is Hugging Face? | p2 |
-| 5 | Ecosystem Overview：三層架構 | p3 |
-| 6 | Hugging Face Hub | p4 |
-| 7 | Model Hub | p5 |
-| 8 | Dataset Hub | p6 |
-| 9 | Spaces：免費的 Demo 託管 | p7 |
-| 10 | Transformers Library | p8 |
-| 11 | Transformers 的實際介面（p9–p14 截圖判讀） | p9–p14 |
-| 12 | Datasets Library | p15 |
-| 13 | Streaming Access：不落地就能讀 | p16–p17 |
-| 14 | Automatic Caching | p18 |
-| 15 | Built-in Preprocessing：`map()`／`filter()`／`shuffle()` | p19–p20 |
-| 16 | Tokenizers：Rust 實作的四種分詞器 | p21 |
-| 17 | WordPiece（BERT 系） | p22–p24 |
-| 18 | BPE（GPT 系） | p25–p27 |
-| 19 | SentencePiece（T5／LLaMA） | p28–p30 |
-| 20 | 四種 Tokenizer 對照總表與選用 | p30 |
-| 21 | Diffusers | p31 |
-| 22 | PEFT | p32 |
-| 23 | LoRA | p33 |
-| 24 | QLoRA | p34–p35 |
-| 25 | Adapters | p36 |
-| 26 | Accelerate | p37 |
-| 27 | Optimum | p38 |
-| 28 | Text Generation Inference（TGI） | p39 |
-| 29 | Inference Endpoints | p40 |
-| 30 | Safetensors | p41 |
-| 31 | `huggingface_hub` SDK | p42 |
-| 32 | Model Cards | p43 |
-| 33 | Use Cases | p44 |
-| 34 | Summary | p45 |
-| 35 | Hands-On：三個 Lab 總覽 | p46 |
-| 36 | `HF_transformer.ipynb` 逐格拆解 | Lab |
-| 37 | ⚠️ `HF_transformer.ipynb` 的三個缺陷 | Lab |
-| 38 | `HF_LLM.ipynb` 逐格拆解 | Lab |
-| 39 | ⚠️ `HF_LLM.ipynb` 的兩個缺陷 | Lab |
-| 40 | `HF_dataset.ipynb` 逐格拆解 | Lab |
-| 41 | ⚠️ `HF_dataset.ipynb`：教 Streaming 卻不用 Streaming | Lab |
-| 42 | 本機實測總表（真實數據） | 實測 |
-| 43 | 考試重點整理 | 整理 |
+| # | 章節 |
+|---|------|
+| 1 | 課程地圖：Lesson 6 在教什麼 |
+| 2 | 前置知識：Transformer 與「三種輸入」的世界 |
+| 3 | 為什麼需要 Hugging Face |
+| 4 | What is Hugging Face? |
+| 5 | Ecosystem Overview：三層架構 |
+| 6 | Hugging Face Hub |
+| 7 | Model Hub |
+| 8 | Dataset Hub |
+| 9 | Spaces：免費的 Demo 託管 |
+| 10 | Transformers Library |
+| 11 | Transformers 的實際介面（p9–p14 截圖判讀） |
+| 12 | Datasets Library |
+| 13 | Streaming Access：不落地就能讀 |
+| 14 | Automatic Caching |
+| 15 | Built-in Preprocessing：`map()`／`filter()`／`shuffle()` |
+| 16 | Tokenizers：Rust 實作的四種分詞器 |
+| 17 | WordPiece（BERT 系） |
+| 18 | BPE（GPT 系） |
+| 19 | SentencePiece（T5／LLaMA） |
+| 20 | 四種 Tokenizer 對照總表與選用 |
+| 21 | Diffusers |
+| 22 | PEFT |
+| 23 | LoRA |
+| 24 | QLoRA |
+| 25 | Adapters |
+| 26 | Accelerate |
+| 27 | Optimum |
+| 28 | Text Generation Inference（TGI） |
+| 29 | Inference Endpoints |
+| 30 | Safetensors |
+| 31 | `huggingface_hub` SDK |
+| 32 | Model Cards |
+| 33 | Use Cases |
+| 34 | Summary |
+| 35 | Hands-On：三個 Lab 總覽 |
+| 36 | `HF_transformer.ipynb` 逐格拆解 |
+| 37 | ⚠️ `HF_transformer.ipynb` 的三個缺陷 |
+| 38 | `HF_LLM.ipynb` 逐格拆解 |
+| 39 | ⚠️ `HF_LLM.ipynb` 的兩個缺陷 |
+| 40 | `HF_dataset.ipynb` 逐格拆解 |
+| 41 | ⚠️ `HF_dataset.ipynb`：教 Streaming 卻不用 Streaming |
+| 42 | 本機實測總表（真實數據） |
+| 43 | 考試重點整理 |
 
-另有 **7 個附錄**：指令與 API 速查表、常見錯誤與陷阱、教材頁面索引對照、離線執行／安裝提示、一頁精華（考前 10 分鐘）、60 題 MC 互動測驗、答錯題目 → 複習章節對照。
+另有 **7 個附錄**：指令與 API 速查表、常見錯誤與陷阱、離線執行／安裝提示、一頁精華（考前 10 分鐘）、60 題 MC 互動測驗、答錯題目 → 複習章節對照。
 
 ---
 
@@ -132,7 +132,6 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 6 —
 | **p22 vs p28** | **ALBERT 同時被列在 WordPiece 與 SentencePiece 底下**，兩頁互相矛盾（實際上用的是 SentencePiece） |
 | **p39** | `Text Generation Inference` 出現 **`• •` 空項目符號** |
 | **p42** | 標題寫 `Huggingface_hub SDK`（實際套件名是全小寫 `huggingface_hub`） |
-| **p1** | 頁尾留著母片**未替換的佔位字串**（其餘 45 頁都是 `(2026年2月)`） |
 | **`HF_LLM.ipynb`** | **`target_modules=["c_attn"]` 只對 GPT-2 有效**——換成 Llama／Qwen 直接 **`ValueError`** |
 | **`HF_LLM.ipynb`** | **只數參數、完全沒有 forward／backward**，卻把「套上 LoRA」當成「微調完成」 |
 | **`HF_transformer.ipynb`** | 註解說 `Google's DeiT model`，**程式實際載入 ViT** |
@@ -153,7 +152,7 @@ ValueError: Target modules {'c_attn'} not found in the base model.
 
 | 寫法 | 可訓練參數 | trainable% | Llama 上能跑嗎 |
 |---|---|---|---|
-| `["c_attn"]`（教材） | 147,456 | 0.1797% | ❌ |
+| `["c_attn"]` | 147,456 | 0.1797% | ❌ |
 | **`"all-linear"`（建議）** | 589,824 | 0.7149% | ✅ |
 
 #### ② `peft` 因為 `torchaudio` 而完全無法匯入
@@ -245,7 +244,7 @@ hf cache scan       # ❌ 沒有這個子指令
 | **huggingface_hub** | **1.24.0** | **2.2.0** | ❌ **跨大版本** |
 
 > 💡 **本筆記的實測數字是「可重現」的，不是「最新」的。**
-> 要完全重現，請鎖定「本機實測」欄的版號（附錄 D 有完整的 `pip install` 指令）。
+> 要完全重現，請鎖定「本機實測」欄的版號（附錄 C 有完整的 `pip install` 指令）。
 
 ---
 
@@ -260,7 +259,7 @@ hf cache scan       # ❌ 沒有這個子指令
 | forward ＋ backward | **0.035 秒** |
 | `google/vit-base-patch16-224` 載入 | **16.0 秒** |
 | ViT 模型類別 | **`ViTForImageClassification`**（不是 DeiT） |
-| 教材裁切圖的預測 | **`book jacket 12.9%`**（失敗） |
+| 裁切圖的預測 | **`book jacket 12.9%`**（失敗） |
 | AST 音訊分類 | **`Ding 55.9%`**（與教材 56% 一致） |
 | wav2vec2 ASR 對同一段正弦 | **`{'text': ''}`**（空字串） |
 | AG News | **120,000 筆、4 類** |
@@ -268,7 +267,6 @@ hf cache scan       # ❌ 沒有這個子指令
 | 快取增量 | **1.9 MB → 237.0 MB** |
 
 > ✅ **三個 Lab 的技術內容全部可複現**——教材的數字在本機一字不差。
-> 問題不在程式能不能跑，而在**註解與示範的教學品質**。
 
 ---
 
@@ -291,12 +289,12 @@ hf cache scan       # ❌ 沒有這個子指令
 5. 讀 §21–§25（Diffusers、PEFT、LoRA、QLoRA、Adapters）
 6. 讀 §26–§34（部署工具鏈與收尾）
 7. 進 Lab：§36–§41，**邊讀邊對照教材的缺陷**
-8. 找個安靜的 75 分鐘，完整做一次**附錄 F 的 60 題線上互動測驗**
-9. 考前 10 分鐘只看**附錄 E 一頁精華**
+8. 找個安靜的 75 分鐘，完整做一次**附錄 E 的 60 題線上互動測驗**
+9. 考前 10 分鐘只看**附錄 D 一頁精華**
 
 祝考試順利。
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*
 

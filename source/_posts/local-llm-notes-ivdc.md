@@ -30,8 +30,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 —
 
 ## 這份筆記有什麼
 
-- **教材 44 頁逐頁重寫**。⚠️ 但教材 **43 頁是純截圖**（全份文字層只有約 2,705 字元），
-  所以筆記逐頁補上「**這一步在做什麼、為什麼**」，並在每節標明對應的 PDF 頁碼
+  所以筆記逐頁補上「**這一步在做什麼、為什麼**」
 - **四個 App 完整拆解**：
   - **LM Studio**：下載 → 首跑引導 → **GPU Offload 與 Context Length** → 從 Hugging Face 抓 GGUF → 附加檔案問答
   - **Ollama**：安裝 → `ollama run` → **模型選擇表** → `list`／`serve`／**埠 11434** → 用 Python 打 REST API
@@ -45,49 +44,49 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 —
 
 ## 章節
 
-| # | 章節 | 教材來源 |
-|---|------|--------|
-| 1 | 課程地圖：Lesson 7 在教什麼 | p1 |
-| 2 | 為什麼要跑本機 LLM | 補充 |
-| 3 | 技術底層：GGUF、量化、llama.cpp 與 Ollama 的關係 | 補充 |
-| 4 | 量化命名規則速查 | 補充 |
-| 5 | LM Studio：下載與安裝 | p3–p8 |
-| 6 | LM Studio：首次啟動與選模型 | p9–p10 |
-| 7 | LM Studio：設定與資源分配 | p11、p15 |
-| 8 | LM Studio：換模型（從 Hugging Face 直接抓） | p12–p14 |
-| 9 | LM Studio：上傳檔案並提問（本機 RAG 的第一次現身） | p16 |
-| 10 | Ollama：下載與安裝 | p18–p19 |
-| 11 | Ollama：模型選擇表（教材唯一的實質內容頁） | p20 |
-| 12 | Ollama：`ollama run` 安裝模型與對話 | p21–p24 |
-| 13 | Ollama：`ollama list`、`ollama serve` 與埠號 | p25–p26 |
-| 14 | `testollama.py` 逐行拆解 | `testollama.py` |
-| 15 | ⚠️ 教材把 LLM 輸出硬轉成 tensor 的問題 | `testollama.py` |
-| 16 | AnythingLLM：安裝與歡迎頁 | p27–p30 |
-| 17 | AnythingLLM：選擇 LLM 模型與換模型 | p31–p34 |
-| 18 | AnythingLLM：提問 | p35 |
-| 19 | GPT4All：安裝與模型安裝 | p36–p39 |
-| 20 | GPT4All：提問 | p40 |
-| 21 | GPT4All：My Documents 設定與加入文件／目錄 | p41–p43 |
-| 22 | GPT4All：對自己的檔案提問（本機 RAG 的雛形） | p44 |
-| 23 | 四個 App 對照總表 | 整理 |
-| 24 | 怎麼選：決策樹 | 整理 |
-| 25 | Open WebUI 與 Streamlit：為什麼要自己寫 | `Open WebUI.pptx` |
-| 26 | `app_web.py` 逐行拆解 | `app_web.py` |
-| 27 | LangChain ＋ LlamaCpp：在 Python 裡直接跑 GGUF | `LangChain.ipynb` |
-| 28 | RAG 概念：關鍵字 RAG vs 向量 RAG | `RAG.ipynb` |
-| 29 | ⚠️ `RAG.ipynb` 的 `max_length` 陷阱 | `RAG.ipynb` |
-| 30 | LlamaIndex ＋ Groq：雲端 LLM ＋ 本機嵌入 | `LangIndex.ipynb` |
-| 31 | ⚠️ Groq API Key 寫死 ＋ 本機替代路徑 | `LangIndex.ipynb` |
-| 32 | LoRA 與本機微調（`train.py`） | `train.py`／`LoRA.txt` |
-| 33 | ⚠️ `train.jsonl`：73 行只有 1 個唯一樣本 | `train.jsonl` |
-| 34 | 轉 GGUF 與 `ollama create` | `ReadMe.txt`／`Modelfile` |
-| 35 | DQN 迷宮：強化學習補充 | `Maze.ipynb` |
-| 36 | NLP 基礎（一）：Tokenizing、停用詞、Stemming 與 Lemmatizing | NLP deck p8–p22 |
-| 37 | NLP 基礎（二）：POS tagging、Chunking、NER 與文字分類 | NLP deck p19–p40 |
-| 38 | 本機實測總表（真實數據） | 實測 |
-| 39 | 考試重點整理 | 整理 |
+| # | 章節 |
+|---|------|
+| 1 | 課程地圖：Lesson 7 在教什麼 |
+| 2 | 為什麼要跑本機 LLM |
+| 3 | 技術底層：GGUF、量化、llama.cpp 與 Ollama 的關係 |
+| 4 | 量化命名規則速查 |
+| 5 | LM Studio：下載與安裝 |
+| 6 | LM Studio：首次啟動與選模型 |
+| 7 | LM Studio：設定與資源分配 |
+| 8 | LM Studio：換模型（從 Hugging Face 直接抓） |
+| 9 | LM Studio：上傳檔案並提問（本機 RAG 的第一次現身） |
+| 10 | Ollama：下載與安裝 |
+| 11 | Ollama：模型選擇表（教材唯一的實質內容頁） |
+| 12 | Ollama：`ollama run` 安裝模型與對話 |
+| 13 | Ollama：`ollama list`、`ollama serve` 與埠號 |
+| 14 | `testollama.py` 逐行拆解 |
+| 15 | ⚠️ 教材把 LLM 輸出硬轉成 tensor 的問題 |
+| 16 | AnythingLLM：安裝與歡迎頁 |
+| 17 | AnythingLLM：選擇 LLM 模型與換模型 |
+| 18 | AnythingLLM：提問 |
+| 19 | GPT4All：安裝與模型安裝 |
+| 20 | GPT4All：提問 |
+| 21 | GPT4All：My Documents 設定與加入文件／目錄 |
+| 22 | GPT4All：對自己的檔案提問（本機 RAG 的雛形） |
+| 23 | 四個 App 對照總表 |
+| 24 | 怎麼選：決策樹 |
+| 25 | Open WebUI 與 Streamlit：為什麼要自己寫 |
+| 26 | `app_web.py` 逐行拆解 |
+| 27 | LangChain ＋ LlamaCpp：在 Python 裡直接跑 GGUF |
+| 28 | RAG 概念：關鍵字 RAG vs 向量 RAG |
+| 29 | ⚠️ `RAG.ipynb` 的 `max_length` 陷阱 |
+| 30 | LlamaIndex ＋ Groq：雲端 LLM ＋ 本機嵌入 |
+| 31 | ⚠️ Groq API Key 寫死 ＋ 本機替代路徑 |
+| 32 | LoRA 與本機微調（`train.py`） |
+| 33 | ⚠️ `train.jsonl`：73 行只有 1 個唯一樣本 |
+| 34 | 轉 GGUF 與 `ollama create` |
+| 35 | DQN 迷宮：強化學習補充 |
+| 36 | NLP 基礎（一）：Tokenizing、停用詞、Stemming 與 Lemmatizing |
+| 37 | NLP 基礎（二）：POS tagging、Chunking、NER 與文字分類 |
+| 38 | 本機實測總表（真實數據） |
+| 39 | 考試重點整理 |
 
-另有 **7 個附錄**：指令與 API 速查表、常見錯誤與陷阱、教材頁面索引對照、離線執行／安裝提示、一頁精華（考前 10 分鐘）、60 題 MC 互動測驗、答錯題目 → 複習章節對照。
+另有 **7 個附錄**：指令與 API 速查表、常見錯誤與陷阱、離線執行／安裝提示、一頁精華（考前 10 分鐘）、60 題 MC 互動測驗、答錯題目 → 複習章節對照。
 
 ---
 
@@ -119,7 +118,6 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 —
 |---|---|
 | **`testollama.py`** | 寫死 **`"model": "llama3"`**——**不在教材自己的模型表裡**，照著做一定 **404** |
 | **`LangIndex.ipynb`** | 把**真實可用的 Groq API key 寫死在程式碼裡**；而且**沒有那把 key 的學員根本跑不動** |
-| **`train.jsonl`** | **73 行全部相同**（唯一樣本數 ＝ 1），樣本本身還是佔位字串 |
 | **`train.py`** | 教材教 **LoRA**，但腳本實際是**全參數微調**，**完全沒有使用 `peft`** |
 | **`Modelfile`** | **`TEMPLATE {{ .Prompt }}`** 沒有角色標記 → `/api/chat` 送進去的 `messages` 被丟掉 |
 | **`RAG.ipynb`** | **`max_length`** 誤用（它是輸入＋輸出的總長，應改用 `max_new_tokens`） |
@@ -130,7 +128,6 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 —
 | **`ReadMe.txt`** | 路徑寫 **`C:\Users\Teacher\...`**（講師的帳號） |
 | **`run.txt`** | `accelerate` 出現兩次；`peft` 裝了卻沒用 |
 | **`LoRA.txt`** | `matrics` 應為 `matrices` |
-| **頁尾** | p1 與 p95 留著母片**未替換的佔位字串** |
 
 ### 沒有 Groq key 也能跑：本機替代路徑
 
@@ -197,11 +194,11 @@ sources: [{'topic': 'overview'}, {'topic': 'RAG'}]
 4. 進 Lab：§25–§31，**把 `app_web.py` 跑起來、把 RAG 管線看懂**
 5. 讀 §32–§34（LoRA／微調／轉 GGUF），理解「自己造模型」的完整鏈路
 6. 讀 §35–§37（RL 補充與 NLP 基礎）
-7. 找個安靜的 75 分鐘，完整做一次**附錄 F 的 60 題線上互動測驗**
-8. 考前 10 分鐘只看**附錄 E 一頁精華**
+7. 找個安靜的 75 分鐘，完整做一次**附錄 E 的 60 題線上互動測驗**
+8. 考前 10 分鐘只看**附錄 D 一頁精華**
 
 祝考試順利。
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*

@@ -2,43 +2,40 @@
 
 > 課程：Certificate in Application of Computer Vision Technology (Part-time)
 > 機構：匯縱專業發展中心（IVDC）
-> 教材來源：`4 IVDC_Responsible AI.pptx` → PDF（24 頁）
 > 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、關鍵數字、法規細節與考點。
-> 教材多為投影片重點字句；本筆記補上「每句話背後的概念」與香港《個人資料（私隱）條例》的對應關係，方便理解與應試。
 > 凡教材未涵蓋、由本筆記補充的內容，一律以 **（補充）** 標示，方便分辨「考試範圍」與「延伸理解」。
-> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
+> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
 ## 目錄
 
-| # | 章節 | PDF 頁 |
-|---|------|--------|
-| 1 | [Responsible AI：什麼是「負責任的 AI」](#1-responsible-ai什麼是負責任的-ai) | 2、5 |
-| 2 | [Ethical AI Principles（12 項倫理原則）](#2-ethical-ai-principles12-項倫理原則) | 3 |
-| 3 | [AI Practice Guide（AI 專案生命週期實務指南）](#3-ai-practice-guideai-專案生命週期實務指南) | 4 |
-| 4 | [Ethical Concerns：電腦視覺的四大倫理議題](#4-ethical-concerns電腦視覺的四大倫理議題) | 6–7 |
-| 5 | [Privacy and Surveillance（隱私與監控）](#5-privacy-and-surveillance隱私與監控) | 8 |
-| 6 | [Bias and Discrimination（偏見與歧視）](#6-bias-and-discrimination偏見與歧視) | 9 |
-| 7 | [Data Security and Consent（資料安全與同意）](#7-data-security-and-consent資料安全與同意) | 10–11 |
-| 8 | [Accountability and Transparency（問責與透明）](#8-accountability-and-transparency問責與透明) | 12 |
-| 9 | [The Personal Data (Privacy) Ordinance（個人資料（私隱）條例）](#9-the-personal-data-privacy-ordinance個人資料私隱條例) | 13 |
-| 10 | [The Six Principles of PDPO（PDPO 六項保護原則）](#10-the-six-principles-of-pdpopdpo-六項保護原則) | 14 |
-| 11 | [Social Impacts of Computer Vision（電腦視覺的社會影響）](#11-social-impacts-of-computer-vision電腦視覺的社會影響) | 15 |
-| 12 | [Enhanced Public Safety（提升公共安全）](#12-enhanced-public-safety提升公共安全) | 16 |
-| 13 | [Improved Healthcare Services（改善醫療服務）](#13-improved-healthcare-services改善醫療服務) | 17 |
-| 14 | [Employment and Workforce Changes（就業與勞動力變化）](#14-employment-and-workforce-changes就業與勞動力變化) | 18 |
-| 15 | [Social Inequality（社會不平等）](#15-social-inequality社會不平等) | 19 |
-| 16 | [Influence on Human Behavior（對人類行為的影響）](#16-influence-on-human-behavior對人類行為的影響) | 20 |
-| 17 | [Recommendations for Ethical Use（倫理使用建議）](#17-recommendations-for-ethical-use倫理使用建議) | 21–22 |
-| 18 | [Conclusion（結論）](#18-conclusion結論) | 23–24 |
-| A | [附錄 A：名詞與法規速查表](#附錄-a名詞與法規速查表) | — |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) | — |
-| C | [附錄 C：教材頁面索引對照](#附錄-c教材頁面索引對照) | — |
-| D | [附錄 D：離線使用與延伸資源](#附錄-d離線使用與延伸資源) | — |
-| E | [附錄 E：一頁精華（考前 10 分鐘）](#附錄-e一頁精華考前-10-分鐘) | — |
-| F | [附錄 F：互動式線上測驗（60 題）](#附錄-f互動式線上測驗60-題) | — |
-| G | [附錄 G：互動測驗答錯題目 → 複習章節對照](#附錄-g互動測驗答錯題目--複習章節對照) | — |
+| # | 章節 |
+|---|------|
+| 1 | [Responsible AI：什麼是「負責任的 AI」](#1-responsible-ai什麼是負責任的-ai) |
+| 2 | [Ethical AI Principles（12 項倫理原則）](#2-ethical-ai-principles12-項倫理原則) |
+| 3 | [AI Practice Guide（AI 專案生命週期實務指南）](#3-ai-practice-guideai-專案生命週期實務指南) |
+| 4 | [Ethical Concerns：電腦視覺的四大倫理議題](#4-ethical-concerns電腦視覺的四大倫理議題) |
+| 5 | [Privacy and Surveillance（隱私與監控）](#5-privacy-and-surveillance隱私與監控) |
+| 6 | [Bias and Discrimination（偏見與歧視）](#6-bias-and-discrimination偏見與歧視) |
+| 7 | [Data Security and Consent（資料安全與同意）](#7-data-security-and-consent資料安全與同意) |
+| 8 | [Accountability and Transparency（問責與透明）](#8-accountability-and-transparency問責與透明) |
+| 9 | [The Personal Data (Privacy) Ordinance（個人資料（私隱）條例）](#9-the-personal-data-privacy-ordinance個人資料私隱條例) |
+| 10 | [The Six Principles of PDPO（PDPO 六項保護原則）](#10-the-six-principles-of-pdpopdpo-六項保護原則) |
+| 11 | [Social Impacts of Computer Vision（電腦視覺的社會影響）](#11-social-impacts-of-computer-vision電腦視覺的社會影響) |
+| 12 | [Enhanced Public Safety（提升公共安全）](#12-enhanced-public-safety提升公共安全) |
+| 13 | [Improved Healthcare Services（改善醫療服務）](#13-improved-healthcare-services改善醫療服務) |
+| 14 | [Employment and Workforce Changes（就業與勞動力變化）](#14-employment-and-workforce-changes就業與勞動力變化) |
+| 15 | [Social Inequality（社會不平等）](#15-social-inequality社會不平等) |
+| 16 | [Influence on Human Behavior（對人類行為的影響）](#16-influence-on-human-behavior對人類行為的影響) |
+| 17 | [Recommendations for Ethical Use（倫理使用建議）](#17-recommendations-for-ethical-use倫理使用建議) |
+| 18 | [Conclusion（結論）](#18-conclusion結論) |
+| A | [附錄 A：名詞與法規速查表](#附錄-a名詞與法規速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線使用與延伸資源](#附錄-c離線使用與延伸資源) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
 
 ---
 
@@ -94,7 +91,6 @@ Responsible AI（負責任的 AI）
 
 ## 1. Responsible AI：什麼是「負責任的 AI」
 
-> 教材 **p2** 是章節標題頁（只有「Responsible AI」）；**p5** 同為標題頁，副標題是「**Challenges on AI**」（AI 帶來的挑戰）。
 
 <!-- RAI-FIGURE:ch01-what-is-responsible-ai -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -157,7 +153,7 @@ Responsible AI（負責任的 AI）
 
 ### 2.1 12 項原則一覽
 
-| # | 原則（教材英文） | 中文 | 一句話說明 |
+| # | 原則（英文） | 中文 | 一句話說明 |
 |---|------------------|------|-----------|
 | 1 | **Reliability, Robustness and Security** | 可靠性、穩健性與安全性 | 系統要穩定可靠、能承受異常與攻擊 |
 | 2 | **Safety** | 安全 | 不應對人身與環境造成危害 |
@@ -209,7 +205,7 @@ Responsible AI（負責任的 AI）
 
 ### 3.1 六個階段
 
-| 順序 | 階段（教材英文） | 中文 | 這一階段要做什麼 |
+| 順序 | 階段（英文） | 中文 | 這一階段要做什麼 |
 |:---:|---|---|---|
 | 1 | **Project Strategy** | 專案策略 | 定義商業目標、風險胃納、要不要做這個 AI 專案 |
 | 2 | **Project Planning** | 專案規劃 | 資源、時程、角色與責任、法規盤點（PDPO 適用性） |
@@ -244,7 +240,6 @@ Responsible AI（負責任的 AI）
 
 ## 4. Ethical Concerns：電腦視覺的四大倫理議題
 
-> 教材 **p6** 是章節標題頁「**Ethical Concerns**」；
 > 教材 **p7** 標題「**Ethical Issues in Computer Vision**」，以四張卡片列出四大議題。
 
 <!-- RAI-FIGURE:ch04-four-ethical-issues -->
@@ -256,7 +251,7 @@ Responsible AI（負責任的 AI）
 
 ### 4.1 四大議題總覽
 
-| # | 議題（教材英文） | 中文 | 核心風險 | 對應倫理原則（p3） | 詳見 |
+| # | 議題（英文） | 中文 | 核心風險 | 對應倫理原則 | 詳見 |
 |---|------------------|------|----------|-------------------|------|
 | 1 | **Privacy and Surveillance** | 隱私與監控 | 未經同意被監控、追蹤、失去匿名性 | Data Privacy、Human Oversight | §5 |
 | 2 | **Bias and Discrimination** | 偏見與歧視 | 對特定族群準確率偏低 → 不公平對待 | Fairness、Diversity and Inclusion | §6 |
@@ -292,7 +287,7 @@ Responsible AI（負責任的 AI）
 
 ### 5.1 教材重點（逐句對照）
 
-| 教材原文 | 中文 | 關鍵詞 |
+| 原文 | 中文 | 關鍵詞 |
 |---|---|---|
 | One of the most significant ethical concerns is the potential invasion of privacy. | 最重大的倫理顧慮之一，是**隱私可能被侵犯**。 | invasion of privacy |
 | Computer vision technologies, particularly **facial recognition** systems, can monitor and track individuals **without their consent**. | 電腦視覺技術，特別是**人臉辨識**系統，可在**未經當事人同意**下監控與追蹤個人。 | facial recognition、without consent |
@@ -340,7 +335,7 @@ Responsible AI（負責任的 AI）
 
 ### 6.1 教材重點（逐句對照）
 
-| 教材原文 | 中文 | 關鍵詞 |
+| 原文 | 中文 | 關鍵詞 |
 |---|---|---|
 | Computer vision systems are trained using **large datasets**. | 電腦視覺系統是用**大量資料集**訓練出來的。 | large datasets |
 | If these datasets are **not diverse or representative**, the resulting models may produce **biased outcomes**. | 若這些資料集**不夠多元或不具代表性**，產出的模型就可能做出**帶有偏見的判斷**。 | diverse / representative、biased outcomes |
@@ -460,7 +455,7 @@ B（少數族群）         2000    12.0%     10.0%      89.0%
 
 ### 7.1 教材重點（逐句對照）
 
-| 教材原文 | 中文 | 關鍵詞 |
+| 原文 | 中文 | 關鍵詞 |
 |---|---|---|
 | The collection and storage of visual data involve **significant security risks**. | 視覺資料的**蒐集與儲存**涉及**重大安全風險**。 | collection and storage、security risks |
 | **Unauthorized access**, **data breaches**, or **misuse of personal images** can harm individuals. | **未經授權的存取**、**資料外洩**或**濫用個人影像**，都可能傷害個人。 | unauthorized access、data breaches、misuse |
@@ -515,7 +510,7 @@ B（少數族群）         2000    12.0%     10.0%      89.0%
 
 ### 8.1 教材重點（逐句對照）
 
-| 教材原文 | 中文 | 關鍵詞 |
+| 原文 | 中文 | 關鍵詞 |
 |---|---|---|
 | When computer vision systems make mistakes, **determining responsibility can be difficult**. | 當電腦視覺系統出錯時，**很難認定責任歸屬**。 | determining responsibility |
 | For instance, if an **autonomous vehicle** fails to recognize a **pedestrian** and causes an accident… | 例如，若**自駕車**未能辨識出**行人**而導致事故… | autonomous vehicle、pedestrian |
@@ -526,7 +521,7 @@ B（少數族群）         2000    12.0%     10.0%      89.0%
 
 教材只列了三個（developer / manufacturer / user），實務上還要加上**監管者**：
 
-| 角色 | 可能被追究的責任 | 對應倫理原則（p3） |
+| 角色 | 可能被追究的責任 | 對應倫理原則 |
 |------|------------------|-------------------|
 | **開發者 Developer** | 演算法設計缺陷、訓練資料不足、未做足測試 | Accountability |
 | **製造商 Manufacturer** | 感測器規格、硬體品質、整合與出廠驗證 | Reliability/Robustness/Security、Safety |
@@ -576,7 +571,7 @@ Human Oversight（人類監督）：人可介入、覆核、否決
 
 ### 9.1 教材重點（逐句對照）
 
-| 教材原文 | 中文 | 關鍵詞 |
+| 原文 | 中文 | 關鍵詞 |
 |---|---|---|
 | **Aim:** protect the privacy interests of individuals in relation to personal data. | **目的**：保護個人在**個人資料**方面的私隱權益。 | privacy interests、personal data |
 | A law to protect a citizen's privacy when his or her personal data is **collected and used** by an institution **for a particular purpose**. | 這是一條法律，用來保護市民的私隱——當其個人資料被機構**為特定目的**而**蒐集與使用**時。 | collected and used、particular purpose |
@@ -650,7 +645,7 @@ PDPO 下的「個人資料」須同時符合三個條件：
 
 ### 10.1 六項原則對照表（教材順序）
 
-| 原則 | 處理的事（教材英文） | 具體要求（教材英文） | 中文 | 簡稱 |
+| 原則 | 處理的事（英文） | 具體要求（英文） | 中文 | 簡稱 |
 |:---:|---|---|---|---|
 | **Principle #1** | deals with the **collection** of personal data | should be **lawful and fair, adequate and not excessive** | 個人資料的**收集**：須**合法、公平**，且**足夠但不超乎適度** | 收集原則 |
 | **Principle #2** | deals with the **retention** of personal data | should **not keep the data longer than necessary** & **accuracy** | 個人資料的**保留**：**不得超過所需時間**，且須**準確** | 保留原則 |
@@ -709,8 +704,6 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 
 ## 11. Social Impacts of Computer Vision（電腦視覺的社會影響）
 
-> 教材 **p15** 是章節標題頁「**Social Impacts of Computer Vision**」，
-> 以五個項目帶出後面五頁的內容。
 
 <!-- RAI-FIGURE:ch11-social-impacts -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -721,13 +714,13 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 
 ### 11.1 五大社會影響（教材順序）
 
-| # | 項目（教材英文） | 中文 | 性質 | PDF 頁 | 本筆記 |
-|---|------------------|------|------|:---:|:---:|
-| 1 | **Enhanced Public Safety** | 提升公共安全 | 🟢 正面 | 16 | §12 |
-| 2 | **Improved Healthcare Services** | 改善醫療服務 | 🟢 正面 | 17 | §13 |
-| 3 | **Employment and Workforce Changes** | 就業與勞動力變化 | 🟡 雙面 | 18 | §14 |
-| 4 | **Social Inequality** | 社會不平等 | 🔴 負面 | 19 | §15 |
-| 5 | **Influence on Human Behavior** | 對人類行為的影響 | 🔴 負面 | 20 | §16 |
+| # | 項目（英文） | 中文 | 性質 | 本筆記 |
+|---|------------------|------|------|:---:|
+| 1 | **Enhanced Public Safety** | 提升公共安全 | 🟢 正面 | §12 |
+| 2 | **Improved Healthcare Services** | 改善醫療服務 | 🟢 正面 | §13 |
+| 3 | **Employment and Workforce Changes** | 就業與勞動力變化 | 🟡 雙面 | §14 |
+| 4 | **Social Inequality** | 社會不平等 | 🔴 負面 | §15 |
+| 5 | **Influence on Human Behavior** | 對人類行為的影響 | 🔴 負面 | §16 |
 
 ### 11.2 一句話記法
 
@@ -754,7 +747,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 
 ### 12.1 教材重點（逐句對照）
 
-| 教材原文 | 中文 | 關鍵詞 |
+| 原文 | 中文 | 關鍵詞 |
 |---|---|---|
 | Computer vision can improve public safety through applications such as **traffic monitoring, crime prevention, and disaster management**. | 電腦視覺可透過**交通監控、犯罪預防與災害管理**等應用提升公共安全。 | traffic monitoring、crime prevention、disaster management |
 | AI-powered systems can **detect suspicious activities**, **identify hazards**, and **assist emergency responders** more efficiently. | AI 系統能**偵測可疑活動**、**辨識危害**，並**更有效率地協助緊急應變人員**。 | detect suspicious activities、identify hazards、assist emergency responders |
@@ -769,7 +762,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 
 ### 12.3 三項 AI 能力
 
-| 教材英文 | 中文 | 說明 |
+| 英文 | 中文 | 說明 |
 |---|---|---|
 | **detect suspicious activities** | 偵測可疑活動 | 從行為模式中找出異常 |
 | **identify hazards** | 辨識危害 | 找出對人有害的環境因素（火、煙、掉落物） |
@@ -797,7 +790,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 
 ### 13.1 教材重點（逐句對照）
 
-| 教材原文 | 中文 | 關鍵詞 |
+| 原文 | 中文 | 關鍵詞 |
 |---|---|---|
 | In healthcare, computer vision assists in **medical imaging analysis**, **disease diagnosis**, and **patient monitoring**. | 在醫療領域，電腦視覺可協助**醫學影像分析**、**疾病診斷**與**病人監測**。 | medical imaging analysis、disease diagnosis、patient monitoring |
 | These technologies can help doctors **detect conditions such as cancer or eye diseases earlier and more accurately**, potentially **saving lives**. | 這些技術能幫助醫生**更早、更準確地發現癌症或眼部疾病等病症**，有可能**挽救生命**。 | earlier and more accurately、cancer、eye diseases、saving lives |
@@ -840,7 +833,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 
 ### 14.1 教材重點（逐句對照）
 
-| 教材原文 | 中文 | 關鍵詞 |
+| 原文 | 中文 | 關鍵詞 |
 |---|---|---|
 | **Automation driven by computer vision** may replace certain **manual or repetitive jobs**… | **由電腦視覺驅動的自動化**可能取代某些**手工或重複性工作**… | automation、manual or repetitive jobs |
 | …such as **quality inspection in manufacturing** or **cashier services in retail**. | …例如**製造業的品質檢驗**或**零售業的收銀服務**。 | quality inspection、cashier services |
@@ -882,7 +875,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 
 ### 15.1 教材重點（逐句對照）
 
-| 教材原文 | 中文 | 關鍵詞 |
+| 原文 | 中文 | 關鍵詞 |
 |---|---|---|
 | Access to advanced computer vision technologies may be **uneven** across different **regions and socioeconomic groups**. | 取得先進電腦視覺技術的機會，在不同**地區與社經群體**之間可能**不平均**。 | uneven access、regions、socioeconomic groups |
 | Organizations with **greater financial resources** can **benefit more** from these technologies… | **財務資源較多**的組織能從這些技術**獲益更多**… | greater financial resources |
@@ -929,14 +922,14 @@ existing social and economic inequalities 被 widening（擴大）
 
 ### 16.1 教材重點（逐句對照）
 
-| 教材原文 | 中文 | 關鍵詞 |
+| 原文 | 中文 | 關鍵詞 |
 |---|---|---|
 | The **widespread presence of surveillance systems** may **change how people behave in public spaces**. | **監控系統的普遍存在**可能**改變人們在公共場所的行為**。 | surveillance systems、public spaces |
 | Individuals who feel **constantly monitored** may experience **reduced freedom of expression** or **increased psychological stress**. | 覺得**持續被監控**的人，可能出現**表達自由降低**或**心理壓力增加**。 | constantly monitored、freedom of expression、psychological stress |
 
 ### 16.2 兩種心理／行為效應
 
-| 效應 | 教材英文 | 說明 | 生活例子 |
+| 效應 | 英文 | 說明 | 生活例子 |
 |------|----------|------|----------|
 | **寒蟬效應** | **reduced freedom of expression** | 因為怕被記錄，而**不敢**表達意見、不敢參加集會 | 不敢在鏡頭前抗議、不敢投訴 |
 | **心理壓力** | **increased psychological stress** | 時時覺得被看著 → 焦慮、緊張、自我審查 | 在監控下刻意改變走路姿勢、說話方式 |
@@ -971,7 +964,7 @@ existing social and economic inequalities 被 widening（擴大）
 
 ### 17.1 六項建議（教材順序，已去除跨頁重複）
 
-| # | 建議（教材英文） | 中文 | 對應倫理原則 | 對應 DPP |
+| # | 建議（英文） | 中文 | 對應倫理原則 | 對應 DPP |
 |:---:|---|---|---|---|
 | 1 | **Establish clear regulations and legal frameworks for data collection and surveillance** | 為資料蒐集與監控**建立清楚的法規與法律框架** | Lawfulness and Compliance | — |
 | 2 | **Ensure transparency in AI decision-making processes** | 確保 AI **決策過程透明** | Transparency and Interpretability | DPP5 |
@@ -1020,7 +1013,7 @@ existing social and economic inequalities 被 widening（擴大）
 
 ### 18.1 p23：機會與挑戰並存
 
-| 教材原文 | 中文 | 關鍵詞 |
+| 原文 | 中文 | 關鍵詞 |
 |---|---|---|
 | Computer vision offers **tremendous opportunities** to improve **efficiency, safety, and quality of life** across many sectors. | 電腦視覺帶來**巨大機會**，可在許多領域提升**效率、安全與生活品質**。 | efficiency、safety、quality of life |
 | However, its **rapid development** also introduces **ethical challenges** related to **privacy, bias, security, and accountability**. | 然而，其**快速發展**也帶來與**隱私、偏見、安全與問責**相關的**倫理挑戰**。 | privacy、bias、security、accountability |
@@ -1031,7 +1024,7 @@ existing social and economic inequalities 被 widening（擴大）
 
 ### 18.2 p24：三個手段 → 兩個成果
 
-| 教材原文 | 中文 | 關鍵詞 |
+| 原文 | 中文 | 關鍵詞 |
 |---|---|---|
 | By implementing **strong regulations, transparent practices, and continuous monitoring**, organizations can **harness the benefits** of computer vision while **minimizing potential risks and negative societal impacts**. | 透過**強健法規、透明實務與持續監控**，組織可在**獲取電腦視覺效益**的同時，**把潛在風險與負面社會影響降到最低**。 | strong regulations、transparent practices、continuous monitoring |
 | Ultimately, **responsible adoption** of this technology will help create a future where innovation serves both **economic progress** and the **well-being of society**. | 最終，**負責任地採用**此技術，將有助於創造一個讓創新同時服務**經濟進步**與**社會福祉**的未來。 | economic progress、well-being of society |
@@ -1166,18 +1159,9 @@ existing social and economic inequalities 被 widening（擴大）
 | 9 | **透明＝問責** | 「能解釋就等於有人負責」 | 透明是**問責的前提**，但**不等於**問責；問責還需可追究的責任歸屬 |
 | 10 | **AI 創造了不平等** | 「AI 造成新的社會不平等」 | 教材用 **widening existing** inequalities——**擴大既有的**不平等 |
 
-### B.2 教材特有的「重複頁」陷阱
+### B.2  關鍵字對照（小心被換字）
 
-| 教材頁 | 狀況 | 提醒 |
-|:---:|---|---|
-| **p10 / p11** | 兩頁文字**完全相同**（Data Security and Consent） | 考試不會因此出兩題，別誤以為有兩個不同主題 |
-| **p21 / p22** | 「Ensure transparency…」**跨頁重複** | 建議實為 **6 項**，不是 7 項 |
-| **p2 / p5** | 都是「Responsible AI」章節頁 | p5 的副標才是重點：**Challenges on AI** |
-| **p23 / p24** | 都是「Conclusion」 | p23 談**機會與挑戰**；p24 談**三手段與兩目的** |
-
-### B.3 關鍵字對照（小心被換字）
-
-| 教材用字 | 常見誘答（錯） | 正確 |
+| 用字 | 常見誘答（錯） | 正確 |
 |---|---|---|
 | **facial** recognition | fingerprint / iris recognition（教材只寫 facial） | 人臉辨識 |
 | **earlier and more accurately** | cheaper / faster | 更早、更準 |
@@ -1187,7 +1171,7 @@ existing social and economic inequalities 被 widening（擴大）
 | **December 1996** | 1997 / 1999 | 1996 年 12 月 |
 | **six** data protection principles | five / seven | 六項 |
 
-### B.4 概念混淆快問快答
+### B.3  概念混淆快問快答
 
 | 問 | 答 |
 |---|---|
@@ -1200,44 +1184,9 @@ existing social and economic inequalities 被 widening（擴大）
 
 ---
 
-## 附錄 C：教材頁面索引對照
+## 附錄 C：離線使用與延伸資源
 
-> 由 PDF 抽取工具產生的頁碼對照（`pages[].first_line`），可回頭核對原文。
-
-| PDF 頁 | 教材標題 | 本筆記對應章節 |
-|:---:|---|---|
-| 1 | Certificate in Application of Computer Vision Technology (Part-time) — Responsible AI（封面） | — |
-| 2 | Responsible AI（章節頁） | §1 |
-| 3 | Ethical AI Principles | §2 |
-| 4 | AI Practice Guide | §3 |
-| 5 | Responsible AI — **Challenges on AI** | §1.2 |
-| 6 | Ethical Concerns（章節頁） | §4 |
-| 7 | Ethical Issues in Computer Vision | §4.1 |
-| 8 | Privacy and Surveillance | §5 |
-| 9 | Bias and Discrimination | §6 |
-| 10 | Data Security and Consent | §7 |
-| 11 | Data Security and Consent（**與 p10 重複**） | §7 |
-| 12 | Accountability and Transparency | §8 |
-| 13 | The Personal Data (Privacy) Ordinance（個人資料（私隱）條例） | §9 |
-| 14 | The Six Principles of PDPO | §10 |
-| 15 | Social Impacts of Computer Vision（章節頁） | §11 |
-| 16 | Enhanced Public Safety | §12 |
-| 17 | Improved Healthcare Services | §13 |
-| 18 | Employment and Workforce Changes | §14 |
-| 19 | Social Inequality | §15 |
-| 20 | Influence on Human Behavior | §16 |
-| 21 | Recommendations for Ethical Use（前半） | §17 |
-| 22 | Recommendations for Ethical Use（後半） | §17 |
-| 23 | Conclusion（前半：機會與挑戰） | §18.1 |
-| 24 | Conclusion（後半：三手段與兩目的） | §18.2 |
-
-**頁數統計**：共 **24 頁**；其中**重複頁 2 頁**（p10/p11），實際內容頁 **23 頁**。
-
----
-
-## 附錄 D：離線使用與延伸資源
-
-### D.1 完全離線使用這份筆記
+### C.1 完全離線使用這份筆記
 
 本筆記的三個檔案都**不含任何外部資源**，因此可以離線使用：
 
@@ -1250,16 +1199,16 @@ existing social and economic inequalities 被 widening（擴大）
 **做法**：把整個資料夾複製到 USB 隨身碟或手機，雙擊 `index.html` 即可閱讀，雙擊 `mc-quiz.html` 即可作答。
 作答進度存在**瀏覽器本機**（localStorage），換電腦不會帶過去——所以正式考試前建議**在同一台裝置**複習。
 
-### D.2 沒有網路時，如何取得教材相關資源
+### C.2 沒有網路時，如何取得教材相關資源
 
 | 需要什麼 | 離線做法 |
 |---|---|
-| 教材 PDF | 已下載於本機（`4 IVDC_Responsible AI.pdf`），可直接用瀏覽器或 PDF 閱讀器開啟 |
+|  PDF | 已下載於本機（`4 IVDC_Responsible AI.pdf`），可直接用瀏覽器或 PDF 閱讀器開啟 |
 | PCPD 六原則官方頁面 | 有網路時先「**列印成 PDF**」或用瀏覽器的「**離線閱讀**」功能存檔 |
 | PDPO 條文（Cap. 486） | 到 Hong Kong e-Legislation 下載 PDF 版本存檔 |
 | 這份筆記的測驗 | `mc-quiz.html` 本身就是離線檔，不需網路 |
 
-### D.3 延伸資源（**（補充）**，非考試範圍）
+### C.3 延伸資源（**（補充）**，非考試範圍）
 
 | 資源 | 說明 |
 |---|---|
@@ -1273,7 +1222,7 @@ existing social and economic inequalities 被 widening（擴大）
 
 > ⚠️ 上述延伸資源**不在教材內**，僅供理解背景；考試請以**教材 24 頁**的內容為準。
 
-### D.4 本筆記的程式範例
+### C.4 本筆記的程式範例
 
 §6.5 的 `bias_metrics_demo.py` 只依賴 `numpy`。若本機沒有 numpy：
 
@@ -1286,7 +1235,7 @@ pip install numpy
 
 ---
 
-## 附錄 E：一頁精華（考前 10 分鐘）
+## 附錄 D：一頁精華（考前 10 分鐘）
 
 ```
 ================= Responsible AI（IVDC Lesson 4，教材 24 頁）=================
@@ -1355,12 +1304,12 @@ p10 = p11（完全相同）｜ p21 末行 = p22 首行（transparency）→ 建�
 
 ---
 
-## 附錄 F：互動式線上測驗（60 題）
+## 附錄 E：互動式線上測驗（60 題）
 
 > **60 題單選、滿分 60 分、建議 50 分鐘。**
 > 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不重複收錄題目**。
 
-### F.1 開始測驗
+### E.1 開始測驗
 
 **👉 [開始 60 題線上測驗](mc-quiz.html)**
 
@@ -1372,7 +1321,7 @@ p10 = p11（完全相同）｜ p21 末行 = p22 首行（transparency）→ 建�
 - 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
 - 需要紙本時，直接在該頁按列印即可
 
-### F.2 時間分配建議
+### E.2 時間分配建議
 
 | 階段 | 時間 | 做什麼 |
 |---|---|---|
@@ -1380,20 +1329,20 @@ p10 = p11（完全相同）｜ p21 末行 = p22 首行（transparency）→ 建�
 | 第二輪 | 30–45 分鐘 | 回頭處理標記的難題（多為 PDPO 與偏見指標） |
 | 第三輪 | 45–50 分鐘 | 檢查有沒有漏答 |
 
-### F.3 評分參考
+### E.3 評分參考
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 54–60 | 優異 | 直接看附錄 E 一頁精華即可上場 |
+| 54–60 | 優異 | 直接看附錄 D 一頁精華即可上場 |
 | 45–53 | 良好 | 複習錯題所屬章節 |
 | 36–44 | 及格邊緣 | 重讀 §2、§4、§10、§17 + 附錄 A |
 | 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
-> 答錯的題目請對照下方〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
+> 答錯的題目請對照下方〈附錄 F：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
 
 ---
 
-## 附錄 G：互動測驗答錯題目 → 複習章節對照
+## 附錄 F：互動測驗答錯題目 → 複習章節對照
 
 > 題號對應 `mc-quiz.html` 的題目順序（每 5 題為一組）。
 
@@ -1402,10 +1351,10 @@ p10 = p11（完全相同）｜ p21 末行 = p22 首行（transparency）→ 建�
 | 1–5 | Responsible AI 定義與 Challenges on AI | §1、附錄 A.1 |
 | 6–10 | 12 項倫理原則（辨識與配對） | §2、附錄 A.1 |
 | 11–15 | AI Practice Guide 六階段 | §3、附錄 A.1 |
-| 16–20 | 四大倫理議題總覽與分類 | §4、附錄 B.4 |
+| 16–20 | 四大倫理議題總覽與分類 | §4、附錄 B.3 |
 | 21–25 | Privacy and Surveillance | §5、附錄 A.2 |
 | 26–30 | Bias and Discrimination（含公平性指標） | §6、附錄 A.2 |
-| 31–35 | Data Security and Consent（含知情同意） | §7、附錄 B.4 |
+| 31–35 | Data Security and Consent（含知情同意） | §7、附錄 B.3 |
 | 36–40 | Accountability and Transparency（含黑箱） | §8、附錄 A.2 |
 | 41–45 | PDPO：目的、章號、生效日、PCPD | §9、附錄 A.3 |
 | 46–50 | PDPO 六項保護原則（DPP1–DPP6） | §10、附錄 A.4 |
@@ -1414,4 +1363,4 @@ p10 = p11（完全相同）｜ p21 末行 = p22 首行（transparency）→ 建�
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*

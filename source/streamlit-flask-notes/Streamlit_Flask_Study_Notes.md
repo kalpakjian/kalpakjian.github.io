@@ -2,48 +2,46 @@
 
 > 課程：Certificate in Application of Large Language Model (LLM) (Part-time) — Lesson 9
 > 機構：匯縱專業發展中心（IVDC）
-> 教材來源：`server.py`、`app.py`、`README.md`、`ReadMe.txt`（LLM AI Demo 專案）
 > 本筆記依課程大綱每一支程式逐一填充內容，並補上定義、參數說明、常見錯誤與考點。
 > 所有程式碼與數字都在本機實測（Flask 3.1.3／Streamlit 1.59.1／Python 3.11.15），實測輸出直接寫進內文。
 > ⚠️ **版本時效（2026-10 實查）**：**Flask 3.1.3 查證後仍是目前最新版**；
 > 但 **Streamlit 已到 1.65.0**（本機實測用 1.59.1）。完整對照表見 **§20.6**。
-> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
+> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
 ## 目錄
 
-| # | 章節 | 教材來源 |
-|---|------|--------|
-| 1 | [為什麼要拆成前端與後端](#1-為什麼要拆成前端與後端) | `README.md` |
-| 2 | [Flask 是什麼：最小應用](#2-flask-是什麼最小應用) | `server.py` |
-| 3 | [路由與 HTTP 方法（`@app.route`）](#3-路由與-http-方法approute) | `server.py` |
-| 4 | [第一個端點 `/greet`（`server.py` 逐行）](#4-第一個端點-greetserverpy-逐行) | `server.py` |
-| 5 | [`request.get_json()` 與它的危險邊界](#5-requestget_json-與它的危險邊界) | `server.py` |
-| 6 | [`jsonify()` 與中文編碼](#6-jsonify-與中文編碼) | `server.py` |
-| 7 | [錯誤狀態碼總表](#7-錯誤狀態碼總表) | `server.py` |
-| 8 | [用 `test_client` 測 Flask（不必開埠號）](#8-用-test_client-測-flask不必開埠號) | 補充 |
-| 9 | [用 `requests` / `curl` 測真實 HTTP](#9-用-requests--curl-測真實-http) | 補充 |
-| 10 | [Streamlit 是什麼：最小應用](#10-streamlit-是什麼最小應用) | `app.py` |
-| 11 | [Streamlit 的執行模型：每次互動重跑整個腳本](#11-streamlit-的執行模型每次互動重跑整個腳本) | `app.py` |
-| 12 | [常用 Streamlit 元件](#12-常用-streamlit-元件) | `app.py` |
-| 13 | [表單互動：`st.button` 與回傳值](#13-表單互動stbutton-與回傳值) | `app.py` |
-| 14 | [呼叫後端：`requests.post`（`app.py` 逐行）](#14-呼叫後端requestspostapppy-逐行) | `app.py` |
-| 15 | [錯誤處理與使用者回饋](#15-錯誤處理與使用者回饋) | `app.py` |
-| 16 | [`st.spinner` 與等待體驗](#16-stspinner-與等待體驗) | `app.py` |
-| 17 | [整合 LiteLLM + Ollama：讓前端有 LLM 能力](#17-整合-litellm--ollama讓前端有-llm-能力) | `app.py` |
-| 18 | [啟動順序與連接埠](#18-啟動順序與連接埠) | `ReadMe.txt` |
-| 19 | [完整架構圖與資料流](#19-完整架構圖與資料流) | 整合 |
-| 20 | [本機實測總表（真實數據）](#20-本機實測總表真實數據) | 實測 |
-| 21 | [常見錯誤與陷阱](#21-常見錯誤與陷阱) | 整理 |
-| 22 | [考試重點整理](#22-考試重點整理) | 整理 |
-| A | [附錄 A：API 速查表](#附錄-aapi-速查表) | — |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) | — |
-| C | [附錄 C：教材頁面索引對照](#附錄-c教材頁面索引對照) | — |
-| D | [附錄 D：離線執行／安裝提示](#附錄-d離線執行安裝提示) | — |
-| E | [附錄 E：一頁精華（考前 10 分鐘）](#附錄-e一頁精華考前-10-分鐘) | — |
-| F | [附錄 F：互動式線上測驗（60 題）](#附錄-f互動式線上測驗60-題) | — |
-| G | [附錄 G：互動測驗答錯題目 → 複習章節對照](#附錄-g互動測驗答錯題目--複習章節對照) | — |
+| # | 章節 |
+|---|------|
+| 1 | [為什麼要拆成前端與後端](#1-為什麼要拆成前端與後端) |
+| 2 | [Flask 是什麼：最小應用](#2-flask-是什麼最小應用) |
+| 3 | [路由與 HTTP 方法（`@app.route`）](#3-路由與-http-方法approute) |
+| 4 | [第一個端點 `/greet`（`server.py` 逐行）](#4-第一個端點-greetserverpy-逐行) |
+| 5 | [`request.get_json()` 與它的危險邊界](#5-requestget_json-與它的危險邊界) |
+| 6 | [`jsonify()` 與中文編碼](#6-jsonify-與中文編碼) |
+| 7 | [錯誤狀態碼總表](#7-錯誤狀態碼總表) |
+| 8 | [用 `test_client` 測 Flask（不必開埠號）](#8-用-test_client-測-flask不必開埠號) |
+| 9 | [用 `requests` / `curl` 測真實 HTTP](#9-用-requests--curl-測真實-http) |
+| 10 | [Streamlit 是什麼：最小應用](#10-streamlit-是什麼最小應用) |
+| 11 | [Streamlit 的執行模型：每次互動重跑整個腳本](#11-streamlit-的執行模型每次互動重跑整個腳本) |
+| 12 | [常用 Streamlit 元件](#12-常用-streamlit-元件) |
+| 13 | [表單互動：`st.button` 與回傳值](#13-表單互動stbutton-與回傳值) |
+| 14 | [呼叫後端：`requests.post`（`app.py` 逐行）](#14-呼叫後端requestspostapppy-逐行) |
+| 15 | [錯誤處理與使用者回饋](#15-錯誤處理與使用者回饋) |
+| 16 | [`st.spinner` 與等待體驗](#16-stspinner-與等待體驗) |
+| 17 | [整合 LiteLLM + Ollama：讓前端有 LLM 能力](#17-整合-litellm--ollama讓前端有-llm-能力) |
+| 18 | [啟動順序與連接埠](#18-啟動順序與連接埠) |
+| 19 | [完整架構圖與資料流](#19-完整架構圖與資料流) |
+| 20 | [本機實測總表（真實數據）](#20-本機實測總表真實數據) |
+| 21 | [常見錯誤與陷阱](#21-常見錯誤與陷阱) |
+| 22 | [考試重點整理](#22-考試重點整理) |
+| A | [附錄 A：API 速查表](#附錄-aapi-速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
 
 ---
 
@@ -138,7 +136,6 @@ LiteLLM ──HTTP──▶ Ollama (http://127.0.0.1:11434)
 
 ## 2. Flask 是什麼：最小應用
 
-> 教材來源：`server.py`
 
 <!-- FIGURE:ch02-flask-minimal-app -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -252,7 +249,6 @@ def greet_both():
 
 ## 4. 第一個端點 `/greet`（`server.py` 逐行）
 
-> 教材來源：`server.py`（**全部只有 12 行**）
 
 <!-- FIGURE:ch04-greet-endpoint -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -714,7 +710,6 @@ with url: /greet (Caused by NewConnectionError(...))
 
 ## 10. Streamlit 是什麼：最小應用
 
-> 教材來源：`app.py`
 
 <!-- FIGURE:ch10-streamlit-minimal-app -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1009,7 +1004,6 @@ if st.button("Ask LLM", key="btn_ask"):
 
 ## 14. 呼叫後端：`requests.post`（`app.py` 逐行）
 
-> 教材來源：`app.py` 第 1–20 行
 
 <!-- FIGURE:ch14-calling-the-backend -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1876,75 +1870,9 @@ Lesson 9  Streamlit & Flask   →  怎麼「做介面」給人用
 ---
 
 
-## 附錄 C：教材頁面索引對照
+## 附錄 C：離線執行／安裝提示
 
-> 本課教材是 **Python 原始檔**（不是投影片 PDF），因此下表以「**檔案／行號**」取代頁碼。
-
-### C.1 `server.py`（12 行）
-
-| 行 | 內容 | 本筆記對應章節 |
-|:---:|---|---|
-| 1 | `from flask import Flask, request, jsonify` | §2.2 |
-| 3 | `app = Flask(__name__)` | §2.2 |
-| 5 | `@app.route('/greet', methods=['POST'])` | §3、§4.2 |
-| 6 | `def greet():` | §4.2 |
-| 7 | `data = request.get_json()` | **§5（含危險邊界）** |
-| 8 | `name = data.get("name", "Guest")` | **§5.3（null 陷阱）** |
-| 9 | `return jsonify({...})` | §6 |
-| 11 | `if __name__ == '__main__':` | §4.3 |
-| 12 | `app.run(port=5000, debug=True)` | §4.4、§18 |
-
-### C.2 `app.py`（46 行）
-
-| 行 | 內容 | 本筆記對應章節 |
-|:---:|---|---|
-| 1 | `import streamlit as st` | §10 |
-| 2 | `import requests` | §14.2 |
-| 3 | `from litellm import completion` | §17 |
-| 5 | `st.title("Streamlit & Flask Demo")` | §12.1 |
-| 8 | `name = st.text_input("Enter your name:", "User")` | §12.1、§13.3 |
-| 10 | `if st.button("Get Greeting"):` | **§13.1（事件機制）** |
-| 13 | `response = requests.post(..., json={"name": name})` | §14.3 |
-| 14–16 | `if response.status_code == 200:` … | §15.2 |
-| 17–18 | `else: st.error(...)` | §15.2（缺陷） |
-| 19–20 | `except Exception as e: st.error(...)` | §15 |
-| 23 | `st.divider()` | §12.1 |
-| 24 | `st.subheader("Ask Ollama LLM")` | §12.1 |
-| 26 | `question = st.text_input("Enter your question:", "What is RAG?")` | §13.3 |
-| 28 | `if st.button("Ask LLM"):` | §13.2 |
-| 29 | `with st.spinner("Thinking..."):` | **§16** |
-| 31–42 | `resp = completion(...)` | §17 |
-| 43 | `answer = resp["choices"][0]["message"]["content"]` | §16.3 |
-| 44 | `st.success(answer)` | §15.1 |
-
-### C.3 其他教材檔
-
-| 檔案 | 內容 | 本筆記對應章節 |
-|---|---|---|
-| `README.md` | 架構圖、前置需求、安裝、執行方式 | §1、§18.2 |
-| `ReadMe.txt` | 兩行啟動指令 | §18.2 |
-| `lite.py` | LiteLLM 呼叫本機 Ollama | → 見 Lesson 8 筆記 §9 |
-
-### C.4 教材未涵蓋、本筆記補上的章節
-
-| 章節 | 為什麼要補 |
-|---|---|
-| §5.3–5.5 `get_json()` 的危險邊界 | 教材未處理，是**真實漏洞** |
-| §7 錯誤狀態碼總表 | 教材沒說明 405／415／500 的差別 |
-| §8 `test_client` | 教材未提測試 |
-| §9 `requests`／`curl` 實測 | 教材只有啟動指令 |
-| §11 Streamlit 執行模型 | **最重要的觀念**，教材完全沒解釋 |
-| §12 常用元件 | 教材只用 8 個元件 |
-| §13.3 label 重複陷阱 | 教材的兩個 `text_input` 剛好沒撞名 |
-| §15.2–15.4 錯誤處理改進 | 教材的 `else` 分支會誤導使用者 |
-| §18.5 健康檢查端點 | 教材未提 |
-| §20–§21 實測總表與陷阱 | 教材完全沒有 |
-
----
-
-## 附錄 D：離線執行／安裝提示
-
-### D.1 安裝
+### C.1 安裝
 
 ```bash
 pip install streamlit flask requests litellm
@@ -1956,7 +1884,7 @@ pip install streamlit flask requests litellm
 - [Ollama](https://ollama.com/) 已安裝並在本機執行（預設埠 `11434`）
 - 已拉取模型：`ollama pull smollm`
 
-### D.2 完整離線啟動流程
+### C.2 完整離線啟動流程
 
 ```powershell
 # ── 終端機 1：Ollama（LLM 功能需要）──
@@ -1971,7 +1899,7 @@ streamlit run app.py
 
 瀏覽器開 **http://localhost:8501**。
 
-### D.3 只練前端／後端（不需要 LLM）
+### C.3 只練前端／後端（不需要 LLM）
 
 | 想練什麼 | 需要開哪些服務 |
 |---|---|
@@ -1981,7 +1909,7 @@ streamlit run app.py
 | 區塊 1（問候） | Flask + Streamlit |
 | 區塊 2（問 LLM） | Ollama + Streamlit |
 
-### D.4 離線環境的自檢清單
+### C.4 離線環境的自檢清單
 
 | 檢查 | 指令 | 預期 |
 |---|---|---|
@@ -1991,7 +1919,7 @@ streamlit run app.py
 | Streamlit 在跑嗎 | `curl http://127.0.0.1:8501/_stcore/health` | `ok` |
 | Ollama 在跑嗎 | `ollama ps` | 有輸出 |
 
-### D.5 沒有 Ollama 時的替代方案
+### C.5 沒有 Ollama 時的替代方案
 
 區塊 2 的 `completion()` 呼叫可以改成「**假的回答**」，方便先驗證 UI：
 
@@ -2007,7 +1935,7 @@ if st.button("Ask LLM"):
 ---
 
 
-## 附錄 E：一頁精華（考前 10 分鐘）
+## 附錄 D：一頁精華（考前 10 分鐘）
 
 ```text
 ========== 1. 三個服務、三個埠號 ==========
@@ -2084,12 +2012,12 @@ app.py 46 行           LiteLLM→Ollama 2.82 s
 
 ---
 
-## 附錄 F：互動式線上測驗（60 題）
+## 附錄 E：互動式線上測驗（60 題）
 
 > **60 題單選、滿分 60 分、建議 75 分鐘。**
 > 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不重複收錄題目**。
 
-### F.1 開始測驗
+### E.1 開始測驗
 
 **👉 [開始 60 題線上測驗](mc-quiz.html)**
 
@@ -2101,7 +2029,7 @@ app.py 46 行           LiteLLM→Ollama 2.82 s
 - 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
 - 需要紙本時，直接在該頁按列印即可
 
-### F.2 時間分配建議
+### E.2 時間分配建議
 
 | 階段 | 時間 | 做什麼 |
 |---|---|---|
@@ -2109,20 +2037,20 @@ app.py 46 行           LiteLLM→Ollama 2.82 s
 | 第二輪 | 40–65 分鐘 | 回頭處理標記的難題 |
 | 第三輪 | 65–75 分鐘 | 檢查有沒有漏答 |
 
-### F.3 評分參考
+### E.3 評分參考
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 54–60 | 優異 | 直接看附錄 E 一頁精華即可上場 |
+| 54–60 | 優異 | 直接看附錄 D 一頁精華即可上場 |
 | 45–53 | 良好 | 複習錯題所屬章節 |
 | 36–44 | 及格邊緣 | 重讀主要章節 + 附錄 A |
 | 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
-> 答錯的題目請對照下方〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
+> 答錯的題目請對照下方〈附錄 F：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
 
 ---
 
-## 附錄 G：互動測驗答錯題目 → 複習章節對照
+## 附錄 F：互動測驗答錯題目 → 複習章節對照
 
 | 答錯題號 | 建議複習章節 |
 |---|---|
@@ -2141,5 +2069,5 @@ app.py 46 行           LiteLLM→Ollama 2.82 s
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*
 

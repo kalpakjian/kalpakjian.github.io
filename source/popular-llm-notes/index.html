@@ -624,35 +624,33 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 </ul>
 </li>
-<li><a href="#附錄-c教材頁面索引對照">附錄 C：教材頁面索引對照</a>
-</li>
-<li><a href="#附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</a>
+<li><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a>
 <ul>
-<li><a href="#d1-這份筆記本身">D.1 這份筆記本身</a>
+<li><a href="#c1-這份筆記本身">C.1 這份筆記本身</a>
 </li>
-<li><a href="#d2-要自己跑-lab-需要什麼">D.2 要自己跑 Lab 需要什麼</a>
+<li><a href="#c2-要自己跑-lab-需要什麼">C.2 要自己跑 Lab 需要什麼</a>
 </li>
-<li><a href="#d3-完全離線的做法先在有網路時把模型抓好">D.3 完全離線的做法（先在有網路時把模型抓好）</a>
+<li><a href="#c3-完全離線的做法先在有網路時把模型抓好">C.3 完全離線的做法（先在有網路時把模型抓好）</a>
 </li>
-<li><a href="#d4-本機測試資料不需要下載任何檔案">D.4 本機測試資料（不需要下載任何檔案）</a>
+<li><a href="#c4-本機測試資料不需要下載任何檔案">C.4 本機測試資料（不需要下載任何檔案）</a>
 </li>
-<li><a href="#d5-需要網路的只有兩件事">D.5 需要網路的只有兩件事</a>
+<li><a href="#c5-需要網路的只有兩件事">C.5 需要網路的只有兩件事</a>
 </li>
 </ul>
 </li>
-<li><a href="#附錄-e一頁精華考前-10-分鐘">附錄 E：一頁精華（考前 10 分鐘）</a>
+<li><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a>
 </li>
-<li><a href="#附錄-f互動式線上測驗60-題">附錄 F：互動式線上測驗（60 題）</a>
+<li><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a>
 <ul>
-<li><a href="#f1-開始測驗">F.1 開始測驗</a>
+<li><a href="#e1-開始測驗">E.1 開始測驗</a>
 </li>
-<li><a href="#f2-時間分配建議">F.2 時間分配建議</a>
+<li><a href="#e2-時間分配建議">E.2 時間分配建議</a>
 </li>
-<li><a href="#f3-評分參考">F.3 評分參考</a>
+<li><a href="#e3-評分參考">E.3 評分參考</a>
 </li>
 </ul>
 </li>
-<li><a href="#附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</a>
+<li><a href="#附錄-f互動測驗答錯題目--複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a>
 </li>
 </ul>
 </div>
@@ -665,11 +663,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 機構：匯縱專業發展中心（IVDC）
 教材來源：<code>02_IVDC_Popular_LLM.pdf</code>（77 頁）
 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、參數說明、常見錯誤與考點。
-教材共 77 頁，其中<strong>大量頁面是純截圖</strong>（產品介面、比較表），文字層只有標題一行；
-這些章節由筆者補上可考的內容，並在每節標明「本節為圖示頁」。
 Lab 程式碼（<code>LLM.ipynb</code>／<code>RAG.ipynb</code>／<code>Predictive AI.ipynb</code>／<code>Gen AI.ipynb</code>）都在本機實測
 （Python 3.11.15／torch 2.14.1+cu132／transformers 5.17.0／RTX 4090），實測數字直接寫進內文。
-🖱️ <strong>互動測驗（推薦）</strong>：附錄 F 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
+🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
 </blockquote>
 <hr>
 <h2 id="目錄">目錄</h2>
@@ -678,209 +674,164 @@ Lab 程式碼（<code>LLM.ipynb</code>／<code>RAG.ipynb</code>／<code>Predicti
 <tr>
 <th>#</th>
 <th>章節</th>
-<th>PDF 頁</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
 <td><a href="#1-課程地圖這份教材的三條主線">課程地圖：這份教材的三條主線</a></td>
-<td>p2</td>
 </tr>
 <tr>
 <td>2</td>
 <td><a href="#2-什麼是生成式-aigenerative-artificial-intelligence">什麼是生成式 AI（Generative Artificial Intelligence）</a></td>
-<td>p3</td>
 </tr>
 <tr>
 <td>3</td>
 <td><a href="#3-熱門-llm-總覽六個對話式生成式-ai">熱門 LLM 總覽：六個對話式生成式 AI</a></td>
-<td>p4–6</td>
 </tr>
 <tr>
 <td>4</td>
 <td><a href="#4-chatgpt介面與用途">ChatGPT：介面與用途</a></td>
-<td>p7–10</td>
 </tr>
 <tr>
 <td>5</td>
 <td><a href="#5-chatgpt-的智慧從哪來rlhf獎勵模型與-ppo">ChatGPT 的智慧從哪來：RLHF、獎勵模型與 PPO</a></td>
-<td>p11–13</td>
 </tr>
 <tr>
 <td>6</td>
 <td><a href="#6-gemini">Gemini</a></td>
-<td>p14</td>
 </tr>
 <tr>
 <td>7</td>
 <td><a href="#7-chatgpt-prompt-範例">ChatGPT Prompt 範例</a></td>
-<td>p15</td>
 </tr>
 <tr>
 <td>8</td>
 <td><a href="#8-copilot">Copilot</a></td>
-<td>p16</td>
 </tr>
 <tr>
 <td>9</td>
 <td><a href="#9-metallama">Meta／Llama</a></td>
-<td>p17</td>
 </tr>
 <tr>
 <td>10</td>
 <td><a href="#10-grok">Grok</a></td>
-<td>p18</td>
 </tr>
 <tr>
 <td>11</td>
 <td><a href="#11-perplexityai-搜尋引擎">Perplexity：AI 搜尋引擎</a></td>
-<td>p19</td>
 </tr>
 <tr>
 <td>12</td>
 <td><a href="#12-中國熱門-llmkimi通義tongyideepseek">中國熱門 LLM：Kimi、通義（Tongyi）、DeepSeek</a></td>
-<td>p20–23</td>
 </tr>
 <tr>
 <td>13</td>
 <td><a href="#13-在本機使用-deepseek">在本機使用 DeepSeek</a></td>
-<td>p24</td>
 </tr>
 <tr>
 <td>14</td>
 <td><a href="#14-第三方多模型聚合-app">第三方多模型聚合 App</a></td>
-<td>p25</td>
 </tr>
 <tr>
 <td>15</td>
 <td><a href="#15-生成式-ai-偵測器">生成式 AI 偵測器</a></td>
-<td>p26</td>
 </tr>
 <tr>
 <td>16</td>
 <td><a href="#16-predictive-ai-vs-generative-ai主題地圖">Predictive AI vs Generative AI：主題地圖</a></td>
-<td>p27</td>
 </tr>
 <tr>
 <td>17</td>
 <td><a href="#17-predictive-ai-深入資料模型與應用">Predictive AI 深入：資料、模型與應用</a></td>
-<td>p28</td>
 </tr>
 <tr>
 <td>18</td>
 <td><a href="#18-predictive-ai-的五步流程">Predictive AI 的五步流程</a></td>
-<td>p29</td>
 </tr>
 <tr>
 <td>19</td>
 <td><a href="#19-generative-ai-深入定義與核心技術">Generative AI 深入：定義與核心技術</a></td>
-<td>p30–31</td>
 </tr>
 <tr>
 <td>20</td>
 <td><a href="#20-generative-ai-的運作方式與生成流程">Generative AI 的運作方式與生成流程</a></td>
-<td>p32–33</td>
 </tr>
 <tr>
 <td>21</td>
 <td><a href="#21-對照總表predictive-ai-vs-generative-ai">對照總表：Predictive AI vs Generative AI</a></td>
-<td>p34</td>
 </tr>
 <tr>
 <td>22</td>
 <td><a href="#22-ai--ml--dl--generative-ai-的層次與-aigc">AI → ML → DL → Generative AI 的層次，與 AIGC</a></td>
-<td>p35–36</td>
 </tr>
 <tr>
 <td>23</td>
 <td><a href="#23-gan-基礎概念">GAN 基礎概念</a></td>
-<td>p37–40</td>
 </tr>
 <tr>
 <td>24</td>
 <td><a href="#24-gan-的底層技術與演算法">GAN 的底層技術與演算法</a></td>
-<td>p41–52</td>
 </tr>
 <tr>
 <td>25</td>
 <td><a href="#25-diffusion-model">Diffusion Model</a></td>
-<td>p53–58</td>
 </tr>
 <tr>
 <td>26</td>
 <td><a href="#26-gan-vs-diffusion與其他生成模型">GAN vs Diffusion，與其他生成模型</a></td>
-<td>p59–62</td>
 </tr>
 <tr>
 <td>27</td>
 <td><a href="#27-hybrid-ai-systems">Hybrid AI Systems</a></td>
-<td>p63–65</td>
 </tr>
 <tr>
 <td>28</td>
 <td><a href="#28-真實世界應用醫療電商招聘">真實世界應用：醫療、電商、招聘</a></td>
-<td>p66–68</td>
 </tr>
 <tr>
 <td>29</td>
 <td><a href="#29-rag檢索增強生成與-anythingllm">RAG：檢索增強生成與 AnythingLLM</a></td>
-<td>p70–71</td>
 </tr>
 <tr>
 <td>30</td>
 <td><a href="#30-llm-vs-rag比較強弱與使用時機">LLM vs RAG：比較、強弱與使用時機</a></td>
-<td>p72–74</td>
 </tr>
 <tr>
 <td>31</td>
 <td><a href="#31-更多-chatgpthinton-的推理題">更多 ChatGPT：Hinton 的推理題</a></td>
-<td>p75</td>
 </tr>
 <tr>
 <td>32</td>
 <td><a href="#32-程式範例索引與本機實測總表">程式範例索引與本機實測總表</a></td>
-<td>p69, p76</td>
 </tr>
 <tr>
 <td>33</td>
 <td><a href="#33-考試重點整理">考試重點整理</a></td>
-<td>整理</td>
 </tr>
 <tr>
 <td>A</td>
 <td><a href="#附錄-a名詞與架構速查表">附錄 A：名詞與架構速查表</a></td>
-<td>—</td>
 </tr>
 <tr>
 <td>B</td>
 <td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
-<td>—</td>
-</tr>
-<tr>
-<td>C</td>
-<td><a href="#附錄-c教材頁面索引對照">附錄 C：教材頁面索引對照</a></td>
-<td>—</td>
 </tr>
 <tr>
 <td>D</td>
-<td><a href="#附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</a></td>
-<td>—</td>
+<td><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a></td>
 </tr>
 <tr>
 <td>E</td>
-<td><a href="#附錄-e一頁精華考前-10-分鐘">附錄 E：一頁精華（考前 10 分鐘）</a></td>
-<td>—</td>
+<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
 </tr>
 <tr>
 <td>F</td>
-<td><a href="#附錄-f互動式線上測驗60-題">附錄 F：互動式線上測驗（60 題）</a></td>
-<td>—</td>
+<td><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a></td>
 </tr>
 <tr>
 <td>G</td>
-<td><a href="#附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</a></td>
-<td>—</td>
+<td><a href="#附錄-f互動測驗答錯題目--複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
 </tr>
 </tbody>
 </table>
@@ -976,7 +927,6 @@ Lab 程式碼（<code>LLM.ipynb</code>／<code>RAG.ipynb</code>／<code>Predicti
 <hr>
 <h2 id="1-課程地圖這份教材的三條主線">1. 課程地圖：這份教材的三條主線</h2>
 <blockquote>
-<p>對照教材 <strong>p2</strong>（Learning topics）。</p>
 </blockquote>
 <!-- FIGURE:ch01-course-map -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1045,7 +995,6 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 <hr>
 <h2 id="2-什麼是生成式-aigenerative-artificial-intelligence">2. 什麼是生成式 AI（Generative Artificial Intelligence）</h2>
 <blockquote>
-<p>對照教材 <strong>p3</strong>（Generative Artificial Intelligence / What is Generative AI?）。</p>
 </blockquote>
 <!-- FIGURE:ch02-what-is-generative-ai -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1067,7 +1016,7 @@ generate new content that is <strong>similar to the training data</strong>.</p>
 <thead>
 <tr>
 <th>要素</th>
-<th>教材的說法</th>
+<th>說法</th>
 <th>說明</th>
 </tr>
 </thead>
@@ -1136,7 +1085,6 @@ generate new content that is <strong>similar to the training data</strong>.</p>
 <hr>
 <h2 id="3-熱門-llm-總覽六個對話式生成式-ai">3. 熱門 LLM 總覽：六個對話式生成式 AI</h2>
 <blockquote>
-<p>對照教材 <strong>p4–p6</strong>（Popular LLM）。
 ⚠️ p5、p6 為<strong>純截圖頁</strong>（比較圖表），文字層只有標題。</p>
 </blockquote>
 <!-- FIGURE:ch03-popular-llm-overview -->
@@ -1151,7 +1099,7 @@ generate new content that is <strong>similar to the training data</strong>.</p>
 <thead>
 <tr>
 <th>產品</th>
-<th>教材的說明</th>
+<th>說明</th>
 <th>開發者</th>
 <th>定位</th>
 </tr>
@@ -1251,7 +1199,6 @@ generate new content that is <strong>similar to the training data</strong>.</p>
 <hr>
 <h2 id="4-chatgpt介面與用途">4. ChatGPT：介面與用途</h2>
 <blockquote>
-<p>對照教材 <strong>p7–p10</strong>。
 ⚠️ p7–p10 為<strong>截圖頁</strong>（主畫面、新版主畫面、寫履歷的示範），文字層只有標題與少量說明。</p>
 </blockquote>
 <!-- FIGURE:ch04-chatgpt-interface -->
@@ -1265,29 +1212,24 @@ generate new content that is <strong>similar to the training data</strong>.</p>
 <table>
 <thead>
 <tr>
-<th>頁</th>
-<th>教材標題</th>
+<th>標題</th>
 <th>內容</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>p7</td>
 <td>ChatGPT</td>
 <td>產品主視覺（附外部圖片來源連結）</td>
 </tr>
 <tr>
-<td>p8</td>
 <td>Sample usage of ChatGPT — <strong>Main screen</strong></td>
 <td>舊版主畫面截圖</td>
 </tr>
 <tr>
-<td>p9</td>
 <td><strong>New ChatGPT</strong> — Main screen</td>
 <td>改版後的主畫面</td>
 </tr>
 <tr>
-<td>p10</td>
 <td>Sample usage of ChatGPT — <strong>Writing a resume</strong></td>
 <td>用 ChatGPT 寫履歷的示範</td>
 </tr>
@@ -1338,7 +1280,6 @@ generate new content that is <strong>similar to the training data</strong>.</p>
 <hr>
 <h2 id="5-chatgpt-的智慧從哪來rlhf獎勵模型與-ppo">5. ChatGPT 的智慧從哪來：RLHF、獎勵模型與 PPO</h2>
 <blockquote>
-<p>對照教材 <strong>p11–p13</strong>（Reinforcement Learning in ChatGPT／How does ChatGPT Work?／
 ChatGPT is an example of a Large Language Model (LLM)）。</p>
 </blockquote>
 <!-- FIGURE:ch05-rlhf-ppo -->
@@ -1361,7 +1302,7 @@ ChatGPT is an example of a Large Language Model (LLM)）。</p>
 <thead>
 <tr>
 <th>名詞</th>
-<th>教材的定義</th>
+<th>定義</th>
 </tr>
 </thead>
 <tbody>
@@ -1445,7 +1386,7 @@ uses <strong>deep learning</strong> techniques and <strong>massively large data 
 <thead>
 <tr>
 <th>關鍵</th>
-<th>教材用詞</th>
+<th>用詞</th>
 <th>說明</th>
 </tr>
 </thead>
@@ -1532,8 +1473,6 @@ at a baby boy&#39;s heart. Photo Credit: Wendytale - All images can be saved via
 <hr>
 <h2 id="6-gemini">6. Gemini</h2>
 <blockquote>
-<p>對照教材 <strong>p14</strong>（Gemini）。
-⚠️ 本節為<strong>圖示頁</strong>，文字層只有標題。</p>
 </blockquote>
 <!-- FIGURE:ch06-gemini -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1608,8 +1547,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="7-chatgpt-prompt-範例">7. ChatGPT Prompt 範例</h2>
 <blockquote>
-<p>對照教材 <strong>p15</strong>（ChatGPT Prompt）。
-⚠️ 本節為<strong>圖示頁</strong>，文字層只有標題。</p>
 </blockquote>
 <!-- FIGURE:ch07-chatgpt-prompt -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1667,8 +1604,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="8-copilot">8. Copilot</h2>
 <blockquote>
-<p>對照教材 <strong>p16</strong>（Copilot）。
-⚠️ 本節為<strong>圖示頁</strong>，文字層只有標題。</p>
 </blockquote>
 <!-- FIGURE:ch08-copilot -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1721,8 +1656,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="9-metallama">9. Meta／Llama</h2>
 <blockquote>
-<p>對照教材 <strong>p17</strong>（Meta）。
-⚠️ 本節為<strong>圖示頁</strong>，文字層只有標題。</p>
 </blockquote>
 <!-- FIGURE:ch09-meta-llama -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1806,8 +1739,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="10-grok">10. Grok</h2>
 <blockquote>
-<p>對照教材 <strong>p18</strong>（Grok）。
-⚠️ 本節為<strong>圖示頁</strong>，文字層只有標題。</p>
 </blockquote>
 <!-- FIGURE:ch10-grok -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1850,8 +1781,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="11-perplexityai-搜尋引擎">11. Perplexity：AI 搜尋引擎</h2>
 <blockquote>
-<p>對照教材 <strong>p19</strong>（Perplexity）。
-⚠️ 本節為<strong>圖示頁</strong>，文字層只有標題。</p>
 </blockquote>
 <!-- FIGURE:ch11-perplexity -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1903,7 +1832,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="12-中國熱門-llmkimi通義tongyideepseek">12. 中國熱門 LLM：Kimi、通義（Tongyi）、DeepSeek</h2>
 <blockquote>
-<p>對照教材 <strong>p20–p23</strong>（Popular LLM (China)／Kimi／Tongyi／Deepseek）。
 ⚠️ p21–p23 為<strong>截圖頁</strong>，文字層只有標題。</p>
 </blockquote>
 <!-- FIGURE:ch12-china-llms -->
@@ -1918,7 +1846,7 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <thead>
 <tr>
 <th>產品</th>
-<th>教材寫法</th>
+<th>寫法</th>
 <th>開發者</th>
 <th>一句話定位</th>
 </tr>
@@ -1982,8 +1910,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="13-在本機使用-deepseek">13. 在本機使用 DeepSeek</h2>
 <blockquote>
-<p>對照教材 <strong>p24</strong>（DeepSeek to use locally）。
-⚠️ 本節為<strong>圖示頁</strong>，文字層只有標題。</p>
 </blockquote>
 <!-- FIGURE:ch13-deepseek-local -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2083,8 +2009,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="14-第三方多模型聚合-app">14. 第三方多模型聚合 App</h2>
 <blockquote>
-<p>對照教材 <strong>p25</strong>（Third Party App with Multiple AI Models）。
-⚠️ 本節為<strong>圖示頁</strong>，文字層只有標題。</p>
 </blockquote>
 <!-- FIGURE:ch14-multi-model-apps -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2143,8 +2067,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="15-生成式-ai-偵測器">15. 生成式 AI 偵測器</h2>
 <blockquote>
-<p>對照教材 <strong>p26</strong>（Generative AI Detector）。
-⚠️ 本節為<strong>圖示頁</strong>，文字層只有標題。</p>
 </blockquote>
 <!-- FIGURE:ch15-ai-detector -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2214,7 +2136,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="16-predictive-ai-vs-generative-ai主題地圖">16. Predictive AI vs Generative AI：主題地圖</h2>
 <blockquote>
-<p>對照教材 <strong>p27</strong>（Predictive AI vs Generative AI）。
 ⚠️ 教材為<strong>章節過場頁</strong>，列出接下來要講的四個子題。</p>
 </blockquote>
 <!-- FIGURE:ch16-topic-map -->
@@ -2228,7 +2149,7 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <table>
 <thead>
 <tr>
-<th>教材的 bullet</th>
+<th> bullet</th>
 <th>中文</th>
 <th>本筆記章節</th>
 </tr>
@@ -2279,7 +2200,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="17-predictive-ai-深入資料模型與應用">17. Predictive AI 深入：資料、模型與應用</h2>
 <blockquote>
-<p>對照教材 <strong>p28</strong>（Predictive AI）。</p>
 </blockquote>
 <!-- FIGURE:ch17-predictive-ai -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2293,7 +2213,7 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <table>
 <thead>
 <tr>
-<th>教材小標</th>
+<th>小標</th>
 <th>內容</th>
 <th>中文</th>
 </tr>
@@ -2362,7 +2282,7 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <thead>
 <tr>
 <th>領域</th>
-<th>教材舉的例子</th>
+<th>舉的例子</th>
 </tr>
 </thead>
 <tbody>
@@ -2391,7 +2311,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="18-predictive-ai-的五步流程">18. Predictive AI 的五步流程</h2>
 <blockquote>
-<p>對照教材 <strong>p29</strong>（Predictive AI — Process）。</p>
 </blockquote>
 <!-- FIGURE:ch18-predictive-process -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2417,7 +2336,7 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <thead>
 <tr>
 <th>#</th>
-<th>教材英文</th>
+<th>英文</th>
 <th>中文</th>
 <th>這一步的關鍵詞</th>
 </tr>
@@ -2583,7 +2502,6 @@ Gemini 屬於「<strong>輸入端也支援多模態</strong>」的那一類，�
 <hr>
 <h2 id="19-generative-ai-深入定義與核心技術">19. Generative AI 深入：定義與核心技術</h2>
 <blockquote>
-<p>對照教材 <strong>p30–p31</strong>（Generative AI）。</p>
 </blockquote>
 <!-- FIGURE:ch19-generative-core-tech -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2641,7 +2559,7 @@ such as text, images, audio, video, or code, <strong>by learning patterns from e
 <table>
 <thead>
 <tr>
-<th>教材分組</th>
+<th>分組</th>
 <th>內容</th>
 </tr>
 </thead>
@@ -2706,7 +2624,7 @@ such as text, images, audio, video, or code, <strong>by learning patterns from e
 <table>
 <thead>
 <tr>
-<th>教材寫的例子</th>
+<th>寫的例子</th>
 <th>屬於哪一類</th>
 <th>開發者</th>
 </tr>
@@ -2741,7 +2659,6 @@ such as text, images, audio, video, or code, <strong>by learning patterns from e
 <hr>
 <h2 id="20-generative-ai-的運作方式與生成流程">20. Generative AI 的運作方式與生成流程</h2>
 <blockquote>
-<p>對照教材 <strong>p32–p33</strong>（Generative AI — How It Works／Process）。</p>
 </blockquote>
 <!-- FIGURE:ch20-generative-how-it-works -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2755,7 +2672,7 @@ such as text, images, audio, video, or code, <strong>by learning patterns from e
 <thead>
 <tr>
 <th>階段</th>
-<th>教材英文</th>
+<th>英文</th>
 <th>中文</th>
 <th>關鍵詞</th>
 </tr>
@@ -2903,7 +2820,6 @@ such as text, images, audio, video, or code, <strong>by learning patterns from e
 <hr>
 <h2 id="21-對照總表predictive-ai-vs-generative-ai">21. 對照總表：Predictive AI vs Generative AI</h2>
 <blockquote>
-<p>對照教材 <strong>p34</strong>（Predictive AI vs Generative AI）。</p>
 </blockquote>
 <!-- FIGURE:ch21-comparison-table -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -3022,7 +2938,6 @@ such as text, images, audio, video, or code, <strong>by learning patterns from e
 <hr>
 <h2 id="22-ai--ml--dl--generative-ai-的層次與-aigc">22. AI → ML → DL → Generative AI 的層次，與 AIGC</h2>
 <blockquote>
-<p>對照教材 <strong>p35–p36</strong>（Understanding Artificial Intelligence and Generative AI／
 Generative AI and AIGC）。</p>
 </blockquote>
 <!-- FIGURE:ch22-ai-ml-dl-aigc -->
@@ -3038,7 +2953,7 @@ Generative AI and AIGC）。</p>
 <thead>
 <tr>
 <th>層</th>
-<th>教材的定義</th>
+<th>定義</th>
 </tr>
 </thead>
 <tbody>
@@ -3145,7 +3060,6 @@ and generated synthetic data."</p>
 <hr>
 <h2 id="23-gan-基礎概念">23. GAN 基礎概念</h2>
 <blockquote>
-<p>對照教材 <strong>p37–p40</strong>（Basic Concepts in GAN Network）。</p>
 </blockquote>
 <!-- FIGURE:ch23-gan-basics -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -3155,7 +3069,6 @@ and generated synthetic data."</p>
 <!-- /FIGURE -->
 
 <p>教材用四頁建立 GAN 的基本概念，其中 p38–p39 的文字層重複出現「• Basic Concepts in GAN Network」
-這個小標（母片設計），實際內容如下。</p>
 <h3 id="231-p37gan-的定義">23.1 p37：GAN 的定義</h3>
 <blockquote>
 <p>Generative Adversarial Networks (GANs) are a type of machine learning framework used to
@@ -3231,7 +3144,7 @@ together in a <strong>zero-sum game</strong>, adversarial, until the discriminat
 <table>
 <thead>
 <tr>
-<th>教材說</th>
+<th>課程說明</th>
 <th>意思是</th>
 </tr>
 </thead>
@@ -3282,7 +3195,7 @@ together in a <strong>zero-sum game</strong>, adversarial, until the discriminat
 <thead>
 <tr>
 <th>類型</th>
-<th>教材的例子</th>
+<th>例子</th>
 </tr>
 </thead>
 <tbody>
@@ -3303,7 +3216,6 @@ together in a <strong>zero-sum game</strong>, adversarial, until the discriminat
 <hr>
 <h2 id="24-gan-的底層技術與演算法">24. GAN 的底層技術與演算法</h2>
 <blockquote>
-<p>對照教材 <strong>p41–p52</strong>（Underlying Technologies and Algorithms of GAN）。
 ⚠️ 這 12 頁中，p41–p43、p45、p47 為<strong>截圖頁</strong>（架構圖），文字層只有標題；
 其餘各頁才有實質內容。</p>
 </blockquote>
@@ -3344,7 +3256,7 @@ weights</strong>.</p>
 <thead>
 <tr>
 <th>#</th>
-<th>教材英文</th>
+<th>英文</th>
 <th>中文</th>
 </tr>
 </thead>
@@ -3521,7 +3433,6 @@ the GAN and the distribution of the real data</strong>.</p>
 <hr>
 <h2 id="25-diffusion-model">25. Diffusion Model</h2>
 <blockquote>
-<p>對照教材 <strong>p53–p58</strong>（Diffusion Model）。</p>
 </blockquote>
 <!-- FIGURE:ch25-diffusion-model -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -3547,8 +3458,8 @@ then methodically <strong>reverse</strong> this process.</p>
 <thead>
 <tr>
 <th>過程</th>
-<th>教材標題</th>
-<th>教材說明</th>
+<th>標題</th>
+<th>說明</th>
 <th>白話</th>
 </tr>
 </thead>
@@ -3627,7 +3538,7 @@ model that focuses on <strong>probabilistically removing noise</strong> from dat
 <thead>
 <tr>
 <th>類別</th>
-<th>教材內容</th>
+<th>內容</th>
 <th>中文</th>
 </tr>
 </thead>
@@ -3713,7 +3624,6 @@ model that focuses on <strong>probabilistically removing noise</strong> from dat
 <hr>
 <h2 id="26-gan-vs-diffusion與其他生成模型">26. GAN vs Diffusion，與其他生成模型</h2>
 <blockquote>
-<p>對照教材 <strong>p59–p62</strong>（GANs vs. Diffusion Models／Other Models）。
 ⚠️ p59–p61 為<strong>純截圖頁</strong>（比較表格），文字層只有標題。</p>
 </blockquote>
 <!-- FIGURE:ch26-gan-vs-diffusion -->
@@ -3796,7 +3706,7 @@ model that focuses on <strong>probabilistically removing noise</strong> from dat
 <thead>
 <tr>
 <th>模型</th>
-<th>教材定義</th>
+<th>定義</th>
 <th>中文</th>
 </tr>
 </thead>
@@ -3855,7 +3765,6 @@ model that focuses on <strong>probabilistically removing noise</strong> from dat
 <hr>
 <h2 id="27-hybrid-ai-systems">27. Hybrid AI Systems</h2>
 <blockquote>
-<p>對照教材 <strong>p63–p65</strong>（Hybrid AI Systems）。</p>
 </blockquote>
 <!-- FIGURE:ch27-hybrid-ai -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -3922,7 +3831,7 @@ for their weaknesses</strong>. The most common combination is:</p>
 <thead>
 <tr>
 <th>類型</th>
-<th>教材的定義</th>
+<th>定義</th>
 <th>優點</th>
 </tr>
 </thead>
@@ -3973,7 +3882,6 @@ for their weaknesses</strong>. The most common combination is:</p>
 <hr>
 <h2 id="28-真實世界應用醫療電商招聘">28. 真實世界應用：醫療、電商、招聘</h2>
 <blockquote>
-<p>對照教材 <strong>p66–p68</strong>（Real-World Application）。</p>
 </blockquote>
 <!-- FIGURE:ch28-real-world-apps -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -4108,7 +4016,6 @@ Hybrid 負責把兩者接起來。</p>
 <hr>
 <h2 id="29-rag檢索增強生成與-anythingllm">29. RAG：檢索增強生成與 AnythingLLM</h2>
 <blockquote>
-<p>對照教材 <strong>p70–p71</strong>（Retrieval-Augmented Generation (RAG)／AnythingLLM）。
 ⚠️ p71 為<strong>截圖頁</strong>（AnythingLLM 操作步驟以文字形式附在圖說中）。</p>
 </blockquote>
 <!-- FIGURE:ch29-rag-anythingllm -->
@@ -4146,7 +4053,7 @@ index the vector store, but <strong>no model weights are updated</strong>.</p>
 <thead>
 <tr>
 <th>細節</th>
-<th>教材說法</th>
+<th>說法</th>
 <th>為什麼重要</th>
 </tr>
 </thead>
@@ -4178,7 +4085,7 @@ index the vector store, but <strong>no model weights are updated</strong>.</p>
 <thead>
 <tr>
 <th>類別</th>
-<th>教材舉的例子</th>
+<th>舉的例子</th>
 </tr>
 </thead>
 <tbody>
@@ -4202,7 +4109,7 @@ index the vector store, but <strong>no model weights are updated</strong>.</p>
 <thead>
 <tr>
 <th>#</th>
-<th>教材英文</th>
+<th>英文</th>
 <th>中文</th>
 </tr>
 </thead>
@@ -4248,7 +4155,6 @@ index the vector store, but <strong>no model weights are updated</strong>.</p>
 <hr>
 <h2 id="30-llm-vs-rag比較強弱與使用時機">30. LLM vs RAG：比較、強弱與使用時機</h2>
 <blockquote>
-<p>對照教材 <strong>p72–p74</strong>（Comparison of LLM vs RAG and Use Cases／Strengths &amp; Weaknesses／Use Cases）。</p>
 </blockquote>
 <!-- FIGURE:ch30-llm-vs-rag -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -4515,7 +4421,6 @@ prompt 字元數 = 863 | prompt token 數 = 153
 <hr>
 <h2 id="31-更多-chatgpthinton-的推理題">31. 更多 ChatGPT：Hinton 的推理題</h2>
 <blockquote>
-<p>對照教材 <strong>p75</strong>（More on ChatGPT）。</p>
 </blockquote>
 <!-- FIGURE:ch31-hinton-reasoning -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -4606,7 +4511,6 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 <hr>
 <h2 id="32-程式範例索引與本機實測總表">32. 程式範例索引與本機實測總表</h2>
 <blockquote>
-<p>對照教材 <strong>p69</strong>（Predictive AI vs Generative AI — Code Examples and Demo）與
 <strong>p76</strong>（Large Language Model — Code Example of LLM and RAG）。</p>
 </blockquote>
 <!-- FIGURE:ch32-code-index -->
@@ -4620,19 +4524,16 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 <table>
 <thead>
 <tr>
-<th>教材頁</th>
-<th>教材指令</th>
+<th>指令</th>
 <th>Lab 檔案</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>p69</strong></td>
 <td>• Refer to the <strong>Predictive AI.ipynb</strong><br>• Refer to the <strong>Gen AI.ipynb</strong></td>
 <td><code>GenAI/Predictive AI.ipynb</code>、<code>GenAI/Gen AI.ipynb</code></td>
 </tr>
 <tr>
-<td><strong>p76</strong></td>
 <td>• Refer to <strong>LLM.ipynb</strong><br>• Refer to <strong>RAG.ipynb</strong></td>
 <td><code>LLM/LLM.ipynb</code>、<code>LLM/RAG.ipynb</code></td>
 </tr>
@@ -4959,7 +4860,7 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 <thead>
 <tr>
 <th>#</th>
-<th>教材的寫法</th>
+<th>舊寫法</th>
 <th>現況</th>
 </tr>
 </thead>
@@ -5470,388 +5371,11 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 這也是為什麼實務上要用 <strong><code>uv</code>／<code>conda</code> 的隔離環境</strong>。</p>
 </blockquote>
 <hr>
-<h2 id="附錄-c教材頁面索引對照">附錄 C：教材頁面索引對照</h2>
-<table>
-<thead>
-<tr>
-<th>PDF 頁</th>
-<th>教材標題</th>
-<th>本筆記對應章節</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Certificate in Application of Large Language Model (LLM) — Popular LLM Models（<strong>課程封面</strong>）</td>
-<td>—</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Learning topics</td>
-<td>§1</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Generative Artificial Intelligence / What is Generative AI?</td>
-<td>§2</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Popular LLM（產品清單 + 「與 Google 搜尋有何不同」）</td>
-<td>§3</td>
-</tr>
-<tr>
-<td>5–6</td>
-<td>Popular LLM（截圖）</td>
-<td>§3</td>
-</tr>
-<tr>
-<td>7</td>
-<td>ChatGPT</td>
-<td>§4</td>
-</tr>
-<tr>
-<td>8</td>
-<td>ChatGPT — Sample usage / Main screen</td>
-<td>§4</td>
-</tr>
-<tr>
-<td>9</td>
-<td>ChatGPT — New ChatGPT / Main screen</td>
-<td>§4</td>
-</tr>
-<tr>
-<td>10</td>
-<td>ChatGPT — Writing a resume</td>
-<td>§4</td>
-</tr>
-<tr>
-<td>11</td>
-<td>ChatGPT — Reinforcement Learning in ChatGPT / How does ChatGPT Work?</td>
-<td>§5</td>
-</tr>
-<tr>
-<td>12</td>
-<td>ChatGPT — RLHF 三階段（SFT／Reward Model／PPO）</td>
-<td>§5</td>
-</tr>
-<tr>
-<td>13</td>
-<td>ChatGPT — LLM 的定義</td>
-<td>§5</td>
-</tr>
-<tr>
-<td>14</td>
-<td>Gemini（截圖）</td>
-<td>§6</td>
-</tr>
-<tr>
-<td>15</td>
-<td>ChatGPT Prompt（截圖）</td>
-<td>§7</td>
-</tr>
-<tr>
-<td>16</td>
-<td>Copilot（截圖）</td>
-<td>§8</td>
-</tr>
-<tr>
-<td>17</td>
-<td>Meta（截圖）</td>
-<td>§9</td>
-</tr>
-<tr>
-<td>18</td>
-<td>Grok（截圖）</td>
-<td>§10</td>
-</tr>
-<tr>
-<td>19</td>
-<td>Perplexity（截圖）</td>
-<td>§11</td>
-</tr>
-<tr>
-<td>20</td>
-<td>Popular LLM (China) — Kimi／Tongyi／DeepSeek</td>
-<td>§12</td>
-</tr>
-<tr>
-<td>21</td>
-<td>Kimi（截圖）</td>
-<td>§12</td>
-</tr>
-<tr>
-<td>22</td>
-<td>Tongyi（截圖）</td>
-<td>§12</td>
-</tr>
-<tr>
-<td>23</td>
-<td>Deepseek（截圖）</td>
-<td>§12</td>
-</tr>
-<tr>
-<td>24</td>
-<td>DeepSeek to use locally（截圖）</td>
-<td>§13</td>
-</tr>
-<tr>
-<td>25</td>
-<td>Third Party App with Multiple AI Models（截圖）</td>
-<td>§14</td>
-</tr>
-<tr>
-<td>26</td>
-<td>Generative AI Detector（截圖）</td>
-<td>§15</td>
-</tr>
-<tr>
-<td>27</td>
-<td>Predictive AI vs Generative AI（章節過場頁，四個 bullet）</td>
-<td>§16</td>
-</tr>
-<tr>
-<td>28</td>
-<td>Predictive AI（Data-Driven Insights／ML Models／Applications）</td>
-<td>§17</td>
-</tr>
-<tr>
-<td>29</td>
-<td>Predictive AI — Process（五步）</td>
-<td>§18</td>
-</tr>
-<tr>
-<td>30</td>
-<td>Generative AI（定義）</td>
-<td>§19</td>
-</tr>
-<tr>
-<td>31</td>
-<td>Generative AI — Core Technologies</td>
-<td>§19</td>
-</tr>
-<tr>
-<td>32</td>
-<td>Generative AI — How It Works</td>
-<td>§20</td>
-</tr>
-<tr>
-<td>33</td>
-<td>Generative AI — Process</td>
-<td>§20</td>
-</tr>
-<tr>
-<td>34</td>
-<td>Predictive AI vs Generative AI（對照總表）</td>
-<td>§21</td>
-</tr>
-<tr>
-<td>35</td>
-<td>Understanding Artificial Intelligence and Generative AI</td>
-<td>§22</td>
-</tr>
-<tr>
-<td>36</td>
-<td>Generative AI and AIGC（PGC／UGC／AIGC）</td>
-<td>§22</td>
-</tr>
-<tr>
-<td>37</td>
-<td>Basic Concepts in GAN Network</td>
-<td>§23</td>
-</tr>
-<tr>
-<td>38</td>
-<td>Basic Concepts in GAN Network（generative modeling）</td>
-<td>§23</td>
-</tr>
-<tr>
-<td>39</td>
-<td>Basic Concepts in GAN Network（zero-sum game）</td>
-<td>§23</td>
-</tr>
-<tr>
-<td>40</td>
-<td>Basic Concepts in GAN Network — How it works</td>
-<td>§23</td>
-</tr>
-<tr>
-<td>41–43</td>
-<td>Underlying Technologies and Algorithms of GAN（截圖）</td>
-<td>§24</td>
-</tr>
-<tr>
-<td>44</td>
-<td>同上（generator 輸出直連 discriminator 輸入）</td>
-<td>§24</td>
-</tr>
-<tr>
-<td>45</td>
-<td>同上（截圖）</td>
-<td>§24</td>
-</tr>
-<tr>
-<td>46</td>
-<td>同上（During discriminator training）</td>
-<td>§24</td>
-</tr>
-<tr>
-<td>47</td>
-<td>同上（截圖）</td>
-<td>§24</td>
-</tr>
-<tr>
-<td>48</td>
-<td>同上（訓練 generator 的六步）</td>
-<td>§24</td>
-</tr>
-<tr>
-<td>49</td>
-<td>同上（Generator／Discriminator 角色）</td>
-<td>§24</td>
-</tr>
-<tr>
-<td>50</td>
-<td>同上（alternating periods）</td>
-<td>§24</td>
-</tr>
-<tr>
-<td>51</td>
-<td>同上（Convergence）</td>
-<td>§24</td>
-</tr>
-<tr>
-<td>52</td>
-<td>同上（Loss Functions）</td>
-<td>§24</td>
-</tr>
-<tr>
-<td>53</td>
-<td>Diffusion Model（定義與雙相機制）</td>
-<td>§25</td>
-</tr>
-<tr>
-<td>54</td>
-<td>Diffusion Model — Forward Process</td>
-<td>§25</td>
-</tr>
-<tr>
-<td>55</td>
-<td>Diffusion Model — Reverse Process</td>
-<td>§25</td>
-</tr>
-<tr>
-<td>56</td>
-<td>Diffusion Model — SDE</td>
-<td>§25</td>
-</tr>
-<tr>
-<td>57</td>
-<td>Diffusion Model — DDPM</td>
-<td>§25</td>
-</tr>
-<tr>
-<td>58</td>
-<td>Diffusion Model — Advantages and Challenges</td>
-<td>§25</td>
-</tr>
-<tr>
-<td>59–61</td>
-<td>GANs vs. Diffusion Models（截圖）</td>
-<td>§26</td>
-</tr>
-<tr>
-<td>62</td>
-<td>Other Models（VAE／AR）</td>
-<td>§26</td>
-</tr>
-<tr>
-<td>63</td>
-<td>Hybrid AI Systems（預測 + 生成）</td>
-<td>§27</td>
-</tr>
-<tr>
-<td>64</td>
-<td>Hybrid AI Systems（符號式 + 次符號式）</td>
-<td>§27</td>
-</tr>
-<tr>
-<td>65</td>
-<td>Hybrid AI Systems（Predictive + Generative）</td>
-<td>§27</td>
-</tr>
-<tr>
-<td>66</td>
-<td>Real-World Application — Healthcare Diagnostics</td>
-<td>§28</td>
-</tr>
-<tr>
-<td>67</td>
-<td>Real-World Application — E-commerce</td>
-<td>§28</td>
-</tr>
-<tr>
-<td>68</td>
-<td>Real-World Application — Recruitment Platforms</td>
-<td>§28</td>
-</tr>
-<tr>
-<td>69</td>
-<td>Predictive AI vs Generative AI — Code Examples and Demo</td>
-<td>§32</td>
-</tr>
-<tr>
-<td>70</td>
-<td>Retrieval-Augmented Generation (RAG)</td>
-<td>§29</td>
-</tr>
-<tr>
-<td>71</td>
-<td>AnythingLLM</td>
-<td>§29</td>
-</tr>
-<tr>
-<td>72</td>
-<td>Comparison of LLM vs RAG and Use Cases</td>
-<td>§30</td>
-</tr>
-<tr>
-<td>73</td>
-<td>Strengths &amp; Weaknesses</td>
-<td>§30</td>
-</tr>
-<tr>
-<td>74</td>
-<td>Use Cases</td>
-<td>§30</td>
-</tr>
-<tr>
-<td>75</td>
-<td>More on ChatGPT（Hinton 的推理題）</td>
-<td>§31</td>
-</tr>
-<tr>
-<td>76</td>
-<td>Large Language Model — Code Example of LLM and RAG</td>
-<td>§32</td>
-</tr>
-<tr>
-<td>77</td>
-<td>（母片頁尾，無內容）</td>
-<td>—</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p><strong>共 77 頁</strong>。其中<strong>約 30 頁為純截圖頁</strong>（文字層只有標題），已在各章節以
-「⚠️ 本節為圖示頁」標示。</p>
-</blockquote>
-<hr>
-<h2 id="附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</h2>
-<h3 id="d1-這份筆記本身">D.1 這份筆記本身</h3>
+<h2 id="附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</h2>
+<h3 id="c1-這份筆記本身">C.1 這份筆記本身</h3>
 <p>單一 HTML 檔、<strong>零外部資源</strong>：所有 CSS、語法高亮、圖片都以 base64 內嵌，
 下載後雙擊即可離線閱讀，不需要網路。</p>
-<h3 id="d2-要自己跑-lab-需要什麼">D.2 要自己跑 Lab 需要什麼</h3>
+<h3 id="c2-要自己跑-lab-需要什麼">C.2 要自己跑 Lab 需要什麼</h3>
 <table>
 <thead>
 <tr>
@@ -5886,7 +5410,7 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 </tr>
 </tbody>
 </table>
-<h3 id="d3-完全離線的做法先在有網路時把模型抓好">D.3 完全離線的做法（先在有網路時把模型抓好）</h3>
+<h3 id="c3-完全離線的做法先在有網路時把模型抓好">C.3 完全離線的做法（先在有網路時把模型抓好）</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># 第一次（有網路）：把權重抓進本機快取</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
 <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;distilgpt2&quot;</span><span class="p">)</span>
@@ -5901,11 +5425,11 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 <div class="codehilite"><pre><span></span><code>C:\Users\&lt;你&gt;\.cache\huggingface\hub\
 </code></pre></div>
 
-<h3 id="d4-本機測試資料不需要下載任何檔案">D.4 本機測試資料（不需要下載任何檔案）</h3>
+<h3 id="c4-本機測試資料不需要下載任何檔案">C.4 本機測試資料（不需要下載任何檔案）</h3>
 <p>教材的 <code>RAG.ipynb</code> 用上傳檔案，本筆記的實測改用 Lab 附的 <code>sample.txt</code>（110 字）。
 若手上沒有它，任何一段英文文章都可以取代——<strong>RAG 的檢索品質與文件量成正比，
 2 塊文件時相似度差異會很明顯</strong>。</p>
-<h3 id="d5-需要網路的只有兩件事">D.5 需要網路的只有兩件事</h3>
+<h3 id="c5-需要網路的只有兩件事">C.5 需要網路的只有兩件事</h3>
 <table>
 <thead>
 <tr>
@@ -5933,7 +5457,7 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 </tbody>
 </table>
 <hr>
-<h2 id="附錄-e一頁精華考前-10-分鐘">附錄 E：一頁精華（考前 10 分鐘）</h2>
+<h2 id="附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</h2>
 <div class="codehilite"><pre><span></span><code>【三大主題】Popular LLM ／ Predictive AI vs Generative AI ／ LLM vs RAG
 
 【產品與開發者】
@@ -5983,12 +5507,12 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 </code></pre></div>
 
 <hr>
-<h2 id="附錄-f互動式線上測驗60-題">附錄 F：互動式線上測驗（60 題）</h2>
+<h2 id="附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</h2>
 <blockquote>
 <p><strong>60 題單選、滿分 60 分、建議 75 分鐘。</strong>
 測驗以<strong>互動網頁</strong>形式提供（點選即時計分、進度自動儲存）；本筆記<strong>不重複收錄題目</strong>。</p>
 </blockquote>
-<h3 id="f1-開始測驗">F.1 開始測驗</h3>
+<h3 id="e1-開始測驗">E.1 開始測驗</h3>
 <p><strong>👉 <a href="mc-quiz.html">開始 60 題線上測驗</a></strong></p>
 <p>線上版功能：</p>
 <ul>
@@ -5998,7 +5522,7 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 <li>按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷</li>
 <li>需要紙本時，直接在該頁按列印即可</li>
 </ul>
-<h3 id="f2-時間分配建議">F.2 時間分配建議</h3>
+<h3 id="e2-時間分配建議">E.2 時間分配建議</h3>
 <table>
 <thead>
 <tr>
@@ -6025,7 +5549,7 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 </tr>
 </tbody>
 </table>
-<h3 id="f3-評分參考">F.3 評分參考</h3>
+<h3 id="e3-評分參考">E.3 評分參考</h3>
 <table>
 <thead>
 <tr>
@@ -6038,7 +5562,7 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 <tr>
 <td>54–60</td>
 <td>優異</td>
-<td>直接看附錄 E 一頁精華即可上場</td>
+<td>直接看附錄 D 一頁精華即可上場</td>
 </tr>
 <tr>
 <td>45–53</td>
@@ -6058,10 +5582,10 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 </tbody>
 </table>
 <blockquote>
-<p>答錯的題目請對照下方〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。</p>
+<p>答錯的題目請對照下方〈附錄 F：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。</p>
 </blockquote>
 <hr>
-<h2 id="附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</h2>
+<h2 id="附錄-f互動測驗答錯題目--複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</h2>
 <table>
 <thead>
 <tr>

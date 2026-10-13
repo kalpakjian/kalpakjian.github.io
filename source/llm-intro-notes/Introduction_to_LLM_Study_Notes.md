@@ -2,59 +2,56 @@
 
 > 課程：Certificate in Application of Large Language Model (LLM) (Part-time)
 > 機構：匯縱專業發展中心（IVDC）
-> 教材來源：`3 IVDC_Introduction to LLM (adjusted).pdf`（47 頁）
 > 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、關鍵數字、常見錯誤與考點。
-> 教材是 PowerPoint 匯出的投影片，**後半（p29–p47）幾乎沒有文字層**（只有圖與程式碼截圖）；
 > 本筆記把關鍵圖重畫成內嵌 SVG，並把程式碼**在本機實測**後把真實輸出寫進筆記。
-> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
+> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
 ## 目錄
 
-| # | 章節 | PDF 頁 |
-|---|------|--------|
-| 1 | [Understanding Large Language Models](#1-understanding-large-language-models) | 2–4 |
-| 2 | [What is an LLM?](#2-what-is-an-llm) | 5–7 |
-| 3 | [Applications of LLMs](#3-applications-of-llms) | 8 |
-| 4 | [Custom-built LLMs](#4-custom-built-llms) | 9 |
-| 5 | [Pretraining vs Finetuning](#5-pretraining-vs-finetuning) | 10–11 |
-| 6 | [Instruction-finetuning and Finetuning for classification tasks](#6-instruction-finetuning-and-finetuning-for-classification-tasks) | 12 |
-| 7 | [Transformer Architecture](#7-transformer-architecture) | 13–15 |
-| 8 | [Self-attention mechanism](#8-self-attention-mechanism) | 16 |
-| 9 | [BERT vs GPT](#9-bert-vs-gpt) | 17–21 |
-| 10 | [Datasets used for GPT Training](#10-datasets-used-for-gpt-training) | 22 |
-| 11 | [Tokens](#11-tokens) | 23 |
-| 12 | [Cost of Pretraining LLMs](#12-cost-of-pretraining-llms) | 24 |
-| 13 | [Pretrained LLMs](#13-pretrained-llms) | 25 |
-| 14 | [Next-Word Prediction Task](#14-next-word-prediction-task) | 26 |
-| 15 | [Autoregressive Models](#15-autoregressive-models) | 27 |
-| 16 | [GPT-3](#16-gpt-3) | 28 |
-| 17 | [Autoregressive Models（續）](#17-autoregressive-models續) | 29 |
-| 18 | [Building an LLM](#18-building-an-llm) | 30–31 |
-| 19 | [Understanding word embeddings](#19-understanding-word-embeddings) | 32–33 |
-| 20 | [Tokenizing text](#20-tokenizing-text) | 34 |
-| 21 | [Converting tokens into token IDs](#21-converting-tokens-into-token-ids) | 35–36 |
-| 22 | [Simple Tokenizer](#22-simple-tokenizer) | 37 |
-| 23 | [Adding Special Tokens](#23-adding-special-tokens) | 38 |
-| 24 | [Start and End of Text](#24-start-and-end-of-text) | 39 |
-| 25 | [Data sampling with a sliding window](#25-data-sampling-with-a-sliding-window) | 40 |
-| 26 | [Data Loaders](#26-data-loaders) | 41 |
-| 27 | [Sliding Window](#27-sliding-window) | 42–43 |
-| 28 | [Embedding layers](#28-embedding-layers) | 44–45 |
-| 29 | [Positional Embeddings](#29-positional-embeddings) | 46 |
-| 30 | [Input Processing Pipeline](#30-input-processing-pipeline) | 47 |
-| A | [附錄 A：名詞與架構速查表](#附錄-a名詞與架構速查表) | — |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) | — |
-| C | [附錄 C：教材頁面索引對照](#附錄-c教材頁面索引對照) | — |
-| D | [附錄 D：離線執行／安裝提示](#附錄-d離線執行安裝提示) | — |
-| E | [附錄 E：一頁精華（考前 10 分鐘）](#附錄-e一頁精華考前-10-分鐘) | — |
-| F | [附錄 F：互動式線上測驗（60 題）](#附錄-f互動式線上測驗60-題) | — |
-| G | [附錄 G：互動測驗答錯題目 → 複習章節對照](#附錄-g互動測驗答錯題目--複習章節對照) | — |
+| # | 章節 |
+|---|------|
+| 1 | [Understanding Large Language Models](#1-understanding-large-language-models) |
+| 2 | [What is an LLM?](#2-what-is-an-llm) |
+| 3 | [Applications of LLMs](#3-applications-of-llms) |
+| 4 | [Custom-built LLMs](#4-custom-built-llms) |
+| 5 | [Pretraining vs Finetuning](#5-pretraining-vs-finetuning) |
+| 6 | [Instruction-finetuning and Finetuning for classification tasks](#6-instruction-finetuning-and-finetuning-for-classification-tasks) |
+| 7 | [Transformer Architecture](#7-transformer-architecture) |
+| 8 | [Self-attention mechanism](#8-self-attention-mechanism) |
+| 9 | [BERT vs GPT](#9-bert-vs-gpt) |
+| 10 | [Datasets used for GPT Training](#10-datasets-used-for-gpt-training) |
+| 11 | [Tokens](#11-tokens) |
+| 12 | [Cost of Pretraining LLMs](#12-cost-of-pretraining-llms) |
+| 13 | [Pretrained LLMs](#13-pretrained-llms) |
+| 14 | [Next-Word Prediction Task](#14-next-word-prediction-task) |
+| 15 | [Autoregressive Models](#15-autoregressive-models) |
+| 16 | [GPT-3](#16-gpt-3) |
+| 17 | [Autoregressive Models（續）](#17-autoregressive-models續) |
+| 18 | [Building an LLM](#18-building-an-llm) |
+| 19 | [Understanding word embeddings](#19-understanding-word-embeddings) |
+| 20 | [Tokenizing text](#20-tokenizing-text) |
+| 21 | [Converting tokens into token IDs](#21-converting-tokens-into-token-ids) |
+| 22 | [Simple Tokenizer](#22-simple-tokenizer) |
+| 23 | [Adding Special Tokens](#23-adding-special-tokens) |
+| 24 | [Start and End of Text](#24-start-and-end-of-text) |
+| 25 | [Data sampling with a sliding window](#25-data-sampling-with-a-sliding-window) |
+| 26 | [Data Loaders](#26-data-loaders) |
+| 27 | [Sliding Window](#27-sliding-window) |
+| 28 | [Embedding layers](#28-embedding-layers) |
+| 29 | [Positional Embeddings](#29-positional-embeddings) |
+| 30 | [Input Processing Pipeline](#30-input-processing-pipeline) |
+| A | [附錄 A：名詞與架構速查表](#附錄-a名詞與架構速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
 
 > ⚠️ **p1 是課程封面頁**（課程名 + 課節名），**不是**第 1 章；本筆記的章節從 p2 起算。
 > 另外教材有 **p27 / p29 兩頁同名**「Autoregressive Models」（中間夾著 p28 GPT-3），
-> 本筆記依教材順序拆成 §15、§17 兩章，附錄 C 有完整對照。
+> 本筆記依教材順序拆成 §15、§17 兩章。
 
 ---
 
@@ -150,7 +147,6 @@ tasks）而設計的**。那些早期模型在各自的窄領域（narrow applic
 
 ## 2. What is an LLM?
 
-> 教材 p5–6 給出 LLM 的正式定義與「Large」的兩層意義；p7 是一張示意圖（沒有文字層），
 > 本筆記在 2.3 補上該圖要表達的內容。
 
 <!-- FIGURE:ch02-what-is-an-llm -->
@@ -502,7 +498,7 @@ contextually relevant output）**的能力。
 教材 p20 說明：**GPT 模型主要被設計與訓練來執行文字補全（text completion）任務，同時也展現出驚人的
 多樣性（remarkable versatility）**。這些模型擅長執行 **zero-shot 與 few-shot 學習任務**：
 
-| 名詞 | 教材定義 | 白話 |
+| 名詞 | 定義 | 白話 |
 |---|---|---|
 | **Zero-shot learning** | 能在**完全沒有事先提供任何具體範例**的情況下，**泛化到完全沒見過的任務** | 直接叫它做，不給例子 |
 | **Few-shot learning** | 從**使用者提供的最少量範例（a minimal number of examples）**中學習 | 給一兩個例子就會 |
@@ -515,7 +511,7 @@ contextually relevant output）**的能力。
 | 訓練目標 | masked word prediction（遮字填空） | next-word prediction（文字補全） |
 | 方向性 | 雙向（同時看左右文） | 單向（只看前面的字） |
 | 主要強項 | **文字分類**：情感預測、文件分類 | **生成**：翻譯、摘要、小說、程式碼 |
-| 教材實例 | Twitter 偵測 toxic content | zero-shot／few-shot |
+| 實例 | Twitter 偵測 toxic content | zero-shot／few-shot |
 | 架構特性 | 較適合「理解」 | 較適合「生成」 |
 
 > **考點**：**BERT = encoder = masked word prediction = 分類**；**GPT = decoder = 生成 = 自迴歸**；
@@ -525,7 +521,6 @@ contextually relevant output）**的能力。
 
 ## 10. Datasets used for GPT Training
 
-> 教材 p22 是一張**資料集表格的圖**（沒有文字層）。本節依公開文獻補上各代 GPT 的訓練資料集，
 > 並標明「本筆記補充」，避免與教材文字混淆。
 
 <!-- FIGURE:ch10-gpt-datasets -->
@@ -818,7 +813,6 @@ GPT-3          ：96 層   █████████████████�
 
 ## 17. Autoregressive Models（續）
 
-> 教材 p29 與 p27 **同名**（中間夾著 p28 的 GPT-3），而且這一頁**沒有文字層**——只有一張圖。
 > 本節說明這張圖在講什麼，並補上生成時實際發生的事。
 
 <!-- FIGURE:ch17-autoregressive-generation -->
@@ -856,7 +850,6 @@ GPT-3          ：96 層   █████████████████�
 
 ## 18. Building an LLM
 
-> 教材 p30–31：章節分隔頁（無文字層），宣告接下來要「動手做」。p32–47 就是實作細節。
 
 <!-- FIGURE:ch18-building-an-llm -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -872,27 +865,26 @@ GPT-3          ：96 層   █████████████████�
 
 ### 18.1 教材 p30–31 的定位
 
-p30 與 p31 都只有標題「Building an LLM」，是**章節分隔頁**：把教材從「觀念」切換到「實作」。
 它要傳達的是——**LLM 不是魔法，而是一條可以自己動手搭起來的資料處理管線。**
 
 ### 18.2 教材後半（p32–47）到底在做什麼
 
 教材後半的章節標題本身就構成一條完整流程，本筆記依序實作：
 
-| PDF 頁 | 主題 | 在本筆記 |
-|:---:|---|---|
-| p32–33 | Understanding word embeddings | §19 |
-| p34 | Tokenizing text | §20 |
-| p35–36 | Converting tokens into token IDs | §21 |
-| p37 | Simple Tokenizer | §22 |
-| p38 | Adding Special Tokens | §23 |
-| p39 | Start and End of Text | §24 |
-| p40 | Data sampling with a sliding window | §25 |
-| p41 | Data Loaders | §26 |
-| p42–43 | Sliding Window | §27 |
-| p44–45 | Embedding layers | §28 |
-| p46 | Positional Embeddings | §29 |
-| p47 | Input Processing Pipeline | §30 |
+| 主題 | 在本筆記 |
+|---|---|
+| Understanding word embeddings | §19 |
+| Tokenizing text | §20 |
+| Converting tokens into token IDs | §21 |
+| Simple Tokenizer | §22 |
+| Adding Special Tokens | §23 |
+| Start and End of Text | §24 |
+| Data sampling with a sliding window | §25 |
+| Data Loaders | §26 |
+| Sliding Window | §27 |
+| Embedding layers | §28 |
+| Positional Embeddings | §29 |
+| Input Processing Pipeline | §30 |
 
 ### 18.3 一句話總結
 
@@ -910,7 +902,6 @@ p30 與 p31 都只有標題「Building an LLM」，是**章節分隔頁**：把�
 
 ## 19. Understanding word embeddings
 
-> 教材 p32–33 都是**純圖**（沒有文字層），標題相同。本節說明這兩張圖要表達的觀念。
 
 <!-- FIGURE:ch19-word-embeddings -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -940,10 +931,10 @@ p30 與 p31 都只有標題「Building an LLM」，是**章節分隔頁**：把�
 
 ### 19.3 兩張圖分別在講什麼
 
-| PDF 頁 | 圖要表達的內容 |
-|---|---|
-| p32 | **embedding 是把 token 變成向量的對應關係**（文字世界 → 數值世界） |
-| p33 | **同一個 token ID 在不同位置，查到的向量相同**——所以位置資訊必須另外加（§29） |
+| 圖要表達的內容 |
+|---|
+| **embedding 是把 token 變成向量的對應關係**（文字世界 → 數值世界） |
+| **同一個 token ID 在不同位置，查到的向量相同**——所以位置資訊必須另外加（§29） |
 
 > **考點**：embedding 的定義（token → 固定長度向量）；**語意相近 → 向量相近**；
 > 它是「把文字轉成神經網路可運算形式」的第一步。實際的查表實作見 §28。
@@ -1757,71 +1748,9 @@ python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
 | `IndexError: index out of range in self` | token ID ≥ `vocab_size` | 檢查 vocabulary 是否與模型一致 |
 | 樣本數是 0 | 語料比 `max_length` 還短 | 縮小 `max_length` 或換更長語料 |
 
-### B.3 「無文字頁」陷阱
+## 附錄 C：離線執行／安裝提示
 
-教材有 **21 頁沒有文字層**（p7、p8、p11、p13、p18、p21、p22、p29–p40、p43）。
-如果只讀 PDF 的文字，會以為這些頁「沒有內容」——**其實全部都是圖與程式碼截圖**。
-本筆記已逐頁補上內容（見附錄 C 的標記）。
-
-> ⚠️ 另外：教材 **p1（封面頁）的頁尾是母片的佔位字串**——日期欄位根本沒填，留著未替換的樣板文字；
-> p2 之後的頁尾才是實際日期。**本筆記不轉載任何頁尾／版權文字**，只保留標題與頁碼對照。
-
----
-
-## 附錄 C：教材頁面索引對照
-
-「文字層」欄位：✅＝有文字可直接抽取；🖼️＝**教材只有圖或程式碼截圖**（本筆記已補上內容）。
-
-| PDF 頁 | 教材標題 | 本筆記章節 | 文字層 |
-|:---:|---|:---:|:---:|
-| 1 | Certificate in Application of Large Language Model (LLM)（**課程封面頁**） | — | ✅ |
-| 2–4 | Understanding Large Language Models | §1 | ✅ |
-| 5–6 | What is an LLM? | §2 | ✅ |
-| 7 | What is an LLM? | §2.3 | 🖼️ |
-| 8 | Applications of LLMs | §3 | 🖼️ |
-| 9 | Custom-built LLMs | §4 | ✅ |
-| 10 | Pretraining vs Finetuning | §5 | ✅ |
-| 11 | Pretraining vs Finetuning | §5 | 🖼️ |
-| 12 | Instruction-finetuning and Finetuning for classification tasks | §6 | ✅ |
-| 13 | Transformer Architecture | §7 | 🖼️ |
-| 14–15 | Transformer Architecture | §7.1–7.3 | ✅ |
-| 16 | Self-attention mechanism | §8 | ✅ |
-| 17 | BERT vs GPT | §9.1 | ✅ |
-| 18 | BERT vs GPT | §9.4 | 🖼️ |
-| 19 | BERT vs GPT | §9.2 | ✅ |
-| 20 | BERT vs GPT | §9.3 | ✅ |
-| 21 | BERT vs GPT | §9.4 | 🖼️ |
-| 22 | Datasets used for GPT Training | §10 | 🖼️ |
-| 23 | Tokens | §11 | ✅ |
-| 24 | Cost of Pretraining LLMs | §12 | ✅ |
-| 25 | Pretrained LLMs | §13 | ✅ |
-| 26 | Next-Word Prediction Task | §14 | ✅ |
-| 27 | Autoregressive Models | §15 | ✅ |
-| 28 | GPT-3 | §16 | ✅ |
-| 29 | Autoregressive Models（**與 p27 同名**） | §17 | 🖼️ |
-| 30–31 | Building an LLM（章節分隔頁） | §18 | 🖼️ |
-| 32–33 | Understanding word embeddings | §19 | 🖼️ |
-| 34 | Tokenizing text | §20 | 🖼️ |
-| 35–36 | Converting tokens into token IDs | §21 | 🖼️ |
-| 37 | Simple Tokenizer | §22 | 🖼️ |
-| 38 | Adding Special Tokens | §23 | 🖼️ |
-| 39 | Start and End of Text | §24 | 🖼️ |
-| 40 | Data sampling with a sliding window | §25 | 🖼️ |
-| 41 | Data Loaders | §26 | ✅ |
-| 42 | Sliding Window | §27.1–27.2 | ✅ |
-| 43 | Sliding Window | §27.2 | 🖼️ |
-| 44–45 | Embedding layers | §28 | ✅ |
-| 46 | Positional Embeddings | §29 | ✅ |
-| 47 | Input Processing Pipeline | §30 | ✅ |
-
-> **統計**：47 頁中，**21 頁無文字層**（🖼️）。這也是為什麼本筆記必須自己重畫圖表、
-> 自己把程式碼跑一遍——**只靠 PDF 的文字抽取會漏掉將近一半的教材**。
-
----
-
-## 附錄 D：離線執行／安裝提示
-
-### D.1 本筆記用到的套件
+### C.1 本筆記用到的套件
 
 | 套件 | 用途 | 本機實測版本 |
 |---|---|---|
@@ -1833,7 +1762,7 @@ python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
 pip install torch tiktoken
 ```
 
-### D.2 沒有網路時怎麼取得依賴
+### C.2 沒有網路時怎麼取得依賴
 
 | 情境 | 做法 |
 |---|---|
@@ -1841,7 +1770,7 @@ pip install torch tiktoken
 | 完全離線的環境 | 設 `TIKTOKEN_CACHE_DIR` 指向已快取的資料夾，或直接把快取檔一起複製 |
 | 連 tiktoken 都不能裝 | 用 §20–§23 的**正則分詞器**（純標準庫 `re`，零依賴）就能跑完整條管線 |
 
-### D.3 純標準庫版本（零依賴）
+### C.3 純標準庫版本（零依賴）
 
 如果你只想驗證觀念、不想裝任何套件，下面這段只用 `re` 就能跑：
 
@@ -1862,7 +1791,7 @@ print(ids)      # [4, 0, 9, 2, 5, 8, 1, 6, 7, 3]
 
 ---
 
-## 附錄 E：一頁精華（考前 10 分鐘）
+## 附錄 D：一頁精華（考前 10 分鐘）
 
 ```python
 # ========== 1. LLM 是什麼（§1–§2） ==========
@@ -1909,12 +1838,12 @@ print(ids)      # [4, 0, 9, 2, 5, 8, 1, 6, 7, 3]
 
 ---
 
-## 附錄 F：互動式線上測驗（60 題）
+## 附錄 E：互動式線上測驗（60 題）
 
 > **60 題單選、滿分 60 分、建議 50 分鐘。**
 > 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；**本筆記不重複收錄題目**。
 
-### F.1 開始測驗
+### E.1 開始測驗
 
 **👉 [開始 60 題線上測驗](mc-quiz.html)**
 
@@ -1926,7 +1855,7 @@ print(ids)      # [4, 0, 9, 2, 5, 8, 1, 6, 7, 3]
 - 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
 - 需要紙本時，直接在該頁按列印即可
 
-### F.2 試卷結構（十二個區塊，依教材章節順序）
+### E.2 試卷結構（十二個區塊，依教材章節順序）
 
 | 題號 | 涵蓋章節 | 主題 |
 |:---:|---|---|
@@ -1943,7 +1872,7 @@ print(ids)      # [4, 0, 9, 2, 5, 8, 1, 6, 7, 3]
 | 51–55 | §28–§29 | embedding 查表、位置編碼相加 |
 | 56–60 | §30＋附錄 | 輸入管線五步驟、必背數字總複習 |
 
-### F.3 時間分配建議
+### E.3 時間分配建議
 
 | 階段 | 時間 | 做什麼 |
 |---|---|---|
@@ -1951,20 +1880,20 @@ print(ids)      # [4, 0, 9, 2, 5, 8, 1, 6, 7, 3]
 | 第二輪 | 30–42 分鐘 | 回頭處理標記的難題 |
 | 第三輪 | 42–50 分鐘 | 檢查有沒有漏答 |
 
-### F.4 評分參考
+### E.4 評分參考
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 54–60 | 優異 | 直接看附錄 E 一頁精華即可上場 |
+| 54–60 | 優異 | 直接看附錄 D 一頁精華即可上場 |
 | 45–53 | 良好 | 複習錯題所屬章節 |
 | 36–44 | 及格邊緣 | 重讀主要章節 + 附錄 A |
 | 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
-> 答錯的題目請對照下方〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
+> 答錯的題目請對照下方〈附錄 F：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
 
 ---
 
-## 附錄 G：互動測驗答錯題目 → 複習章節對照
+## 附錄 F：互動測驗答錯題目 → 複習章節對照
 
 | 答錯題號 | 建議複習章節 |
 |:---:|---|
@@ -1986,14 +1915,14 @@ print(ids)      # [4, 0, 9, 2, 5, 8, 1, 6, 7, 3]
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*
 
-### D.4 本筆記的圖表
+### C.4 本筆記的圖表
 
 全部圖表都是**內嵌 SVG**、程式碼高亮也已內嵌，所以這份 `index.html` **下載後可離線雙擊開啟**，
 不需要任何網路資源。
 
-### D.5 想自己動手做一個小 LLM
+### C.5 想自己動手做一個小 LLM
 
 教材後半（§20–§30）就是一個最小可行的**輸入處理管線**。若想繼續往下做，順序是：
 

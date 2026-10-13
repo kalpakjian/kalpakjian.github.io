@@ -2,63 +2,60 @@
 
 > 課程：Certificate in Application of Large Language Model (LLM) (Part-time)
 > 機構：匯縱專業發展中心（IVDC）
-> 教材來源：`9 IVDC_Prompt_Engineering (adjusted).pdf`（92 頁）
 > 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、可複製的提示詞範本、常見錯誤與考點。
-> 教材是 PowerPoint 匯出的投影片，**部分頁面（尤其 p34–35、p38–39、p56、p91）幾乎沒有文字層**（只有圖）；
 > 本筆記把該處的圖意用文字補齊，並把每頁的「Classroom Exercise」併入所屬技術章節。
-> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
+> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
 ## 目錄
 
-| # | 章節 | PDF 頁 |
-|---|------|--------|
-| 1 | [Prerequisites & Objectives](#1-prerequisites--objectives) | 2 |
-| 2 | [What are prompts?](#2-what-are-prompts) | 5 |
-| 3 | [Why Prompt Engineering?](#3-why-prompt-engineering) | 6 |
-| 4 | [First Basic Prompt](#4-first-basic-prompt) | 7 |
-| 5 | [Elements of a Prompt](#5-elements-of-a-prompt) | 8 |
-| 6 | [Settings to keep in mind: temperature 與 top_p](#6-settings-to-keep-in-mind-temperature-與-top_p) | 9 |
-| 7 | [Designing Prompts for Different Tasks（六大任務）](#7-designing-prompts-for-different-tasks六大任務) | 10–16 |
-| 8 | [Prompt Engineering 技術地圖（七大類）](#8-prompt-engineering-技術地圖七大類) | 17–19、27、40、50、59 |
-| 9 | [Zero-Shot Prompting](#9-zero-shot-prompting) | 20–21 |
-| 10 | [Few-Shot Prompting](#10-few-shot-prompting) | 22–23 |
-| 11 | [Clear Instructions and Task Framing](#11-clear-instructions-and-task-framing) | 24–26 |
-| 12 | [System Prompting](#12-system-prompting) | 28–29 |
-| 13 | [Role Prompting](#13-role-prompting) | 30–31 |
-| 14 | [Contextual Prompting](#14-contextual-prompting) | 32–35 |
-| 15 | [Markdown Prompting](#15-markdown-prompting) | 36–39 |
-| 16 | [Chain-of-Thought (CoT) Prompting](#16-chain-of-thought-cot-prompting) | 41–42 |
-| 17 | [Tabular Chain-of-Thought (TCoT)](#17-tabular-chain-of-thought-tcot) | 43–44 |
-| 18 | [Skeleton-of-Thought (SoT)](#18-skeleton-of-thought-sot) | 45–46 |
-| 19 | [Step-Back Prompting](#19-step-back-prompting) | 47–48 |
-| 20 | [Least-to-Most Prompting](#20-least-to-most-prompting) | 51–52 |
-| 21 | [Tree-of-Thoughts (ToT)](#21-tree-of-thoughts-tot) | 53–54 |
-| 22 | [Interactive Tree-of-Thoughts (iToT)](#22-interactive-tree-of-thoughts-itot) | 55–56 |
-| 23 | [Self-Generated In-Context Learning (SG-ICL)](#23-self-generated-in-context-learning-sg-icl) | 57–58 |
-| 24 | [Constitutional AI (CAI)](#24-constitutional-ai-cai) | 60–61 |
-| 25 | [Perspective-Taking Prompting](#25-perspective-taking-prompting) | 62–63 |
-| 26 | [Analogical Prompting](#26-analogical-prompting) | 64–65 |
-| 27 | [Multi-Modal Prompting](#27-multi-modal-prompting) | 66–67 |
-| 28 | [Persona Consistency Prompting](#28-persona-consistency-prompting) | 68–69 |
-| 29 | [Predictive Prompting](#29-predictive-prompting) | 70–71 |
-| 30 | [Generate Knowledge Prompting](#30-generate-knowledge-prompting) | 72–74 |
-| 31 | [Program-aided Language Model (PAL)](#31-program-aided-language-model-pal) | 75–76 |
-| 32 | [ReAct](#32-react) | 77–78 |
-| 33 | [Tools & IDEs](#33-tools--ides) | 80 |
-| 34 | [Applications（外部工具與資料增強生成）](#34-applications外部工具與資料增強生成) | 81–83 |
-| 35 | [Opportunities and Future Directions](#35-opportunities-and-future-directions) | 85 |
-| 36 | [Model Safety](#36-model-safety) | 86 |
-| 37 | [Prompt Injection 三大攻擊](#37-prompt-injection-三大攻擊) | 87–91 |
-| 38 | [RLHF](#38-rlhf) | 92 |
-| A | [附錄 A：Prompt 元素與參數速查表](#附錄-aprompt-元素與參數速查表) | — |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) | — |
-| C | [附錄 C：教材頁面索引對照](#附錄-c教材頁面索引對照) | — |
-| D | [附錄 D：離線執行／安裝提示](#附錄-d離線執行安裝提示) | — |
-| E | [附錄 E：一頁精華（考前 10 分鐘）](#附錄-e一頁精華考前-10-分鐘) | — |
-| F | [附錄 F：互動式線上測驗（60 題）](#附錄-f互動式線上測驗60-題) | — |
-| G | [附錄 G：互動測驗答錯題目 → 複習章節對照](#附錄-g互動測驗答錯題目--複習章節對照) | — |
+| # | 章節 |
+|---|------|
+| 1 | [Prerequisites & Objectives](#1-prerequisites--objectives) |
+| 2 | [What are prompts?](#2-what-are-prompts) |
+| 3 | [Why Prompt Engineering?](#3-why-prompt-engineering) |
+| 4 | [First Basic Prompt](#4-first-basic-prompt) |
+| 5 | [Elements of a Prompt](#5-elements-of-a-prompt) |
+| 6 | [Settings to keep in mind: temperature 與 top_p](#6-settings-to-keep-in-mind-temperature-與-top_p) |
+| 7 | [Designing Prompts for Different Tasks（六大任務）](#7-designing-prompts-for-different-tasks六大任務) |
+| 8 | [Prompt Engineering 技術地圖（七大類）](#8-prompt-engineering-技術地圖七大類) |
+| 9 | [Zero-Shot Prompting](#9-zero-shot-prompting) |
+| 10 | [Few-Shot Prompting](#10-few-shot-prompting) |
+| 11 | [Clear Instructions and Task Framing](#11-clear-instructions-and-task-framing) |
+| 12 | [System Prompting](#12-system-prompting) |
+| 13 | [Role Prompting](#13-role-prompting) |
+| 14 | [Contextual Prompting](#14-contextual-prompting) |
+| 15 | [Markdown Prompting](#15-markdown-prompting) |
+| 16 | [Chain-of-Thought (CoT) Prompting](#16-chain-of-thought-cot-prompting) |
+| 17 | [Tabular Chain-of-Thought (TCoT)](#17-tabular-chain-of-thought-tcot) |
+| 18 | [Skeleton-of-Thought (SoT)](#18-skeleton-of-thought-sot) |
+| 19 | [Step-Back Prompting](#19-step-back-prompting) |
+| 20 | [Least-to-Most Prompting](#20-least-to-most-prompting) |
+| 21 | [Tree-of-Thoughts (ToT)](#21-tree-of-thoughts-tot) |
+| 22 | [Interactive Tree-of-Thoughts (iToT)](#22-interactive-tree-of-thoughts-itot) |
+| 23 | [Self-Generated In-Context Learning (SG-ICL)](#23-self-generated-in-context-learning-sg-icl) |
+| 24 | [Constitutional AI (CAI)](#24-constitutional-ai-cai) |
+| 25 | [Perspective-Taking Prompting](#25-perspective-taking-prompting) |
+| 26 | [Analogical Prompting](#26-analogical-prompting) |
+| 27 | [Multi-Modal Prompting](#27-multi-modal-prompting) |
+| 28 | [Persona Consistency Prompting](#28-persona-consistency-prompting) |
+| 29 | [Predictive Prompting](#29-predictive-prompting) |
+| 30 | [Generate Knowledge Prompting](#30-generate-knowledge-prompting) |
+| 31 | [Program-aided Language Model (PAL)](#31-program-aided-language-model-pal) |
+| 32 | [ReAct](#32-react) |
+| 33 | [Tools & IDEs](#33-tools--ides) |
+| 34 | [Applications（外部工具與資料增強生成）](#34-applications外部工具與資料增強生成) |
+| 35 | [Opportunities and Future Directions](#35-opportunities-and-future-directions) |
+| 36 | [Model Safety](#36-model-safety) |
+| 37 | [Prompt Injection 三大攻擊](#37-prompt-injection-三大攻擊) |
+| 38 | [RLHF](#38-rlhf) |
+| A | [附錄 A：Prompt 元素與參數速查表](#附錄-aprompt-元素與參數速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
 
 ---
 
@@ -174,7 +171,7 @@ Prompt Engineering = 設計並最佳化「餵給語言模型的指令與上下�
 
 ### 2.1 兩個定義
 
-| 名詞 | 教材定義 | 中文 |
+| 名詞 | 定義 | 中文 |
 |---|---|---|
 | **Prompt** | instructions and context passed to a language model **to achieve a desired task** | 為了達成想要的任務，傳給語言模型的**指令與上下文** |
 | **Prompt engineering** | the practice of **developing and optimizing prompts** to efficiently use language models (LMs) for a variety of applications | **開發並最佳化** prompt 的實務，以便在各種應用中**有效率地**使用 LM |
@@ -232,7 +229,7 @@ Prompt Engineering = 設計並最佳化「餵給語言模型的指令與上下�
 
 ### 4.1 結構：Instruction 與 Response
 
-| 欄位 | 教材內容 |
+| 欄位 | 內容 |
 |---|---|
 | **Instruction**（你的輸入） | `The sky is blue` |
 | **Response**（模型輸出） | The sky is a beautiful blue color during the day. The blue of the sky is created by the Earth's atmosphere scattering the sun's light. The blue is a result of the air molecules in the atmosphere reflecting the shorter wavelength of blue light back to our eyes. |
@@ -501,7 +498,7 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。
 
 **① Foundational Techniques（p19）**
 
-| 技術 | 教材一句話 |
+| 技術 | 一句話 |
 |---|---|
 | **Zero-Shot Prompting** | Ask the model to perform a task **without examples**. |
 | **Few-Shot Prompting (In-Context Learning)** | Provide examples to **guide the model's response style**. |
@@ -509,7 +506,7 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。
 
 **② Context & Role-Based Techniques（p27）**
 
-| 技術 | 教材一句話 |
+| 技術 | 一句話 |
 |---|---|
 | **System Prompting** | Define rules or boundaries for the AI（例："You are a helpful tutor"）。 |
 | **Role Prompting** | Assign a persona（例："Act as a project manager"）。 |
@@ -518,7 +515,7 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。
 
 **③ Reasoning & Planning Techniques（p40）**
 
-| 技術 | 教材一句話 |
+| 技術 | 一句話 |
 |---|---|
 | **Chain-of-Thought (CoT)** | Ask the model to show **step-by-step reasoning**. |
 | **Tabular Chain-of-Thought (TCoT)** | Structure reasoning in **tables** for clarity. |
@@ -527,7 +524,7 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。
 
 **④ Advanced Orchestration & Control（p50）**
 
-| 技術 | 教材一句話 |
+| 技術 | 一句話 |
 |---|---|
 | **Least-to-Most Prompting** | Break complex tasks into **simpler steps**. |
 | **Tree-of-Thoughts (ToT)** | Explore **multiple reasoning branches** before deciding. |
@@ -539,7 +536,7 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。
 
 **⑤ Specialized & Cutting-Edge（p59）**
 
-| 技術 | 教材一句話 |
+| 技術 | 一句話 |
 |---|---|
 | **Constitutional AI (CAI)** | Apply **ethical or rule-based constraints**. |
 | **Perspective-Taking Prompting** | Ask the model to **adopt different viewpoints**. |
@@ -868,7 +865,6 @@ Clear Instruction (framed):
 **With 版本補了四項背景**：① 受眾（`first-year learners`）；② 先備知識（`basic Python only`）；
 ③ 數量（`3 classroom uses`）；④ **環境限制**（`school lab with limited computing power`）。
 
-> ⚠️ 教材 **p34、p35 是兩頁沒有文字層的延伸練習頁**（只有圖）。它們延續同一個題型：
 > 給一句「無上下文」的指令，再給「有上下文」的版本，要你比較兩者輸出差異。本筆記已把重點併入 14.4。
 
 > **考點**：contextual 要補的六類背景（audience／goals／environment／constraints／location／prior knowledge）
@@ -920,7 +916,6 @@ Clear Instruction (framed):
 **With 版本做了兩件事**：① **指定四個小節標題**（Overview／Key Types／Real-World Examples／Limitations）；
 ② **指定每個小節用 bullet points**。等於先把輸出骨架畫好，模型只負責填肉。
 
-> ⚠️ 教材 **p38、p39 是兩頁沒有文字層的延伸練習頁**（只有圖）。它們延續同一題型：
 > 給定不同的 section 清單與格式要求，比較「有／沒有 Markdown 指示」的輸出差異。本筆記已把重點併入 15.4。
 
 > **考點**：Markdown prompting 的價值在於**可讀性與可重用性**（readable and reusable），
@@ -992,7 +987,7 @@ Clear Instruction (framed):
 
 > Tabular Chain-of-Thought is a **structured version of step-by-step reasoning** in which the model presents **each reasoning stage in a table**. Instead of a paragraph of logic, the model organizes steps into **columns** such as **step number, action, evidence, and result**.
 
-| 教材建議的欄位 | 中文 |
+| 建議的欄位 | 中文 |
 |---|---|
 | **step number** | 步驟編號 |
 | **action** | 動作 |
@@ -1254,7 +1249,6 @@ Clear Instruction (framed):
 | **Without** iToT | 一次生成 3 個教案就結束，不會回頭改 |
 | **With** iToT | 先產生 **3 個可能**的教案方向 → 對每個方向**評估並修正** → 把修正後的結果**整合**成最終教案 |
 
-> ⚠️ 教材 **p56 的內文有部分沒有文字層**（只有圖），本筆記已把該頁示範的三步驟
 > （generate → refine → present the improved final plan）用文字補齊。
 
 > **考點**：iToT 的關鍵字是 **iteratively**、**feedback after each round**、**revised or replaced**。
@@ -1962,7 +1956,6 @@ Observation（觀察：工具回傳了什麼？）            │
 
 ### 37.5 Jailbreaking examples（p91）
 
-> ⚠️ 教材 **p91 只有標題、沒有文字層**（只有示意圖）。本筆記依「三大攻擊」的定義整理出
 > 三者的辨別方式如下（這是考試最可能出的比較題）：
 
 | 攻擊 | 目標 | 一句話辨別 |
@@ -2134,130 +2127,15 @@ pip install openai            # 或其他供應商的 SDK
 | CAI ↔ RLHF | CAI 在**推論時**依規則約束；RLHF 在**訓練時**內化偏好 |
 | Prompt Injection ↔ Jailbreaking | Jailbreaking 是 injection 的**一種**，目標是**繞過安全與審核** |
 
-### B.3 「無文字頁」與排版陷阱
+## 附錄 C：離線執行／安裝提示
 
-教材有數頁**沒有文字層**（只有圖）：**p34、p35、p38、p39、p56（部分）、p91**。
-如果只讀 PDF 的文字，會以為這些頁「沒有內容」——其實是**延伸練習頁與示意圖**。
-本筆記已逐頁補上內容（見附錄 C 的標記）。
-
-> ⚠️ 另外兩處教材本身的問題：
-> ① **p44** 的「With TCoT」欄位混入了上一頁（p42 CoT 練習）的殘留文字——那是教材的複製貼上失誤；
-> ② **p91** 只有標題「Jailbreaking examples」，內文全在圖裡。
-> 本筆記只保留該頁真正要示範的內容，並在對應章節加註說明。
-> **本筆記不轉載任何頁尾／版權文字**，只保留標題與頁碼對照。
-
----
-
-## 附錄 C：教材頁面索引對照
-
-「文字層」欄位：✅＝有文字可直接抽取；🖼️＝**教材只有圖或示意**（本筆記已補上內容）。
-
-| PDF 頁 | 教材標題 | 本筆記章節 | 文字層 |
-|:---:|---|---|:---:|
-| 1 | Certificate in Application of Large Language Model (LLM) | —（課程封面頁） | ✅ |
-| 2 | Prerequisites & Objectives | §1 | ✅ |
-| 3 | Agenda | 目錄 | ✅ |
-| 4 | Introduction to Prompt Engineering | —（Part 1 分隔頁） | ✅ |
-| 5 | What are prompts? | §2 | ✅ |
-| 6 | Why Prompt Engineering? | §3 | ✅ |
-| 7 | First Basic Prompt | §4 | ✅ |
-| 8 | Elements of a Prompt | §5 | ✅ |
-| 9 | Settings to keep in mind | §6 | ✅ |
-| 10 | Designing Prompts for Different Tasks | §7.1 | ✅ |
-| 11 | Text Summarization | §7.2 | ✅ |
-| 12 | Question Answering | §7.3 | ✅ |
-| 13 | Text Classification | §7.4 | ✅ |
-| 14 | Role Playing | §7.5 | ✅ |
-| 15 | Code Generation | §7.6 | ✅ |
-| 16 | Reasoning | §7.7 | ✅ |
-| 17 | List of Prompt Engineer Techniques | §8 | ✅ |
-| 18 | List of Prompt Engineer techniques | §8.1 | ✅ |
-| 19 | Foundational Techniques | §8.2 | ✅ |
-| 20 | Zero-Shot Prompting | §9.1–9.2 | ✅ |
-| 21 | Classroom Exercise | §9.3 | ✅ |
-| 22 | Few-Shot Prompting | §10.1–10.2 | ✅ |
-| 23 | Classroom Exercise | §10.4 | ✅ |
-| 24 | Clear Instructions and Task Framing | §11.1–11.2 | ✅ |
-| 25 | Examples Weak vs Strong Prompt | §11.3 | ✅ |
-| 26 | Classroom Exercise | §11.4 | ✅ |
-| 27 | Context & Role-Based Techniques | §8.2 | ✅ |
-| 28 | System Prompting | §12.1–12.3 | ✅ |
-| 29 | Classroom Exercise | §12.4 | ✅ |
-| 30 | Role Prompting — Description | §13.1–13.3 | ✅ |
-| 31 | Classroom Exercise | §13.4 | ✅ |
-| 32 | Contextual Prompting — Description | §14.1–14.3 | ✅ |
-| 33 | Classroom Exercise | §14.4 | ✅ |
-| 34 | Classroom Exercise | §14.4（延伸練習） | 🖼️ |
-| 35 | Classroom Exercise | §14.4（延伸練習） | 🖼️ |
-| 36 | Markdown Prompting | §15.1–15.3 | ✅ |
-| 37 | Classroom Exercise | §15.4 | ✅ |
-| 38 | Classroom Exercise | §15.4（延伸練習） | 🖼️ |
-| 39 | Classroom Exercise | §15.4（延伸練習） | 🖼️ |
-| 40 | Reasoning & Planning Techniques | §8.2 | ✅ |
-| 41 | Chain-of-Thought (CoT) — Description | §16.1–16.3 | ✅ |
-| 42 | Classroom Exercise | §16.4 | ✅ |
-| 43 | Tabular Chain-of-Thought (TCoT) | §17.1–17.3 | ✅ |
-| 44 | Classroom Exercise | §17.4 | ✅ |
-| 45 | Skeleton-of-Thought (SoT) | §18.1–18.3 | ✅ |
-| 46 | Classroom Exercise | §18.4 | ✅ |
-| 47 | Step-Back Prompting | §19.1–19.3 | ✅ |
-| 48 | Classroom Exercise | §19.4 | ✅ |
-| 49 | Advanced Techniques for Prompt Engineering | —（Part 2 分隔頁） | ✅ |
-| 50 | Advanced Orchestration & Control | §8.2 | ✅ |
-| 51 | Least-to-Most Prompting | §20.1–20.3 | ✅ |
-| 52 | Classroom Exercise | §20.4 | ✅ |
-| 53 | Tree-of-Thoughts (ToT) | §21.1–21.3 | ✅ |
-| 54 | Classroom Exercise | §21.4 | ✅ |
-| 55 | Interactive Tree-of-Thoughts (iToT) | §22.1–22.3 | ✅ |
-| 56 | Classroom Exercise | §22.4 | 🖼️ |
-| 57 | Self-Generated In-Context Learning | §23.1–23.3 | ✅ |
-| 58 | Classroom Exercise | §23.4 | ✅ |
-| 59 | Specialized & Cutting-Edge | §8.2 | ✅ |
-| 60 | Constitutional AI (CAI) | §24.1–24.3 | ✅ |
-| 61 | Classroom Exercise | §24.4 | ✅ |
-| 62 | Perspective-Taking Prompting | §25.1–25.3 | ✅ |
-| 63 | Classroom Exercise | §25.4 | ✅ |
-| 64 | Analogical Prompting | §26.1–26.3 | ✅ |
-| 65 | Classroom Exercise | §26.4 | ✅ |
-| 66 | Multi-Modal Prompting | §27.1–27.3 | ✅ |
-| 67 | Classroom Exercise | §27.4 | ✅ |
-| 68 | Persona Consistency Prompting | §28.1–28.3 | ✅ |
-| 69 | Classroom Exercise | §28.4 | ✅ |
-| 70 | Predictive Prompting | §29.1–29.3 | ✅ |
-| 71 | Classroom Exercise | §29.4 | ✅ |
-| 72 | Generate Knowledge Prompting | §30.1–30.2 | ✅ |
-| 73 | Generate Knowledge Prompting Example | §30.3（階段一） | ✅ |
-| 74 | Generate Knowledge Prompting Example | §30.3（階段二） | ✅ |
-| 75 | Program-aided Language Model (PAL) | §31.1–31.2 | ✅ |
-| 76 | PAL | §31.3（示意圖） | ✅ |
-| 77 | ReAct | §32.1 | ✅ |
-| 78 | ReAct | §32.3（示意圖） | ✅ |
-| 79 | Tools and Applications | —（Part 3 分隔頁） | ✅ |
-| 80 | Tools & IDEs | §33 | ✅ |
-| 81 | Applications | §34.1 | ✅ |
-| 82 | LLMs with External Tools | §34.2 | ✅ |
-| 83 | Data-Augmented Generation | §34.3 | ✅ |
-| 84 | Conclusion and Future Directions | —（Part 4 分隔頁） | ✅ |
-| 85 | Opportunities and Future Directions | §35 | ✅ |
-| 86 | Model Safety | §36 | ✅ |
-| 87 | Prompt Injections | §37.1 | ✅ |
-| 88 | Prompt Injection | §37.2 | ✅ |
-| 89 | Prompt Leaking | §37.3 | ✅ |
-| 90 | Jailbreaking | §37.4 | ✅ |
-| 91 | Jailbreaking examples | §37.5 | 🖼️ |
-| 92 | RLHF | §38 | ✅ |
-
----
-
-## 附錄 D：離線執行／安裝提示
-
-### D.1 這份筆記本身
+### C.1 這份筆記本身
 
 - 本頁是**單一 HTML 檔**：CSS、語法高亮、插圖（base64）**全部內嵌**，
   **零外部資源**，下載後**雙擊即可離線閱讀**，不需要網路。
 - 原始 Markdown 也在同一資料夾，方便你自行修改或再轉檔。
 
-### D.2 想自己動手試 prompt
+### C.2 想自己動手試 prompt
 
 本筆記的內容都是「**方法論**」，不需要安裝任何套件就能讀完。若要實作：
 
@@ -2268,23 +2146,23 @@ pip install openai            # 或其他供應商的 SDK
 | 多供應商統一介面 | LiteLLM（本課程 Lesson 8 的主題） |
 | 建聊天介面 | Streamlit 或 Flask（本課程 Lesson 9 的主題） |
 
-### D.3 沒有網路時怎麼複習
+### C.3 沒有網路時怎麼複習
 
 | 做法 | 說明 |
 |---|---|
 | 把本頁存成 PDF | 瀏覽器列印 → 存成 PDF（版面已為列印最佳化） |
-| 用附錄 E | 考前 10 分鐘只需要看附錄 E 的一頁精華 |
+| 用附錄 D | 考前 10 分鐘只需要看附錄 D 的一頁精華 |
 | 用附錄 A | 需要查「某個技術的一句話定義」時查附錄 A.3 |
 | 用附錄 B | 複習時最有效的是 B.2 的「易混淆技術對照」 |
 
-### D.4 驗證本頁確實可離線使用
+### C.4 驗證本頁確實可離線使用
 
 在瀏覽器開發者工具的 Network 面板重新載入本頁，應該看到 **0 個外部請求**
 （只有這一份 HTML 本身）。插圖是 `data:image/jpeg;base64,...`，不會發出請求。
 
 ---
 
-## 附錄 E：一頁精華（考前 10 分鐘）
+## 附錄 D：一頁精華（考前 10 分鐘）
 
 ```text
 ========== 1. 三個定義 ==========
@@ -2330,12 +2208,12 @@ RLHF：Reinforcement Learning from Human Feedback → fit human preference
 
 ---
 
-## 附錄 F：互動式線上測驗（60 題）
+## 附錄 E：互動式線上測驗（60 題）
 
 > **60 題單選、滿分 60 分、建議 75 分鐘。**
 > 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不重複收錄題目**。
 
-### F.1 開始測驗
+### E.1 開始測驗
 
 **👉 [開始 60 題線上測驗](mc-quiz.html)**
 
@@ -2347,7 +2225,7 @@ RLHF：Reinforcement Learning from Human Feedback → fit human preference
 - 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
 - 需要紙本時，直接在該頁按列印即可
 
-### F.2 時間分配建議
+### E.2 時間分配建議
 
 | 階段 | 時間 | 做什麼 |
 |---|---|---|
@@ -2355,20 +2233,20 @@ RLHF：Reinforcement Learning from Human Feedback → fit human preference
 | 第二輪 | 40–65 分鐘 | 回頭處理標記的難題 |
 | 第三輪 | 65–75 分鐘 | 檢查有沒有漏答 |
 
-### F.3 評分參考
+### E.3 評分參考
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 54–60 | 優異 | 直接看附錄 E 一頁精華即可上場 |
+| 54–60 | 優異 | 直接看附錄 D 一頁精華即可上場 |
 | 45–53 | 良好 | 複習錯題所屬章節 |
 | 36–44 | 及格邊緣 | 重讀主要章節 + 附錄 A |
 | 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
-> 答錯的題目請對照下方〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
+> 答錯的題目請對照下方〈附錄 F：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
 
 ---
 
-## 附錄 G：互動測驗答錯題目 → 複習章節對照
+## 附錄 F：互動測驗答錯題目 → 複習章節對照
 
 | 答錯題號 | 建議複習章節 |
 |---|---|
@@ -2391,4 +2269,4 @@ RLHF：Reinforcement Learning from Human Feedback → fit human preference
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*

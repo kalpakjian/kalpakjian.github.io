@@ -2,45 +2,42 @@
 
 > 課程：Certificate in Application of Computer Vision Technology (Part-time)
 > 機構：匯縱專業發展中心（IVDC）
-> 教材來源：`IVDC_Using Local GPU for ML.pptx` → PDF（26 頁）
 > 本筆記依課程大綱每一個標題逐一填充內容，並補上實際指令、版本對照、常見錯誤、模擬試題。
-> 教材為**安裝步驟截圖**（文字極少）；本筆記把每一步補上「要做什麼、用什麼指令、如何驗證」。
 > 本機實測環境（Windows）：**RTX 4090 / 驅動 617.42 / CUDA 13.4 / PyTorch 2.14.1+cu132**。
-> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
+> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
 ## 目錄
 
-| # | 章節 | PDF 頁 |
-|---|------|--------|
-| 1 | [Set up Nvidia Video Driver](#1-set-up-nvidia-video-driver) | 2–3 |
-| 2 | [Install Visual Studio C++](#2-install-visual-studio-c) | 4–5 |
-| 3 | [Install Anaconda](#3-install-anaconda) | 6–8 |
-| 4 | [Anaconda Prompt](#4-anaconda-prompt) | 9 |
-| 5 | [Setup Anaconda Path](#5-setup-anaconda-path) | 10 |
-| 6 | [Install or check CUDA tool](#6-install-or-check-cuda-tool) | 11 |
-| 7 | [Check version for PyTorch](#7-check-version-for-pytorch) | 12 |
-| 8 | [CUDA Toolkit](#8-cuda-toolkit) | 13 |
-| 9 | [cuDNN](#9-cudnn) | 14 |
-| 10 | [Copy cuDNN bin files to CUDA](#10-copy-cudnn-bin-files-to-cuda) | 15 |
-| 11 | [Copy cuDNN lib files to CUDA](#11-copy-cudnn-lib-files-to-cuda) | 16 |
-| 12 | [Check Environment Variables](#12-check-environment-variables) | 17 |
-| 13 | [Install Visual Studio Code](#13-install-visual-studio-code) | 18 |
-| 14 | [Install Git](#14-install-git) | 19 |
-| 15 | [Install PyTorch](#15-install-pytorch) | 20–21 |
-| 16 | [Use Visual Studio Code](#16-use-visual-studio-code) | 22 |
-| 17 | [Use Bash Shell (if needed)](#17-use-bash-shell-if-needed) | 23 |
-| 18 | [Install Python (if needed)](#18-install-python-if-needed) | 24 |
-| 19 | [Check GPU](#19-check-gpu) | 25 |
-| 20 | [Set Path (if needed)](#20-set-path-if-needed) | 26 |
-| A | [附錄 A：指令速查表](#附錄-a指令速查表) | — |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) | — |
-| C | [附錄 C：教材頁面索引對照](#附錄-c教材頁面索引對照) | — |
-| D | [附錄 D：離線安裝提示](#附錄-d離線安裝提示) | — |
-| E | [附錄 E：一頁精華（考前 10 分鐘）](#附錄-e一頁精華考前-10-分鐘) | — |
-| F | [附錄 F：互動式線上測驗（60 題）](#附錄-f互動式線上測驗60-題) | — |
-| G | [附錄 G：互動測驗答錯題目 → 複習章節對照](#附錄-g互動測驗答錯題目--複習章節對照) | — |
+| # | 章節 |
+|---|------|
+| 1 | [Set up Nvidia Video Driver](#1-set-up-nvidia-video-driver) |
+| 2 | [Install Visual Studio C++](#2-install-visual-studio-c) |
+| 3 | [Install Anaconda](#3-install-anaconda) |
+| 4 | [Anaconda Prompt](#4-anaconda-prompt) |
+| 5 | [Setup Anaconda Path](#5-setup-anaconda-path) |
+| 6 | [Install or check CUDA tool](#6-install-or-check-cuda-tool) |
+| 7 | [Check version for PyTorch](#7-check-version-for-pytorch) |
+| 8 | [CUDA Toolkit](#8-cuda-toolkit) |
+| 9 | [cuDNN](#9-cudnn) |
+| 10 | [Copy cuDNN bin files to CUDA](#10-copy-cudnn-bin-files-to-cuda) |
+| 11 | [Copy cuDNN lib files to CUDA](#11-copy-cudnn-lib-files-to-cuda) |
+| 12 | [Check Environment Variables](#12-check-environment-variables) |
+| 13 | [Install Visual Studio Code](#13-install-visual-studio-code) |
+| 14 | [Install Git](#14-install-git) |
+| 15 | [Install PyTorch](#15-install-pytorch) |
+| 16 | [Use Visual Studio Code](#16-use-visual-studio-code) |
+| 17 | [Use Bash Shell (if needed)](#17-use-bash-shell-if-needed) |
+| 18 | [Install Python (if needed)](#18-install-python-if-needed) |
+| 19 | [Check GPU](#19-check-gpu) |
+| 20 | [Set Path (if needed)](#20-set-path-if-needed) |
+| A | [附錄 A：指令速查表](#附錄-a指令速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線安裝提示](#附錄-c離線安裝提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
 
 ---
 
@@ -779,45 +776,9 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
 
 ---
 
-## 附錄 C：教材頁面索引對照
+## 附錄 C：離線安裝提示
 
-| PDF 頁 | 標題 | 本筆記對應章節 |
-|--------|------|---------------|
-| 1 | 封面：Using Local GPU for Machine Learning | — |
-| 2 | Set up Nvidia Video Driver | 第 1 節 |
-| 3 | Set up Nvidia Video Driver | 第 1 節 |
-| 4 | Install Visual Studio C++ | 第 2 節 |
-| 5 | Install Visual Studio C++ | 第 2 節 |
-| 6 | Install Anaconda | 第 3 節 |
-| 7 | Install Anaconda | 第 3 節 |
-| 8 | Install Anaconda | 第 3 節 |
-| 9 | Anaconda Prompt | 第 4 節 |
-| 10 | Setup Anaconda Path | 第 5 節 |
-| 11 | Install or check CUDA tool | 第 6 節 |
-| 12 | Check version for Pytorch | 第 7 節 |
-| 13 | CUDA Toolkit | 第 8 節 |
-| 14 | cuDNN | 第 9 節 |
-| 15 | Copy cuDNN bin files to CUDA | 第 10 節 |
-| 16 | Copy cuDNN lib files to CUDA | 第 11 節 |
-| 17 | Check Environment Variables | 第 12 節 |
-| 18 | Install Visual Studio Code | 第 13 節 |
-| 19 | Install Git | 第 14 節 |
-| 20 | Install Pytorch | 第 15 節 |
-| 21 | Install Pytorch | 第 15 節 |
-| 22 | Use Visual Studio Code | 第 16 節 |
-| 23 | Use Bash Shell (if needed) | 第 17 節 |
-| 24 | Install Python (if needed) | 第 18 節 |
-| 25 | Check GPU（含 PyTorch 程式碼） | 第 19 節 |
-| 26 | Set Path (if needed) | 第 20 節 |
-
-> 說明：教材幾乎每頁都是**安裝精靈截圖**，只有 **p25** 含實際程式碼（PyTorch GPU 檢查）；
-> 本筆記把每一步補上「目的、指令、驗證方式」，讓沒有截圖也能照著做。
-
----
-
-## 附錄 D：離線安裝提示
-
-### D.1 需要先下載的安裝檔（有網路時先備好）
+### C.1 需要先下載的安裝檔（有網路時先備好）
 
 | 項目 | 來源 | 檔名關鍵字 |
 |------|------|-----------|
@@ -829,7 +790,7 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
 | VS Code | code.visualstudio.com | `VSCodeUserSetup-x64-*.exe` |
 | Git | git-scm.com | `Git-*-64-bit.exe` |
 
-### D.2 離線安裝注意
+### C.2 離線安裝注意
 
 - **cuDNN 需登入 NVIDIA 帳號**才能下載，建議**事先**下載好 zip。
 - PyTorch 的 wheel 很大（數 GB），建議先用 `pip download` 或 `conda` 的離線包：
@@ -840,14 +801,14 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
   ```
 - **順序不能省**：驅動 → 編譯器/Anaconda → CUDA/cuDNN → PyTorch。
 
-### D.3 沒有 GPU 時的替代
+### C.3 沒有 GPU 時的替代
 
 - 裝 **CPU 版 PyTorch** 仍可學習與跑小模型（`torch.cuda.is_available()` 會是 `False`）。
 - 雲端替代：Colab、Kaggle、或雲端 GPU 服務（不必在本機裝 CUDA）。
 
 ---
 
-## 附錄 E：一頁精華（考前 10 分鐘）
+## 附錄 D：一頁精華（考前 10 分鐘）
 
 ```text
 【安裝順序（必背）】
@@ -886,12 +847,12 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
 
 ---
 
-## 附錄 F：互動式線上測驗（60 題）
+## 附錄 E：互動式線上測驗（60 題）
 
 > **60 題單選、滿分 60 分、建議 75 分鐘。**
 > 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不再收錄非互動的紙本題目**，避免與線上版重複。
 
-### F.1 開始測驗
+### E.1 開始測驗
 
 **👉 [開始 60 題線上測驗](mc-quiz.html)**
 
@@ -903,7 +864,7 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
 - 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
 - 需要紙本時，直接在該頁按列印即可
 
-### F.2 時間分配建議
+### E.2 時間分配建議
 
 | 階段 | 時間 | 做什麼 |
 |---|---|---|
@@ -911,20 +872,20 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
 | 第二輪 | 40–65 分鐘 | 回頭處理標記的難題 |
 | 第三輪 | 65–75 分鐘 | 檢查有沒有漏答 |
 
-### F.3 評分參考
+### E.3 評分參考
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 54–60 | 優異 | 直接看附錄 E 一頁精華即可上場 |
+| 54–60 | 優異 | 直接看附錄 D 一頁精華即可上場 |
 | 45–53 | 良好 | 複習錯題所屬章節 |
 | 36–44 | 及格邊緣 | 重讀主要章節 + 附錄 A |
 | 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
-> 答錯的題目請對照〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
+> 答錯的題目請對照〈附錄 F：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
 
 ---
 
-## 附錄 G：互動測驗答錯題目 → 複習章節對照
+## 附錄 F：互動測驗答錯題目 → 複習章節對照
 
 | 答錯題號 | 建議複習章節 |
 |---|---|
@@ -945,9 +906,9 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
 | 41–44 | §13 / §14 VS Code 與 Git |
 | 45–50 | §15 / §19 PyTorch 與 GPU 驗證 |
 | 51–54 | §16 Interpreter、附錄 B.2 排錯 |
-| 55–59 | §18 Python / venv、附錄 D 離線 |
+| 55–59 | §18 Python / venv、附錄 C 離線 |
 | 60 | §15.2 版本驗證 |
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*

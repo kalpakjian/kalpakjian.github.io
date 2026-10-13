@@ -20,7 +20,6 @@ archive: true
 
 IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 — Popular LLM Models** 的完整學習筆記。
 
-這一課把「生成式 AI 家族」拆成三條主線：**有哪些產品**（Popular LLM）、**原理對照**（Predictive AI vs Generative AI）、以及**知識要放在哪裡**（LLM vs RAG）。教材 77 頁，其中約 30 頁是純截圖，筆記逐頁補上可考的內容。
 
 <!-- more -->
 
@@ -35,43 +34,43 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 —
 
 ## 章節
 
-| # | 章節 | PDF 頁 |
-|---|------|--------|
-| 1 | 課程地圖：這份教材的三條主線 | p2 |
-| 2 | 什麼是生成式 AI | p3 |
-| 3 | 熱門 LLM 總覽：六個對話式生成式 AI | p4–6 |
-| 4 | ChatGPT：介面與用途 | p7–10 |
-| 5 | ChatGPT 的智慧從哪來：RLHF、獎勵模型與 PPO | p11–13 |
-| 6 | Gemini | p14 |
-| 7 | ChatGPT Prompt 範例 | p15 |
-| 8 | Copilot | p16 |
-| 9 | Meta／Llama | p17 |
-| 10 | Grok | p18 |
-| 11 | Perplexity：AI 搜尋引擎 | p19 |
-| 12 | 中國熱門 LLM：Kimi、通義、DeepSeek | p20–23 |
-| 13 | 在本機使用 DeepSeek | p24 |
-| 14 | 第三方多模型聚合 App | p25 |
-| 15 | 生成式 AI 偵測器 | p26 |
-| 16 | Predictive AI vs Generative AI：主題地圖 | p27 |
-| 17 | Predictive AI 深入：資料、模型與應用 | p28 |
-| 18 | Predictive AI 的五步流程 | p29 |
-| 19 | Generative AI 深入：定義與核心技術 | p30–31 |
-| 20 | Generative AI 的運作方式與生成流程 | p32–33 |
-| 21 | 對照總表：Predictive AI vs Generative AI | p34 |
-| 22 | AI → ML → DL → Generative AI 的層次，與 AIGC | p35–36 |
-| 23 | GAN 基礎概念 | p37–40 |
-| 24 | GAN 的底層技術與演算法 | p41–52 |
-| 25 | Diffusion Model | p53–58 |
-| 26 | GAN vs Diffusion，與其他生成模型 | p59–62 |
-| 27 | Hybrid AI Systems | p63–65 |
-| 28 | 真實世界應用：醫療、電商、招聘 | p66–68 |
-| 29 | RAG：檢索增強生成與 AnythingLLM | p70–71 |
-| 30 | LLM vs RAG：比較、強弱與使用時機 | p72–74 |
-| 31 | 更多 ChatGPT：Hinton 的推理題 | p75 |
-| 32 | 程式範例索引與本機實測總表 | p69, p76 |
-| 33 | 考試重點整理 | 整理 |
+| # | 章節 |
+|---|------|
+| 1 | 課程地圖：這份教材的三條主線 |
+| 2 | 什麼是生成式 AI |
+| 3 | 熱門 LLM 總覽：六個對話式生成式 AI |
+| 4 | ChatGPT：介面與用途 |
+| 5 | ChatGPT 的智慧從哪來：RLHF、獎勵模型與 PPO |
+| 6 | Gemini |
+| 7 | ChatGPT Prompt 範例 |
+| 8 | Copilot |
+| 9 | Meta／Llama |
+| 10 | Grok |
+| 11 | Perplexity：AI 搜尋引擎 |
+| 12 | 中國熱門 LLM：Kimi、通義、DeepSeek |
+| 13 | 在本機使用 DeepSeek |
+| 14 | 第三方多模型聚合 App |
+| 15 | 生成式 AI 偵測器 |
+| 16 | Predictive AI vs Generative AI：主題地圖 |
+| 17 | Predictive AI 深入：資料、模型與應用 |
+| 18 | Predictive AI 的五步流程 |
+| 19 | Generative AI 深入：定義與核心技術 |
+| 20 | Generative AI 的運作方式與生成流程 |
+| 21 | 對照總表：Predictive AI vs Generative AI |
+| 22 | AI → ML → DL → Generative AI 的層次，與 AIGC |
+| 23 | GAN 基礎概念 |
+| 24 | GAN 的底層技術與演算法 |
+| 25 | Diffusion Model |
+| 26 | GAN vs Diffusion，與其他生成模型 |
+| 27 | Hybrid AI Systems |
+| 28 | 真實世界應用：醫療、電商、招聘 |
+| 29 | RAG：檢索增強生成與 AnythingLLM |
+| 30 | LLM vs RAG：比較、強弱與使用時機 |
+| 31 | 更多 ChatGPT：Hinton 的推理題 |
+| 32 | 程式範例索引與本機實測總表 |
+| 33 | 考試重點整理 |
 
-另有 **7 個附錄**：名詞與架構速查表、常見錯誤與陷阱、教材頁面索引對照、離線執行／安裝提示、一頁精華（考前 10 分鐘）、60 題 MC 互動測驗、答錯題目 → 複習章節對照。
+另有 **7 個附錄**：名詞與架構速查表、常見錯誤與陷阱、離線執行／安裝提示、一頁精華（考前 10 分鐘）、60 題 MC 互動測驗、答錯題目 → 複習章節對照。
 
 ---
 
@@ -97,7 +96,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 —
 
 ## ⚠️ 本機實測抓到的兩個問題
 
-| 教材寫法 | 實測結果 |
+| 寫法 | 實測結果 |
 |---|---|
 | `generator(prompt, max_length=50, ...)`（`RAG.ipynb`） | ❌ prompt 已 153 token → `ValueError`，要改 **`max_new_tokens=50`** |
 | 「SD 生成 may take **30-60 seconds**」 | 本機 RTX 4090 只要 **0.61 秒**（教材數字來自 Colab T4） |
@@ -139,12 +138,12 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 —
 3. §6–§15 用「誰做的／屬於哪一類」的方式快速掃過
 4. 精讀 §16–§22（預測 vs 生成的原理對照）
 5. 精讀 §23–§26（GAN 與 Diffusion 的訓練機制）
-6. 讀 §29–§30（RAG 與 LLM vs RAG），並動手跑一次附錄 D 的最小 RAG
-7. 找個安靜的 75 分鐘，完整做一次**附錄 F 的 60 題線上互動測驗**
-8. 考前 10 分鐘只看**附錄 E 一頁精華**
+6. 讀 §29–§30（RAG 與 LLM vs RAG），並動手跑一次附錄 C 的最小 RAG
+7. 找個安靜的 75 分鐘，完整做一次**附錄 E 的 60 題線上互動測驗**
+8. 考前 10 分鐘只看**附錄 D 一頁精華**
 
 祝考試順利。
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*

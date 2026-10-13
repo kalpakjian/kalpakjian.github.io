@@ -664,37 +664,33 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#b2-易混淆技術對照">B.2 易混淆技術對照</a>
 </li>
-<li><a href="#b3-教材的無文字頁與排版陷阱">B.3 「無文字頁」與排版陷阱</a>
-</li>
 </ul>
 </li>
-<li><a href="#附錄-c教材頁面索引對照">附錄 C：教材頁面索引對照</a>
-</li>
-<li><a href="#附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</a>
+<li><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a>
 <ul>
-<li><a href="#d1-這份筆記本身">D.1 這份筆記本身</a>
+<li><a href="#c1-這份筆記本身">C.1 這份筆記本身</a>
 </li>
-<li><a href="#d2-想自己動手試-prompt">D.2 想自己動手試 prompt</a>
+<li><a href="#c2-想自己動手試-prompt">C.2 想自己動手試 prompt</a>
 </li>
-<li><a href="#d3-沒有網路時怎麼複習">D.3 沒有網路時怎麼複習</a>
+<li><a href="#c3-沒有網路時怎麼複習">C.3 沒有網路時怎麼複習</a>
 </li>
-<li><a href="#d4-驗證本頁確實可離線使用">D.4 驗證本頁確實可離線使用</a>
+<li><a href="#c4-驗證本頁確實可離線使用">C.4 驗證本頁確實可離線使用</a>
 </li>
 </ul>
 </li>
-<li><a href="#附錄-e一頁精華考前-10-分鐘">附錄 E：一頁精華（考前 10 分鐘）</a>
+<li><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a>
 </li>
-<li><a href="#附錄-f互動式線上測驗60-題">附錄 F：互動式線上測驗（60 題）</a>
+<li><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a>
 <ul>
-<li><a href="#f1-開始測驗">F.1 開始測驗</a>
+<li><a href="#e1-開始測驗">E.1 開始測驗</a>
 </li>
-<li><a href="#f2-時間分配建議">F.2 時間分配建議</a>
+<li><a href="#e2-時間分配建議">E.2 時間分配建議</a>
 </li>
-<li><a href="#f3-評分參考">F.3 評分參考</a>
+<li><a href="#e3-評分參考">E.3 評分參考</a>
 </li>
 </ul>
 </li>
-<li><a href="#附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</a>
+<li><a href="#附錄-f互動測驗答錯題目--複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a>
 </li>
 </ul>
 </div>
@@ -707,9 +703,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 機構：匯縱專業發展中心（IVDC）
 教材來源：<code>9 IVDC_Prompt_Engineering (adjusted).pdf</code>（92 頁）
 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、可複製的提示詞範本、常見錯誤與考點。
-教材是 PowerPoint 匯出的投影片，<strong>部分頁面（尤其 p34–35、p38–39、p56、p91）幾乎沒有文字層</strong>（只有圖）；
 本筆記把該處的圖意用文字補齊，並把每頁的「Classroom Exercise」併入所屬技術章節。
-🖱️ <strong>互動測驗（推薦）</strong>：附錄 F 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
+🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
 </blockquote>
 <hr>
 <h2 id="目錄">目錄</h2>
@@ -718,234 +713,184 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <tr>
 <th>#</th>
 <th>章節</th>
-<th>PDF 頁</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
 <td><a href="#1-prerequisites--objectives">Prerequisites &amp; Objectives</a></td>
-<td>2</td>
 </tr>
 <tr>
 <td>2</td>
 <td><a href="#2-what-are-prompts">What are prompts?</a></td>
-<td>5</td>
 </tr>
 <tr>
 <td>3</td>
 <td><a href="#3-why-prompt-engineering">Why Prompt Engineering?</a></td>
-<td>6</td>
 </tr>
 <tr>
 <td>4</td>
 <td><a href="#4-first-basic-prompt">First Basic Prompt</a></td>
-<td>7</td>
 </tr>
 <tr>
 <td>5</td>
 <td><a href="#5-elements-of-a-prompt">Elements of a Prompt</a></td>
-<td>8</td>
 </tr>
 <tr>
 <td>6</td>
 <td><a href="#6-settings-to-keep-in-mind-temperature-與-top_p">Settings to keep in mind: temperature 與 top_p</a></td>
-<td>9</td>
 </tr>
 <tr>
 <td>7</td>
 <td><a href="#7-designing-prompts-for-different-tasks六大任務">Designing Prompts for Different Tasks（六大任務）</a></td>
-<td>10–16</td>
 </tr>
 <tr>
 <td>8</td>
 <td><a href="#8-prompt-engineering-技術地圖七大類">Prompt Engineering 技術地圖（七大類）</a></td>
-<td>17–19、27、40、50、59</td>
 </tr>
 <tr>
 <td>9</td>
 <td><a href="#9-zero-shot-prompting">Zero-Shot Prompting</a></td>
-<td>20–21</td>
 </tr>
 <tr>
 <td>10</td>
 <td><a href="#10-few-shot-prompting">Few-Shot Prompting</a></td>
-<td>22–23</td>
 </tr>
 <tr>
 <td>11</td>
 <td><a href="#11-clear-instructions-and-task-framing">Clear Instructions and Task Framing</a></td>
-<td>24–26</td>
 </tr>
 <tr>
 <td>12</td>
 <td><a href="#12-system-prompting">System Prompting</a></td>
-<td>28–29</td>
 </tr>
 <tr>
 <td>13</td>
 <td><a href="#13-role-prompting">Role Prompting</a></td>
-<td>30–31</td>
 </tr>
 <tr>
 <td>14</td>
 <td><a href="#14-contextual-prompting">Contextual Prompting</a></td>
-<td>32–35</td>
 </tr>
 <tr>
 <td>15</td>
 <td><a href="#15-markdown-prompting">Markdown Prompting</a></td>
-<td>36–39</td>
 </tr>
 <tr>
 <td>16</td>
 <td><a href="#16-chain-of-thought-cot-prompting">Chain-of-Thought (CoT) Prompting</a></td>
-<td>41–42</td>
 </tr>
 <tr>
 <td>17</td>
 <td><a href="#17-tabular-chain-of-thought-tcot">Tabular Chain-of-Thought (TCoT)</a></td>
-<td>43–44</td>
 </tr>
 <tr>
 <td>18</td>
 <td><a href="#18-skeleton-of-thought-sot">Skeleton-of-Thought (SoT)</a></td>
-<td>45–46</td>
 </tr>
 <tr>
 <td>19</td>
 <td><a href="#19-step-back-prompting">Step-Back Prompting</a></td>
-<td>47–48</td>
 </tr>
 <tr>
 <td>20</td>
 <td><a href="#20-least-to-most-prompting">Least-to-Most Prompting</a></td>
-<td>51–52</td>
 </tr>
 <tr>
 <td>21</td>
 <td><a href="#21-tree-of-thoughts-tot">Tree-of-Thoughts (ToT)</a></td>
-<td>53–54</td>
 </tr>
 <tr>
 <td>22</td>
 <td><a href="#22-interactive-tree-of-thoughts-itot">Interactive Tree-of-Thoughts (iToT)</a></td>
-<td>55–56</td>
 </tr>
 <tr>
 <td>23</td>
 <td><a href="#23-self-generated-in-context-learning-sg-icl">Self-Generated In-Context Learning (SG-ICL)</a></td>
-<td>57–58</td>
 </tr>
 <tr>
 <td>24</td>
 <td><a href="#24-constitutional-ai-cai">Constitutional AI (CAI)</a></td>
-<td>60–61</td>
 </tr>
 <tr>
 <td>25</td>
 <td><a href="#25-perspective-taking-prompting">Perspective-Taking Prompting</a></td>
-<td>62–63</td>
 </tr>
 <tr>
 <td>26</td>
 <td><a href="#26-analogical-prompting">Analogical Prompting</a></td>
-<td>64–65</td>
 </tr>
 <tr>
 <td>27</td>
 <td><a href="#27-multi-modal-prompting">Multi-Modal Prompting</a></td>
-<td>66–67</td>
 </tr>
 <tr>
 <td>28</td>
 <td><a href="#28-persona-consistency-prompting">Persona Consistency Prompting</a></td>
-<td>68–69</td>
 </tr>
 <tr>
 <td>29</td>
 <td><a href="#29-predictive-prompting">Predictive Prompting</a></td>
-<td>70–71</td>
 </tr>
 <tr>
 <td>30</td>
 <td><a href="#30-generate-knowledge-prompting">Generate Knowledge Prompting</a></td>
-<td>72–74</td>
 </tr>
 <tr>
 <td>31</td>
 <td><a href="#31-program-aided-language-model-pal">Program-aided Language Model (PAL)</a></td>
-<td>75–76</td>
 </tr>
 <tr>
 <td>32</td>
 <td><a href="#32-react">ReAct</a></td>
-<td>77–78</td>
 </tr>
 <tr>
 <td>33</td>
 <td><a href="#33-tools--ides">Tools &amp; IDEs</a></td>
-<td>80</td>
 </tr>
 <tr>
 <td>34</td>
 <td><a href="#34-applications外部工具與資料增強生成">Applications（外部工具與資料增強生成）</a></td>
-<td>81–83</td>
 </tr>
 <tr>
 <td>35</td>
 <td><a href="#35-opportunities-and-future-directions">Opportunities and Future Directions</a></td>
-<td>85</td>
 </tr>
 <tr>
 <td>36</td>
 <td><a href="#36-model-safety">Model Safety</a></td>
-<td>86</td>
 </tr>
 <tr>
 <td>37</td>
 <td><a href="#37-prompt-injection-三大攻擊">Prompt Injection 三大攻擊</a></td>
-<td>87–91</td>
 </tr>
 <tr>
 <td>38</td>
 <td><a href="#38-rlhf">RLHF</a></td>
-<td>92</td>
 </tr>
 <tr>
 <td>A</td>
 <td><a href="#附錄-aprompt-元素與參數速查表">附錄 A：Prompt 元素與參數速查表</a></td>
-<td>—</td>
 </tr>
 <tr>
 <td>B</td>
 <td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
-<td>—</td>
-</tr>
-<tr>
-<td>C</td>
-<td><a href="#附錄-c教材頁面索引對照">附錄 C：教材頁面索引對照</a></td>
-<td>—</td>
 </tr>
 <tr>
 <td>D</td>
-<td><a href="#附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</a></td>
-<td>—</td>
+<td><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a></td>
 </tr>
 <tr>
 <td>E</td>
-<td><a href="#附錄-e一頁精華考前-10-分鐘">附錄 E：一頁精華（考前 10 分鐘）</a></td>
-<td>—</td>
+<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
 </tr>
 <tr>
 <td>F</td>
-<td><a href="#附錄-f互動式線上測驗60-題">附錄 F：互動式線上測驗（60 題）</a></td>
-<td>—</td>
+<td><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a></td>
 </tr>
 <tr>
 <td>G</td>
-<td><a href="#附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</a></td>
-<td>—</td>
+<td><a href="#附錄-f互動測驗答錯題目--複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
 </tr>
 </tbody>
 </table>
@@ -1186,7 +1131,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <thead>
 <tr>
 <th>名詞</th>
-<th>教材定義</th>
+<th>定義</th>
 <th>中文</th>
 </tr>
 </thead>
@@ -1274,7 +1219,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <thead>
 <tr>
 <th>欄位</th>
-<th>教材內容</th>
+<th>內容</th>
 </tr>
 </thead>
 <tbody>
@@ -1708,7 +1653,7 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。</p>
 <thead>
 <tr>
 <th>技術</th>
-<th>教材一句話</th>
+<th>一句話</th>
 </tr>
 </thead>
 <tbody>
@@ -1731,7 +1676,7 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。</p>
 <thead>
 <tr>
 <th>技術</th>
-<th>教材一句話</th>
+<th>一句話</th>
 </tr>
 </thead>
 <tbody>
@@ -1758,7 +1703,7 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。</p>
 <thead>
 <tr>
 <th>技術</th>
-<th>教材一句話</th>
+<th>一句話</th>
 </tr>
 </thead>
 <tbody>
@@ -1785,7 +1730,7 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。</p>
 <thead>
 <tr>
 <th>技術</th>
-<th>教材一句話</th>
+<th>一句話</th>
 </tr>
 </thead>
 <tbody>
@@ -1824,7 +1769,7 @@ Part 1 先埋梗，Part 1 後半的 CoT（Chapter 16）再正式命名。</p>
 <thead>
 <tr>
 <th>技術</th>
-<th>教材一句話</th>
+<th>一句話</th>
 </tr>
 </thead>
 <tbody>
@@ -2423,7 +2368,6 @@ p25 的四組弱／強對照要能配對。最常考「強 prompt 比弱 prompt 
 <p><strong>With 版本補了四項背景</strong>：① 受眾（<code>first-year learners</code>）；② 先備知識（<code>basic Python only</code>）；
 ③ 數量（<code>3 classroom uses</code>）；④ <strong>環境限制</strong>（<code>school lab with limited computing power</code>）。</p>
 <blockquote>
-<p>⚠️ 教材 <strong>p34、p35 是兩頁沒有文字層的延伸練習頁</strong>（只有圖）。它們延續同一個題型：
 給一句「無上下文」的指令，再給「有上下文」的版本，要你比較兩者輸出差異。本筆記已把重點併入 14.4。</p>
 <p><strong>考點</strong>：contextual 要補的六類背景（audience／goals／environment／constraints／location／prior knowledge）
 是常考清單；另外要記 <strong>"the same question could require different answers in different settings"</strong> 這句判斷準則。
@@ -2510,7 +2454,6 @@ p25 的四組弱／強對照要能配對。最常考「強 prompt 比弱 prompt 
 <p><strong>With 版本做了兩件事</strong>：① <strong>指定四個小節標題</strong>（Overview／Key Types／Real-World Examples／Limitations）；
 ② <strong>指定每個小節用 bullet points</strong>。等於先把輸出骨架畫好，模型只負責填肉。</p>
 <blockquote>
-<p>⚠️ 教材 <strong>p38、p39 是兩頁沒有文字層的延伸練習頁</strong>（只有圖）。它們延續同一題型：
 給定不同的 section 清單與格式要求，比較「有／沒有 Markdown 指示」的輸出差異。本筆記已把重點併入 15.4。</p>
 <p><strong>考點</strong>：Markdown prompting 的價值在於<strong>可讀性與可重用性</strong>（readable and reusable），
 以及它同時改善<strong>prompt 清晰度</strong>與<strong>輸出可讀性</strong>這兩件事。另外要記 p37 的四個示範小節名稱。</p>
@@ -2612,7 +2555,7 @@ careful decision-making）與 p42 的「由簡到繁排查」示範。</p>
 <table>
 <thead>
 <tr>
-<th>教材建議的欄位</th>
+<th>建議的欄位</th>
 <th>中文</th>
 </tr>
 </thead>
@@ -3053,7 +2996,6 @@ careful decision-making）與 p42 的「由簡到繁排查」示範。</p>
 </tbody>
 </table>
 <blockquote>
-<p>⚠️ 教材 <strong>p56 的內文有部分沒有文字層</strong>（只有圖），本筆記已把該頁示範的三步驟
 （generate → refine → present the improved final plan）用文字補齊。</p>
 <p><strong>考點</strong>：iToT 的關鍵字是 <strong>iteratively</strong>、<strong>feedback after each round</strong>、<strong>revised or replaced</strong>。
 一句話記：<strong>ToT 是「廣度搜尋」，iToT 是「廣度搜尋 + 迭代精煉」。</strong></p>
@@ -4235,7 +4177,6 @@ directions）。注意教材把 <strong>RLHF 放在安全主題群組裡</strong
 <p><strong>「served static」是關鍵</strong>：模型上線後不會自己更新防禦，所以同一個攻擊手法可以重複使用。</p>
 <h3 id="375-jailbreaking-examplesp91">37.5 Jailbreaking examples（p91）</h3>
 <blockquote>
-<p>⚠️ 教材 <strong>p91 只有標題、沒有文字層</strong>（只有示意圖）。本筆記依「三大攻擊」的定義整理出
 三者的辨別方式如下（這是考試最可能出的比較題）：</p>
 </blockquote>
 <table>
@@ -4751,593 +4692,14 @@ pip<span class="w"> </span>install<span class="w"> </span>openai<span class="w">
 </tr>
 </tbody>
 </table>
-<h3 id="b3-教材的無文字頁與排版陷阱">B.3 「無文字頁」與排版陷阱</h3>
-<p>教材有數頁<strong>沒有文字層</strong>（只有圖）：<strong>p34、p35、p38、p39、p56（部分）、p91</strong>。
-如果只讀 PDF 的文字，會以為這些頁「沒有內容」——其實是<strong>延伸練習頁與示意圖</strong>。
-本筆記已逐頁補上內容（見附錄 C 的標記）。</p>
-<blockquote>
-<p>⚠️ 另外兩處教材本身的問題：
-① <strong>p44</strong> 的「With TCoT」欄位混入了上一頁（p42 CoT 練習）的殘留文字——那是教材的複製貼上失誤；
-② <strong>p91</strong> 只有標題「Jailbreaking examples」，內文全在圖裡。
-本筆記只保留該頁真正要示範的內容，並在對應章節加註說明。
-<strong>本筆記不轉載任何頁尾／版權文字</strong>，只保留標題與頁碼對照。</p>
-</blockquote>
-<hr>
-<h2 id="附錄-c教材頁面索引對照">附錄 C：教材頁面索引對照</h2>
-<p>「文字層」欄位：✅＝有文字可直接抽取；🖼️＝<strong>教材只有圖或示意</strong>（本筆記已補上內容）。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">PDF 頁</th>
-<th>教材標題</th>
-<th>本筆記章節</th>
-<th style="text-align: center;">文字層</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">1</td>
-<td>Certificate in Application of Large Language Model (LLM)</td>
-<td>—（課程封面頁）</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">2</td>
-<td>Prerequisites &amp; Objectives</td>
-<td>§1</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">3</td>
-<td>Agenda</td>
-<td>目錄</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">4</td>
-<td>Introduction to Prompt Engineering</td>
-<td>—（Part 1 分隔頁）</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">5</td>
-<td>What are prompts?</td>
-<td>§2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">6</td>
-<td>Why Prompt Engineering?</td>
-<td>§3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">7</td>
-<td>First Basic Prompt</td>
-<td>§4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">8</td>
-<td>Elements of a Prompt</td>
-<td>§5</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">9</td>
-<td>Settings to keep in mind</td>
-<td>§6</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">10</td>
-<td>Designing Prompts for Different Tasks</td>
-<td>§7.1</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">11</td>
-<td>Text Summarization</td>
-<td>§7.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">12</td>
-<td>Question Answering</td>
-<td>§7.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">13</td>
-<td>Text Classification</td>
-<td>§7.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">14</td>
-<td>Role Playing</td>
-<td>§7.5</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">15</td>
-<td>Code Generation</td>
-<td>§7.6</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">16</td>
-<td>Reasoning</td>
-<td>§7.7</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">17</td>
-<td>List of Prompt Engineer Techniques</td>
-<td>§8</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">18</td>
-<td>List of Prompt Engineer techniques</td>
-<td>§8.1</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">19</td>
-<td>Foundational Techniques</td>
-<td>§8.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">20</td>
-<td>Zero-Shot Prompting</td>
-<td>§9.1–9.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">21</td>
-<td>Classroom Exercise</td>
-<td>§9.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">22</td>
-<td>Few-Shot Prompting</td>
-<td>§10.1–10.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">23</td>
-<td>Classroom Exercise</td>
-<td>§10.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">24</td>
-<td>Clear Instructions and Task Framing</td>
-<td>§11.1–11.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">25</td>
-<td>Examples Weak vs Strong Prompt</td>
-<td>§11.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">26</td>
-<td>Classroom Exercise</td>
-<td>§11.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">27</td>
-<td>Context &amp; Role-Based Techniques</td>
-<td>§8.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">28</td>
-<td>System Prompting</td>
-<td>§12.1–12.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">29</td>
-<td>Classroom Exercise</td>
-<td>§12.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">30</td>
-<td>Role Prompting — Description</td>
-<td>§13.1–13.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">31</td>
-<td>Classroom Exercise</td>
-<td>§13.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">32</td>
-<td>Contextual Prompting — Description</td>
-<td>§14.1–14.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">33</td>
-<td>Classroom Exercise</td>
-<td>§14.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">34</td>
-<td>Classroom Exercise</td>
-<td>§14.4（延伸練習）</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">35</td>
-<td>Classroom Exercise</td>
-<td>§14.4（延伸練習）</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">36</td>
-<td>Markdown Prompting</td>
-<td>§15.1–15.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">37</td>
-<td>Classroom Exercise</td>
-<td>§15.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">38</td>
-<td>Classroom Exercise</td>
-<td>§15.4（延伸練習）</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">39</td>
-<td>Classroom Exercise</td>
-<td>§15.4（延伸練習）</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">40</td>
-<td>Reasoning &amp; Planning Techniques</td>
-<td>§8.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">41</td>
-<td>Chain-of-Thought (CoT) — Description</td>
-<td>§16.1–16.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">42</td>
-<td>Classroom Exercise</td>
-<td>§16.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">43</td>
-<td>Tabular Chain-of-Thought (TCoT)</td>
-<td>§17.1–17.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">44</td>
-<td>Classroom Exercise</td>
-<td>§17.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">45</td>
-<td>Skeleton-of-Thought (SoT)</td>
-<td>§18.1–18.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">46</td>
-<td>Classroom Exercise</td>
-<td>§18.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">47</td>
-<td>Step-Back Prompting</td>
-<td>§19.1–19.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">48</td>
-<td>Classroom Exercise</td>
-<td>§19.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">49</td>
-<td>Advanced Techniques for Prompt Engineering</td>
-<td>—（Part 2 分隔頁）</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">50</td>
-<td>Advanced Orchestration &amp; Control</td>
-<td>§8.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">51</td>
-<td>Least-to-Most Prompting</td>
-<td>§20.1–20.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">52</td>
-<td>Classroom Exercise</td>
-<td>§20.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">53</td>
-<td>Tree-of-Thoughts (ToT)</td>
-<td>§21.1–21.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">54</td>
-<td>Classroom Exercise</td>
-<td>§21.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">55</td>
-<td>Interactive Tree-of-Thoughts (iToT)</td>
-<td>§22.1–22.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">56</td>
-<td>Classroom Exercise</td>
-<td>§22.4</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">57</td>
-<td>Self-Generated In-Context Learning</td>
-<td>§23.1–23.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">58</td>
-<td>Classroom Exercise</td>
-<td>§23.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">59</td>
-<td>Specialized &amp; Cutting-Edge</td>
-<td>§8.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">60</td>
-<td>Constitutional AI (CAI)</td>
-<td>§24.1–24.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">61</td>
-<td>Classroom Exercise</td>
-<td>§24.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">62</td>
-<td>Perspective-Taking Prompting</td>
-<td>§25.1–25.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">63</td>
-<td>Classroom Exercise</td>
-<td>§25.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">64</td>
-<td>Analogical Prompting</td>
-<td>§26.1–26.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">65</td>
-<td>Classroom Exercise</td>
-<td>§26.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">66</td>
-<td>Multi-Modal Prompting</td>
-<td>§27.1–27.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">67</td>
-<td>Classroom Exercise</td>
-<td>§27.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">68</td>
-<td>Persona Consistency Prompting</td>
-<td>§28.1–28.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">69</td>
-<td>Classroom Exercise</td>
-<td>§28.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">70</td>
-<td>Predictive Prompting</td>
-<td>§29.1–29.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">71</td>
-<td>Classroom Exercise</td>
-<td>§29.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">72</td>
-<td>Generate Knowledge Prompting</td>
-<td>§30.1–30.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">73</td>
-<td>Generate Knowledge Prompting Example</td>
-<td>§30.3（階段一）</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">74</td>
-<td>Generate Knowledge Prompting Example</td>
-<td>§30.3（階段二）</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">75</td>
-<td>Program-aided Language Model (PAL)</td>
-<td>§31.1–31.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">76</td>
-<td>PAL</td>
-<td>§31.3（示意圖）</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">77</td>
-<td>ReAct</td>
-<td>§32.1</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">78</td>
-<td>ReAct</td>
-<td>§32.3（示意圖）</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">79</td>
-<td>Tools and Applications</td>
-<td>—（Part 3 分隔頁）</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">80</td>
-<td>Tools &amp; IDEs</td>
-<td>§33</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">81</td>
-<td>Applications</td>
-<td>§34.1</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">82</td>
-<td>LLMs with External Tools</td>
-<td>§34.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">83</td>
-<td>Data-Augmented Generation</td>
-<td>§34.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">84</td>
-<td>Conclusion and Future Directions</td>
-<td>—（Part 4 分隔頁）</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">85</td>
-<td>Opportunities and Future Directions</td>
-<td>§35</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">86</td>
-<td>Model Safety</td>
-<td>§36</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">87</td>
-<td>Prompt Injections</td>
-<td>§37.1</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">88</td>
-<td>Prompt Injection</td>
-<td>§37.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">89</td>
-<td>Prompt Leaking</td>
-<td>§37.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">90</td>
-<td>Jailbreaking</td>
-<td>§37.4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">91</td>
-<td>Jailbreaking examples</td>
-<td>§37.5</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">92</td>
-<td>RLHF</td>
-<td>§38</td>
-<td style="text-align: center;">✅</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</h2>
-<h3 id="d1-這份筆記本身">D.1 這份筆記本身</h3>
+<h2 id="附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</h2>
+<h3 id="c1-這份筆記本身">C.1 這份筆記本身</h3>
 <ul>
 <li>本頁是<strong>單一 HTML 檔</strong>：CSS、語法高亮、插圖（base64）<strong>全部內嵌</strong>，
   <strong>零外部資源</strong>，下載後<strong>雙擊即可離線閱讀</strong>，不需要網路。</li>
 <li>原始 Markdown 也在同一資料夾，方便你自行修改或再轉檔。</li>
 </ul>
-<h3 id="d2-想自己動手試-prompt">D.2 想自己動手試 prompt</h3>
+<h3 id="c2-想自己動手試-prompt">C.2 想自己動手試 prompt</h3>
 <p>本筆記的內容都是「<strong>方法論</strong>」，不需要安裝任何套件就能讀完。若要實作：</p>
 <table>
 <thead>
@@ -5365,7 +4727,7 @@ pip<span class="w"> </span>install<span class="w"> </span>openai<span class="w">
 </tr>
 </tbody>
 </table>
-<h3 id="d3-沒有網路時怎麼複習">D.3 沒有網路時怎麼複習</h3>
+<h3 id="c3-沒有網路時怎麼複習">C.3 沒有網路時怎麼複習</h3>
 <table>
 <thead>
 <tr>
@@ -5379,8 +4741,8 @@ pip<span class="w"> </span>install<span class="w"> </span>openai<span class="w">
 <td>瀏覽器列印 → 存成 PDF（版面已為列印最佳化）</td>
 </tr>
 <tr>
-<td>用附錄 E</td>
-<td>考前 10 分鐘只需要看附錄 E 的一頁精華</td>
+<td>用附錄 D</td>
+<td>考前 10 分鐘只需要看附錄 D 的一頁精華</td>
 </tr>
 <tr>
 <td>用附錄 A</td>
@@ -5392,11 +4754,11 @@ pip<span class="w"> </span>install<span class="w"> </span>openai<span class="w">
 </tr>
 </tbody>
 </table>
-<h3 id="d4-驗證本頁確實可離線使用">D.4 驗證本頁確實可離線使用</h3>
+<h3 id="c4-驗證本頁確實可離線使用">C.4 驗證本頁確實可離線使用</h3>
 <p>在瀏覽器開發者工具的 Network 面板重新載入本頁，應該看到 <strong>0 個外部請求</strong>
 （只有這一份 HTML 本身）。插圖是 <code>data:image/jpeg;base64,...</code>，不會發出請求。</p>
 <hr>
-<h2 id="附錄-e一頁精華考前-10-分鐘">附錄 E：一頁精華（考前 10 分鐘）</h2>
+<h2 id="附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</h2>
 <div class="codehilite"><pre><span></span><code>========== 1. 三個定義 ==========
 Prompt            = instructions + context，為了達成任務而送給語言模型的東西
 Prompt engineering= 開發並最佳化 prompt，以有效率地使用 LM
@@ -5439,12 +4801,12 @@ RLHF：Reinforcement Learning from Human Feedback → fit human preference
 </code></pre></div>
 
 <hr>
-<h2 id="附錄-f互動式線上測驗60-題">附錄 F：互動式線上測驗（60 題）</h2>
+<h2 id="附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</h2>
 <blockquote>
 <p><strong>60 題單選、滿分 60 分、建議 75 分鐘。</strong>
 測驗以<strong>互動網頁</strong>形式提供（點選即時計分、進度自動儲存）；本筆記<strong>不重複收錄題目</strong>。</p>
 </blockquote>
-<h3 id="f1-開始測驗">F.1 開始測驗</h3>
+<h3 id="e1-開始測驗">E.1 開始測驗</h3>
 <p><strong>👉 <a href="mc-quiz.html">開始 60 題線上測驗</a></strong></p>
 <p>線上版功能：</p>
 <ul>
@@ -5454,7 +4816,7 @@ RLHF：Reinforcement Learning from Human Feedback → fit human preference
 <li>按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷</li>
 <li>需要紙本時，直接在該頁按列印即可</li>
 </ul>
-<h3 id="f2-時間分配建議">F.2 時間分配建議</h3>
+<h3 id="e2-時間分配建議">E.2 時間分配建議</h3>
 <table>
 <thead>
 <tr>
@@ -5481,7 +4843,7 @@ RLHF：Reinforcement Learning from Human Feedback → fit human preference
 </tr>
 </tbody>
 </table>
-<h3 id="f3-評分參考">F.3 評分參考</h3>
+<h3 id="e3-評分參考">E.3 評分參考</h3>
 <table>
 <thead>
 <tr>
@@ -5494,7 +4856,7 @@ RLHF：Reinforcement Learning from Human Feedback → fit human preference
 <tr>
 <td>54–60</td>
 <td>優異</td>
-<td>直接看附錄 E 一頁精華即可上場</td>
+<td>直接看附錄 D 一頁精華即可上場</td>
 </tr>
 <tr>
 <td>45–53</td>
@@ -5514,10 +4876,10 @@ RLHF：Reinforcement Learning from Human Feedback → fit human preference
 </tbody>
 </table>
 <blockquote>
-<p>答錯的題目請對照下方〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。</p>
+<p>答錯的題目請對照下方〈附錄 F：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。</p>
 </blockquote>
 <hr>
-<h2 id="附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</h2>
+<h2 id="附錄-f互動測驗答錯題目--複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</h2>
 <table>
 <thead>
 <tr>

@@ -562,41 +562,37 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#b2-錯誤訊息對照">B.2 錯誤訊息對照</a>
 </li>
-<li><a href="#b3-教材的無文字頁陷阱">B.3 「無文字頁」陷阱</a>
+</ul>
+</li>
+<li><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a>
+<ul>
+<li><a href="#c1-本筆記用到的套件">C.1 本筆記用到的套件</a>
+</li>
+<li><a href="#c2-沒有網路時怎麼取得依賴">C.2 沒有網路時怎麼取得依賴</a>
+</li>
+<li><a href="#c3-純標準庫版本零依賴">C.3 純標準庫版本（零依賴）</a>
 </li>
 </ul>
 </li>
-<li><a href="#附錄-c教材頁面索引對照">附錄 C：教材頁面索引對照</a>
+<li><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a>
 </li>
-<li><a href="#附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</a>
+<li><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a>
 <ul>
-<li><a href="#d1-本筆記用到的套件">D.1 本筆記用到的套件</a>
+<li><a href="#e1-開始測驗">E.1 開始測驗</a>
 </li>
-<li><a href="#d2-沒有網路時怎麼取得依賴">D.2 沒有網路時怎麼取得依賴</a>
+<li><a href="#e2-試卷結構十二個區塊依教材章節順序">E.2 試卷結構（十二個區塊，依教材章節順序）</a>
 </li>
-<li><a href="#d3-純標準庫版本零依賴">D.3 純標準庫版本（零依賴）</a>
+<li><a href="#e3-時間分配建議">E.3 時間分配建議</a>
+</li>
+<li><a href="#e4-評分參考">E.4 評分參考</a>
 </li>
 </ul>
 </li>
-<li><a href="#附錄-e一頁精華考前-10-分鐘">附錄 E：一頁精華（考前 10 分鐘）</a>
-</li>
-<li><a href="#附錄-f互動式線上測驗60-題">附錄 F：互動式線上測驗（60 題）</a>
+<li><a href="#附錄-f互動測驗答錯題目--複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a>
 <ul>
-<li><a href="#f1-開始測驗">F.1 開始測驗</a>
+<li><a href="#c4-本筆記的圖表">C.4 本筆記的圖表</a>
 </li>
-<li><a href="#f2-試卷結構十二個區塊依教材章節順序">F.2 試卷結構（十二個區塊，依教材章節順序）</a>
-</li>
-<li><a href="#f3-時間分配建議">F.3 時間分配建議</a>
-</li>
-<li><a href="#f4-評分參考">F.4 評分參考</a>
-</li>
-</ul>
-</li>
-<li><a href="#附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</a>
-<ul>
-<li><a href="#d4-本筆記的圖表">D.4 本筆記的圖表</a>
-</li>
-<li><a href="#d5-想自己動手做一個小-llm">D.5 想自己動手做一個小 LLM</a>
+<li><a href="#c5-想自己動手做一個小-llm">C.5 想自己動手做一個小 LLM</a>
 </li>
 </ul>
 </li>
@@ -611,9 +607,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 機構：匯縱專業發展中心（IVDC）
 教材來源：<code>3 IVDC_Introduction to LLM (adjusted).pdf</code>（47 頁）
 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、關鍵數字、常見錯誤與考點。
-教材是 PowerPoint 匯出的投影片，<strong>後半（p29–p47）幾乎沒有文字層</strong>（只有圖與程式碼截圖）；
 本筆記把關鍵圖重畫成內嵌 SVG，並把程式碼<strong>在本機實測</strong>後把真實輸出寫進筆記。
-🖱️ <strong>互動測驗（推薦）</strong>：附錄 F 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
+🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
 </blockquote>
 <hr>
 <h2 id="目錄">目錄</h2>
@@ -622,201 +617,159 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <tr>
 <th>#</th>
 <th>章節</th>
-<th>PDF 頁</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
 <td><a href="#1-understanding-large-language-models">Understanding Large Language Models</a></td>
-<td>2–4</td>
 </tr>
 <tr>
 <td>2</td>
 <td><a href="#2-what-is-an-llm">What is an LLM?</a></td>
-<td>5–7</td>
 </tr>
 <tr>
 <td>3</td>
 <td><a href="#3-applications-of-llms">Applications of LLMs</a></td>
-<td>8</td>
 </tr>
 <tr>
 <td>4</td>
 <td><a href="#4-custom-built-llms">Custom-built LLMs</a></td>
-<td>9</td>
 </tr>
 <tr>
 <td>5</td>
 <td><a href="#5-pretraining-vs-finetuning">Pretraining vs Finetuning</a></td>
-<td>10–11</td>
 </tr>
 <tr>
 <td>6</td>
 <td><a href="#6-instruction-finetuning-and-finetuning-for-classification-tasks">Instruction-finetuning and Finetuning for classification tasks</a></td>
-<td>12</td>
 </tr>
 <tr>
 <td>7</td>
 <td><a href="#7-transformer-architecture">Transformer Architecture</a></td>
-<td>13–15</td>
 </tr>
 <tr>
 <td>8</td>
 <td><a href="#8-self-attention-mechanism">Self-attention mechanism</a></td>
-<td>16</td>
 </tr>
 <tr>
 <td>9</td>
 <td><a href="#9-bert-vs-gpt">BERT vs GPT</a></td>
-<td>17–21</td>
 </tr>
 <tr>
 <td>10</td>
 <td><a href="#10-datasets-used-for-gpt-training">Datasets used for GPT Training</a></td>
-<td>22</td>
 </tr>
 <tr>
 <td>11</td>
 <td><a href="#11-tokens">Tokens</a></td>
-<td>23</td>
 </tr>
 <tr>
 <td>12</td>
 <td><a href="#12-cost-of-pretraining-llms">Cost of Pretraining LLMs</a></td>
-<td>24</td>
 </tr>
 <tr>
 <td>13</td>
 <td><a href="#13-pretrained-llms">Pretrained LLMs</a></td>
-<td>25</td>
 </tr>
 <tr>
 <td>14</td>
 <td><a href="#14-next-word-prediction-task">Next-Word Prediction Task</a></td>
-<td>26</td>
 </tr>
 <tr>
 <td>15</td>
 <td><a href="#15-autoregressive-models">Autoregressive Models</a></td>
-<td>27</td>
 </tr>
 <tr>
 <td>16</td>
 <td><a href="#16-gpt-3">GPT-3</a></td>
-<td>28</td>
 </tr>
 <tr>
 <td>17</td>
 <td><a href="#17-autoregressive-models續">Autoregressive Models（續）</a></td>
-<td>29</td>
 </tr>
 <tr>
 <td>18</td>
 <td><a href="#18-building-an-llm">Building an LLM</a></td>
-<td>30–31</td>
 </tr>
 <tr>
 <td>19</td>
 <td><a href="#19-understanding-word-embeddings">Understanding word embeddings</a></td>
-<td>32–33</td>
 </tr>
 <tr>
 <td>20</td>
 <td><a href="#20-tokenizing-text">Tokenizing text</a></td>
-<td>34</td>
 </tr>
 <tr>
 <td>21</td>
 <td><a href="#21-converting-tokens-into-token-ids">Converting tokens into token IDs</a></td>
-<td>35–36</td>
 </tr>
 <tr>
 <td>22</td>
 <td><a href="#22-simple-tokenizer">Simple Tokenizer</a></td>
-<td>37</td>
 </tr>
 <tr>
 <td>23</td>
 <td><a href="#23-adding-special-tokens">Adding Special Tokens</a></td>
-<td>38</td>
 </tr>
 <tr>
 <td>24</td>
 <td><a href="#24-start-and-end-of-text">Start and End of Text</a></td>
-<td>39</td>
 </tr>
 <tr>
 <td>25</td>
 <td><a href="#25-data-sampling-with-a-sliding-window">Data sampling with a sliding window</a></td>
-<td>40</td>
 </tr>
 <tr>
 <td>26</td>
 <td><a href="#26-data-loaders">Data Loaders</a></td>
-<td>41</td>
 </tr>
 <tr>
 <td>27</td>
 <td><a href="#27-sliding-window">Sliding Window</a></td>
-<td>42–43</td>
 </tr>
 <tr>
 <td>28</td>
 <td><a href="#28-embedding-layers">Embedding layers</a></td>
-<td>44–45</td>
 </tr>
 <tr>
 <td>29</td>
 <td><a href="#29-positional-embeddings">Positional Embeddings</a></td>
-<td>46</td>
 </tr>
 <tr>
 <td>30</td>
 <td><a href="#30-input-processing-pipeline">Input Processing Pipeline</a></td>
-<td>47</td>
 </tr>
 <tr>
 <td>A</td>
 <td><a href="#附錄-a名詞與架構速查表">附錄 A：名詞與架構速查表</a></td>
-<td>—</td>
 </tr>
 <tr>
 <td>B</td>
 <td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
-<td>—</td>
-</tr>
-<tr>
-<td>C</td>
-<td><a href="#附錄-c教材頁面索引對照">附錄 C：教材頁面索引對照</a></td>
-<td>—</td>
 </tr>
 <tr>
 <td>D</td>
-<td><a href="#附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</a></td>
-<td>—</td>
+<td><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a></td>
 </tr>
 <tr>
 <td>E</td>
-<td><a href="#附錄-e一頁精華考前-10-分鐘">附錄 E：一頁精華（考前 10 分鐘）</a></td>
-<td>—</td>
+<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
 </tr>
 <tr>
 <td>F</td>
-<td><a href="#附錄-f互動式線上測驗60-題">附錄 F：互動式線上測驗（60 題）</a></td>
-<td>—</td>
+<td><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a></td>
 </tr>
 <tr>
 <td>G</td>
-<td><a href="#附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</a></td>
-<td>—</td>
+<td><a href="#附錄-f互動測驗答錯題目--複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
 </tr>
 </tbody>
 </table>
 <blockquote>
 <p>⚠️ <strong>p1 是課程封面頁</strong>（課程名 + 課節名），<strong>不是</strong>第 1 章；本筆記的章節從 p2 起算。
 另外教材有 <strong>p27 / p29 兩頁同名</strong>「Autoregressive Models」（中間夾著 p28 GPT-3），
-本筆記依教材順序拆成 §15、§17 兩章，附錄 C 有完整對照。</p>
+本筆記依教材順序拆成 §15、§17 兩章。</p>
 </blockquote>
 <hr>
 <h2 id="0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</h2>
@@ -1006,7 +959,6 @@ tasks）而設計的</strong>。那些早期模型在各自的窄領域（narrow
 <hr>
 <h2 id="2-what-is-an-llm">2. What is an LLM?</h2>
 <blockquote>
-<p>教材 p5–6 給出 LLM 的正式定義與「Large」的兩層意義；p7 是一張示意圖（沒有文字層），
 本筆記在 2.3 補上該圖要表達的內容。</p>
 </blockquote>
 <!-- FIGURE:ch02-what-is-an-llm -->
@@ -1302,7 +1254,7 @@ pretrained model 又叫 <strong>base model／foundation model</strong>（§12 �
 <tr>
 <th>類別</th>
 <th>標註資料的形式</th>
-<th>教材舉例</th>
+<th>舉例</th>
 <th>學到的能力</th>
 </tr>
 </thead>
@@ -1525,7 +1477,7 @@ p18 與 p21 是圖。</p>
 <thead>
 <tr>
 <th>名詞</th>
-<th>教材定義</th>
+<th>定義</th>
 <th>白話</th>
 </tr>
 </thead>
@@ -1591,7 +1543,6 @@ p18 與 p21 是圖。</p>
 <hr>
 <h2 id="10-datasets-used-for-gpt-training">10. Datasets used for GPT Training</h2>
 <blockquote>
-<p>教材 p22 是一張<strong>資料集表格的圖</strong>（沒有文字層）。本節依公開文獻補上各代 GPT 的訓練資料集，
 並標明「本筆記補充」，避免與教材文字混淆。</p>
 </blockquote>
 <!-- FIGURE:ch10-gpt-datasets -->
@@ -2007,7 +1958,6 @@ GPT-3          ：96 層   █████████████████�
 <hr>
 <h2 id="17-autoregressive-models續">17. Autoregressive Models（續）</h2>
 <blockquote>
-<p>教材 p29 與 p27 <strong>同名</strong>（中間夾著 p28 的 GPT-3），而且這一頁<strong>沒有文字層</strong>——只有一張圖。
 本節說明這張圖在講什麼，並補上生成時實際發生的事。</p>
 </blockquote>
 <!-- FIGURE:ch17-autoregressive-generation -->
@@ -2076,7 +2026,6 @@ GPT-3          ：96 層   █████████████████�
 <hr>
 <h2 id="18-building-an-llm">18. Building an LLM</h2>
 <blockquote>
-<p>教材 p30–31：章節分隔頁（無文字層），宣告接下來要「動手做」。p32–47 就是實作細節。</p>
 </blockquote>
 <!-- FIGURE:ch18-building-an-llm -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2091,76 +2040,62 @@ GPT-3          ：96 層   █████████████████�
 </figure>
 
 <h3 id="181-教材-p3031-的定位">18.1 教材 p30–31 的定位</h3>
-<p>p30 與 p31 都只有標題「Building an LLM」，是<strong>章節分隔頁</strong>：把教材從「觀念」切換到「實作」。
 它要傳達的是——<strong>LLM 不是魔法，而是一條可以自己動手搭起來的資料處理管線。</strong></p>
 <h3 id="182-教材後半p3247到底在做什麼">18.2 教材後半（p32–47）到底在做什麼</h3>
 <p>教材後半的章節標題本身就構成一條完整流程，本筆記依序實作：</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">PDF 頁</th>
 <th>主題</th>
 <th>在本筆記</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">p32–33</td>
 <td>Understanding word embeddings</td>
 <td>§19</td>
 </tr>
 <tr>
-<td style="text-align: center;">p34</td>
 <td>Tokenizing text</td>
 <td>§20</td>
 </tr>
 <tr>
-<td style="text-align: center;">p35–36</td>
 <td>Converting tokens into token IDs</td>
 <td>§21</td>
 </tr>
 <tr>
-<td style="text-align: center;">p37</td>
 <td>Simple Tokenizer</td>
 <td>§22</td>
 </tr>
 <tr>
-<td style="text-align: center;">p38</td>
 <td>Adding Special Tokens</td>
 <td>§23</td>
 </tr>
 <tr>
-<td style="text-align: center;">p39</td>
 <td>Start and End of Text</td>
 <td>§24</td>
 </tr>
 <tr>
-<td style="text-align: center;">p40</td>
 <td>Data sampling with a sliding window</td>
 <td>§25</td>
 </tr>
 <tr>
-<td style="text-align: center;">p41</td>
 <td>Data Loaders</td>
 <td>§26</td>
 </tr>
 <tr>
-<td style="text-align: center;">p42–43</td>
 <td>Sliding Window</td>
 <td>§27</td>
 </tr>
 <tr>
-<td style="text-align: center;">p44–45</td>
 <td>Embedding layers</td>
 <td>§28</td>
 </tr>
 <tr>
-<td style="text-align: center;">p46</td>
 <td>Positional Embeddings</td>
 <td>§29</td>
 </tr>
 <tr>
-<td style="text-align: center;">p47</td>
 <td>Input Processing Pipeline</td>
 <td>§30</td>
 </tr>
@@ -2179,7 +2114,6 @@ positional → pipeline）就是 §20–§30 的骨架。</p>
 <hr>
 <h2 id="19-understanding-word-embeddings">19. Understanding word embeddings</h2>
 <blockquote>
-<p>教材 p32–33 都是<strong>純圖</strong>（沒有文字層），標題相同。本節說明這兩張圖要表達的觀念。</p>
 </blockquote>
 <!-- FIGURE:ch19-word-embeddings -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2223,17 +2157,14 @@ positional → pipeline）就是 §20–§30 的骨架。</p>
 <table>
 <thead>
 <tr>
-<th>PDF 頁</th>
 <th>圖要表達的內容</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>p32</td>
 <td><strong>embedding 是把 token 變成向量的對應關係</strong>（文字世界 → 數值世界）</td>
 </tr>
 <tr>
-<td>p33</td>
 <td><strong>同一個 token ID 在不同位置，查到的向量相同</strong>——所以位置資訊必須另外加（§29）</td>
 </tr>
 </tbody>
@@ -3686,270 +3617,8 @@ python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;i
 </tr>
 </tbody>
 </table>
-<h3 id="b3-教材的無文字頁陷阱">B.3 「無文字頁」陷阱</h3>
-<p>教材有 <strong>21 頁沒有文字層</strong>（p7、p8、p11、p13、p18、p21、p22、p29–p40、p43）。
-如果只讀 PDF 的文字，會以為這些頁「沒有內容」——<strong>其實全部都是圖與程式碼截圖</strong>。
-本筆記已逐頁補上內容（見附錄 C 的標記）。</p>
-<blockquote>
-<p>⚠️ 另外：教材 <strong>p1（封面頁）的頁尾是母片的佔位字串</strong>——日期欄位根本沒填，留著未替換的樣板文字；
-p2 之後的頁尾才是實際日期。<strong>本筆記不轉載任何頁尾／版權文字</strong>，只保留標題與頁碼對照。</p>
-</blockquote>
-<hr>
-<h2 id="附錄-c教材頁面索引對照">附錄 C：教材頁面索引對照</h2>
-<p>「文字層」欄位：✅＝有文字可直接抽取；🖼️＝<strong>教材只有圖或程式碼截圖</strong>（本筆記已補上內容）。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">PDF 頁</th>
-<th>教材標題</th>
-<th style="text-align: center;">本筆記章節</th>
-<th style="text-align: center;">文字層</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">1</td>
-<td>Certificate in Application of Large Language Model (LLM)（<strong>課程封面頁</strong>）</td>
-<td style="text-align: center;">—</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">2–4</td>
-<td>Understanding Large Language Models</td>
-<td style="text-align: center;">§1</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">5–6</td>
-<td>What is an LLM?</td>
-<td style="text-align: center;">§2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">7</td>
-<td>What is an LLM?</td>
-<td style="text-align: center;">§2.3</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">8</td>
-<td>Applications of LLMs</td>
-<td style="text-align: center;">§3</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">9</td>
-<td>Custom-built LLMs</td>
-<td style="text-align: center;">§4</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">10</td>
-<td>Pretraining vs Finetuning</td>
-<td style="text-align: center;">§5</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">11</td>
-<td>Pretraining vs Finetuning</td>
-<td style="text-align: center;">§5</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">12</td>
-<td>Instruction-finetuning and Finetuning for classification tasks</td>
-<td style="text-align: center;">§6</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">13</td>
-<td>Transformer Architecture</td>
-<td style="text-align: center;">§7</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">14–15</td>
-<td>Transformer Architecture</td>
-<td style="text-align: center;">§7.1–7.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">16</td>
-<td>Self-attention mechanism</td>
-<td style="text-align: center;">§8</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">17</td>
-<td>BERT vs GPT</td>
-<td style="text-align: center;">§9.1</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">18</td>
-<td>BERT vs GPT</td>
-<td style="text-align: center;">§9.4</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">19</td>
-<td>BERT vs GPT</td>
-<td style="text-align: center;">§9.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">20</td>
-<td>BERT vs GPT</td>
-<td style="text-align: center;">§9.3</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">21</td>
-<td>BERT vs GPT</td>
-<td style="text-align: center;">§9.4</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">22</td>
-<td>Datasets used for GPT Training</td>
-<td style="text-align: center;">§10</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">23</td>
-<td>Tokens</td>
-<td style="text-align: center;">§11</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">24</td>
-<td>Cost of Pretraining LLMs</td>
-<td style="text-align: center;">§12</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">25</td>
-<td>Pretrained LLMs</td>
-<td style="text-align: center;">§13</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">26</td>
-<td>Next-Word Prediction Task</td>
-<td style="text-align: center;">§14</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">27</td>
-<td>Autoregressive Models</td>
-<td style="text-align: center;">§15</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">28</td>
-<td>GPT-3</td>
-<td style="text-align: center;">§16</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">29</td>
-<td>Autoregressive Models（<strong>與 p27 同名</strong>）</td>
-<td style="text-align: center;">§17</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">30–31</td>
-<td>Building an LLM（章節分隔頁）</td>
-<td style="text-align: center;">§18</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">32–33</td>
-<td>Understanding word embeddings</td>
-<td style="text-align: center;">§19</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">34</td>
-<td>Tokenizing text</td>
-<td style="text-align: center;">§20</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">35–36</td>
-<td>Converting tokens into token IDs</td>
-<td style="text-align: center;">§21</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">37</td>
-<td>Simple Tokenizer</td>
-<td style="text-align: center;">§22</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">38</td>
-<td>Adding Special Tokens</td>
-<td style="text-align: center;">§23</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">39</td>
-<td>Start and End of Text</td>
-<td style="text-align: center;">§24</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">40</td>
-<td>Data sampling with a sliding window</td>
-<td style="text-align: center;">§25</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">41</td>
-<td>Data Loaders</td>
-<td style="text-align: center;">§26</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">42</td>
-<td>Sliding Window</td>
-<td style="text-align: center;">§27.1–27.2</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">43</td>
-<td>Sliding Window</td>
-<td style="text-align: center;">§27.2</td>
-<td style="text-align: center;">🖼️</td>
-</tr>
-<tr>
-<td style="text-align: center;">44–45</td>
-<td>Embedding layers</td>
-<td style="text-align: center;">§28</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">46</td>
-<td>Positional Embeddings</td>
-<td style="text-align: center;">§29</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td style="text-align: center;">47</td>
-<td>Input Processing Pipeline</td>
-<td style="text-align: center;">§30</td>
-<td style="text-align: center;">✅</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p><strong>統計</strong>：47 頁中，<strong>21 頁無文字層</strong>（🖼️）。這也是為什麼本筆記必須自己重畫圖表、
-自己把程式碼跑一遍——<strong>只靠 PDF 的文字抽取會漏掉將近一半的教材</strong>。</p>
-</blockquote>
-<hr>
-<h2 id="附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</h2>
-<h3 id="d1-本筆記用到的套件">D.1 本筆記用到的套件</h3>
+<h2 id="附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</h2>
+<h3 id="c1-本筆記用到的套件">C.1 本筆記用到的套件</h3>
 <table>
 <thead>
 <tr>
@@ -3979,7 +3648,7 @@ p2 之後的頁尾才是實際日期。<strong>本筆記不轉載任何頁尾／
 <div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>tiktoken
 </code></pre></div>
 
-<h3 id="d2-沒有網路時怎麼取得依賴">D.2 沒有網路時怎麼取得依賴</h3>
+<h3 id="c2-沒有網路時怎麼取得依賴">C.2 沒有網路時怎麼取得依賴</h3>
 <table>
 <thead>
 <tr>
@@ -4002,7 +3671,7 @@ p2 之後的頁尾才是實際日期。<strong>本筆記不轉載任何頁尾／
 </tr>
 </tbody>
 </table>
-<h3 id="d3-純標準庫版本零依賴">D.3 純標準庫版本（零依賴）</h3>
+<h3 id="c3-純標準庫版本零依賴">C.3 純標準庫版本（零依賴）</h3>
 <p>如果你只想驗證觀念、不想裝任何套件，下面這段只用 <code>re</code> 就能跑：</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 
@@ -4020,7 +3689,7 @@ p2 之後的頁尾才是實際日期。<strong>本筆記不轉載任何頁尾／
 ——<strong>標點排在最前面</strong>（因為它們的 ASCII 碼最小），這也是「為什麼一定要 <code>sorted</code>」的最佳示範。</p>
 </blockquote>
 <hr>
-<h2 id="附錄-e一頁精華考前-10-分鐘">附錄 E：一頁精華（考前 10 分鐘）</h2>
+<h2 id="附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</h2>
 <div class="codehilite"><pre><span></span><code><span class="c1"># ========== 1. LLM 是什麼（§1–§2） ==========</span>
 <span class="c1"># 神經網路，設計來 understand / generate / respond 人類文字</span>
 <span class="c1"># 「Large」= 參數量（數十億～數千億）＋ 資料量（海量）  ← 兩個都要寫</span>
@@ -4064,12 +3733,12 @@ p2 之後的頁尾才是實際日期。<strong>本筆記不轉載任何頁尾／
 </code></pre></div>
 
 <hr>
-<h2 id="附錄-f互動式線上測驗60-題">附錄 F：互動式線上測驗（60 題）</h2>
+<h2 id="附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</h2>
 <blockquote>
 <p><strong>60 題單選、滿分 60 分、建議 50 分鐘。</strong>
 測驗以<strong>互動網頁</strong>形式提供（點選即時計分、進度自動儲存）；<strong>本筆記不重複收錄題目</strong>。</p>
 </blockquote>
-<h3 id="f1-開始測驗">F.1 開始測驗</h3>
+<h3 id="e1-開始測驗">E.1 開始測驗</h3>
 <p><strong>👉 <a href="mc-quiz.html">開始 60 題線上測驗</a></strong></p>
 <p>線上版功能：</p>
 <ul>
@@ -4079,7 +3748,7 @@ p2 之後的頁尾才是實際日期。<strong>本筆記不轉載任何頁尾／
 <li>按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷</li>
 <li>需要紙本時，直接在該頁按列印即可</li>
 </ul>
-<h3 id="f2-試卷結構十二個區塊依教材章節順序">F.2 試卷結構（十二個區塊，依教材章節順序）</h3>
+<h3 id="e2-試卷結構十二個區塊依教材章節順序">E.2 試卷結構（十二個區塊，依教材章節順序）</h3>
 <table>
 <thead>
 <tr>
@@ -4151,7 +3820,7 @@ p2 之後的頁尾才是實際日期。<strong>本筆記不轉載任何頁尾／
 </tr>
 </tbody>
 </table>
-<h3 id="f3-時間分配建議">F.3 時間分配建議</h3>
+<h3 id="e3-時間分配建議">E.3 時間分配建議</h3>
 <table>
 <thead>
 <tr>
@@ -4178,7 +3847,7 @@ p2 之後的頁尾才是實際日期。<strong>本筆記不轉載任何頁尾／
 </tr>
 </tbody>
 </table>
-<h3 id="f4-評分參考">F.4 評分參考</h3>
+<h3 id="e4-評分參考">E.4 評分參考</h3>
 <table>
 <thead>
 <tr>
@@ -4191,7 +3860,7 @@ p2 之後的頁尾才是實際日期。<strong>本筆記不轉載任何頁尾／
 <tr>
 <td>54–60</td>
 <td>優異</td>
-<td>直接看附錄 E 一頁精華即可上場</td>
+<td>直接看附錄 D 一頁精華即可上場</td>
 </tr>
 <tr>
 <td>45–53</td>
@@ -4211,10 +3880,10 @@ p2 之後的頁尾才是實際日期。<strong>本筆記不轉載任何頁尾／
 </tbody>
 </table>
 <blockquote>
-<p>答錯的題目請對照下方〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。</p>
+<p>答錯的題目請對照下方〈附錄 F：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。</p>
 </blockquote>
 <hr>
-<h2 id="附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</h2>
+<h2 id="附錄-f互動測驗答錯題目--複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</h2>
 <table>
 <thead>
 <tr>
@@ -4279,10 +3948,10 @@ p2 之後的頁尾才是實際日期。<strong>本筆記不轉載任何頁尾／
 </blockquote>
 <hr>
 <p><em>本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。</em></p>
-<h3 id="d4-本筆記的圖表">D.4 本筆記的圖表</h3>
+<h3 id="c4-本筆記的圖表">C.4 本筆記的圖表</h3>
 <p>全部圖表都是<strong>內嵌 SVG</strong>、程式碼高亮也已內嵌，所以這份 <code>index.html</code> <strong>下載後可離線雙擊開啟</strong>，
 不需要任何網路資源。</p>
-<h3 id="d5-想自己動手做一個小-llm">D.5 想自己動手做一個小 LLM</h3>
+<h3 id="c5-想自己動手做一個小-llm">C.5 想自己動手做一個小 LLM</h3>
 <p>教材後半（§20–§30）就是一個最小可行的<strong>輸入處理管線</strong>。若想繼續往下做，順序是：</p>
 <div class="codehilite"><pre><span></span><code>①<span class="w"> </span>輸入管線（本筆記<span class="w"> </span>§<span class="mi">20</span>–§<span class="mi">30</span>，已完成）
 ②<span class="w"> </span>加上<span class="w"> </span><span class="nv">self</span><span class="o">-</span><span class="nv">attention</span><span class="w"> </span>與<span class="w"> </span><span class="nv">transformer</span><span class="w"> </span><span class="nv">block</span>

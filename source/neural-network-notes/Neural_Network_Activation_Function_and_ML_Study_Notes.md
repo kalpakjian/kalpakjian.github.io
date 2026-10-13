@@ -2,45 +2,43 @@
 
 > 課程：Certificate in Application of Computer Vision Technology (Part-time)
 > 機構：匯縱專業發展中心（IVDC）
-> 教材來源：`5 IVDC_Neural Network, Activation Function and Machine Learning.pptx` → PDF（30 頁）
 > 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、公式、關鍵數字、常見錯誤與考點。
 > 教材後半大量使用投影片圖示（p9–p16、p25–p26、p29–p30 幾乎沒有可抽取的文字），本筆記為這些圖**重繪了 22 張精確圖表**（內嵌 SVG，向量、可放大），並針對每個主題另外用 **Qwen-Image 2.1 生成了 16 張專屬插圖**（同樣內嵌，離線可看），最後補上圖示背後的概念。
-> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
+> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
-| # | 章節 | PDF 頁 |
-|---|------|--------|
-| 0 | [0. 30 秒總複習（考前最後掃描）](#0-30-秒總複習考前最後掃描) | — |
-| 1 | [1. 教材與課程資訊（PDF p1）](#1-教材與課程資訊pdf-p1) | 1 |
-| 2 | [2. Neural Network：AI 基本原則與生物神經元（PDF p2–p3）](#2-neural-networkai-基本原則與生物神經元pdf-p2p3) | 2–3 |
-| 3 | [3. Neural Network：神經網路的組成（PDF p4）](#3-neural-network神經網路的組成pdf-p4) | 4 |
-| 4 | [4. Artificial Neural Network：三層結構與傳播方向（PDF p5）](#4-artificial-neural-network三層結構與傳播方向pdf-p5) | 5 |
-| 5 | [5. Artificial Neural Network：ANN 與 DNN 的定義（PDF p6）](#5-artificial-neural-networkann-與-dnn-的定義pdf-p6) | 6 |
-| 6 | [6. Deep Neural Network：網路拓撲 Network Topology（PDF p7）](#6-deep-neural-network網路拓撲-network-topologypdf-p7) | 7 |
-| 7 | [7. Activation Function：激勵函數是什麼（PDF p8）](#7-activation-function激勵函數是什麼pdf-p8) | 8 |
-| 8 | [8. Threshold Logic Unit（TLU）（PDF p9–p10）](#8-threshold-logic-unittlupdf-p9p10) | 9–10 |
-| 9 | [9. Rectified Linear Units（ReLU）（PDF p11–p12）](#9-rectified-linear-unitsrelupdf-p11p12) | 11–12 |
-| 10 | [10. Sigmoid Function（PDF p13–p14）](#10-sigmoid-functionpdf-p13p14) | 13–14 |
-| 11 | [11. Softmax Function（PDF p15–p16）](#11-softmax-functionpdf-p15p16) | 15–16 |
-| 12 | [12. 問題類型與激勵函數的對應（PDF p17）](#12-問題類型與激勵函數的對應pdf-p17) | 17 |
-| 13 | [13. Machine Learning：Analytics and Machine Learning（PDF p18）](#13-machine-learninganalytics-and-machine-learningpdf-p18) | 18 |
-| 14 | [14. Machine Learning：基本概念 Basic Concepts（PDF p19）](#14-machine-learning基本概念-basic-conceptspdf-p19) | 19 |
-| 15 | [15. 機器學習解決方案的十個步驟 Ten Steps（PDF p20）](#15-機器學習解決方案的十個步驟-ten-stepspdf-p20) | 20 |
-| 16 | [16. Machine Learning：The Data/AI Landscape（PDF p21）](#16-machine-learningthe-dataai-landscapepdf-p21) | 21 |
-| 17 | [17. Machine Learning：Types 機器學習的類型（PDF p22、p24、p27）](#17-machine-learningtypes-機器學習的類型pdf-p22p24p27) | 22、p24、p27 |
-| 18 | [18. 監督式學習 Supervised Learning（PDF p23）](#18-監督式學習-supervised-learningpdf-p23) | 23 |
-| 19 | [19. 監督式學習實例：分類與迴歸（PDF p25–p26）](#19-監督式學習實例分類與迴歸pdf-p25p26) | 25–26 |
-| 20 | [20. 非監督式學習 Unsupervised Learning（PDF p28）](#20-非監督式學習-unsupervised-learningpdf-p28) | 28 |
-| 21 | [21. Clustering：分群的兩個距離目標（PDF p29）](#21-clustering分群的兩個距離目標pdf-p29) | 29 |
-| 22 | [22. Clustering：分群實例（PDF p30）](#22-clustering分群實例pdf-p30) | 30 |
-| A | [附錄 A：名詞速查表](#附錄-a名詞速查表) | — |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) | — |
-| C | [附錄 C：教材頁面索引對照](#附錄-c教材頁面索引對照) | — |
-| D | [附錄 D：延伸資源與離線提示](#附錄-d延伸資源與離線提示) | — |
-| E | [附錄 E：一頁精華（考前 10 分鐘）](#附錄-e一頁精華考前-10-分鐘) | — |
-| F | [附錄 F：互動式線上測驗（60 題）](#附錄-f互動式線上測驗60-題) | — |
-| G | [附錄 G：互動測驗答錯題目 → 複習章節對照](#附錄-g互動測驗答錯題目--複習章節對照) | — |
+| # | 章節 |
+|---|------|
+| 0 | [0. 30 秒總複習（考前最後掃描）](#0-30-秒總複習考前最後掃描) |
+| 1 | [1. 教材與課程資訊（PDF p1）](#1-教材與課程資訊pdf-p1) |
+| 2 | [2. Neural Network：AI 基本原則與生物神經元（PDF p2–p3）](#2-neural-networkai-基本原則與生物神經元pdf-p2p3) |
+| 3 | [3. Neural Network：神經網路的組成（PDF p4）](#3-neural-network神經網路的組成pdf-p4) |
+| 4 | [4. Artificial Neural Network：三層結構與傳播方向（PDF p5）](#4-artificial-neural-network三層結構與傳播方向pdf-p5) |
+| 5 | [5. Artificial Neural Network：ANN 與 DNN 的定義（PDF p6）](#5-artificial-neural-networkann-與-dnn-的定義pdf-p6) |
+| 6 | [6. Deep Neural Network：網路拓撲 Network Topology（PDF p7）](#6-deep-neural-network網路拓撲-network-topologypdf-p7) |
+| 7 | [7. Activation Function：激勵函數是什麼（PDF p8）](#7-activation-function激勵函數是什麼pdf-p8) |
+| 8 | [8. Threshold Logic Unit（TLU）（PDF p9–p10）](#8-threshold-logic-unittlupdf-p9p10) |
+| 9 | [9. Rectified Linear Units（ReLU）（PDF p11–p12）](#9-rectified-linear-unitsrelupdf-p11p12) |
+| 10 | [10. Sigmoid Function（PDF p13–p14）](#10-sigmoid-functionpdf-p13p14) |
+| 11 | [11. Softmax Function（PDF p15–p16）](#11-softmax-functionpdf-p15p16) |
+| 12 | [12. 問題類型與激勵函數的對應（PDF p17）](#12-問題類型與激勵函數的對應pdf-p17) |
+| 13 | [13. Machine Learning：Analytics and Machine Learning（PDF p18）](#13-machine-learninganalytics-and-machine-learningpdf-p18) |
+| 14 | [14. Machine Learning：基本概念 Basic Concepts（PDF p19）](#14-machine-learning基本概念-basic-conceptspdf-p19) |
+| 15 | [15. 機器學習解決方案的十個步驟 Ten Steps（PDF p20）](#15-機器學習解決方案的十個步驟-ten-stepspdf-p20) |
+| 16 | [16. Machine Learning：The Data/AI Landscape（PDF p21）](#16-machine-learningthe-dataai-landscapepdf-p21) |
+| 17 | [17. Machine Learning：Types 機器學習的類型（PDF p22、p24、p27）](#17-machine-learningtypes-機器學習的類型pdf-p22p24p27) |
+| 18 | [18. 監督式學習 Supervised Learning（PDF p23）](#18-監督式學習-supervised-learningpdf-p23) |
+| 19 | [19. 監督式學習實例：分類與迴歸（PDF p25–p26）](#19-監督式學習實例分類與迴歸pdf-p25p26) |
+| 20 | [20. 非監督式學習 Unsupervised Learning（PDF p28）](#20-非監督式學習-unsupervised-learningpdf-p28) |
+| 21 | [21. Clustering：分群的兩個距離目標（PDF p29）](#21-clustering分群的兩個距離目標pdf-p29) |
+| 22 | [22. Clustering：分群實例（PDF p30）](#22-clustering分群實例pdf-p30) |
+| A | [附錄 A：名詞速查表](#附錄-a名詞速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：延伸資源與離線提示](#附錄-c延伸資源與離線提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
 
 ---
 
@@ -113,7 +111,7 @@ Neural Network, Activation Function and Machine Learning
 | 課程 | Certificate in Application of Computer Vision Technology (Part-time) |
 | 機構 | 匯縱專業發展中心（IVDC） |
 | 本節主題 | Neural Network, Activation Function and Machine Learning |
-| 教材頁數 | 30 頁（PowerPoint 匯出 PDF） |
+| 頁數 | 30 頁（PowerPoint 匯出 PDF） |
 
 ### 1.1 本節在整個課程的位置
 
@@ -192,7 +190,7 @@ Introduction to Computer Vision、OpenCV；後面接的是 **CNN 1、CNN 2、Ten
 
 教材 p4 用兩條列點定義神經網路由什麼組成：
 
-| 組成 | 教材說明 | 白話 |
+| 組成 | 說明 | 白話 |
 |---|---|---|
 | **Neurons** 神經元 | Neurons which pass input values through functions and output the result | 神經元把**輸入值通過函數**，再輸出結果 |
 | **Weights** 權重 | Weights which carry values between neurons | 權重負責在神經元**之間傳遞數值** |
@@ -379,7 +377,7 @@ Introduction to Computer Vision、OpenCV；後面接的是 **CNN 1、CNN 2、Ten
 
 中文拆解：
 
-| 教材說法 | 意義 |
+| 說法 | 意義 |
 |---|---|
 | a **math rule** used in a neural network | 它是一條**數學規則** |
 | **sits inside a neuron** | 它**位於神經元內部**（不是在外面） |
@@ -731,11 +729,11 @@ Problem
 
 教材 p18 是「機器學習」這半場的**目錄頁**，列出三個主題：
 
-| # | 教材條列 | 中文 | 對應頁 |
-|---|---|---|---|
-| 1 | Basic Concepts of Machine Learning | 機器學習的基本概念 | p19–p22 |
-| 2 | Principles and Examples of Supervised Learning | 監督式學習的原理與實例 | p23、p25–p26 |
-| 3 | Principles and Examples of Unsupervised Learning | 非監督式學習的原理與實例 | p28–p30 |
+| # | 條列 | 中文 |
+|---|---|---|
+| 1 | Basic Concepts of Machine Learning | 機器學習的基本概念 |
+| 2 | Principles and Examples of Supervised Learning | 監督式學習的原理與實例 |
+| 3 | Principles and Examples of Unsupervised Learning | 非監督式學習的原理與實例 |
 
 ### 13.1 為什麼分析（Analytics）與機器學習要放在一起講
 
@@ -941,7 +939,7 @@ Problem
 
 條列內容：
 
-| 教材 | 中文 |
+| 原文 | 中文 |
 |---|---|
 | Labels (teach) algorithm to learn **mapping from observations to labels** | 標籤**教**演算法學會「從觀察值到標籤」的**對應關係** |
 | Examples: **Classification** (SVMs, Neural Nets, Decision Trees, Nearest Neighbors) | 例子：**分類**（支援向量機、神經網路、決策樹、最近鄰） |
@@ -964,7 +962,7 @@ Problem
 
 ### 18.2 監督式的兩大任務與常見演算法
 
-| 任務 | 輸出 | 常見演算法（教材點名） |
+| 任務 | 輸出 | 常見演算法 |
 |---|---|---|
 | **Classification** 分類 | 類別 | **SVM**、**Neural Nets**、**Decision Trees**、**Nearest Neighbors** |
 | **Regression** 迴歸 | 連續數值 | **Linear Regression**、**Neural Nets** |
@@ -1083,7 +1081,7 @@ p25 是**分類**（混淆矩陣＋門檻），p26 是**迴歸**（一條擬合�
 
 條列內容（原文照錄 + 翻譯）：
 
-| 教材 | 中文 |
+| 原文 | 中文 |
 |---|---|
 | Learning algorithm must **identify patterns from features alone** | 學習演算法必須**只從特徵本身**找出模式（沒有答案可對） |
 | Can be the **goal inside itself** (discover hidden patterns, exploratory analysis) | 可以**本身就是目的**：發現隱藏的模式、做探索式分析 |
@@ -1307,49 +1305,9 @@ $$
 
 ---
 
-## 附錄 C：教材頁面索引對照
+## 附錄 C：延伸資源與離線提示
 
-| PDF 頁 | 教材標題／內容 | 本筆記對應章節 |
-|:---:|---|---|
-| 1 | 封面：Neural Network, Activation Function and Machine Learning | §1 |
-| 2 | Neural Network — AI Basic Principles（生物神經元構造） | §2.1 |
-| 3 | Neural Network — AI Basic Principles（動作電位、學習） | §2.2 |
-| 4 | Neural Network（neurons / weights + 圖） | §3 |
-| 5 | Artificial Neural Network（三層 + feed-forward / back propagation） | §4 |
-| 6 | Artificial Neural Network — ANN and DNN（定義） | §5 |
-| 7 | Deep Neural Network — Network Topology | §6 |
-| 8 | Activation Function（定義） | §7 |
-| 9 | Threshold Logic Unit (TLU)（結構圖） | §8.1 |
-| 10 | TLU -activation（圖形） | §8.2 |
-| 11 | Rectified Linear Units (ReLU)（結構圖） | §9.1 |
-| 12 | ReLU -activation（圖形） | §9.2 |
-| 13 | Sigmoid Function（結構圖） | §10.1 |
-| 14 | Sigmoid -activation / Softmax -activation（圖形） | §10.2 |
-| 15 | Softmax Function（結構圖） | §11.1 |
-| 16 | Softmax Function（圖形） | §11.2 |
-| 17 | Problem → Classification / Regression → TLU / Softmax / Sigmoid / ReLU | §12 |
-| 18 | Machine Learning — Analytics and Machine Learning（三個主題） | §13 |
-| 19 | Machine Learning — Basic Concepts（圖） | §14 |
-| 20 | Ten Steps to a Machine Learning Solution | §15 |
-| 21 | The Data/AI Landscape（圖） | §16 |
-| 22 | Machine Learning - Types（三個問句） | §17 |
-| 23 | Supervised Learning: labeled observations（Learning Strategy） | §18 |
-| 24 | Machine Learning - Types（加上 Classification / Regression） | §17 |
-| 25 | 分類實例（混淆矩陣、門檻；全圖、無文字） | §19.1–19.2 |
-| 26 | 迴歸實例（f(x) = 35 + 1.5x；全圖、無文字） | §19.3 |
-| 27 | Machine Learning - Types（與 p24 相同） | §17 |
-| 28 | Unsupervised Learning: unlabeled observations（Learning Strategy） | §20 |
-| 29 | Intracluster / intercluster distances（圖） | §21 |
-| 30 | Clustering（花朵分群圖） | §22 |
-
-> **使用方式**：考試若遇到「教材第 N 頁在講什麼」的題目，直接查這張表。
-> p25、p26、p29、p30 是**純圖頁**（PDF 抽不出文字），本筆記已重繪為圖 33、35、36、38，並附上對應的 AI 插圖（圖 32、34、37）。
-
----
-
-## 附錄 D：延伸資源與離線提示
-
-### D.1 這份筆記怎麼離線用
+### C.1 這份筆記怎麼離線用
 
 | 檔案 | 用途 |
 |---|---|
@@ -1367,7 +1325,7 @@ $$
 - 沒有連外圖片、沒有外部字型、沒有 CDN → **飛航模式也能看**。
 - 圖表是向量圖，放大不會模糊、列印也清楚。
 
-### D.2 插圖是怎麼產生的（可重現）
+### C.2 插圖是怎麼產生的（可重現）
 
 **（a）22 張精確圖表**由一支小程式產生（純標準庫、無第三方套件）：
 
@@ -1393,7 +1351,7 @@ python diagrams.py notes_src.md notes_final.md  # 同時內嵌 SVG 圖表與 AI 
 - 插圖以 **base64 直接內嵌**，所以下載單一 HTML 就含全部圖片。
 - 插圖上的文字一律留白（AI 生成的中文字常有錯字），所有標註都寫在**圖說**裡，確保不會誤導。
 
-### D.3 數學公式是怎麼顯示的（為什麼不用公式 CDN）
+### C.3 數學公式是怎麼顯示的（為什麼不用公式 CDN）
 
 原本公式是寫成 `max(0, a)`、`σ(a) = 1/(1+e⁻ᵃ)` 這種**等寬字**，既不美觀、上下標也容易看錯。
 現在筆記裡的公式是**真正的 LaTeX**（`$…$` 行內、`$$…$$` 獨立段落），在**建置時**用
@@ -1422,10 +1380,10 @@ python notes_to_html.py notes_final.md --out index.html ...   # 建置時自動�
 python check_math.py index.html                 # 驗證字形快取、<use> 參照、零外部資源
 ```
 
-> 註：§0「30 秒總複習」與附錄 E「一頁精華」兩段**刻意保留等寬的 Unicode 公式**
+> 註：§0「30 秒總複習」與附錄 D「一頁精華」兩段**刻意保留等寬的 Unicode 公式**
 > （例如 `σ(a) = 1/(1+e⁻ᵃ)`）：那是排成對齊欄位的速查表，改成向量公式反而會打亂版面。
 
-### D.4 本筆記補充資料的來源（用於交叉查核，非教材內容）
+### C.4 本筆記補充資料的來源（用於交叉查核，非教材內容）
 
 | 主題 | 查核來源 |
 |---|---|
@@ -1442,7 +1400,7 @@ python check_math.py index.html                 # 驗證字形快取、<use> 參
 
 ---
 
-## 附錄 E：一頁精華（考前 10 分鐘）
+## 附錄 D：一頁精華（考前 10 分鐘）
 
 ```text
 ========== 1. 生物 → 人工 ==========
@@ -1504,12 +1462,12 @@ k 要人決定（elbow method）；對尺度與離群值敏感
 
 ---
 
-## 附錄 F：互動式線上測驗（60 題）
+## 附錄 E：互動式線上測驗（60 題）
 
 > **60 題單選、滿分 60 分、建議 45 分鐘。**
 > 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不重複收錄題目**。
 
-### F.1 開始測驗
+### E.1 開始測驗
 
 **👉 [開始 60 題線上測驗](mc-quiz.html)**
 
@@ -1521,7 +1479,7 @@ k 要人決定（elbow method）；對尺度與離群值敏感
 - 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
 - 需要紙本時，直接在該頁按列印即可
 
-### F.2 時間分配建議
+### E.2 時間分配建議
 
 | 階段 | 時間 | 做什麼 |
 |---|---|---|
@@ -1529,20 +1487,20 @@ k 要人決定（elbow method）；對尺度與離群值敏感
 | 第二輪 | 25–40 分鐘 | 回頭處理標記的難題 |
 | 第三輪 | 40–45 分鐘 | 檢查有沒有漏答 |
 
-### F.3 評分參考
+### E.3 評分參考
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 54–60 | 優異 | 直接看附錄 E 一頁精華即可上場 |
+| 54–60 | 優異 | 直接看附錄 D 一頁精華即可上場 |
 | 45–53 | 良好 | 複習錯題所屬章節 |
 | 36–44 | 及格邊緣 | 重讀主要章節 + 附錄 A |
 | 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
-> 答錯的題目請對照下方〈附錄 G〉回到對應章節複習。
+> 答錯的題目請對照下方〈附錄 F〉回到對應章節複習。
 
 ---
 
-## 附錄 G：互動測驗答錯題目 → 複習章節對照
+## 附錄 F：互動測驗答錯題目 → 複習章節對照
 
 | 答錯題號 | 主題 | 建議複習章節 |
 |---|---|---|
@@ -1561,7 +1519,7 @@ k 要人決定（elbow method）；對尺度與離群值敏感
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*
 
 
 

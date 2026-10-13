@@ -2,51 +2,49 @@
 
 > 課程：Certificate in Application of Large Language Model (LLM) (Part-time) — Lesson 8
 > 機構：匯縱專業發展中心（IVDC）
-> 教材來源：`liteLLM_Getting_Started.ipynb`（18 格）、`lite.py`、`app.py`、**課堂教材 `IVDC_LiteLLM.pptx`（11 頁）**
 > 本筆記依課程大綱每一格逐一填充內容，並補上定義、參數說明、常見錯誤與考點。
-> **§21 與附錄 H 來自課堂教材**，補上 notebook 沒有的 gateway 概念與企業治理面。
+> **§21 與附錄 G 來自課堂教材**，補上 notebook 沒有的 gateway 概念與企業治理面。
 > 所有程式碼與數字都在本機實測（litellm 1.91.2／Python 3.11.15／Ollama），實測輸出直接寫進內文。
 > ⚠️ **版本時效（2026-10 實查）**：本筆記實測用的是 **litellm 1.91.2**，但最新已到 **1.105.0**，
 > 且底層 `openai` 依賴已從 2.x **跨到 3.x**。完整對照表見 **§2.1**。
-> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **68 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
+> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **68 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
 ## 目錄
 
-| # | 章節 | 教材來源 |
-|---|------|--------|
-| 1 | [什麼是 LiteLLM：一個介面，146 個供應商](#1-什麼是-litellm一個介面146-個供應商) | nb c0 |
-| 2 | [安裝與設定（Installation and setting Params）](#2-安裝與設定installation-and-setting-params) | nb c1–c3 |
-| 3 | [API Key 管理（Set your API keys）](#3-api-key-管理set-your-api-keys) | nb c4–c5 |
-| 4 | [Call chatGPT — 最小可用範例](#4-call-chatgpt--最小可用範例) | nb c6–c7 |
-| 5 | [Call Claude-2 — 第二個供應商，同一段程式](#5-call-claude-2--第二個供應商同一段程式) | nb c8–c9 |
-| 6 | [Call llama2 on replicate — 開源模型走 Replicate](#6-call-llama2-on-replicate--開源模型走-replicate) | nb c10–c11 |
-| 7 | [Call Command-Nightly — Cohere](#7-call-command-nightly--cohere) | nb c12–c13 |
-| 8 | [Call Azure OpenAI — `azure/` 前綴與 deployment-id](#8-call-azure-openai--azure-前綴與-deployment-id) | nb c14–c16 |
-| 9 | [本機模型：Ollama（`lite.py` 逐行）](#9-本機模型ollamalitepy-逐行) | `lite.py` |
-| 10 | [模型命名規則與供應商前綴總表](#10-模型命名規則與供應商前綴總表) | 補充 |
-| 11 | [`completion()` 的統一 I/O 契約](#11-completion-的統一-io-契約) | 補充 |
-| 12 | [`messages` 的三種角色](#12-messages-的三種角色) | 補充 |
-| 13 | [常用參數速查](#13-常用參數速查) | 補充 |
-| 14 | [串流輸出 `stream=True`](#14-串流輸出-streamtrue) | 補充 |
-| 15 | [錯誤處理與例外類別](#15-錯誤處理與例外類別) | 補充 |
-| 16 | [能力查詢：`supports_*`](#16-能力查詢supports_) | 補充 |
-| 17 | [Token 計數 `token_counter()`](#17-token-計數-token_counter) | 補充 |
-| 18 | [成本追蹤 `completion_cost()` 與內建成本表](#18-成本追蹤-completion_cost-與內建成本表) | 補充 |
-| 19 | [進階：Router、Fallbacks 與重試](#19-進階routerfallbacks-與重試) | 補充 |
-| 20 | [LiteLLM Proxy：把 146 個供應商變成一個 OpenAI 端點](#20-litellm-proxy把-146-個供應商變成一個-openai-端點) | 補充 |
-| 21 | [LiteLLM 作為 LLM Gateway：企業級治理與架構](#21-litellm-作為-llm-gateway企業級治理與架構) | 教材 |
-| 22 | [本機實測總表（真實數據）](#22-本機實測總表真實數據) | 實測 |
-| 23 | [考試重點整理](#23-考試重點整理) | 整理 |
-| A | [附錄 A：API 速查表](#附錄-aapi-速查表) | — |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) | — |
-| C | [附錄 C：教材頁面索引對照](#附錄-c教材頁面索引對照) | — |
-| D | [附錄 D：離線執行／安裝提示](#附錄-d離線執行安裝提示) | — |
-| E | [附錄 E：一頁精華（考前 10 分鐘）](#附錄-e一頁精華考前-10-分鐘) | — |
-| F | [附錄 F：互動式線上測驗（68 題）](#附錄-f互動式線上測驗68-題) | — |
-| G | [附錄 G：互動測驗答錯題目 → 複習章節對照](#附錄-g互動測驗答錯題目--複習章節對照) | — |
-| H | [附錄 H：Lesson 8 教材頁面索引對照（`IVDC_LiteLLM.pptx`）](#附錄-hlesson-8-教材頁面索引對照ivdc_litellmpptx) | — |
+| # | 章節 |
+|---|------|
+| 1 | [什麼是 LiteLLM：一個介面，146 個供應商](#1-什麼是-litellm一個介面146-個供應商) |
+| 2 | [安裝與設定（Installation and setting Params）](#2-安裝與設定installation-and-setting-params) |
+| 3 | [API Key 管理（Set your API keys）](#3-api-key-管理set-your-api-keys) |
+| 4 | [Call chatGPT — 最小可用範例](#4-call-chatgpt--最小可用範例) |
+| 5 | [Call Claude-2 — 第二個供應商，同一段程式](#5-call-claude-2--第二個供應商同一段程式) |
+| 6 | [Call llama2 on replicate — 開源模型走 Replicate](#6-call-llama2-on-replicate--開源模型走-replicate) |
+| 7 | [Call Command-Nightly — Cohere](#7-call-command-nightly--cohere) |
+| 8 | [Call Azure OpenAI — `azure/` 前綴與 deployment-id](#8-call-azure-openai--azure-前綴與-deployment-id) |
+| 9 | [本機模型：Ollama（`lite.py` 逐行）](#9-本機模型ollamalitepy-逐行) |
+| 10 | [模型命名規則與供應商前綴總表](#10-模型命名規則與供應商前綴總表) |
+| 11 | [`completion()` 的統一 I/O 契約](#11-completion-的統一-io-契約) |
+| 12 | [`messages` 的三種角色](#12-messages-的三種角色) |
+| 13 | [常用參數速查](#13-常用參數速查) |
+| 14 | [串流輸出 `stream=True`](#14-串流輸出-streamtrue) |
+| 15 | [錯誤處理與例外類別](#15-錯誤處理與例外類別) |
+| 16 | [能力查詢：`supports_*`](#16-能力查詢supports_) |
+| 17 | [Token 計數 `token_counter()`](#17-token-計數-token_counter) |
+| 18 | [成本追蹤 `completion_cost()` 與內建成本表](#18-成本追蹤-completion_cost-與內建成本表) |
+| 19 | [進階：Router、Fallbacks 與重試](#19-進階routerfallbacks-與重試) |
+| 20 | [LiteLLM Proxy：把 146 個供應商變成一個 OpenAI 端點](#20-litellm-proxy把-146-個供應商變成一個-openai-端點) |
+| 21 | [LiteLLM 作為 LLM Gateway：企業級治理與架構](#21-litellm-作為-llm-gateway企業級治理與架構) |
+| 22 | [本機實測總表（真實數據）](#22-本機實測總表真實數據) |
+| 23 | [考試重點整理](#23-考試重點整理) |
+| A | [附錄 A：API 速查表](#附錄-aapi-速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（68 題）](#附錄-e互動式線上測驗68-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
+| G | [附錄 G：Lesson 8 教材頁面索引對照（`IVDC_LiteLLM.pptx`）](#附錄-glesson-8-教材頁面索引對照ivdc_litellmpptx) |
 
 ---
 
@@ -582,7 +580,6 @@ azure/my-deployment  -> provider=azure  model=my-deployment
 
 ## 9. 本機模型：Ollama（`lite.py` 逐行）
 
-> 教材來源：`lite.py`（本課第二份程式碼範例，教材 notebook 未涵蓋）
 
 <!-- FIGURE:ch09-local-ollama -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1393,7 +1390,7 @@ resp = client.chat.completions.create(
 
 > 教材 TLDR（`IVDC_LiteLLM.pptx` 第 2 頁）：*LiteLLM has emerged as one of the most practical ways to build an LLM Gateway — a single, unified access layer that allows you to route requests to 100+ different LLM providers while hiding provider-specific differences.*
 >
-> **本節來源與 §1–§20 不同**：前面是 notebook 實作（怎麼寫程式），這一節是**課堂教材**（11 頁 PowerPoint），講的是「**為什麼企業要這樣部署**」。教材頁碼對照見附錄 H。
+> **本節來源與 §1–§20 不同**：前面是 notebook 實作（怎麼寫程式），這一節是**課堂教材**（11 頁 PowerPoint），講的是「**為什麼企業要這樣部署**」。教材頁碼對照見附錄 G。
 
 <!-- FIGURE:ch21-llm-gateway -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1436,7 +1433,7 @@ http://your-llm-gateway/v1/chat/completions
 
 | 來源 | 寫法 |
 |---|---|
-| 教材 notebook（§1） | `Call 50+ LLM APIs` |
+|  notebook（§1） | `Call 50+ LLM APIs` |
 | **教材**（第 2、4 頁） | `100+ different LLM providers` |
 | **本機實測** litellm 1.91.2 | `len(litellm.provider_list)` = **146** |
 
@@ -1509,7 +1506,7 @@ gateway 版本則讓**所有應用**都自動被記錄，不需要每支程式�
 
 教材第 8 頁給了三個理由：
 
-| 理由 | 教材說明 |
+| 理由 | 說明 |
 |---|---|
 | **避免供應商鎖定**（vendor lock-in） | 可以試多個模型而**不必重寫程式碼庫** |
 | **企業級安全與隱私** | PII／機密資料可以只走本機路由——這是企業與**政府**的硬需求 |
@@ -1559,14 +1556,6 @@ MCP 工具（tooling）
 
 > **考點**：這是「**加一層 abstraction 的代價**」。
 > §20 說 Proxy 的價值是集中管理；§21.10 說集中管理的代價是**額外延遲與單點風險**。兩者要一起記。
-
-#### ⚠️ 教材的兩個筆誤與一個標題不符
-
-| 頁 | 原文 | 問題 |
-|---|---|---|
-| p6 | `LiteLLM includes:ost dashboards` | 應為 **`Cost dashboards`**——`C` 被吃掉了。這不是術語，是錯字 |
-| p10 | `A typical deployment involves:` | 本頁標題是〈Limitations & Gateway Alternatives〉，這句是**從 p9 複製過來忘了改**，應為 `Limitations include:` |
-| p10 | 標題寫「**& Gateway Alternatives**」 | **內文只列了限制，完全沒有介紹替代方案**——標題與內容不一致 |
 
 ### 21.11 教材沒說、但實務要知道的三件事
 
@@ -1691,7 +1680,7 @@ MCP 工具（tooling）
 
 ### 23.3 教材 vs 現行版本的三個落差（考題最愛）
 
-| 教材寫法 | litellm 1.91.2 實況 |
+| 寫法 | litellm 1.91.2 實況 |
 |---|---|
 | `completion(model="claude-2", ...)` | ❌ `BadRequestError`，需改 `anthropic/claude-2` |
 | 「50+ LLM APIs」 | 現為 **146** 個 provider |
@@ -1813,65 +1802,9 @@ MCP 工具（tooling）
 ---
 
 
-## 附錄 C：教材頁面索引對照
+## 附錄 C：離線執行／安裝提示
 
-> 本課教材是 **Jupyter Notebook（`liteLLM_Getting_Started.ipynb`，18 格）＋ 兩支 Python 檔**，
-> 不是投影片 PDF，因此下表以「**格號／檔案**」取代頁碼。
-
-### C.1 `liteLLM_Getting_Started.ipynb`（18 格）
-
-| 格號 | 型別 | 教材標題／內容 | 本筆記對應章節 |
-|:---:|---|---|---|
-| 0 | markdown | 🚅 liteLLM Quick Start Demo（TLDR、GitHub 連結） | §1 |
-| 1 | markdown | Installation and setting Params | §2 |
-| 2 | code | `!pip install litellm` | §2.1 |
-| 3 | code | `from litellm import completion` / `import os` | §2.2 |
-| 4 | markdown | Set your API keys | §3 |
-| 5 | code | 七個 `os.environ[...]` 設定 | §3.1、§3.2 |
-| 6 | markdown | Call chatGPT | §4 |
-| 7 | code | `completion(model="gpt-3.5-turbo", ...)` | §4.1 |
-| 8 | markdown | Call Claude-2 | §5 |
-| 9 | code | `completion(model="claude-2", ...)` | §5.2、§5.3 |
-| 10 | markdown | Call llama2 on replicate | §6 |
-| 11 | code | `replicate/llama-2-70b-chat:<hash>` | §6.1、§6.3 |
-| 12 | markdown | Call Command-Nightly | §7 |
-| 13 | code | `completion(model="command-nightly", ...)` | §7.1、§7.2 |
-| 14 | markdown | Call Azure OpenAI | §8 |
-| 15 | markdown | Azure 前綴與 deployment-id 說明 | §8.1 |
-| 16 | code | `completion(model="azure/chatgpt-v-2", ...)` | §8.3 |
-| 17 | code | （空白格） | — |
-
-### C.2 其他教材檔
-
-| 檔案 | 內容 | 本筆記對應章節 |
-|---|---|---|
-| `lite.py` | 用 LiteLLM 呼叫本機 Ollama（含 `api_base`） | **§9（逐行）** |
-| `app.py` | Streamlit 前端（呼叫 Flask + LiteLLM） | → 見 Lesson 9 筆記 |
-| `server.py` | Flask 後端 `/greet` | → 見 Lesson 9 筆記 |
-| `README.md` | 專案架構、安裝、啟動說明 | → 見 Lesson 9 筆記 |
-
-### C.3 教材未涵蓋、本筆記補上的章節
-
-| 章節 | 為什麼要補 |
-|---|---|
-| §10 模型命名規則與前綴總表 | 教材只示範 5 個供應商，未整理規則 |
-| §11 統一 I/O 契約 | 教材沒解釋回應物件結構 |
-| §12 `messages` 三種角色 | 教材只用 `role: user` |
-| §13 常用參數速查 | 教材只出現 `model`／`messages` |
-| §14 串流輸出 | 教材未提 `stream` |
-| §15 錯誤處理 | 教材 `lite.py` 只用了 `except Exception` |
-| §16 能力查詢 | 教材未提 |
-| §17 Token 計數 | 教材未提 |
-| §18 成本追蹤 | 教材未提 |
-| §19 Router／Fallbacks | 教材未提 |
-| §20 LiteLLM Proxy | 教材未提 |
-| §21 LiteLLM 作為 LLM Gateway | notebook 完全沒提；來自**課堂教材**（見附錄 H） |
-
----
-
-## 附錄 D：離線執行／安裝提示
-
-### D.1 安裝（有網路時）
+### C.1 安裝（有網路時）
 
 ```bash
 pip install litellm
@@ -1879,7 +1812,7 @@ pip install litellm
 ollama pull smollm
 ```
 
-### D.2 完全離線的方案（本課重點）
+### C.2 完全離線的方案（本課重點）
 
 **LiteLLM + Ollama 是本課唯一能「完全離線」跑起來的組合** ——
 不需要任何 API key、不需要連外網：
@@ -1905,7 +1838,7 @@ resp = completion(
 print(resp.choices[0].message.content)
 ```
 
-### D.3 離線環境的自檢清單
+### C.3 離線環境的自檢清單
 
 | 檢查 | 指令／方法 | 預期 |
 |---|---|---|
@@ -1915,7 +1848,7 @@ print(resp.choices[0].message.content)
 | 埠號對嗎 | `curl http://127.0.0.1:11434/api/tags` | 回 JSON |
 | 推斷對嗎 | `get_llm_provider("ollama/smollm")` | `('smollm', 'ollama')` |
 
-### D.4 沒有 GPU 也能練習的部分
+### C.4 沒有 GPU 也能練習的部分
 
 下列章節**不需要真的呼叫模型**，純讀程式碼就能理解：
 
@@ -1927,7 +1860,7 @@ print(resp.choices[0].message.content)
 ---
 
 
-## 附錄 E：一頁精華（考前 10 分鐘）
+## 附錄 D：一頁精華（考前 10 分鐘）
 
 ```text
 ========== 1. 一句話定義 ==========
@@ -1989,13 +1922,13 @@ get_max_tokens("gpt-3.5-turbo") = 4096
 
 ---
 
-## 附錄 F：互動式線上測驗（68 題）
+## 附錄 E：互動式線上測驗（68 題）
 
 > **68 題單選、滿分 68 分、建議 85 分鐘。**
 > 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不重複收錄題目**。
 > 第 **61–68 題**是 **§21（LLM Gateway 概念，來自教材）** 的專屬題組。
 
-### F.1 開始測驗
+### E.1 開始測驗
 
 **👉 [開始 68 題線上測驗](mc-quiz.html)**
 
@@ -2007,7 +1940,7 @@ get_max_tokens("gpt-3.5-turbo") = 4096
 - 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
 - 需要紙本時，直接在該頁按列印即可
 
-### F.2 時間分配建議
+### E.2 時間分配建議
 
 | 階段 | 時間 | 做什麼 |
 |---|---|---|
@@ -2015,20 +1948,20 @@ get_max_tokens("gpt-3.5-turbo") = 4096
 | 第二輪 | 45–72 分鐘 | 回頭處理標記的難題 |
 | 第三輪 | 72–85 分鐘 | 檢查有沒有漏答 |
 
-### F.3 評分參考
+### E.3 評分參考
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 61–68 | 優異 | 直接看附錄 E 一頁精華即可上場 |
+| 61–68 | 優異 | 直接看附錄 D 一頁精華即可上場 |
 | 51–60 | 良好 | 複習錯題所屬章節 |
 | 41–50 | 及格邊緣 | 重讀主要章節 + 附錄 A |
 | 0–40 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
-> 答錯的題目請對照下方〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
+> 答錯的題目請對照下方〈附錄 F：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
 
 ---
 
-## 附錄 G：互動測驗答錯題目 → 複習章節對照
+## 附錄 F：互動測驗答錯題目 → 複習章節對照
 
 | 答錯題號 | 建議複習章節 |
 |---|---|
@@ -2048,40 +1981,40 @@ get_max_tokens("gpt-3.5-turbo") = 4096
 
 ---
 
-## 附錄 H：Lesson 8 教材頁面索引對照（`IVDC_LiteLLM.pptx`）
+## 附錄 G：Lesson 8 教材頁面索引對照（`IVDC_LiteLLM.pptx`）
 
 > 本課有**兩份教材**：notebook（§1–§20 的實作）與**課堂教材**（§21 的概念）。
 > 這張表把教材 11 頁逐一對到本筆記的章節，方便對照教材。
 
-### H.1 教材 11 頁 → 章節對照
+### G.1 教材 11 頁 → 章節對照
 
-| 頁 | 教材標題 | 本筆記對應 |
-|---|---|---|
-| 1 | 標題頁（Certificate in Application of LLM (Part-time) · LiteLLM） | — |
-| 2 | LiteLLM（核心命題：unified access layer、100+ providers） | **§1**、**§21.2** |
-| 3 | LLM Gateway（定義：集中端點、跨切面控制） | **§21.1** |
-| 4 | How LiteLLM Unifies Access（one API format、proxy endpoint） | **§21.2**、**§20** |
-| 5 | Router, Fallback, and Load Balancing | **§19**、**§21.3** |
-| 6 | Key Features（Auth & Authorization、Multi-Tenant Cost Tracking） | **§21.4**、**§21.5** |
-| 7 | Cloud & Local Models；Centralized Logging, Observability & Guardrails | **§21.6**、**§21.7**、**§9** |
-| 8 | Why Teams Use LiteLLM as Their LLM Gateway | **§21.8** |
-| 9 | Real-World Gateway Architecture Example | **§21.9** |
-| 10 | Limitations & Gateway Alternatives | **§21.10** |
-| 11 | Hands On — Open WebUI | → Lesson 7 筆記 |
+| 標題 | 本筆記對應 |
+|---|---|
+| 標題頁（Certificate in Application of LLM (Part-time) · LiteLLM） | — |
+| LiteLLM（核心命題：unified access layer、100+ providers） | **§1**、**§21.2** |
+| LLM Gateway（定義：集中端點、跨切面控制） | **§21.1** |
+| How LiteLLM Unifies Access（one API format、proxy endpoint） | **§21.2**、**§20** |
+| Router, Fallback, and Load Balancing | **§19**、**§21.3** |
+| Key Features（Auth & Authorization、Multi-Tenant Cost Tracking） | **§21.4**、**§21.5** |
+| Cloud & Local Models；Centralized Logging, Observability & Guardrails | **§21.6**、**§21.7**、**§9** |
+| Why Teams Use LiteLLM as Their LLM Gateway | **§21.8** |
+| Real-World Gateway Architecture Example | **§21.9** |
+| Limitations & Gateway Alternatives | **§21.10** |
+| Hands On — Open WebUI | → Lesson 7 筆記 |
 
-### H.2 教材有、notebook 沒有的內容
+### G.2 教材有、notebook 沒有的內容
 
-| 主題 | 教材頁 | 為什麼重要 |
-|---|---|---|
-| **LLM Gateway** 這個概念本身 | p3 | notebook 只教你呼叫，沒告訴你它在架構上的位置 |
-| 虛擬 API Key／配額／RBAC | p6 | 企業導入的必要條件 |
-| 多租戶成本治理（儀表板／預算／報表） | p6 | §18 只講單次成本，這裡講組織層級 |
-| 本機路由的**動機**（合規） | p7 | §9 只講「怎麼呼叫 Ollama」，沒講「為什麼要」 |
-| 可觀測性平台清單 | p7 | 補齊 §19.3 只提 Langfuse／Helicone 的缺口 |
-| **真實部署架構**（含 Postgres、MCP） | p9 | notebook 完全沒有架構視角 |
-| **限制**（負載、記憶體、DB 延遲） | p10 | 教材少見的「缺點」段落，考題可能出現 |
+| 主題 | 為什麼重要 |
+|---|---|
+| **LLM Gateway** 這個概念本身 | notebook 只教你呼叫，沒告訴你它在架構上的位置 |
+| 虛擬 API Key／配額／RBAC | 企業導入的必要條件 |
+| 多租戶成本治理（儀表板／預算／報表） | §18 只講單次成本，這裡講組織層級 |
+| 本機路由的**動機**（合規） | §9 只講「怎麼呼叫 Ollama」，沒講「為什麼要」 |
+| 可觀測性平台清單 | 補齊 §19.3 只提 Langfuse／Helicone 的缺口 |
+| **真實部署架構**（含 Postgres、MCP） | notebook 完全沒有架構視角 |
+| **限制**（負載、記憶體、DB 延遲） | 教材少見的「缺點」段落，考題可能出現 |
 
-### H.3 notebook 有、教材沒有的內容
+### G.3 notebook 有、教材沒有的內容
 
 | 主題 | 本筆記 | 教材 |
 |---|---|---|
@@ -2095,5 +2028,5 @@ get_max_tokens("gpt-3.5-turbo") = 4096
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*
 

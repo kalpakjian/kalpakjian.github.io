@@ -2,60 +2,56 @@
 
 > 課程：Certificate in Application of Large Language Model (LLM) (Part-time) — Lesson 2
 > 機構：匯縱專業發展中心（IVDC）
-> 教材來源：`02_IVDC_Popular_LLM.pdf`（77 頁）
 > 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、參數說明、常見錯誤與考點。
-> 教材共 77 頁，其中**大量頁面是純截圖**（產品介面、比較表），文字層只有標題一行；
-> 這些章節由筆者補上可考的內容，並在每節標明「本節為圖示頁」。
 > Lab 程式碼（`LLM.ipynb`／`RAG.ipynb`／`Predictive AI.ipynb`／`Gen AI.ipynb`）都在本機實測
 > （Python 3.11.15／torch 2.14.1+cu132／transformers 5.17.0／RTX 4090），實測數字直接寫進內文。
-> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
+> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
 
 ## 目錄
 
-| # | 章節 | PDF 頁 |
-|---|------|--------|
-| 1 | [課程地圖：這份教材的三條主線](#1-課程地圖這份教材的三條主線) | p2 |
-| 2 | [什麼是生成式 AI（Generative Artificial Intelligence）](#2-什麼是生成式-aigenerative-artificial-intelligence) | p3 |
-| 3 | [熱門 LLM 總覽：六個對話式生成式 AI](#3-熱門-llm-總覽六個對話式生成式-ai) | p4–6 |
-| 4 | [ChatGPT：介面與用途](#4-chatgpt介面與用途) | p7–10 |
-| 5 | [ChatGPT 的智慧從哪來：RLHF、獎勵模型與 PPO](#5-chatgpt-的智慧從哪來rlhf獎勵模型與-ppo) | p11–13 |
-| 6 | [Gemini](#6-gemini) | p14 |
-| 7 | [ChatGPT Prompt 範例](#7-chatgpt-prompt-範例) | p15 |
-| 8 | [Copilot](#8-copilot) | p16 |
-| 9 | [Meta／Llama](#9-metallama) | p17 |
-| 10 | [Grok](#10-grok) | p18 |
-| 11 | [Perplexity：AI 搜尋引擎](#11-perplexityai-搜尋引擎) | p19 |
-| 12 | [中國熱門 LLM：Kimi、通義（Tongyi）、DeepSeek](#12-中國熱門-llmkimi通義tongyideepseek) | p20–23 |
-| 13 | [在本機使用 DeepSeek](#13-在本機使用-deepseek) | p24 |
-| 14 | [第三方多模型聚合 App](#14-第三方多模型聚合-app) | p25 |
-| 15 | [生成式 AI 偵測器](#15-生成式-ai-偵測器) | p26 |
-| 16 | [Predictive AI vs Generative AI：主題地圖](#16-predictive-ai-vs-generative-ai主題地圖) | p27 |
-| 17 | [Predictive AI 深入：資料、模型與應用](#17-predictive-ai-深入資料模型與應用) | p28 |
-| 18 | [Predictive AI 的五步流程](#18-predictive-ai-的五步流程) | p29 |
-| 19 | [Generative AI 深入：定義與核心技術](#19-generative-ai-深入定義與核心技術) | p30–31 |
-| 20 | [Generative AI 的運作方式與生成流程](#20-generative-ai-的運作方式與生成流程) | p32–33 |
-| 21 | [對照總表：Predictive AI vs Generative AI](#21-對照總表predictive-ai-vs-generative-ai) | p34 |
-| 22 | [AI → ML → DL → Generative AI 的層次，與 AIGC](#22-ai--ml--dl--generative-ai-的層次與-aigc) | p35–36 |
-| 23 | [GAN 基礎概念](#23-gan-基礎概念) | p37–40 |
-| 24 | [GAN 的底層技術與演算法](#24-gan-的底層技術與演算法) | p41–52 |
-| 25 | [Diffusion Model](#25-diffusion-model) | p53–58 |
-| 26 | [GAN vs Diffusion，與其他生成模型](#26-gan-vs-diffusion與其他生成模型) | p59–62 |
-| 27 | [Hybrid AI Systems](#27-hybrid-ai-systems) | p63–65 |
-| 28 | [真實世界應用：醫療、電商、招聘](#28-真實世界應用醫療電商招聘) | p66–68 |
-| 29 | [RAG：檢索增強生成與 AnythingLLM](#29-rag檢索增強生成與-anythingllm) | p70–71 |
-| 30 | [LLM vs RAG：比較、強弱與使用時機](#30-llm-vs-rag比較強弱與使用時機) | p72–74 |
-| 31 | [更多 ChatGPT：Hinton 的推理題](#31-更多-chatgpthinton-的推理題) | p75 |
-| 32 | [程式範例索引與本機實測總表](#32-程式範例索引與本機實測總表) | p69, p76 |
-| 33 | [考試重點整理](#33-考試重點整理) | 整理 |
-| A | [附錄 A：名詞與架構速查表](#附錄-a名詞與架構速查表) | — |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) | — |
-| C | [附錄 C：教材頁面索引對照](#附錄-c教材頁面索引對照) | — |
-| D | [附錄 D：離線執行／安裝提示](#附錄-d離線執行安裝提示) | — |
-| E | [附錄 E：一頁精華（考前 10 分鐘）](#附錄-e一頁精華考前-10-分鐘) | — |
-| F | [附錄 F：互動式線上測驗（60 題）](#附錄-f互動式線上測驗60-題) | — |
-| G | [附錄 G：互動測驗答錯題目 → 複習章節對照](#附錄-g互動測驗答錯題目--複習章節對照) | — |
+| # | 章節 |
+|---|------|
+| 1 | [課程地圖：這份教材的三條主線](#1-課程地圖這份教材的三條主線) |
+| 2 | [什麼是生成式 AI（Generative Artificial Intelligence）](#2-什麼是生成式-aigenerative-artificial-intelligence) |
+| 3 | [熱門 LLM 總覽：六個對話式生成式 AI](#3-熱門-llm-總覽六個對話式生成式-ai) |
+| 4 | [ChatGPT：介面與用途](#4-chatgpt介面與用途) |
+| 5 | [ChatGPT 的智慧從哪來：RLHF、獎勵模型與 PPO](#5-chatgpt-的智慧從哪來rlhf獎勵模型與-ppo) |
+| 6 | [Gemini](#6-gemini) |
+| 7 | [ChatGPT Prompt 範例](#7-chatgpt-prompt-範例) |
+| 8 | [Copilot](#8-copilot) |
+| 9 | [Meta／Llama](#9-metallama) |
+| 10 | [Grok](#10-grok) |
+| 11 | [Perplexity：AI 搜尋引擎](#11-perplexityai-搜尋引擎) |
+| 12 | [中國熱門 LLM：Kimi、通義（Tongyi）、DeepSeek](#12-中國熱門-llmkimi通義tongyideepseek) |
+| 13 | [在本機使用 DeepSeek](#13-在本機使用-deepseek) |
+| 14 | [第三方多模型聚合 App](#14-第三方多模型聚合-app) |
+| 15 | [生成式 AI 偵測器](#15-生成式-ai-偵測器) |
+| 16 | [Predictive AI vs Generative AI：主題地圖](#16-predictive-ai-vs-generative-ai主題地圖) |
+| 17 | [Predictive AI 深入：資料、模型與應用](#17-predictive-ai-深入資料模型與應用) |
+| 18 | [Predictive AI 的五步流程](#18-predictive-ai-的五步流程) |
+| 19 | [Generative AI 深入：定義與核心技術](#19-generative-ai-深入定義與核心技術) |
+| 20 | [Generative AI 的運作方式與生成流程](#20-generative-ai-的運作方式與生成流程) |
+| 21 | [對照總表：Predictive AI vs Generative AI](#21-對照總表predictive-ai-vs-generative-ai) |
+| 22 | [AI → ML → DL → Generative AI 的層次，與 AIGC](#22-ai--ml--dl--generative-ai-的層次與-aigc) |
+| 23 | [GAN 基礎概念](#23-gan-基礎概念) |
+| 24 | [GAN 的底層技術與演算法](#24-gan-的底層技術與演算法) |
+| 25 | [Diffusion Model](#25-diffusion-model) |
+| 26 | [GAN vs Diffusion，與其他生成模型](#26-gan-vs-diffusion與其他生成模型) |
+| 27 | [Hybrid AI Systems](#27-hybrid-ai-systems) |
+| 28 | [真實世界應用：醫療、電商、招聘](#28-真實世界應用醫療電商招聘) |
+| 29 | [RAG：檢索增強生成與 AnythingLLM](#29-rag檢索增強生成與-anythingllm) |
+| 30 | [LLM vs RAG：比較、強弱與使用時機](#30-llm-vs-rag比較強弱與使用時機) |
+| 31 | [更多 ChatGPT：Hinton 的推理題](#31-更多-chatgpthinton-的推理題) |
+| 32 | [程式範例索引與本機實測總表](#32-程式範例索引與本機實測總表) |
+| 33 | [考試重點整理](#33-考試重點整理) |
+| A | [附錄 A：名詞與架構速查表](#附錄-a名詞與架構速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目--複習章節對照) |
 
 ---
 
@@ -105,7 +101,6 @@
 
 ## 1. 課程地圖：這份教材的三條主線
 
-> 對照教材 **p2**（Learning topics）。
 
 <!-- FIGURE:ch01-course-map -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -154,7 +149,6 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 
 ## 2. 什麼是生成式 AI（Generative Artificial Intelligence）
 
-> 對照教材 **p3**（Generative Artificial Intelligence / What is Generative AI?）。
 
 <!-- FIGURE:ch02-what-is-generative-ai -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -173,7 +167,7 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 
 ### 2.1 拆解成四個要素
 
-| 要素 | 教材的說法 | 說明 |
+| 要素 | 說法 | 說明 |
 |---|---|---|
 | **產出** | images, text, music, videos | 多模態：不只文字 |
 | **方法** | machine learning，特別是 **deep learning** | 不是規則式系統 |
@@ -205,7 +199,6 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 
 ## 3. 熱門 LLM 總覽：六個對話式生成式 AI
 
-> 對照教材 **p4–p6**（Popular LLM）。
 > ⚠️ p5、p6 為**純截圖頁**（比較圖表），文字層只有標題。
 
 <!-- FIGURE:ch03-popular-llm-overview -->
@@ -257,7 +250,6 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 
 ## 4. ChatGPT：介面與用途
 
-> 對照教材 **p7–p10**。
 > ⚠️ p7–p10 為**截圖頁**（主畫面、新版主畫面、寫履歷的示範），文字層只有標題與少量說明。
 
 <!-- FIGURE:ch04-chatgpt-interface -->
@@ -269,12 +261,12 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 
 教材用四頁示範 ChatGPT 的介面與用途：
 
-| 頁 | 教材標題 | 內容 |
-|---|---|---|
-| p7 | ChatGPT | 產品主視覺（附外部圖片來源連結） |
-| p8 | Sample usage of ChatGPT — **Main screen** | 舊版主畫面截圖 |
-| p9 | **New ChatGPT** — Main screen | 改版後的主畫面 |
-| p10 | Sample usage of ChatGPT — **Writing a resume** | 用 ChatGPT 寫履歷的示範 |
+| 標題 | 內容 |
+|---|---|
+| ChatGPT | 產品主視覺（附外部圖片來源連結） |
+| Sample usage of ChatGPT — **Main screen** | 舊版主畫面截圖 |
+| **New ChatGPT** — Main screen | 改版後的主畫面 |
+| Sample usage of ChatGPT — **Writing a resume** | 用 ChatGPT 寫履歷的示範 |
 
 ### 4.1 為什麼教材要示範「寫履歷」
 
@@ -306,7 +298,6 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 
 ## 5. ChatGPT 的智慧從哪來：RLHF、獎勵模型與 PPO
 
-> 對照教材 **p11–p13**（Reinforcement Learning in ChatGPT／How does ChatGPT Work?／
 > ChatGPT is an example of a Large Language Model (LLM)）。
 
 <!-- FIGURE:ch05-rlhf-ppo -->
@@ -328,7 +319,7 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 
 並補上兩個對照的定義：
 
-| 名詞 | 教材的定義 |
+| 名詞 | 定義 |
 |---|---|
 | **Supervised / unsupervised machine learning** | algorithms making **predictions** about data |
 | **Reinforcement learning** | train an **agent** to operate in an **environment** through **interaction** in order to **maximize reward** |
@@ -381,7 +372,7 @@ LLM 記憶 vs RAG 檢索（§29–§30）  ← 第 ③ 條主線
 
 拆成三個關鍵：
 
-| 關鍵 | 教材用詞 | 說明 |
+| 關鍵 | 用詞 | 說明 |
 |---|---|---|
 | 方法 | deep learning | 深度學習，不是統計規則 |
 | 資料 | **massively large** data sets | 「Large」的第一層意義：**資料大** |
@@ -461,8 +452,6 @@ at a baby boy's heart. Photo Credit: Wendytale - All images can be saved via the
 
 ## 6. Gemini
 
-> 對照教材 **p14**（Gemini）。
-> ⚠️ 本節為**圖示頁**，文字層只有標題。
 
 <!-- FIGURE:ch06-gemini -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -506,8 +495,6 @@ Gemini 屬於「**輸入端也支援多模態**」的那一類，這是它與早
 
 ## 7. ChatGPT Prompt 範例
 
-> 對照教材 **p15**（ChatGPT Prompt）。
-> ⚠️ 本節為**圖示頁**，文字層只有標題。
 
 <!-- FIGURE:ch07-chatgpt-prompt -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -540,8 +527,6 @@ Gemini 屬於「**輸入端也支援多模態**」的那一類，這是它與早
 
 ## 8. Copilot
 
-> 對照教材 **p16**（Copilot）。
-> ⚠️ 本節為**圖示頁**，文字層只有標題。
 
 <!-- FIGURE:ch08-copilot -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -579,8 +564,6 @@ Gemini 屬於「**輸入端也支援多模態**」的那一類，這是它與早
 
 ## 9. Meta／Llama
 
-> 對照教材 **p17**（Meta）。
-> ⚠️ 本節為**圖示頁**，文字層只有標題。
 
 <!-- FIGURE:ch09-meta-llama -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -625,8 +608,6 @@ Gemini 屬於「**輸入端也支援多模態**」的那一類，這是它與早
 
 ## 10. Grok
 
-> 對照教材 **p18**（Grok）。
-> ⚠️ 本節為**圖示頁**，文字層只有標題。
 
 <!-- FIGURE:ch10-grok -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -642,7 +623,7 @@ Gemini 屬於「**輸入端也支援多模態**」的那一類，這是它與早
 | 項目 | 正確答案 |
 |---|---|
 | 開發者 | **xAI**（Elon Musk 創辦的 AI 公司） |
-| 教材的說法 | by **Elon Musk**（用創辦人代表公司） |
+| 說法 | by **Elon Musk**（用創辦人代表公司） |
 | 深度整合的平台 | **X**（前 Twitter） |
 
 > **考點**：教材用「Elon Musk」代表這家公司，但正式名稱是 **xAI**。
@@ -657,8 +638,6 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 ## 11. Perplexity：AI 搜尋引擎
 
-> 對照教材 **p19**（Perplexity）。
-> ⚠️ 本節為**圖示頁**，文字層只有標題。
 
 <!-- FIGURE:ch11-perplexity -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -695,7 +674,6 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 ## 12. 中國熱門 LLM：Kimi、通義（Tongyi）、DeepSeek
 
-> 對照教材 **p20–p23**（Popular LLM (China)／Kimi／Tongyi／Deepseek）。
 > ⚠️ p21–p23 為**截圖頁**，文字層只有標題。
 
 <!-- FIGURE:ch12-china-llms -->
@@ -745,8 +723,6 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 ## 13. 在本機使用 DeepSeek
 
-> 對照教材 **p24**（DeepSeek to use locally）。
-> ⚠️ 本節為**圖示頁**，文字層只有標題。
 
 <!-- FIGURE:ch13-deepseek-local -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -798,8 +774,6 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 ## 14. 第三方多模型聚合 App
 
-> 對照教材 **p25**（Third Party App with Multiple AI Models）。
-> ⚠️ 本節為**圖示頁**，文字層只有標題。
 
 <!-- FIGURE:ch14-multi-model-apps -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -848,8 +822,6 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 ## 15. 生成式 AI 偵測器
 
-> 對照教材 **p26**（Generative AI Detector）。
-> ⚠️ 本節為**圖示頁**，文字層只有標題。
 
 <!-- FIGURE:ch15-ai-detector -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -892,7 +864,6 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 ## 16. Predictive AI vs Generative AI：主題地圖
 
-> 對照教材 **p27**（Predictive AI vs Generative AI）。
 > ⚠️ 教材為**章節過場頁**，列出接下來要講的四個子題。
 
 <!-- FIGURE:ch16-topic-map -->
@@ -904,7 +875,7 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 教材 p27 是第二條主線的**目錄頁**，四個 bullet：
 
-| 教材的 bullet | 中文 | 本筆記章節 |
+|  bullet | 中文 | 本筆記章節 |
 |---|---|---|
 | • **Recap of Predictive AI** | 預測式 AI 回顧 | §17–§18 |
 | • **Basic Concepts in GAN Network** | GAN 基礎概念 | §23 |
@@ -939,7 +910,6 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 ## 17. Predictive AI 深入：資料、模型與應用
 
-> 對照教材 **p28**（Predictive AI）。
 
 <!-- FIGURE:ch17-predictive-ai -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -952,7 +922,7 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 ### 17.1 教材的三段敘述
 
-| 教材小標 | 內容 | 中文 |
+| 小標 | 內容 | 中文 |
 |---|---|---|
 | **Data-Driven Insights** | relies on **large datasets** — customer behavior, financial records, sensor data — to identify **patterns and correlations** | 靠大數據找**模式與相關性** |
 | **Machine Learning Models** | common algorithms include **regression models, decision trees, random forests, neural networks, and ensemble methods** | 五類常見演算法 |
@@ -973,7 +943,7 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 ### 17.3 四個應用領域（教材的分類）
 
-| 領域 | 教材舉的例子 |
+| 領域 | 舉的例子 |
 |---|---|
 | **Business** | Customer churn prediction（客戶流失預測）、sales forecasting（銷售預測）、demand planning（需求規劃）、personalized marketing（個人化行銷） |
 | **Healthcare** | Disease outbreak prediction（疫情預測）、patient diagnosis（診斷）、treatment outcome forecasting（治療結果預測） |
@@ -987,7 +957,6 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 ## 18. Predictive AI 的五步流程
 
-> 對照教材 **p29**（Predictive AI — Process）。
 
 <!-- FIGURE:ch18-predictive-process -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1012,7 +981,7 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 
 ### 18.1 五步的關鍵詞對照
 
-| # | 教材英文 | 中文 | 這一步的關鍵詞 |
+| # | 英文 | 中文 | 這一步的關鍵詞 |
 |---|---|---|---|
 | ① | Data Collection | 資料蒐集 | relevant and **high-quality** data |
 | ② | Data Preprocessing | 資料前處理 | **cleaning** and organizing |
@@ -1122,7 +1091,6 @@ intercept_ = -1,617.09
 
 ## 19. Generative AI 深入：定義與核心技術
 
-> 對照教材 **p30–p31**（Generative AI）。
 
 <!-- FIGURE:ch19-generative-core-tech -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1152,7 +1120,7 @@ intercept_ = -1,617.09
 
 教材 p31 列出 **Core Technologies**，分成三組：
 
-| 教材分組 | 內容 |
+| 分組 | 內容 |
 |---|---|
 | **Machine Learning Models** | **Generative Adversarial Networks (GANs)**、**Variational Autoencoders (VAEs)**、**Transformers**、**diffusion models** |
 | **Diffusion Models** | 影像生成的主流（例：**DALL·E**、**Stable Diffusion**） |
@@ -1174,7 +1142,7 @@ intercept_ = -1,617.09
 
 ### 19.3 教材舉的產品對應
 
-| 教材寫的例子 | 屬於哪一類 | 開發者 |
+| 寫的例子 | 屬於哪一類 | 開發者 |
 |---|---|---|
 | **DALL·E** | Diffusion（影像） | OpenAI |
 | **Stable Diffusion** | Diffusion（影像） | Stability AI |
@@ -1189,7 +1157,6 @@ intercept_ = -1,617.09
 
 ## 20. Generative AI 的運作方式與生成流程
 
-> 對照教材 **p32–p33**（Generative AI — How It Works／Process）。
 
 <!-- FIGURE:ch20-generative-how-it-works -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1200,7 +1167,7 @@ intercept_ = -1,617.09
 
 ### 20.1 p32：三個階段（How It Works）
 
-| 階段 | 教材英文 | 中文 | 關鍵詞 |
+| 階段 | 英文 | 中文 | 關鍵詞 |
 |---|---|---|---|
 | ① | **Training** | 訓練 | trained on **vast datasets** to learn patterns, structures, or styles |
 | ② | **Generation** | 生成 | **sampling from learned distributions** or responding to prompts |
@@ -1299,7 +1266,6 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ## 21. 對照總表：Predictive AI vs Generative AI
 
-> 對照教材 **p34**（Predictive AI vs Generative AI）。
 
 <!-- FIGURE:ch21-comparison-table -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1346,7 +1312,6 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ## 22. AI → ML → DL → Generative AI 的層次，與 AIGC
 
-> 對照教材 **p35–p36**（Understanding Artificial Intelligence and Generative AI／
 > Generative AI and AIGC）。
 
 <!-- FIGURE:ch22-ai-ml-dl-aigc -->
@@ -1360,7 +1325,7 @@ steps=20  guidance=15.0 ->  0.60 s
 
 教材 p35 給出四層包含關係，右邊是教材的定義：
 
-| 層 | 教材的定義 |
+| 層 | 定義 |
 |---|---|
 | **Artificial Intelligence (AI)** | simulates human intelligence in machines to perform tasks **autonomously** |
 | **Machine Learning** | enables systems to **learn from data** and improve automatically |
@@ -1418,7 +1383,6 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ## 23. GAN 基礎概念
 
-> 對照教材 **p37–p40**（Basic Concepts in GAN Network）。
 
 <!-- FIGURE:ch23-gan-basics -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1428,7 +1392,6 @@ steps=20  guidance=15.0 ->  0.60 s
 <!-- /FIGURE -->
 
 教材用四頁建立 GAN 的基本概念，其中 p38–p39 的文字層重複出現「• Basic Concepts in GAN Network」
-這個小標（母片設計），實際內容如下。
 
 ### 23.1 p37：GAN 的定義
 
@@ -1476,7 +1439,7 @@ steps=20  guidance=15.0 ->  0.60 s
 
 這裡藏了一個**很反直覺的考點**：
 
-| 教材說 | 意思是 |
+| 課程說明 | 意思是 |
 |---|---|
 | 「framing the problem as a **supervised** learning problem」 | 把生成問題**改寫成**監督式問題（因為判別器在做分類，有「真／假」標籤） |
 | 但 §23.2 說 generative modeling 是 **unsupervised** | 兩者不矛盾：**任務本質非監督，但訓練手法借用監督式分類** |
@@ -1514,7 +1477,6 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ## 24. GAN 的底層技術與演算法
 
-> 對照教材 **p41–p52**（Underlying Technologies and Algorithms of GAN）。
 > ⚠️ 這 12 頁中，p41–p43、p45、p47 為**截圖頁**（架構圖），文字層只有標題；
 > 其餘各頁才有實質內容。
 
@@ -1556,7 +1518,7 @@ steps=20  guidance=15.0 ->  0.60 s
 
 教材列出三步：
 
-| # | 教材英文 | 中文 |
+| # | 英文 | 中文 |
 |---|---|---|
 | ① | The discriminator classifies **both real data and fake data** from the generator | 判別器同時分類真資料與生成器產的假資料 |
 | ② | The discriminator loss **penalizes** the discriminator for **misclassifying a real instance as fake or a fake instance as real** | 判別器損失對**兩種錯誤都罰** |
@@ -1650,7 +1612,6 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ## 25. Diffusion Model
 
-> 對照教材 **p53–p58**（Diffusion Model）。
 
 <!-- FIGURE:ch25-diffusion-model -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1676,7 +1637,7 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ### 25.2 p54–p55：兩個核心過程
 
-| 過程 | 教材標題 | 教材說明 | 白話 |
+| 過程 | 標題 | 說明 | 白話 |
 |---|---|---|---|
 | **Forward Process** | **Forward Process (Noise Addition)** | **Gaussian noise** is **incrementally added** to the data over **multiple steps**, transforming it into **pure noise** | 一步一步加高斯雜訊，最後變成純雜訊 |
 | **Reverse Process** | **Reverse Process (Denoising)** | The model learns to **reverse this process**, gradually **removing noise** to **reconstruct the original data distribution** | 學會倒著走，逐步去噪還原 |
@@ -1715,7 +1676,7 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ### 25.5 p58：優點與挑戰
 
-| 類別 | 教材內容 | 中文 |
+| 類別 | 內容 | 中文 |
 |---|---|---|
 | **High-Quality Outputs** | Diffusion models excel at generating **detailed and realistic** samples | 細節與真實度極佳 |
 | **Flexibility** | Applicable to various data types (**images, audio, text**) | 可跨模態 |
@@ -1752,7 +1713,6 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ## 26. GAN vs Diffusion，與其他生成模型
 
-> 對照教材 **p59–p62**（GANs vs. Diffusion Models／Other Models）。
 > ⚠️ p59–p61 為**純截圖頁**（比較表格），文字層只有標題。
 
 <!-- FIGURE:ch26-gan-vs-diffusion -->
@@ -1789,7 +1749,7 @@ steps=20  guidance=15.0 ->  0.60 s
 
 教材 p62 補了兩個不在 §19.2 清單裡的模型：
 
-| 模型 | 教材定義 | 中文 |
+| 模型 | 定義 | 中文 |
 |---|---|---|
 | **VAE** | A **Variational Autoencoder** is a generative machine learning model that combines **neural networks with Bayesian inference** to learn **latent representations** of data. It's used for tasks like **data generation, denoising, and representation learning**. | 用神經網路 + 貝氏推論學**潛在表徵** |
 | **AR** | An **Autoregressive Model** is a type of statistical or machine learning model used for **time series analysis or sequential data generation**. It predicts the current data point based on **a function of its previous data points**. The core idea is that the output at time *t*, denoted *X_t*, depends on past values *X_{t-1}, X_{t-2}, …* | 用**前面的值**預測下一個值 |
@@ -1815,7 +1775,6 @@ steps=20  guidance=15.0 ->  0.60 s
 
 ## 27. Hybrid AI Systems
 
-> 對照教材 **p63–p65**（Hybrid AI Systems）。
 
 <!-- FIGURE:ch27-hybrid-ai -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1866,7 +1825,7 @@ p65 把它寫得更明確：
 > paradigms within a single system to **leverage their individual strengths and compensate
 > for their weaknesses**. The most common combination is:
 
-| 類型 | 教材的定義 | 優點 |
+| 類型 | 定義 | 優點 |
 |---|---|---|
 | **Symbolic AI**（符號式） | Uses **logic and rules** to make decisions | **可解釋**、擅長**結構化推理** |
 | **Sub-symbolic AI**（次符號式） | **Machine Learning／Neural Networks**；learns from data | 擅長**模式辨識**，但**缺乏透明度** |
@@ -1893,7 +1852,6 @@ p65 把它寫得更明確：
 
 ## 28. 真實世界應用：醫療、電商、招聘
 
-> 對照教材 **p66–p68**（Real-World Application）。
 
 <!-- FIGURE:ch28-real-world-apps -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1955,7 +1913,6 @@ Hybrid 負責把兩者接起來。
 
 ## 29. RAG：檢索增強生成與 AnythingLLM
 
-> 對照教材 **p70–p71**（Retrieval-Augmented Generation (RAG)／AnythingLLM）。
 > ⚠️ p71 為**截圖頁**（AnythingLLM 操作步驟以文字形式附在圖說中）。
 
 <!-- FIGURE:ch29-rag-anythingllm -->
@@ -2006,7 +1963,7 @@ Hybrid 負責把兩者接起來。
 
 ### 29.4 教材提到的具體工具
 
-| 類別 | 教材舉的例子 |
+| 類別 | 舉的例子 |
 |---|---|
 | **嵌入模型** | **all-MiniLM-L6-v2** |
 | **向量資料庫** | **Chroma**、**LanceDB** |
@@ -2016,7 +1973,7 @@ Hybrid 負責把兩者接起來。
 
 教材 p71 是一張截圖，圖說列出操作流程：
 
-| # | 教材英文 | 中文 |
+| # | 英文 | 中文 |
 |---|---|---|
 | ① | **Launch AnythingLLM**: and navigate to the "Documents" or "Workspaces" section | 開啟 AnythingLLM，進到 Documents／Workspaces |
 | ② | **Create or Select a Workspace**: to organize your documents | 建立或選擇工作區 |
@@ -2036,7 +1993,6 @@ Hybrid 負責把兩者接起來。
 
 ## 30. LLM vs RAG：比較、強弱與使用時機
 
-> 對照教材 **p72–p74**（Comparison of LLM vs RAG and Use Cases／Strengths & Weaknesses／Use Cases）。
 
 <!-- FIGURE:ch30-llm-vs-rag -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2211,7 +2167,6 @@ Context: curious robots at a STEM workshop to help students brainstorm ideas.
 
 ## 31. 更多 ChatGPT：Hinton 的推理題
 
-> 對照教材 **p75**（More on ChatGPT）。
 
 <!-- FIGURE:ch31-hinton-reasoning -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2278,7 +2233,6 @@ GPT-4 必須同時掌握三件事才答得出來：
 
 ## 32. 程式範例索引與本機實測總表
 
-> 對照教材 **p69**（Predictive AI vs Generative AI — Code Examples and Demo）與
 > **p76**（Large Language Model — Code Example of LLM and RAG）。
 
 <!-- FIGURE:ch32-code-index -->
@@ -2290,10 +2244,10 @@ GPT-4 必須同時掌握三件事才答得出來：
 
 教材把四支 Lab 分成兩頁指派：
 
-| 教材頁 | 教材指令 | Lab 檔案 |
-|---|---|---|
-| **p69** | • Refer to the **Predictive AI.ipynb**<br>• Refer to the **Gen AI.ipynb** | `GenAI/Predictive AI.ipynb`、`GenAI/Gen AI.ipynb` |
-| **p76** | • Refer to **LLM.ipynb**<br>• Refer to **RAG.ipynb** | `LLM/LLM.ipynb`、`LLM/RAG.ipynb` |
+| 指令 | Lab 檔案 |
+|---|---|
+| • Refer to the **Predictive AI.ipynb**<br>• Refer to the **Gen AI.ipynb** | `GenAI/Predictive AI.ipynb`、`GenAI/Gen AI.ipynb` |
+| • Refer to **LLM.ipynb**<br>• Refer to **RAG.ipynb** | `LLM/LLM.ipynb`、`LLM/RAG.ipynb` |
 
 ### 32.1 四支 Lab 的對應關係
 
@@ -2388,7 +2342,7 @@ GPT-4 必須同時掌握三件事才答得出來：
 
 ### 33.3 教材 vs 現行版本的三個落差（本機實測）
 
-| # | 教材的寫法 | 現況 |
+| # | 舊寫法 | 現況 |
 |---|---|---|
 | 1 | `generator(prompt, max_length=50, ...)` | 在 `transformers` 5.17.0 會丟 `ValueError`，要改 **`max_new_tokens=50`** |
 | 2 | 「may take **30-60 seconds**」（SD 生成） | 在 RTX 4090 上只要 **0.6–0.8 秒**（教材數字來自 Colab T4） |
@@ -2562,96 +2516,14 @@ from transformers import AutoModelForCausalLM, AutoTokenizer   # 這樣就通了
 ---
 
 
-## 附錄 C：教材頁面索引對照
+## 附錄 C：離線執行／安裝提示
 
-| PDF 頁 | 教材標題 | 本筆記對應章節 |
-|--------|------|---------------|
-| 1 | Certificate in Application of Large Language Model (LLM) — Popular LLM Models（**課程封面**） | — |
-| 2 | Learning topics | §1 |
-| 3 | Generative Artificial Intelligence / What is Generative AI? | §2 |
-| 4 | Popular LLM（產品清單 + 「與 Google 搜尋有何不同」） | §3 |
-| 5–6 | Popular LLM（截圖） | §3 |
-| 7 | ChatGPT | §4 |
-| 8 | ChatGPT — Sample usage / Main screen | §4 |
-| 9 | ChatGPT — New ChatGPT / Main screen | §4 |
-| 10 | ChatGPT — Writing a resume | §4 |
-| 11 | ChatGPT — Reinforcement Learning in ChatGPT / How does ChatGPT Work? | §5 |
-| 12 | ChatGPT — RLHF 三階段（SFT／Reward Model／PPO） | §5 |
-| 13 | ChatGPT — LLM 的定義 | §5 |
-| 14 | Gemini（截圖） | §6 |
-| 15 | ChatGPT Prompt（截圖） | §7 |
-| 16 | Copilot（截圖） | §8 |
-| 17 | Meta（截圖） | §9 |
-| 18 | Grok（截圖） | §10 |
-| 19 | Perplexity（截圖） | §11 |
-| 20 | Popular LLM (China) — Kimi／Tongyi／DeepSeek | §12 |
-| 21 | Kimi（截圖） | §12 |
-| 22 | Tongyi（截圖） | §12 |
-| 23 | Deepseek（截圖） | §12 |
-| 24 | DeepSeek to use locally（截圖） | §13 |
-| 25 | Third Party App with Multiple AI Models（截圖） | §14 |
-| 26 | Generative AI Detector（截圖） | §15 |
-| 27 | Predictive AI vs Generative AI（章節過場頁，四個 bullet） | §16 |
-| 28 | Predictive AI（Data-Driven Insights／ML Models／Applications） | §17 |
-| 29 | Predictive AI — Process（五步） | §18 |
-| 30 | Generative AI（定義） | §19 |
-| 31 | Generative AI — Core Technologies | §19 |
-| 32 | Generative AI — How It Works | §20 |
-| 33 | Generative AI — Process | §20 |
-| 34 | Predictive AI vs Generative AI（對照總表） | §21 |
-| 35 | Understanding Artificial Intelligence and Generative AI | §22 |
-| 36 | Generative AI and AIGC（PGC／UGC／AIGC） | §22 |
-| 37 | Basic Concepts in GAN Network | §23 |
-| 38 | Basic Concepts in GAN Network（generative modeling） | §23 |
-| 39 | Basic Concepts in GAN Network（zero-sum game） | §23 |
-| 40 | Basic Concepts in GAN Network — How it works | §23 |
-| 41–43 | Underlying Technologies and Algorithms of GAN（截圖） | §24 |
-| 44 | 同上（generator 輸出直連 discriminator 輸入） | §24 |
-| 45 | 同上（截圖） | §24 |
-| 46 | 同上（During discriminator training） | §24 |
-| 47 | 同上（截圖） | §24 |
-| 48 | 同上（訓練 generator 的六步） | §24 |
-| 49 | 同上（Generator／Discriminator 角色） | §24 |
-| 50 | 同上（alternating periods） | §24 |
-| 51 | 同上（Convergence） | §24 |
-| 52 | 同上（Loss Functions） | §24 |
-| 53 | Diffusion Model（定義與雙相機制） | §25 |
-| 54 | Diffusion Model — Forward Process | §25 |
-| 55 | Diffusion Model — Reverse Process | §25 |
-| 56 | Diffusion Model — SDE | §25 |
-| 57 | Diffusion Model — DDPM | §25 |
-| 58 | Diffusion Model — Advantages and Challenges | §25 |
-| 59–61 | GANs vs. Diffusion Models（截圖） | §26 |
-| 62 | Other Models（VAE／AR） | §26 |
-| 63 | Hybrid AI Systems（預測 + 生成） | §27 |
-| 64 | Hybrid AI Systems（符號式 + 次符號式） | §27 |
-| 65 | Hybrid AI Systems（Predictive + Generative） | §27 |
-| 66 | Real-World Application — Healthcare Diagnostics | §28 |
-| 67 | Real-World Application — E-commerce | §28 |
-| 68 | Real-World Application — Recruitment Platforms | §28 |
-| 69 | Predictive AI vs Generative AI — Code Examples and Demo | §32 |
-| 70 | Retrieval-Augmented Generation (RAG) | §29 |
-| 71 | AnythingLLM | §29 |
-| 72 | Comparison of LLM vs RAG and Use Cases | §30 |
-| 73 | Strengths & Weaknesses | §30 |
-| 74 | Use Cases | §30 |
-| 75 | More on ChatGPT（Hinton 的推理題） | §31 |
-| 76 | Large Language Model — Code Example of LLM and RAG | §32 |
-| 77 | （母片頁尾，無內容） | — |
-
-> **共 77 頁**。其中**約 30 頁為純截圖頁**（文字層只有標題），已在各章節以
-> 「⚠️ 本節為圖示頁」標示。
-
----
-
-## 附錄 D：離線執行／安裝提示
-
-### D.1 這份筆記本身
+### C.1 這份筆記本身
 
 單一 HTML 檔、**零外部資源**：所有 CSS、語法高亮、圖片都以 base64 內嵌，
 下載後雙擊即可離線閱讀，不需要網路。
 
-### D.2 要自己跑 Lab 需要什麼
+### C.2 要自己跑 Lab 需要什麼
 
 | 需求 | 說明 |
 |---|---|
@@ -2662,7 +2534,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer   # 這樣就通了
 | **scikit-learn / pandas** | `pip install scikit-learn pandas matplotlib seaborn` |
 | **GPU** | 非必需，但 SD 生成會從 0.6 秒變成數分鐘 |
 
-### D.3 完全離線的做法（先在有網路時把模型抓好）
+### C.3 完全離線的做法（先在有網路時把模型抓好）
 
 ```python
 # 第一次（有網路）：把權重抓進本機快取
@@ -2683,13 +2555,13 @@ $env:HF_HUB_OFFLINE='1'          # 只用本機快取，不連 HuggingFace
 C:\Users\<你>\.cache\huggingface\hub\
 ```
 
-### D.4 本機測試資料（不需要下載任何檔案）
+### C.4 本機測試資料（不需要下載任何檔案）
 
 教材的 `RAG.ipynb` 用上傳檔案，本筆記的實測改用 Lab 附的 `sample.txt`（110 字）。
 若手上沒有它，任何一段英文文章都可以取代——**RAG 的檢索品質與文件量成正比，
 2 塊文件時相似度差異會很明顯**。
 
-### D.5 需要網路的只有兩件事
+### C.5 需要網路的只有兩件事
 
 | 動作 | 需要網路嗎 |
 |---|---|
@@ -2701,7 +2573,7 @@ C:\Users\<你>\.cache\huggingface\hub\
 ---
 
 
-## 附錄 E：一頁精華（考前 10 分鐘）
+## 附錄 D：一頁精華（考前 10 分鐘）
 
 ```
 【三大主題】Popular LLM ／ Predictive AI vs Generative AI ／ LLM vs RAG
@@ -2754,12 +2626,12 @@ C:\Users\<你>\.cache\huggingface\hub\
 
 ---
 
-## 附錄 F：互動式線上測驗（60 題）
+## 附錄 E：互動式線上測驗（60 題）
 
 > **60 題單選、滿分 60 分、建議 75 分鐘。**
 > 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不重複收錄題目**。
 
-### F.1 開始測驗
+### E.1 開始測驗
 
 **👉 [開始 60 題線上測驗](mc-quiz.html)**
 
@@ -2771,7 +2643,7 @@ C:\Users\<你>\.cache\huggingface\hub\
 - 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
 - 需要紙本時，直接在該頁按列印即可
 
-### F.2 時間分配建議
+### E.2 時間分配建議
 
 | 階段 | 時間 | 做什麼 |
 |---|---|---|
@@ -2779,20 +2651,20 @@ C:\Users\<你>\.cache\huggingface\hub\
 | 第二輪 | 40–65 分鐘 | 回頭處理標記的難題 |
 | 第三輪 | 65–75 分鐘 | 檢查有沒有漏答 |
 
-### F.3 評分參考
+### E.3 評分參考
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 54–60 | 優異 | 直接看附錄 E 一頁精華即可上場 |
+| 54–60 | 優異 | 直接看附錄 D 一頁精華即可上場 |
 | 45–53 | 良好 | 複習錯題所屬章節 |
 | 36–44 | 及格邊緣 | 重讀主要章節 + 附錄 A |
 | 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
-> 答錯的題目請對照下方〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
+> 答錯的題目請對照下方〈附錄 F：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。
 
 ---
 
-## 附錄 G：互動測驗答錯題目 → 複習章節對照
+## 附錄 F：互動測驗答錯題目 → 複習章節對照
 
 | 答錯題號 | 建議複習章節 |
 |---|---|
@@ -2814,5 +2686,5 @@ C:\Users\<你>\.cache\huggingface\hub\
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理。*
 

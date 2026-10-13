@@ -532,45 +532,35 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 </ul>
 </li>
-<li><a href="#附錄-c教材頁面索引對照">附錄 C：教材頁面索引對照</a>
 <ul>
-<li><a href="#c1-serverpy12-行">C.1 server.py（12 行）</a>
+</ul>
+<li><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a>
+<ul>
+<li><a href="#c1-安裝">C.1 安裝</a>
 </li>
-<li><a href="#c2-apppy46-行">C.2 app.py（46 行）</a>
+<li><a href="#c2-完整離線啟動流程">C.2 完整離線啟動流程</a>
 </li>
-<li><a href="#c3-其他教材檔">C.3 其他教材檔</a>
+<li><a href="#c3-只練前端後端不需要-llm">C.3 只練前端／後端（不需要 LLM）</a>
 </li>
-<li><a href="#c4-教材未涵蓋本筆記補上的章節">C.4 教材未涵蓋、本筆記補上的章節</a>
+<li><a href="#c4-離線環境的自檢清單">C.4 離線環境的自檢清單</a>
+</li>
+<li><a href="#c5-沒有-ollama-時的替代方案">C.5 沒有 Ollama 時的替代方案</a>
 </li>
 </ul>
 </li>
-<li><a href="#附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</a>
+<li><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a>
+</li>
+<li><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a>
 <ul>
-<li><a href="#d1-安裝">D.1 安裝</a>
+<li><a href="#e1-開始測驗">E.1 開始測驗</a>
 </li>
-<li><a href="#d2-完整離線啟動流程">D.2 完整離線啟動流程</a>
+<li><a href="#e2-時間分配建議">E.2 時間分配建議</a>
 </li>
-<li><a href="#d3-只練前端後端不需要-llm">D.3 只練前端／後端（不需要 LLM）</a>
-</li>
-<li><a href="#d4-離線環境的自檢清單">D.4 離線環境的自檢清單</a>
-</li>
-<li><a href="#d5-沒有-ollama-時的替代方案">D.5 沒有 Ollama 時的替代方案</a>
+<li><a href="#e3-評分參考">E.3 評分參考</a>
 </li>
 </ul>
 </li>
-<li><a href="#附錄-e一頁精華考前-10-分鐘">附錄 E：一頁精華（考前 10 分鐘）</a>
-</li>
-<li><a href="#附錄-f互動式線上測驗60-題">附錄 F：互動式線上測驗（60 題）</a>
-<ul>
-<li><a href="#f1-開始測驗">F.1 開始測驗</a>
-</li>
-<li><a href="#f2-時間分配建議">F.2 時間分配建議</a>
-</li>
-<li><a href="#f3-評分參考">F.3 評分參考</a>
-</li>
-</ul>
-</li>
-<li><a href="#附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</a>
+<li><a href="#附錄-f互動測驗答錯題目--複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a>
 </li>
 </ul>
 </div>
@@ -586,7 +576,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 所有程式碼與數字都在本機實測（Flask 3.1.3／Streamlit 1.59.1／Python 3.11.15），實測輸出直接寫進內文。
 ⚠️ <strong>版本時效（2026-10 實查）</strong>：<strong>Flask 3.1.3 查證後仍是目前最新版</strong>；
 但 <strong>Streamlit 已到 1.65.0</strong>（本機實測用 1.59.1）。完整對照表見 <strong>§20.6</strong>。
-🖱️ <strong>互動測驗（推薦）</strong>：附錄 F 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
+🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
 </blockquote>
 <hr>
 <h2 id="目錄">目錄</h2>
@@ -595,154 +585,120 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <tr>
 <th>#</th>
 <th>章節</th>
-<th>教材來源</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
 <td><a href="#1-為什麼要拆成前端與後端">為什麼要拆成前端與後端</a></td>
-<td><code>README.md</code></td>
 </tr>
 <tr>
 <td>2</td>
 <td><a href="#2-flask-是什麼最小應用">Flask 是什麼：最小應用</a></td>
-<td><code>server.py</code></td>
 </tr>
 <tr>
 <td>3</td>
 <td><a href="#3-路由與-http-方法approute">路由與 HTTP 方法（<code>@app.route</code>）</a></td>
-<td><code>server.py</code></td>
 </tr>
 <tr>
 <td>4</td>
 <td><a href="#4-第一個端點-greetserverpy-逐行">第一個端點 <code>/greet</code>（<code>server.py</code> 逐行）</a></td>
-<td><code>server.py</code></td>
 </tr>
 <tr>
 <td>5</td>
 <td><a href="#5-requestget_json-與它的危險邊界"><code>request.get_json()</code> 與它的危險邊界</a></td>
-<td><code>server.py</code></td>
 </tr>
 <tr>
 <td>6</td>
 <td><a href="#6-jsonify-與中文編碼"><code>jsonify()</code> 與中文編碼</a></td>
-<td><code>server.py</code></td>
 </tr>
 <tr>
 <td>7</td>
 <td><a href="#7-錯誤狀態碼總表">錯誤狀態碼總表</a></td>
-<td><code>server.py</code></td>
 </tr>
 <tr>
 <td>8</td>
 <td><a href="#8-用-test_client-測-flask不必開埠號">用 <code>test_client</code> 測 Flask（不必開埠號）</a></td>
-<td>補充</td>
 </tr>
 <tr>
 <td>9</td>
 <td><a href="#9-用-requests--curl-測真實-http">用 <code>requests</code> / <code>curl</code> 測真實 HTTP</a></td>
-<td>補充</td>
 </tr>
 <tr>
 <td>10</td>
 <td><a href="#10-streamlit-是什麼最小應用">Streamlit 是什麼：最小應用</a></td>
-<td><code>app.py</code></td>
 </tr>
 <tr>
 <td>11</td>
 <td><a href="#11-streamlit-的執行模型每次互動重跑整個腳本">Streamlit 的執行模型：每次互動重跑整個腳本</a></td>
-<td><code>app.py</code></td>
 </tr>
 <tr>
 <td>12</td>
 <td><a href="#12-常用-streamlit-元件">常用 Streamlit 元件</a></td>
-<td><code>app.py</code></td>
 </tr>
 <tr>
 <td>13</td>
 <td><a href="#13-表單互動stbutton-與回傳值">表單互動：<code>st.button</code> 與回傳值</a></td>
-<td><code>app.py</code></td>
 </tr>
 <tr>
 <td>14</td>
 <td><a href="#14-呼叫後端requestspostapppy-逐行">呼叫後端：<code>requests.post</code>（<code>app.py</code> 逐行）</a></td>
-<td><code>app.py</code></td>
 </tr>
 <tr>
 <td>15</td>
 <td><a href="#15-錯誤處理與使用者回饋">錯誤處理與使用者回饋</a></td>
-<td><code>app.py</code></td>
 </tr>
 <tr>
 <td>16</td>
 <td><a href="#16-stspinner-與等待體驗"><code>st.spinner</code> 與等待體驗</a></td>
-<td><code>app.py</code></td>
 </tr>
 <tr>
 <td>17</td>
 <td><a href="#17-整合-litellm--ollama讓前端有-llm-能力">整合 LiteLLM + Ollama：讓前端有 LLM 能力</a></td>
-<td><code>app.py</code></td>
 </tr>
 <tr>
 <td>18</td>
 <td><a href="#18-啟動順序與連接埠">啟動順序與連接埠</a></td>
-<td><code>ReadMe.txt</code></td>
 </tr>
 <tr>
 <td>19</td>
 <td><a href="#19-完整架構圖與資料流">完整架構圖與資料流</a></td>
-<td>整合</td>
 </tr>
 <tr>
 <td>20</td>
 <td><a href="#20-本機實測總表真實數據">本機實測總表（真實數據）</a></td>
-<td>實測</td>
 </tr>
 <tr>
 <td>21</td>
 <td><a href="#21-常見錯誤與陷阱">常見錯誤與陷阱</a></td>
-<td>整理</td>
 </tr>
 <tr>
 <td>22</td>
 <td><a href="#22-考試重點整理">考試重點整理</a></td>
-<td>整理</td>
 </tr>
 <tr>
 <td>A</td>
 <td><a href="#附錄-aapi-速查表">附錄 A：API 速查表</a></td>
-<td>—</td>
 </tr>
 <tr>
 <td>B</td>
 <td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
-<td>—</td>
-</tr>
-<tr>
-<td>C</td>
-<td><a href="#附錄-c教材頁面索引對照">附錄 C：教材頁面索引對照</a></td>
-<td>—</td>
 </tr>
 <tr>
 <td>D</td>
-<td><a href="#附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</a></td>
-<td>—</td>
+<td><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a></td>
 </tr>
 <tr>
 <td>E</td>
-<td><a href="#附錄-e一頁精華考前-10-分鐘">附錄 E：一頁精華（考前 10 分鐘）</a></td>
-<td>—</td>
+<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
 </tr>
 <tr>
 <td>F</td>
-<td><a href="#附錄-f互動式線上測驗60-題">附錄 F：互動式線上測驗（60 題）</a></td>
-<td>—</td>
+<td><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a></td>
 </tr>
 <tr>
 <td>G</td>
-<td><a href="#附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</a></td>
-<td>—</td>
+<td><a href="#附錄-f互動測驗答錯題目--複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
 </tr>
 </tbody>
 </table>
@@ -925,7 +881,6 @@ LiteLLM ──HTTP──▶ Ollama (http://127.0.0.1:11434)
 <hr>
 <h2 id="2-flask-是什麼最小應用">2. Flask 是什麼：最小應用</h2>
 <blockquote>
-<p>教材來源：<code>server.py</code></p>
 </blockquote>
 <!-- FIGURE:ch02-flask-minimal-app -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1110,7 +1065,6 @@ LiteLLM ──HTTP──▶ Ollama (http://127.0.0.1:11434)
 <hr>
 <h2 id="4-第一個端點-greetserverpy-逐行">4. 第一個端點 <code>/greet</code>（<code>server.py</code> 逐行）</h2>
 <blockquote>
-<p>教材來源：<code>server.py</code>（<strong>全部只有 12 行</strong>）</p>
 </blockquote>
 <!-- FIGURE:ch04-greet-endpoint -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1784,7 +1738,6 @@ with url: /greet (Caused by NewConnectionError(...))
 <hr>
 <h2 id="10-streamlit-是什麼最小應用">10. Streamlit 是什麼：最小應用</h2>
 <blockquote>
-<p>教材來源：<code>app.py</code></p>
 </blockquote>
 <!-- FIGURE:ch10-streamlit-minimal-app -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2211,7 +2164,6 @@ Streamlit 反過來：<strong>你只要描述「畫面應該長什麼樣」，�
 <hr>
 <h2 id="14-呼叫後端requestspostapppy-逐行">14. 呼叫後端：<code>requests.post</code>（<code>app.py</code> 逐行）</h2>
 <blockquote>
-<p>教材來源：<code>app.py</code> 第 1–20 行</p>
 </blockquote>
 <!-- FIGURE:ch14-calling-the-backend -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2400,7 +2352,7 @@ Streamlit 反過來：<strong>你只要描述「畫面應該長什麼樣」，�
 <thead>
 <tr>
 <th>實際情況</th>
-<th>教材顯示</th>
+<th>顯示</th>
 <th>應該顯示</th>
 </tr>
 </thead>
@@ -3974,250 +3926,8 @@ Lesson 9  Streamlit &amp; Flask   →  怎麼「做介面」給人用
 </tbody>
 </table>
 <hr>
-<h2 id="附錄-c教材頁面索引對照">附錄 C：教材頁面索引對照</h2>
-<blockquote>
-<p>本課教材是 <strong>Python 原始檔</strong>（不是投影片 PDF），因此下表以「<strong>檔案／行號</strong>」取代頁碼。</p>
-</blockquote>
-<h3 id="c1-serverpy12-行">C.1 <code>server.py</code>（12 行）</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">行</th>
-<th>內容</th>
-<th>本筆記對應章節</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">1</td>
-<td><code>from flask import Flask, request, jsonify</code></td>
-<td>§2.2</td>
-</tr>
-<tr>
-<td style="text-align: center;">3</td>
-<td><code>app = Flask(__name__)</code></td>
-<td>§2.2</td>
-</tr>
-<tr>
-<td style="text-align: center;">5</td>
-<td><code>@app.route('/greet', methods=['POST'])</code></td>
-<td>§3、§4.2</td>
-</tr>
-<tr>
-<td style="text-align: center;">6</td>
-<td><code>def greet():</code></td>
-<td>§4.2</td>
-</tr>
-<tr>
-<td style="text-align: center;">7</td>
-<td><code>data = request.get_json()</code></td>
-<td><strong>§5（含危險邊界）</strong></td>
-</tr>
-<tr>
-<td style="text-align: center;">8</td>
-<td><code>name = data.get("name", "Guest")</code></td>
-<td><strong>§5.3（null 陷阱）</strong></td>
-</tr>
-<tr>
-<td style="text-align: center;">9</td>
-<td><code>return jsonify({...})</code></td>
-<td>§6</td>
-</tr>
-<tr>
-<td style="text-align: center;">11</td>
-<td><code>if __name__ == '__main__':</code></td>
-<td>§4.3</td>
-</tr>
-<tr>
-<td style="text-align: center;">12</td>
-<td><code>app.run(port=5000, debug=True)</code></td>
-<td>§4.4、§18</td>
-</tr>
-</tbody>
-</table>
-<h3 id="c2-apppy46-行">C.2 <code>app.py</code>（46 行）</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">行</th>
-<th>內容</th>
-<th>本筆記對應章節</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">1</td>
-<td><code>import streamlit as st</code></td>
-<td>§10</td>
-</tr>
-<tr>
-<td style="text-align: center;">2</td>
-<td><code>import requests</code></td>
-<td>§14.2</td>
-</tr>
-<tr>
-<td style="text-align: center;">3</td>
-<td><code>from litellm import completion</code></td>
-<td>§17</td>
-</tr>
-<tr>
-<td style="text-align: center;">5</td>
-<td><code>st.title("Streamlit &amp; Flask Demo")</code></td>
-<td>§12.1</td>
-</tr>
-<tr>
-<td style="text-align: center;">8</td>
-<td><code>name = st.text_input("Enter your name:", "User")</code></td>
-<td>§12.1、§13.3</td>
-</tr>
-<tr>
-<td style="text-align: center;">10</td>
-<td><code>if st.button("Get Greeting"):</code></td>
-<td><strong>§13.1（事件機制）</strong></td>
-</tr>
-<tr>
-<td style="text-align: center;">13</td>
-<td><code>response = requests.post(..., json={"name": name})</code></td>
-<td>§14.3</td>
-</tr>
-<tr>
-<td style="text-align: center;">14–16</td>
-<td><code>if response.status_code == 200:</code> …</td>
-<td>§15.2</td>
-</tr>
-<tr>
-<td style="text-align: center;">17–18</td>
-<td><code>else: st.error(...)</code></td>
-<td>§15.2（缺陷）</td>
-</tr>
-<tr>
-<td style="text-align: center;">19–20</td>
-<td><code>except Exception as e: st.error(...)</code></td>
-<td>§15</td>
-</tr>
-<tr>
-<td style="text-align: center;">23</td>
-<td><code>st.divider()</code></td>
-<td>§12.1</td>
-</tr>
-<tr>
-<td style="text-align: center;">24</td>
-<td><code>st.subheader("Ask Ollama LLM")</code></td>
-<td>§12.1</td>
-</tr>
-<tr>
-<td style="text-align: center;">26</td>
-<td><code>question = st.text_input("Enter your question:", "What is RAG?")</code></td>
-<td>§13.3</td>
-</tr>
-<tr>
-<td style="text-align: center;">28</td>
-<td><code>if st.button("Ask LLM"):</code></td>
-<td>§13.2</td>
-</tr>
-<tr>
-<td style="text-align: center;">29</td>
-<td><code>with st.spinner("Thinking..."):</code></td>
-<td><strong>§16</strong></td>
-</tr>
-<tr>
-<td style="text-align: center;">31–42</td>
-<td><code>resp = completion(...)</code></td>
-<td>§17</td>
-</tr>
-<tr>
-<td style="text-align: center;">43</td>
-<td><code>answer = resp["choices"][0]["message"]["content"]</code></td>
-<td>§16.3</td>
-</tr>
-<tr>
-<td style="text-align: center;">44</td>
-<td><code>st.success(answer)</code></td>
-<td>§15.1</td>
-</tr>
-</tbody>
-</table>
-<h3 id="c3-其他教材檔">C.3 其他教材檔</h3>
-<table>
-<thead>
-<tr>
-<th>檔案</th>
-<th>內容</th>
-<th>本筆記對應章節</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>README.md</code></td>
-<td>架構圖、前置需求、安裝、執行方式</td>
-<td>§1、§18.2</td>
-</tr>
-<tr>
-<td><code>ReadMe.txt</code></td>
-<td>兩行啟動指令</td>
-<td>§18.2</td>
-</tr>
-<tr>
-<td><code>lite.py</code></td>
-<td>LiteLLM 呼叫本機 Ollama</td>
-<td>→ 見 Lesson 8 筆記 §9</td>
-</tr>
-</tbody>
-</table>
-<h3 id="c4-教材未涵蓋本筆記補上的章節">C.4 教材未涵蓋、本筆記補上的章節</h3>
-<table>
-<thead>
-<tr>
-<th>章節</th>
-<th>為什麼要補</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>§5.3–5.5 <code>get_json()</code> 的危險邊界</td>
-<td>教材未處理，是<strong>真實漏洞</strong></td>
-</tr>
-<tr>
-<td>§7 錯誤狀態碼總表</td>
-<td>教材沒說明 405／415／500 的差別</td>
-</tr>
-<tr>
-<td>§8 <code>test_client</code></td>
-<td>教材未提測試</td>
-</tr>
-<tr>
-<td>§9 <code>requests</code>／<code>curl</code> 實測</td>
-<td>教材只有啟動指令</td>
-</tr>
-<tr>
-<td>§11 Streamlit 執行模型</td>
-<td><strong>最重要的觀念</strong>，教材完全沒解釋</td>
-</tr>
-<tr>
-<td>§12 常用元件</td>
-<td>教材只用 8 個元件</td>
-</tr>
-<tr>
-<td>§13.3 label 重複陷阱</td>
-<td>教材的兩個 <code>text_input</code> 剛好沒撞名</td>
-</tr>
-<tr>
-<td>§15.2–15.4 錯誤處理改進</td>
-<td>教材的 <code>else</code> 分支會誤導使用者</td>
-</tr>
-<tr>
-<td>§18.5 健康檢查端點</td>
-<td>教材未提</td>
-</tr>
-<tr>
-<td>§20–§21 實測總表與陷阱</td>
-<td>教材完全沒有</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="附錄-d離線執行安裝提示">附錄 D：離線執行／安裝提示</h2>
-<h3 id="d1-安裝">D.1 安裝</h3>
+<h2 id="附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</h2>
+<h3 id="c1-安裝">C.1 安裝</h3>
 <div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>streamlit<span class="w"> </span>flask<span class="w"> </span>requests<span class="w"> </span>litellm
 </code></pre></div>
 
@@ -4227,7 +3937,7 @@ Lesson 9  Streamlit &amp; Flask   →  怎麼「做介面」給人用
 <li><a href="https://ollama.com/">Ollama</a> 已安裝並在本機執行（預設埠 <code>11434</code>）</li>
 <li>已拉取模型：<code>ollama pull smollm</code></li>
 </ul>
-<h3 id="d2-完整離線啟動流程">D.2 完整離線啟動流程</h3>
+<h3 id="c2-完整離線啟動流程">C.2 完整離線啟動流程</h3>
 <div class="codehilite"><pre><span></span><code><span class="c"># ── 終端機 1：Ollama（LLM 功能需要）──</span>
 <span class="n">ollama</span> <span class="n">serve</span>
 
@@ -4239,7 +3949,7 @@ Lesson 9  Streamlit &amp; Flask   →  怎麼「做介面」給人用
 </code></pre></div>
 
 <p>瀏覽器開 <strong>http://localhost:8501</strong>。</p>
-<h3 id="d3-只練前端後端不需要-llm">D.3 只練前端／後端（不需要 LLM）</h3>
+<h3 id="c3-只練前端後端不需要-llm">C.3 只練前端／後端（不需要 LLM）</h3>
 <table>
 <thead>
 <tr>
@@ -4270,7 +3980,7 @@ Lesson 9  Streamlit &amp; Flask   →  怎麼「做介面」給人用
 </tr>
 </tbody>
 </table>
-<h3 id="d4-離線環境的自檢清單">D.4 離線環境的自檢清單</h3>
+<h3 id="c4-離線環境的自檢清單">C.4 離線環境的自檢清單</h3>
 <table>
 <thead>
 <tr>
@@ -4307,7 +4017,7 @@ Lesson 9  Streamlit &amp; Flask   →  怎麼「做介面」給人用
 </tr>
 </tbody>
 </table>
-<h3 id="d5-沒有-ollama-時的替代方案">D.5 沒有 Ollama 時的替代方案</h3>
+<h3 id="c5-沒有-ollama-時的替代方案">C.5 沒有 Ollama 時的替代方案</h3>
 <p>區塊 2 的 <code>completion()</code> 呼叫可以改成「<strong>假的回答</strong>」，方便先驗證 UI：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">if</span> <span class="n">st</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;Ask LLM&quot;</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">st</span><span class="o">.</span><span class="n">spinner</span><span class="p">(</span><span class="s2">&quot;Thinking...&quot;</span><span class="p">):</span>
@@ -4317,7 +4027,7 @@ Lesson 9  Streamlit &amp; Flask   →  怎麼「做介面」給人用
 
 <p>這樣整份 <code>app.py</code> 的流程都能測，只有真正的模型推論被跳過。</p>
 <hr>
-<h2 id="附錄-e一頁精華考前-10-分鐘">附錄 E：一頁精華（考前 10 分鐘）</h2>
+<h2 id="附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</h2>
 <div class="codehilite"><pre><span></span><code>========== 1. 三個服務、三個埠號 ==========
 Flask      5000    python server.py
 Streamlit  8501    streamlit run app.py
@@ -4391,12 +4101,12 @@ app.py 46 行           LiteLLM→Ollama 2.82 s
 </code></pre></div>
 
 <hr>
-<h2 id="附錄-f互動式線上測驗60-題">附錄 F：互動式線上測驗（60 題）</h2>
+<h2 id="附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</h2>
 <blockquote>
 <p><strong>60 題單選、滿分 60 分、建議 75 分鐘。</strong>
 測驗以<strong>互動網頁</strong>形式提供（點選即時計分、進度自動儲存）；本筆記<strong>不重複收錄題目</strong>。</p>
 </blockquote>
-<h3 id="f1-開始測驗">F.1 開始測驗</h3>
+<h3 id="e1-開始測驗">E.1 開始測驗</h3>
 <p><strong>👉 <a href="mc-quiz.html">開始 60 題線上測驗</a></strong></p>
 <p>線上版功能：</p>
 <ul>
@@ -4406,7 +4116,7 @@ app.py 46 行           LiteLLM→Ollama 2.82 s
 <li>按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷</li>
 <li>需要紙本時，直接在該頁按列印即可</li>
 </ul>
-<h3 id="f2-時間分配建議">F.2 時間分配建議</h3>
+<h3 id="e2-時間分配建議">E.2 時間分配建議</h3>
 <table>
 <thead>
 <tr>
@@ -4433,7 +4143,7 @@ app.py 46 行           LiteLLM→Ollama 2.82 s
 </tr>
 </tbody>
 </table>
-<h3 id="f3-評分參考">F.3 評分參考</h3>
+<h3 id="e3-評分參考">E.3 評分參考</h3>
 <table>
 <thead>
 <tr>
@@ -4446,7 +4156,7 @@ app.py 46 行           LiteLLM→Ollama 2.82 s
 <tr>
 <td>54–60</td>
 <td>優異</td>
-<td>直接看附錄 E 一頁精華即可上場</td>
+<td>直接看附錄 D 一頁精華即可上場</td>
 </tr>
 <tr>
 <td>45–53</td>
@@ -4466,10 +4176,10 @@ app.py 46 行           LiteLLM→Ollama 2.82 s
 </tbody>
 </table>
 <blockquote>
-<p>答錯的題目請對照下方〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。</p>
+<p>答錯的題目請對照下方〈附錄 F：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。</p>
 </blockquote>
 <hr>
-<h2 id="附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</h2>
+<h2 id="附錄-f互動測驗答錯題目--複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</h2>
 <table>
 <thead>
 <tr>
