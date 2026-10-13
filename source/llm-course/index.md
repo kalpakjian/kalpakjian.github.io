@@ -17,9 +17,9 @@ date: 2026-10-13 09:00:00
 |:---:|---|---|
 | **Lesson 1** | Introduction to Generative AI | ✅ [Introduction to AI 學習筆記](/ai-intro-notes/) |
 | **Lesson 2** | Using Local GPU for ML | ✅ [Using Local GPU for ML 學習筆記](/local-gpu-ml-notes/) |
-| **Lesson 2** | Popular LLM | ⏳ 待補 |
+| **Lesson 2** | Popular LLM | ✅ [Popular LLM Models 學習筆記](/popular-llm-notes/) |
 | **Lesson 3** | Introduction to LLM (Theory) | ✅ [Introduction to LLM 學習筆記](/llm-intro-notes/) |
-| **Lesson 4** | Responsible LLM | ⏳ 待補 |
+| **Lesson 4** | Responsible LLM | ✅ [Responsible AI 學習筆記](/responsible-ai-notes/) |
 | **Lesson 4** | Test | — |
 | **Lesson 5** | Prompt Engineering | ✅ [Prompt Engineering 學習筆記](/prompt-engineering-notes/) |
 | **Lesson 6** | Hugging Face for LLM | ⏳ 待補 |
@@ -30,10 +30,34 @@ date: 2026-10-13 09:00:00
 
 > 📌 **Lesson 1 與 Lesson 2 的前半（Using Local GPU for ML）** 與
 > [IVDC 電腦視覺課程專題](/cv-course/) 共用同一份筆記（兩門課的共同模組），此處直接連結，不重複製作。
+>
+> 📌 **Lesson 4（Responsible LLM）** 的內容與電腦視覺課程的
+> [Responsible AI 學習筆記](/responsible-ai-notes/) 高度重疊（同一份教材家族，僅 14 頁），
+> 因此比照 Lesson 1 的做法直接連結，不重複製作。
 
 ---
 
-## 1 · Lesson 3 — Introduction to LLM（Theory）
+## 1 · Lesson 2 — Popular LLM Models
+
+![Popular LLM Models 學習筆記](/img/covers/popular-llm-notes-ivdc.png)
+
+- **涵蓋**：原稿 77 頁、**33 個章節**——三條主線一路展開：
+  - **產品線**：ChatGPT（含 GPT 三個字母的展開）／Gemini（舊名 Bard）／Copilot／Llama（**開放權重**）／Grok（**xAI**）／Perplexity（**AI 搜尋引擎**）／Kimi／通義（**Qwen**）／DeepSeek，以及「**與 Google 搜尋有何不同**」的五層對比
+  - **原理線**：Predictive AI（五類演算法、四領域、**五步流程**）vs Generative AI（四種核心技術、三階段運作），再到 **GAN**（生成器／判別器、零和對抗、交替訓練、收斂與崩壞、損失函數）與 **Diffusion**（Forward 加噪／Reverse 去噪、SDE、DDPM、**DDIM 是加速取樣器**）
+  - **應用線**：Hybrid AI 的**兩種**定義、醫療／電商／招聘三案例、RAG（**不訓練模型，只建索引**）、**LLM vs RAG** 的五維對照
+- **特別之處**：原稿 **約 30 頁是純截圖**（產品介面、比較表格），文字層只有標題一行；
+  筆記逐頁補上可考的內容，並在每節標明「⚠️ 原稿為截圖頁」。
+  四支 Lab（`LLM.ipynb`／`RAG.ipynb`／`Predictive AI.ipynb`／`Gen AI.ipynb`）全部在本機實測
+  （torch 2.14.1+cu132／transformers 5.17.0／RTX 4090），真實輸出直接寫進內文
+- **抓到的兩個原稿缺陷**：
+  - `RAG.ipynb` 的 `max_length=50` 遇上 **153 token** 的 prompt → 直接 `ValueError`（要改 **`max_new_tokens`**）
+  - 原稿說 SD 生成「may take **30-60 seconds**」，本機 4090 只要 **0.61 秒**（原稿是 Colab T4 的體感）
+- 另有 **33 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **👉 [看筆記](/popular-llm-notes/)** ｜ [互動測驗 60 題](/popular-llm-notes/mc-quiz.html)
+
+---
+
+## 2 · Lesson 3 — Introduction to LLM（Theory）
 
 ![Introduction to LLM 學習筆記](/img/covers/llm-intro-notes-ivdc.png)
 
@@ -45,7 +69,7 @@ date: 2026-10-13 09:00:00
 
 ---
 
-## 2 · Lesson 5 — Prompt Engineering
+## 3 · Lesson 5 — Prompt Engineering
 
 ![Prompt Engineering 學習筆記](/img/covers/prompt-engineering-notes-ivdc.png)
 
@@ -64,7 +88,7 @@ date: 2026-10-13 09:00:00
 
 ---
 
-## 3 · Lesson 8 — LiteLLM
+## 4 · Lesson 8 — LiteLLM
 
 ![LiteLLM 學習筆記](/img/covers/litellm-notes-ivdc.png)
 
@@ -81,7 +105,7 @@ date: 2026-10-13 09:00:00
 
 ---
 
-## 4 · Lesson 9 — Streamlit and Flask
+## 5 · Lesson 9 — Streamlit and Flask
 
 ![Streamlit and Flask 學習筆記](/img/covers/streamlit-flask-notes-ivdc.png)
 
