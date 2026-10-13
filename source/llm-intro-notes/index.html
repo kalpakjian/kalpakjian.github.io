@@ -382,7 +382,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#17-autoregressive-models續">17. Autoregressive Models（續）</a>
 <ul>
-<li><a href="#171-為什麼本節會有兩頁同名">17.1 為什麼本節會有兩頁同名</a>
+<li><a href="#171-為什麼本節會有兩頁同名">17.1 為什麼會有兩節同名</a>
 </li>
 <li><a href="#172-生成過程的四個步驟本筆記補充">17.2 生成過程的四個步驟（本筆記補充）</a>
 </li>
@@ -392,7 +392,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#18-building-an-llm">18. Building an LLM</a>
 <ul>
-<li><a href="#181-的定位">18.1  的定位</a>
+<li><a href="#181-的定位">18.1 這兩節的定位</a>
 </li>
 <li><a href="#182-後半段到底在做什麼">18.2 後半段到底在做什麼</a>
 </li>
@@ -532,7 +532,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#30-input-processing-pipeline">30. Input Processing Pipeline</a>
 <ul>
-<li><a href="#301-原文本節是全篇最該背下來的一段">30.1 原文（本節是全篇最該背下來的一段）</a>
+<li><a href="#301-原文本節是全篇最該背下來的一段">30.1 原文（全篇最該背下來的一段）</a>
 </li>
 <li><a href="#302-五個步驟順序不能顛倒">30.2 五個步驟（順序不能顛倒）</a>
 </li>
@@ -580,7 +580,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <ul>
 <li><a href="#e1-開始測驗">E.1 開始測驗</a>
 </li>
-<li><a href="#e2-試卷結構十二個區塊依本節章節順序">E.2 試卷結構（十二個區塊，依本節章節順序）</a>
+<li><a href="#e2-試卷結構十二個區塊依本節章節順序">E.2 試卷結構（十二個區塊，依章節順序）</a>
 </li>
 <li><a href="#e3-時間分配建議">E.3 時間分配建議</a>
 </li>
@@ -766,7 +766,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tbody>
 </table>
 <blockquote>
-另外本節有 <strong>p27 / p29 兩頁同名</strong>「Autoregressive Models」（中間夾著 p28 GPT-3），
+「Autoregressive Models」在課程中出現兩次（同名兩節），
 本筆記依本節順序拆成 §15、§17 兩章。</p>
 </blockquote>
 <hr>
@@ -1965,7 +1965,7 @@ GPT-3          ：96 層   █████████████████�
 </figure>
 <!-- /FIGURE -->
 
-<h3 id="171-為什麼本節會有兩頁同名">17.1 為什麼本節會有兩頁同名</h3>
+<h3 id="171-為什麼本節會有兩頁同名">17.1 為什麼會有兩節同名</h3>
 <p>因為 §15 講的是<strong>「自迴歸是什麼」（定義）</strong>，而下一張圖要表達的是
 <strong>「自迴歸實際跑起來長什麼樣」（生成過程）</strong>——也就是把 §15 的定義畫成一條迴圈。</p>
 <h3 id="172-生成過程的四個步驟本筆記補充">17.2 生成過程的四個步驟（本筆記補充）</h3>
@@ -2037,7 +2037,7 @@ GPT-3          ：96 層   █████████████████�
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 26：<strong>建構一個 LLM 的三個階段</strong>：先做<strong>預訓練</strong>（海量未標註文字 + 下一個字預測）得到 base model，再依需求<strong>微調</strong>；若要變成能聽指令的助手，則再進行<strong>指令微調</strong>。後半段就是把第一階段的<strong>輸入處理管線</strong>拆開來實作。</figcaption>
 </figure>
 
-<h3 id="181-的定位">18.1  的定位</h3>
+<h3 id="181-的定位">18.1 這兩節的定位</h3>
 它要傳達的是——<strong>LLM 不是魔法，而是一條可以自己動手搭起來的資料處理管線。</strong></p>
 <h3 id="182-後半段到底在做什麼">18.2 後半段到底在做什麼</h3>
 <p>後半段的章節標題本身就構成一條完整流程，本筆記依序實作：</p>
@@ -3118,7 +3118,7 @@ input embedding 就不同了</strong>——這正是本節這張圖要表達的�
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 42：<strong>完整的輸入處理管線</strong>：輸入文字先被切成一個一個 <strong>token</strong>，再用 <strong>vocabulary</strong> 轉成 <strong>token ID</strong>，接著轉成 <strong>embedding 向量</strong>，並加上相同維度的 <strong>positional embedding</strong>，最後成為送進 LLM 主層的 <strong>input embeddings</strong>。 34、47 頁。</figcaption>
 </figure>
 
-<h3 id="301-原文本節是全篇最該背下來的一段">30.1 原文（本節是全篇最該背下來的一段）</h3>
+<h3 id="301-原文本節是全篇最該背下來的一段">30.1 原文（全篇最該背下來的一段）</h3>
 <blockquote>
 <p>As part of the input processing pipeline, input text is first <strong>broken up into individual
 tokens</strong>. These tokens are then <strong>converted into token IDs using a vocabulary</strong>. The token IDs
@@ -3680,6 +3680,21 @@ python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;i
 ——<strong>標點排在最前面</strong>（因為它們的 ASCII 碼最小），這也是「為什麼一定要 <code>sorted</code>」的最佳示範。</p>
 </blockquote>
 <hr>
+<h3 id="c4-本筆記的圖表">C.4 本筆記的圖表</h3>
+<p>全部圖表都是<strong>內嵌 SVG</strong>、程式碼高亮也已內嵌，所以這份 <code>index.html</code> <strong>下載後可離線雙擊開啟</strong>，
+不需要任何網路資源。</p>
+
+
+<h3 id="c5-想自己動手做一個小-llm">C.5 想自己動手做一個小 LLM</h3>
+<p>後半段（§20–§30）就是一個最小可行的<strong>輸入處理管線</strong>。若想繼續往下做，順序是：</p>
+<div class="codehilite"><pre><span></span><code>①<span class="w"> </span>輸入管線（本筆記<span class="w"> </span>§<span class="mi">20</span>–§<span class="mi">30</span>，已完成）
+②<span class="w"> </span>加上<span class="w"> </span><span class="nv">self</span><span class="o">-</span><span class="nv">attention</span><span class="w"> </span>與<span class="w"> </span><span class="nv">transformer</span><span class="w"> </span><span class="nv">block</span>
+③<span class="w"> </span>定義<span class="w"> </span><span class="nv">loss</span>（<span class="nv">cross</span><span class="o">-</span><span class="nv">entropy</span><span class="w"> </span><span class="nv">on</span><span class="w"> </span><span class="k">next</span><span class="w"> </span><span class="nv">token</span>）
+④<span class="w"> </span>訓練迴圈（<span class="nv">forward</span><span class="w"> </span>→<span class="w"> </span><span class="nv">loss</span><span class="w"> </span>→<span class="w"> </span><span class="nv">backward</span><span class="w"> </span>→<span class="w"> </span><span class="nv">step</span>）
+⑤<span class="w"> </span>生成（自迴歸解碼，§<span class="mi">17</span>）
+</code></pre></div>
+
+
 <h2 id="附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</h2>
 <div class="codehilite"><pre><span></span><code><span class="c1"># ========== 1. LLM 是什麼（§1–§2） ==========</span>
 <span class="c1"># 神經網路，設計來 understand / generate / respond 人類文字</span>
@@ -3739,7 +3754,7 @@ python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;i
 <li>按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷</li>
 <li>需要紙本時，直接在該頁按列印即可</li>
 </ul>
-<h3 id="e2-試卷結構十二個區塊依本節章節順序">E.2 試卷結構（十二個區塊，依本節章節順序）</h3>
+<h3 id="e2-試卷結構十二個區塊依本節章節順序">E.2 試卷結構（十二個區塊，依章節順序）</h3>
 <table>
 <thead>
 <tr>
@@ -3939,17 +3954,6 @@ python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;i
 </blockquote>
 <hr>
 <p><em>本篇為個人學習筆記整理。</em></p>
-<h3 id="c4-本筆記的圖表">C.4 本筆記的圖表</h3>
-<p>全部圖表都是<strong>內嵌 SVG</strong>、程式碼高亮也已內嵌，所以這份 <code>index.html</code> <strong>下載後可離線雙擊開啟</strong>，
-不需要任何網路資源。</p>
-<h3 id="c5-想自己動手做一個小-llm">C.5 想自己動手做一個小 LLM</h3>
-<p>後半段（§20–§30）就是一個最小可行的<strong>輸入處理管線</strong>。若想繼續往下做，順序是：</p>
-<div class="codehilite"><pre><span></span><code>①<span class="w"> </span>輸入管線（本筆記<span class="w"> </span>§<span class="mi">20</span>–§<span class="mi">30</span>，已完成）
-②<span class="w"> </span>加上<span class="w"> </span><span class="nv">self</span><span class="o">-</span><span class="nv">attention</span><span class="w"> </span>與<span class="w"> </span><span class="nv">transformer</span><span class="w"> </span><span class="nv">block</span>
-③<span class="w"> </span>定義<span class="w"> </span><span class="nv">loss</span>（<span class="nv">cross</span><span class="o">-</span><span class="nv">entropy</span><span class="w"> </span><span class="nv">on</span><span class="w"> </span><span class="k">next</span><span class="w"> </span><span class="nv">token</span>）
-④<span class="w"> </span>訓練迴圈（<span class="nv">forward</span><span class="w"> </span>→<span class="w"> </span><span class="nv">loss</span><span class="w"> </span>→<span class="w"> </span><span class="nv">backward</span><span class="w"> </span>→<span class="w"> </span><span class="nv">step</span>）
-⑤<span class="w"> </span>生成（自迴歸解碼，§<span class="mi">17</span>）
-</code></pre></div>
 </main>
 </div>
 </body>

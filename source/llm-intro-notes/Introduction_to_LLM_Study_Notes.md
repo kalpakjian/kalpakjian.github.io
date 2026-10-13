@@ -862,7 +862,7 @@ GPT-3          ：96 層   █████████████████�
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 26：<strong>建構一個 LLM 的三個階段</strong>：先做<strong>預訓練</strong>（海量未標註文字 + 下一個字預測）得到 base model，再依需求<strong>微調</strong>；若要變成能聽指令的助手，則再進行<strong>指令微調</strong>。後半段就是把第一階段的<strong>輸入處理管線</strong>拆開來實作。</figcaption>
 </figure>
 
-### 18.1  的定位
+### 18.1 這兩節的定位
 
 它要傳達的是——**LLM 不是魔法，而是一條可以自己動手搭起來的資料處理管線。**
 
@@ -1586,7 +1586,7 @@ print((tok_emb + pos_emb(pos)))
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 42：<strong>完整的輸入處理管線</strong>：輸入文字先被切成一個一個 <strong>token</strong>，再用 <strong>vocabulary</strong> 轉成 <strong>token ID</strong>，接著轉成 <strong>embedding 向量</strong>，並加上相同維度的 <strong>positional embedding</strong>，最後成為送進 LLM 主層的 <strong>input embeddings</strong>。 34、47 頁。</figcaption>
 </figure>
 
-### 30.1 原文（本節是全篇最該背下來的一段）
+### 30.1 原文（全篇最該背下來的一段）
 
 > As part of the input processing pipeline, input text is first **broken up into individual
 > tokens**. These tokens are then **converted into token IDs using a vocabulary**. The token IDs
@@ -1789,6 +1789,25 @@ print(ids)      # [4, 0, 9, 2, 5, 8, 1, 6, 7, 3]
 
 ---
 
+### C.4 本筆記的圖表
+
+全部圖表都是**內嵌 SVG**、程式碼高亮也已內嵌，所以這份 `index.html` **下載後可離線雙擊開啟**，
+不需要任何網路資源。
+
+
+### C.5 想自己動手做一個小 LLM
+
+後半段（§20–§30）就是一個最小可行的**輸入處理管線**。若想繼續往下做，順序是：
+
+```
+① 輸入管線（本筆記 §20–§30，已完成）
+② 加上 self-attention 與 transformer block
+③ 定義 loss（cross-entropy on next token）
+④ 訓練迴圈（forward → loss → backward → step）
+⑤ 生成（自迴歸解碼，§17）
+```
+
+
 ## 附錄 D：一頁精華（考前 10 分鐘）
 
 ```python
@@ -1853,7 +1872,7 @@ print(ids)      # [4, 0, 9, 2, 5, 8, 1, 6, 7, 3]
 - 按「顯示答案」才揭曉正解與解析，不會一開始就被暴雷
 - 需要紙本時，直接在該頁按列印即可
 
-### E.2 試卷結構（十二個區塊，依本節章節順序）
+### E.2 試卷結構（十二個區塊，依章節順序）
 
 | 題號 | 涵蓋章節 | 主題 |
 |:---:|---|---|
@@ -1915,19 +1934,3 @@ print(ids)      # [4, 0, 9, 2, 5, 8, 1, 6, 7, 3]
 
 *本篇為個人學習筆記整理。*
 
-### C.4 本筆記的圖表
-
-全部圖表都是**內嵌 SVG**、程式碼高亮也已內嵌，所以這份 `index.html` **下載後可離線雙擊開啟**，
-不需要任何網路資源。
-
-### C.5 想自己動手做一個小 LLM
-
-後半段（§20–§30）就是一個最小可行的**輸入處理管線**。若想繼續往下做，順序是：
-
-```
-① 輸入管線（本筆記 §20–§30，已完成）
-② 加上 self-attention 與 transformer block
-③ 定義 loss（cross-entropy on next token）
-④ 訓練迴圈（forward → loss → backward → step）
-⑤ 生成（自迴歸解碼，§17）
-```

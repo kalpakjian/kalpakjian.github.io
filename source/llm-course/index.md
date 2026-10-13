@@ -32,7 +32,7 @@ date: 2026-10-13 09:00:00
 > [IVDC 電腦視覺課程專題](/cv-course/) 共用同一份筆記（兩門課的共同模組），此處直接連結，不重複製作。
 >
 > 📌 **Lesson 4（Responsible LLM）** 的內容與電腦視覺課程的
-> [Responsible AI 學習筆記](/responsible-ai-notes/) 高度重疊（內容高度重疊，僅 14 頁），
+> [Responsible AI 學習筆記](/responsible-ai-notes/) 高度重疊（僅 14 頁），
 > 因此比照 Lesson 1 的做法直接連結，不重複製作。
 
 ---
@@ -126,7 +126,7 @@ date: 2026-10-13 09:00:00
   - **GPT4All**：**My Documents**、允許的副檔名 `docx,pdf,txt,md,rst`、**對自己的檔案提問**
   - **Lab**：`testollama.py`、`app_web.py`、`LangChain.ipynb`、`LangIndex.ipynb`、`RAG.ipynb`、`train.py`、`Modelfile`
   - **NLP 補充**（95 頁 deck）：Tokenizing／停用詞／Stemming／Lemmatizing／POS／Chunking／NER／文字分類／**Extractive vs Abstractive 摘要**
-  筆記逐頁補上「**這一步在做什麼、為什麼**」，並在每節標明對應 PDF 頁碼
+  筆記逐頁補上「**這一步在做什麼、為什麼**」
 - **實測抓到的問題共 14 項**，其中兩個最嚴重：
   - **`testollama.py` 寫死 `"model": "llama3"`**——**不在課程自己的模型表裡**，照著做一定 **HTTP 404**
   - **`LangIndex.ipynb` 把真實的 Groq API key 寫死在程式碼裡**，而且**沒有那把 key 的學員根本跑不動** →
