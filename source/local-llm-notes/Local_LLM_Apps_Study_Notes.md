@@ -147,6 +147,26 @@ Ollama 最小操作
 3. 用「介面」對它提問        ← GUI 或 REST API（Ollama 是 11434 埠）
 ```
 
+### 1.4 Lab 從「用 App」走到「自己寫 App」
+
+本節本身只教用現成 App。但課程附的 `lesson67\**` 資料夾才是重頭戲——它把同一件事用**程式**重做一次：
+
+| 檔案 | 對應章節 | 學到什麼 |
+|---|---|---|
+| `testollama.py` | §14、§15 | 用 `requests` 打 Ollama 的 REST API |
+| `app_web.py` | §26 | 用 Streamlit 做一個「可以切換模型」的網頁 |
+| `LangChain.ipynb` | §27、§28 | LangChain ＋ `LlamaCpp` 在 Python 裡跑 GGUF |
+| `LangIndex.ipynb` | §30、§31 | LlamaIndex ＋ 雲端 LLM ＋ 本機嵌入 |
+| `train.py`／`LoRA.txt` | §32、§33 | LoRA 微調 |
+| `Modelfile`／`ReadMe.txt` | §34 | 轉 GGUF 並用 `ollama create` 註冊成新模型 |
+| `Maze.ipynb` | §35 | DQN 強化學習（課程的補充主題） |
+
+> **考點**：四個 App **依序**是 LM Studio → Ollama → AnythingLLM → GPT4All；
+> 其中**只有 Ollama 同時提供 CLI 與 REST API**，也是唯一被 LiteLLM（Lesson 8）與
+> LlamaIndex（Lab）直接當成後端的那一個。**11434** 這個埠號會一路貫穿到後面的課。
+
+---
+
 ## 2. 為什麼要跑本機 LLM
 
 > 補充章節（課程沒有這一節的文字，但這是理解整份課程「為什麼要教這個」的關鍵）。
