@@ -49,7 +49,7 @@
 | E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
 | F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
 
-> 另外本節有 **p27 / p29 兩頁同名**「Autoregressive Models」（中間夾著 p28 GPT-3），
+> 「Autoregressive Models」在課程中出現兩次（同名兩節），
 > 本筆記依本節順序拆成 §15、§17 兩章。
 
 ---
@@ -97,7 +97,7 @@ LLM = Large Language Model（大型語言模型）
 
 ## 1. Understanding Large Language Models
 
->  以三頁說明「LLM 到底強在哪、以及它與早期 NLP 的根本差別」。這是整份
+> 本節以三頁說明「LLM 到底強在哪、以及它與早期 NLP 的根本差別」。這是整份
 > 定調章：先講「能力」，再講「與舊方法的差異」，最後給出「為什麼會成功」的兩個原因。
 
 <!-- FIGURE:ch01-understanding-llms -->
@@ -109,7 +109,7 @@ LLM = Large Language Model（大型語言模型）
 
 ### 1.1 LLM 的能力，與「理解」的準確意思
 
-本節第一頁的重點是：LLM 具備理解（understand）、生成（generate）、詮釋（interpret）人類語言的
+本節開頭的重點是：LLM 具備理解（understand）、生成（generate）、詮釋（interpret）人類語言的
 卓越能力。但接著馬上澄清一句——**當我們說語言模型「理解」時，指的是它能產生看起來連貫
 （coherent）、且切合上下文（contextually relevant）的文字，而不是它真的具備人類的意識或理解力。**
 
@@ -121,7 +121,7 @@ LLM = Large Language Model（大型語言模型）
 
 ### 1.2 與早期 NLP 模型的根本差別
 
- 指出：當代 LLM 與早期 NLP 模型最重要的區別是——**早期的模型通常是為特定任務（specific
+本節指出：當代 LLM 與早期 NLP 模型最重要的區別是——**早期的模型通常是為特定任務（specific
 tasks）而設計的**。那些早期模型在各自的窄領域（narrow applications）表現優異，但 LLM 展現的是
 **跨越多種 NLP 任務的廣泛能力（broader proficiency）**。
 
@@ -272,7 +272,7 @@ wide range of NLP tasks」的具體展現。
 
 ## 5. Pretraining vs Finetuning
 
-> ：建立 LLM 的一般流程包含 **pretraining（預訓練）** 與 **finetuning（微調）** 兩階段。
+> 建立 LLM 的一般流程包含 **pretraining（預訓練）** 與 **finetuning（微調）** 兩階段。
 
 <!-- FIGURE:ch05-pretraining-vs-finetuning -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -319,7 +319,7 @@ resource）**，可以再透過 finetuning 進一步精煉——而 finetuning �
 
 ## 6. Instruction-finetuning and Finetuning for classification tasks
 
-> 微調最常見的兩大類別——**指令微調**與**分類微調**。這一頁幾乎必出配對題。
+> 微調最常見的兩大類別——**指令微調**與**分類微調**。這一節幾乎必出配對題。
 
 <!-- FIGURE:ch06-instruction-vs-classification -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -360,7 +360,7 @@ resource）**，可以再透過 finetuning 進一步精煉——而 finetuning �
 
 ## 7. Transformer Architecture
 
-> ：p13 是架構圖（無文字），p14–15 說明兩個子模組與 self-attention 的角色。
+> 這一節是架構圖，接著說明兩個子模組與 self-attention 的角色。
 
 <!-- FIGURE:ch07-transformer-architecture -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -376,7 +376,7 @@ resource）**，可以再透過 finetuning 進一步精煉——而 finetuning �
 
 ### 7.1 兩個子模組
 
- 指出：圖中的 transformer 架構由**兩個子模組**組成——一個 **encoder（編碼器）** 與一個
+本節指出：圖中的 transformer 架構由**兩個子模組**組成——一個 **encoder（編碼器）** 與一個
 **decoder（解碼器）**。
 
 - **Encoder 模組**：處理**輸入文字（input text）**，並把它編碼成**一系列數值表徵或向量
@@ -412,7 +412,7 @@ self-attention 機制（self-attention mechanism）連接。**
 
 ## 8. Self-attention mechanism
 
-> transformers 與 LLM 的關鍵元件。本節特別註明「not shown」——這張圖在本節中並未畫出，
+> transformers 與 LLM 的關鍵元件。課程特別註明「not shown」——這張圖在課程中並未畫出，
 > 本筆記以示意圖補上。
 
 <!-- FIGURE:ch08-self-attention -->
@@ -458,8 +458,8 @@ contextually relevant output）**的能力。
 
 ## 9. BERT vs GPT
 
->  共五頁，是整份本節最密集的比較段：p17 講 BERT、p19 講 GPT、p20 講 zero-shot／few-shot，
->  與 p21 是圖。
+> 這幾節是整份筆記最密集的比較段：BERT、GPT、zero-shot／few-shot，
+> 其餘是圖。
 
 <!-- FIGURE:ch09-bert-vs-gpt -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -475,7 +475,7 @@ contextually relevant output）**的能力。
 
 ### 9.1 BERT：建立在 encoder 上
 
- 指出：**BERT 建立在原始 transformer 的 encoder 子模組之上**，它的**訓練方式和 GPT 不同**。
+本節指出：**BERT 建立在原始 transformer 的 encoder 子模組之上**，它的**訓練方式和 GPT 不同**。
 
 - GPT 是為**生成任務（generative tasks）**設計的；
 - **BERT 及其變體則專精於 masked word prediction（遮字預測）**——模型要**預測句子中被遮蔽或隱藏的
@@ -494,7 +494,7 @@ contextually relevant output）**的能力。
 
 ### 9.3 Zero-shot 與 few-shot
 
- 說明：**GPT 模型主要被設計與訓練來執行文字補全（text completion）任務，同時也展現出驚人的
+本節說明：**GPT 模型主要被設計與訓練來執行文字補全（text completion）任務，同時也展現出驚人的
 多樣性（remarkable versatility）**。這些模型擅長執行 **zero-shot 與 few-shot 學習任務**：
 
 | 名詞 | 定義 | 白話 |
@@ -545,7 +545,7 @@ contextually relevant output）**的能力。
 | **來源以網路文本為主** | 對應 §2「涵蓋網路上公開可用文字的很大一部分」 |
 | **必須過濾與去重** | 原始爬蟲資料含大量垃圾與重複，品質決定訓練成敗 |
 
-> **考點**：本節是圖，考試若出題，最可能考**「GPT-2 的訓練資料集叫什麼」→ WebText**、
+> **考點**：這一節是圖，考試若出題，最可能考**「GPT-2 的訓練資料集叫什麼」→ WebText**、
 > 以及「資料量與參數量**同時**變大」。記住資料集名稱比記細節數字重要。
 
 ---
@@ -730,7 +730,7 @@ print([(enc.decode([i]), i) for i in ids])
 
 ## 15. Autoregressive Models
 
-> GPT 屬自迴歸模型。p29 同名再出現一次（見 §17）。
+> GPT 屬自迴歸模型；同名的一節後面會再出現（見 §17）。
 
 <!-- FIGURE:ch15-autoregressive -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -821,9 +821,9 @@ GPT-3          ：96 層   █████████████████�
 </figure>
 <!-- /FIGURE -->
 
-### 17.1 為什麼本節會有兩頁同名
+### 17.1 為什麼會有兩節同名
 
-因為 §15 講的是**「自迴歸是什麼」（定義）**，而 p29 這張圖要表達的是
+因為 §15 講的是**「自迴歸是什麼」（定義）**，而下一張圖要表達的是
 **「自迴歸實際跑起來長什麼樣」（生成過程）**——也就是把 §15 的定義畫成一條迴圈。
 
 ### 17.2 生成過程的四個步驟（本筆記補充）
@@ -1122,7 +1122,7 @@ class SimpleTokenizerV1:
 | `encode("Hello, do you like tea?")` | ❌ **KeyError: 'Hello'** |
 
 > **考點**：V1 的致命缺點是——**遇到詞彙表裡沒有的詞（OOV）會直接 KeyError 崩掉**，
-> 所以才有 §23 的 V2。這是→p38 的敘事邏輯。
+> 所以才有 §23 的 V2。這就是這一節的敘事邏輯。
 
 ---
 
@@ -1388,7 +1388,7 @@ DataLoader batch y shape: (2, 4) -> [[4, 11, 9, 13], [11, 9, 13, 8]]
 
 ## 27. Sliding Window
 
-> 本節說明 stride 的兩種設定；p43 是示意圖。
+> 本節說明 stride 的兩種設定；下圖是示意圖。
 
 <!-- FIGURE:ch27-sliding-window -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1582,7 +1582,7 @@ print((tok_emb + pos_emb(pos)))
 <!-- /FIGURE -->
 
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
-<svg viewBox="0 0 880 300" width="100%" style="max-width:880px;height:auto" role="img" aria-label="輸入處理管線：文字 → token → token ID → embedding → 主層"><rect x="0" y="0" width="880" height="300" rx="8" fill="#111a26"/><defs><marker id="ar-tp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4da3ff"/></marker></defs><rect x="30" y="60" width="150" height="104" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.6"/><text x="105.0" y="86" font-size="13" fill="#4da3ff" text-anchor="middle" font-weight="bold">① 原始文字</text><text x="105.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">"Hello, world!"</text><text x="105.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">text</text><rect x="196" y="60" width="156" height="104" rx="8" fill="#1b2534" stroke="#b98cff" stroke-width="1.6"/><text x="274.0" y="86" font-size="13" fill="#b98cff" text-anchor="middle" font-weight="bold">② Tokenize</text><text x="274.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">["Hello", ",", " world", "!"]</text><text x="274.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">tokens</text><rect x="368" y="60" width="168" height="104" rx="8" fill="#1b2534" stroke="#f5a524" stroke-width="1.6"/><text x="452.0" y="86" font-size="13" fill="#f5a524" text-anchor="middle" font-weight="bold">③ Token ID</text><text x="452.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">[15496, 11, 995, 0]</text><text x="452.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">IDs（靠 vocabulary）</text><rect x="552" y="60" width="150" height="104" rx="8" fill="#1b2534" stroke="#2fd4c4" stroke-width="1.6"/><text x="627.0" y="86" font-size="13" fill="#2fd4c4" text-anchor="middle" font-weight="bold">④ Embedding</text><text x="627.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">[[0.1, …], …]</text><text x="627.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">向量</text><rect x="718" y="60" width="140" height="104" rx="8" fill="#1b2534" stroke="#3fd07a" stroke-width="1.6"/><text x="788.0" y="86" font-size="13" fill="#3fd07a" text-anchor="middle" font-weight="bold">⑤ + Position</text><text x="788.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">input embeddings</text><text x="788.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">→ 主 LLM 層</text><line x1="184" y1="112" x2="202" y2="112" stroke="#93a1b1" stroke-width="2.2" marker-end="url(#ar-tp)"/><line x1="356" y1="112" x2="374" y2="112" stroke="#93a1b1" stroke-width="2.2" marker-end="url(#ar-tp)"/><line x1="540" y1="112" x2="558" y2="112" stroke="#93a1b1" stroke-width="2.2" marker-end="url(#ar-tp)"/><line x1="706" y1="112" x2="724" y2="112" stroke="#93a1b1" stroke-width="2.2" marker-end="url(#ar-tp)"/><text x="30" y="210" font-size="13" fill="#2fd4c4" text-anchor="start" font-weight="normal">重點順序：先切 token → 用 vocabulary 轉成 ID → 轉成 embedding 向量 → 加上位置編碼 → 才是 LLM 主層的輸入。</text><text x="30" y="238" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">「token 數」約等於「字數 + 標點數」；這是估算訓練成本與 context 長度的基準。</text><text x="30" y="268" font-size="12.5" fill="#e6edf3" text-anchor="start" font-weight="normal">考點：p47 這一頁就是整份後半段的總結，五個步驟的順序不能顛倒。</text></svg>
+<svg viewBox="0 0 880 300" width="100%" style="max-width:880px;height:auto" role="img" aria-label="輸入處理管線：文字 → token → token ID → embedding → 主層"><rect x="0" y="0" width="880" height="300" rx="8" fill="#111a26"/><defs><marker id="ar-tp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4da3ff"/></marker></defs><rect x="30" y="60" width="150" height="104" rx="8" fill="#1b2534" stroke="#4da3ff" stroke-width="1.6"/><text x="105.0" y="86" font-size="13" fill="#4da3ff" text-anchor="middle" font-weight="bold">① 原始文字</text><text x="105.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">"Hello, world!"</text><text x="105.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">text</text><rect x="196" y="60" width="156" height="104" rx="8" fill="#1b2534" stroke="#b98cff" stroke-width="1.6"/><text x="274.0" y="86" font-size="13" fill="#b98cff" text-anchor="middle" font-weight="bold">② Tokenize</text><text x="274.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">["Hello", ",", " world", "!"]</text><text x="274.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">tokens</text><rect x="368" y="60" width="168" height="104" rx="8" fill="#1b2534" stroke="#f5a524" stroke-width="1.6"/><text x="452.0" y="86" font-size="13" fill="#f5a524" text-anchor="middle" font-weight="bold">③ Token ID</text><text x="452.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">[15496, 11, 995, 0]</text><text x="452.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">IDs（靠 vocabulary）</text><rect x="552" y="60" width="150" height="104" rx="8" fill="#1b2534" stroke="#2fd4c4" stroke-width="1.6"/><text x="627.0" y="86" font-size="13" fill="#2fd4c4" text-anchor="middle" font-weight="bold">④ Embedding</text><text x="627.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">[[0.1, …], …]</text><text x="627.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">向量</text><rect x="718" y="60" width="140" height="104" rx="8" fill="#1b2534" stroke="#3fd07a" stroke-width="1.6"/><text x="788.0" y="86" font-size="13" fill="#3fd07a" text-anchor="middle" font-weight="bold">⑤ + Position</text><text x="788.0" y="108" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">input embeddings</text><text x="788.0" y="126" font-size="11" fill="#e6edf3" text-anchor="middle" font-weight="normal">→ 主 LLM 層</text><line x1="184" y1="112" x2="202" y2="112" stroke="#93a1b1" stroke-width="2.2" marker-end="url(#ar-tp)"/><line x1="356" y1="112" x2="374" y2="112" stroke="#93a1b1" stroke-width="2.2" marker-end="url(#ar-tp)"/><line x1="540" y1="112" x2="558" y2="112" stroke="#93a1b1" stroke-width="2.2" marker-end="url(#ar-tp)"/><line x1="706" y1="112" x2="724" y2="112" stroke="#93a1b1" stroke-width="2.2" marker-end="url(#ar-tp)"/><text x="30" y="210" font-size="13" fill="#2fd4c4" text-anchor="start" font-weight="normal">重點順序：先切 token → 用 vocabulary 轉成 ID → 轉成 embedding 向量 → 加上位置編碼 → 才是 LLM 主層的輸入。</text><text x="30" y="238" font-size="12.5" fill="#93a1b1" text-anchor="start" font-weight="normal">「token 數」約等於「字數 + 標點數」；這是估算訓練成本與 context 長度的基準。</text><text x="30" y="268" font-size="12.5" fill="#e6edf3" text-anchor="start" font-weight="normal">考點：這一節就是整份後半段的總結，五個步驟的順序不能顛倒。</text></svg>
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 42：<strong>完整的輸入處理管線</strong>：輸入文字先被切成一個一個 <strong>token</strong>，再用 <strong>vocabulary</strong> 轉成 <strong>token ID</strong>，接著轉成 <strong>embedding 向量</strong>，並加上相同維度的 <strong>positional embedding</strong>，最後成為送進 LLM 主層的 <strong>input embeddings</strong>。 34、47 頁。</figcaption>
 </figure>
 
