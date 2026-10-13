@@ -137,7 +137,7 @@ Ollama 最小操作
 | 團隊工作區、要文件庫 | AnythingLLM | 要把公司文件丟進去問 |
 | 桌面文件問答、最無腦 | GPT4All | 只想「問我的 PDF」 |
 
-### 1.3 貫穿整份三個動作
+### 1.3 貫穿整份筆記的三個動作
 
 不管哪一個 App，流程都一樣是三步：
 
@@ -1351,7 +1351,7 @@ print(r["message"]["content"])
 </figure>
 <!-- /FIGURE -->
 
-### 15.1 課程那三行
+### 15.1 那三行
 
 ```python
     # Convert to PyTorch tensor (example: tokenizing or embedding)
