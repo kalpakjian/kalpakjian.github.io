@@ -161,15 +161,20 @@ foreach ($d in $dirs) {
     if ($diff -gt 0) { $problems += ("heading mismatch md<->html = {0}" -f $diff) }
   }
 
-  # 9) header blockquote rendered line by line
-  $h1 = $html.IndexOf('</h1>')
+  # 9) header blockquote rendered line by line (only when a header block is present)
+  $main = $html.IndexOf('<main>')
+  if ($main -ge 0) { $h1 = $html.IndexOf('</h1>', $main) } else { $h1 = $html.IndexOf('</h1>') }
   if ($h1 -ge 0) {
-    $s = $html.IndexOf('<blockquote>', $h1)
+    $after = $h1 + 5
+    $s = $html.IndexOf('<blockquote>', $after)
     if ($s -ge 0) {
-      $e = $html.IndexOf('</blockquote>', $s)
-      $seg = $html.Substring($s, $e - $s)
-      $nbr = ([regex]::Matches($seg, $brRx)).Count
-      if ($nbr -lt 3) { $problems += ("header blockquote line breaks = {0} (expect >= 3)" -f $nbr) }
+      $between = $html.Substring($after, $s - $after)
+      if ($between -match '^\s*$') {
+        $e = $html.IndexOf('</blockquote>', $s)
+        $seg = $html.Substring($s, $e - $s)
+        $nbr = ([regex]::Matches($seg, $brRx)).Count
+        if ($nbr -lt 3) { $problems += ("header blockquote line breaks = {0} (expect >= 3)" -f $nbr) }
+      }
     }
   }
 

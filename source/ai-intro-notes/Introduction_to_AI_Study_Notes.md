@@ -1,33 +1,5 @@
 # Introduction to AI 學習筆記（考試溫習版）
 
-> 課程：Certificate in Application of Computer Vision Technology (Part-time)
-> 機構：匯縱專業發展中心（IVDC）
-> 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、參數、常見錯誤、模擬試題。
-> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
-
----
-
-## 目錄
-
-| # | 章節 |
-|---|------|
-| 1 | [AI 是什麼？定義與兩個取徑](#1-ai-是什麼定義與兩個取徑) |
-| 2 | [AI 的子目標（Sub-objectives of AI）](#2-ai-的子目標sub-objectives-of-ai) |
-| 3 | [AI 應用與例子](#3-ai-應用與例子) |
-| 4 | [異常偵測 Anomaly Detection](#4-異常偵測-anomaly-detection) |
-| 5 | [影像／視訊辨識 Image/Video Recognition](#5-影像視訊辨識-imagevideo-recognition) |
-| 6 | [人臉辨識 Facial Recognition](#6-人臉辨識-facial-recognition) |
-| 7 | [自然語言處理 NLP](#7-自然語言處理-nlp) |
-| 8 | [語音辨識 Speech Recognition](#8-語音辨識-speech-recognition) |
-| 9 | [強化學習 Reinforcement Learning](#9-強化學習-reinforcement-learning) |
-| 10 | [生成式 AI Generative AI](#10-生成式-ai-generative-ai) |
-| A | [附錄 A：AI 名詞速查表](#附錄-aai-名詞速查表) |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
-| C | [附錄 C：延伸資源與離線提示](#附錄-c延伸資源與離線提示) |
-| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
-| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
-
 ---
 
 ## 0. 30 秒總複習（考前最後掃描）
@@ -669,3 +641,26 @@ Detection（偵測） → Analysis（分析） → Recognition（辨識）
 ---
 
 *本篇為個人學習筆記整理。*
+
+---
+
+## 目錄
+
+| # | 章節 |
+|---|------|
+| 1 | [AI 是什麼？定義與兩個取徑](#1-ai-是什麼定義與兩個取徑) |
+| 2 | [AI 的子目標（Sub-objectives of AI）](#2-ai-的子目標sub-objectives-of-ai) |
+| 3 | [AI 應用與例子](#3-ai-應用與例子) |
+| 4 | [異常偵測 Anomaly Detection](#4-異常偵測-anomaly-detection) |
+| 5 | [影像／視訊辨識 Image/Video Recognition](#5-影像視訊辨識-imagevideo-recognition) |
+| 6 | [人臉辨識 Facial Recognition](#6-人臉辨識-facial-recognition) |
+| 7 | [自然語言處理 NLP](#7-自然語言處理-nlp) |
+| 8 | [語音辨識 Speech Recognition](#8-語音辨識-speech-recognition) |
+| 9 | [強化學習 Reinforcement Learning](#9-強化學習-reinforcement-learning) |
+| 10 | [生成式 AI Generative AI](#10-生成式-ai-generative-ai) |
+| A | [附錄 A：AI 名詞速查表](#附錄-aai-名詞速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：延伸資源與離線提示](#附錄-c延伸資源與離線提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
