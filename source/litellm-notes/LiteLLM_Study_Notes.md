@@ -1386,7 +1386,7 @@ resp = client.chat.completions.create(
 
 > 課程 TLDR：*LiteLLM has emerged as one of the most practical ways to build an LLM Gateway — a single, unified access layer that allows you to route requests to 100+ different LLM providers while hiding provider-specific differences.*
 >
-> **本節來源與 §1–§20 不同**：前面是 notebook 實作（怎麼寫程式），這一節是**課堂補充**（11 頁 PowerPoint），講的是「**為什麼企業要這樣部署**」。
+> **這一節的來源與 §1–§20 不同**：前面是 notebook 實作（怎麼寫程式），這一節是**課堂補充**（11 頁 PowerPoint），講的是「**為什麼企業要這樣部署**」。
 
 <!-- FIGURE:ch21-llm-gateway -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1407,7 +1407,7 @@ resp = client.chat.completions.create(
 
 > **考點**：課程原文是「a **centralized** API endpoint」。
 > Gateway 的價值不在「多接幾家」，而在**把重複的控制邏輯集中到一個地方**——
-> 這與 §20 的 Proxy 是同一件事：§20 講「怎麼開起來」，本節講「開了之後能管什麼」。
+> 這與 §20 的 Proxy 是同一件事：§20 講「怎麼開起來」，課程講「開了之後能管什麼」。
 
 LiteLLM 直接實作了這個 gateway：對外提供 **OpenAI 相容的 API**，應用程式**不需要改寫程式碼**。
 

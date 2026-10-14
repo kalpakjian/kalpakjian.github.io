@@ -622,9 +622,9 @@ python -m venv .venv
 
 ## 19. Check GPU
 
-**目的**：用 PyTorch 確認 GPU 是否真的可用（**本章是本節唯一的程式碼**）。
+**目的**：用 PyTorch 確認 GPU 是否真的可用（**本章是課程唯一的程式碼**）。
 
-### 19.1 本節程式碼（實測通過）
+### 19.1 課程程式碼（實測通過）
 
 ```python
 import torch

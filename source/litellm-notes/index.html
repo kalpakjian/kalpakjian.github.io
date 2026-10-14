@@ -2658,7 +2658,7 @@ litellm<span class="w"> </span>--config<span class="w"> </span>config.yaml<span 
 <h2 id="21-litellm-作為-llm-gateway企業級治理與架構">21. LiteLLM 作為 LLM Gateway：企業級治理與架構</h2>
 <blockquote>
 <p>課程 TLDR（<code>IVDC_LiteLLM.pptx</code>）：<em>LiteLLM has emerged as one of the most practical ways to build an LLM Gateway — a single, unified access layer that allows you to route requests to 100+ different LLM providers while hiding provider-specific differences.</em></p>
-<p><strong>本節來源與 §1–§20 不同</strong>：前面是 notebook 實作（怎麼寫程式），這一節是<strong>課堂補充</strong>（11 頁 PowerPoint），講的是「<strong>為什麼企業要這樣部署</strong>」。</p>
+<p><strong>這一節的來源與 §1–§20 不同</strong>：前面是 notebook 實作（怎麼寫程式），這一節是<strong>課堂補充</strong>（11 頁 PowerPoint），講的是「<strong>為什麼企業要這樣部署</strong>」。</p>
 </blockquote>
 <!-- FIGURE:ch21-llm-gateway -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2698,7 +2698,7 @@ litellm<span class="w"> </span>--config<span class="w"> </span>config.yaml<span 
 <blockquote>
 <p><strong>考點</strong>：課程原文是「a <strong>centralized</strong> API endpoint」。
 Gateway 的價值不在「多接幾家」，而在<strong>把重複的控制邏輯集中到一個地方</strong>——
-這與 §20 的 Proxy 是同一件事：§20 講「怎麼開起來」，本節講「開了之後能管什麼」。</p>
+這與 §20 的 Proxy 是同一件事：§20 講「怎麼開起來」，課程講「開了之後能管什麼」。</p>
 </blockquote>
 <p>LiteLLM 直接實作了這個 gateway：對外提供 <strong>OpenAI 相容的 API</strong>，應用程式<strong>不需要改寫程式碼</strong>。</p>
 <h3 id="212-一個介面統一-100-供應商">21.2 一個介面統一 100+ 供應商</h3>

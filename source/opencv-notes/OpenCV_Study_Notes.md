@@ -1225,7 +1225,7 @@ print("Inliers:", int(mask.sum()), "/", len(matches))
 
 ## 13. Real-World Projects
 
-本節列出五個實戰專案，以下補充實作要點：
+課程列出五個實戰專案，以下補充實作要點：
 
 ### 13.1 Panorama Generation（全景圖生成）
 
@@ -1274,7 +1274,7 @@ print("Inliers:", int(mask.sum()), "/", len(matches))
 
 ## 14. OpenCV Programming Examples（程式範例）
 
-> 本章完整收錄 本節的程式碼，並加上逐行解釋。
+> 本章完整收錄 課程的程式碼，並加上逐行解釋。
 > **本機驗證**：以下所有程式碼已在 OpenCV 5.0.0 / NumPy 2.4.6 / Matplotlib 3.11.2 環境實際執行通過。
 
 ### 14.0 環境安裝與通用設定

@@ -34,7 +34,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 6 —
 - **逐節重寫**。
 - **生態系三層架構**（全課骨架）：**① Hub → ② Core ML Libraries → ③ Inference & Deployment**
 - **Hub 四件套**：Model Hub（300k+）／Dataset Hub／**Spaces**／文件與版控
-- **三種 Tokenizer 深入對比**（本節用 **10 頁**講這個，考題最密集）：
+- **三種 Tokenizer 深入對比**（課程用 **10 頁**講這個，考題最密集）：
   - **WordPiece**：`##` 標記、**最大似然**合併、BERT 系、**需要空白前處理**
   - **BPE**：byte-level、**貪婪**合併最頻繁對、GPT 系、**永不出現 `<unk>`**
   - **SentencePiece**：`▁` 標記、BPE 或 **Unigram**、T5／LLaMA、**不需空白前處理**
@@ -181,7 +181,7 @@ peft 完全無法匯入 —— 即使你根本不用音訊
 > 所以 `torch 2.14.1+cu132` 配 `torchaudio 2.11.0+cu130` **不是「裝錯」，而是「只能這樣裝」**。
 > 想兩邊都對，唯一的路是把 **torch 降回 `2.14.1+cu130`**（torch 確實有 cu130 建置）。
 
-#### ③ 本節用兩頁教 Streaming，三個 Lab 一次都沒用
+#### ③ 課程用兩頁教 Streaming，三個 Lab 一次都沒用
 
 | 做法 | 取得第 1 筆 | 再取 200 筆 | 快取增量 |
 |---|---|---|---|
@@ -194,7 +194,7 @@ peft 完全無法匯入 —— 即使你根本不用音訊
 
 ## ⚠️ 過時資訊更正（2026-10 實查）
 
-除了本節本身的問題，其他網路教學裡還有一批**已過時的資訊**。我把每一項都查證後更正：
+除了課程本身的問題，其他網路教學裡還有一批**已過時的資訊**。我把每一項都查證後更正：
 
 | # | 原本寫的 | **實查結果** | 位置 |
 |---|---|---|---|
@@ -212,12 +212,12 @@ peft 完全無法匯入 —— 即使你根本不用音訊
 **① Model Hub 的模型數差了近一個數量級**
 
 ```
-本節（撰寫時）  : 300k+ models
+課程（撰寫時）  : 300k+ models
 2026-10 實查       : 2M+ models      ← 約 6.7 倍
                     500k+ datasets
 ```
 
-> **考試怎麼答？** 題目問「本節說有多少模型」→ **答 300k+**（考的是本節）。
+> **考試怎麼答？** 題目問「課程說有多少模型」→ **答 300k+**（考的是課程）。
 > 但你要知道**實際已經超過 200 萬**。
 
 **② `hf cache scan` 是錯的指令**
@@ -258,7 +258,7 @@ hf cache scan       # ❌ 沒有這個子指令
 | `google/vit-base-patch16-224` 載入 | **16.0 秒** |
 | ViT 模型類別 | **`ViTForImageClassification`**（不是 DeiT） |
 | 裁切圖的預測 | **`book jacket 12.9%`**（失敗） |
-| AST 音訊分類 | **`Ding 55.9%`**（與本節 56% 一致） |
+| AST 音訊分類 | **`Ding 55.9%`**（與課程 56% 一致） |
 | wav2vec2 ASR 對同一段正弦 | **`{'text': ''}`**（空字串） |
 | AG News | **120,000 筆、4 類** |
 | Tiny ImageNet（clean） | **98,179 筆** |
@@ -282,7 +282,7 @@ hf cache scan       # ❌ 沒有這個子指令
 
 1. 先讀 §1–§5（定位與三層架構），建立整體座標
 2. 讀 §6–§11（Hub 與 Transformers Library）
-3. 讀 §12–§15（Datasets：Streaming／Caching／Preprocessing）——**這三節本節講了但 Lab 沒做**
+3. 讀 §12–§15（Datasets：Streaming／Caching／Preprocessing）——**這三節課程講了但 Lab 沒做**
 4. **重點複習 §16–§20（三種 Tokenizer）**，這是考題最密集的區域
 5. 讀 §21–§25（Diffusers、PEFT、LoRA、QLoRA、Adapters）
 6. 讀 §26–§34（部署工具鏈與收尾）

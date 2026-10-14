@@ -79,7 +79,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 —
 **🖱️ [開始 60 題線上測驗](/popular-llm-notes/mc-quiz.html)**
 
 - 60 題單選、滿分 60 分、建議 75 分鐘
-- 分四個部分、依本節頁碼順序排列
+- 分四個部分、依課程頁碼順序排列
 - 答案分佈刻意打散（A/B/C/D 各 15 題）
 - 點選即時計分、進度存在 localStorage、可切換「只看未答／只看答錯」
 
@@ -90,7 +90,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 —
 > **Diffusion 只有 Reverse 需要訓練**、
 > **RAG 不訓練任何模型權重**、
 > **LLM 可離線／RAG 不可離線**，
-> 以及**本節 SD 的預設值 20 步 / guidance 7.5**。
+> 以及**課程 SD 的預設值 20 步 / guidance 7.5**。
 
 ---
 

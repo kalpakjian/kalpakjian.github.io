@@ -14,7 +14,7 @@ index_img: /img/covers/ai-intro-notes-ivdc.png
 banner_img: /img/covers/ai-intro-notes-ivdc.png
 ---
 
-最近為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程第一份本節《1 IVDC_Introduction to AI (icebreaking).pptx》（34 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
+最近為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程第一份課程《1 IVDC_Introduction to AI (icebreaking).pptx》（34 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
 筆記已發佈成獨立專題頁面：
 
@@ -41,7 +41,7 @@ banner_img: /img/covers/ai-intro-notes-ivdc.png
 | 9 | 強化學習 Reinforcement Learning（agent、policy、AlphaGo） |
 | 10 | 生成式 AI Generative AI |
 
-另外補了 7 個附錄：**AI 名詞速查表**、**常見錯誤與陷阱**、**本節頁面索引對照**、**延伸資源與離線提示**、**一頁精華（考前 10 分鐘）**、**60 題 MC 互動測驗**、**答錯題目 → 複習章節對照**。
+另外補了 7 個附錄：**AI 名詞速查表**、**常見錯誤與陷阱**、**課程頁面索引對照**、**延伸資源與離線提示**、**一頁精華（考前 10 分鐘）**、**60 題 MC 互動測驗**、**答錯題目 → 複習章節對照**。
 
 ---
 
@@ -71,8 +71,8 @@ banner_img: /img/covers/ai-intro-notes-ivdc.png
 ---
 
 
-這份本節是 PowerPoint 匯出的 PDF，很多頁只有示意圖（例如 AI 子目標圖、人臉辨識流程圖、RL 迴圈圖）。
-筆記除了忠實保留本節文字，還補上每張圖背後的**定義、量測項目與考點**，讓沒有圖也能讀懂、能應試。
+這份課程是 PowerPoint 匯出的 PDF，很多頁只有示意圖（例如 AI 子目標圖、人臉辨識流程圖、RL 迴圈圖）。
+筆記除了忠實保留課程文字，還補上每張圖背後的**定義、量測項目與考點**，讓沒有圖也能讀懂、能應試。
 
 ---
 

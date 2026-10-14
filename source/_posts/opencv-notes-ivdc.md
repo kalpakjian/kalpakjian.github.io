@@ -14,7 +14,7 @@ index_img: /img/covers/opencv-notes-ivdc.png
 banner_img: /img/covers/opencv-notes-ivdc.png
 ---
 
-最近為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程本節《3 IVDC OpenCV.pdf》的 29 頁內容完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
+最近為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程課程《3 IVDC OpenCV.pdf》的 29 頁內容完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
 筆記已發佈成獨立專題頁面：
 
@@ -40,10 +40,10 @@ banner_img: /img/covers/opencv-notes-ivdc.png
 | 10 | Edge Detection |
 | 11–12 | Feature Extraction / Feature Matching |
 | 13 | Real-World Projects |
-| 14 | OpenCV Programming Examples（本節第 16–28 頁的程式範例） |
+| 14 | OpenCV Programming Examples（課程第 16–28 頁的程式範例） |
 | 15 | Summary |
 
-另外補了 6 個附錄：**API 速查表**、**常見錯誤與陷阱**、**本節頁面索引對照**、**離線執行提示**、**一頁精華（考前 10 分鐘）**、**互動式線上測驗（60 題）**。
+另外補了 6 個附錄：**API 速查表**、**常見錯誤與陷阱**、**課程頁面索引對照**、**離線執行提示**、**一頁精華（考前 10 分鐘）**、**互動式線上測驗（60 題）**。
 
 ---
 
@@ -82,7 +82,7 @@ NumPy      2.4.6
 Matplotlib 3.11.2
 ```
 
-幾個和本節對得上的實測數字：ORB 偵測到 **493** 個關鍵點、描述子形狀 **(493, 32)**、Canny 得到 **3157** 個邊緣像素、ORB + BFMatcher 在 45° 旋轉後仍有 **280** 組匹配。
+幾個和課程對得上的實測數字：ORB 偵測到 **493** 個關鍵點、描述子形狀 **(493, 32)**、Canny 得到 **3157** 個邊緣像素、ORB + BFMatcher 在 45° 旋轉後仍有 **280** 組匹配。
 
 ---
 

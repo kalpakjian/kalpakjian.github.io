@@ -117,7 +117,7 @@ Ollama 最小操作
 
 ### 1.1 四個主段落
 
-本節內容可以清楚切成四塊，每一塊就是一個桌面應用程式的**逐步操作手冊**：
+課程內容可以清楚切成四塊，每一塊就是一個桌面應用程式的**逐步操作手冊**：
 
 | 部 | 主題 | 這一塊在教什麼 |
 |---|---|---|
@@ -149,7 +149,7 @@ Ollama 最小操作
 
 ### 1.4 Lab 從「用 App」走到「自己寫 App」
 
-本節本身只教用現成 App。但課程附的 `lesson67\**` 資料夾才是重頭戲——它把同一件事用**程式**重做一次：
+課程本身只教用現成 App。但課程附的 `lesson67\**` 資料夾才是重頭戲——它把同一件事用**程式**重做一次：
 
 | 檔案 | 對應章節 | 學到什麼 |
 |---|---|---|
@@ -2421,7 +2421,7 @@ LangChain 這一格示範的是**另一條路**：
 
 ```
 路徑 A（§14、§26）  Python ──HTTP──▶ Ollama（獨立行程）──▶ GGUF
-路徑 B（本節）      Python ──直接載入 GGUF──▶ 同一個行程內推論
+路徑 B（課程）      Python ──直接載入 GGUF──▶ 同一個行程內推論
 ```
 
 | | 路徑 A（Ollama） | 路徑 B（`LlamaCpp`） |
@@ -2577,7 +2577,7 @@ doc3: "FAISS is a vector database..."    → 命中 1 個（faiss）     → 1 �
 
 ### 27.6 關鍵字檢索 vs 向量檢索（**必考**）
 
-| | **關鍵字檢索**（本節） | **向量檢索**（真正的 RAG） |
+| | **關鍵字檢索**（課程） | **向量檢索**（真正的 RAG） |
 |---|---|---|
 | 比什麼 | **字面是否相同** | **語意是否相近** |
 | 用什麼算 | 字串比對／計數 | **嵌入向量 ＋ 餘弦相似度** |
@@ -2667,7 +2667,7 @@ print(response_rag)
 
 **對照前面章節**：
 
-| 步驟 | LM Studio（§9） | GPT4All（§22） | RAG.ipynb（本節） |
+| 步驟 | LM Studio（§9） | GPT4All（§22） | RAG.ipynb（課程） |
 |---|---|---|---|
 | 切塊 | 自動 | 自動 | **`split_document()`，每 100 個字** |
 | 嵌入 | 自動 | 自動 | **`get_embedding()`，distilbert** |
@@ -2806,7 +2806,7 @@ Answer:                                     ← 讓模型接著寫
 
 ### 28.6 關鍵字 RAG vs 向量 RAG：完整對照
 
-| | 關鍵字 RAG（§27.5） | **向量 RAG**（本節） |
+| | 關鍵字 RAG（§27.5） | **向量 RAG**（課程） |
 |---|---|---|
 | 切塊 | 無（整段比） | ✅ `split_document()` |
 | 表示方式 | **原始字串** | **768 維向量** |
@@ -2944,7 +2944,7 @@ result = generator(
 | §7.2 LM Studio | `Context Length` = 4096 | **輸入**的上限 |
 | §14 Ollama | `eval_count` | **生成了幾個 token**（輸出） |
 | §27 `LlamaCpp` | `n_ctx=2048` | 上下文總長度 |
-| **本節** | **`max_new_tokens`** | **只算輸出** |
+| **課程** | **`max_new_tokens`** | **只算輸出** |
 
 > **考點（高頻）**：Hugging Face `generate()` 的 **`max_length` 是「輸入 ＋ 輸出」的總長度**，
 > 不是「輸出長度」。RAG 的 prompt 動輒數百 token，
@@ -2967,7 +2967,7 @@ result = generator(
 
 ### 30.1 LlamaIndex 是什麼
 
-| | LangChain（§27） | **LlamaIndex**（本節） |
+| | LangChain（§27） | **LlamaIndex**（課程） |
 |---|---|---|
 | 定位 | **通用**的 LLM 應用框架 | **專注在「資料 ＋ LLM」** |
 | 核心抽象 | Chain／Agent／Tool | **Index／Query Engine** |
@@ -3020,7 +3020,7 @@ Settings.embed_model = HuggingFaceEmbedding(
 | 套件 | 用途 |
 |---|---|
 | `llama-index-core` | 核心（`Document`／`VectorStoreIndex`／`Settings`） |
-| **`llama-index-llms-groq`** | **Groq 的 LLM 整合**（本節的雲端部分） |
+| **`llama-index-llms-groq`** | **Groq 的 LLM 整合**（課程的雲端部分） |
 | `llama-index-embeddings-huggingface` | HuggingFace 嵌入（本機部分） |
 
 > 💡 **LlamaIndex 的套件命名慣例**：`llama-index-llms-<供應商>` 與
@@ -4038,7 +4038,7 @@ from collections import deque
 
 ## 36. NLP 基礎（一）：Tokenizing、停用詞、Stemming 與 Lemmatizing
 
-> 這份 deck 是課程附的 **NLP 基礎補充**，本節筆記完全沒涵蓋。
+> 這份 deck 是課程附的 **NLP 基礎補充**，課程筆記完全沒涵蓋。
 > 全部範例使用 **NLTK**（Natural Language Toolkit）。
 
 <!-- FIGURE:ch36-nlp-text-prep -->
@@ -4559,7 +4559,7 @@ tree = nltk.ne_chunk(lotr_pos_tags)
 
 ## 38. 本機實測總表（真實數據）
 
-> 本節所有數字都是**在本機實際執行**得到的，不是從文件抄來的。
+> 課程所有數字都是**在本機實際執行**得到的，不是從文件抄來的。
 > 環境：**Python 3.11.15／Ollama 0.40.3／Windows**。
 
 <!-- FIGURE:ch38-benchmarks -->
