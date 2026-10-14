@@ -1,57 +1,5 @@
 # Introduction to LLM 學習筆記（考試溫習版）
 
-> 課程：Certificate in Application of Large Language Model (LLM) (Part-time)
-> 機構：匯縱專業發展中心（IVDC）
-> 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、關鍵數字、常見錯誤與考點。
-> 本筆記把關鍵圖重畫成內嵌 SVG，並把程式碼**在本機實測**後把真實輸出寫進筆記。
-> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
-
----
-
-## 目錄
-
-| # | 章節 |
-|---|------|
-| 1 | [Understanding Large Language Models](#1-understanding-large-language-models) |
-| 2 | [What is an LLM?](#2-what-is-an-llm) |
-| 3 | [Applications of LLMs](#3-applications-of-llms) |
-| 4 | [Custom-built LLMs](#4-custom-built-llms) |
-| 5 | [Pretraining vs Finetuning](#5-pretraining-vs-finetuning) |
-| 6 | [Instruction-finetuning and Finetuning for classification tasks](#6-instruction-finetuning-and-finetuning-for-classification-t) |
-| 7 | [Transformer Architecture](#7-transformer-architecture) |
-| 8 | [Self-attention mechanism](#8-self-attention-mechanism) |
-| 9 | [BERT vs GPT](#9-bert-vs-gpt) |
-| 10 | [Datasets used for GPT Training](#10-datasets-used-for-gpt-training) |
-| 11 | [Tokens](#11-tokens) |
-| 12 | [Cost of Pretraining LLMs](#12-cost-of-pretraining-llms) |
-| 13 | [Pretrained LLMs](#13-pretrained-llms) |
-| 14 | [Next-Word Prediction Task](#14-next-word-prediction-task) |
-| 15 | [Autoregressive Models](#15-autoregressive-models) |
-| 16 | [GPT-3](#16-gpt-3) |
-| 17 | [Autoregressive Models（續）](#17-autoregressive-models續) |
-| 18 | [Building an LLM](#18-building-an-llm) |
-| 19 | [Understanding word embeddings](#19-understanding-word-embeddings) |
-| 20 | [Tokenizing text](#20-tokenizing-text) |
-| 21 | [Converting tokens into token IDs](#21-converting-tokens-into-token-ids) |
-| 22 | [Simple Tokenizer](#22-simple-tokenizer) |
-| 23 | [Adding Special Tokens](#23-adding-special-tokens) |
-| 24 | [Start and End of Text](#24-start-and-end-of-text) |
-| 25 | [Data sampling with a sliding window](#25-data-sampling-with-a-sliding-window) |
-| 26 | [Data Loaders](#26-data-loaders) |
-| 27 | [Sliding Window](#27-sliding-window) |
-| 28 | [Embedding layers](#28-embedding-layers) |
-| 29 | [Positional Embeddings](#29-positional-embeddings) |
-| 30 | [Input Processing Pipeline](#30-input-processing-pipeline) |
-| A | [附錄 A：名詞與架構速查表](#附錄-a名詞與架構速查表) |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
-| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
-| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
-| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
-
-> 「Autoregressive Models」在課程中出現兩次（同名兩節），
-> 本筆記依課程順序拆成 §15、§17 兩章。
-
 ---
 
 ## 0. 30 秒總複習（考前最後掃描）
@@ -1934,3 +1882,48 @@ print(ids)      # [4, 0, 9, 2, 5, 8, 1, 6, 7, 3]
 
 *本篇為個人學習筆記整理。*
 
+---
+
+## 目錄
+
+| # | 章節 |
+|---|------|
+| 1 | [Understanding Large Language Models](#1-understanding-large-language-models) |
+| 2 | [What is an LLM?](#2-what-is-an-llm) |
+| 3 | [Applications of LLMs](#3-applications-of-llms) |
+| 4 | [Custom-built LLMs](#4-custom-built-llms) |
+| 5 | [Pretraining vs Finetuning](#5-pretraining-vs-finetuning) |
+| 6 | [Instruction-finetuning and Finetuning for classification tasks](#6-instruction-finetuning-and-finetuning-for-classification-t) |
+| 7 | [Transformer Architecture](#7-transformer-architecture) |
+| 8 | [Self-attention mechanism](#8-self-attention-mechanism) |
+| 9 | [BERT vs GPT](#9-bert-vs-gpt) |
+| 10 | [Datasets used for GPT Training](#10-datasets-used-for-gpt-training) |
+| 11 | [Tokens](#11-tokens) |
+| 12 | [Cost of Pretraining LLMs](#12-cost-of-pretraining-llms) |
+| 13 | [Pretrained LLMs](#13-pretrained-llms) |
+| 14 | [Next-Word Prediction Task](#14-next-word-prediction-task) |
+| 15 | [Autoregressive Models](#15-autoregressive-models) |
+| 16 | [GPT-3](#16-gpt-3) |
+| 17 | [Autoregressive Models（續）](#17-autoregressive-models續) |
+| 18 | [Building an LLM](#18-building-an-llm) |
+| 19 | [Understanding word embeddings](#19-understanding-word-embeddings) |
+| 20 | [Tokenizing text](#20-tokenizing-text) |
+| 21 | [Converting tokens into token IDs](#21-converting-tokens-into-token-ids) |
+| 22 | [Simple Tokenizer](#22-simple-tokenizer) |
+| 23 | [Adding Special Tokens](#23-adding-special-tokens) |
+| 24 | [Start and End of Text](#24-start-and-end-of-text) |
+| 25 | [Data sampling with a sliding window](#25-data-sampling-with-a-sliding-window) |
+| 26 | [Data Loaders](#26-data-loaders) |
+| 27 | [Sliding Window](#27-sliding-window) |
+| 28 | [Embedding layers](#28-embedding-layers) |
+| 29 | [Positional Embeddings](#29-positional-embeddings) |
+| 30 | [Input Processing Pipeline](#30-input-processing-pipeline) |
+| A | [附錄 A：名詞與架構速查表](#附錄-a名詞與架構速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
+
+> 「Autoregressive Models」在課程中出現兩次（同名兩節），
+> 本筆記依課程順序拆成 §15、§17 兩章。

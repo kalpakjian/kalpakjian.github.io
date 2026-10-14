@@ -599,173 +599,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </nav>
 <main>
 <h1 id="introduction-to-llm-學習筆記考試溫習版">Introduction to LLM 學習筆記（考試溫習版）</h1>
-<blockquote>
-<p>課程：Certificate in Application of Large Language Model (LLM) (Part-time)<br />
-機構：匯縱專業發展中心（IVDC）<br />
-本筆記依課程大綱每一個標題逐一填充內容，並補上定義、關鍵數字、常見錯誤與考點。<br />
-本筆記把關鍵圖重畫成內嵌 SVG，並把程式碼<strong>在本機實測</strong>後把真實輸出寫進筆記。<br />
-🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
-</blockquote>
-<hr>
-<h2 id="目錄">目錄</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>章節</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><a href="#1-understanding-large-language-models">Understanding Large Language Models</a></td>
-</tr>
-<tr>
-<td>2</td>
-<td><a href="#2-what-is-an-llm">What is an LLM?</a></td>
-</tr>
-<tr>
-<td>3</td>
-<td><a href="#3-applications-of-llms">Applications of LLMs</a></td>
-</tr>
-<tr>
-<td>4</td>
-<td><a href="#4-custom-built-llms">Custom-built LLMs</a></td>
-</tr>
-<tr>
-<td>5</td>
-<td><a href="#5-pretraining-vs-finetuning">Pretraining vs Finetuning</a></td>
-</tr>
-<tr>
-<td>6</td>
-<td><a href="#6-instruction-finetuning-and-finetuning-for-classification-t">Instruction-finetuning and Finetuning for classification tasks</a></td>
-</tr>
-<tr>
-<td>7</td>
-<td><a href="#7-transformer-architecture">Transformer Architecture</a></td>
-</tr>
-<tr>
-<td>8</td>
-<td><a href="#8-self-attention-mechanism">Self-attention mechanism</a></td>
-</tr>
-<tr>
-<td>9</td>
-<td><a href="#9-bert-vs-gpt">BERT vs GPT</a></td>
-</tr>
-<tr>
-<td>10</td>
-<td><a href="#10-datasets-used-for-gpt-training">Datasets used for GPT Training</a></td>
-</tr>
-<tr>
-<td>11</td>
-<td><a href="#11-tokens">Tokens</a></td>
-</tr>
-<tr>
-<td>12</td>
-<td><a href="#12-cost-of-pretraining-llms">Cost of Pretraining LLMs</a></td>
-</tr>
-<tr>
-<td>13</td>
-<td><a href="#13-pretrained-llms">Pretrained LLMs</a></td>
-</tr>
-<tr>
-<td>14</td>
-<td><a href="#14-next-word-prediction-task">Next-Word Prediction Task</a></td>
-</tr>
-<tr>
-<td>15</td>
-<td><a href="#15-autoregressive-models">Autoregressive Models</a></td>
-</tr>
-<tr>
-<td>16</td>
-<td><a href="#16-gpt-3">GPT-3</a></td>
-</tr>
-<tr>
-<td>17</td>
-<td><a href="#17-autoregressive-models續">Autoregressive Models（續）</a></td>
-</tr>
-<tr>
-<td>18</td>
-<td><a href="#18-building-an-llm">Building an LLM</a></td>
-</tr>
-<tr>
-<td>19</td>
-<td><a href="#19-understanding-word-embeddings">Understanding word embeddings</a></td>
-</tr>
-<tr>
-<td>20</td>
-<td><a href="#20-tokenizing-text">Tokenizing text</a></td>
-</tr>
-<tr>
-<td>21</td>
-<td><a href="#21-converting-tokens-into-token-ids">Converting tokens into token IDs</a></td>
-</tr>
-<tr>
-<td>22</td>
-<td><a href="#22-simple-tokenizer">Simple Tokenizer</a></td>
-</tr>
-<tr>
-<td>23</td>
-<td><a href="#23-adding-special-tokens">Adding Special Tokens</a></td>
-</tr>
-<tr>
-<td>24</td>
-<td><a href="#24-start-and-end-of-text">Start and End of Text</a></td>
-</tr>
-<tr>
-<td>25</td>
-<td><a href="#25-data-sampling-with-a-sliding-window">Data sampling with a sliding window</a></td>
-</tr>
-<tr>
-<td>26</td>
-<td><a href="#26-data-loaders">Data Loaders</a></td>
-</tr>
-<tr>
-<td>27</td>
-<td><a href="#27-sliding-window">Sliding Window</a></td>
-</tr>
-<tr>
-<td>28</td>
-<td><a href="#28-embedding-layers">Embedding layers</a></td>
-</tr>
-<tr>
-<td>29</td>
-<td><a href="#29-positional-embeddings">Positional Embeddings</a></td>
-</tr>
-<tr>
-<td>30</td>
-<td><a href="#30-input-processing-pipeline">Input Processing Pipeline</a></td>
-</tr>
-<tr>
-<td>A</td>
-<td><a href="#附錄-a名詞與架構速查表">附錄 A：名詞與架構速查表</a></td>
-</tr>
-<tr>
-<td>B</td>
-<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
-</tr>
-<tr>
-<td>C</td>
-<td><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a></td>
-</tr>
-<tr>
-<td>D</td>
-<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
-</tr>
-<tr>
-<td>E</td>
-<td><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a></td>
-</tr>
-<tr>
-<td>F</td>
-<td><a href="#附錄-f互動測驗答錯題目-複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-「Autoregressive Models」在課程中出現兩次（同名兩節），
-本筆記依課程順序拆成 §15、§17 兩章。</p>
-</blockquote>
 <hr>
 <h2 id="0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</h2>
 <div class="codehilite"><pre><span></span><code>LLM = Large Language Model（大型語言模型）
@@ -3951,6 +3784,162 @@ python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;i
 </blockquote>
 <hr>
 <p><em>本篇為個人學習筆記整理。</em></p>
+<hr>
+<h2 id="目錄">目錄</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>章節</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="#1-understanding-large-language-models">Understanding Large Language Models</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#2-what-is-an-llm">What is an LLM?</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#3-applications-of-llms">Applications of LLMs</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#4-custom-built-llms">Custom-built LLMs</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="#5-pretraining-vs-finetuning">Pretraining vs Finetuning</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="#6-instruction-finetuning-and-finetuning-for-classification-t">Instruction-finetuning and Finetuning for classification tasks</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="#7-transformer-architecture">Transformer Architecture</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="#8-self-attention-mechanism">Self-attention mechanism</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="#9-bert-vs-gpt">BERT vs GPT</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="#10-datasets-used-for-gpt-training">Datasets used for GPT Training</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="#11-tokens">Tokens</a></td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="#12-cost-of-pretraining-llms">Cost of Pretraining LLMs</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="#13-pretrained-llms">Pretrained LLMs</a></td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="#14-next-word-prediction-task">Next-Word Prediction Task</a></td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="#15-autoregressive-models">Autoregressive Models</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="#16-gpt-3">GPT-3</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="#17-autoregressive-models續">Autoregressive Models（續）</a></td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="#18-building-an-llm">Building an LLM</a></td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="#19-understanding-word-embeddings">Understanding word embeddings</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="#20-tokenizing-text">Tokenizing text</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="#21-converting-tokens-into-token-ids">Converting tokens into token IDs</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="#22-simple-tokenizer">Simple Tokenizer</a></td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="#23-adding-special-tokens">Adding Special Tokens</a></td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="#24-start-and-end-of-text">Start and End of Text</a></td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="#25-data-sampling-with-a-sliding-window">Data sampling with a sliding window</a></td>
+</tr>
+<tr>
+<td>26</td>
+<td><a href="#26-data-loaders">Data Loaders</a></td>
+</tr>
+<tr>
+<td>27</td>
+<td><a href="#27-sliding-window">Sliding Window</a></td>
+</tr>
+<tr>
+<td>28</td>
+<td><a href="#28-embedding-layers">Embedding layers</a></td>
+</tr>
+<tr>
+<td>29</td>
+<td><a href="#29-positional-embeddings">Positional Embeddings</a></td>
+</tr>
+<tr>
+<td>30</td>
+<td><a href="#30-input-processing-pipeline">Input Processing Pipeline</a></td>
+</tr>
+<tr>
+<td>A</td>
+<td><a href="#附錄-a名詞與架構速查表">附錄 A：名詞與架構速查表</a></td>
+</tr>
+<tr>
+<td>B</td>
+<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
+</tr>
+<tr>
+<td>C</td>
+<td><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a></td>
+</tr>
+<tr>
+<td>D</td>
+<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
+</tr>
+<tr>
+<td>E</td>
+<td><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a></td>
+</tr>
+<tr>
+<td>F</td>
+<td><a href="#附錄-f互動測驗答錯題目-複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
+</tr>
+</tbody>
+</table>
 </main>
 </div>
 </body>
