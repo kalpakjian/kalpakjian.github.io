@@ -2,8 +2,10 @@
 
 > 課程：Certificate in Application of Computer Vision Technology (Part-time)
 > 機構：匯縱專業發展中心（IVDC）
+> 涵蓋檔案：4 IVDC_Responsible AI.pptx（→ PDF）
 > 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、關鍵數字、法規細節與考點。
-> 凡本筆記補充、由本筆記補充的內容，一律以 **（補充）** 標示，方便分辨「考試範圍」與「延伸理解」。
+> 課程內容多為投影片重點字句；本筆記補上「每句話背後的概念」與香港《個人資料（私隱）條例》的對應關係，方便理解與應試。
+> 凡本筆記補充的內容，一律以 **（補充）** 標示，方便分辨「考試範圍」與「延伸理解」。
 > 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 
 ---
@@ -63,13 +65,13 @@ Responsible AI（負責任的 AI）
   │     ├─ 正面：提升公共安全、改善醫療服務
   │     └─ 挑戰：就業與勞動力變化、社會不平等、對人類行為的影響
   │
-  └─ 六項倫理使用建議+ 結論：創新與倫理責任必須平衡
+  └─ 六項倫理使用建議 ＋ 結論：創新與倫理責任必須平衡
 ```
 
 | 你會用到的關鍵詞 | 一句話記法 |
 |---|---|
 | Responsible AI | 在 AI **整個生命週期**都主動降低對個人與社會的風險 |
-| Ethical AI Principles | 本節列 **12 項**（由 Reliability 到 Transparency） |
+| Ethical AI Principles | 課程列 **12 項**（由 Reliability 到 Transparency） |
 | AI Practice Guide | 涵蓋專案生命週期的 **6 個階段** |
 | Ethical Issues in CV | 四大議題：隱私／偏見／資安同意／問責透明 |
 | Privacy and Surveillance | 人臉辨識可在**未經同意**下監控與追蹤 |
@@ -104,7 +106,7 @@ Responsible AI（負責任的 AI）
 **Responsible AI（負責任的 AI）** 指在 AI 系統的**整個生命週期**（設計 → 開發 → 部署 → 維運 → 退役）中，
 主動辨識並降低對**個人**與**社會**造成的風險，使系統同時滿足三個條件：
 
-| 面向 | 要求 | 對應本節原則 |
+| 面向 | 要求 | 對應課程原則 |
 |------|------|-------------------|
 | **合法** | 符合法律與監管要求 | Lawfulness and Compliance |
 | **合乎倫理** | 符合公平、人權、社會價值 | Fairness、Diversity and Inclusion、Beneficial AI |
@@ -113,9 +115,9 @@ Responsible AI（負責任的 AI）
 > **（補充）** 業界最常引用的三分法就是「**Lawful（合法）／Ethical（合乎倫理）／Robust（穩健）**」；
 > 記法是：**先合法，再談倫理，最後要能用得住**。
 
-### 1.2 本節點出的挑戰（Challenges on AI）
+### 1.2 課程點出的挑戰（Challenges on AI）
 
-本節以「Challenges on AI」帶出整份內容要處理的問題，可歸納為六大類：
+課程以「Challenges on AI」帶出整份內容要處理的問題，可歸納為六大類：
 
 | # | 挑戰 | 具體表現 | 本筆記對應章節 |
 |---|------|----------|----------------|
@@ -142,7 +144,7 @@ Responsible AI（負責任的 AI）
 
 ## 2. Ethical AI Principles（12 項倫理原則）
 
-> 本節：標題「**Ethical AI Principles**」，以 12 個圓形標籤列出倫理原則。
+> 課程：標題「**Ethical AI Principles**」，以 12 個圓形標籤列出倫理原則。
 
 <!-- RAI-FIGURE:ch02-twelve-principles -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -185,14 +187,14 @@ Responsible AI（負責任的 AI）
 | **Safety vs Reliability/Robustness/Security** | Safety 談「**對人的傷害**」；Reliability/Robustness/Security 談「**系統本身不出錯、不被攻破**」 |
 | **Transparency vs Accountability** | Transparency 是「**資訊公開、可解釋**」；Accountability 是「**責任可被追究**」——透明是問責的前提，但不等於問責 |
 
-> **考點**：本節列的是 **12 項**。最常考「配對題」——給你一句描述，要你選出對應原則。
+> **考點**：課程列的是 **12 項**。最常考「配對題」——給你一句描述，要你選出對應原則。
 > 例：「人必須能覆核 AI 的決定」→ **Human Oversight**；「不因種族而準確率不同」→ **Fairness**。
 
 ---
 
 ## 3. AI Practice Guide（AI 專案生命週期實務指南）
 
-> 本節：標題「**AI Practice Guide**」，
+> 課程：標題「**AI Practice Guide**」，
 > 說明為「**Provides detailed management and technical practices to be followed during the whole AI project lifecycle**」
 > （提供在**整個 AI 專案生命週期**都必須遵循的詳細**管理**與**技術**實務）。
 
@@ -214,15 +216,18 @@ Responsible AI（負責任的 AI）
 | 5 | **System Development** | 系統開發 | 模型訓練／建置／測試、整合與上線準備 |
 | 6 | **System Operation and Monitoring** | 系統營運與監控 | 上線後持續監控效能、偏誤、漂移與事故處理 |
 
-> **（補充）** 本節把它畫成一條由上而下的流程；實務上第 4、5 階段常被合稱「開發」，但本節**分開列出**，
+> **（補充）** 課程把它畫成一條由上而下的流程；實務上第 4、5 階段常被合稱「開發」，但課程**分開列出**，
 > 考試時請記得是 **6 個階段**、且最後一項是「**System Operation and Monitoring**」（強調**監控是持續的**）。
 
 ### 3.2 管理實務 vs 技術實務
 
-本節強調這份指南同時包含「**management**」與「**technical**」兩類實務：
+課程強調這份指南同時包含「**management**」與「**technical**」兩類實務：
 
-| 類別 | 例子 |\r\n|---|---|\r\n| **管理實務** | 倫理審查委員會、影響評估、責任矩陣、供應商條款、事故通報流程 || **技術實務** | 資料集多樣性檢查、公平性指標量測、模型可解釋性工具、存取控制與加密、模型監控與漂移偵測 |
-### 3.3 與本課程其他連結
+| 類別 | 例子 |
+|---|---|
+| **管理實務** | 倫理審查委員會、影響評估、責任矩陣、供應商條款、事故通報流程 |
+| **技術實務** | 資料集多樣性檢查、公平性指標量測、模型可解釋性工具、存取控制與加密、模型監控與漂移偵測 |
+### 3.3 與本課程其他單元的連結
 
 | 本課程主題 | 對應的 Responsible AI 動作 |
 |---|---|
@@ -236,7 +241,7 @@ Responsible AI（負責任的 AI）
 
 ## 4. Ethical Concerns：電腦視覺的四大倫理議題
 
-> 本節標題「**Ethical Issues in Computer Vision**」，以四張卡片列出四大議題。
+> 課程標題「**Ethical Issues in Computer Vision**」，以四張卡片列出四大議題。
 
 <!-- RAI-FIGURE:ch04-four-ethical-issues -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -266,13 +271,13 @@ Responsible AI（負責任的 AI）
 > **（補充）** 這四項正好對應個人資料的**四個生命階段**：**蒐集 → 建模 → 儲存 → 決策**。
 > 考試若問「下列何者**不屬於**電腦視覺的倫理議題」，通常會混入與 CV 無關的選項（如資料庫正規化）。
 
-> **考點**：務必背熟四大議題的**英文原名**，因為本節就是用英文命題；順序也要記（Privacy → Bias → Data Security → Accountability）。
+> **考點**：務必背熟四大議題的**英文原名**，因為課程就是用英文命題；順序也要記（Privacy → Bias → Data Security → Accountability）。
 
 ---
 
 ## 5. Privacy and Surveillance（隱私與監控）
 
-> 本節：標題「**Privacy and Surveillance**」，兩段文字。
+> 課程：標題「**Privacy and Surveillance**」，兩段文字。
 
 <!-- RAI-FIGURE:ch05-privacy-surveillance -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -281,7 +286,7 @@ Responsible AI（負責任的 AI）
 </figure>
 <!-- /RAI-FIGURE -->
 
-### 5.1 本節重點（逐句對照）
+### 5.1 課程重點（逐句對照）
 
 | 原文 | 中文 | 關鍵詞 |
 |---|---|---|
@@ -292,7 +297,7 @@ Responsible AI（負責任的 AI）
 
 ### 5.2 三個主體都要負責
 
-本節特別點名「**Governments, organizations, and private companies**」三方，代表監控風險**不限於公部門**：
+課程特別點名「**Governments, organizations, and private companies**」三方，代表監控風險**不限於公部門**：
 
 | 主體 | 典型情境 | 主要風險 |
 |------|----------|----------|
@@ -320,7 +325,7 @@ Responsible AI（負責任的 AI）
 
 ## 6. Bias and Discrimination（偏見與歧視）
 
-> 本節：標題「**Bias and Discrimination**」，兩段文字。
+> 課程：標題「**Bias and Discrimination**」，兩段文字。
 
 <!-- RAI-FIGURE:ch06-bias-discrimination -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -329,7 +334,7 @@ Responsible AI（負責任的 AI）
 </figure>
 <!-- /RAI-FIGURE -->
 
-### 6.1 本節重點（逐句對照）
+### 6.1 課程重點（逐句對照）
 
 | 原文 | 中文 | 關鍵詞 |
 |---|---|---|
@@ -351,7 +356,7 @@ Responsible AI（負責任的 AI）
 ```
 
 > **（補充）** 注意：**偏見不是模型「故意」的**，而是資料的統計反映。
-> 所以本節把根因放在「**datasets are not diverse or representative**」，而不是演算法本身。
+> 所以課程把根因放在「**datasets are not diverse or representative**」，而不是演算法本身。
 
 ### 6.3 偏見的三個來源（**（補充）**）
 
@@ -429,7 +434,7 @@ B（少數族群）         2000    12.0%     10.0%      89.0%
 | 準確率 95% vs 89% | 整體看起來「還不錯」，但**落差 6 個百分點**已足以造成歧視 |
 | FNR 6% vs 12% | 少數族群「**該通過卻被擋下**」的機率是 **2 倍** → 機會均等被違反 |
 | FPR 4% vs 10% | 少數族群被「**誤判為通過**」的機率也偏高 → 均等化賠率被違反 |
-| 只報整體準確率 | **會掩蓋**族群間的落差——所以本節才強調要檢查資料是否多元 |
+| 只報整體準確率 | **會掩蓋**族群間的落差——所以課程才強調要檢查資料是否多元 |
 
 > **考點**：**根因**是「資料集不夠多元或不具代表性」（not diverse or representative）；
 > 受影響的三個維度是「**ethnic groups、genders、age groups**」；後果是「**unfair treatment and discrimination**」。
@@ -439,7 +444,7 @@ B（少數族群）         2000    12.0%     10.0%      89.0%
 
 ## 7. Data Security and Consent（資料安全與同意）
 
-> 標題同為「**Data Security and Consent**」。以下合併整理。
+> 課程有兩張投影片**內容完全相同**（重複投影片），標題同為「**Data Security and Consent**」。以下合併整理。
 
 <!-- RAI-FIGURE:ch07-data-security-consent -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -448,7 +453,7 @@ B（少數族群）         2000    12.0%     10.0%      89.0%
 </figure>
 <!-- /RAI-FIGURE -->
 
-### 7.1 本節重點（逐句對照）
+### 7.1 課程重點（逐句對照）
 
 | 原文 | 中文 | 關鍵詞 |
 |---|---|---|
@@ -459,16 +464,16 @@ B（少數族群）         2000    12.0%     10.0%      89.0%
 
 ### 7.2 兩段論：安全（Security）× 同意（Consent）
 
-本節把兩個不同層次的問題放在同一頁，考試常考「**哪一句屬於哪一類**」：
+課程把兩個不同層次的問題放在同一頁，考試常考「**哪一句屬於哪一類**」：
 
-| 層次 | 問題 | 對應本節字句 | 香港法規對應 |
+| 層次 | 問題 | 對應課程字句 | 香港法規對應 |
 |------|------|--------------|--------------|
 | **Security（安全）** | 資料被偷、被外洩、被濫用 | unauthorized access、data breaches、misuse of personal images | **DPP4 保安原則**：確保資料的**保密性、完整性、可用性** |
 | **Consent（同意）** | 當事人根本不知道自己的影像被蒐集 | not be aware、informed consent | **DPP1 收集原則**（合法、公平）＋**DPP3 使用原則**（取得同意） |
 
 ### 7.3 什麼才算「知情同意」（**（補充）**）
 
-本節只點出「informed consent」這個詞，考試若要考細節，判斷標準是**四個要素**：
+課程只點出「informed consent」這個詞，考試若要考細節，判斷標準是**四個要素**：
 
 | 要素 | 說明 | 反例（不算知情同意） |
 |------|------|---------------------|
@@ -494,7 +499,7 @@ B（少數族群）         2000    12.0%     10.0%      89.0%
 
 ## 8. Accountability and Transparency（問責與透明）
 
-> 本節：標題「**Accountability and Transparency**」，一段文字（含自駕車例子）。
+> 課程：標題「**Accountability and Transparency**」，一段文字（含自駕車例子）。
 
 <!-- RAI-FIGURE:ch08-accountability-transparency -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -503,7 +508,7 @@ B（少數族群）         2000    12.0%     10.0%      89.0%
 </figure>
 <!-- /RAI-FIGURE -->
 
-### 8.1 本節重點（逐句對照）
+### 8.1 課程重點（逐句對照）
 
 | 原文 | 中文 | 關鍵詞 |
 |---|---|---|
@@ -514,7 +519,7 @@ B（少數族群）         2000    12.0%     10.0%      89.0%
 
 ### 8.2 自駕車例子：責任鏈上的四個角色
 
-本節只列了三個（developer / manufacturer / user），實務上還要加上**監管者**：
+課程只列了三個（developer / manufacturer / user），實務上還要加上**監管者**：
 
 | 角色 | 可能被追究的責任 | 對應倫理原則 |
 |------|------------------|-------------------|
@@ -554,7 +559,7 @@ Human Oversight（人類監督）：人可介入、覆核、否決
 
 ## 9. The Personal Data (Privacy) Ordinance（個人資料（私隱）條例）
 
-> 本節：標題「**The Personal Data (Privacy) Ordinance (個人資料(私隱)條例)**」，
+> 課程：標題「**The Personal Data (Privacy) Ordinance (個人資料(私隱)條例)**」，
 > 右下角標籤為「**data privacy**」，並附官方連結（pcpd.org.hk）。
 
 <!-- RAI-FIGURE:ch09-pdpo-ordinance -->
@@ -564,7 +569,7 @@ Human Oversight（人類監督）：人可介入、覆核、否決
 </figure>
 <!-- /RAI-FIGURE -->
 
-### 9.1 本節重點（逐句對照）
+### 9.1 課程重點（逐句對照）
 
 | 原文 | 中文 | 關鍵詞 |
 |---|---|---|
@@ -582,7 +587,7 @@ Human Oversight（人類監督）：人可介入、覆核、否決
 | **中文全名** | 《個人資料（私隱）條例》 |
 | **簡稱** | **PDPO** |
 | **香港法例章號** | **第 486 章（Cap. 486）** |
-| **生效日期** | **1996 年 12 月 20 日**（本節寫「December 1996」） |
+| **生效日期** | **1996 年 12 月 20 日**（課程寫「December 1996」） |
 | **監管機構** | **PCPD**＝個人資料私隱專員公署（Office of the Privacy Commissioner for Personal Data） |
 | **主要負責人** | **個人資料私隱專員（Privacy Commissioner）** |
 | **適用範圍** | **公私營機構與政府部門都適用**（不只管政府） |
@@ -612,22 +617,22 @@ PDPO 下的「個人資料」須同時符合三個條件：
 
 ### 9.5 執法與後果
 
-| 手段 | 說明 | 本節對應 |
+| 手段 | 說明 | 課程對應 |
 |------|------|----------|
 | **勸喻與指引** | 專員發出指引、實務守則、調查報告 | — |
-| **執行通知（Enforcement Notice）** | 要求資料使用者**停止或改善**違反行為；不遵從即屬犯罪 | 對應本節「to enforce improvement」 |
-| **資料保安事故通知** | 就保安事故通知機構並要求補救（本節用語） | **personal data security breach notification** |
+| **執行通知（Enforcement Notice）** | 要求資料使用者**停止或改善**違反行為；不遵從即屬犯罪 | 對應課程「to enforce improvement」 |
+| **資料保安事故通知** | 就保安事故通知機構並要求補救（課程用語） | **personal data security breach notification** |
 | **檢控** | 對違反 PDPO 的罪行提出檢控 | violate the PDPO |
 | **停止披露通知（Cessation Notice）** | 2021 年修訂引入，處理「**起底**」（doxxing） | **（補充）** |
 
 > **考點**：三個必背數字／名稱——**Cap. 486**、**1996 年 12 月**、**PCPD**。
-> 並記住本節把條例的「**Aim**」明確寫成「protect the **privacy interests of individuals** in relation to **personal data**」。
+> 並記住課程把條例的「**Aim**」明確寫成「protect the **privacy interests of individuals** in relation to **personal data**」。
 
 ---
 
 ## 10. The Six Principles of PDPO（PDPO 六項保護原則）
 
-> 本節：標題「**The Six Principles of PDPO**」，以表格列出六項原則，
+> 課程：標題「**The Six Principles of PDPO**」，以表格列出六項原則，
 > 頁尾附官方來源連結：
 > https://www.pcpd.org.hk/english/data_privacy_law/6_data_protection_principles/principles.html
 
@@ -724,14 +729,14 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 挑戰：搶飯碗（就業）＋ 拉大差距（不平等）＋ 改變行為（監控下的自我審查）
 ```
 
-> **考點**：本節把社會影響分為 **5 項**，**順序**是 Safety → Healthcare → Employment → Inequality → Behavior。
+> **考點**：課程把社會影響分為 **5 項**，**順序**是 Safety → Healthcare → Employment → Inequality → Behavior。
 > 出題常問「下列何者**不是**電腦視覺的社會影響」，或要你把項目歸類為「正面／負面」。
 
 ---
 
 ## 12. Enhanced Public Safety（提升公共安全）
 
-> 本節：標題「**Enhanced Public Safety**」。
+> 課程：標題「**Enhanced Public Safety**」。
 
 <!-- RAI-FIGURE:ch12-public-safety -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -740,7 +745,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 </figure>
 <!-- /RAI-FIGURE -->
 
-### 12.1 本節重點（逐句對照）
+### 12.1 課程重點（逐句對照）
 
 | 原文 | 中文 | 關鍵詞 |
 |---|---|---|
@@ -774,7 +779,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 
 ## 13. Improved Healthcare Services（改善醫療服務）
 
-> 本節：標題「**Improved Healthcare Services**」。
+> 課程：標題「**Improved Healthcare Services**」。
 
 <!-- RAI-FIGURE:ch13-healthcare -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -783,7 +788,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 </figure>
 <!-- /RAI-FIGURE -->
 
-### 13.1 本節重點（逐句對照）
+### 13.1 課程重點（逐句對照）
 
 | 原文 | 中文 | 關鍵詞 |
 |---|---|---|
@@ -800,12 +805,12 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 
 ### 13.3 兩個關鍵字：更早（earlier）＋ 更準（more accurately）
 
-本節特別強調「**earlier and more accurately**」，因為對**癌症與眼科疾病**而言：
+課程特別強調「**earlier and more accurately**」，因為對**癌症與眼科疾病**而言：
 
 - **更早發現** → 治療選項更多、存活率更高。
 - **更準確** → 減少不必要的侵入性檢查與病患焦慮。
 
-本節舉的兩個例子是 **cancer（癌症）** 與 **eye diseases（眼部疾病）**，最終目的是 **saving lives（挽救生命）**。
+課程舉的兩個例子是 **cancer（癌症）** 與 **eye diseases（眼部疾病）**，最終目的是 **saving lives（挽救生命）**。
 
 > **（補充）** 醫療是電腦視覺**風險／報酬最高**的場域之一：誤判的代價極大，
 > 因此特別需要 §8 的**問責與透明**（誰為誤診負責？）與 §2 的 **Human Oversight**（醫師必須有最終決定權）。
@@ -817,7 +822,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 
 ## 14. Employment and Workforce Changes（就業與勞動力變化）
 
-> 本節：標題「**Employment and Workforce Changes**」。
+> 課程：標題「**Employment and Workforce Changes**」。
 
 <!-- RAI-FIGURE:ch14-employment-workforce -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -826,7 +831,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 </figure>
 <!-- /RAI-FIGURE -->
 
-### 14.1 本節重點（逐句對照）
+### 14.1 課程重點（逐句對照）
 
 | 原文 | 中文 | 關鍵詞 |
 |---|---|---|
@@ -834,7 +839,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 | …such as **quality inspection in manufacturing** or **cashier services in retail**. | …例如**製造業的品質檢驗**或**零售業的收銀服務**。 | quality inspection、cashier services |
 | While this can **improve efficiency**, it may also lead to **job displacement** and require workers to **develop new skills**. | 這雖能**提升效率**，卻也可能造成**工作被取代**，並要求勞工**發展新技能**。 | improve efficiency、job displacement、new skills |
 
-### 14.2 兩個本節舉例
+### 14.2 課程的兩個例子
 
 | 產業 | 被取代的職務 | 對應的 CV 技術 |
 |------|--------------|----------------|
@@ -859,7 +864,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 
 ## 15. Social Inequality（社會不平等）
 
-> 本節：標題「**Social Inequality**」。
+> 課程：標題「**Social Inequality**」。
 
 <!-- RAI-FIGURE:ch15-social-inequality -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -868,7 +873,7 @@ DPP1 收集 → DPP2 保留 → DPP3 使用 → DPP4 保安 → DPP5 開放 → 
 </figure>
 <!-- /RAI-FIGURE -->
 
-### 15.1 本節重點（逐句對照）
+### 15.1 課程重點（逐句對照）
 
 | 原文 | 中文 | 關鍵詞 |
 |---|---|---|
@@ -893,7 +898,7 @@ existing social and economic inequalities 被 widening（擴大）
 
 ### 15.3 注意用字：是「**擴大既有的**」不平等
 
-本節用的是「**widening existing** inequalities」——意思是 AI **不是創造**不平等，而是**放大原本就存在的**落差。
+課程用的是「**widening existing** inequalities」——意思是 AI **不是創造**不平等，而是**放大原本就存在的**落差。
 這個細節常出現在選項設計中（「AI 創造了不平等」vs「AI 擴大了既有的不平等」）。
 
 > **（補充）** 因應方向：**開放資料集、開源模型、公共算力、政府補助與數位素養教育**，
@@ -906,7 +911,7 @@ existing social and economic inequalities 被 widening（擴大）
 
 ## 16. Influence on Human Behavior（對人類行為的影響）
 
-> 本節：標題「**Influence on Human Behavior**」。
+> 課程：標題「**Influence on Human Behavior**」。
 
 <!-- RAI-FIGURE:ch16-human-behavior -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -915,7 +920,7 @@ existing social and economic inequalities 被 widening（擴大）
 </figure>
 <!-- /RAI-FIGURE -->
 
-### 16.1 本節重點（逐句對照）
+### 16.1 課程重點（逐句對照）
 
 | 原文 | 中文 | 關鍵詞 |
 |---|---|---|
@@ -947,7 +952,7 @@ existing social and economic inequalities 被 widening（擴大）
 
 ## 17. Recommendations for Ethical Use（倫理使用建議）
 
-> 本節：標題同為「**Recommendations for Ethical Use**」，分兩頁列出建議。
+> 課程：標題同為「**Recommendations for Ethical Use**」，分兩頁列出建議。
 >  開頭說明：「To ensure that computer vision technologies **benefit society while minimizing risks**, several measures should be adopted.」
 
 <!-- RAI-FIGURE:ch17-recommendations -->
@@ -957,7 +962,7 @@ existing social and economic inequalities 被 widening（擴大）
 </figure>
 <!-- /RAI-FIGURE -->
 
-### 17.1 六項建議（本節順序，已去除跨頁重複）
+### 17.1 六項建議（課程順序，已去除跨頁重複）
 
 | # | 建議（英文） | 中文 | 對應倫理原則 | 對應 DPP |
 |:---:|---|---|---|---|
@@ -997,7 +1002,7 @@ existing social and economic inequalities 被 widening（擴大）
 
 ## 18. Conclusion（結論）
 
-> 本節：標題同為「**Conclusion**」，分兩頁收尾。
+> 課程：標題同為「**Conclusion**」，分兩頁收尾。
 
 <!-- RAI-FIGURE:ch18-conclusion -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -1149,16 +1154,16 @@ existing social and economic inequalities 被 widening（擴大）
 | 4 | **DPP5 與 DPP6 對調** | 「開放＝讓人查自己的資料」 | **DPP5**＝制定並**公開政策與實務**；**DPP6**＝**查閱與更正**個人資料 |
 | 5 | **偏見的根因** | 「演算法本身有偏見」 | 根因是**資料集不夠多元或不具代表性**（not diverse or representative） |
 | 6 | **公平性定義可以全滿足** | 「只要夠努力就能同時滿足所有公平定義」 | 多種公平性定義**數學上無法同時全部滿足**，必須取捨 |
-| 7 | **監控風險只來自政府** | 「只有政府才會監控」 | 本節點名 **governments、organizations、private companies** 三方 |
+| 7 | **監控風險只來自政府** | 「只有政府才會監控」 | 課程點名 **governments、organizations、private companies** 三方 |
 | 8 | **資料安全＝隱私** | 「資安做好就沒有隱私問題」 | 資安（DPP4）與**知情同意**（DPP1／DPP3）是**兩件不同的事** |
 | 9 | **透明＝問責** | 「能解釋就等於有人負責」 | 透明是**問責的前提**，但**不等於**問責；問責還需可追究的責任歸屬 |
-| 10 | **AI 創造了不平等** | 「AI 造成新的社會不平等」 | 本節用 **widening existing** inequalities——**擴大既有的**不平等 |
+| 10 | **AI 創造了不平等** | 「AI 造成新的社會不平等」 | 課程用 **widening existing** inequalities——**擴大既有的**不平等 |
 
-### B.2  關鍵字對照（小心被換字）
+### B.2 關鍵字對照（小心被換字）
 
 | 用字 | 常見誘答（錯） | 正確 |
 |---|---|---|
-| **facial** recognition | fingerprint / iris recognition（本節只寫 facial） | 人臉辨識 |
+| **facial** recognition | fingerprint / iris recognition（課程只寫 facial） | 人臉辨識 |
 | **earlier and more accurately** | cheaper / faster | 更早、更準 |
 | **without their consent** | with partial consent | 未經同意 |
 | **widening** existing inequalities | creating new inequalities | 擴大既有 |
@@ -1166,7 +1171,7 @@ existing social and economic inequalities 被 widening（擴大）
 | **December 1996** | 1997 / 1999 | 1996 年 12 月 |
 | **six** data protection principles | five / seven | 六項 |
 
-### B.3  概念混淆快問快答
+### B.3 概念混淆快問快答
 
 | 問 | 答 |
 |---|---|
@@ -1194,11 +1199,11 @@ existing social and economic inequalities 被 widening（擴大）
 **做法**：把整個資料夾複製到 USB 隨身碟或手機，雙擊 `index.html` 即可閱讀，雙擊 `mc-quiz.html` 即可作答。
 作答進度存在**瀏覽器本機**（localStorage），換電腦不會帶過去——所以正式考試前建議**在同一台裝置**複習。
 
-### C.2 沒有網路時，如何取得本節相關資源
+### C.2 沒有網路時，如何取得課程相關資源
 
 | 需要什麼 | 離線做法 |
 |---|---|
-|  PDF | 已下載於本機（`4 IVDC_Responsible AI.pdf`），可直接用瀏覽器或 PDF 閱讀器開啟 |
+| 課程 PDF | 已下載於本機（`4 IVDC_Responsible AI.pdf`），可直接用瀏覽器或 PDF 閱讀器開啟 |
 | PCPD 六原則官方頁面 | 有網路時先「**列印成 PDF**」或用瀏覽器的「**離線閱讀**」功能存檔 |
 | PDPO 條文（Cap. 486） | 到 Hong Kong e-Legislation 下載 PDF 版本存檔 |
 | 這份筆記的測驗 | `mc-quiz.html` 本身就是離線檔，不需網路 |
@@ -1215,7 +1220,7 @@ existing social and economic inequalities 被 widening（擴大）
 | **NIST AI Risk Management Framework** | 美國 NIST 的 AI 風險管理框架 |
 | **Model Cards / Datasheets for Datasets** | 模型與資料集的透明化文件格式 |
 
-> ⚠️ 上述延伸資源**不在本節內**，僅供理解背景；考試請以**本節內容**為準。
+> ⚠️ 上述延伸資源**不在課程內**，僅供理解背景；考試請以**課程內容**為準。
 
 ### C.4 本筆記的程式範例
 
@@ -1286,10 +1291,10 @@ Establish 法規框架 ｜ Ensure 透明 ｜ Use 多元且具代表性的資料�
 Implement 資安措施 ｜ Require 知情同意 ｜ Regularly audit 公平/準確/問責
 
 --- 結論---
-機會 × 挑戰：（efficiency, safety, quality of life）× 挑戰（privacy, bias, security, accountability）
+機會（efficiency, safety, quality of life）× 挑戰（privacy, bias, security, accountability）
      Balancing technological innovation with ethical responsibility
      respect individual rights + promote fairness + maintain public trust
-手段與目的： strong regulations + transparent practices + continuous monitoring
+手段與目的：strong regulations + transparent practices + continuous monitoring
      目的 = economic progress + well-being of society
 
 ===============================================================================
