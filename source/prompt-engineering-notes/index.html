@@ -698,201 +698,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </nav>
 <main>
 <h1 id="prompt-engineering-學習筆記考試溫習版">Prompt Engineering 學習筆記（考試溫習版）</h1>
-<blockquote>
-<p>課程：Certificate in Application of Large Language Model (LLM) (Part-time)<br />
-機構：匯縱專業發展中心（IVDC）<br />
-本筆記依課程大綱每一個標題逐一填充內容，並補上定義、可複製的提示詞範本、常見錯誤與考點。<br />
-本筆記把該處的圖意用文字補齊，並把每頁的「Classroom Exercise」併入所屬技術章節。<br />
-🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
-</blockquote>
-<hr>
-<h2 id="目錄">目錄</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>章節</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-1</td>
-<td><a href="#1-prerequisites-objectives">Prerequisites & Objectives</a></td>
-</tr>
-<tr>
-<td>2</td>
-<td><a href="#2-what-are-prompts">What are prompts?</a></td>
-</tr>
-<tr>
-<td>3</td>
-<td><a href="#3-why-prompt-engineering">Why Prompt Engineering?</a></td>
-</tr>
-<tr>
-<td>4</td>
-<td><a href="#4-first-basic-prompt">First Basic Prompt</a></td>
-</tr>
-<tr>
-<td>5</td>
-<td><a href="#5-elements-of-a-prompt">Elements of a Prompt</a></td>
-</tr>
-<tr>
-<td>6</td>
-<td><a href="#6-settings-to-keep-in-mind-temperature-與-top-p">Settings to keep in mind: temperature 與 top_p</a></td>
-</tr>
-<tr>
-<td>7</td>
-<td><a href="#7-designing-prompts-for-different-tasks六大任務">Designing Prompts for Different Tasks（六大任務）</a></td>
-</tr>
-<tr>
-<td>8</td>
-<td><a href="#8-prompt-engineering-技術地圖七大類">Prompt Engineering 技術地圖（七大類）</a></td>
-</tr>
-<tr>
-<td>9</td>
-<td><a href="#9-zero-shot-prompting">Zero-Shot Prompting</a></td>
-</tr>
-<tr>
-<td>10</td>
-<td><a href="#10-few-shot-prompting">Few-Shot Prompting</a></td>
-</tr>
-<tr>
-<td>11</td>
-<td><a href="#11-clear-instructions-and-task-framing">Clear Instructions and Task Framing</a></td>
-</tr>
-<tr>
-<td>12</td>
-<td><a href="#12-system-prompting">System Prompting</a></td>
-</tr>
-<tr>
-<td>13</td>
-<td><a href="#13-role-prompting">Role Prompting</a></td>
-</tr>
-<tr>
-<td>14</td>
-<td><a href="#14-contextual-prompting">Contextual Prompting</a></td>
-</tr>
-<tr>
-<td>15</td>
-<td><a href="#15-markdown-prompting">Markdown Prompting</a></td>
-</tr>
-<tr>
-<td>16</td>
-<td><a href="#16-chain-of-thought-cot-prompting">Chain-of-Thought (CoT) Prompting</a></td>
-</tr>
-<tr>
-<td>17</td>
-<td><a href="#17-tabular-chain-of-thought-tcot">Tabular Chain-of-Thought (TCoT)</a></td>
-</tr>
-<tr>
-<td>18</td>
-<td><a href="#18-skeleton-of-thought-sot">Skeleton-of-Thought (SoT)</a></td>
-</tr>
-<tr>
-<td>19</td>
-<td><a href="#19-step-back-prompting">Step-Back Prompting</a></td>
-</tr>
-<tr>
-<td>20</td>
-<td><a href="#20-least-to-most-prompting">Least-to-Most Prompting</a></td>
-</tr>
-<tr>
-<td>21</td>
-<td><a href="#21-tree-of-thoughts-tot">Tree-of-Thoughts (ToT)</a></td>
-</tr>
-<tr>
-<td>22</td>
-<td><a href="#22-interactive-tree-of-thoughts-itot">Interactive Tree-of-Thoughts (iToT)</a></td>
-</tr>
-<tr>
-<td>23</td>
-<td><a href="#23-self-generated-in-context-learning-sg-icl">Self-Generated In-Context Learning (SG-ICL)</a></td>
-</tr>
-<tr>
-<td>24</td>
-<td><a href="#24-constitutional-ai-cai">Constitutional AI (CAI)</a></td>
-</tr>
-<tr>
-<td>25</td>
-<td><a href="#25-perspective-taking-prompting">Perspective-Taking Prompting</a></td>
-</tr>
-<tr>
-<td>26</td>
-<td><a href="#26-analogical-prompting">Analogical Prompting</a></td>
-</tr>
-<tr>
-<td>27</td>
-<td><a href="#27-multi-modal-prompting">Multi-Modal Prompting</a></td>
-</tr>
-<tr>
-<td>28</td>
-<td><a href="#28-persona-consistency-prompting">Persona Consistency Prompting</a></td>
-</tr>
-<tr>
-<td>29</td>
-<td><a href="#29-predictive-prompting">Predictive Prompting</a></td>
-</tr>
-<tr>
-<td>30</td>
-<td><a href="#30-generate-knowledge-prompting">Generate Knowledge Prompting</a></td>
-</tr>
-<tr>
-<td>31</td>
-<td><a href="#31-program-aided-language-model-pal">Program-aided Language Model (PAL)</a></td>
-</tr>
-<tr>
-<td>32</td>
-<td><a href="#32-react">ReAct</a></td>
-</tr>
-<tr>
-33</td>
-<td><a href="#33-tools-ides">Tools & IDEs</a></td>
-</tr>
-<tr>
-<td>34</td>
-<td><a href="#34-applications外部工具與資料增強生成">Applications（外部工具與資料增強生成）</a></td>
-</tr>
-<tr>
-<td>35</td>
-<td><a href="#35-opportunities-and-future-directions">Opportunities and Future Directions</a></td>
-</tr>
-<tr>
-<td>36</td>
-<td><a href="#36-model-safety">Model Safety</a></td>
-</tr>
-<tr>
-<td>37</td>
-<td><a href="#37-prompt-injection-三大攻擊">Prompt Injection 三大攻擊</a></td>
-</tr>
-<tr>
-<td>38</td>
-<td><a href="#38-rlhf">RLHF</a></td>
-</tr>
-<tr>
-<td>A</td>
-<td><a href="#附錄-aprompt-元素與參數速查表">附錄 A：Prompt 元素與參數速查表</a></td>
-</tr>
-<tr>
-<td>B</td>
-<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
-</tr>
-<tr>
-<td>C</td>
-<td><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a></td>
-</tr>
-<tr>
-<td>D</td>
-<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
-</tr>
-<tr>
-<td>E</td>
-<td><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a></td>
-</tr>
-<tr>
-<td>F</td>
-<td><a href="#附錄-f互動測驗答錯題目-複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
-</tr>
-</tbody>
-</table>
 <hr>
 <h2 id="0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</h2>
 <div class="codehilite"><pre><span></span><code>Prompt Engineering = 設計並最佳化「餵給語言模型的指令與上下文」，讓同一個模型產出你要的結果
@@ -4955,6 +4760,194 @@ RLHF：Reinforcement Learning from Human Feedback → fit human preference
 </table>
 <hr>
 <p><em>本篇為個人學習筆記整理。</em></p>
+<hr>
+<h2 id="目錄">目錄</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>章節</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+1</td>
+<td><a href="#1-prerequisites-objectives">Prerequisites & Objectives</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#2-what-are-prompts">What are prompts?</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#3-why-prompt-engineering">Why Prompt Engineering?</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#4-first-basic-prompt">First Basic Prompt</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="#5-elements-of-a-prompt">Elements of a Prompt</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="#6-settings-to-keep-in-mind-temperature-與-top-p">Settings to keep in mind: temperature 與 top_p</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="#7-designing-prompts-for-different-tasks六大任務">Designing Prompts for Different Tasks（六大任務）</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="#8-prompt-engineering-技術地圖七大類">Prompt Engineering 技術地圖（七大類）</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="#9-zero-shot-prompting">Zero-Shot Prompting</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="#10-few-shot-prompting">Few-Shot Prompting</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="#11-clear-instructions-and-task-framing">Clear Instructions and Task Framing</a></td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="#12-system-prompting">System Prompting</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="#13-role-prompting">Role Prompting</a></td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="#14-contextual-prompting">Contextual Prompting</a></td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="#15-markdown-prompting">Markdown Prompting</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="#16-chain-of-thought-cot-prompting">Chain-of-Thought (CoT) Prompting</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="#17-tabular-chain-of-thought-tcot">Tabular Chain-of-Thought (TCoT)</a></td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="#18-skeleton-of-thought-sot">Skeleton-of-Thought (SoT)</a></td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="#19-step-back-prompting">Step-Back Prompting</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="#20-least-to-most-prompting">Least-to-Most Prompting</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="#21-tree-of-thoughts-tot">Tree-of-Thoughts (ToT)</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="#22-interactive-tree-of-thoughts-itot">Interactive Tree-of-Thoughts (iToT)</a></td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="#23-self-generated-in-context-learning-sg-icl">Self-Generated In-Context Learning (SG-ICL)</a></td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="#24-constitutional-ai-cai">Constitutional AI (CAI)</a></td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="#25-perspective-taking-prompting">Perspective-Taking Prompting</a></td>
+</tr>
+<tr>
+<td>26</td>
+<td><a href="#26-analogical-prompting">Analogical Prompting</a></td>
+</tr>
+<tr>
+<td>27</td>
+<td><a href="#27-multi-modal-prompting">Multi-Modal Prompting</a></td>
+</tr>
+<tr>
+<td>28</td>
+<td><a href="#28-persona-consistency-prompting">Persona Consistency Prompting</a></td>
+</tr>
+<tr>
+<td>29</td>
+<td><a href="#29-predictive-prompting">Predictive Prompting</a></td>
+</tr>
+<tr>
+<td>30</td>
+<td><a href="#30-generate-knowledge-prompting">Generate Knowledge Prompting</a></td>
+</tr>
+<tr>
+<td>31</td>
+<td><a href="#31-program-aided-language-model-pal">Program-aided Language Model (PAL)</a></td>
+</tr>
+<tr>
+<td>32</td>
+<td><a href="#32-react">ReAct</a></td>
+</tr>
+<tr>
+33</td>
+<td><a href="#33-tools-ides">Tools & IDEs</a></td>
+</tr>
+<tr>
+<td>34</td>
+<td><a href="#34-applications外部工具與資料增強生成">Applications（外部工具與資料增強生成）</a></td>
+</tr>
+<tr>
+<td>35</td>
+<td><a href="#35-opportunities-and-future-directions">Opportunities and Future Directions</a></td>
+</tr>
+<tr>
+<td>36</td>
+<td><a href="#36-model-safety">Model Safety</a></td>
+</tr>
+<tr>
+<td>37</td>
+<td><a href="#37-prompt-injection-三大攻擊">Prompt Injection 三大攻擊</a></td>
+</tr>
+<tr>
+<td>38</td>
+<td><a href="#38-rlhf">RLHF</a></td>
+</tr>
+<tr>
+<td>A</td>
+<td><a href="#附錄-aprompt-元素與參數速查表">附錄 A：Prompt 元素與參數速查表</a></td>
+</tr>
+<tr>
+<td>B</td>
+<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
+</tr>
+<tr>
+<td>C</td>
+<td><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a></td>
+</tr>
+<tr>
+<td>D</td>
+<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
+</tr>
+<tr>
+<td>E</td>
+<td><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a></td>
+</tr>
+<tr>
+<td>F</td>
+<td><a href="#附錄-f互動測驗答錯題目-複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
+</tr>
+</tbody>
+</table>
 </main>
 </div>
 </body>

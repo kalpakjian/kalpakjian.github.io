@@ -1,62 +1,5 @@
 # Prompt Engineering 學習筆記（考試溫習版）
 
-> 課程：Certificate in Application of Large Language Model (LLM) (Part-time)
-> 機構：匯縱專業發展中心（IVDC）
-> 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、可複製的提示詞範本、常見錯誤與考點。
-> 本筆記把該處的圖意用文字補齊，並把每頁的「Classroom Exercise」併入所屬技術章節。
-> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
-
----
-
-## 目錄
-
-| # | 章節 |
-|---|------|
-| 1 | [Prerequisites & Objectives](#1-prerequisites-objectives) |
-| 2 | [What are prompts?](#2-what-are-prompts) |
-| 3 | [Why Prompt Engineering?](#3-why-prompt-engineering) |
-| 4 | [First Basic Prompt](#4-first-basic-prompt) |
-| 5 | [Elements of a Prompt](#5-elements-of-a-prompt) |
-| 6 | [Settings to keep in mind: temperature 與 top_p](#6-settings-to-keep-in-mind-temperature-與-top-p) |
-| 7 | [Designing Prompts for Different Tasks（六大任務）](#7-designing-prompts-for-different-tasks六大任務) |
-| 8 | [Prompt Engineering 技術地圖（七大類）](#8-prompt-engineering-技術地圖七大類) |
-| 9 | [Zero-Shot Prompting](#9-zero-shot-prompting) |
-| 10 | [Few-Shot Prompting](#10-few-shot-prompting) |
-| 11 | [Clear Instructions and Task Framing](#11-clear-instructions-and-task-framing) |
-| 12 | [System Prompting](#12-system-prompting) |
-| 13 | [Role Prompting](#13-role-prompting) |
-| 14 | [Contextual Prompting](#14-contextual-prompting) |
-| 15 | [Markdown Prompting](#15-markdown-prompting) |
-| 16 | [Chain-of-Thought (CoT) Prompting](#16-chain-of-thought-cot-prompting) |
-| 17 | [Tabular Chain-of-Thought (TCoT)](#17-tabular-chain-of-thought-tcot) |
-| 18 | [Skeleton-of-Thought (SoT)](#18-skeleton-of-thought-sot) |
-| 19 | [Step-Back Prompting](#19-step-back-prompting) |
-| 20 | [Least-to-Most Prompting](#20-least-to-most-prompting) |
-| 21 | [Tree-of-Thoughts (ToT)](#21-tree-of-thoughts-tot) |
-| 22 | [Interactive Tree-of-Thoughts (iToT)](#22-interactive-tree-of-thoughts-itot) |
-| 23 | [Self-Generated In-Context Learning (SG-ICL)](#23-self-generated-in-context-learning-sg-icl) |
-| 24 | [Constitutional AI (CAI)](#24-constitutional-ai-cai) |
-| 25 | [Perspective-Taking Prompting](#25-perspective-taking-prompting) |
-| 26 | [Analogical Prompting](#26-analogical-prompting) |
-| 27 | [Multi-Modal Prompting](#27-multi-modal-prompting) |
-| 28 | [Persona Consistency Prompting](#28-persona-consistency-prompting) |
-| 29 | [Predictive Prompting](#29-predictive-prompting) |
-| 30 | [Generate Knowledge Prompting](#30-generate-knowledge-prompting) |
-| 31 | [Program-aided Language Model (PAL)](#31-program-aided-language-model-pal) |
-| 32 | [ReAct](#32-react) |
-| 33 | [Tools & IDEs](#33-tools-ides) |
-| 34 | [Applications（外部工具與資料增強生成）](#34-applications外部工具與資料增強生成) |
-| 35 | [Opportunities and Future Directions](#35-opportunities-and-future-directions) |
-| 36 | [Model Safety](#36-model-safety) |
-| 37 | [Prompt Injection 三大攻擊](#37-prompt-injection-三大攻擊) |
-| 38 | [RLHF](#38-rlhf) |
-| A | [附錄 A：Prompt 元素與參數速查表](#附錄-aprompt-元素與參數速查表) |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
-| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
-| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
-| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
-
 ---
 
 ## 0. 30 秒總複習（考前最後掃描）
@@ -2270,3 +2213,54 @@ RLHF：Reinforcement Learning from Human Feedback → fit human preference
 ---
 
 *本篇為個人學習筆記整理。*
+
+---
+
+## 目錄
+
+| # | 章節 |
+|---|------|
+| 1 | [Prerequisites & Objectives](#1-prerequisites-objectives) |
+| 2 | [What are prompts?](#2-what-are-prompts) |
+| 3 | [Why Prompt Engineering?](#3-why-prompt-engineering) |
+| 4 | [First Basic Prompt](#4-first-basic-prompt) |
+| 5 | [Elements of a Prompt](#5-elements-of-a-prompt) |
+| 6 | [Settings to keep in mind: temperature 與 top_p](#6-settings-to-keep-in-mind-temperature-與-top-p) |
+| 7 | [Designing Prompts for Different Tasks（六大任務）](#7-designing-prompts-for-different-tasks六大任務) |
+| 8 | [Prompt Engineering 技術地圖（七大類）](#8-prompt-engineering-技術地圖七大類) |
+| 9 | [Zero-Shot Prompting](#9-zero-shot-prompting) |
+| 10 | [Few-Shot Prompting](#10-few-shot-prompting) |
+| 11 | [Clear Instructions and Task Framing](#11-clear-instructions-and-task-framing) |
+| 12 | [System Prompting](#12-system-prompting) |
+| 13 | [Role Prompting](#13-role-prompting) |
+| 14 | [Contextual Prompting](#14-contextual-prompting) |
+| 15 | [Markdown Prompting](#15-markdown-prompting) |
+| 16 | [Chain-of-Thought (CoT) Prompting](#16-chain-of-thought-cot-prompting) |
+| 17 | [Tabular Chain-of-Thought (TCoT)](#17-tabular-chain-of-thought-tcot) |
+| 18 | [Skeleton-of-Thought (SoT)](#18-skeleton-of-thought-sot) |
+| 19 | [Step-Back Prompting](#19-step-back-prompting) |
+| 20 | [Least-to-Most Prompting](#20-least-to-most-prompting) |
+| 21 | [Tree-of-Thoughts (ToT)](#21-tree-of-thoughts-tot) |
+| 22 | [Interactive Tree-of-Thoughts (iToT)](#22-interactive-tree-of-thoughts-itot) |
+| 23 | [Self-Generated In-Context Learning (SG-ICL)](#23-self-generated-in-context-learning-sg-icl) |
+| 24 | [Constitutional AI (CAI)](#24-constitutional-ai-cai) |
+| 25 | [Perspective-Taking Prompting](#25-perspective-taking-prompting) |
+| 26 | [Analogical Prompting](#26-analogical-prompting) |
+| 27 | [Multi-Modal Prompting](#27-multi-modal-prompting) |
+| 28 | [Persona Consistency Prompting](#28-persona-consistency-prompting) |
+| 29 | [Predictive Prompting](#29-predictive-prompting) |
+| 30 | [Generate Knowledge Prompting](#30-generate-knowledge-prompting) |
+| 31 | [Program-aided Language Model (PAL)](#31-program-aided-language-model-pal) |
+| 32 | [ReAct](#32-react) |
+| 33 | [Tools & IDEs](#33-tools-ides) |
+| 34 | [Applications（外部工具與資料增強生成）](#34-applications外部工具與資料增強生成) |
+| 35 | [Opportunities and Future Directions](#35-opportunities-and-future-directions) |
+| 36 | [Model Safety](#36-model-safety) |
+| 37 | [Prompt Injection 三大攻擊](#37-prompt-injection-三大攻擊) |
+| 38 | [RLHF](#38-rlhf) |
+| A | [附錄 A：Prompt 元素與參數速查表](#附錄-aprompt-元素與參數速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
