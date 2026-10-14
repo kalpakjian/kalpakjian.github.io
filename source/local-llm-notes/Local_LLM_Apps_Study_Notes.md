@@ -4038,7 +4038,7 @@ from collections import deque
 
 ## 36. NLP 基礎（一）：Tokenizing、停用詞、Stemming 與 Lemmatizing
 
-> 這份 deck 是課程附的 **NLP 基礎補充**，課程筆記完全沒涵蓋。
+> 這份 deck 是課程附的 **NLP 基礎補充**，本筆記完全沒涵蓋。
 > 全部範例使用 **NLTK**（Natural Language Toolkit）。
 
 <!-- FIGURE:ch36-nlp-text-prep -->
