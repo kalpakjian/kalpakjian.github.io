@@ -1,0 +1,40 @@
+name: Notes QA (non-blocking)
+
+# Advisory quality gate for the study notes.
+# This workflow is deliberately separate from pages.yml and marked
+# continue-on-error, so it can never block a deployment.
+# Enable it by copying this file to .github/workflows/notes-qa.yml
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'source/**'
+      - 'tools/notes-qa/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run notes QA gate
+        shell: pwsh
+        run: ./tools/notes-qa/qa_notes.ps1
+
+      - name: Publish summary
+        if: always()
+        shell: pwsh
+        run: |
+          $out = & ./tools/notes-qa/qa_notes.ps1 2>&1 | Out-String
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value '### Notes QA result'
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value '```'
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value $out
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value '```'
