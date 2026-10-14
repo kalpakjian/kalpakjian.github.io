@@ -1430,7 +1430,7 @@ http://your-llm-gateway/v1/chat/completions
 | 來源 | 寫法 |
 |---|---|
 | 課程 notebook（§1） | `Call 50+ LLM APIs` |
-| **課程**（第 2、4 頁） | `100+ different LLM providers` |
+| **課程**（簡報） | `100+ different LLM providers` |
 | **本機實測** litellm 1.91.2 | `len(litellm.provider_list)` = **146** |
 
 三個數字在各自的課程裡都不算錯，差別只是**版本時間點**。考題出現任何一個都要認得，但要知道出處不同。

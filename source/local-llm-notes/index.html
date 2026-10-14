@@ -1739,10 +1739,10 @@ LM Studio 有 Windows／macOS／Linux 三平台，而 Windows 上又分 <strong>
 </blockquote>
 <h3 id="54-安裝精靈連續四頁">5.4 安裝精靈（連續四頁）</h3>
 <p>連續四頁的標題都是 "Install"，是安裝精靈的逐步截圖：</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">p5</span><span class="w">  </span>→<span class="w"> </span>安裝精靈首頁（<span class="k">Next</span>）
-<span class="nv">p6</span><span class="w">  </span>→<span class="w"> </span>選擇安裝路徑
-<span class="nv">p7</span><span class="w">  </span>→<span class="w"> </span>開始複製檔案（進度條）
-<span class="nv">p8</span><span class="w">  </span>→<span class="w"> </span>完成（<span class="nv">Finish</span>）
+<div class="codehilite"><pre><span></span><code>→<span class="w"> </span>安裝精靈首頁（<span class="k">Next</span>）
+→<span class="w"> </span>選擇安裝路徑
+→<span class="w"> </span>開始複製檔案（進度條）
+→<span class="w"> </span>完成（<span class="nv">Finish</span>）
 </code></pre></div>
 
 <p><strong>為什麼要四頁？</strong> 因為這是<strong>完全沒有技術含量、但最容易卡住新手</strong>的地方。
@@ -1873,7 +1873,7 @@ LM Studio 的整個賣點就是<strong>在你自己的電腦上跑</strong>，�
 <h2 id="7-lm-studio設定與資源分配">7. LM Studio：設定與資源分配</h2>
 <blockquote>
 ⚠️ 課程把「首次設定」與「模型資源分配」分成相隔四頁的兩張截圖，但它們其實是<strong>同一件事的兩半</strong>：
-p11 決定「<strong>要不要開開發者模式</strong>」，另一頁決定「<strong>模型要用多少硬體</strong>」。</p>
+其中一頁決定「<strong>要不要開開發者模式</strong>」，另一頁決定「<strong>模型要用多少硬體</strong>」。</p>
 </blockquote>
 <!-- FIGURE:ch07-lmstudio-resources -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -2593,8 +2593,8 @@ https://huggingface.co/TheBloke/deepseek-llm-7B-base-GGUF
 <hr>
 <h2 id="12-ollamaollama-run-安裝模型與對話">12. Ollama：<code>ollama run</code> 安裝模型與對話</h2>
 <blockquote>
-p22「Ask Question in Ollama」、p23「Install Model：<code>ollama run smollm2:135m</code>」、
-p24「Ask Question in Ollama」。
+「Ask Question in Ollama」、「Install Model：<code>ollama run smollm2:135m</code>」、
+「Ask Question in Ollama」。
 課程把「裝模型」和「問問題」<strong>交錯示範了兩輪</strong>（先 tinyllama、再 smollm2），
 目的就是讓你看到：<strong>同一套指令、換一個名字就是換一個模型</strong>。</p>
 </blockquote>
@@ -2823,7 +2823,7 @@ qwen3-8b-heretic:q8_0                        c57d38da8314    8.7 GB    7 weeks a
 <hr>
 <h2 id="13-ollamaollama-listollama-serve-與埠號">13. Ollama：<code>ollama list</code>、<code>ollama serve</code> 與埠號</h2>
 <blockquote>
-⚠️ <strong>p25 是整份課程第二個有實質文字的頁面</strong>，四行指令就是 Ollama 從「命令列工具」
+⚠️ <strong>這一頁是整份課程第二個有實質文字的頁面</strong>，四行指令就是 Ollama 從「命令列工具」
 變成「<strong>可被程式呼叫的服務</strong>」的關鍵。</p>
 </blockquote>
 <!-- FIGURE:ch13-ollama-serve -->
@@ -3208,7 +3208,7 @@ requests.exceptions.HTTPError: 404 Client Error: Not Found
 </tbody>
 </table>
 <p><strong>根因</strong>：<strong>Ollama 對「模型不存在」回的是 <code>404</code>，不是 <code>400</code>。</strong>
-而課程指定的 <strong><code>llama3</code> 從來沒被安裝過</strong>——它甚至<strong>不在課程自己 p20 的模型表裡</strong>
+而課程指定的 <strong><code>llama3</code> 從來沒被安裝過</strong>——它甚至<strong>不在課程自己的模型表裡</strong>
 （表裡是 <code>tinyllama</code>／<code>smollm2:135m</code>／<code>llama3.2:1b</code>／…，<strong>沒有 <code>llama3</code></strong>）。</p>
 <blockquote>
 <p>⚠️ <strong>這是實作上的真實陷阱</strong>：學生照著課程做完 §12（<code>ollama run tinyllama</code>、
@@ -3440,7 +3440,7 @@ requests.exceptions.HTTPError: 404 Client Error: Not Found
 <hr>
 <h2 id="16-anythingllm安裝與歡迎頁">16. AnythingLLM：安裝與歡迎頁</h2>
 <blockquote>
-＋ <strong>p29</strong>（Installation）＋ <strong>p30</strong>（Welcome page）。</p>
+＋「Installation」＋「Welcome page」。</p>
 </blockquote>
 <!-- FIGURE:ch16-anythingllm-install -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -3528,7 +3528,7 @@ requests.exceptions.HTTPError: 404 Client Error: Not Found
 <hr>
 <h2 id="17-anythingllm選擇-llm-模型與換模型">17. AnythingLLM：選擇 LLM 模型與換模型</h2>
 <blockquote>
-＋ <strong>p34</strong>（"Change to another model"）。
+＋「Change to another model」。
 課程用了<strong>四頁</strong>講同一件事——因為這是 AnythingLLM 最核心、也最容易卡住的一步。</p>
 </blockquote>
 <!-- FIGURE:ch17-anythingllm-provider -->
@@ -3763,7 +3763,7 @@ AnythingLLM 顯示在畫面上
 <hr>
 <h2 id="19-gpt4all安裝與模型安裝">19. GPT4All：安裝與模型安裝</h2>
 <blockquote>
-＋ <strong>p38、p39</strong>（Install LLM Model）。
+＋「Install LLM Model」。
 ⚠️ 課程把 <code>GPT4All</code> 拼成 <strong><code>GTP4ALL</code></strong>與 <strong><code>GTP4All</code></strong>——<strong>字母順序錯了</strong>，
 正確拼法是 <strong><code>GPT4All</code></strong>（GPT ＋ 4 ＋ All）。</p>
 </blockquote>
@@ -3808,7 +3808,7 @@ AnythingLLM 顯示在畫面上
 </blockquote>
 <h3 id="192-安裝-llm-模型">19.2 安裝 LLM 模型</h3>
 <p>課程用<strong>兩頁</strong>示範「Install LLM Model」——因為 GPT4All <strong>內建一個模型下載器</strong>：</p>
-<div class="codehilite"><pre><span></span><code>p38  → 開啟模型清單
+<div class="codehilite"><pre><span></span><code>→ 開啟模型清單
 →  選擇並下載模型
 </code></pre></div>
 
@@ -3844,7 +3844,7 @@ AnythingLLM 顯示在畫面上
 </blockquote>
 <h3 id="193-提問">19.3 提問</h3>
 <p>「Ask Question in <strong>GTP4ALL</strong>」（同一個拼字錯誤）就是開啟對話、直接提問。</p>
-<p><strong>p44 的截圖顯示了實際的模型名稱</strong>：</p>
+<p><strong>截圖顯示了實際的模型名稱</strong>：</p>
 <table>
 <thead>
 <tr>
@@ -3877,7 +3877,7 @@ AnythingLLM 顯示在畫面上
 對照 §34 課程自己建出的 <code>mymodel</code>（<strong>GPT-2，沒有 Instruct</strong>）就能看出差別。</p>
 </blockquote>
 <h3 id="194-gpt4all-的介面語言">19.4 GPT4All 的介面語言</h3>
-<p>⚠️ <strong> 與 p44 的 GPT4All 介面是「繁體中文」</strong>（<code>設定</code>／<code>我的文件</code>／<code>新增文件</code>／
+<p>⚠️ <strong>GPT4All 的介面是「繁體中文」</strong>（<code>設定</code>／<code>我的文件</code>／<code>新增文件</code>／
 <code>0個檔案 · 0個字</code>）。這表示 <strong>GPT4All 會跟隨系統語言</strong>——
 你裝在中文 Windows 上，介面就是中文。</p>
 <p><strong>考試時請認得中英對照</strong>：</p>
@@ -4085,7 +4085,7 @@ GPT4All 的文件處理管線源自 Python 生態，而 <code>rst</code> 是 Pyt
 </blockquote>
 <h3 id="213-加入文件或目錄">21.3 加入文件或目錄</h3>
 <p>課程用兩頁示範「Add a Document/Directory」：</p>
-<div class="codehilite"><pre><span></span><code>p42  → 點「新增文件」／選擇加入方式
+<div class="codehilite"><pre><span></span><code>→ 點「新增文件」／選擇加入方式
 →  選擇檔案或整個資料夾
 </code></pre></div>
 
@@ -7452,7 +7452,7 @@ DQN 的三個核心是 <strong>Q 網路／經驗回放（<code>deque</code>）�
 <hr>
 <h2 id="36-nlp-基礎一tokenizing停用詞stemming-與-lemmatizing">36. NLP 基礎（一）：Tokenizing、停用詞、Stemming 與 Lemmatizing</h2>
 <blockquote>
-<p>來源：<strong>補充課程</strong> <code>IVDC_LLM - Text Summarization and Content Generation.pdf</code>（<strong>95 頁</strong>）的 p8。
+<p>來源：<strong>補充課程</strong> <code>IVDC_LLM - Text Summarization and Content Generation.pdf</code>。
 這份 deck 是課程附的 <strong>NLP 基礎補充</strong>，本筆記完全沒涵蓋。
 全部範例使用 <strong>NLTK</strong>（Natural Language Toolkit）。</p>
 </blockquote>

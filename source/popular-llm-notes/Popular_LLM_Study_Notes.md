@@ -1785,7 +1785,7 @@ steps=20  guidance=15.0 ->  0.60 s
 > **anticipate and create**, enabling **smarter, more adaptive, and more human-like
 > decision-making**.
 
-p65 把它寫得更明確：
+課程把它寫得更明確：
 
 | 元件 | 角色 |
 |---|---|

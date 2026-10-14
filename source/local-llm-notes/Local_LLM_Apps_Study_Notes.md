@@ -1771,7 +1771,7 @@ C:\Users\<你>\AppData\Local\nomic.ai\GPT4All
 
 ### 19.4 GPT4All 的介面語言
 
-⚠️ ** 與 p44 的 GPT4All 介面是「繁體中文」**（`設定`／`我的文件`／`新增文件`／
+⚠️ **GPT4All 的介面是「繁體中文」**（`設定`／`我的文件`／`新增文件`／
 `0個檔案 · 0個字`）。這表示 **GPT4All 會跟隨系統語言**——
 你裝在中文 Windows 上，介面就是中文。
 
@@ -4545,7 +4545,13 @@ tree = nltk.ne_chunk(lotr_pos_tags)
 
 | 這份 deck | 已涵蓋於 |
 |---|---|
-| Transformer  | **Lesson 3（Introduction to LLM）**  |\r\n| GAN／Diffusion  | **Lesson 2（Popular LLM Models）**  |\r\n| ChatGPT  | **Lesson 2**  |\r\n| Next-Token Prediction  | **Lesson 3**  |\r\n| Prompting  | **Lesson 5（Prompt Engineering）**  |\r\n| Code Examples  | **Lesson 8（LiteLLM）**  |\r\n
+| Transformer | **Lesson 3（Introduction to LLM）** |
+| GAN／Diffusion | **Lesson 2（Popular LLM Models）** |
+| ChatGPT | **Lesson 2** |
+| Next-Token Prediction | **Lesson 3** |
+| Prompting | **Lesson 5（Prompt Engineering）** |
+| Code Examples | **Lesson 8（LiteLLM）** |
+
 
 > **考點**：
 > **POS tagging** 依「**定義 ＋ 上下文**」標詞性，是 **Chunking 與 NER 的前置步驟**。

@@ -974,7 +974,7 @@ existing social and economic inequalities 被 widening（擴大）
 | 6 | **Regularly audit AI systems for fairness, accuracy, and accountability** | **定期稽核** AI 系統的**公平性、準確度與問責性** | Accountability | DPP2、DPP6 |
 
 > ⚠️ **跨頁重複**：第 2 項「**Ensure transparency in AI decision-making processes**」
-> 同時出現在 **p21 最後一行**與 **p22 第一行**。實際上是 **6 項**建議，不是 7 項。
+> 同時出現在建議的**最後一行**與**下一頁第一行**。實際上是 **6 項**建議，不是 7 項。
 
 ### 17.2 建議如何對應四大倫理議題
 
@@ -1020,7 +1020,7 @@ existing social and economic inequalities 被 widening（擴大）
 | **Balancing technological innovation with ethical responsibility** is essential… | **在技術創新與倫理責任之間取得平衡**至關重要… | balancing innovation with ethics |
 | …to ensure that computer vision systems are developed and deployed in ways that **respect individual rights**, **promote fairness**, and **maintain public trust**. | …以確保系統的開發與部署能**尊重個人權利**、**促進公平**並**維持公眾信任**。 | respect individual rights、promote fairness、maintain public trust |
 
-> **注意**：p23 的「**privacy, bias, security, and accountability**」正是 §5–§8 四大議題的**再現**。
+> **注意**：結論提到的「**privacy, bias, security, and accountability**」正是 §5–§8 四大議題的**再現**。
 
 ### 18.2 三個手段 → 兩個成果
 
