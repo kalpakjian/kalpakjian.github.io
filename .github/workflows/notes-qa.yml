@@ -1,9 +1,14 @@
 name: Notes QA (non-blocking)
 
-# Advisory quality gate for the study notes.
-# This workflow is deliberately separate from pages.yml and marked
-# continue-on-error, so it can never block a deployment.
-# Enable it by copying this file to .github/workflows/notes-qa.yml
+# Advisory quality gate for the study notes (tools/notes-qa/qa_notes.ps1).
+#
+# Separate from pages.yml and continue-on-error, so it can never block a deploy.
+# The gate is invoked EXACTLY ONCE: this single step runs it, publishes the result to
+# the job summary, and re-exits with the gate's own exit code -- so a failure still
+# shows up as a red step without costing a second run.
+#
+# Triggered by note changes only. Tool changes are covered by notes-qa-tools.yml,
+# which keeps the two runs from overlapping.
 
 on:
   push:
@@ -11,7 +16,6 @@ on:
       - main
     paths:
       - 'source/**'
-      - 'tools/notes-qa/**'
   workflow_dispatch:
 
 permissions:
@@ -25,16 +29,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run notes QA gate
-        shell: pwsh
-        run: ./tools/notes-qa/qa_notes.ps1
-
-      - name: Publish summary
-        if: always()
+      - name: Run notes QA gate and publish summary
         shell: pwsh
         run: |
-          $out = & ./tools/notes-qa/qa_notes.ps1 2>&1 | Out-String
+          try {
+            $out = & ./tools/notes-qa/qa_notes.ps1 2>&1 | Out-String
+            $code = $LASTEXITCODE
+          } catch {
+            $out = $_ | Out-String
+            $code = 1
+          }
+          Write-Output $out
           Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value '### Notes QA result'
           Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value '```'
           Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value $out
           Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value '```'
+          exit $code

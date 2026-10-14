@@ -189,8 +189,18 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 
 
 ---
 
-## 11.（選用）把閘門接進 CI
+## 11. CI
 
-`tools\notes-qa\notes-qa.yml` 是一份**現成、非阻擋式**的 workflow：push 後自動跑 QA 並把結果貼在
-Actions 摘要，**不會擋部署**。要啟用就把它複製到 `.github/workflows/notes-qa.yml` 並 push。
+兩個 workflow 都放在 `.github\workflows\`，**已啟用**，而且**觸發條件刻意不重疊**（不浪費 CI 分鐘數）：
+
+| workflow | 觸發 | 做什麼 | 會擋部署嗎 |
+|---|---|---|---|
+| `notes-qa.yml` | push 動到 `source/**` | 跑品質閘門**一次**，把結果貼進 Actions 摘要 | 不會（`continue-on-error`） |
+| `notes-qa-tools.yml` | push 動到 `tools/notes-qa/**` | 跑 `selftest_tools.py`（工具回歸測試） | 不會（與 `pages.yml` 各自獨立） |
+
+- `notes-qa.yml` 在**同一步**裡跑閘門 → 貼摘要 → 再以閘門的離開碼結束。所以失敗會顯示成紅色的 step，
+  但閘門只被執行一次（舊版會跑兩次，浪費 CI 分鐘數）。
+- `notes-qa-tools.yml` **故意不設** `continue-on-error`：工具壞掉是真缺陷，值得一個紅燈；
+  部署由 `pages.yml` 負責，本來就不受它影響。
+- 想停用某一個：直接刪掉 `.github\workflows\` 底下那個檔案即可。
 

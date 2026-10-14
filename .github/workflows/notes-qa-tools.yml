@@ -1,0 +1,34 @@
+name: Notes QA tools (selftest)
+
+# Regression tests for the tools/notes-qa scripts themselves
+# (tools/notes-qa/selftest_tools.py): builds a throwaway note fixture, runs each tool
+# from a foreign cwd, and asserts the expected edit -- so a broken root discovery or a
+# Windows-only assumption fails here instead of silently doing nothing.
+#
+# Runs only when the toolset changes, so it never duplicates the gate's CI minutes.
+# Deliberately NOT continue-on-error: a broken tool is a real defect worth a red X.
+# It still cannot block a deployment, because pages.yml is a separate workflow.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'tools/notes-qa/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  selftest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run tools selftest
+        shell: pwsh
+        run: |
+          python3 tools/notes-qa/selftest_tools.py
+          exit $LASTEXITCODE

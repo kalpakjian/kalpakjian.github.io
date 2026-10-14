@@ -9,7 +9,7 @@ while (-not [string]::IsNullOrWhiteSpace($dir) -and
   if ([string]::IsNullOrWhiteSpace($parent) -or $parent -eq $dir) { break }
   $dir = $parent
 }
-$root = (Join-Path $dir 'source') + '\'
+$root = Join-Path $dir 'source'
 if (-not (Test-Path $root)) { throw "cannot find <repo>\source above $PSScriptRoot" }
 
 function Fix-Html([string]$t) {

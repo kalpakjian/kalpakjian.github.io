@@ -13,7 +13,11 @@
 | `fix_toc_dup.ps1` | 移除目錄「編號重複」 |
 | `fix_header_br.ps1` | 頁首區塊逐行補 `<br />`（只在句尾或 `課程：` 行斷行） |
 | `normalize_crlf.ps1` | 把筆記裡的孤立 LF 正規化為 CRLF（`-DryRun` 可先預覽，不會寫檔） |
-| `notes-qa.yml` | 選用的 CI workflow（非阻擋式，push 後自動跑 QA 並貼摘要） |
+| `selftest_tools.py` | **工具回歸測試**：用臨時 fixture 驗證上面每支工具（CI 會在工具變動時自動跑） |
+
+> CI：`.github\workflows\notes-qa.yml`（push 動到 `source/**` 時跑閘門，非阻擋式）與
+> `.github\workflows\notes-qa-tools.yml`（push 動到 `tools/notes-qa/**` 時跑上面的工具回歸測試）。
+> 詳見 `NOTE_STYLE_CONTRACT.md` §11。
 
 ## 快速用法
 
@@ -32,6 +36,9 @@ pwsh -File tools/notes-qa/yk_replace2.ps1 -ruleFile rules.txt -filter local-llm-
 # 行尾正規化（先預覽再寫）
 pwsh -File tools/notes-qa/normalize_crlf.ps1 -DryRun
 pwsh -File tools/notes-qa/normalize_crlf.ps1
+
+# 工具回歸測試（臨時 fixture，不會動到真筆記）
+python tools/notes-qa/selftest_tools.py
 ```
 
 所有腳本都會自動以**自己所在位置**推算 repo 根目錄（`tools/notes-qa` → repo → `source`），
