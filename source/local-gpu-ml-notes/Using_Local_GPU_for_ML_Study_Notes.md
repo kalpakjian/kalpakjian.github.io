@@ -1,44 +1,5 @@
 # Using Local GPU for Machine Learning 學習筆記（考試溫習版）
 
-> 課程：Certificate in Application of Computer Vision Technology (Part-time)
-> 機構：匯縱專業發展中心（IVDC）
-> 本筆記依課程大綱每一個標題逐一填充內容，並補上實際指令、版本對照、常見錯誤、模擬試題。
-> 本機實測環境（Windows）：**RTX 4090 / 驅動 617.42 / CUDA 13.4 / PyTorch 2.14.1+cu132**。
-> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
-
----
-
-## 目錄
-
-| # | 章節 |
-|---|------|
-| 1 | [Set up Nvidia Video Driver](#1-set-up-nvidia-video-driver) |
-| 2 | [Install Visual Studio C++](#2-install-visual-studio-c) |
-| 3 | [Install Anaconda](#3-install-anaconda) |
-| 4 | [Anaconda Prompt](#4-anaconda-prompt) |
-| 5 | [Setup Anaconda Path](#5-setup-anaconda-path) |
-| 6 | [Install or check CUDA tool](#6-install-or-check-cuda-tool) |
-| 7 | [Check version for PyTorch](#7-check-version-for-pytorch) |
-| 8 | [CUDA Toolkit](#8-cuda-toolkit) |
-| 9 | [cuDNN](#9-cudnn) |
-| 10 | [Copy cuDNN bin files to CUDA](#10-copy-cudnn-bin-files-to-cuda) |
-| 11 | [Copy cuDNN lib files to CUDA](#11-copy-cudnn-lib-files-to-cuda) |
-| 12 | [Check Environment Variables](#12-check-environment-variables) |
-| 13 | [Install Visual Studio Code](#13-install-visual-studio-code) |
-| 14 | [Install Git](#14-install-git) |
-| 15 | [Install PyTorch](#15-install-pytorch) |
-| 16 | [Use Visual Studio Code](#16-use-visual-studio-code) |
-| 17 | [Use Bash Shell (if needed)](#17-use-bash-shell-if-needed) |
-| 18 | [Install Python (if needed)](#18-install-python-if-needed) |
-| 19 | [Check GPU](#19-check-gpu) |
-| 20 | [Set Path (if needed)](#20-set-path-if-needed) |
-| A | [附錄 A：指令速查表](#附錄-a指令速查表) |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
-| C | [附錄 C：離線安裝提示](#附錄-c離線安裝提示) |
-| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
-| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
-
 ---
 
 ## 0. 30 秒總複習（考前最後掃描）
@@ -912,3 +873,36 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
 ---
 
 *本篇為個人學習筆記整理。*
+
+---
+
+## 目錄
+
+| # | 章節 |
+|---|------|
+| 1 | [Set up Nvidia Video Driver](#1-set-up-nvidia-video-driver) |
+| 2 | [Install Visual Studio C++](#2-install-visual-studio-c) |
+| 3 | [Install Anaconda](#3-install-anaconda) |
+| 4 | [Anaconda Prompt](#4-anaconda-prompt) |
+| 5 | [Setup Anaconda Path](#5-setup-anaconda-path) |
+| 6 | [Install or check CUDA tool](#6-install-or-check-cuda-tool) |
+| 7 | [Check version for PyTorch](#7-check-version-for-pytorch) |
+| 8 | [CUDA Toolkit](#8-cuda-toolkit) |
+| 9 | [cuDNN](#9-cudnn) |
+| 10 | [Copy cuDNN bin files to CUDA](#10-copy-cudnn-bin-files-to-cuda) |
+| 11 | [Copy cuDNN lib files to CUDA](#11-copy-cudnn-lib-files-to-cuda) |
+| 12 | [Check Environment Variables](#12-check-environment-variables) |
+| 13 | [Install Visual Studio Code](#13-install-visual-studio-code) |
+| 14 | [Install Git](#14-install-git) |
+| 15 | [Install PyTorch](#15-install-pytorch) |
+| 16 | [Use Visual Studio Code](#16-use-visual-studio-code) |
+| 17 | [Use Bash Shell (if needed)](#17-use-bash-shell-if-needed) |
+| 18 | [Install Python (if needed)](#18-install-python-if-needed) |
+| 19 | [Check GPU](#19-check-gpu) |
+| 20 | [Set Path (if needed)](#20-set-path-if-needed) |
+| A | [附錄 A：指令速查表](#附錄-a指令速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線安裝提示](#附錄-c離線安裝提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |

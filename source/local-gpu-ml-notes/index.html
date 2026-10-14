@@ -443,129 +443,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </nav>
 <main>
 <h1 id="using-local-gpu-for-machine-learning-學習筆記考試溫習版">Using Local GPU for Machine Learning 學習筆記（考試溫習版）</h1>
-<blockquote>
-<p>課程：Certificate in Application of Computer Vision Technology (Part-time)<br />
-機構：匯縱專業發展中心（IVDC）<br />
-本筆記依課程大綱每一個標題逐一填充內容，並補上實際指令、版本對照、常見錯誤、模擬試題。<br />
-本機實測環境（Windows）：<strong>RTX 4090 / 驅動 617.42 / CUDA 13.4 / PyTorch 2.14.1+cu132</strong>。<br />
-🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
-</blockquote>
-<hr>
-<h2 id="目錄">目錄</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>章節</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><a href="#1-set-up-nvidia-video-driver">Set up Nvidia Video Driver</a></td>
-</tr>
-<tr>
-<td>2</td>
-<td><a href="#2-install-visual-studio-c">Install Visual Studio C++</a></td>
-</tr>
-<tr>
-<td>3</td>
-<td><a href="#3-install-anaconda">Install Anaconda</a></td>
-</tr>
-<tr>
-<td>4</td>
-<td><a href="#4-anaconda-prompt">Anaconda Prompt</a></td>
-</tr>
-<tr>
-<td>5</td>
-<td><a href="#5-setup-anaconda-path">Setup Anaconda Path</a></td>
-</tr>
-<tr>
-<td>6</td>
-<td><a href="#6-install-or-check-cuda-tool">Install or check CUDA tool</a></td>
-</tr>
-<tr>
-<td>7</td>
-<td><a href="#7-check-version-for-pytorch">Check version for PyTorch</a></td>
-</tr>
-<tr>
-<td>8</td>
-<td><a href="#8-cuda-toolkit">CUDA Toolkit</a></td>
-</tr>
-<tr>
-<td>9</td>
-<td><a href="#9-cudnn">cuDNN</a></td>
-</tr>
-<tr>
-<td>10</td>
-<td><a href="#10-copy-cudnn-bin-files-to-cuda">Copy cuDNN bin files to CUDA</a></td>
-</tr>
-<tr>
-<td>11</td>
-<td><a href="#11-copy-cudnn-lib-files-to-cuda">Copy cuDNN lib files to CUDA</a></td>
-</tr>
-<tr>
-<td>12</td>
-<td><a href="#12-check-environment-variables">Check Environment Variables</a></td>
-</tr>
-<tr>
-<td>13</td>
-<td><a href="#13-install-visual-studio-code">Install Visual Studio Code</a></td>
-</tr>
-<tr>
-<td>14</td>
-<td><a href="#14-install-git">Install Git</a></td>
-</tr>
-<tr>
-<td>15</td>
-<td><a href="#15-install-pytorch">Install PyTorch</a></td>
-</tr>
-<tr>
-<td>16</td>
-<td><a href="#16-use-visual-studio-code">Use Visual Studio Code</a></td>
-</tr>
-<tr>
-<td>17</td>
-<td><a href="#17-use-bash-shell-if-needed">Use Bash Shell (if needed)</a></td>
-</tr>
-<tr>
-<td>18</td>
-<td><a href="#18-install-python-if-needed">Install Python (if needed)</a></td>
-</tr>
-<tr>
-<td>19</td>
-<td><a href="#19-check-gpu">Check GPU</a></td>
-</tr>
-<tr>
-<td>20</td>
-<td><a href="#20-set-path-if-needed">Set Path (if needed)</a></td>
-</tr>
-<tr>
-<td>A</td>
-<td><a href="#附錄-a指令速查表">附錄 A：指令速查表</a></td>
-</tr>
-<tr>
-<td>B</td>
-<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
-</tr>
-<tr>
-<td>C</td>
-<td><a href="#附錄-c離線安裝提示">附錄 C：離線安裝提示</a></td>
-</tr>
-<tr>
-<td>D</td>
-<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
-</tr>
-<tr>
-<td>E</td>
-<td><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a></td>
-</tr>
-<tr>
-<td>F</td>
-<td><a href="#附錄-f互動測驗答錯題目-複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
-</tr>
-</tbody>
-</table>
 <hr>
 <h2 id="0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</h2>
 <div class="codehilite"><pre><span></span><code>在本機用 GPU 跑 ML（Windows）的安裝順序：
@@ -1768,6 +1645,122 @@ device name    : NVIDIA GeForce RTX 4090
 </table>
 <hr>
 <p><em>本篇為個人學習筆記整理。</em></p>
+<hr>
+<h2 id="目錄">目錄</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>章節</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="#1-set-up-nvidia-video-driver">Set up Nvidia Video Driver</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#2-install-visual-studio-c">Install Visual Studio C++</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#3-install-anaconda">Install Anaconda</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#4-anaconda-prompt">Anaconda Prompt</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="#5-setup-anaconda-path">Setup Anaconda Path</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="#6-install-or-check-cuda-tool">Install or check CUDA tool</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="#7-check-version-for-pytorch">Check version for PyTorch</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="#8-cuda-toolkit">CUDA Toolkit</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="#9-cudnn">cuDNN</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="#10-copy-cudnn-bin-files-to-cuda">Copy cuDNN bin files to CUDA</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="#11-copy-cudnn-lib-files-to-cuda">Copy cuDNN lib files to CUDA</a></td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="#12-check-environment-variables">Check Environment Variables</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="#13-install-visual-studio-code">Install Visual Studio Code</a></td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="#14-install-git">Install Git</a></td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="#15-install-pytorch">Install PyTorch</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="#16-use-visual-studio-code">Use Visual Studio Code</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="#17-use-bash-shell-if-needed">Use Bash Shell (if needed)</a></td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="#18-install-python-if-needed">Install Python (if needed)</a></td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="#19-check-gpu">Check GPU</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="#20-set-path-if-needed">Set Path (if needed)</a></td>
+</tr>
+<tr>
+<td>A</td>
+<td><a href="#附錄-a指令速查表">附錄 A：指令速查表</a></td>
+</tr>
+<tr>
+<td>B</td>
+<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
+</tr>
+<tr>
+<td>C</td>
+<td><a href="#附錄-c離線安裝提示">附錄 C：離線安裝提示</a></td>
+</tr>
+<tr>
+<td>D</td>
+<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
+</tr>
+<tr>
+<td>E</td>
+<td><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a></td>
+</tr>
+<tr>
+<td>F</td>
+<td><a href="#附錄-f互動測驗答錯題目-複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
+</tr>
+</tbody>
+</table>
 </main>
 </div>
 </body>
