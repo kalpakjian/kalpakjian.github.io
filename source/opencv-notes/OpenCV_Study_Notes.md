@@ -1,37 +1,5 @@
 # OpenCV 學習筆記（考試溫習版）
 
-> 課程：Certificate in Application of Computer Vision Technology (Part-time)
-> 機構：匯縱專業發展中心（IVDC）
-> 本筆記依課程大綱每一個標題逐一填充內容，並補上 API 簽名、參數說明、常見錯誤、模擬試題。
-> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
-
----
-
-## 目錄
-
-| # | 章節 |
-|---|------|
-| 1 | [What is OpenCV?](#1-what-is-opencv) |
-| 2 | [OpenCV Applications](#2-opencv-applications) |
-| 3 | [Color Spaces](#3-color-spaces) |
-| 4 | [Color Space Conversion](#4-color-space-conversion) |
-| 5 | [Image Pre-processing](#5-image-pre-processing) |
-| 6 | [Matrix Operations](#6-matrix-operations) |
-| 7 | [Drawing Functions](#7-drawing-functions) |
-| 8 | [Transformations](#8-transformations) |
-| 9 | [Filtering Techniques](#9-filtering-techniques) |
-| 10 | [Edge Detection](#10-edge-detection) |
-| 11 | [Feature Extraction](#11-feature-extraction) |
-| 12 | [Feature Matching](#12-feature-matching) |
-| 13 | [Real-World Projects](#13-real-world-projects) |
-| 14 | [OpenCV Programming Examples（程式範例）](#14-opencv-programming-examples程式範例) |
-| 15 | [Summary](#15-summary) |
-| A | [附錄 A：API 速查表](#附錄-aapi-速查表) |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
-| C | [附錄 C：離線執行提示](#附錄-c離線執行提示) |
-| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
-| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-
 ---
 
 ## 0. 30 秒總複習（考前最後掃描）
@@ -2341,3 +2309,29 @@ ORB 配 Hamming、SIFT 配 L2
 *模擬試題為附錄 E 的線上互動測驗（60 題）。*
 *所有程式碼已於本機 OpenCV 5.0.0 / NumPy 2.4.6 / Matplotlib 3.11.2 環境實測通過。*
 
+---
+
+## 目錄
+
+| # | 章節 |
+|---|------|
+| 1 | [What is OpenCV?](#1-what-is-opencv) |
+| 2 | [OpenCV Applications](#2-opencv-applications) |
+| 3 | [Color Spaces](#3-color-spaces) |
+| 4 | [Color Space Conversion](#4-color-space-conversion) |
+| 5 | [Image Pre-processing](#5-image-pre-processing) |
+| 6 | [Matrix Operations](#6-matrix-operations) |
+| 7 | [Drawing Functions](#7-drawing-functions) |
+| 8 | [Transformations](#8-transformations) |
+| 9 | [Filtering Techniques](#9-filtering-techniques) |
+| 10 | [Edge Detection](#10-edge-detection) |
+| 11 | [Feature Extraction](#11-feature-extraction) |
+| 12 | [Feature Matching](#12-feature-matching) |
+| 13 | [Real-World Projects](#13-real-world-projects) |
+| 14 | [OpenCV Programming Examples（程式範例）](#14-opencv-programming-examples程式範例) |
+| 15 | [Summary](#15-summary) |
+| A | [附錄 A：API 速查表](#附錄-aapi-速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線執行提示](#附錄-c離線執行提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
