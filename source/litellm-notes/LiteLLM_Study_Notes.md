@@ -1,51 +1,5 @@
 # LiteLLM 學習筆記（考試溫習版）
 
-> 課程：Certificate in Application of Large Language Model (LLM) (Part-time) — Lesson 8
-> 機構：匯縱專業發展中心（IVDC）
-> 涵蓋檔案：`liteLLM_Getting_Started.ipynb`、`lite.py`、`app.py`、`IVDC_LiteLLM.pptx`
-> 本筆記依課程大綱每一格逐一填充內容，並補上定義、參數說明、常見錯誤與考點。
-> **§21 為課堂補充**，補上 notebook 沒有的 gateway 概念與企業治理面。
-> 所有程式碼與數字都在本機實測（litellm 1.91.2／Python 3.11.15／Ollama），實測輸出直接寫進內文。
-> ⚠️ **版本時效（2026-10 實查）**：本筆記實測用的是 **litellm 1.91.2**，但最新已到 **1.105.0**，
-> 且底層 `openai` 依賴已從 2.x **跨到 3.x**。完整對照表見 **§2.1**。
-> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **68 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
-
----
-
-## 目錄
-
-| # | 章節 |
-|---|------|
-| 1 | [什麼是 LiteLLM：一個介面，146 個供應商](#1-什麼是-litellm一個介面146-個供應商) |
-| 2 | [安裝與設定（Installation and setting Params）](#2-安裝與設定installation-and-setting-params) |
-| 3 | [API Key 管理（Set your API keys）](#3-api-key-管理set-your-api-keys) |
-| 4 | [Call chatGPT — 最小可用範例](#4-call-chatgpt-最小可用範例) |
-| 5 | [Call Claude-2 — 第二個供應商，同一段程式](#5-call-claude-2-第二個供應商同一段程式) |
-| 6 | [Call llama2 on replicate — 開源模型走 Replicate](#6-call-llama2-on-replicate-開源模型走-replicate) |
-| 7 | [Call Command-Nightly — Cohere](#7-call-command-nightly-cohere) |
-| 8 | [Call Azure OpenAI — `azure/` 前綴與 deployment-id](#8-call-azure-openai-azure-前綴與-deployment-id) |
-| 9 | [本機模型：Ollama（`lite.py` 逐行）](#9-本機模型ollamalitepy-逐行) |
-| 10 | [模型命名規則與供應商前綴總表](#10-模型命名規則與供應商前綴總表) |
-| 11 | [`completion()` 的統一 I/O 契約](#11-completion-的統一-io-契約) |
-| 12 | [`messages` 的三種角色](#12-messages-的三種角色) |
-| 13 | [常用參數速查](#13-常用參數速查) |
-| 14 | [串流輸出 `stream=True`](#14-串流輸出-streamtrue) |
-| 15 | [錯誤處理與例外類別](#15-錯誤處理與例外類別) |
-| 16 | [能力查詢：`supports_*`](#16-能力查詢supports) |
-| 17 | [Token 計數 `token_counter()`](#17-token-計數-token-counter) |
-| 18 | [成本追蹤 `completion_cost()` 與內建成本表](#18-成本追蹤-completion-cost-與內建成本表) |
-| 19 | [進階：Router、Fallbacks 與重試](#19-進階routerfallbacks-與重試) |
-| 20 | [LiteLLM Proxy：把 146 個供應商變成一個 OpenAI 端點](#20-litellm-proxy把-146-個供應商變成一個-openai-端點) |
-| 21 | [LiteLLM 作為 LLM Gateway：企業級治理與架構](#21-litellm-作為-llm-gateway企業級治理與架構) |
-| 22 | [本機實測總表（真實數據）](#22-本機實測總表真實數據) |
-| 23 | [考試重點整理](#23-考試重點整理) |
-| A | [附錄 A：API 速查表](#附錄-aapi-速查表) |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
-| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
-| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
-| E | [附錄 E：互動式線上測驗（68 題）](#附錄-e互動式線上測驗68-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
-
 ---
 
 ## 0. 30 秒總複習（考前最後掃描）
@@ -1976,3 +1930,37 @@ get_max_tokens("gpt-3.5-turbo") = 4096
 | 61–68 | §21 LiteLLM 作為 LLM Gateway（課程概念面） |
 
 ---
+
+## 目錄
+
+| # | 章節 |
+|---|------|
+| 1 | [什麼是 LiteLLM：一個介面，146 個供應商](#1-什麼是-litellm一個介面146-個供應商) |
+| 2 | [安裝與設定（Installation and setting Params）](#2-安裝與設定installation-and-setting-params) |
+| 3 | [API Key 管理（Set your API keys）](#3-api-key-管理set-your-api-keys) |
+| 4 | [Call chatGPT — 最小可用範例](#4-call-chatgpt-最小可用範例) |
+| 5 | [Call Claude-2 — 第二個供應商，同一段程式](#5-call-claude-2-第二個供應商同一段程式) |
+| 6 | [Call llama2 on replicate — 開源模型走 Replicate](#6-call-llama2-on-replicate-開源模型走-replicate) |
+| 7 | [Call Command-Nightly — Cohere](#7-call-command-nightly-cohere) |
+| 8 | [Call Azure OpenAI — `azure/` 前綴與 deployment-id](#8-call-azure-openai-azure-前綴與-deployment-id) |
+| 9 | [本機模型：Ollama（`lite.py` 逐行）](#9-本機模型ollamalitepy-逐行) |
+| 10 | [模型命名規則與供應商前綴總表](#10-模型命名規則與供應商前綴總表) |
+| 11 | [`completion()` 的統一 I/O 契約](#11-completion-的統一-io-契約) |
+| 12 | [`messages` 的三種角色](#12-messages-的三種角色) |
+| 13 | [常用參數速查](#13-常用參數速查) |
+| 14 | [串流輸出 `stream=True`](#14-串流輸出-streamtrue) |
+| 15 | [錯誤處理與例外類別](#15-錯誤處理與例外類別) |
+| 16 | [能力查詢：`supports_*`](#16-能力查詢supports) |
+| 17 | [Token 計數 `token_counter()`](#17-token-計數-token-counter) |
+| 18 | [成本追蹤 `completion_cost()` 與內建成本表](#18-成本追蹤-completion-cost-與內建成本表) |
+| 19 | [進階：Router、Fallbacks 與重試](#19-進階routerfallbacks-與重試) |
+| 20 | [LiteLLM Proxy：把 146 個供應商變成一個 OpenAI 端點](#20-litellm-proxy把-146-個供應商變成一個-openai-端點) |
+| 21 | [LiteLLM 作為 LLM Gateway：企業級治理與架構](#21-litellm-作為-llm-gateway企業級治理與架構) |
+| 22 | [本機實測總表（真實數據）](#22-本機實測總表真實數據) |
+| 23 | [考試重點整理](#23-考試重點整理) |
+| A | [附錄 A：API 速查表](#附錄-aapi-速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（68 題）](#附錄-e互動式線上測驗68-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |

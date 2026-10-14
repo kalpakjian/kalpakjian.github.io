@@ -544,145 +544,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </nav>
 <main>
 <h1 id="litellm-學習筆記考試溫習版">LiteLLM 學習筆記（考試溫習版）</h1>
-<blockquote>
-<p>課程：Certificate in Application of Large Language Model (LLM) (Part-time) — Lesson 8<br />
-機構：匯縱專業發展中心（IVDC）<br />
-涵蓋檔案：<code>liteLLM_Getting_Started.ipynb</code>、<code>lite.py</code>、<code>app.py</code>、<code>IVDC_LiteLLM.pptx</code><br />
-本筆記依課程大綱每一格逐一填充內容，並補上定義、參數說明、常見錯誤與考點。<br />
-<strong>§21 為課堂補充</strong>，補上 notebook 沒有的 gateway 概念與企業治理面。<br />
-所有程式碼與數字都在本機實測（litellm 1.91.2／Python 3.11.15／Ollama），實測輸出直接寫進內文。<br />
-⚠️ <strong>版本時效（2026-10 實查）</strong>：本筆記實測用的是 <strong>litellm 1.91.2</strong>，但最新已到 <strong>1.105.0</strong>，
-且底層 <code>openai</code> 依賴已從 2.x <strong>跨到 3.x</strong>。完整對照表見 <strong>§2.1</strong>。<br />
-🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>68 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
-</blockquote>
-<hr>
-<h2 id="目錄">目錄</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>章節</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><a href="#1-什麼是-litellm一個介面146-個供應商">什麼是 LiteLLM：一個介面，146 個供應商</a></td>
-</tr>
-<tr>
-<td>2</td>
-<td><a href="#2-安裝與設定installation-and-setting-params">安裝與設定（Installation and setting Params）</a></td>
-</tr>
-<tr>
-<td>3</td>
-<td><a href="#3-api-key-管理set-your-api-keys">API Key 管理（Set your API keys）</a></td>
-</tr>
-<tr>
-<td>4</td>
-<td><a href="#4-call-chatgpt-最小可用範例">Call chatGPT — 最小可用範例</a></td>
-</tr>
-<tr>
-<td>5</td>
-<td><a href="#5-call-claude-2-第二個供應商同一段程式">Call Claude-2 — 第二個供應商，同一段程式</a></td>
-</tr>
-<tr>
-<td>6</td>
-<td><a href="#6-call-llama2-on-replicate-開源模型走-replicate">Call llama2 on replicate — 開源模型走 Replicate</a></td>
-</tr>
-<tr>
-<td>7</td>
-<td><a href="#7-call-command-nightly-cohere">Call Command-Nightly — Cohere</a></td>
-</tr>
-<tr>
-8</td>
-<td><a href="#8-call-azure-openai-azure-前綴與-deployment-id">Call Azure OpenAI — <code>azure/</code> 前綴與 deployment-id</a></td>
-</tr>
-<tr>
-9</td>
-<td><a href="#9-本機模型ollamalitepy-逐行">本機模型：Ollama（<code>lite.py</code> 逐行）</a></td>
-</tr>
-<tr>
-<td>10</td>
-<td><a href="#10-模型命名規則與供應商前綴總表">模型命名規則與供應商前綴總表</a></td>
-</tr>
-<tr>
-11</td>
-<td><a href="#11-completion-的統一-io-契約"><code>completion()</code> 的統一 I/O 契約</a></td>
-</tr>
-<tr>
-12</td>
-<td><a href="#12-messages-的三種角色"><code>messages</code> 的三種角色</a></td>
-</tr>
-<tr>
-<td>13</td>
-<td><a href="#13-常用參數速查">常用參數速查</a></td>
-</tr>
-<tr>
-14</td>
-<td><a href="#14-串流輸出-streamtrue">串流輸出 <code>stream=True</code></a></td>
-</tr>
-<tr>
-<td>15</td>
-<td><a href="#15-錯誤處理與例外類別">錯誤處理與例外類別</a></td>
-</tr>
-<tr>
-16</td>
-<td><a href="#16-能力查詢supports">能力查詢：<code>supports_*</code></a></td>
-</tr>
-<tr>
-17</td>
-<td><a href="#17-token-計數-token-counter">Token 計數 <code>token_counter()</code></a></td>
-</tr>
-<tr>
-18</td>
-<td><a href="#18-成本追蹤-completion-cost-與內建成本表">成本追蹤 <code>completion_cost()</code> 與內建成本表</a></td>
-</tr>
-<tr>
-<td>19</td>
-<td><a href="#19-進階routerfallbacks-與重試">進階：Router、Fallbacks 與重試</a></td>
-</tr>
-<tr>
-<td>20</td>
-<td><a href="#20-litellm-proxy把-146-個供應商變成一個-openai-端點">LiteLLM Proxy：把 146 個供應商變成一個 OpenAI 端點</a></td>
-</tr>
-<tr>
-<td>21</td>
-<td><a href="#21-litellm-作為-llm-gateway企業級治理與架構">LiteLLM 作為 LLM Gateway：企業級治理與架構</a></td>
-</tr>
-<tr>
-<td>22</td>
-<td><a href="#22-本機實測總表真實數據">本機實測總表（真實數據）</a></td>
-</tr>
-<tr>
-<td>23</td>
-<td><a href="#23-考試重點整理">考試重點整理</a></td>
-</tr>
-<tr>
-<td>A</td>
-<td><a href="#附錄-aapi-速查表">附錄 A：API 速查表</a></td>
-</tr>
-<tr>
-<td>B</td>
-<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
-</tr>
-<tr>
-<td>C</td>
-<td><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a></td>
-</tr>
-<tr>
-<td>D</td>
-<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
-</tr>
-<tr>
-<td>E</td>
-<td><a href="#附錄-e互動式線上測驗68-題">附錄 E：互動式線上測驗（68 題）</a></td>
-</tr>
-<tr>
-<td>F</td>
-<td><a href="#附錄-f互動測驗答錯題目-複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
-</tr>
-</tbody>
-</table>
 <hr>
 <h2 id="0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</h2>
 <div class="codehilite"><pre><span></span><code><span class="err">【</span><span class="n">一句話</span><span class="err">】</span><span class="n">LiteLLM</span> <span class="n">讓</span> <span class="mi">146</span> <span class="n">個供應商講同一種話</span><span class="err">（</span><span class="n">OpenAI</span> <span class="n">的</span> <span class="n">chat</span> <span class="n">格式</span><span class="err">）。</span>
@@ -3919,3 +3780,130 @@ get_max_tokens(&quot;gpt-3.5-turbo&quot;) = 4096
 </tbody>
 </table>
 <hr>
+<h2 id="目錄">目錄</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>章節</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="#1-什麼是-litellm一個介面146-個供應商">什麼是 LiteLLM：一個介面，146 個供應商</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#2-安裝與設定installation-and-setting-params">安裝與設定（Installation and setting Params）</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#3-api-key-管理set-your-api-keys">API Key 管理（Set your API keys）</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#4-call-chatgpt-最小可用範例">Call chatGPT — 最小可用範例</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="#5-call-claude-2-第二個供應商同一段程式">Call Claude-2 — 第二個供應商，同一段程式</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="#6-call-llama2-on-replicate-開源模型走-replicate">Call llama2 on replicate — 開源模型走 Replicate</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="#7-call-command-nightly-cohere">Call Command-Nightly — Cohere</a></td>
+</tr>
+<tr>
+8</td>
+<td><a href="#8-call-azure-openai-azure-前綴與-deployment-id">Call Azure OpenAI — <code>azure/</code> 前綴與 deployment-id</a></td>
+</tr>
+<tr>
+9</td>
+<td><a href="#9-本機模型ollamalitepy-逐行">本機模型：Ollama（<code>lite.py</code> 逐行）</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="#10-模型命名規則與供應商前綴總表">模型命名規則與供應商前綴總表</a></td>
+</tr>
+<tr>
+11</td>
+<td><a href="#11-completion-的統一-io-契約"><code>completion()</code> 的統一 I/O 契約</a></td>
+</tr>
+<tr>
+12</td>
+<td><a href="#12-messages-的三種角色"><code>messages</code> 的三種角色</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="#13-常用參數速查">常用參數速查</a></td>
+</tr>
+<tr>
+14</td>
+<td><a href="#14-串流輸出-streamtrue">串流輸出 <code>stream=True</code></a></td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="#15-錯誤處理與例外類別">錯誤處理與例外類別</a></td>
+</tr>
+<tr>
+16</td>
+<td><a href="#16-能力查詢supports">能力查詢：<code>supports_*</code></a></td>
+</tr>
+<tr>
+17</td>
+<td><a href="#17-token-計數-token-counter">Token 計數 <code>token_counter()</code></a></td>
+</tr>
+<tr>
+18</td>
+<td><a href="#18-成本追蹤-completion-cost-與內建成本表">成本追蹤 <code>completion_cost()</code> 與內建成本表</a></td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="#19-進階routerfallbacks-與重試">進階：Router、Fallbacks 與重試</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="#20-litellm-proxy把-146-個供應商變成一個-openai-端點">LiteLLM Proxy：把 146 個供應商變成一個 OpenAI 端點</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="#21-litellm-作為-llm-gateway企業級治理與架構">LiteLLM 作為 LLM Gateway：企業級治理與架構</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="#22-本機實測總表真實數據">本機實測總表（真實數據）</a></td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="#23-考試重點整理">考試重點整理</a></td>
+</tr>
+<tr>
+<td>A</td>
+<td><a href="#附錄-aapi-速查表">附錄 A：API 速查表</a></td>
+</tr>
+<tr>
+<td>B</td>
+<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
+</tr>
+<tr>
+<td>C</td>
+<td><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a></td>
+</tr>
+<tr>
+<td>D</td>
+<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
+</tr>
+<tr>
+<td>E</td>
+<td><a href="#附錄-e互動式線上測驗68-題">附錄 E：互動式線上測驗（68 題）</a></td>
+</tr>
+<tr>
+<td>F</td>
+<td><a href="#附錄-f互動測驗答錯題目-複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
+</tr>
+</tbody>
+</table>
