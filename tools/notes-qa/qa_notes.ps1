@@ -18,6 +18,8 @@
     7. literal \r\n     : table corruption marker inside md
     8. heading parity   : h2/h3 set identical between md and html
     9. header blockquote: rendered line by line (<br /> present)
+                          -- only checked when a header block is actually there,
+                             i.e. a <blockquote> immediately after </h1>
    10. quiz            : QUESTIONS JSON parses, count matches the nav label
 
   Warnings (advisory, never fail the run):
@@ -31,10 +33,21 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-# Portable default: <repo>\source, derived from this script's own location (tools/notes-qa).
+# Portable default: locate <repo>\source by walking up from this script's own
+# location, so the gate behaves identically whether it is run from
+# tools/notes-qa/ (canonical, tracked) or from a scratch copy elsewhere.
 if ([string]::IsNullOrWhiteSpace($Root)) {
-  $repoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-  $Root = Join-Path $repoRoot 'source'
+  $dir = $PSScriptRoot
+  while (-not [string]::IsNullOrWhiteSpace($dir) -and
+         -not (Test-Path (Join-Path $dir 'source'))) {
+    $parent = Split-Path -Parent $dir
+    if ([string]::IsNullOrWhiteSpace($parent) -or $parent -eq $dir) { break }
+    $dir = $parent
+  }
+  $Root = Join-Path $dir 'source'
+  if (-not (Test-Path $Root)) {
+    throw "cannot find <repo>\source above $PSScriptRoot - pass -Root explicitly"
+  }
 }
 
 function Ch([int[]]$c) { -join ($c | ForEach-Object { [char]$_ }) }
@@ -217,6 +230,11 @@ foreach ($d in $dirs) {
   } else {
     $rows += ("PASS  {0}" -f $name)
   }
+}
+
+if ($dirs.Count -eq 0) {
+  Write-Output ("no note folders found under {0} - refusing to report a pass" -f $Root)
+  exit 1
 }
 
 if (-not $Quiet) {

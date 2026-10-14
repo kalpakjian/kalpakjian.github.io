@@ -68,7 +68,7 @@ HTML 對應：同一段放在 `<blockquote>` 裡，**每一行結尾加 `<br />`
 
 - md 的 `##`／`###` 標題文字與 html 的 `<h2>`／`<h3>` 文字**必須逐字相同**（QA 會比對）。
 - html 的 `id` 由標題文字自動產生（去標籤、空白→`-`、只留英數與中日韓字）。
-  標題改字後**一定要跑** `_covergen\regen_ids.ps1`，它會重生 id 並同步 md／html 的 `](#…)` 連結。
+  標題改字後**一定要跑** `tools\notes-qa\regen_ids.ps1`，它會重生 id 並同步 md／html 的 `](#…)` 連結。
 - 目錄表格：`#` 欄放編號，**連結文字不要再寫一次編號**
   （✅ `| 8 | [Call Azure OpenAI — …](#8-…) |`　❌ `| 8 | [8. Call Azure OpenAI — …](#…) |`）。
 - 標題裡的 `<` `>` 佔位符（如 `<供應商>/<模型>`）在 html 必須寫成 `&lt;…&gt;`，否則會被當成標籤吃掉。
@@ -107,10 +107,10 @@ HTML 對應：同一段放在 `<blockquote>` 裡，**每一行結尾加 `<br />`
 
 ## 8. 批次修改工具（事後修正用，也可用在生成階段）
 
-**`_covergen\yk_replace2.ps1`** — 規則式批次取代（md＋html＋quiz 同時處理）
+**`tools\notes-qa\yk_replace2.ps1`** — 規則式批次取代（md＋html＋quiz 同時處理）
 
 ```
-powershell -NoProfile -ExecutionPolicy Bypass -File _covergen\yk_replace2.ps1 -ruleFile <rules.txt> [-filter <dirName>]
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\yk_replace2.ps1 -ruleFile <rules.txt> [-filter <dirName>]
 ```
 
 規則檔（UTF-8）每行一條，格式 `pattern@@@replacement`：
@@ -135,12 +135,19 @@ powershell -NoProfile -ExecutionPolicy Bypass -File _covergen\yk_replace2.ps1 -r
 ## 9. 品質閘門：`qa_notes.ps1`
 
 ```
-powershell -NoProfile -ExecutionPolicy Bypass -File _covergen\qa_notes.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File _covergen\qa_notes.ps1 -Quiet      # 只看總結
-powershell -NoProfile -ExecutionPolicy Bypass -File _covergen\qa_notes.ps1 -Root <dir>  # 指定目錄
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 -Quiet      # 只看總結
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 -Root <dir>  # 指定目錄
 ```
 
 離開碼：`0` = 全部通過、`1` = 有硬性失敗（可直接當 CI 的 gate）。
+
+> ⛔ **只跑 `tools\notes-qa\` 這一份，不要在別處留副本。**
+> 閘門的預設根目錄是「從腳本位置往上找到 `<repo>\source`」，所以正本放在
+> `tools\notes-qa\` 才會找到 13 份筆記。`_covergen\` 底下若有舊副本，會發生兩件事：
+> ① 它不會跟著正本更新（檢查邏輯過期）；② 從 `_covergen\` 執行時往上找到的層級不對，
+> 會**檢查 0 份筆記然後回報通過**（最危險的假通過）。現在的版本已改成找不到就報錯，
+> 但正解仍然是只跑正本。
 
 **硬性檢查（必須 0）**
 
@@ -159,11 +166,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File _covergen\qa_notes.ps1 -Root
 
 **警告（僅提示）**：孤立 LF、`第 N 頁` 這種寫法（可能是合法例子）。
 
-**自我測試樣本**：`_covergen\qa_selftest\bad-notes\` 是一份**故意有 12 種瑕疵**的假筆記，
+**自我測試樣本**：`tools\notes-qa\qa_selftest\bad-notes\` 是一份**故意有 12 種瑕疵**的假筆記，
 用來確認閘門還有效：
 
 ```
-powershell -NoProfile -ExecutionPolicy Bypass -File _covergen\qa_notes.ps1 -Root C:\Users\princ\blog\_covergen\qa_selftest
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 -Root tools/notes-qa/qa_selftest
 # 應該 FAIL 並列出 12 項，離開碼 1
 ```
 
@@ -184,6 +191,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File _covergen\qa_notes.ps1 -Root
 
 ## 11.（選用）把閘門接進 CI
 
-`_covergen\notes-qa.yml` 是一份**現成、非阻擋式**的 workflow：push 後自動跑 QA 並把結果貼在
+`tools\notes-qa\notes-qa.yml` 是一份**現成、非阻擋式**的 workflow：push 後自動跑 QA 並把結果貼在
 Actions 摘要，**不會擋部署**。要啟用就把它複製到 `.github/workflows/notes-qa.yml` 並 push。
 
