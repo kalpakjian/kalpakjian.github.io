@@ -1,67 +1,5 @@
 # Local LLM Apps 學習筆記（考試溫習版）
 
-> 課程：Certificate in Application of Large Language Model (LLM) (Part-time) — Lesson 7
-> 機構：匯縱專業發展中心（IVDC）
-> 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、參數說明、常見錯誤與考點。
-> 因此筆記逐頁補上「**這一步在做什麼、為什麼**」。
-> 所有程式碼與數字都在本機實測（Python 3.11.15／Ollama 0.40.3／llama-index 0.14.25），實測輸出直接寫進內文。
-> ⚠️ **版本時效（2026-10 實查）**：完整「本機實測 vs 最新」對照表見 **§38.9**。
-> 好消息是 **Ollama 0.40.3 查證後仍是目前最新版**，所以本課的 Ollama 實測數字全部有效；
-> 但 **LM Studio 已到 0.4.26**（本筆記撰寫時是  0.4.6），且 **`huggingface_hub[cli]` 這個 extra 已被移除**。
-> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
-
----
-
-## 目錄
-
-| # | 章節 |
-|---|------|
-| 1 | [課程地圖：Lesson 7 在教什麼](#1-課程地圖lesson-7-在教什麼) |
-| 2 | [為什麼要跑本機 LLM](#2-為什麼要跑本機-llm) |
-| 3 | [技術底層：GGUF、量化、llama.cpp 與 Ollama 的關係](#3-技術底層gguf量化llamacpp-與-ollama-的關係) |
-| 4 | [量化命名規則速查](#4-量化命名規則速查) |
-| 5 | [LM Studio：下載與安裝](#5-lm-studio下載與安裝) |
-| 6 | [LM Studio：首次啟動與選模型](#6-lm-studio首次啟動與選模型) |
-| 7 | [LM Studio：設定與資源分配](#7-lm-studio設定與資源分配) |
-| 8 | [LM Studio：換模型（從 Hugging Face 直接抓）](#8-lm-studio換模型從-hugging-face-直接抓) |
-| 9 | [LM Studio：上傳檔案並提問（本機 RAG 的第一次現身）](#9-lm-studio上傳檔案並提問本機-rag-的第一次現身) |
-| 10 | [Ollama：下載與安裝](#10-ollama下載與安裝) |
-| 11 | [Ollama：模型選擇表](#11-ollama模型選擇表) |
-| 12 | [Ollama：`ollama run` 安裝模型與對話](#12-ollamaollama-run-安裝模型與對話) |
-| 13 | [Ollama：`ollama list`、`ollama serve` 與埠號](#13-ollamaollama-listollama-serve-與埠號) |
-| 14 | [`testollama.py` 逐行拆解（Lab）](#14-testollamapy-逐行拆解lab) |
-| 15 | [⚠️ 課程把 LLM 輸出硬轉成 tensor 的問題](#15-課程把-llm-輸出硬轉成-tensor-的問題) |
-| 16 | [AnythingLLM：安裝與歡迎頁](#16-anythingllm安裝與歡迎頁) |
-| 17 | [AnythingLLM：選擇 LLM 模型與換模型](#17-anythingllm選擇-llm-模型與換模型) |
-| 18 | [AnythingLLM：提問](#18-anythingllm提問) |
-| 19 | [GPT4All：安裝與模型安裝](#19-gpt4all安裝與模型安裝) |
-| 20 | [GPT4All：提問](#20-gpt4all提問) |
-| 21 | [GPT4All：My Documents 設定與加入文件／目錄](#21-gpt4allmy-documents-設定與加入文件目錄) |
-| 22 | [GPT4All：對自己的檔案提問（本機 RAG 的雛形）](#22-gpt4all對自己的檔案提問本機-rag-的雛形) |
-| 23 | [四個 App 對照總表](#23-四個-app-對照總表) |
-| 24 | [怎麼選：決策樹](#24-怎麼選決策樹) |
-| 25 | [Open WebUI 與 Streamlit：為什麼要自己寫](#25-open-webui-與-streamlit為什麼要自己寫) |
-| 26 | [`app_web.py` 逐行拆解（Lab）](#26-app-webpy-逐行拆解lab) |
-| 27 | [LangChain ＋ LlamaCpp：在 Python 裡直接跑 GGUF](#27-langchain-llamacpp在-python-裡直接跑-gguf) |
-| 28 | [RAG 概念：關鍵字 RAG vs 向量 RAG](#28-rag-概念關鍵字-rag-vs-向量-rag) |
-| 29 | [⚠️ `RAG.ipynb` 的 `max_length` 陷阱](#29-ragipynb-的-max-length-陷阱) |
-| 30 | [LlamaIndex ＋ Groq：雲端 LLM ＋ 本機嵌入](#30-llamaindex-groq雲端-llm-本機嵌入) |
-| 31 | [⚠️ Groq API Key 寫死 ＋ 本機替代路徑](#31-groq-api-key-寫死-本機替代路徑) |
-| 32 | [LoRA 與本機微調（`train.py`）](#32-lora-與本機微調trainpy) |
-| 33 | [⚠️ `train.jsonl`：73 行只有 1 個唯一樣本](#33-trainjsonl73-行只有-1-個唯一樣本) |
-| 34 | [轉 GGUF 與 `ollama create`](#34-轉-gguf-與-ollama-create) |
-| 35 | [DQN 迷宮：強化學習補充](#35-dqn-迷宮強化學習補充) |
-| 36 | [NLP 基礎（一）：Tokenizing、停用詞、Stemming 與 Lemmatizing](#36-nlp-基礎一tokenizing停用詞stemming-與-lemmatizing) |
-| 37 | [NLP 基礎（二）：POS tagging、Chunking、NER 與文字分類](#37-nlp-基礎二pos-taggingchunkingner-與文字分類) |
-| 38 | [本機實測總表（真實數據）](#38-本機實測總表真實數據) |
-| 39 | [考試重點整理](#39-考試重點整理) |
-| A | [附錄 A：指令與 API 速查表](#附錄-a指令與-api-速查表) |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
-| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
-| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
-| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
-
 ---
 
 ## 0. 30 秒總複習（考前最後掃描）
@@ -5277,3 +5215,55 @@ Lab
 ---
 
 *本篇為個人學習筆記整理。*
+
+---
+
+## 目錄
+
+| # | 章節 |
+|---|------|
+| 1 | [課程地圖：Lesson 7 在教什麼](#1-課程地圖lesson-7-在教什麼) |
+| 2 | [為什麼要跑本機 LLM](#2-為什麼要跑本機-llm) |
+| 3 | [技術底層：GGUF、量化、llama.cpp 與 Ollama 的關係](#3-技術底層gguf量化llamacpp-與-ollama-的關係) |
+| 4 | [量化命名規則速查](#4-量化命名規則速查) |
+| 5 | [LM Studio：下載與安裝](#5-lm-studio下載與安裝) |
+| 6 | [LM Studio：首次啟動與選模型](#6-lm-studio首次啟動與選模型) |
+| 7 | [LM Studio：設定與資源分配](#7-lm-studio設定與資源分配) |
+| 8 | [LM Studio：換模型（從 Hugging Face 直接抓）](#8-lm-studio換模型從-hugging-face-直接抓) |
+| 9 | [LM Studio：上傳檔案並提問（本機 RAG 的第一次現身）](#9-lm-studio上傳檔案並提問本機-rag-的第一次現身) |
+| 10 | [Ollama：下載與安裝](#10-ollama下載與安裝) |
+| 11 | [Ollama：模型選擇表](#11-ollama模型選擇表) |
+| 12 | [Ollama：`ollama run` 安裝模型與對話](#12-ollamaollama-run-安裝模型與對話) |
+| 13 | [Ollama：`ollama list`、`ollama serve` 與埠號](#13-ollamaollama-listollama-serve-與埠號) |
+| 14 | [`testollama.py` 逐行拆解（Lab）](#14-testollamapy-逐行拆解lab) |
+| 15 | [⚠️ 課程把 LLM 輸出硬轉成 tensor 的問題](#15-課程把-llm-輸出硬轉成-tensor-的問題) |
+| 16 | [AnythingLLM：安裝與歡迎頁](#16-anythingllm安裝與歡迎頁) |
+| 17 | [AnythingLLM：選擇 LLM 模型與換模型](#17-anythingllm選擇-llm-模型與換模型) |
+| 18 | [AnythingLLM：提問](#18-anythingllm提問) |
+| 19 | [GPT4All：安裝與模型安裝](#19-gpt4all安裝與模型安裝) |
+| 20 | [GPT4All：提問](#20-gpt4all提問) |
+| 21 | [GPT4All：My Documents 設定與加入文件／目錄](#21-gpt4allmy-documents-設定與加入文件目錄) |
+| 22 | [GPT4All：對自己的檔案提問（本機 RAG 的雛形）](#22-gpt4all對自己的檔案提問本機-rag-的雛形) |
+| 23 | [四個 App 對照總表](#23-四個-app-對照總表) |
+| 24 | [怎麼選：決策樹](#24-怎麼選決策樹) |
+| 25 | [Open WebUI 與 Streamlit：為什麼要自己寫](#25-open-webui-與-streamlit為什麼要自己寫) |
+| 26 | [`app_web.py` 逐行拆解（Lab）](#26-app-webpy-逐行拆解lab) |
+| 27 | [LangChain ＋ LlamaCpp：在 Python 裡直接跑 GGUF](#27-langchain-llamacpp在-python-裡直接跑-gguf) |
+| 28 | [RAG 概念：關鍵字 RAG vs 向量 RAG](#28-rag-概念關鍵字-rag-vs-向量-rag) |
+| 29 | [⚠️ `RAG.ipynb` 的 `max_length` 陷阱](#29-ragipynb-的-max-length-陷阱) |
+| 30 | [LlamaIndex ＋ Groq：雲端 LLM ＋ 本機嵌入](#30-llamaindex-groq雲端-llm-本機嵌入) |
+| 31 | [⚠️ Groq API Key 寫死 ＋ 本機替代路徑](#31-groq-api-key-寫死-本機替代路徑) |
+| 32 | [LoRA 與本機微調（`train.py`）](#32-lora-與本機微調trainpy) |
+| 33 | [⚠️ `train.jsonl`：73 行只有 1 個唯一樣本](#33-trainjsonl73-行只有-1-個唯一樣本) |
+| 34 | [轉 GGUF 與 `ollama create`](#34-轉-gguf-與-ollama-create) |
+| 35 | [DQN 迷宮：強化學習補充](#35-dqn-迷宮強化學習補充) |
+| 36 | [NLP 基礎（一）：Tokenizing、停用詞、Stemming 與 Lemmatizing](#36-nlp-基礎一tokenizing停用詞stemming-與-lemmatizing) |
+| 37 | [NLP 基礎（二）：POS tagging、Chunking、NER 與文字分類](#37-nlp-基礎二pos-taggingchunkingner-與文字分類) |
+| 38 | [本機實測總表（真實數據）](#38-本機實測總表真實數據) |
+| 39 | [考試重點整理](#39-考試重點整理) |
+| A | [附錄 A：指令與 API 速查表](#附錄-a指令與-api-速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
