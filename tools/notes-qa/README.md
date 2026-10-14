@@ -12,6 +12,7 @@
 | `yk_replace2.ps1` | 規則式批次取代（md＋html＋quiz 同時處理），規則檔格式 `pattern@@@replacement` |
 | `fix_toc_dup.ps1` | 移除目錄「編號重複」 |
 | `fix_header_br.ps1` | 頁首區塊逐行補 `<br />`（只在句尾或 `課程：` 行斷行） |
+| `normalize_crlf.ps1` | 把筆記裡的孤立 LF 正規化為 CRLF（`-DryRun` 可先預覽，不會寫檔） |
 | `notes-qa.yml` | 選用的 CI workflow（非阻擋式，push 後自動跑 QA 並貼摘要） |
 
 ## 快速用法
@@ -27,10 +28,15 @@ pwsh -File tools/notes-qa/regen_ids.ps1
 
 # 批次取代（規則檔 UTF-8，每行 pattern@@@replacement）
 pwsh -File tools/notes-qa/yk_replace2.ps1 -ruleFile rules.txt -filter local-llm-notes
+
+# 行尾正規化（先預覽再寫）
+pwsh -File tools/notes-qa/normalize_crlf.ps1 -DryRun
+pwsh -File tools/notes-qa/normalize_crlf.ps1
 ```
 
 所有腳本都會自動以**自己所在位置**推算 repo 根目錄（`tools/notes-qa` → repo → `source`），
-所以整包複製到別台機器也能直接跑。
+所以整包複製到別台機器也能直接跑。`qa_notes.ps1` 與 `normalize_crlf.ps1` 更進一步
+**逐層往上找到 `source` 為止**，因此就算從別的位置執行也不會找錯目錄（也不會「檢查 0 份卻回報通過」）。
 
 > 腳本本身維持**純 ASCII**（Windows PowerShell 5.1 用 ANSI 讀 `.ps1`），
 > 中日韓字元一律放在規則檔／資料檔裡。

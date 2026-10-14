@@ -127,7 +127,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\yk_replace2.p
 | `regen_ids.ps1` | 由標題文字重生所有 `id`，並同步 md／html 連結 |
 | `fix_toc_dup.ps1` | 移除目錄「編號重複」 |
 | `fix_header_br.ps1` | 頁首區塊逐行補 `<br />`（只在句尾或 `課程：` 行斷行） |
-| `normalize_crlf.ps1` | 把孤立 LF 正規化為 CRLF |
+| `normalize_crlf.ps1` | 把筆記裡的孤立 LF 正規化為 CRLF（`-DryRun` 先預覽、`-Quiet` 只看總結） |
 | `qa_notes.ps1` | **品質閘門**（本契約的執行者） |
 
 ---
