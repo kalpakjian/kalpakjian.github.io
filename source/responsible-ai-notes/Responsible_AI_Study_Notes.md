@@ -1,44 +1,5 @@
 # Responsible AI 學習筆記（考試溫習版）
 
-> 課程：Certificate in Application of Computer Vision Technology (Part-time)
-> 機構：匯縱專業發展中心（IVDC）
-> 涵蓋檔案：4 IVDC_Responsible AI.pptx（→ PDF）
-> 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、關鍵數字、法規細節與考點。
-> 課程內容多為投影片重點字句；本筆記補上「每句話背後的概念」與香港《個人資料（私隱）條例》的對應關係，方便理解與應試。
-> 凡本筆記補充的內容，一律以 **（補充）** 標示，方便分辨「考試範圍」與「延伸理解」。
-> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
-
----
-
-## 目錄
-
-| # | 章節 |
-|---|------|
-| 1 | [Responsible AI：什麼是「負責任的 AI」](#1-responsible-ai什麼是負責任的-ai) |
-| 2 | [Ethical AI Principles（12 項倫理原則）](#2-ethical-ai-principles12-項倫理原則) |
-| 3 | [AI Practice Guide（AI 專案生命週期實務指南）](#3-ai-practice-guideai-專案生命週期實務指南) |
-| 4 | [Ethical Concerns：電腦視覺的四大倫理議題](#4-ethical-concerns電腦視覺的四大倫理議題) |
-| 5 | [Privacy and Surveillance（隱私與監控）](#5-privacy-and-surveillance隱私與監控) |
-| 6 | [Bias and Discrimination（偏見與歧視）](#6-bias-and-discrimination偏見與歧視) |
-| 7 | [Data Security and Consent（資料安全與同意）](#7-data-security-and-consent資料安全與同意) |
-| 8 | [Accountability and Transparency（問責與透明）](#8-accountability-and-transparency問責與透明) |
-| 9 | [The Personal Data (Privacy) Ordinance（個人資料（私隱）條例）](#9-the-personal-data-privacy-ordinance個人資料私隱條例) |
-| 10 | [The Six Principles of PDPO（PDPO 六項保護原則）](#10-the-six-principles-of-pdpopdpo-六項保護原則) |
-| 11 | [Social Impacts of Computer Vision（電腦視覺的社會影響）](#11-social-impacts-of-computer-vision電腦視覺的社會影響) |
-| 12 | [Enhanced Public Safety（提升公共安全）](#12-enhanced-public-safety提升公共安全) |
-| 13 | [Improved Healthcare Services（改善醫療服務）](#13-improved-healthcare-services改善醫療服務) |
-| 14 | [Employment and Workforce Changes（就業與勞動力變化）](#14-employment-and-workforce-changes就業與勞動力變化) |
-| 15 | [Social Inequality（社會不平等）](#15-social-inequality社會不平等) |
-| 16 | [Influence on Human Behavior（對人類行為的影響）](#16-influence-on-human-behavior對人類行為的影響) |
-| 17 | [Recommendations for Ethical Use（倫理使用建議）](#17-recommendations-for-ethical-use倫理使用建議) |
-| 18 | [Conclusion（結論）](#18-conclusion結論) |
-| A | [附錄 A：名詞與法規速查表](#附錄-a名詞與法規速查表) |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
-| C | [附錄 C：離線使用與延伸資源](#附錄-c離線使用與延伸資源) |
-| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
-| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
-
 ---
 
 ## 0. 30 秒總複習（考前最後掃描）
@@ -1362,3 +1323,34 @@ Implement 資安措施 ｜ Require 知情同意 ｜ Regularly audit 公平/準�
 ---
 
 *本篇為個人學習筆記整理。*
+
+---
+
+## 目錄
+
+| # | 章節 |
+|---|------|
+| 1 | [Responsible AI：什麼是「負責任的 AI」](#1-responsible-ai什麼是負責任的-ai) |
+| 2 | [Ethical AI Principles（12 項倫理原則）](#2-ethical-ai-principles12-項倫理原則) |
+| 3 | [AI Practice Guide（AI 專案生命週期實務指南）](#3-ai-practice-guideai-專案生命週期實務指南) |
+| 4 | [Ethical Concerns：電腦視覺的四大倫理議題](#4-ethical-concerns電腦視覺的四大倫理議題) |
+| 5 | [Privacy and Surveillance（隱私與監控）](#5-privacy-and-surveillance隱私與監控) |
+| 6 | [Bias and Discrimination（偏見與歧視）](#6-bias-and-discrimination偏見與歧視) |
+| 7 | [Data Security and Consent（資料安全與同意）](#7-data-security-and-consent資料安全與同意) |
+| 8 | [Accountability and Transparency（問責與透明）](#8-accountability-and-transparency問責與透明) |
+| 9 | [The Personal Data (Privacy) Ordinance（個人資料（私隱）條例）](#9-the-personal-data-privacy-ordinance個人資料私隱條例) |
+| 10 | [The Six Principles of PDPO（PDPO 六項保護原則）](#10-the-six-principles-of-pdpopdpo-六項保護原則) |
+| 11 | [Social Impacts of Computer Vision（電腦視覺的社會影響）](#11-social-impacts-of-computer-vision電腦視覺的社會影響) |
+| 12 | [Enhanced Public Safety（提升公共安全）](#12-enhanced-public-safety提升公共安全) |
+| 13 | [Improved Healthcare Services（改善醫療服務）](#13-improved-healthcare-services改善醫療服務) |
+| 14 | [Employment and Workforce Changes（就業與勞動力變化）](#14-employment-and-workforce-changes就業與勞動力變化) |
+| 15 | [Social Inequality（社會不平等）](#15-social-inequality社會不平等) |
+| 16 | [Influence on Human Behavior（對人類行為的影響）](#16-influence-on-human-behavior對人類行為的影響) |
+| 17 | [Recommendations for Ethical Use（倫理使用建議）](#17-recommendations-for-ethical-use倫理使用建議) |
+| 18 | [Conclusion（結論）](#18-conclusion結論) |
+| A | [附錄 A：名詞與法規速查表](#附錄-a名詞與法規速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線使用與延伸資源](#附錄-c離線使用與延伸資源) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
