@@ -1,10 +1,19 @@
 $ErrorActionPreference = 'Stop'
 $utf8 = New-Object System.Text.UTF8Encoding($false)
-# Portable: <repo>\source, derived from this script's own location (tools/notes-qa).
-$root = Join-Path (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)) 'source'
-# end-of-line chars: 。！？）」 (U+3002 U+FF01 U+FF1F U+FF09 U+300D)
+# Portable: <repo>\source is located by walking up from this script's own location,
+# so the tool behaves the same wherever it is invoked from.
+$dir = $PSScriptRoot
+while (-not [string]::IsNullOrWhiteSpace($dir) -and
+       -not (Test-Path (Join-Path $dir 'source'))) {
+  $parent = Split-Path -Parent $dir
+  if ([string]::IsNullOrWhiteSpace($parent) -or $parent -eq $dir) { break }
+  $dir = $parent
+}
+$root = Join-Path $dir 'source'
+if (-not (Test-Path $root)) { throw "cannot find <repo>\source above $PSScriptRoot" }
+# end-of-line chars (built from code points below): U+3002 U+FF01 U+FF1F U+FF09 U+300D
 $endChars = @([char]0x3002, [char]0xFF01, [char]0xFF1F, [char]0xFF09, [char]0x300D)
-# prefix "課程：" = U+8AB2 U+7A0B U+FF1A
+# prefix label (built from code points below) = U+8AB2 U+7A0B U+FF1A
 $keCheng = [string]([char]0x8AB2) + [string]([char]0x7A0B) + [string]([char]0xFF1A)
 $br = '<' + 'br />'
 $total = 0

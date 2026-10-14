@@ -5,9 +5,20 @@ param(
   [string]$Root = ''
 )
 $ErrorActionPreference = 'Stop'
-# Portable: <repo>\source, derived from this script's own location (tools/notes-qa).
+# Portable: <repo>\source is located by walking up from this script's own location,
+# so the tool behaves the same wherever it is invoked from.
 if ([string]::IsNullOrWhiteSpace($Root)) {
-  $Root = Join-Path (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)) 'source'
+  $dir = $PSScriptRoot
+  while (-not [string]::IsNullOrWhiteSpace($dir) -and
+         -not (Test-Path (Join-Path $dir 'source'))) {
+    $parent = Split-Path -Parent $dir
+    if ([string]::IsNullOrWhiteSpace($parent) -or $parent -eq $dir) { break }
+    $dir = $parent
+  }
+  $Root = Join-Path $dir 'source'
+  if (-not (Test-Path $Root)) {
+    throw "cannot find <repo>\source above $PSScriptRoot - pass -Root explicitly"
+  }
 }
 $root     = $Root
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)

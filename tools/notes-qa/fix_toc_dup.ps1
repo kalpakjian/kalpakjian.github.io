@@ -1,7 +1,16 @@
 $ErrorActionPreference = 'Stop'
 $utf8 = New-Object System.Text.UTF8Encoding($false)
-# Portable: <repo>\source\, derived from this script's own location (tools/notes-qa).
-$root = (Join-Path (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)) 'source') + '\'
+# Portable: <repo>\source is located by walking up from this script's own location,
+# so the tool behaves the same wherever it is invoked from.
+$dir = $PSScriptRoot
+while (-not [string]::IsNullOrWhiteSpace($dir) -and
+       -not (Test-Path (Join-Path $dir 'source'))) {
+  $parent = Split-Path -Parent $dir
+  if ([string]::IsNullOrWhiteSpace($parent) -or $parent -eq $dir) { break }
+  $dir = $parent
+}
+$root = (Join-Path $dir 'source') + '\'
+if (-not (Test-Path $root)) { throw "cannot find <repo>\source above $PSScriptRoot" }
 
 function Fix-Html([string]$t) {
   $script:hits = 0
