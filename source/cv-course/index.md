@@ -3,33 +3,6 @@ title: 專題：IVDC 電腦視覺課程筆記
 date: 2026-10-10 23:40:00
 ---
 
-這是 **IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology (Part-time)」** 課程的學習筆記專題。
-
-我把課程內容逐份整理成**可離線閱讀**的筆記，每一份都附 **60 題互動 MC 測驗**（點選即時計分、進度自動儲存）。
-
-> 以下依**課程官方順序**（Lesson Plan）排列；✅ 已完成，⏳ 尚未製作。
-
----
-
-## 課程順序總覽
-
-| 課節 | 主題 | 筆記 |
-|:---:|---|---|
-| **Lesson 1** | Introduction to Generative AI | ✅ [Introduction to AI 學習筆記](/ai-intro-notes/) |
-| **Lesson 2** | Using Local GPU for ML | ✅ [Using Local GPU for ML 學習筆記](/local-gpu-ml-notes/) |
-| **Lesson 2** | Introduction to Computer Vision and Application | ✅ [Introduction to Computer Vision 學習筆記](/cv-intro-notes/) |
-| **Lesson 3** | OpenCV | ✅ [OpenCV 學習筆記](/opencv-notes/) |
-| **Lesson 4** | Responsible AI | ✅ [Responsible AI 學習筆記](/responsible-ai-notes/) |
-| **Lesson 4** | Test | — |
-| **Lesson 5** | Neural Network, Activation Function and Machine Learning | ✅ [Neural Network &amp; ML 學習筆記](/neural-network-notes/) |
-| **Lesson 6** | Convolutional Neural Network (CNN) 1 | ⏳ 待補 |
-| **Lesson 7** | CNN 2 | ⏳ 待補 |
-| **Lesson 8** | Tensorflow and Pytorch for Object Detection and CNN | ⏳ 待補 |
-| **Lesson 9** | Practical Application for Implementation and Demo | ⏳ 待補 |
-| **Lesson 10** | Exam | — |
-
----
-
 ## 1 · Lesson 1 — Introduction to Generative AI
 
 ![Introduction to AI 學習筆記](/img/covers/ai-intro-notes-ivdc.png)
@@ -101,3 +74,22 @@ date: 2026-10-10 23:40:00
 ---
 
 *本專題為個人學習筆記整理。*
+
+---
+
+## 課程順序總覽
+
+| 課節 | 主題 | 筆記 |
+|:---:|---|---|
+| **Lesson 1** | Introduction to Generative AI | ✅ [Introduction to AI 學習筆記](/ai-intro-notes/) |
+| **Lesson 2** | Using Local GPU for ML | ✅ [Using Local GPU for ML 學習筆記](/local-gpu-ml-notes/) |
+| **Lesson 2** | Introduction to Computer Vision and Application | ✅ [Introduction to Computer Vision 學習筆記](/cv-intro-notes/) |
+| **Lesson 3** | OpenCV | ✅ [OpenCV 學習筆記](/opencv-notes/) |
+| **Lesson 4** | Responsible AI | ✅ [Responsible AI 學習筆記](/responsible-ai-notes/) |
+| **Lesson 4** | Test | — |
+| **Lesson 5** | Neural Network, Activation Function and Machine Learning | ✅ [Neural Network &amp; ML 學習筆記](/neural-network-notes/) |
+| **Lesson 6** | Convolutional Neural Network (CNN) 1 | ⏳ 待補 |
+| **Lesson 7** | CNN 2 | ⏳ 待補 |
+| **Lesson 8** | Tensorflow and Pytorch for Object Detection and CNN | ⏳ 待補 |
+| **Lesson 9** | Practical Application for Implementation and Demo | ⏳ 待補 |
+| **Lesson 10** | Exam | — |

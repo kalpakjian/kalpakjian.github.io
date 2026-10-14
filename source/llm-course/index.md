@@ -3,40 +3,6 @@ title: 專題：IVDC LLM 與生成式 AI 課程筆記
 date: 2026-10-13 09:00:00
 ---
 
-這是 **IVDC（匯縱專業發展中心）「Certificate in Application of Large Language Model (LLM) (Part-time)」** 課程的學習筆記專題。
-
-我把課程內容逐份整理成**可離線閱讀**的筆記，每一份都附 **60 題互動 MC 測驗**（點選即時計分、進度自動儲存）。
-
-> 以下依**課程官方順序**（`Lesson Plan.docx`）排列；✅ 已完成，⏳ 尚未製作。
-
----
-
-## 課程順序總覽
-
-| 課節 | 主題 | 筆記 |
-|:---:|---|---|
-| **Lesson 1** | Introduction to Generative AI | ✅ [Introduction to AI 學習筆記](/ai-intro-notes/) |
-| **Lesson 2** | Using Local GPU for ML | ✅ [Using Local GPU for ML 學習筆記](/local-gpu-ml-notes/) |
-| **Lesson 2** | Popular LLM | ✅ [Popular LLM Models 學習筆記](/popular-llm-notes/) |
-| **Lesson 3** | Introduction to LLM (Theory) | ✅ [Introduction to LLM 學習筆記](/llm-intro-notes/) |
-| **Lesson 4** | Responsible LLM | ✅ [Responsible AI 學習筆記](/responsible-ai-notes/) |
-| **Lesson 4** | Test | — |
-| **Lesson 5** | Prompt Engineering | ✅ [Prompt Engineering 學習筆記](/prompt-engineering-notes/) |
-| **Lesson 6** | Hugging Face for LLM | ✅ [Hugging Face for LLM 學習筆記](/huggingface-notes/) |
-| **Lesson 7** | Local LLM Apps | ✅ [Local LLM Apps 學習筆記](/local-llm-notes/) |
-| **Lesson 8** | LiteLLM | ✅ [LiteLLM 學習筆記](/litellm-notes/) |
-| **Lesson 9** | Streamlit and Flask | ✅ [Streamlit and Flask 學習筆記](/streamlit-flask-notes/) |
-| **Lesson 10** | Exam | — |
-
-> 📌 **Lesson 1 與 Lesson 2 的前半（Using Local GPU for ML）** 與
-> [IVDC 電腦視覺課程專題](/cv-course/) 共用同一份筆記（兩門課的共同模組），此處直接連結，不重複製作。
->
-> 📌 **Lesson 4（Responsible LLM）** 的內容與電腦視覺課程的
-> [Responsible AI 學習筆記](/responsible-ai-notes/) 高度重疊（僅 14 頁），
-> 因此比照 Lesson 1 的做法直接連結，不重複製作。
-
----
-
 ## 1 · Lesson 2 — Popular LLM Models
 
 ![Popular LLM Models 學習筆記](/img/covers/popular-llm-notes-ivdc.png)
@@ -196,3 +162,29 @@ date: 2026-10-13 09:00:00
 ---
 
 *本專題為個人學習筆記整理。*
+
+---
+
+## 課程順序總覽
+
+| 課節 | 主題 | 筆記 |
+|:---:|---|---|
+| **Lesson 1** | Introduction to Generative AI | ✅ [Introduction to AI 學習筆記](/ai-intro-notes/) |
+| **Lesson 2** | Using Local GPU for ML | ✅ [Using Local GPU for ML 學習筆記](/local-gpu-ml-notes/) |
+| **Lesson 2** | Popular LLM | ✅ [Popular LLM Models 學習筆記](/popular-llm-notes/) |
+| **Lesson 3** | Introduction to LLM (Theory) | ✅ [Introduction to LLM 學習筆記](/llm-intro-notes/) |
+| **Lesson 4** | Responsible LLM | ✅ [Responsible AI 學習筆記](/responsible-ai-notes/) |
+| **Lesson 4** | Test | — |
+| **Lesson 5** | Prompt Engineering | ✅ [Prompt Engineering 學習筆記](/prompt-engineering-notes/) |
+| **Lesson 6** | Hugging Face for LLM | ✅ [Hugging Face for LLM 學習筆記](/huggingface-notes/) |
+| **Lesson 7** | Local LLM Apps | ✅ [Local LLM Apps 學習筆記](/local-llm-notes/) |
+| **Lesson 8** | LiteLLM | ✅ [LiteLLM 學習筆記](/litellm-notes/) |
+| **Lesson 9** | Streamlit and Flask | ✅ [Streamlit and Flask 學習筆記](/streamlit-flask-notes/) |
+| **Lesson 10** | Exam | — |
+
+> 📌 **Lesson 1 與 Lesson 2 的前半（Using Local GPU for ML）** 與
+> [IVDC 電腦視覺課程專題](/cv-course/) 共用同一份筆記（兩門課的共同模組），此處直接連結，不重複製作。
+>
+> 📌 **Lesson 4（Responsible LLM）** 的內容與電腦視覺課程的
+> [Responsible AI 學習筆記](/responsible-ai-notes/) 高度重疊（僅 14 頁），
+> 因此比照 Lesson 1 的做法直接連結，不重複製作。
