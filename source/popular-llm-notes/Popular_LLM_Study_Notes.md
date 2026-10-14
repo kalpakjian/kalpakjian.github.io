@@ -1,58 +1,5 @@
 # Popular LLM Models 學習筆記（考試溫習版）
 
-> 課程：Certificate in Application of Large Language Model (LLM) (Part-time) — Lesson 2
-> 機構：匯縱專業發展中心（IVDC）
-> 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、參數說明、常見錯誤與考點。
-> Lab 程式碼（`LLM.ipynb`／`RAG.ipynb`／`Predictive AI.ipynb`／`Gen AI.ipynb`）都在本機實測
-> （Python 3.11.15／torch 2.14.1+cu132／transformers 5.17.0／RTX 4090），實測數字直接寫進內文。
-> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
-
----
-
-## 目錄
-
-| # | 章節 |
-|---|------|
-| 1 | [課程地圖：三條主線](#1-課程地圖三條主線) |
-| 2 | [什麼是生成式 AI（Generative Artificial Intelligence）](#2-什麼是生成式-aigenerative-artificial-intelligence) |
-| 3 | [熱門 LLM 總覽：六個對話式生成式 AI](#3-熱門-llm-總覽六個對話式生成式-ai) |
-| 4 | [ChatGPT：介面與用途](#4-chatgpt介面與用途) |
-| 5 | [ChatGPT 的智慧從哪來：RLHF、獎勵模型與 PPO](#5-chatgpt-的智慧從哪來rlhf獎勵模型與-ppo) |
-| 6 | [Gemini](#6-gemini) |
-| 7 | [ChatGPT Prompt 範例](#7-chatgpt-prompt-範例) |
-| 8 | [Copilot](#8-copilot) |
-| 9 | [Meta／Llama](#9-metallama) |
-| 10 | [Grok](#10-grok) |
-| 11 | [Perplexity：AI 搜尋引擎](#11-perplexityai-搜尋引擎) |
-| 12 | [中國熱門 LLM：Kimi、通義（Tongyi）、DeepSeek](#12-中國熱門-llmkimi通義tongyideepseek) |
-| 13 | [在本機使用 DeepSeek](#13-在本機使用-deepseek) |
-| 14 | [第三方多模型聚合 App](#14-第三方多模型聚合-app) |
-| 15 | [生成式 AI 偵測器](#15-生成式-ai-偵測器) |
-| 16 | [Predictive AI vs Generative AI：主題地圖](#16-predictive-ai-vs-generative-ai主題地圖) |
-| 17 | [Predictive AI 深入：資料、模型與應用](#17-predictive-ai-深入資料模型與應用) |
-| 18 | [Predictive AI 的五步流程](#18-predictive-ai-的五步流程) |
-| 19 | [Generative AI 深入：定義與核心技術](#19-generative-ai-深入定義與核心技術) |
-| 20 | [Generative AI 的運作方式與生成流程](#20-generative-ai-的運作方式與生成流程) |
-| 21 | [對照總表：Predictive AI vs Generative AI](#21-對照總表predictive-ai-vs-generative-ai) |
-| 22 | [AI → ML → DL → Generative AI 的層次，與 AIGC](#22-ai-ml-dl-generative-ai-的層次與-aigc) |
-| 23 | [GAN 基礎概念](#23-gan-基礎概念) |
-| 24 | [GAN 的底層技術與演算法](#24-gan-的底層技術與演算法) |
-| 25 | [Diffusion Model](#25-diffusion-model) |
-| 26 | [GAN vs Diffusion，與其他生成模型](#26-gan-vs-diffusion與其他生成模型) |
-| 27 | [Hybrid AI Systems](#27-hybrid-ai-systems) |
-| 28 | [真實世界應用：醫療、電商、招聘](#28-真實世界應用醫療電商招聘) |
-| 29 | [RAG：檢索增強生成與 AnythingLLM](#29-rag檢索增強生成與-anythingllm) |
-| 30 | [LLM vs RAG：比較、強弱與使用時機](#30-llm-vs-rag比較強弱與使用時機) |
-| 31 | [更多 ChatGPT：Hinton 的推理題](#31-更多-chatgpthinton-的推理題) |
-| 32 | [程式範例索引與本機實測總表](#32-程式範例索引與本機實測總表) |
-| 33 | [考試重點整理](#33-考試重點整理) |
-| A | [附錄 A：名詞與架構速查表](#附錄-a名詞與架構速查表) |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
-| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
-| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
-| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
-
 ---
 
 ## 0. 30 秒總複習（考前最後掃描）
@@ -2680,3 +2627,48 @@ C:\Users\<你>\.cache\huggingface\hub\
 
 *本篇為個人學習筆記整理。*
 
+---
+
+## 目錄
+
+| # | 章節 |
+|---|------|
+| 1 | [課程地圖：三條主線](#1-課程地圖三條主線) |
+| 2 | [什麼是生成式 AI（Generative Artificial Intelligence）](#2-什麼是生成式-aigenerative-artificial-intelligence) |
+| 3 | [熱門 LLM 總覽：六個對話式生成式 AI](#3-熱門-llm-總覽六個對話式生成式-ai) |
+| 4 | [ChatGPT：介面與用途](#4-chatgpt介面與用途) |
+| 5 | [ChatGPT 的智慧從哪來：RLHF、獎勵模型與 PPO](#5-chatgpt-的智慧從哪來rlhf獎勵模型與-ppo) |
+| 6 | [Gemini](#6-gemini) |
+| 7 | [ChatGPT Prompt 範例](#7-chatgpt-prompt-範例) |
+| 8 | [Copilot](#8-copilot) |
+| 9 | [Meta／Llama](#9-metallama) |
+| 10 | [Grok](#10-grok) |
+| 11 | [Perplexity：AI 搜尋引擎](#11-perplexityai-搜尋引擎) |
+| 12 | [中國熱門 LLM：Kimi、通義（Tongyi）、DeepSeek](#12-中國熱門-llmkimi通義tongyideepseek) |
+| 13 | [在本機使用 DeepSeek](#13-在本機使用-deepseek) |
+| 14 | [第三方多模型聚合 App](#14-第三方多模型聚合-app) |
+| 15 | [生成式 AI 偵測器](#15-生成式-ai-偵測器) |
+| 16 | [Predictive AI vs Generative AI：主題地圖](#16-predictive-ai-vs-generative-ai主題地圖) |
+| 17 | [Predictive AI 深入：資料、模型與應用](#17-predictive-ai-深入資料模型與應用) |
+| 18 | [Predictive AI 的五步流程](#18-predictive-ai-的五步流程) |
+| 19 | [Generative AI 深入：定義與核心技術](#19-generative-ai-深入定義與核心技術) |
+| 20 | [Generative AI 的運作方式與生成流程](#20-generative-ai-的運作方式與生成流程) |
+| 21 | [對照總表：Predictive AI vs Generative AI](#21-對照總表predictive-ai-vs-generative-ai) |
+| 22 | [AI → ML → DL → Generative AI 的層次，與 AIGC](#22-ai-ml-dl-generative-ai-的層次與-aigc) |
+| 23 | [GAN 基礎概念](#23-gan-基礎概念) |
+| 24 | [GAN 的底層技術與演算法](#24-gan-的底層技術與演算法) |
+| 25 | [Diffusion Model](#25-diffusion-model) |
+| 26 | [GAN vs Diffusion，與其他生成模型](#26-gan-vs-diffusion與其他生成模型) |
+| 27 | [Hybrid AI Systems](#27-hybrid-ai-systems) |
+| 28 | [真實世界應用：醫療、電商、招聘](#28-真實世界應用醫療電商招聘) |
+| 29 | [RAG：檢索增強生成與 AnythingLLM](#29-rag檢索增強生成與-anythingllm) |
+| 30 | [LLM vs RAG：比較、強弱與使用時機](#30-llm-vs-rag比較強弱與使用時機) |
+| 31 | [更多 ChatGPT：Hinton 的推理題](#31-更多-chatgpthinton-的推理題) |
+| 32 | [程式範例索引與本機實測總表](#32-程式範例索引與本機實測總表) |
+| 33 | [考試重點整理](#33-考試重點整理) |
+| A | [附錄 A：名詞與架構速查表](#附錄-a名詞與架構速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：離線執行／安裝提示](#附錄-c離線執行安裝提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |

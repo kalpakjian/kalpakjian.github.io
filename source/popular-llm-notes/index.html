@@ -658,182 +658,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </nav>
 <main>
 <h1 id="popular-llm-models-學習筆記考試溫習版">Popular LLM Models 學習筆記（考試溫習版）</h1>
-<blockquote>
-<p>課程：Certificate in Application of Large Language Model (LLM) (Part-time) — Lesson 2<br />
-機構：匯縱專業發展中心（IVDC）<br />
-本筆記依課程大綱每一個標題逐一填充內容，並補上定義、參數說明、常見錯誤與考點。<br />
-Lab 程式碼（<code>LLM.ipynb</code>／<code>RAG.ipynb</code>／<code>Predictive AI.ipynb</code>／<code>Gen AI.ipynb</code>）都在本機實測
-（Python 3.11.15／torch 2.14.1+cu132／transformers 5.17.0／RTX 4090），實測數字直接寫進內文。<br />
-🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
-</blockquote>
-<hr>
-<h2 id="目錄">目錄</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>章節</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><a href="#1-課程地圖三條主線">課程地圖：三條主線</a></td>
-</tr>
-<tr>
-<td>2</td>
-<td><a href="#2-什麼是生成式-aigenerative-artificial-intelligence">什麼是生成式 AI（Generative Artificial Intelligence）</a></td>
-</tr>
-<tr>
-<td>3</td>
-<td><a href="#3-熱門-llm-總覽六個對話式生成式-ai">熱門 LLM 總覽：六個對話式生成式 AI</a></td>
-</tr>
-<tr>
-<td>4</td>
-<td><a href="#4-chatgpt介面與用途">ChatGPT：介面與用途</a></td>
-</tr>
-<tr>
-<td>5</td>
-<td><a href="#5-chatgpt-的智慧從哪來rlhf獎勵模型與-ppo">ChatGPT 的智慧從哪來：RLHF、獎勵模型與 PPO</a></td>
-</tr>
-<tr>
-<td>6</td>
-<td><a href="#6-gemini">Gemini</a></td>
-</tr>
-<tr>
-<td>7</td>
-<td><a href="#7-chatgpt-prompt-範例">ChatGPT Prompt 範例</a></td>
-</tr>
-<tr>
-<td>8</td>
-<td><a href="#8-copilot">Copilot</a></td>
-</tr>
-<tr>
-<td>9</td>
-<td><a href="#9-metallama">Meta／Llama</a></td>
-</tr>
-<tr>
-<td>10</td>
-<td><a href="#10-grok">Grok</a></td>
-</tr>
-<tr>
-<td>11</td>
-<td><a href="#11-perplexityai-搜尋引擎">Perplexity：AI 搜尋引擎</a></td>
-</tr>
-<tr>
-<td>12</td>
-<td><a href="#12-中國熱門-llmkimi通義tongyideepseek">中國熱門 LLM：Kimi、通義（Tongyi）、DeepSeek</a></td>
-</tr>
-<tr>
-<td>13</td>
-<td><a href="#13-在本機使用-deepseek">在本機使用 DeepSeek</a></td>
-</tr>
-<tr>
-<td>14</td>
-<td><a href="#14-第三方多模型聚合-app">第三方多模型聚合 App</a></td>
-</tr>
-<tr>
-<td>15</td>
-<td><a href="#15-生成式-ai-偵測器">生成式 AI 偵測器</a></td>
-</tr>
-<tr>
-<td>16</td>
-<td><a href="#16-predictive-ai-vs-generative-ai主題地圖">Predictive AI vs Generative AI：主題地圖</a></td>
-</tr>
-<tr>
-<td>17</td>
-<td><a href="#17-predictive-ai-深入資料模型與應用">Predictive AI 深入：資料、模型與應用</a></td>
-</tr>
-<tr>
-<td>18</td>
-<td><a href="#18-predictive-ai-的五步流程">Predictive AI 的五步流程</a></td>
-</tr>
-<tr>
-<td>19</td>
-<td><a href="#19-generative-ai-深入定義與核心技術">Generative AI 深入：定義與核心技術</a></td>
-</tr>
-<tr>
-<td>20</td>
-<td><a href="#20-generative-ai-的運作方式與生成流程">Generative AI 的運作方式與生成流程</a></td>
-</tr>
-<tr>
-<td>21</td>
-<td><a href="#21-對照總表predictive-ai-vs-generative-ai">對照總表：Predictive AI vs Generative AI</a></td>
-</tr>
-<tr>
-<td>22</td>
-<td><a href="#22-ai-ml-dl-generative-ai-的層次與-aigc">AI → ML → DL → Generative AI 的層次，與 AIGC</a></td>
-</tr>
-<tr>
-<td>23</td>
-<td><a href="#23-gan-基礎概念">GAN 基礎概念</a></td>
-</tr>
-<tr>
-<td>24</td>
-<td><a href="#24-gan-的底層技術與演算法">GAN 的底層技術與演算法</a></td>
-</tr>
-<tr>
-<td>25</td>
-<td><a href="#25-diffusion-model">Diffusion Model</a></td>
-</tr>
-<tr>
-<td>26</td>
-<td><a href="#26-gan-vs-diffusion與其他生成模型">GAN vs Diffusion，與其他生成模型</a></td>
-</tr>
-<tr>
-<td>27</td>
-<td><a href="#27-hybrid-ai-systems">Hybrid AI Systems</a></td>
-</tr>
-<tr>
-<td>28</td>
-<td><a href="#28-真實世界應用醫療電商招聘">真實世界應用：醫療、電商、招聘</a></td>
-</tr>
-<tr>
-<td>29</td>
-<td><a href="#29-rag檢索增強生成與-anythingllm">RAG：檢索增強生成與 AnythingLLM</a></td>
-</tr>
-<tr>
-<td>30</td>
-<td><a href="#30-llm-vs-rag比較強弱與使用時機">LLM vs RAG：比較、強弱與使用時機</a></td>
-</tr>
-<tr>
-<td>31</td>
-<td><a href="#31-更多-chatgpthinton-的推理題">更多 ChatGPT：Hinton 的推理題</a></td>
-</tr>
-<tr>
-<td>32</td>
-<td><a href="#32-程式範例索引與本機實測總表">程式範例索引與本機實測總表</a></td>
-</tr>
-<tr>
-<td>33</td>
-<td><a href="#33-考試重點整理">考試重點整理</a></td>
-</tr>
-<tr>
-<td>A</td>
-<td><a href="#附錄-a名詞與架構速查表">附錄 A：名詞與架構速查表</a></td>
-</tr>
-<tr>
-<td>B</td>
-<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
-</tr>
-<tr>
-<td>C</td>
-<td><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a></td>
-</tr>
-<tr>
-<td>D</td>
-<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
-</tr>
-<tr>
-<td>E</td>
-<td><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a></td>
-</tr>
-<tr>
-<td>F</td>
-<td><a href="#附錄-f互動測驗答錯題目-複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
-</tr>
-</tbody>
-</table>
 <hr>
 <h2 id="0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</h2>
 <div class="codehilite"><pre><span></span><code>【一句話】這一課把「生成式 AI 的家族」拆成三塊：熱門 LLM 產品、
@@ -5650,6 +5474,174 @@ So what should I do if I want all the rooms to be white </em><em>within 2 years<
 </table>
 <hr>
 <p><em>本篇為個人學習筆記整理。</em></p>
+<hr>
+<h2 id="目錄">目錄</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>章節</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="#1-課程地圖三條主線">課程地圖：三條主線</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#2-什麼是生成式-aigenerative-artificial-intelligence">什麼是生成式 AI（Generative Artificial Intelligence）</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#3-熱門-llm-總覽六個對話式生成式-ai">熱門 LLM 總覽：六個對話式生成式 AI</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#4-chatgpt介面與用途">ChatGPT：介面與用途</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="#5-chatgpt-的智慧從哪來rlhf獎勵模型與-ppo">ChatGPT 的智慧從哪來：RLHF、獎勵模型與 PPO</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="#6-gemini">Gemini</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="#7-chatgpt-prompt-範例">ChatGPT Prompt 範例</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="#8-copilot">Copilot</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="#9-metallama">Meta／Llama</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="#10-grok">Grok</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="#11-perplexityai-搜尋引擎">Perplexity：AI 搜尋引擎</a></td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="#12-中國熱門-llmkimi通義tongyideepseek">中國熱門 LLM：Kimi、通義（Tongyi）、DeepSeek</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="#13-在本機使用-deepseek">在本機使用 DeepSeek</a></td>
+</tr>
+<tr>
+<td>14</td>
+<td><a href="#14-第三方多模型聚合-app">第三方多模型聚合 App</a></td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="#15-生成式-ai-偵測器">生成式 AI 偵測器</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td><a href="#16-predictive-ai-vs-generative-ai主題地圖">Predictive AI vs Generative AI：主題地圖</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td><a href="#17-predictive-ai-深入資料模型與應用">Predictive AI 深入：資料、模型與應用</a></td>
+</tr>
+<tr>
+<td>18</td>
+<td><a href="#18-predictive-ai-的五步流程">Predictive AI 的五步流程</a></td>
+</tr>
+<tr>
+<td>19</td>
+<td><a href="#19-generative-ai-深入定義與核心技術">Generative AI 深入：定義與核心技術</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td><a href="#20-generative-ai-的運作方式與生成流程">Generative AI 的運作方式與生成流程</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td><a href="#21-對照總表predictive-ai-vs-generative-ai">對照總表：Predictive AI vs Generative AI</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td><a href="#22-ai-ml-dl-generative-ai-的層次與-aigc">AI → ML → DL → Generative AI 的層次，與 AIGC</a></td>
+</tr>
+<tr>
+<td>23</td>
+<td><a href="#23-gan-基礎概念">GAN 基礎概念</a></td>
+</tr>
+<tr>
+<td>24</td>
+<td><a href="#24-gan-的底層技術與演算法">GAN 的底層技術與演算法</a></td>
+</tr>
+<tr>
+<td>25</td>
+<td><a href="#25-diffusion-model">Diffusion Model</a></td>
+</tr>
+<tr>
+<td>26</td>
+<td><a href="#26-gan-vs-diffusion與其他生成模型">GAN vs Diffusion，與其他生成模型</a></td>
+</tr>
+<tr>
+<td>27</td>
+<td><a href="#27-hybrid-ai-systems">Hybrid AI Systems</a></td>
+</tr>
+<tr>
+<td>28</td>
+<td><a href="#28-真實世界應用醫療電商招聘">真實世界應用：醫療、電商、招聘</a></td>
+</tr>
+<tr>
+<td>29</td>
+<td><a href="#29-rag檢索增強生成與-anythingllm">RAG：檢索增強生成與 AnythingLLM</a></td>
+</tr>
+<tr>
+<td>30</td>
+<td><a href="#30-llm-vs-rag比較強弱與使用時機">LLM vs RAG：比較、強弱與使用時機</a></td>
+</tr>
+<tr>
+<td>31</td>
+<td><a href="#31-更多-chatgpthinton-的推理題">更多 ChatGPT：Hinton 的推理題</a></td>
+</tr>
+<tr>
+<td>32</td>
+<td><a href="#32-程式範例索引與本機實測總表">程式範例索引與本機實測總表</a></td>
+</tr>
+<tr>
+<td>33</td>
+<td><a href="#33-考試重點整理">考試重點整理</a></td>
+</tr>
+<tr>
+<td>A</td>
+<td><a href="#附錄-a名詞與架構速查表">附錄 A：名詞與架構速查表</a></td>
+</tr>
+<tr>
+<td>B</td>
+<td><a href="#附錄-b常見錯誤與陷阱">附錄 B：常見錯誤與陷阱</a></td>
+</tr>
+<tr>
+<td>C</td>
+<td><a href="#附錄-c離線執行安裝提示">附錄 C：離線執行／安裝提示</a></td>
+</tr>
+<tr>
+<td>D</td>
+<td><a href="#附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</a></td>
+</tr>
+<tr>
+<td>E</td>
+<td><a href="#附錄-e互動式線上測驗60-題">附錄 E：互動式線上測驗（60 題）</a></td>
+</tr>
+<tr>
+<td>F</td>
+<td><a href="#附錄-f互動測驗答錯題目-複習章節對照">附錄 F：互動測驗答錯題目 → 複習章節對照</a></td>
+</tr>
+</tbody>
+</table>
 </main>
 </div>
 </body>
