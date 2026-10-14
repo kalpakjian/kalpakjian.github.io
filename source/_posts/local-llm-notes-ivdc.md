@@ -122,7 +122,7 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 —
 | **`Modelfile`** | **`TEMPLATE {{ .Prompt }}`** 沒有角色標記 → `/api/chat` 送進去的 `messages` 被丟掉 |
 | **`RAG.ipynb`** | **`max_length`** 誤用（它是輸入＋輸出的總長，應改用 `max_new_tokens`） |
 | **`testollama.py`** | `torch.tensor([ord(c)…])` 是**假嵌入**，只是 ASCII 碼、沒有語意 |
-| **p36／p37** | `GPT4All` 被拼成 **`GTP4ALL`／`GTP4All`** |
+| **拼字錯誤的兩頁** | `GPT4All` 被拼成 **`GTP4ALL`／`GTP4All`** |
 | **這兩頁** | `lmstudio` 被拼成 **`Imstudio`** |
 | **這兩頁** | 同一列 `phi3:3.8b` vs `ollama run phi3`；`app_web.py` 又出現第三種 `phi3:mini` |
 | **`ReadMe.txt`** | 路徑寫 **`C:\Users\Teacher\...`**（講師的帳號） |

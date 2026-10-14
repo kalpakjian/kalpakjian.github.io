@@ -125,9 +125,9 @@ IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 6 —
 
 | 位置 | 缺陷 |
 |---|---|
-| **p36 標題** | **`Adaptors`**（應為 `Adapters`），且同頁內文寫 `An Adapter is…`——標題與內文自己不一致 |
-| **p34／p35 標題** | **`QLoRA (Low Rank Adaptation)`**——直接複製 LoRA 的展開；正確是 **Quantized** Low-Rank Adaptation |
-| **p22 vs p28** | **ALBERT 同時被列在 WordPiece 與 SentencePiece 底下**，兩頁互相矛盾（實際上用的是 SentencePiece） |
+| **章節標題** | **`Adaptors`**（應為 `Adapters`），且同頁內文寫 `An Adapter is…`——標題與內文自己不一致 |
+| **章節標題** | **`QLoRA (Low Rank Adaptation)`**——直接複製 LoRA 的展開；正確是 **Quantized** Low-Rank Adaptation |
+| **ALBERT 那兩處** | **ALBERT 同時被列在 WordPiece 與 SentencePiece 底下**，兩頁互相矛盾（實際上用的是 SentencePiece） |
 | **這兩頁** | `Text Generation Inference` 出現 **`• •` 空項目符號** |
 | **這兩頁** | 標題寫 `Huggingface_hub SDK`（實際套件名是全小寫 `huggingface_hub`） |
 | **`HF_LLM.ipynb`** | **`target_modules=["c_attn"]` 只對 GPT-2 有效**——換成 Llama／Qwen 直接 **`ValueError`** |
