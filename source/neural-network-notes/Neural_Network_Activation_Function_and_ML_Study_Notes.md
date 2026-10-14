@@ -1,45 +1,5 @@
 # Neural Network, Activation Function and Machine Learning 學習筆記（考試溫習版）
 
-> 課程：Certificate in Application of Computer Vision Technology (Part-time)
-> 機構：匯縱專業發展中心（IVDC）
-> 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、公式、關鍵數字、常見錯誤與考點。
-> 後半段大量使用投影片圖示，本筆記為這些圖**重繪了 22 張精確圖表**（內嵌 SVG，向量、可放大），並針對每個主題另外用 **Qwen-Image 2.1 生成了 16 張專屬插圖**（同樣內嵌，離線可看），最後補上圖示背後的概念。
-> 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
-
----
-
-| # | 章節 |
-|---|------|
-| 0 | [30 秒總複習（考前最後掃描）](#0-30-秒總複習考前最後掃描) |
-| 1 | [課程資訊](#1-課程資訊) |
-| 2 | [Neural Network：AI 基本原則與生物神經元](#2-neural-networkai-基本原則與生物神經元) |
-| 3 | [Neural Network：神經網路的組成](#3-neural-network神經網路的組成) |
-| 4 | [Artificial Neural Network：三層結構與傳播方向](#4-artificial-neural-network三層結構與傳播方向) |
-| 5 | [Artificial Neural Network：ANN 與 DNN 的定義](#5-artificial-neural-networkann-與-dnn-的定義) |
-| 6 | [Deep Neural Network：網路拓撲 Network Topology](#6-deep-neural-network網路拓撲-network-topology) |
-| 7 | [Activation Function：激勵函數是什麼](#7-activation-function激勵函數是什麼) |
-| 8 | [Threshold Logic Unit（TLU）](#8-threshold-logic-unittlu) |
-| 9 | [Rectified Linear Units（ReLU）](#9-rectified-linear-unitsrelu) |
-| 10 | [Sigmoid Function](#10-sigmoid-function) |
-| 11 | [Softmax Function](#11-softmax-function) |
-| 12 | [問題類型與激勵函數的對應](#12-問題類型與激勵函數的對應) |
-| 13 | [Machine Learning：Analytics and Machine Learning](#13-machine-learninganalytics-and-machine-learning) |
-| 14 | [Machine Learning：基本概念 Basic Concepts](#14-machine-learning基本概念-basic-concepts) |
-| 15 | [機器學習解決方案的十個步驟 Ten Steps](#15-機器學習解決方案的十個步驟-ten-steps) |
-| 16 | [Machine Learning：The Data/AI Landscape](#16-machine-learningthe-dataai-landscape) |
-| 17 | [Machine Learning：Types 機器學習的類型](#17-machine-learningtypes-機器學習的類型) |
-| 18 | [監督式學習 Supervised Learning](#18-監督式學習-supervised-learning) |
-| 19 | [監督式學習實例：分類與迴歸](#19-監督式學習實例分類與迴歸) |
-| 20 | [非監督式學習 Unsupervised Learning](#20-非監督式學習-unsupervised-learning) |
-| 21 | [Clustering：分群的兩個距離目標](#21-clustering分群的兩個距離目標) |
-| 22 | [Clustering：分群實例](#22-clustering分群實例) |
-| A | [附錄 A：名詞速查表](#附錄-a名詞速查表) |
-| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
-| C | [附錄 C：延伸資源與離線提示](#附錄-c延伸資源與離線提示) |
-| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
-| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
-| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
-
 ---
 
 ## 0. 30 秒總複習（考前最後掃描）
@@ -1519,11 +1479,38 @@ k 要人決定（elbow method）；對尺度與離群值敏感
 
 *本篇為個人學習筆記整理。*
 
+---
 
+## 目錄
 
-
-
-
-
-
-
+| # | 章節 |
+|---|------|
+| 0 | [30 秒總複習（考前最後掃描）](#0-30-秒總複習考前最後掃描) |
+| 1 | [課程資訊](#1-課程資訊) |
+| 2 | [Neural Network：AI 基本原則與生物神經元](#2-neural-networkai-基本原則與生物神經元) |
+| 3 | [Neural Network：神經網路的組成](#3-neural-network神經網路的組成) |
+| 4 | [Artificial Neural Network：三層結構與傳播方向](#4-artificial-neural-network三層結構與傳播方向) |
+| 5 | [Artificial Neural Network：ANN 與 DNN 的定義](#5-artificial-neural-networkann-與-dnn-的定義) |
+| 6 | [Deep Neural Network：網路拓撲 Network Topology](#6-deep-neural-network網路拓撲-network-topology) |
+| 7 | [Activation Function：激勵函數是什麼](#7-activation-function激勵函數是什麼) |
+| 8 | [Threshold Logic Unit（TLU）](#8-threshold-logic-unittlu) |
+| 9 | [Rectified Linear Units（ReLU）](#9-rectified-linear-unitsrelu) |
+| 10 | [Sigmoid Function](#10-sigmoid-function) |
+| 11 | [Softmax Function](#11-softmax-function) |
+| 12 | [問題類型與激勵函數的對應](#12-問題類型與激勵函數的對應) |
+| 13 | [Machine Learning：Analytics and Machine Learning](#13-machine-learninganalytics-and-machine-learning) |
+| 14 | [Machine Learning：基本概念 Basic Concepts](#14-machine-learning基本概念-basic-concepts) |
+| 15 | [機器學習解決方案的十個步驟 Ten Steps](#15-機器學習解決方案的十個步驟-ten-steps) |
+| 16 | [Machine Learning：The Data/AI Landscape](#16-machine-learningthe-dataai-landscape) |
+| 17 | [Machine Learning：Types 機器學習的類型](#17-machine-learningtypes-機器學習的類型) |
+| 18 | [監督式學習 Supervised Learning](#18-監督式學習-supervised-learning) |
+| 19 | [監督式學習實例：分類與迴歸](#19-監督式學習實例分類與迴歸) |
+| 20 | [非監督式學習 Unsupervised Learning](#20-非監督式學習-unsupervised-learning) |
+| 21 | [Clustering：分群的兩個距離目標](#21-clustering分群的兩個距離目標) |
+| 22 | [Clustering：分群實例](#22-clustering分群實例) |
+| A | [附錄 A：名詞速查表](#附錄-a名詞速查表) |
+| B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) |
+| C | [附錄 C：延伸資源與離線提示](#附錄-c延伸資源與離線提示) |
+| D | [附錄 D：一頁精華（考前 10 分鐘）](#附錄-d一頁精華考前-10-分鐘) |
+| E | [附錄 E：互動式線上測驗（60 題）](#附錄-e互動式線上測驗60-題) |
+| F | [附錄 F：互動測驗答錯題目 → 複習章節對照](#附錄-f互動測驗答錯題目-複習章節對照) |
