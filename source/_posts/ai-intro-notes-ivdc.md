@@ -1,6 +1,6 @@
 ---
 title: Introduction to AI 學習筆記：IVDC 課程完整複習 + 60 題 MC 模擬試卷
-archive: true   # 已歸入「專題：IVDC電腦視覺課程」，不列在首頁
+archive: true   # 已歸入「IVDC 電腦視覺課程」學習筆記，不列在首頁
 date: 2026-10-10 21:00:00
 categories:
   - 學習資源
@@ -16,7 +16,7 @@ banner_img: /img/covers/ai-intro-notes-ivdc.png
 
 最近為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程第一份課程《1 IVDC_Introduction to AI (icebreaking).pptx》（34 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
-筆記已發佈成獨立專題頁面：
+筆記已發佈成獨立頁面：
 
 **👉 [Introduction to AI 學習筆記（考試溫習版）](/ai-intro-notes/)**
 

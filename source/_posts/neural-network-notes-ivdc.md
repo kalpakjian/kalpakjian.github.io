@@ -1,6 +1,6 @@
 ---
 title: 神經網路與機器學習學習筆記：IVDC 課程完整複習 + 60 題 MC 模擬試卷
-archive: true   # 已歸入「專題：IVDC電腦視覺課程」，不列在首頁
+archive: true   # 已歸入「IVDC 電腦視覺課程」學習筆記，不列在首頁
 date: 2026-10-12 22:00:00
 categories:
   - 學習資源

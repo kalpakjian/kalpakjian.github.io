@@ -3,15 +3,26 @@ navbar:
   blog_title: AI Tech Notes
   ground_glass:
     enable: true
+  # 資源分三類：文章（首頁／歸檔）、專題、學習筆記
+  # 名稱不再加「專題：」前綴，改用兩個下拉群組呈現
   menu:
     - { key: 'home', link: '/', icon: 'iconfont icon-home-fill' }
+    - key: 'topics'
+      name: '專題'
+      icon: 'iconfont icon-books'
+      submenu:
+        - { name: '手寫程式碼的時代正式結束（DHH 退休）', link: '/dhh-rails-world-2026/index.html', icon: 'iconfont icon-bookmark' }
+        - { name: '從零打造一個 coding agent', link: '/coding-agent/', icon: 'iconfont icon-bookmark' }
+    - key: 'notes'
+      name: '學習筆記'
+      icon: 'iconfont icon-notebook'
+      submenu:
+        - { name: 'IVDC 電腦視覺課程', link: '/cv-course/', icon: 'iconfont icon-note' }
+        - { name: 'IVDC LLM 與生成式 AI 課程', link: '/llm-course/', icon: 'iconfont icon-note' }
+        - { name: 'AutoML 應用證書課程', link: '/automl-course/', icon: 'iconfont icon-note' }
     - { key: 'archive', link: '/archives/', icon: 'iconfont icon-archive-fill' }
     - { key: 'category', link: '/categories/', icon: 'iconfont icon-category-fill' }
     - { key: 'tag', link: '/tags/', icon: 'iconfont icon-tags-fill' }
-    - { key: '專題：DHH退休', link: '/dhh-rails-world-2026/index.html', icon: 'iconfont icon-bookmark' }
-    - { key: '專題：Coding Agent', link: '/coding-agent/', icon: 'iconfont icon-bookmark' }
-    - { key: '專題：IVDC電腦視覺課程', link: '/cv-course/', icon: 'iconfont icon-bookmark' }
-    - { key: '專題：IVDC LLM課程', link: '/llm-course/', icon: 'iconfont icon-bookmark' }
     - { key: 'about', link: '/about/', icon: 'iconfont icon-user-fill' }
 
 index:

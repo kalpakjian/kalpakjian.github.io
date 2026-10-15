@@ -1,6 +1,6 @@
 ---
 title: Introduction to Computer Vision 學習筆記：IVDC 課程完整複習 + 60 題 MC 模擬試卷
-archive: true   # 已歸入「專題：IVDC電腦視覺課程」，不列在首頁
+archive: true   # 已歸入「IVDC 電腦視覺課程」學習筆記，不列在首頁
 date: 2026-10-10 22:00:00
 categories:
   - 學習資源
@@ -17,7 +17,7 @@ banner_img: /img/covers/cv-intro-notes-ivdc.png
 
 最近為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程第二份課程《2 IVDC_Introduction to Computer Vision and Application.pptx》（12 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
-筆記已發佈成獨立專題頁面：
+筆記已發佈成獨立頁面：
 
 **👉 [Introduction to Computer Vision 學習筆記（考試溫習版）](/cv-intro-notes/)**
 

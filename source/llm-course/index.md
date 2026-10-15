@@ -1,5 +1,5 @@
 ---
-title: 專題：IVDC LLM 與生成式 AI 課程筆記
+title: IVDC LLM 與生成式 AI 課程 學習筆記總覽
 date: 2026-10-13 09:00:00
 ---
 
@@ -161,7 +161,7 @@ date: 2026-10-13 09:00:00
 
 ---
 
-*本專題為個人學習筆記整理。*
+*本頁為個人學習筆記整理。*
 
 ---
 
@@ -183,7 +183,7 @@ date: 2026-10-13 09:00:00
 | **Lesson 10** | Exam | — |
 
 > 📌 **Lesson 1 與 Lesson 2 的前半（Using Local GPU for ML）** 與
-> [IVDC 電腦視覺課程專題](/cv-course/) 共用同一份筆記（兩門課的共同模組），此處直接連結，不重複製作。
+> [IVDC 電腦視覺課程 學習筆記](/cv-course/) 共用同一份筆記（兩門課的共同模組），此處直接連結，不重複製作。
 >
 > 📌 **Lesson 4（Responsible LLM）** 的內容與電腦視覺課程的
 > [Responsible AI 學習筆記](/responsible-ai-notes/) 高度重疊（僅 14 頁），

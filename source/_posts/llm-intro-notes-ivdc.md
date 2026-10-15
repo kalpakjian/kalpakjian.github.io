@@ -1,6 +1,6 @@
 ---
 title: Introduction to LLM 學習筆記：IVDC Lesson 3 完整複習 + 60 題 MC 模擬試卷
-archive: true   # 已歸入「專題：IVDC LLM課程」，不列在首頁
+archive: true   # 已歸入「IVDC LLM 課程」學習筆記，不列在首頁
 date: 2026-10-13 09:10:00
 categories:
   - 學習資源
@@ -21,7 +21,7 @@ banner_img: /img/covers/llm-intro-notes-ivdc.png
 
 為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Large Language Model (LLM)」的考試，我把課程第三份課程《3 IVDC_Introduction to LLM (adjusted).pdf》（**47 頁**）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
-筆記已發佈成獨立專題頁面：
+筆記已發佈成獨立頁面：
 
 **👉 [Introduction to LLM 學習筆記（考試溫習版）](/llm-intro-notes/)**
 

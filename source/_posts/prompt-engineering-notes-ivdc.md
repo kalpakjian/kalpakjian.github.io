@@ -1,6 +1,6 @@
 ---
 title: Prompt Engineering 學習筆記：IVDC Lesson 5 完整複習 + 60 題 MC 模擬試卷
-archive: true   # 已歸入「專題：IVDC LLM課程」，不列在首頁
+archive: true   # 已歸入「IVDC LLM 課程」學習筆記，不列在首頁
 date: 2026-10-13 10:20:00
 categories:
   - 學習資源
@@ -21,7 +21,7 @@ banner_img: /img/covers/prompt-engineering-notes-ivdc.png
 
 為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Large Language Model (LLM)」的考試，我把課程第五份課程《9 IVDC_Prompt_Engineering (adjusted).pdf》（**92 頁**）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
-筆記已發佈成獨立專題頁面：
+筆記已發佈成獨立頁面：
 
 **👉 [Prompt Engineering 學習筆記（考試溫習版）](/prompt-engineering-notes/)**
 

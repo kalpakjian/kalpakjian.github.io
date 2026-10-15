@@ -1,6 +1,6 @@
 ---
 title: Responsible AI 學習筆記：IVDC 課程完整複習 + 60 題 MC 模擬試卷
-archive: true   # 已歸入「專題：IVDC電腦視覺課程」，不列在首頁
+archive: true   # 已歸入「IVDC 電腦視覺課程」學習筆記，不列在首頁
 date: 2026-10-12 18:00:00
 categories:
   - 學習資源
@@ -20,7 +20,7 @@ banner_img: /img/covers/responsible-ai-notes-ivdc.png
 
 這一份和前三份（Introduction to AI、Local GPU、Computer Vision、OpenCV）性質不同：**它幾乎沒有程式碼，全部都是觀念、原則與法規**——但正因為如此，考題更容易出「配對題」與「數字題」，反而更需要精確記憶。
 
-筆記已發佈成獨立專題頁面：
+筆記已發佈成獨立頁面：
 
 **👉 [Responsible AI 學習筆記（考試溫習版）](/responsible-ai-notes/)**
 

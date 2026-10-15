@@ -1,6 +1,6 @@
 ---
 title: AutoML 應用證書 學習筆記：四單元完整複習 + 60 題 MC 模擬試卷
-archive: true   # 已歸入「專題：AutoML 應用證書課程筆記」，不列在首頁
+archive: true   # 已歸入「AutoML 應用證書課程」學習筆記，不列在首頁
 date: 2026-10-16 21:00:00
 categories:
   - 學習資源
@@ -18,7 +18,7 @@ banner_img: /img/covers/automl-notes.png
 
 我把「自動化機器學習（AutoML）應用證書」四個單元、100 頁的課程內容完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
-筆記已發佈成獨立專題頁面：
+筆記已發佈成獨立頁面：
 
 **👉 [AutoML 應用證書 學習筆記（考試溫習版）](/automl-notes/)**
 

@@ -122,3 +122,124 @@ body {
   }
 }
 
+/* ===== 首頁資源總覽：專題 / 學習筆記 / 文章 ===== */
+/* 由 scripts/home-resources.js 注入；沿用本站既有的 rgba 中性色＋強調色寫法，深色模式自動相容 */
+.home-resources {
+  margin: 0 0 2.5rem;
+}
+
+.home-resources-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text-color);
+}
+
+.home-resources-title i {
+  color: var(--custom-accent);
+  font-size: 1.4rem;
+}
+
+.home-resources-sub {
+  margin: 6px 0 18px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--sec-text-color);
+}
+
+.home-resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.res-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border: 1px solid rgba(128, 128, 128, 0.28);
+  border-left: 4px solid var(--custom-accent);
+  border-radius: 12px;
+  background: rgba(128, 128, 128, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.res-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.res-kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--custom-accent);
+}
+
+.res-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.home-resources .res-title a {
+  color: var(--text-color);
+}
+
+.home-resources .res-title a:hover {
+  color: var(--custom-accent);
+  text-decoration: none;
+}
+
+.res-desc {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--sec-text-color);
+}
+
+.res-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.home-resources .res-link {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: 999px;
+  background: rgba(128, 128, 128, 0.08);
+  color: var(--sec-text-color);
+}
+
+.home-resources .res-link:hover {
+  border-color: var(--custom-accent);
+  color: var(--custom-accent);
+  text-decoration: none;
+}
+
+/* 首頁區塊錨點：導覽列固定在頁面上方，捲動定位時要留出高度 */
+#topics,
+#notes,
+#articles {
+  scroll-margin-top: 84px;
+}
+
+@media (max-width: 640px) {
+  .home-resources-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
