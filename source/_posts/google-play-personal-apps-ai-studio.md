@@ -34,7 +34,7 @@ banner_img: /img/covers/google-play-personal-apps-ai-studio.png
 
 - <strong>新功能</strong>：Google Play 的 personal app（個人 App）。用 Google AI Studio 的 Build mode 以自然語言產生 Android App，再直接從 Google Play 裝到自己的裝置。
 - <strong>不需要什麼</strong>：不需要 Google Play 開發者帳號（官方原文是 <code>no developer account required</code>）、不需要公開上架、不需要側載與 adb 指令。
-- <strong>首波範圍</strong>：2026-10-13 起，「select markets, including the U.S.」，<strong>18 歲以上</strong>。台灣不在首波名單內。
+- <strong>首波範圍</strong>：2026-10-13 起，「select markets, including the U.S.」，<strong>18 歲以上</strong>。香港不在首波名單內。
 - <strong>隱私設計</strong>：個人 App 與公開商店目錄分開，不會出現在 Google Play 的搜尋與列表頁，只有建立者自己能用。
 - <strong>之後才會有的</strong>：未來幾個月可分享給「一小圈親友」；要給全世界用，得「畢業」到專業開發者帳號，並走同一套 Trust &amp; Safety 審查與品質標準。
 - <strong>技術長相</strong>：AI Studio 產生的是 <strong>Kotlin + Jetpack Compose</strong> 的 Gradle 專案（單 activity、單模組、純客戶端），可在瀏覽器內的 Android 模擬器預覽，也能下載 ZIP 帶進 Android Studio。
@@ -166,16 +166,33 @@ banner_img: /img/covers/google-play-personal-apps-ai-studio.png
 - <strong>交接路徑有三條</strong>：下載 ZIP、交給 Gemini in Android Studio（官方稱其模型有 Android 專屬調校）、或 Antigravity（把 Android CLI 指令整合進 agentic 開發流程）。
 - <strong>教學與認證的位移</strong>：入門門檻下降後，分水嶺會從「會不會寫第一支 App」移到「能不能維護 AI 產出的專案，並把它擴張成可上架、可維運的產品」。
 
-## 台灣使用者現在用得到嗎？
+## 香港使用者現在用得到嗎？
 
-| 項目 | 現況 |
+先講最關鍵的前提：<strong>香港目前不在 Google AI Studio 的支援地區清單內</strong>。這條路徑的第一步——在 AI Studio 的 Build mode 用自然語言產生 Android App——在香港並未正式開放，所以下表其餘項目，對香港讀者來說大多是「先確認能不能開始」之後才會遇到的問題。
+
+| 項目 | 香港現況 |
 | --- | --- |
-| 個人 App | 首波是「select markets, including the U.S.」的 18 歲以上使用者，<strong>台灣不在首波名單</strong>；官方未公布完整國家清單與台灣時程 |
-| 在 AI Studio 建 Android App | 這個能力早在 2026-05-19 就隨 Google I/O 開放，可用範圍以 AI Studio 的可用地區為準；差別在「裝到自己手機」過去要靠 adb 或開發者帳號的內部測試軌 |
-| Play in Gemini | 官方說「很快會推送給所有 Gemini 使用者」，沒有給具體日期 |
-| Game Finder | 首波限美國英文使用者，其他市場 coming soon |
-| Ask Play 的 App 比較 | 2026-10-13 起推出 |
-| 想現在就落地 | 最接近的替代路徑是 AI Studio 的 Publish to Play Store 到 internal testing track（需開發者帳號、$25），或下載 ZIP 自行建置後側載（在已收緊驗證的國家會遇到 developer verification 要求） |
+| Google AI Studio（Build mode／建 Android App） | 官方〈Available regions for Google AI Studio and Gemini API〉（頁面標示最後更新 2026-04-28）的支援清單裡<strong>沒有香港</strong>；台灣、新加坡、日本、韓國、馬來西亞、泰國都在名單內。官方疑難排解頁（2026-09-09）說明 403 Access Restricted 的常見原因就是「不在支援地區」，並把 <code>Supported region</code> 列為必要條件，同頁也載明 18 歲以上與帳號年齡驗證要求 |
+| 個人 App | 首波是「select markets, including the U.S.」的 18 歲以上使用者，<strong>香港不在首波名單</strong>；官方未公布完整國家清單與香港時程，也未說明判定依據是 Play 國家設定還是帳號地區 |
+| Gemini App（消費者端） | <strong>已可用</strong>：Google 在 2026-03-27 前後把 Gemini 開放給全港使用者（Google 香港董事總經理 Michael Yue 受訪表示「no VPN or workaround required」），官方支援清單也包含香港並提供「中文（香港）」語言。要注意這是與 AI Studio 不同的另一套可用性判定 |
+| Gemini in Android Studio | 官方〈Gemini availability〉（2026-09-02）的地區清單同樣<strong>沒有香港</strong>，因此「改用 Android Studio 內建 Gemini 接手」在香港也不是現成替代方案 |
+| Play in Gemini | 官方只說「很快會推送給所有 Gemini 使用者」；Gemini App 在香港可用，但 Play in Gemini 是否涵蓋香港尚未公布 |
+| Game Finder | 首波限美國英文使用者，其他市場 coming soon；香港未公布 |
+| Ask Play 的 App 比較 | 2026-10-13 起推出（與 AI Studio／Gemini 的地區限制是兩件事） |
+| Google Play Points／Play Fest | <strong>香港可用</strong>：官方說明香港是 Play Points 支援地區，每消費 HK$7 累積 1 點 |
+| Apps Experience／Level Up（較低服務費） | 目前適用澳洲、日本、EEA、英國、美國，年底前推到韓國；<strong>香港未列入</strong> |
+| 開發者驗證（側載收緊） | 首波是 2026-09-30 起的巴西、印尼、新加坡、泰國；<strong>香港不在首波</strong>，但官方說 2027 起推向全球，屆時會影響香港 |
+| 想現在就落地 | 三條現實路徑：①用開發者帳號把 App 發到 Play Console 的 internal testing track（一次性 25 美元；2023-11-13 之後建立的個人帳號仍須 12 位測試者連續 14 天才能申請 production）；②自行編譯後側載（香港目前未受開發者驗證限制，2027 年全球推行後會改變）；③依官方在「不支援地區」時指向的 Gemini Enterprise Agent Platform 取得模型能力（但無法取代 AI Studio 的 Build mode） |
+
+### 關於「把 Google Play 國家改成美國」
+
+香港讀者很自然會問：改一下 Play 國家不就好了？官方〈How to change your Google Play country〉列出的限制讓這件事既不划算、也不保證有用：
+
+- 設定後<strong>至少 90 天</strong>才能再改，之後每次更改也必須間隔至少 90 天。
+- 必須<strong>實際身處該地</strong>，而且要有該國的付款方式。
+- 如果你加入了 Google 家庭群組，<strong>不能</strong>更改國家或地區。
+- Play 餘額與 Play Points <strong>不會</strong>跟著移轉（Play Points 會全部失效、等級不保留）。
+- 官方沒有說明個人 App 的開放是否跟著 Play 國家走；就算跟著走，AI Studio 的 Build mode 是以「所在地區」判定的另一套限制，改 Play 國家不會改變它。
 
 ## 給三種讀者的行動清單
 
@@ -212,11 +229,13 @@ banner_img: /img/covers/google-play-personal-apps-ai-studio.png
 
 <strong>What it does not change.</strong> Personal apps are private, unlisted, non-monetizable and limited to a single user today, so they cannot replace a published app. The real shift is upstream: prototyping collapses to a prompt, and discovery moves from the search box to a chat box.
 
+<strong>Hong Kong readers.</strong> Hong Kong is not on Google AI Studio's supported-regions list (which does include Taiwan, Singapore, Japan and Korea), so the first step — generating an Android app in AI Studio's Build mode — is not officially available there, and Gemini in Android Studio is likewise unavailable in Hong Kong, even though the consumer Gemini app opened to all Hong Kong users around March 27, 2026. Google Play Points, by contrast, does cover Hong Kong.
+
 ## 社群貼文版（可直接貼）
 
 <strong>中文版</strong>
 
-> Google Play 現在可以裝「你自己 vibe code 的 App」了。用 AI Studio 一句話生成 Android App，直接裝進手機，<strong>不用開發者帳號、不進商店目錄、只有你看得到</strong>。首波美國等特定市場、18 歲以上；未來幾個月可分享給一小圈親友，要公開上架仍得回到專業開發者帳號與 Trust &amp; Safety 審查。技術上是 Kotlin + Jetpack Compose、純客戶端、單 activity。台灣不在首波名單內。
+> Google Play 現在可以裝「你自己 vibe code 的 App」了。用 AI Studio 一句話生成 Android App，直接裝進手機，<strong>不用開發者帳號、不進商店目錄、只有你看得到</strong>。首波美國等特定市場、18 歲以上；未來幾個月可分享給一小圈親友，要公開上架仍得回到專業開發者帳號與 Trust &amp; Safety 審查。技術上是 Kotlin + Jetpack Compose、純客戶端、單 activity。香港不在首波名單內，而且香港目前也不在 AI Studio 的支援地區清單內。
 
 <strong>English version</strong>
 
@@ -224,14 +243,14 @@ banner_img: /img/covers/google-play-personal-apps-ai-studio.png
 
 <strong>一行版（X／Threads）</strong>
 
-> 從「有個 App 可以做到」到「有個 App 為我而生」：Google Play 讓你把手機當成自己 AI 作品的執行平台，不用開發者帳號。首波美國 18+，台灣還要等。
+> 從「有個 App 可以做到」到「有個 App 為我而生」：Google Play 讓你把手機當成自己 AI 作品的執行平台，不用開發者帳號。首波美國 18+，香港還要等——而且香港目前不在 AI Studio 支援地區清單內。
 
 ## 風險、爭議與尚未確認的事
 
 | 項目 | 現況與不確定性 |
 | --- | --- |
 | 完整開放國家清單 | 官方只說 <code>select markets, including the U.S.</code>，未列完整清單 |
-| 台灣時程 | 未公布 |
+| 香港時程 | 未公布；而且香港目前不在 AI Studio 支援地區清單內，開放的先決條件比「等名單」更前面 |
 | 分享機制 | 官方只說 <code>a close circle of friends and family</code>；人數上限、是否需要重新審查、如何撤銷，都沒有說明 |
 | 「畢業」流程細節 | 官方只說會走同一套 Trust &amp; Safety 審查與品質標準；是否仍需 25 美元、是否仍需 12 位測試者連續 14 天，未公布 |
 | 政策文件 | 個人 App 仍須遵守 Play 政策（TechCrunch 引述），但未見 Google 針對個人 App 的專門政策頁 |
@@ -248,6 +267,13 @@ banner_img: /img/covers/google-play-personal-apps-ai-studio.png
 - 🛠️ Android 開發者部落格：[Build native Android apps in Google AI Studio](https://android-developers.googleblog.com/2026/05/build-android-apps-google-ai-studio.html)（2026-05-19）
 - 📘 AI Studio 官方文件：[Build Android apps in Google AI Studio](https://ai.google.dev/gemini-api/docs/aistudio-android)（標示最後更新 2026-08-18）
 - 📘 AI Studio 官方文件：[Build apps in Google AI Studio（Build mode）](https://ai.google.dev/gemini-api/docs/aistudio-build-mode)（標示最後更新 2026-08-20）
+- 🌏 AI Studio 可用地區（<strong>香港未列入</strong>）：[Available regions for Google AI Studio and Gemini API](https://ai.google.dev/gemini-api/docs/available-regions)（標示最後更新 2026-04-28）
+- 🔧 AI Studio 疑難排解（403 Access Restricted 與支援地區要求）：[Troubleshoot Google AI Studio](https://ai.google.dev/gemini-api/docs/troubleshoot-ai-studio)（標示最後更新 2026-09-09）
+- 🤖 Android Studio 的 Gemini 可用地區（<strong>香港未列入</strong>）：[Gemini availability](https://developer.android.com/studio/gemini/availability)（標示最後更新 2026-09-02）
+- 🌐 Gemini App 支援的國家與地區（含香港）：[Where you can use the Gemini web app](https://support.google.com/gemini/answer/13575153)
+- 🇭🇰 Gemini 開放全港使用者：[Time Out Hong Kong〈Google's Gemini AI chatbot is finally available in Hong Kong〉](https://www.timeout.com/hong-kong/news/googles-gemini-ai-chatbot-is-finally-available-in-hong-kong-032726)（2026-03-27）
+- 💰 Google Play Points（香港）：[Join Google Play Points](https://support.google.com/googleplay/answer/9077312?co=GENIE.CountryCode%3DHK&hl=en)
+- 🌍 更改 Google Play 國家：[How to change your Google Play country](https://support.google.com/googleplay/answer/7431675)
 - 🔐 Play Console 說明：[App testing requirements for new personal developer accounts](https://support.google.com/googleplay/android-developer/answer/14151465)
 - ✅ Android 開發者部落格：[Android developer verification 時程](https://developer.android.com/blog/posts/android-developer-verification-rolling-out-to-all-developers-on-play-console-and-android-developer-console)
 - 🚗 Google 部落格：[cars with Google built-in 的 Play Store 更新](https://blog.google/products-and-platforms/platforms/android/cars-with-google-built-in-google-play-updates/)
