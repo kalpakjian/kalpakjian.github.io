@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AutoML 應用證書 MC 模擬測驗（60 題）| AI Tech Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#e2e5ea; --txt:#1f2328; --dim:#5b636e;
+  --blue:#2563eb; --green:#15803d; --green-bg:#e8f6ec; --red:#b91c1c;
+  --red-bg:#fdeaea; --sel:#dbeafe; --sel-line:#2563eb;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",
+    "Microsoft JhengHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+a{color:var(--blue)}
+.topbar{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  padding:12px 20px 10px;
+}
+.topbar .row1{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px}
+.topbar h1{font-size:17px; margin:0; font-weight:700}
+.topbar .back{font-size:13px; color:var(--dim); text-decoration:none}
+.topbar .back:hover{color:var(--blue)}
+.stats{display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; font-size:14px; color:var(--dim)}
+.stats b{font-size:18px; color:var(--txt)}
+.stats .ok b{color:var(--green)}
+.stats .no b{color:var(--red)}
+.saved{font-size:12px; color:var(--green); opacity:0; transition:opacity .3s}
+.saved.on{opacity:1}
+.progress{height:6px; background:var(--line); border-radius:99px; margin-top:10px; overflow:hidden}
+.progress i{display:block; height:100%; width:0; background:var(--blue); border-radius:99px; transition:width .25s}
+.controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+button{
+  font:inherit; font-size:13px; padding:6px 13px; border-radius:8px;
+  border:1px solid var(--line); background:#fff; color:var(--txt); cursor:pointer;
+  transition:.15s;
+}
+button:hover{border-color:#b9c0c9; background:#fbfbfc}
+button.primary{background:var(--blue); border-color:var(--blue); color:#fff}
+button.primary:hover{background:#1d4ed8}
+button.active{background:var(--sel); border-color:var(--sel-line); color:#1e40af; font-weight:600}
+button.danger{color:var(--red); border-color:#f0c4c4}
+button.danger:hover{background:var(--red-bg)}
+.navwrap{padding:16px 20px 0}
+.navgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px}
+.navgrid button{padding:6px 0; font-size:13px; border-radius:7px; text-align:center; font-variant-numeric:tabular-nums}
+.navgrid button.done{background:#eef2ff; border-color:#c7d2fe; color:#3730a3}
+.navgrid button.right{background:var(--green-bg); border-color:#a7d7b6; color:var(--green); font-weight:700}
+.navgrid button.wrong{background:var(--red-bg); border-color:#eeb4b4; color:var(--red); font-weight:700}
+main{max-width:900px; margin:0 auto; padding:20px 20px 80px}
+.parttitle{
+  margin:34px 0 14px; font-size:15px; font-weight:700; color:var(--dim);
+  border-left:4px solid var(--blue); padding-left:10px;
+}
+.q{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px 18px; margin-bottom:14px;
+}
+.q.correct{border-color:#a7d7b6; background:var(--green-bg)}
+.q.incorrect{border-color:#eeb4b4; background:var(--red-bg)}
+.qhead{display:flex; gap:10px; align-items:flex-start}
+.num{
+  flex:0 0 auto; min-width:30px; height:26px; line-height:26px; text-align:center;
+  background:#eef1f5; border-radius:7px; font-size:13px; font-weight:700;
+  color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.qtext{margin:0; font-weight:600; font-size:16px}
+.opts{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:7px}
+.opt{
+  display:flex; gap:10px; align-items:flex-start; padding:9px 12px;
+  border:1px solid var(--line); border-radius:9px; background:#fff;
+  cursor:pointer; transition:.12s; user-select:none;
+}
+.opt:hover{border-color:#b9c0c9; background:#fbfbfc}
+.opt .lt{
+  flex:0 0 auto; width:22px; height:22px; line-height:22px; text-align:center;
+  border-radius:6px; background:#eef1f5; font-size:12px; font-weight:700; color:var(--dim);
+}
+.opt.picked{border-color:var(--sel-line); background:var(--sel)}
+.opt.picked .lt{background:var(--sel-line); color:#fff}
+.opt.right{border-color:#7cc08f; background:var(--green-bg)}
+.opt.right .lt{background:var(--green); color:#fff}
+.opt.wrong{border-color:#e39191; background:var(--red-bg)}
+.opt.wrong .lt{background:var(--red); color:#fff}
+.tag{font-size:11px; padding:1px 7px; border-radius:99px; margin-left:auto;
+     flex:0 0 auto; font-weight:700; align-self:center}
+.tag.right{background:var(--green); color:#fff}
+.tag.wrong{background:var(--red); color:#fff}
+.expl{
+  margin-top:12px; padding:11px 14px; background:#f8fafc; border-radius:9px;
+  border-left:3px solid var(--blue); font-size:14.5px; color:#333a44;
+}
+.expl b{color:var(--txt)}
+.empty{text-align:center; color:var(--dim); padding:50px 20px; font-size:15px}
+footer{
+  max-width:900px; margin:0 auto; padding:0 20px 60px; color:var(--dim);
+  font-size:13px; text-align:center;
+}
+@media print{
+  .topbar,.navwrap,footer,.controls{display:none !important}
+  body{background:#fff; font-size:12pt}
+  main{max-width:none; padding:0}
+  .q{break-inside:avoid; page-break-inside:avoid; border-color:#999}
+}
+@media (max-width:560px){
+  .topbar{padding:10px 14px 8px}
+  .topbar h1{font-size:15px}
+  main{padding:14px 14px 60px}
+  .navwrap{padding:12px 14px 0}
+  .q{padding:13px 14px}
+  .qtext{font-size:15px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="row1">
+    <h1>AutoML 學習筆記 · MC 模擬測驗</h1>
+    <a class="back" href="index.html">&larr; 回到 AutoML 學習筆記</a>
+    <span class="saved" id="saved">進度已儲存 &#10003;</span>
+  </div>
+  <div class="stats">
+    <span>已答 <b id="nAns">0</b> / 60</span>
+    <span class="ok">得分 <b id="nScore">0</b> / 60</span>
+    <span class="no">答錯 <b id="nWrong">0</b></span>
+    <span id="hint">作答進度自動存在此瀏覽器，關掉再回來可繼續</span>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <button id="btnReveal" class="primary">顯示答案</button>
+    <button id="btnAll" class="active">全部 60 題</button>
+    <button id="btnUnans">只看未答</button>
+    <button id="btnWrong">只看答錯</button>
+    <button id="btnTop">回到頂部</button>
+    <button id="btnReset" class="danger">重設全部</button>
+  </div>
+</header>
+
+<div class="navwrap">
+  <div class="navgrid" id="navgrid"></div>
+</div>
+
+<main id="quiz"></main>
+
+<footer>
+  <p>AutoML 應用證書 · 單元一至單元四 個人學習筆記</p>
+  <p>單一 HTML 檔、無外部資源，可離線使用</p>
+</footer>
+<script>
+const QUESTIONS = [{"q":"AutoML 最核心的價值是什麼？","o":["讓模型準確率自動變成 100%","把資料清理、特徵工程、算法選擇與超參數調整自動化","取代所有資料科學家的工作","自動產生訓練資料"],"a":1,"e":"AutoML 自動化的是**流程**，不是變出資料或保證完美。複習 §2。"},{"q":"下列哪一項「不是」傳統機器學習的痛點？","o":["模型無法部署到雲端","高度依賴具備深厚 ML 背景的專家","流程繁瑣，每個步驟都需專業知識","超參數調整可能耗費數週"],"a":0,"e":"部署屬於工程環節，不是課程列出的三個痛點。三個痛點是流程繁瑣、耗時費力、高度依賴專家。複習 §2.1。"},{"q":"「讓業務人員、分析師等非技術背景人員也能獨立運用 AI」對應 AutoML 的哪一項突破？","o":["全自動化","高效能","低門檻","高準確率"],"a":2,"e":"三個突破是全自動化、高效能、**低門檻**。低門檻講的就是使用者的身分門檻。複習 §2.2。"},{"q":"AutoML 用什麼機制自動處理欄位中的空白值？","o":["One-Hot Encoding","Cross Validation","Auto Encoding","Auto Imputation"],"a":3,"e":"**Auto Imputation** 是自動填補缺失值；Auto Encoding 是自動轉換類別特徵。兩者最常被混淆。複習 §2.3。"},{"q":"把「居住城市」這一個文字欄位拆成「是否住台北／台中／高雄」三個 0/1 欄位，這個動作叫什麼？","o":["Regularization","One-Hot Encoding（獨熱編碼）","Auto Imputation","Feature Scaling"],"a":1,"e":"這就是 **One-Hot Encoding**。課程用它示範傳統特徵工程有多繁瑣——300 個鄉鎮市區就會暴增 300 欄。複習 §2.3。"},{"q":"負責任 AI 六大原則中，哪一項要求「模型不能因性別、種族、年齡而產生系統性歧視」？","o":["包容性","透明度","公平性","問責制"],"a":2,"e":"**公平性**管的是輸出結果不能有系統性偏見。複習 §3.1。"},{"q":"「視障人士無法使用一般網頁介面上傳履歷」最直接違反哪一項原則？","o":["可靠性與安全性","隱私與保障","公平性","包容性"],"a":3,"e":"**包容性**管的是「每個人都用得到」；公平性管的是「結果不能偏」。前者管入口，後者管輸出。複習 §3.1、§3.2。"},{"q":"「AI 發生嚴重誤判導致客戶損失時，必須有人承擔責任」對應哪一項原則？","o":["問責制","可靠性與安全性","包容性","透明度"],"a":0,"e":"**問責制**要求最終決策責任在於人類。透明度是「說得清楚」，問責制是「有人要負責」。複習 §3.1、§3.2。"},{"q":"醫療 AI 系統在信心指數低於多少時，課程建議強制顯示「需人工進階判定」？","o":["60%","70%","90%","50%"],"a":1,"e":"課程設計的容錯機制門檻是 **70%**——低於此值不給結論，轉人工。複習 §4.5。"},{"q":"銀行審批系統中，課程規定信用評分落在哪個區間必須強制轉交人工複核？","o":["700–750 分","800 分以上","600–650 分","500–550 分"],"a":2,"e":"邊界值 **600–650 分**，以及所有高風險案件，都必須 Human-in-the-loop。複習 §4.4。"},{"q":"課程設計的公平性定期檢測機制中，群體核卡率差異超過多少就要進一步檢查？","o":["5%","10%","20%","1%"],"a":0,"e":"每月抽樣 500 筆，比對群體差異是否大於 **5%**。複習 §4.4。"},{"q":"為什麼課程要求用 AI「故意讓某群體核卡率偏低」來生成模擬資料？","o":["為了節省資料收集時間","為了測試 AI 的生成能力","為了讓模型更準確","為了模擬真實世界的歷史偏見，讓學員親眼看到偏見如何被製造"],"a":3,"e":"目的是**模擬歷史偏見**——只有親手造出偏見資料，才能理解為什麼要在訓練前移除敏感特徵。複習 §4.2。"},{"q":"在銀行審批案例中，「居住地區」為什麼被列為必須移除的敏感特徵？","o":["因為它常被當成種族或社經地位的代理變數","因為它無法被數位化","因為它會讓資料集變太大","因為它與還款能力完全正相關"],"a":0,"e":"地區常是**代理變數（proxy）**——模型用它間接學到歧視，即使沒有直接用種族欄位。複習 §4.3。"},{"q":"「人類介入（Human-in-the-loop）」的核心精神是什麼？","o":["AI 完全自動決策以提升效率","AI 只做初步篩選，高風險案件強制轉交人工複核","人類必須複核每一筆 AI 決策","AI 決策後由系統自動簽核"],"a":1,"e":"關鍵是**權限邊界**：AI 只做初步篩選，邊界值與高風險案件轉人工。複習 §4.4。"},{"q":"課程提供的「AI 產品倫理檢核表」中，「數據是否已完全去識別化」對應哪一項原則？","o":["透明度","包容性","隱私與保障","公平性"],"a":2,"e":"去識別化（匿名化）屬於**隱私與保障**。複習 §3.3。"},{"q":"課程要求 AutoML 專案上線前必須做什麼？","o":["先取得 ISO 認證","先關閉所有雲端服務","先跑一次 100 萬筆的壓力測試","逐一打勾確認六大原則的倫理檢核表"],"a":3,"e":"六大原則轉成的 **Check-list** 要留著，未來任何專案上線前逐一打勾。複習 §3.3。"},{"q":"「透明度」與「問責制」的關係是什麼？","o":["兩者是同一件事","透明度是問責的前提，但透明不等於問責","問責是透明的前提","兩者互不相關"],"a":1,"e":"說得清楚（透明）才能追究責任（問責），但「透明」本身不產生責任歸屬。複習 §3.2。"},{"q":"六大原則的口訣「公 · 可 · 隱 · 包 · 透 · 問」中，「可」指的是什麼？","o":["可維護性","可解釋性","可靠性與安全性","可擴充性"],"a":2,"e":"「可」＝**可靠性與安全性**（極端情況下不崩潰、有容錯機制）。複習 §3.2。"},{"q":"在模擬傳統 ML 痛點的練習中，把年齡寫成「999 歲」是要示範哪一種資料問題？","o":["異常值（離群值）","類別不平衡","重複值","缺失值"],"a":0,"e":"999 歲是**異常值**；年齡留白是缺失值；年收入寫「一百萬」是格式問題。複習 §2.3。"},{"q":"課程用「5 筆資料 vs 100 萬筆資料」的對比，主要是想強調什麼？","o":["5 筆資料無法訓練模型","100 萬筆資料必須用 GPU","資料越多模型一定越好","手動資料清理的耗時會隨資料量爆炸性成長，因此需要自動化"],"a":3,"e":"重點是**規模感**：5 筆就要花時間判斷，100 萬筆根本無法手動處理。複習 §2.3。"},{"q":"「客戶會不會在 30 天內流失？」屬於哪一種任務？","o":["分類","分群","降維","迴歸"],"a":0,"e":"問「會不會」＝**分類**（離散的類別標籤）。複習 §5.1。"},{"q":"「這棟房子的市場價格是多少元？」屬於哪一種任務？","o":["異常偵測","分類","迴歸","關聯規則"],"a":2,"e":"問「多少」＝**迴歸**（連續的數值結果）。複習 §5.2。"},{"q":"判斷任務類型最實用的口訣是什麼？","o":["看欄位數量決定","問「多少」通常是迴歸，問「是誰／會不會」通常是分類","資料筆數多就是迴歸，少就是分類","有圖片的都是分類"],"a":1,"e":"這是課程反覆強調的**關鍵字萃取口訣**。複習 §5.2。"},{"q":"「預測機台明天會不會故障」屬於哪一種任務？","o":["分群，因為沒有標籤","無法判斷","迴歸，因為要算機率","分類，因為問的是「會不會」"],"a":3,"e":"最常答錯的一題：問「**會不會**」就是分類。問「多久後故障」或「故障機率是多少」才偏向迴歸。複習 §5.3。"},{"q":"課程要求把目標變數標記成什麼顏色以便辨識？","o":["綠色","黃色","藍色","紅色"],"a":1,"e":"在 Excel 中用**黃色底色**標記目標變數（通常是預測結果那一欄）。複習 §2.5 個案 2。"},{"q":"99 筆正常、1 筆詐騙的資料集，模型全部猜「正常」，準確率是多少？","o":["100%","1%","50%","99%"],"a":3,"e":"**99%**——但這個模型完全沒抓到詐騙，毫無價值。這是 Accuracy 最經典的陷阱。複習 §6.2。"},{"q":"為什麼在不平衡資料中應該看 AUC 而不是 Accuracy？","o":["因為 AUC 衡量區分正負樣本的綜合能力，不受數據比例懸殊影響","因為 AUC 一定比較高","因為 Accuracy 只適用於迴歸","因為 AUC 計算比較快"],"a":0,"e":"AUC 看的是**排序與區分能力**，與正負樣本比例無關。複習 §6.1、§6.2。"},{"q":"AUC 數值 0.5 代表什麼？","o":["資料量不足","完美預測","與隨機猜測相當","模型訓練失敗"],"a":2,"e":"**0.5 = 隨機瞎猜**；1.0 = 完美預測。數值範圍 0.5–1。複習 §6.1。"},{"q":"RMSE 的計算過程中，為什麼要先把誤差「平方」？","o":["為了讓數值變小比較好看","為了消除正負號影響，並放大極端誤差","為了把單位換成百分比","為了加速運算"],"a":1,"e":"平方同時達到兩個目的：**消除正負號**與**放大離群值**——這也是 RMSE 對離群值敏感的原因。複習 §6.3。"},{"q":"RMSE 的數值方向是什麼？","o":["越接近 1 越好","沒有方向性","越大越好","越小越好"],"a":3,"e":"**RMSE 越小越好**，單位與原始資料相同（如新台幣、攝氏度）。複習 §6.1。"},{"q":"指標選擇決策樹中，分類問題且資料「不平衡」時應該用什麼指標？","o":["R²","Accuracy","AUC","RMSE"],"a":2,"e":"決策樹：分類 → 平衡用 Accuracy、**不平衡用 AUC**；迴歸 → 直接看 RMSE。複習 §6.4。"},{"q":"Teachable Machine 中，訓練期間課程特別提醒不要做什麼？","o":["不要切換瀏覽器分頁","不要關閉攝影機","不要改變燈光","不要調整瀏覽器視窗大小"],"a":0,"e":"**切換分頁會中斷訓練**。複習 §7.2。"},{"q":"Teachable Machine 實作中，兩個類別各需要約多少張照片？","o":["各約 10 張","各約 50 張","各約 100 張","各約 1000 張"],"a":2,"e":"戴口罩／無口罩**各約 100 張**，且要變換不同頭部角度。複習 §7.1、§7.2。"},{"q":"為什麼拍攝訓練照片時必須「變換不同頭部角度」？","o":["避免模型只學到「正面＋口罩」而不是「口罩」本身","為了增加訓練時間","為了讓信心指數變高","為了讓照片檔案更小"],"a":0,"e":"角度單一會讓模型**缺乏泛化能力**——換個角度就失效。複習 §7.2、§7.3。"},{"q":"若訓練照片角度單一，模型在複雜場景下的表現如何？","o":["無法判斷","表現極差，缺乏泛化能力","表現一樣好，因為模型已學會特徵","表現更好，因為干擾更少"],"a":1,"e":"課程的標準答案：**表現極差，缺乏泛化能力**。複習 §7.4。"},{"q":"Azure ML Studio 的四大核心模組，正確的流程順序是什麼？","o":["Compute → Data → Endpoint → Workspace","Workspace → Endpoint → Data → Compute","Endpoint → Workspace → Compute → Data","Data → Compute → Workspace → Endpoint"],"a":3,"e":"資料準備 → 提供算力 → 統一管理 → 封裝成 REST API 供外部呼叫。複習 §8.2。"},{"q":"Azure 中負責「執行繁重的模型訓練任務，可按需彈性擴展」的是哪個模組？","o":["Endpoint","Workspace","Compute Cluster","Data"],"a":2,"e":"**Compute Cluster（計算叢集）**負責訓練算力。複習 §8.1、§8.3。"},{"q":"把本地 CSV 上傳並「註冊」為雲端數據集的主要好處是什麼？","o":["檔案會自動清理缺失值","可以自動生成更多資料","檔案會自動加密","未來所有實驗與模型可直接跨專案重複調用，無需反覆上傳"],"a":3,"e":"註冊的價值是**重複使用**。複習 §8.1、§8.3。"},{"q":"建立 Azure 計算叢集時，為了「不使用時不會計費」，最小節點數應設為多少？","o":["0","1","2","依資料量決定"],"a":0,"e":"**最小節點 0 / 最大節點 2** 是成本控制的核心設定。複習 §9.2。"},{"q":"Azure 客戶流失預測實戰中，目標欄位（Target column）應該選哪一個？","o":["duration","y","balance","age"],"a":1,"e":"目標欄位是 **`y`**（代表客戶是否訂購定期存款），任務類型因此是 Classification。複習 §9.4。"},{"q":"Azure AutoML 啟動訓練後，系統約需多久完成一輪訓練迭代？","o":["3–5 小時","一整晚","1–2 分鐘","15–30 分鐘"],"a":3,"e":"課程標示約 **15–30 分鐘**，期間系統會自動嘗試多種演算法。複習 §9.1。"},{"q":"Azure AutoML 會自動嘗試下列哪些演算法？","o":["Random Forest、LightGBM、XGBoost 等多種演算法","只嘗試使用者手動指定的那一種","只嘗試神經網路","只嘗試 Linear Regression"],"a":0,"e":"平台會自動嘗試**多種演算法組合**——這正是「高效能」的來源。複習 §9.1、§9.5。"},{"q":"在 Azure 最佳模型頁面中，「Feature Importance」圖表的主要用途是什麼？","o":["顯示伺服器的 CPU 使用率","顯示模型訓練花了多少錢","找出對預測結果影響最大的特徵，轉化為業務洞察","顯示資料集有幾筆"],"a":2,"e":"Feature Importance 讓你從「模型指標」翻譯成「**業務行動**」。複習 §9.5。"},{"q":"把 Azure 模型部署為 Real-time endpoint 後，外部程式可以透過什麼呼叫它？","o":["只能透過 Azure 網頁介面","REST API（含網址與金鑰）","只能透過 Excel 外掛","無法被外部呼叫"],"a":1,"e":"部署會產生 **REST API 網址與金鑰**，任何外部應用程式都能即時呼叫。複習 §9.6。"},{"q":"TPOT 的全名是什麼？","o":["Total Processing Output Toolkit","Training Pipeline Object Tracker","Temporal Prediction Optimization Technique","Tree-based Pipeline Optimization Tool"],"a":3,"e":"TPOT = **Tree-based Pipeline Optimization Tool**，一個基於遺傳演算法的 Python 開源庫。複習 §10.1。"},{"q":"TPOT 用什麼技術自動搜尋最佳 Pipeline？","o":["遺傳演算法","隨機森林","貝氏網路","梯度下降"],"a":0,"e":"**遺傳演算法**模仿生物進化（突變、交配、選擇）來繁衍最佳組合。複習 §10.1、§10.2。"},{"q":"遺傳演算法中，把兩個表現不錯的 Pipeline 各取一部分組合成新的，這個機制叫什麼？","o":["突變（mutation）","交配（crossover）","選擇（selection）","正規化（normalization）"],"a":1,"e":"**交配（crossover）**是組合；突變是隨機更換步驟；選擇是淘汰較差的個體。複習 §10.2。"},{"q":"TPOT 的兩個「時間 ↔ 品質」旋鈕是哪兩個參數？","o":["max_depth 與 n_estimators","learning_rate 與 batch_size","generations 與 population_size","cv 與 random_state"],"a":2,"e":"**generations**（演化幾代）與 **population_size**（每代幾個模型）。複習 §10.2、§11.4。"},{"q":"課程為了節省課堂時間，把 TPOT 設定成什麼？","o":["使用預設值不調整","generations=1、population_size=20","generations=50、population_size=100","generations=0、population_size=0"],"a":1,"e":"課程設定 **1 代 × 20 個模型**；實務上建議加大到 50 × 100，但時間會顯著增加。複習 §10.2、§11.4。"},{"q":"設定 `random_state=42` 的主要目的是什麼？","o":["加快訓練速度","減少記憶體用量","讓模型準確率變高","確保每次執行的結果一致，方便除錯與報告"],"a":3,"e":"`random_state` 是**可重現性**的關鍵——沒有它，每次跑的結果都不一樣。複習 §11.4。"},{"q":"TPOT 的 `max_time_mins=2` 代表什麼？","o":["限制整個搜尋最多執行兩分鐘","模型最多只能預測兩分鐘","每隔兩分鐘自動存檔","每兩分鐘檢查一次進度"],"a":0,"e":"這是**硬性時間上限**，避免在課堂上跑太久。複習 §11.4。"},{"q":"`test_size=0.2` 代表訓練集與測試集的比例是多少？","o":["100% 訓練、0% 測試","20% 訓練、80% 測試","80% 訓練、20% 測試","50% 訓練、50% 測試"],"a":2,"e":"**80/20**——保留 20% 作為未知的測試集，才能客觀評估預測能力。複習 §11.3。"},{"q":"`TPOTRegressor` 的 `.score()` 方法預設輸出什麼指標？","o":["Accuracy","AUC","R²（決定係數）","RMSE"],"a":2,"e":"迴歸任務預設輸出 **R²**，數值 0–1，越接近 1.0 越好。複習 §11.6。"},{"q":"R² 分數 0.75 代表什麼意義？","o":["模型解釋了 75% 的目標變數變異","模型訓練花了 75 秒","有 75% 的資料被用來訓練","模型有 75% 的預測是正確的"],"a":0,"e":"R² 是**解釋變異的能力**，不是準確率。R²=0.75 代表解釋了 75% 的價格變異。複習 §11.6。"},{"q":"TPOT 訓練過程中，日誌顯示的每代最佳交叉驗證分數通常是什麼？","o":["正的 R²，越大越好","負的 MSE，數值越接近 0 越好","百分比準確率","訓練耗時（秒）"],"a":1,"e":"內部交叉驗證預設顯示**負的 MSE**（因為 sklearn 的 scorer 取負值），越接近 0 越好。複習 §11.5。"},{"q":"導出 TPOT 最佳 Pipeline 的指令是什麼？","o":["tpot.export()","tpot.save_model()","print(tpot.best_params_)","print(tpot.fitted_pipeline_)"],"a":3,"e":"`print(tpot.fitted_pipeline_)` 會輸出可讀的 Python Pipeline。複習 §12.1。"},{"q":"TPOT 導出的 Pipeline 最重要的商業價值是什麼？","o":["可以省下雲端費用","可以讓模型準確率再提升 10%","可解釋、可維護，且能脫離 TPOT 獨立部署（白盒模型）","可以自動生成更多訓練資料"],"a":2,"e":"導出後是**乾淨的 sklearn 程式碼**，可向非技術人員解釋、可送審、可獨立部署。複習 §12.4、§12.5。"},{"q":"公司預算充足、團隊缺乏寫程式能力，需要快速建立並部署模型，應選擇哪個方案？","o":["Excel 手算","Azure AutoML","Colab + TPOT","自行開發框架"],"a":1,"e":"圖形化介面、無代碼、一鍵部署 API → **Azure AutoML**。複習 §10.5、§13.1。"},{"q":"公司預算有限、團隊有 Python 基礎，且法規要求模型具備高度程式碼透明度，應選擇哪個方案？","o":["商業 AutoML 授權","不導入 AI","Azure AutoML","TPOT（開源工具）"],"a":3,"e":"完全免費、可導出 Python 程式碼、高度可客製化 → **TPOT**。複習 §10.5、§13.1。"},{"q":"本課程四個單元的核心主題，下列哪一項配對是正確的？","o":["單元二：分類／迴歸任務定義與評估指標","單元三：無代碼模型訓練","單元四：負責任 AI 原則","單元一：TPOT 遺傳演算法"],"a":0,"e":"單元一＝概念與倫理、單元二＝任務類型與指標、單元三＝Azure 實戰、單元四＝TPOT 開源工具。複習 §13.2。"}];
+
+const LET = 'ABCD';
+const KEY = 'automl-mc-quiz-v1';
+const state = { answers:{}, revealed:false, filter:'all' };
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p && typeof p === 'object'){
+      state.answers = (p.answers && typeof p.answers === 'object') ? p.answers : {};
+      state.revealed = !!p.revealed;
+      state.filter = p.filter || 'all';
+    }
+  }catch(e){}
+}
+let savedTimer = null;
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const el = document.getElementById('saved');
+    if(el){ el.classList.add('on'); clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ el.classList.remove('on'); }, 1200); }
+  }catch(e){}
+}
+
+function tally(){
+  let answered = 0, score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    if(a !== undefined && a !== null){
+      answered++;
+      if(a === QUESTIONS[i].a) score++;
+    }
+  }
+  return { answered:answered, score:score, wrong:answered-score };
+}
+
+function isVisible(i){
+  const a = state.answers[i];
+  const has = (a !== undefined && a !== null);
+  if(state.filter === 'unanswered') return !has;
+  if(state.filter === 'wrong') return has && a !== QUESTIONS[i].a;
+  return true;
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdInline(s){
+  s = esc(s);
+  let out = '';
+  let bold = false;
+  let i = 0;
+  while(i < s.length){
+    if(s.charAt(i) === '*' && s.charAt(i + 1) === '*'){
+      bold = !bold;
+      out += bold ? '<b>' : '</b>';
+      i += 2;
+    } else {
+      out += s.charAt(i);
+      i++;
+    }
+  }
+  return out;
+}
+
+function renderStats(){
+  const t = tally();
+  document.getElementById('nAns').textContent = t.answered;
+  document.getElementById('nScore').textContent = t.score;
+  document.getElementById('nWrong').textContent = t.wrong;
+  document.getElementById('bar').style.width = (t.answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('btnReveal').textContent = state.revealed ? '隱藏答案' : '顯示答案';
+  document.getElementById('hint').textContent = state.revealed
+    ? '已顯示正解與解析'
+    : '作答進度自動存在此瀏覽器，關掉再回來可繼續';
+}
+
+function renderNav(){
+  const nav = document.getElementById('navgrid');
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    const has = (a !== undefined && a !== null);
+    let cls = '';
+    if(has) cls = 'done';
+    if(state.revealed && has) cls = (a === QUESTIONS[i].a) ? 'right' : 'wrong';
+    html += '<button class="' + cls + '" data-goto="' + i + '">' + (i+1) + '</button>';
+  }
+  nav.innerHTML = html;
+}
+
+function renderQuestions(){
+  const box = document.getElementById('quiz');
+  let html = '';
+  let shown = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(!isVisible(i)) continue;
+    shown++;
+    const q = QUESTIONS[i];
+    if(i === 0 || i === 20 || i === 40){
+      const label = i === 0 ? '第一部分：AutoML 概念與負責任 AI（1–20）'
+                  : i === 20 ? '第二部分：任務類型、評估指標與無 Azure 前的實作（21–40）'
+                  : '第三部分：Azure 實戰、TPOT 與平台選擇（41–60）';
+      html += '<div class="parttitle">' + label + '</div>';
+    }
+    const picked = state.answers[i];
+    const hasPicked = (picked !== undefined && picked !== null);
+    let qcls = '';
+    if(state.revealed && hasPicked) qcls = (picked === q.a) ? 'correct' : 'incorrect';
+
+    html += '<article class="q ' + qcls + '" id="q' + (i+1) + '">';
+    html += '<div class="qhead"><span class="num">' + (i+1) + '</span>';
+    html += '<p class="qtext">' + mdInline(q.q) + '</p></div>';
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      let cls = 'opt';
+      if(hasPicked && picked === k) cls += ' picked';
+      let tag = '';
+      if(state.revealed){
+        if(k === q.a){ cls += ' right'; tag = '<span class="tag right">正解</span>'; }
+        else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
+      }
+      html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
+    }
+    html += '</ul>';
+    if(state.revealed){
+      html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
+    }
+    html += '</article>';
+  }
+  if(shown === 0){
+    html = '<div class="empty">目前篩選條件下沒有題目 &#128522;<br>換個篩選，或按「全部 60 題」。</div>';
+  }
+  box.innerHTML = html;
+}
+
+function renderAll(){ renderStats(); renderNav(); renderQuestions(); }
+
+document.addEventListener('click', function(ev){
+  const opt = ev.target.closest ? ev.target.closest('.opt') : null;
+  if(opt){
+    state.answers[parseInt(opt.getAttribute('data-q'), 10)] = parseInt(opt.getAttribute('data-k'), 10);
+    saveState();
+    renderAll();
+    return;
+  }
+  const go = ev.target.closest ? ev.target.closest('[data-goto]') : null;
+  if(go){
+    const idx = parseInt(go.getAttribute('data-goto'), 10);
+    if(state.filter !== 'all'){ state.filter = 'all'; syncFilterButtons(); renderAll(); }
+    const el = document.getElementById('q' + (idx + 1));
+    if(el){
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      el.style.transition = 'box-shadow .3s';
+      el.style.boxShadow = '0 0 0 3px rgba(37,99,235,.35)';
+      setTimeout(function(){ el.style.boxShadow = ''; }, 900);
+    }
+    saveState();
+  }
+});
+
+function syncFilterButtons(){
+  const map = { all:'btnAll', unanswered:'btnUnans', wrong:'btnWrong' };
+  for(const k in map){
+    const b = document.getElementById(map[k]);
+    if(b) b.classList.toggle('active', state.filter === k);
+  }
+}
+
+function setFilter(f){
+  state.filter = f;
+  syncFilterButtons();
+  saveState();
+  renderAll();
+}
+
+function bind(){
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.revealed = !state.revealed; saveState(); renderAll();
+  });
+  document.getElementById('btnAll').addEventListener('click', function(){ setFilter('all'); });
+  document.getElementById('btnUnans').addEventListener('click', function(){ setFilter('unanswered'); });
+  document.getElementById('btnWrong').addEventListener('click', function(){ setFilter('wrong'); });
+  document.getElementById('btnTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('確定要清除全部作答紀錄嗎？此動作無法復原。')) return;
+    state.answers = {}; state.revealed = false; state.filter = 'all';
+    saveState(); syncFilterButtons(); renderAll();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && state.revealed){ state.revealed = false; saveState(); renderAll(); }
+  });
+}
+
+loadState();
+syncFilterButtons();
+renderAll();
+bind();
+</script>
+</body>
+</html>
