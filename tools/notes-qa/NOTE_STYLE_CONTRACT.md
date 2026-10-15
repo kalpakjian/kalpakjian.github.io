@@ -163,15 +163,16 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 
 | 8 | md ↔ html 標題集合相同 | 兩份檔案內容一致 |
 | 9 | 頁首區塊有換行（`<br />` ≥ 3） | 網頁上不會擠成一行 |
 | 10 | 測驗 JSON 合法、題數與 nav 一致 | 測驗可用 |
+| 11 | 產生 `<li class="opt">` 選項列的測驗，必須同時引用選項陣列（`q.o[k]`） | 少這一行時每個選項都渲染成空的 `<li>`，讀者**完全看不到選項**（本站曾有 12 份測驗如此上線） |
 
 **警告（僅提示）**：孤立 LF、`第 N 頁` 這種寫法（可能是合法例子）。
 
-**自我測試樣本**：`tools\notes-qa\qa_selftest\bad-notes\` 是一份**故意有 12 種瑕疵**的假筆記，
+**自我測試樣本**：`tools\notes-qa\qa_selftest\bad-notes\` 是一份**故意有 13 種瑕疵**的假筆記，
 用來確認閘門還有效：
 
 ```
 powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 -Root tools/notes-qa/qa_selftest
-# 應該 FAIL 並列出 12 項，離開碼 1
+# 應該 FAIL 並列出 13 項，離開碼 1
 ```
 
 ---

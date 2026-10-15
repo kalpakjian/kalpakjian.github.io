@@ -2,8 +2,27 @@
 <html lang="zh-Hant">
 <head><meta charset="utf-8"><title>Bad quiz (QA fixture)</title></head>
 <body>
+<a class="quiz" href="mc-quiz.html">互動測驗（60 題）</a>
 <script>
 const QUESTIONS = [{"q":"a","o":["1","2"],"a":0}];
+
+// FLAW 13: builds the option rows but never appends the letter + option text +
+// "</li>", so every choice renders as an empty <li> (the reader sees no
+// options at all). The gate must catch this: the option-array reference that
+// would supply the text is absent, so this file only ever touches the array's
+// length.
+function renderQuestions(){
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const q = QUESTIONS[i];
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      html += '<li class="opt" data-q="' + i + '" data-k="' + k + '">';
+    }
+    html += '</ul>';
+  }
+  return html;
+}
 </script>
 </body>
 </html>

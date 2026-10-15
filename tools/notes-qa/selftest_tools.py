@@ -52,6 +52,53 @@ MD = (
 QUIZ = "const QUESTIONS = [];\n"          # lone LF on purpose
 ORPHAN = "<p>no md here</p>\n"            # lone LF, must stay untouched
 
+# ---- positive control for hard check 11 (quiz options must render text) ----
+_GOOD_QS = ",".join('{"q":"q%d","o":["a","b","c","d"],"a":0}' % i
+                    for i in range(1, 21))
+GOOD_QUIZ = (
+    '<!DOCTYPE html>\n<html lang="zh-Hant">\n<head><meta charset="utf-8">'
+    '<title>Good quiz (QA fixture)</title></head>\n<body>\n<script>\n'
+    "const QUESTIONS = [" + _GOOD_QS + "];\n"
+    "function renderQuestions(){\n"
+    "  let html = '';\n"
+    "  for(let i=0;i<QUESTIONS.length;i++){\n"
+    "    const q = QUESTIONS[i];\n"
+    "    html += '<ul class=\"opts\">';\n"
+    "    for(let k=0;k<q.o.length;k++){\n"
+    "      html += '<li class=\"opt\" data-q=\"' + i + '\" data-k=\"' + k + '\">';\n"
+    "      html += '<span>' + esc(q.o[k]) + '</span></li>';\n"
+    "    }\n"
+    "    html += '</ul>';\n"
+    "  }\n"
+    "  return html;\n"
+    "}\n"
+    "</script>\n</body>\n</html>\n"
+)
+GOOD_HTML = (
+    '<!DOCTYPE html>\r\n<html lang="zh-Hant">\r\n<head><meta charset="utf-8">'
+    "<title>Good note (QA fixture)</title></head>\r\n<body>\r\n"
+    '<h1 id="good-note">Good \u7b46\u8a18\uff08QA \u6e2c\u8a66\u6a23\u672c\uff09</h1>\r\n'
+    "<blockquote>\r\n"
+    "\u8ab2\u7a0b\uff1a\u793a\u7bc4\u7528<br />\r\n"
+    "\u6a5f\u69cb\uff1a\u793a\u7bc4\u6a5f\u69cb<br />\r\n"
+    "\u6db5\u84cb\u6a94\u6848\uff1a<code>demo.pptx</code><br />\r\n"
+    "\u672c\u7b46\u8a18\u4f9d\u8ab2\u7a0b\u5927\u7db1\u586b\u5145\u5167\u5bb9\u3002<br />\r\n"
+    '<a class="quiz" href="mc-quiz.html">\u4e92\u52d5\u6e2c\u9a57\uff0820 \u984c\uff09</a></p>\r\n'
+    "</blockquote>\r\n"
+    '<h2 id="1-\u793a\u7bc4\u7ae0\u7bc0">1. \u793a\u7bc4\u7ae0\u7bc0</h2>\r\n'
+    "<table><tbody>\r\n"
+    '<tr><td>1</td><td><a href="#1-\u793a\u7bc4\u7ae0\u7bc0">'
+    "\u793a\u7bc4\u7ae0\u7bc0</a></td></tr>\r\n"
+    "</tbody></table>\r\n"
+    "<ul><li>\u7b2c\u4e00\u9805</li><li>\u7b2c\u4e8c\u9805</li></ul>\r\n"
+    "</body>\r\n</html>\r\n"
+)
+GOOD_MD = (
+    "## 1. \u793a\u7bc4\u7ae0\u7bc0\r\n\r\n"
+    "| # | \u7ae0\u7bc0 |\r\n|---|------|\r\n"
+    "| 1 | [\u793a\u7bc4\u7ae0\u7bc0](#1-\u793a\u7bc4\u7ae0\u7bc0) |\r\n"
+)
+
 _results = []
 
 
@@ -88,13 +135,19 @@ def build(root):
         shutil.rmtree(root)
     src = os.path.join(root, "source", "demo-notes")
     orphan = os.path.join(root, "source", "not-a-note")
+    good = os.path.join(root, "source", "good-notes")
     tools = os.path.join(root, "tools", "notes-qa")
-    for d in (src, orphan, tools):
+    for d in (src, orphan, good, tools):
         os.makedirs(d)
     write(os.path.join(src, "index.html"), HTML)
     write(os.path.join(src, "Demo_Study_Notes.md"), MD)
     write(os.path.join(src, "mc-quiz.html"), QUIZ)
     write(os.path.join(orphan, "index.html"), ORPHAN)
+    # positive control for the option-text check: a quiz that DOES render the
+    # letter + option text, which the gate must accept.
+    write(os.path.join(good, "index.html"), GOOD_HTML)
+    write(os.path.join(good, "Good_Study_Notes.md"), GOOD_MD)
+    write(os.path.join(good, "mc-quiz.html"), GOOD_QUIZ)
     for n in SCRIPTS:
         shutil.copy2(os.path.join(TOOLS_DIR, n), os.path.join(tools, n))
     write(os.path.join(root, "rules.txt"), "IVDC@@@IVDC-ORG\r\n")
@@ -103,6 +156,8 @@ def build(root):
         "md": os.path.join(src, "Demo_Study_Notes.md"),
         "quiz": os.path.join(src, "mc-quiz.html"),
         "orphan": os.path.join(orphan, "index.html"),
+        "good": os.path.join(good, "index.html"),
+        "goodquiz": os.path.join(good, "mc-quiz.html"),
         "tools": tools,
         "rules": os.path.join(root, "rules.txt"),
         "root": root,
@@ -187,6 +242,24 @@ def main():
                       "-Root", os.path.join(TOOLS_DIR, "qa_selftest"), "-Quiet",
                       cwd=foreign)
         check("gate rejects sample", rc == 1 and "failures = 1" in out,
+              "rc=%d  %s" % (rc, out))
+
+        # 9) the gate must flag a quiz whose option rows render without text
+        #    (the shared shell built '<li class="opt">' but never appended the
+        #    letter + option text + '</li>', so readers saw no options at all).
+        rc, out = run(os.path.join(TOOLS_DIR, "qa_notes.ps1"),
+                      "-Root", os.path.join(TOOLS_DIR, "qa_selftest"),
+                      cwd=foreign)
+        check("gate flags empty options",
+              rc == 1 and "quiz options render without text" in out,
+              "rc=%d  %s" % (rc, out))
+
+        # 10) positive control: a quiz that DOES render the option text must
+        #     pass, so the new check cannot false-positive on a healthy note.
+        rc, out = run(os.path.join(TOOLS_DIR, "qa_notes.ps1"),
+                      "-Root", os.path.join(repo, "source"), cwd=foreign)
+        check("gate accepts good quiz",
+              "PASS  good-notes" in out and "FAIL  good-notes" not in out,
               "rc=%d  %s" % (rc, out))
     finally:
         shutil.rmtree(tmp, ignore_errors=True)

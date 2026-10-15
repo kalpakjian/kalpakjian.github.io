@@ -21,6 +21,11 @@
                           -- only checked when a header block is actually there,
                              i.e. a <blockquote> immediately after </h1>
    10. quiz            : QUESTIONS JSON parses, count matches the nav label
+   11. quiz options    : a quiz that builds <li class="opt"> rows must also
+                          reference the option array (q.o[k]); otherwise every
+                          choice renders as an empty <li> and the reader sees
+                          no options at all (this shipped broken in 12 quizzes)
+
 
   Warnings (advisory, never fail the run):
     - lone LF line endings
@@ -211,6 +216,19 @@ foreach ($d in $dirs) {
         }
         if ($qc -lt 20) { $problems += ("quiz has only {0} questions" -f $qc) }
       } catch { $problems += 'quiz JSON parse failed' }
+    }
+
+    # 11) a quiz that renders option rows must also render the option TEXT.
+    #     The shared shell builds each row with  html += '<li class="' + cls +
+    #     '" data-q="' ... '">';  and then appends the letter + text + '</li>'.
+    #     When that second line is lost, every choice renders as an empty <li>
+    #     and the reader sees no options at all (12 quizzes shipped like this).
+    $rendersOptRows = ([regex]::Matches($quiz, "'<li class=")).Count -gt 0
+    if ($rendersOptRows) {
+      $hasOptText = ([regex]::Matches($quiz, 'q\.o\[')).Count -gt 0
+      if (-not $hasOptText) {
+        $problems += 'quiz options render without text (no q.o[k] reference)'
+      }
     }
   }
 

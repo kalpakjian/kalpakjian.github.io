@@ -7,7 +7,7 @@
 | 檔案 | 用途 |
 |---|---|
 | `NOTE_STYLE_CONTRACT.md` | **寫作契約**：用詞、頁碼、頁首、標題／錨點、表格、測驗、檔案配對、上線 checklist |
-| `qa_notes.ps1` | **品質閘門**：10 項硬性檢查 + 2 項警告，離開碼 0／1（可當 CI gate） |
+| `qa_notes.ps1` | **品質閘門**：11 項硬性檢查 + 2 項警告，離開碼 0／1（可當 CI gate） |
 | `regen_ids.ps1` | 由標題文字重生所有 `id`，並同步 md／html 的 `](#…)` 連結 |
 | `yk_replace2.ps1` | 規則式批次取代（md＋html＋quiz 同時處理），規則檔格式 `pattern@@@replacement` |
 | `fix_toc_dup.ps1` | 移除目錄「編號重複」 |
@@ -60,9 +60,9 @@ git add .github/workflows/notes-qa.yml ; git commit -m "ci: add notes QA"; git p
 
 ## 自我測試
 
-`qa_selftest/bad-notes/` 是一份**故意有 12 種瑕疵**的假筆記，用來確認閘門還有作用：
+`qa_selftest/bad-notes/` 是一份**故意有 13 種瑕疵**的假筆記，用來確認閘門還有作用：
 
 ```powershell
 pwsh -File tools/notes-qa/qa_notes.ps1 -Root tools/notes-qa/qa_selftest
-# 預期：FAIL 並列出 12 項，離開碼 1
+# 預期：FAIL 並列出 13 項，離開碼 1
 ```
