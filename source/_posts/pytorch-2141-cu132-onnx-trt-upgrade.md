@@ -12,6 +12,8 @@ tags:
   - nightly
   - 效能實測
 toc: true
+index_img: /img/covers/pytorch-2141-cu132-onnx-trt-upgrade.png
+banner_img: /img/covers/pytorch-2141-cu132-onnx-trt-upgrade.png
 ---
 
 > <strong>一句話結論</strong>：可以，<code>torch 2.14.1+cu132</code> 不是障礙，但舊的 <code>.engine</code> 不能直接沿用——換 CUDA 版本必須重編一次，編完速度回到 <code>ck_trt -51.6%</code> 同級甚至更好。
