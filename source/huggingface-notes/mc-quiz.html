@@ -283,7 +283,8 @@ function renderQuestions(){
         else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
       }
       html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
-    }
+    html += '<span class="lt">' + LET[k] + '</span><span>' + esc(q.o[k]) + '</span>' + tag + '</li>';
+}
     html += '</ul>';
     if(state.revealed){
       html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
