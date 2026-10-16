@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>評估指標與 K-Means 聚類 MC 模擬測驗（60 題）| AI Tech Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#e2e5ea; --txt:#1f2328; --dim:#5b636e;
+  --blue:#2563eb; --green:#15803d; --green-bg:#e8f6ec; --red:#b91c1c;
+  --red-bg:#fdeaea; --sel:#dbeafe; --sel-line:#2563eb;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",
+    "Microsoft JhengHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+a{color:var(--blue)}
+.topbar{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  padding:12px 20px 10px;
+}
+.topbar .row1{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px}
+.topbar h1{font-size:17px; margin:0; font-weight:700}
+.topbar .back{font-size:13px; color:var(--dim); text-decoration:none}
+.topbar .back:hover{color:var(--blue)}
+.stats{display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; font-size:14px; color:var(--dim)}
+.stats b{font-size:18px; color:var(--txt)}
+.stats .ok b{color:var(--green)}
+.stats .no b{color:var(--red)}
+.saved{font-size:12px; color:var(--green); opacity:0; transition:opacity .3s}
+.saved.on{opacity:1}
+.progress{height:6px; background:var(--line); border-radius:99px; margin-top:10px; overflow:hidden}
+.progress i{display:block; height:100%; width:0; background:var(--blue); border-radius:99px; transition:width .25s}
+.controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+button{
+  font:inherit; font-size:13px; padding:6px 13px; border-radius:8px;
+  border:1px solid var(--line); background:#fff; color:var(--txt); cursor:pointer;
+  transition:.15s;
+}
+button:hover{border-color:#b9c0c9; background:#fbfbfc}
+button.primary{background:var(--blue); border-color:var(--blue); color:#fff}
+button.primary:hover{background:#1d4ed8}
+button.active{background:var(--sel); border-color:var(--sel-line); color:#1e40af; font-weight:600}
+button.danger{color:var(--red); border-color:#f0c4c4}
+button.danger:hover{background:var(--red-bg)}
+.navwrap{padding:16px 20px 0}
+.navgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px}
+.navgrid button{padding:6px 0; font-size:13px; border-radius:7px; text-align:center; font-variant-numeric:tabular-nums}
+.navgrid button.done{background:#eef2ff; border-color:#c7d2fe; color:#3730a3}
+.navgrid button.right{background:var(--green-bg); border-color:#a7d7b6; color:var(--green); font-weight:700}
+.navgrid button.wrong{background:var(--red-bg); border-color:#eeb4b4; color:var(--red); font-weight:700}
+main{max-width:900px; margin:0 auto; padding:20px 20px 80px}
+.parttitle{
+  margin:34px 0 14px; font-size:15px; font-weight:700; color:var(--dim);
+  border-left:4px solid var(--blue); padding-left:10px;
+}
+.q{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px 18px; margin-bottom:14px;
+}
+.q.correct{border-color:#a7d7b6; background:var(--green-bg)}
+.q.incorrect{border-color:#eeb4b4; background:var(--red-bg)}
+.qhead{display:flex; gap:10px; align-items:flex-start}
+.num{
+  flex:0 0 auto; min-width:30px; height:26px; line-height:26px; text-align:center;
+  background:#eef1f5; border-radius:7px; font-size:13px; font-weight:700;
+  color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.qtext{margin:0; font-weight:600; font-size:16px}
+.opts{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:7px}
+.opt{
+  display:flex; gap:10px; align-items:flex-start; padding:9px 12px;
+  border:1px solid var(--line); border-radius:9px; background:#fff;
+  cursor:pointer; transition:.12s; user-select:none;
+}
+.opt:hover{border-color:#b9c0c9; background:#fbfbfc}
+.opt .lt{
+  flex:0 0 auto; width:22px; height:22px; line-height:22px; text-align:center;
+  border-radius:6px; background:#eef1f5; font-size:12px; font-weight:700; color:var(--dim);
+}
+.opt.picked{border-color:var(--sel-line); background:var(--sel)}
+.opt.picked .lt{background:var(--sel-line); color:#fff}
+.opt.right{border-color:#7cc08f; background:var(--green-bg)}
+.opt.right .lt{background:var(--green); color:#fff}
+.opt.wrong{border-color:#e39191; background:var(--red-bg)}
+.opt.wrong .lt{background:var(--red); color:#fff}
+.tag{font-size:11px; padding:1px 7px; border-radius:99px; margin-left:auto;
+     flex:0 0 auto; font-weight:700; align-self:center}
+.tag.right{background:var(--green); color:#fff}
+.tag.wrong{background:var(--red); color:#fff}
+.expl{
+  margin-top:12px; padding:11px 14px; background:#f8fafc; border-radius:9px;
+  border-left:3px solid var(--blue); font-size:14.5px; color:#333a44;
+}
+.expl b{color:var(--txt)}
+.empty{text-align:center; color:var(--dim); padding:50px 20px; font-size:15px}
+footer{
+  max-width:900px; margin:0 auto; padding:0 20px 60px; color:var(--dim);
+  font-size:13px; text-align:center;
+}
+@media print{
+  .topbar,.navwrap,footer,.controls{display:none !important}
+  body{background:#fff; font-size:12pt}
+  main{max-width:none; padding:0}
+  .q{break-inside:avoid; page-break-inside:avoid; border-color:#999}
+}
+@media (max-width:560px){
+  .topbar{padding:10px 14px 8px}
+  .topbar h1{font-size:15px}
+  main{padding:14px 14px 60px}
+  .navwrap{padding:12px 14px 0}
+  .q{padding:13px 14px}
+  .qtext{font-size:15px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="row1">
+    <h1>評估指標與 K-Means 聚類 · MC 模擬測驗</h1>
+    <a class="back" href="index.html">&larr; 回到 評估指標與 K-Means 聚類學習筆記</a>
+    <span class="saved" id="saved">進度已儲存 &#10003;</span>
+  </div>
+  <div class="stats">
+    <span>已答 <b id="nAns">0</b> / 60</span>
+    <span class="ok">得分 <b id="nScore">0</b> / 60</span>
+    <span class="no">答錯 <b id="nWrong">0</b></span>
+    <span id="hint">作答進度自動存在此瀏覽器，關掉再回來可繼續</span>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <button id="btnReveal" class="primary">顯示答案</button>
+    <button id="btnAll" class="active">全部 60 題</button>
+    <button id="btnUnans">只看未答</button>
+    <button id="btnWrong">只看答錯</button>
+    <button id="btnTop">回到頂部</button>
+    <button id="btnReset" class="danger">重設全部</button>
+  </div>
+</header>
+
+<div class="navwrap">
+  <div class="navgrid" id="navgrid"></div>
+</div>
+
+<main id="quiz"></main>
+
+<footer>
+  <p>AutoML 單元二延伸（評估指標與 K-Means 聚類）個人學習筆記 · 只考課程內容與基本理論，不含完整程式碼</p>
+  <p>單一 HTML 檔、無外部資源，可離線使用 · 題庫涵蓋全部 14 個章節（分類指標 7 章 + K-Means 7 章）</p>
+</footer>
+<script>
+const QUESTIONS = [{"q":"在癌症化驗的例子中，「實際有病，但模型預測健康」屬於混淆矩陣的哪一格？","o":["TP（真陽性）","TN（真陰性）","FP（偽陽性）","FN（偽陰性）"],"a":3,"e":"實際為正類（有病）、模型猜負類（健康）→ **FN（False Negative，偽陰性）**，也就是「漏診」，在醫療情境中最危險。"},{"q":"混淆矩陣的四個縮寫，**第二個字母**代表什麼意思？","o":["樣本屬於訓練集還是測試集","指標是否為標準化數值","模型猜對還是猜錯","模型猜的是哪一類（Positive 或 Negative）"],"a":3,"e":"記法是：**第二個字母 = 模型猜什麼**（P 猜有病／N 猜健康）；**第一個字母 = 猜對了嗎**（T 對／F 錯）。所以 FN 就是「猜 Negative 而且猜錯了」。"},{"q":"化驗報告顯示「發現癌細胞」，但進一步切片檢查後發現只是良性發炎細胞。這屬於哪一種結果？","o":["FP（偽陽性）","TP（真陽性）","TN（真陰性）","FN（偽陰性）"],"a":0,"e":"實際健康（負類）卻被模型判為有病（正類）→ **FP（偽陽性）**，也就是「虛驚一場」，代價是病人的短暫恐慌與不必要的檢查。"},{"q":"在癌症初期篩檢的情境中，下列哪一種錯誤被形容為「最可怕的漏診，會直接延誤黃金治療時機」？","o":["TN（真陰性）","FN（偽陰性）","TP（真陽性）","FP（偽陽性）"],"a":1,"e":"**FN** 代表實際有病卻被判健康，病人不會被安排後續治療，因此是代價最高、最危險的錯誤型態。"},{"q":"confusion_matrix(y_true, y_pred, labels=[0, 1]).ravel() 取出的四個數字，順序為何？","o":["tn, fn, fp, tp","tp, fp, fn, tn","tp, fn, fp, tn","tn, fp, fn, tp"],"a":3,"e":"confusion_matrix 回傳的矩陣是 **[[TN, FP], [FN, TP]]**，所以攤平後的順序是 **tn, fp, fn, tp**。寫成 tp, fn, fp, tn 會讓 Precision 與 Recall 整個對調。"},{"q":"關於混淆矩陣的「正類（Positive）」，下列敘述何者正確？","o":["正類由使用者依業務需求自行定義，題目通常會明講","正類一定是少數類","正類一律是標籤數值較大的那一類","正類是模型自己決定的"],"a":0,"e":"正類是**人為定義**的。癌症例子把「有病」當正類；若改把「健康」當正類，TP 與 TN 會互換，所有指標數字都跟著變。所以要先確認題目把哪一邊當正類。"},{"q":"Accuracy（準確率）的公式為何？","o":["TP / (TP+FP)","TP / (TP+FN)","(TP+TN) / 全部樣本數","(TP+FP) / 全部樣本數"],"a":2,"e":"Accuracy = **(TP+TN) / 全部樣本數**，也就是「整體預測正確的比例」。"},{"q":"一份血液樣本有 10,000 個細胞，其中只有 10 個是癌細胞。一個「全部猜健康」的偷懶模型，其 Accuracy 約為多少？","o":["0.001","0.900","0.999","1.000"],"a":2,"e":"它猜對 9,990 個健康細胞，Accuracy = 9990/10000 = **0.999**（99.9%）。這個數字看起來完美，但模型毫無價值。"},{"q":"承上題，那個「全部猜健康」的模型，Recall 是多少？","o":["0.500","1.000","0.000","0.001"],"a":2,"e":"Recall = TP/(TP+FN) = 0/(0+10) = **0**。它一個癌細胞都沒抓到——這正是「高 Accuracy 不等於好模型」的經典示範。"},{"q":"Accuracy 的「致命缺點」是什麼？","o":["在資料不平衡（Imbalanced Data）時會失效","只能用在二元分類","無法用程式計算","計算複雜度太高"],"a":0,"e":"當類別極度不平衡時，模型只要全部猜多數類就能拿到高 Accuracy。所以不平衡資料必須搭配 Precision / Recall / F1 一起看。"},{"q":"precision_score / recall_score 在分母為 0 時，scikit-learn 的**預設**行為是什麼？","o":["直接丟出 ValueError 中止程式","回傳 NaN","回傳 0 並發出警告（zero_division='warn'）","自動忽略該樣本"],"a":2,"e":"實測 scikit-learn 1.9.1 的預設值是 **zero_division='warn'**：回傳 **0** 並發出警告。要消掉警告可明確傳 zero_division=0。"},{"q":"下列哪一種情況，Accuracy 仍然是「還算可用」的指標？","o":["類別極度不平衡（例如 1:1000）","類別大致均衡（例如 50/50）且 FP 與 FN 代價相近","只要 FP 與 FN 代價相差很大就一定可用","只要資料量夠大就一定可用"],"a":1,"e":"Accuracy 可用的前提是**類別大致均衡**，而且 FP 與 FN 的代價差不多。它適合當第一眼的健康檢查，但不能當唯一指標。"},{"q":"Precision（精確率）的公式為何？","o":["TN / (TN+FP)","TP / (TP+FP)","TP / (TP+FN)","(TP+TN) / 全部樣本數"],"a":1,"e":"Precision = **TP / (TP+FP)**，分母是「模型所有喊正類的次數」。"},{"q":"AI 化驗系統圈出 100 個「疑似癌細胞」，最終證實只有 20 個真的是癌細胞。此系統的 Precision 為何？","o":["0.98","0.20","0.50","0.80"],"a":1,"e":"Precision = 20/(20+80) = **0.20**。精確率過低意味著嚴重的過度醫療——80 個健康細胞被當成癌細胞。"},{"q":"Precision 強調「寧缺勿濫」，因此它最在意下列哪一種錯誤？","o":["TN 太多","TP 太少","FN（漏診）","FP（誤判為正類）"],"a":3,"e":"Precision 的分母是 TP+FP，所以**FP 越多，Precision 越低**。它關心的是「不要冤枉好人」。"},{"q":"下列哪一項是「Precision 過低」在醫療情境中最直接的後果？","o":["大量病患被漏診","健康的病人白白挨刀、承受不必要的化療副作用","模型無法收斂","資料集無法切分"],"a":1,"e":"Precision 低 = 喊「有病」的裡面很多是誤判 → **過度醫療**。漏診（FN）是 Recall 的問題，不是 Precision 的。"},{"q":"Recall（召回率）的公式為何？","o":["TP / (TP+FN)","FN / (TP+FN)","(TP+TN) / 全部樣本數","TP / (TP+FP)"],"a":0,"e":"Recall = **TP / (TP+FN)**，分母是「所有真正為正類的樣本」。"},{"q":"病人的組織樣本中實際隱藏著 50 個癌細胞，AI 只挑出其中 10 個、漏掉 40 個。此系統的 Recall 為何？","o":["0.80","0.10","0.20","0.40"],"a":2,"e":"Recall = 10/(10+40) = **0.20**。在癌症初期篩檢中，Recall 通常是最核心的指標，因為漏診的代價是病人的生命。"},{"q":"「召回率」在文獻或考題中，還常被稱作什麼？","o":["Positive Predictive Value","Sensitivity（敏感度）／True Positive Rate","Specificity（特異度）","False Positive Rate"],"a":1,"e":"Recall 的別名是 **Sensitivity（敏感度）** 與 **True Positive Rate（TPR）**。看到這三個詞，指的都是同一個指標。"},{"q":"為了提高 Recall，實務上通常會怎麼做？付出什麼代價？","o":["把門檻調嚴，代價是 Recall 也跟著下降","把門檻放寬、容忍較高的 FP，代價是 Precision 下降","增加 K 值，代價是運算變慢","改用 Accuracy，代價是無法計算"],"a":1,"e":"把判正類的標準放寬 → 抓到更多真的正類（Recall↑），但也會誤抓更多負類（FP↑）→ **Precision 下降**。兩者是天秤兩端。"},{"q":"F1-Score 的公式為何？","o":["2 × Precision × Recall / (Precision + Recall)","Precision × Recall","Precision − Recall","(Precision + Recall) / 2"],"a":0,"e":"F1 = **2PR/(P+R)**，等價於 **2TP / (2TP + FP + FN)**。"},{"q":"F1-Score 為什麼使用「調和平均數（Harmonic Mean）」而不是算術平均數？","o":["因為只要 Precision 或 Recall 其中一個極低，F1 就會被拉低","因為它只能處理二元分類","因為調和平均的數值一定比較大","因為計算比較快"],"a":0,"e":"調和平均對「小的那一邊」極度敏感，因此能嚴格檢驗模型是否在 Precision 與 Recall 之間取得良好平衡。"},{"q":"一個模型把「所有細胞都判成癌細胞」，其 Precision = 0.005、Recall = 1.000。它的 F1 約是多少？","o":["0.5000","0.9900","1.0000","0.0099"],"a":3,"e":"F1 = 2×0.005×1.0/(0.005+1.0) ≈ **0.0099**。雖然算術平均高達 0.5025，但 F1 幾乎是 0——這就是調和平均的作用。"},{"q":"課程給的 F1 實務門檻是什麼？","o":["60% 商業可用、70% 醫療可用","80% 商業可用、90% 醫療可用","70% 商業可用、85% 醫療可用","90% 商業可用、95% 醫療可用"],"a":1,"e":"課程明講：**> 80% 商業上可用，> 90% 醫療上可用**。"},{"q":"關於 F1-Score 的數值，下列敘述何者正確？","o":["F1 一定大於 Precision 與 Recall","F1 一定介於 Precision 與 Recall 之間","F1 一定小於 Precision 與 Recall","F1 與 Precision、Recall 無關"],"a":1,"e":"F1 是 Precision 與 Recall 的加權調和平均，所以**一定落在兩者之間**。若算出來落在區間外，一定是算錯了。"},{"q":"MAE（平均絕對誤差）的計算方式是？","o":["把誤差開根號後取平均","把誤差平方後取平均","把誤差取絕對值後取平均","把誤差取平均後平方"],"a":2,"e":"MAE = **平均 |誤差|**。它的物理意義非常直觀：MAE = 2000 代表模型預測房價平均誤差為 2000 元。"},{"q":"RMSE 為什麼會「特別討厭離譜的大失誤」？","o":["因為它先取絕對值","因為它先把誤差平方，大誤差被嚴重放大","因為它除以樣本數","因為它會自動排除離群值"],"a":1,"e":"RMSE 先將誤差**平方**：小誤差被縮小、大誤差被嚴重放大，最後才開根號。因此模型只要對幾個樣本錯得非常離譜，RMSE 就會急遽飆升。"},{"q":"三次預測的誤差分別是 [5, 3, 4] 公分，其 MAE 為多少？","o":["4.08","16.0","3.0","4.0"],"a":3,"e":"(5+3+4) ÷ 3 = **4.0** 公分。這是課程「猜同學身高」的例子。"},{"q":"三次預測的誤差分別是 [1, 1, 10] 公分，其 RMSE 約為多少？","o":["5.83","34.00","4.00","4.08"],"a":0,"e":"RMSE = √((1+1+100)/3) = √34 ≈ **5.83**。注意它的 MAE 也是 4.0，但 RMSE 從 4.08 跳到 5.83——差距就是那個「10 公分的大失誤」。"},{"q":"關於 MAE 與 RMSE 的關係，下列敘述何者**正確**？","o":["RMSE 永遠大於或等於 MAE","兩者數值一定相同","兩者無法比較","RMSE 永遠小於 MAE"],"a":0,"e":"**RMSE ≥ MAE 永遠成立**，等號只在「所有誤差都相同」時發生。看到「RMSE 小於 MAE」的選項可以直接刪掉。"},{"q":"sklearn.metrics.mean_squared_error(y_true, y_pred) 回傳的是什麼？","o":["MSE（平方後的平均），要自己開根號才是 RMSE","MAE","R²","RMSE"],"a":0,"e":"它回傳的是 **MSE**。要得到 RMSE 必須自己 np.sqrt(...)，或傳 squared=False。這是實作與考題最常見的坑。"},{"q":"R² = 0 代表什麼意義？","o":["模型的表現跟「直接猜所有數據的平均值」一樣爛","模型解釋了 100% 的變異","模型完美預測","模型完全無法預測"],"a":0,"e":"R² = 0 表示模型的表現**與基準模型（全猜平均）相同**——有學等於沒學。"},{"q":"R² 的數值範圍為何？","o":["0 到 ∞","0 到 1","−1 到 1","−∞ 到 1"],"a":3,"e":"R² 標準化到 **−∞ 到 1** 之間。R² < 0 代表模型預測得比直接猜平均值還要糟糕，通常代表模型設定完全錯誤。"},{"q":"R² 的公式為何？（y 上加橫線代表真實值的平均數）","o":["SS_tot / SS_res","1 + SS_res / SS_tot","SS_res / SS_tot","1 − SS_res / SS_tot"],"a":3,"e":"R² = **1 − SS_res / SS_tot**，衡量的是「模型解釋了多少資料變異的百分比」。"},{"q":"為什麼有了 MAE 與 RMSE 之後，還需要 R²？","o":["因為 R² 可以處理分類問題","因為 R² 不需要真實值","因為 MAE 與 RMSE 算得太慢","因為 MAE 與 RMSE 的數值大小取決於資料單位，難以跨模型比較"],"a":3,"e":"MAE 與 RMSE **帶有單位**（房價可能是幾十萬、溫度可能是幾度），難以跨資料集比較；R² 把評估標準化、去掉單位。"},{"q":"R² = 0.8 的正確解讀是？","o":["模型的錯誤率是 20%","80% 的預測結果是正確的","模型解釋了 80% 的資料變異","模型有 80% 的機率猜對"],"a":2,"e":"R² **不是準確率**。R² = 0.8 的意思是「相對於全猜平均這個基準模型，改善了 80% 的變異」。"},{"q":"非監督式學習（Unsupervised Learning）最本質的特徵是什麼？","o":["一定要用 GPU","只能處理數值資料","模型一定比監督式學習準","資料沒有標籤（沒有標準答案）"],"a":3,"e":"非監督式學習的核心是**在沒有標準答案（無標籤）的情況下**，透過演算法自動探索數據內部的拓撲結構與分佈規律。"},{"q":"課程指出，聚類算法的「終極數學目標」是什麼？","o":["群內差異最大化、群間差異最小化","群內差異最小化（高內聚）、群間差異最大化（低耦合）","讓每一群的樣本數完全相同","讓 K 值越小越好"],"a":1,"e":"**群內差異最小化（高內聚）＋ 群間差異最大化（低耦合）**。在 K-Means 裡，「高內聚」對應的就是最小化 WCSS。"},{"q":"「高內聚（群內差異最小化）」在 K-Means 中對應到哪個量？","o":["最大化輪廓係數的負值","最小化 K 值","最大化 inertia","最小化 WCSS（inertia）"],"a":3,"e":"K-Means 的目標函式就是**最小化 WCSS（群內誤差平方和）**，也就是 km.inertia_。"},{"q":"課程用「一箱沒有說明書的樂高積木」比喻什麼？","o":["非監督式學習在沒有標準答案下，靠自己找規律分類","深度學習需要大量算力","資料前處理的重要性","監督式學習需要大量標籤"],"a":0,"e":"沒有人告訴你哪些積木是做車子的、哪些是做房子的，你靠自己觀察把「有輪子的」放一堆——這就是**非監督式學習**。"},{"q":"K-Means 在數學上是在最小化哪一個量？","o":["輪廓係數","歐幾里得距離的平均值","群間距離平方和","群內誤差平方和（WCSS）"],"a":3,"e":"K-Means 的目標函式是 **WCSS（Within-Cluster Sum of Squares，群內誤差平方和）**，在 scikit-learn 中就是 km.inertia_。"},{"q":"KMeans() 的 n_clusters 參數**預設值**是多少？","o":["8","2","3","5"],"a":0,"e":"實測 scikit-learn 1.9.1 的預設值是 **8**。不傳這個參數，你會默默得到 8 群。"},{"q":"K-Means 的執行步驟，正確順序為何？","o":["初始化 → 選 K → 分配 → 更新 → 重複","選 K → 初始化 → 分配群組 → 更新中心點 → 重複迭代","分配 → 更新 → 選 K → 初始化 → 重複","選 K → 分配 → 初始化 → 更新 → 重複"],"a":1,"e":"正確順序是：**① 選擇 K → ② 初始化 → ③ 分配群組 → ④ 更新中心點 → ⑤ 重複迭代到收斂**。"},{"q":"關於 km.inertia_，下列敘述何者正確？","o":["它是建構 KMeans 時要傳入的參數","它是 fit 之後才能讀取的屬性，代表 WCSS","它代表輪廓係數","它代表迭代次數"],"a":1,"e":"inertia_ 是 **fit 之後才有的屬性**（尾端有底線），代表 WCSS。建構時傳 inertia= 會直接報錯。"},{"q":"課程如何描述 K-Means 的演算法本質？","o":["一種基於決策樹的演算法","一種基於機率抽樣的演算法","一種基於距離的迭代優化算法","一種梯度下降演算法"],"a":2,"e":"課程原文：K-Means 是一種**基於距離的迭代優化算法**，其背後是在最小化 WCSS。"},{"q":"手肘法（Elbow Method）是在觀察什麼？","o":["每一群的樣本數是否平均","輪廓係數的最大值","WCSS 隨 K 值增加而遞減的幅度，找出下降趨勢變緩的轉折點","模型訓練時間的變化"],"a":2,"e":"手肘法看的是 **WCSS（inertia）的降幅**：當再多一個 K、WCSS 卻只降一點點時，那個轉折點就是「手肘」。"},{"q":"輪廓係數（Silhouette Score）的取值範圍為何？","o":["−∞ 到 1","0 到 100","0 到 1","−1 到 1"],"a":3,"e":"輪廓係數的範圍是 **−1 到 1**，**越大越好**。負值代表該點可能被分錯群了。"},{"q":"為什麼**不能**直接選「inertia 最小的 K」？","o":["因為 inertia 越大越好","因為 inertia 只適用於 K = 2","因為 inertia 無法計算","因為 inertia 隨 K 增加而單調遞減，選最小等於選 K = 樣本數"],"a":3,"e":"K 越大、每群越小、誤差越小；極端情況 K = 樣本數時 WCSS = 0。所以要看**降幅**（手肘），而不是看最小值。"},{"q":"本機實測中（300 點、真實 4 群），輪廓係數在 K 等於多少時最高？","o":["K = 2（0.6155）","K = 3（0.7993）","K = 4（0.8756）","K = 10（0.3592）"],"a":2,"e":"輪廓係數在 **K = 4 達到最高 0.8756**，與手肘法（K=4→5 的降幅從 1569.9 崩到 19.5）指向同一個答案。"},{"q":"scikit-learn 的 KMeans 中，init 參數的**預設值**是什麼？","o":["'random'","'k-means++'","'pca'","None"],"a":1,"e":"實測 scikit-learn 1.9.1 的預設值是 **'k-means++'**。所以「不指定 init 就等於純隨機」是**錯的**——那是舊版（0.23 以前）的行為。"},{"q":"K-Means++ 初始化演算法的核心思想是什麼？","o":["直接使用前 K 筆資料當中心點","把中心點全部放在資料的幾何中心","確保初始的中心點彼此之間距離越遠越好","用 PCA 降維後再隨機挑點"],"a":2,"e":"K-Means++ 會讓每一個新中心點**依距離越遠、被選中機率越高**的方式挑選，因此初始中心點均勻散佈，大幅提升收斂速度與穩定性。"},{"q":"課程指出，完全隨機放置中心點可能導致什麼後果？","o":["K 值被自動改變","程式直接當機","演算法陷入局部最佳解（Local Optima），分群結果極差","資料被自動標準化"],"a":2,"e":"完全隨機可能讓初始中心點擠在同一個真實群裡，演算法就卡在**局部最佳解**上——這正是 K-Means++ 要解決的問題。"},{"q":"n_init 設為預設值 'auto' 時，搭配 init='k-means++' 會重跑幾次？","o":["10 次","300 次","1 次","5 次"],"a":2,"e":"n_init='auto' 的規則是：init='k-means++' → 跑 **1** 次；init='random' → 跑 **10** 次。"},{"q":"K-Means 的「分配群組（Assignment Step）」最常使用哪一種距離？","o":["歐幾里得距離（Euclidean Distance）","餘弦相似度","漢明距離","曼哈頓距離"],"a":0,"e":"課程明講最常使用的是**歐幾里得距離**：把每個維度的差值平方、加總後再開根號。"},{"q":"為什麼在執行 K-Means 之前**必須**先做特徵縮放？","o":["因為 K-Means 用歐幾里得距離，數值範圍大的特徵會完全主導分群結果","因為不縮放就無法計算 inertia","因為縮放可以減少 K 值","因為 scikit-learn 會強制檢查"],"a":0,"e":"距離是把各維度差值**平方後相加**，所以數值範圍大的特徵（例如以公克計的體重）會壓過數值小的特徵（以公分計的身高）。"},{"q":"本機實測中，若「體重以公克記錄」而不做特徵縮放，會發生什麼事？","o":["K 值會自動變成 2","分群結果與縮放後完全相同","每一群都混著矮的和高的，群內身高標準差膨脹到約 10 公分","程式會丟出錯誤"],"a":2,"e":"不縮放時分群只按體重切，**群內身高標準差從真實的 3 公分膨脹到約 10 公分**；縮放後四群完全對上四種真實族（標準差約 3 公分）。"},{"q":"K-Means 的「更新中心點（Update Step）」是用什麼當作新的中心點？","o":["群內的第一個資料點","群內距離原點最近的點","群內的中位數","群內所有點在各個特徵維度上的平均值（質心）"],"a":3,"e":"新中心點 = 該群成員在**每個特徵維度上的平均值**，也就是「質心」。取平均正好能最小化群內平方誤差（對 μ 微分為 0）。"},{"q":"「更新中心點時取群內平均值」正好對應什麼數學性質？","o":["平均值能保證找到全域最佳解","平均值可以消除資料的單位","平均值剛好是讓群內平方誤差最小的那個點","平均值可以讓群間距離最大"],"a":2,"e":"把群內平方誤差對中心點 μ 微分並令為 0，解出來正好是**平均值**。這也是 K-Means 用平均而不是中位數的原因（用中位數就變成 K-Medians）。"},{"q":"K-Means 的兩個停止（收斂）條件是什麼？","o":["inertia 開始上升，或 Precision 下降","中心點的移動距離小於 tolerance（tol），或達到最大迭代次數（max_iter）","K 值不再改變，或資料用完","輪廓係數達到 1，或 R² 達到 1"],"a":1,"e":"課程列出的兩個條件：**① 中心點移動距離 < tol（預設 1e-4）；② 達到 max_iter（預設 300）**。滿足任一個就停。"},{"q":"本機實測中，若把 max_iter 設得太小（例如 5），會發生什麼事？","o":["不會報錯，但會停在 inertia 偏高的較差解","模型會自動把 max_iter 調大","inertia 會變成 0","程式會丟出例外並中止"],"a":0,"e":"被 max_iter 切斷**不會報錯、不會警告**，只是停在比較差的解（實測 max_iter=5 → inertia 4892.0，正常收斂是 4389.2）。要看 n_iter_ 是否等於 max_iter 才能判斷。"}];
+
+const LET = 'ABCD';
+const KEY = 'automl-unit2-extra-mc-quiz-v1';
+const state = { answers:{}, revealed:false, filter:'all' };
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p && typeof p === 'object'){
+      state.answers = (p.answers && typeof p.answers === 'object') ? p.answers : {};
+      state.revealed = !!p.revealed;
+      state.filter = p.filter || 'all';
+    }
+  }catch(e){}
+}
+let savedTimer = null;
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const el = document.getElementById('saved');
+    if(el){ el.classList.add('on'); clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ el.classList.remove('on'); }, 1200); }
+  }catch(e){}
+}
+
+function tally(){
+  let answered = 0, score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    if(a !== undefined && a !== null){
+      answered++;
+      if(a === QUESTIONS[i].a) score++;
+    }
+  }
+  return { answered:answered, score:score, wrong:answered-score };
+}
+
+function isVisible(i){
+  const a = state.answers[i];
+  const has = (a !== undefined && a !== null);
+  if(state.filter === 'unanswered') return !has;
+  if(state.filter === 'wrong') return has && a !== QUESTIONS[i].a;
+  return true;
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdInline(s){
+  s = esc(s);
+  let out = '';
+  let bold = false;
+  let i = 0;
+  while(i < s.length){
+    if(s.charAt(i) === '*' && s.charAt(i + 1) === '*'){
+      bold = !bold;
+      out += bold ? '<b>' : '</b>';
+      i += 2;
+    } else {
+      out += s.charAt(i);
+      i++;
+    }
+  }
+  return out;
+}
+
+function renderStats(){
+  const t = tally();
+  document.getElementById('nAns').textContent = t.answered;
+  document.getElementById('nScore').textContent = t.score;
+  document.getElementById('nWrong').textContent = t.wrong;
+  document.getElementById('bar').style.width = (t.answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('btnReveal').textContent = state.revealed ? '隱藏答案' : '顯示答案';
+  document.getElementById('hint').textContent = state.revealed
+    ? '已顯示正解與解析'
+    : '作答進度自動存在此瀏覽器，關掉再回來可繼續';
+}
+
+function renderNav(){
+  const nav = document.getElementById('navgrid');
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    const has = (a !== undefined && a !== null);
+    let cls = '';
+    if(has) cls = 'done';
+    if(state.revealed && has) cls = (a === QUESTIONS[i].a) ? 'right' : 'wrong';
+    html += '<button class="' + cls + '" data-goto="' + i + '">' + (i+1) + '</button>';
+  }
+  nav.innerHTML = html;
+}
+
+function renderQuestions(){
+  const box = document.getElementById('quiz');
+  let html = '';
+  let shown = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(!isVisible(i)) continue;
+    shown++;
+    const q = QUESTIONS[i];
+    if(i === 0 || i === 20 || i === 41){
+      const label = i === 0 ? '第一部分：痛點、橋樑書與 1:1 學習法（1–20）'
+                  : i === 20 ? '第二部分：入門標準與學習藍圖十節點（21–41）'
+                  : '第三部分：MNIST 實戰、後續路徑與心態（42–60）';
+      html += '<div class="parttitle">' + label + '</div>';
+    }
+    const picked = state.answers[i];
+    const hasPicked = (picked !== undefined && picked !== null);
+    let qcls = '';
+    if(state.revealed && hasPicked) qcls = (picked === q.a) ? 'correct' : 'incorrect';
+
+    html += '<article class="q ' + qcls + '" id="q' + (i+1) + '">';
+    html += '<div class="qhead"><span class="num">' + (i+1) + '</span>';
+    html += '<p class="qtext">' + mdInline(q.q) + '</p></div>';
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      let cls = 'opt';
+      if(hasPicked && picked === k) cls += ' picked';
+      let tag = '';
+      if(state.revealed){
+        if(k === q.a){ cls += ' right'; tag = '<span class="tag right">正解</span>'; }
+        else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
+      }
+      html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
+    html += '<span class="lt">' + LET[k] + '</span><span>' + esc(q.o[k]) + '</span>' + tag + '</li>';
+}
+    html += '</ul>';
+    if(state.revealed){
+      html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
+    }
+    html += '</article>';
+  }
+  if(shown === 0){
+    html = '<div class="empty">目前篩選條件下沒有題目 &#128522;<br>換個篩選，或按「全部 60 題」。</div>';
+  }
+  box.innerHTML = html;
+}
+
+function renderAll(){ renderStats(); renderNav(); renderQuestions(); }
+
+document.addEventListener('click', function(ev){
+  const opt = ev.target.closest ? ev.target.closest('.opt') : null;
+  if(opt){
+    state.answers[parseInt(opt.getAttribute('data-q'), 10)] = parseInt(opt.getAttribute('data-k'), 10);
+    saveState();
+    renderAll();
+    return;
+  }
+  const go = ev.target.closest ? ev.target.closest('[data-goto]') : null;
+  if(go){
+    const idx = parseInt(go.getAttribute('data-goto'), 10);
+    if(state.filter !== 'all'){ state.filter = 'all'; syncFilterButtons(); renderAll(); }
+    const el = document.getElementById('q' + (idx + 1));
+    if(el){
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      el.style.transition = 'box-shadow .3s';
+      el.style.boxShadow = '0 0 0 3px rgba(37,99,235,.35)';
+      setTimeout(function(){ el.style.boxShadow = ''; }, 900);
+    }
+    saveState();
+  }
+});
+
+function syncFilterButtons(){
+  const map = { all:'btnAll', unanswered:'btnUnans', wrong:'btnWrong' };
+  for(const k in map){
+    const b = document.getElementById(map[k]);
+    if(b) b.classList.toggle('active', state.filter === k);
+  }
+}
+
+function setFilter(f){
+  state.filter = f;
+  syncFilterButtons();
+  saveState();
+  renderAll();
+}
+
+function bind(){
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.revealed = !state.revealed; saveState(); renderAll();
+  });
+  document.getElementById('btnAll').addEventListener('click', function(){ setFilter('all'); });
+  document.getElementById('btnUnans').addEventListener('click', function(){ setFilter('unanswered'); });
+  document.getElementById('btnWrong').addEventListener('click', function(){ setFilter('wrong'); });
+  document.getElementById('btnTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('確定要清除全部作答紀錄嗎？此動作無法復原。')) return;
+    state.answers = {}; state.revealed = false; state.filter = 'all';
+    saveState(); syncFilterButtons(); renderAll();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && state.revealed){ state.revealed = false; saveState(); renderAll(); }
+  });
+}
+
+loadState();
+syncFilterButtons();
+renderAll();
+bind();
+</script>
+</body>
+</html>

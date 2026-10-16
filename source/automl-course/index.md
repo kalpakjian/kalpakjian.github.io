@@ -103,6 +103,29 @@ date: 2026-10-16 21:30:00
 
 ---
 
+## 6 · 評估指標與 K-Means 聚類（單元二延伸）
+
+![評估指標與 K-Means 聚類 學習筆記](/img/covers/automl-unit2-extra-notes.png)
+
+- **定位**：AutoML 單元二的**延伸課節**，教材為獨立一份 **20 頁**簡報（⚠️ **整份都是正文、沒有封面頁**，所以 §1 就是第一個標題）
+- **核心命題**：把「評估指標」與「K-Means 聚類」這兩塊最容易被死背的內容，**推導到數學定義層級**——每個指標都從混淆矩陣長出來，K-Means 的每一步都在最小化同一個目標函式
+- **兩條主線**：
+  - **指標線**：混淆矩陣四格 → Accuracy（在不平衡資料會騙人）→ Precision（怕 FP）→ Recall（怕 FN）→ F1（調和平均）→ 回歸三兄弟 MAE / RMSE / R²
+  - **聚類線**：非監督式學習的本質（高內聚、低耦合）→ K-Means 五步循環（選 K → 初始化 → 分配 → 更新 → 收斂）
+- **特別之處**：所有結論都附**本機實測數字**（Python 3.11.15 / scikit-learn 1.9.1 / numpy 2.4.6，固定 `random_state`，原始輸出全文收錄於附錄 G）——
+  - 10,000 個細胞、10 個癌，全猜健康 → Accuracy **0.999000** 但 Recall **0.000000**
+  - 門檻 0.5→3.5：Precision 由 0.0286 升到 1.0000，Recall 由 0.9000 掉到 0.1000；F1 最高落在門檻 **2.5**（0.3467）
+  - `[5,3,4]` 與 `[1,1,10]` 的 MAE **都是 4.0000**，RMSE 卻由 **4.0825** 跳到 **5.8310**
+  - R² 可以是負的：完美 **1.000000**、全猜平均 **0.000000**、比平均更糟 **−1.132762**
+  - 手肘法與輪廓係數同時指向 **K=4**（inertia 降幅由 1569.9 崩到 19.5；輪廓係數 0.8756 最高）
+  - K-Means 不做特徵縮放時，群內身高標準差由真實的 3 公分**膨脹到約 10 公分**
+  - `max_iter=5` 不會報錯，只是停在 inertia **4892.0**（正常收斂為 **4389.2**）
+- **三個高頻考點**：inertia 隨 K **單調遞減**（不能選最小值）、歐幾里得距離**必須先做特徵縮放**、`n_iter_ < max_iter` 才算真的收斂
+- 另有 **14 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **👉 [看筆記](/automl-unit2-extra-notes/)** ｜ [互動測驗 60 題](/automl-unit2-extra-notes/mc-quiz.html)
+
+---
+
 ## 筆記的共同規格
 
 | 項目 | 說明 |
@@ -125,6 +148,7 @@ date: 2026-10-16 21:30:00
 | **三** | Azure AutoML 雲端平台實戰 | Azure Machine Learning Studio | ✅ 同上 |
 | **四** | 開源 AutoML 工具與綜合應用 | Google Colab、Python、TPOT | ✅ 同上 |
 | **延伸** | 泛化能力（Generalization Capability） | Python、scikit-learn、numpy | ✅ [泛化能力筆記](/generalization-notes/) |
+| **延伸** | 評估指標與 K-Means 聚類（單元二延伸） | Python、scikit-learn、numpy、StandardScaler | ✅ [評估指標與 K-Means 筆記](/automl-unit2-extra-notes/) |
 | **速查** | 機器學習模型速查（25 個模型卡） | Python、scikit-learn、LightGBM、XGBoost | ✅ [模型速查筆記](/ml-models-notes/) |
 | **開源實作** | H2O AutoML 實作（H2O-3 + Flow 端到端） | H2O-3、Flow、Python、pandas、Excel | ✅ [H2O AutoML 筆記](/h2o-automl-notes/) |
 | **導讀** | 《最新機器學習的教科書》DM2155 導讀（橋樑書：基礎數學 ＋ Python 實作） | Python、Jupyter、Keras、TensorFlow | ✅ [導讀筆記](/ml-textbook-notes/) |
