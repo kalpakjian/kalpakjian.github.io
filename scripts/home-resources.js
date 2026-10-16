@@ -26,7 +26,7 @@
 
 const MARKER = 'data-home-resources';
 
-// 專題：長篇系列（source 底下 skip_render 的獨立靜態站）
+// 專題：長篇系列（source 底下 skip_render 的獨立靜態站），或單篇長文＋一手來源的入口
 const TOPICS = [
   {
     kicker: 'Rails World 2026 開幕演講',
@@ -57,6 +57,22 @@ const TOPICS = [
       { label: '06 一手實測', href: '/coding-agent/ch06-experiment.html' },
       { label: '08 結語', href: '/coding-agent/ch08-standard.html' },
       { label: '導讀文章', href: '/2026/10/11/building-a-coding-agent/' }
+    ]
+  },
+  {
+    kicker: 'Agent 工作流 · 診斷清單',
+    title: 'Agent 時代，你可能累錯地方了',
+    href: '/2026/10/16/matt-pocock-18-agent-mistakes/',
+    desc:
+      'Matt Pocock 的 18 條「你可能正在犯的錯」，加上一份可以量的自我診斷表。' +
+      '18 條原文與中文對照、五組歸納、三個最容易讀錯的地方，並拿本站自己的品質閘門當實測案例：' +
+      '檢查存在，但驗證不痛。',
+    links: [
+      { label: '全文', href: '/2026/10/16/matt-pocock-18-agent-mistakes/' },
+      { label: '原始貼文', href: 'https://x.com/mattpocockuk/status/2109973273924579720' },
+      { label: 'skills repo', href: 'https://github.com/mattpocock/skills' },
+      { label: 'AI Coding Dictionary', href: 'https://aicodingdictionary.com' },
+      { label: 'Pragmatic Engineer 訪談', href: 'https://newsletter.pragmaticengineer.com/p/ai-skills-with-matt-pocock' }
     ]
   }
 ];
