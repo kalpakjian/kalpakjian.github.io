@@ -38,6 +38,33 @@ date: 2026-10-16 21:30:00
 
 ---
 
+## 3 · 機器學習模型速查（25 個模型）
+
+![機器學習模型速查 學習筆記](/img/covers/ml-models-notes.png)
+
+- **定位**：本課程的**模型速查卡**——教材為獨立一份 **25 頁**簡報（⚠️ **沒有封面頁**，25 頁全部是正文，所以 §1 = PDF 第 1 頁）
+- **形式**：每一頁就是一張**模型卡**，固定五格——🧩 原理 → ✨ 優點 → ⚠️ 缺點 → 🎯 應用 → 核心公式
+- **25 個模型一次收齊**（依原稿順序）：
+  - **Bagging**：隨機森林、Extra Trees
+  - **Boosting**：LightGBM、XGBoost、梯度提升、AdaBoost
+  - **樹與規則**：決策樹、CN2 規則歸納
+  - **線性與距離**：線性迴歸、邏輯迴歸、SVM、PLS、kNN
+  - **機率**：單純貝氏、校準學習器
+  - **最佳化與網路**：SGD、神經網路
+  - **集成策略**：堆疊法（Stacking）
+  - **前處理與特徵工程**：MaxAbsScaler、SelectFromModel + 多層 FeatureUnion
+  - **基準與可解釋**：Constant 常數模型、計分表
+  - **函數擬合與工程落地**：曲線擬合、儲存模型、載入模型
+- **特別之處**：**每一章都有本機實測數字**（Python 3.11.15 / scikit-learn 1.9.1 / lightgbm 4.7.0 / xgboost 3.2.0，固定 `random_state=42`），原始輸出全文收錄於附錄 D。其中 **4 個結果與直覺相反**，也是考題最愛出的地方：
+  - 對**本來就校準得不錯**的隨機森林再校準，Brier 反而由 0.0359 變差到 **0.0399**
+  - **Extra Trees 反而略勝**隨機森林（RMSE 52.041 vs 52.964）而且快約 40%
+  - 梯度提升學習率由 0.05 開到 0.5，訓練 RMSE 掉到 0.582（幾乎背下資料），測試卻由 54.768 升到 **62.757**
+  - **Stacking（0.9591）輸給最強的單一成員** SVC（0.9766）
+- 另有 **25 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **👉 [看筆記](/ml-models-notes/)** ｜ [互動測驗 60 題](/ml-models-notes/mc-quiz.html)
+
+---
+
 ## 筆記的共同規格
 
 | 項目 | 說明 |
@@ -60,6 +87,7 @@ date: 2026-10-16 21:30:00
 | **三** | Azure AutoML 雲端平台實戰 | Azure Machine Learning Studio | ✅ 同上 |
 | **四** | 開源 AutoML 工具與綜合應用 | Google Colab、Python、TPOT | ✅ 同上 |
 | **延伸** | 泛化能力（Generalization Capability） | Python、scikit-learn、numpy | ✅ [泛化能力筆記](/generalization-notes/) |
+| **速查** | 機器學習模型速查（25 個模型卡） | Python、scikit-learn、LightGBM、XGBoost | ✅ [模型速查筆記](/ml-models-notes/) |
 
 ---
 

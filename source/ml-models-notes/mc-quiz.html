@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>機器學習模型速查 MC 模擬測驗（60 題）| AI Tech Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#e2e5ea; --txt:#1f2328; --dim:#5b636e;
+  --blue:#2563eb; --green:#15803d; --green-bg:#e8f6ec; --red:#b91c1c;
+  --red-bg:#fdeaea; --sel:#dbeafe; --sel-line:#2563eb;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",
+    "Microsoft JhengHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+a{color:var(--blue)}
+.topbar{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  padding:12px 20px 10px;
+}
+.topbar .row1{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px}
+.topbar h1{font-size:17px; margin:0; font-weight:700}
+.topbar .back{font-size:13px; color:var(--dim); text-decoration:none}
+.topbar .back:hover{color:var(--blue)}
+.stats{display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; font-size:14px; color:var(--dim)}
+.stats b{font-size:18px; color:var(--txt)}
+.stats .ok b{color:var(--green)}
+.stats .no b{color:var(--red)}
+.saved{font-size:12px; color:var(--green); opacity:0; transition:opacity .3s}
+.saved.on{opacity:1}
+.progress{height:6px; background:var(--line); border-radius:99px; margin-top:10px; overflow:hidden}
+.progress i{display:block; height:100%; width:0; background:var(--blue); border-radius:99px; transition:width .25s}
+.controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+button{
+  font:inherit; font-size:13px; padding:6px 13px; border-radius:8px;
+  border:1px solid var(--line); background:#fff; color:var(--txt); cursor:pointer;
+  transition:.15s;
+}
+button:hover{border-color:#b9c0c9; background:#fbfbfc}
+button.primary{background:var(--blue); border-color:var(--blue); color:#fff}
+button.primary:hover{background:#1d4ed8}
+button.active{background:var(--sel); border-color:var(--sel-line); color:#1e40af; font-weight:600}
+button.danger{color:var(--red); border-color:#f0c4c4}
+button.danger:hover{background:var(--red-bg)}
+.navwrap{padding:16px 20px 0}
+.navgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px}
+.navgrid button{padding:6px 0; font-size:13px; border-radius:7px; text-align:center; font-variant-numeric:tabular-nums}
+.navgrid button.done{background:#eef2ff; border-color:#c7d2fe; color:#3730a3}
+.navgrid button.right{background:var(--green-bg); border-color:#a7d7b6; color:var(--green); font-weight:700}
+.navgrid button.wrong{background:var(--red-bg); border-color:#eeb4b4; color:var(--red); font-weight:700}
+main{max-width:900px; margin:0 auto; padding:20px 20px 80px}
+.parttitle{
+  margin:34px 0 14px; font-size:15px; font-weight:700; color:var(--dim);
+  border-left:4px solid var(--blue); padding-left:10px;
+}
+.q{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px 18px; margin-bottom:14px;
+}
+.q.correct{border-color:#a7d7b6; background:var(--green-bg)}
+.q.incorrect{border-color:#eeb4b4; background:var(--red-bg)}
+.qhead{display:flex; gap:10px; align-items:flex-start}
+.num{
+  flex:0 0 auto; min-width:30px; height:26px; line-height:26px; text-align:center;
+  background:#eef1f5; border-radius:7px; font-size:13px; font-weight:700;
+  color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.qtext{margin:0; font-weight:600; font-size:16px}
+.opts{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:7px}
+.opt{
+  display:flex; gap:10px; align-items:flex-start; padding:9px 12px;
+  border:1px solid var(--line); border-radius:9px; background:#fff;
+  cursor:pointer; transition:.12s; user-select:none;
+}
+.opt:hover{border-color:#b9c0c9; background:#fbfbfc}
+.opt .lt{
+  flex:0 0 auto; width:22px; height:22px; line-height:22px; text-align:center;
+  border-radius:6px; background:#eef1f5; font-size:12px; font-weight:700; color:var(--dim);
+}
+.opt.picked{border-color:var(--sel-line); background:var(--sel)}
+.opt.picked .lt{background:var(--sel-line); color:#fff}
+.opt.right{border-color:#7cc08f; background:var(--green-bg)}
+.opt.right .lt{background:var(--green); color:#fff}
+.opt.wrong{border-color:#e39191; background:var(--red-bg)}
+.opt.wrong .lt{background:var(--red); color:#fff}
+.tag{font-size:11px; padding:1px 7px; border-radius:99px; margin-left:auto;
+     flex:0 0 auto; font-weight:700; align-self:center}
+.tag.right{background:var(--green); color:#fff}
+.tag.wrong{background:var(--red); color:#fff}
+.expl{
+  margin-top:12px; padding:11px 14px; background:#f8fafc; border-radius:9px;
+  border-left:3px solid var(--blue); font-size:14.5px; color:#333a44;
+}
+.expl b{color:var(--txt)}
+.empty{text-align:center; color:var(--dim); padding:50px 20px; font-size:15px}
+footer{
+  max-width:900px; margin:0 auto; padding:0 20px 60px; color:var(--dim);
+  font-size:13px; text-align:center;
+}
+@media print{
+  .topbar,.navwrap,footer,.controls{display:none !important}
+  body{background:#fff; font-size:12pt}
+  main{max-width:none; padding:0}
+  .q{break-inside:avoid; page-break-inside:avoid; border-color:#999}
+}
+@media (max-width:560px){
+  .topbar{padding:10px 14px 8px}
+  .topbar h1{font-size:15px}
+  main{padding:14px 14px 60px}
+  .navwrap{padding:12px 14px 0}
+  .q{padding:13px 14px}
+  .qtext{font-size:15px}
+}
+code{background:#eef1f5; padding:1px 5px; border-radius:4px; font-size:.92em; font-family:ui-monospace,Consolas,"Courier New",monospace}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="row1">
+    <h1>機器學習模型速查 · MC 模擬測驗</h1>
+    <a class="back" href="index.html">&larr; 回到機器學習模型速查筆記</a>
+    <span class="saved" id="saved">進度已儲存 &#10003;</span>
+  </div>
+  <div class="stats">
+    <span>已答 <b id="nAns">0</b> / 60</span>
+    <span class="ok">得分 <b id="nScore">0</b> / 60</span>
+    <span class="no">答錯 <b id="nWrong">0</b></span>
+    <span id="hint">作答進度自動存在此瀏覽器，關掉再回來可繼續</span>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <button id="btnReveal" class="primary">顯示答案</button>
+    <button id="btnAll" class="active">全部 60 題</button>
+    <button id="btnUnans">只看未答</button>
+    <button id="btnWrong">只看答錯</button>
+    <button id="btnTop">回到頂部</button>
+    <button id="btnReset" class="danger">重設全部</button>
+  </div>
+</header>
+
+<div class="navwrap">
+  <div class="navgrid" id="navgrid"></div>
+</div>
+
+<main id="quiz"></main>
+
+<footer>
+  <p>機器學習模型速查（25 個模型）個人學習筆記 · 題目對應 PDF 第 1–25 頁的 25 張模型卡</p>
+  <p>單一 HTML 檔、無外部資源，可離線使用 · 每題解析都引用筆記中的本機實測數字</p>
+</footer>
+<script>
+const QUESTIONS = [{"q":"隨機森林中，控制「樣本隨機」與「特徵隨機」的參數分別是？","o":["`n_estimators` 與 `max_depth`","`bootstrap` 與 `max_features`","`oob_score` 與 `max_features`","`max_features` 與 `bootstrap`"],"a":1,"e":"**樣本隨機**由 `bootstrap` 控制（每棵樹抽樣本）；**特徵隨機**由 `max_features` 控制（每次切分只隨機看一部分特徵）。"},{"q":"隨機森林比單棵決策樹表現更好的主要原因是？","o":["提高可解釋性","加快訓練速度","降低偏差（bias）","降低變異（variance）"],"a":3,"e":"集成多棵樹把**不相關的誤差平均掉**，主要降低的是**變異**，不是偏差。"},{"q":"本機實測（breast_cancer）單棵決策樹與隨機森林（100 棵）的測試準確率分別是？","o":["0.9181 / 0.9357","0.9357 / 0.9181","0.9573 / 0.9181","兩者皆為 0.9357"],"a":0,"e":"單棵樹 0.9181、森林 0.9357；森林的 OOB 分數為 0.9573（不需另切驗證集）。"},{"q":"LightGBM 用來加速訓練的四項機制是？","o":["二階泰勒展開、正則化、稀疏感知、早停","核函數、最大邊界、鬆弛變數、對偶問題","直方圖、leaf-wise 生長、GOSS、EFB","隨機旋轉、投影、抽樣、投票"],"a":2,"e":"原稿寫得很清楚：**直方圖建立梯度提升樹，採 leaf-wise 生長，搭配 GOSS、EFB 加速**。"},{"q":"LightGBM 與 XGBoost 預設的樹生長方式有何差別？","o":["兩者皆為 leaf-wise","LightGBM 為 leaf-wise、XGBoost 為 level-wise","LightGBM 為 level-wise、XGBoost 為 leaf-wise","兩者皆為 level-wise"],"a":1,"e":"LightGBM 預設 **leaf-wise**（挑最肥的葉節點繼續切），XGBoost 預設 **level-wise**（一層一層長）。"},{"q":"本機實測：訓練資料僅 398 筆時，把 `num_leaves` 由 8 開到 255，結果是？","o":["訓練與測試一起上升","訓練下降、測試上升","訓練與測試都不變","訓練維持 1.0000，測試由 0.9649 退到 0.9591"],"a":3,"e":"小資料下大容量只會**過擬合**：訓練集永遠滿分，測試反而退步——印證原稿「小資料容易過擬合」。"},{"q":"XGBoost 的 Ω(f) = γT + ½λ‖w‖² 中，γT 與 ½λ‖w‖² 分別懲罰什麼？","o":["葉節點數與葉權重","樹的數量與學習率","特徵數與樣本數","損失值與梯度"],"a":0,"e":"**γT 懲罰葉節點數**（樹太複雜）、**½λ‖w‖² 懲罰葉權重**（權重太大）；γ、λ 控制模型複雜度。"},{"q":"XGBoost 比傳統梯度提升收斂更快的主要原因是？","o":["一定使用 GPU 加速","使用更大的學習率","對目標函數做二階泰勒展開（相當於自帶牛頓法）","使用隨機森林當基底學習器"],"a":2,"e":"原稿明寫「用**二階泰勒展開**最佳化」：連曲率都用上，因此有解析解、收斂更快。"},{"q":"本機實測 `reg_lambda` 由 1.0 開到 100.0 的結果是？","o":["訓練與測試都變好","訓練 1.0000→0.9899、測試 0.9532→0.9240","訓練不變、測試變好","兩者完全不變"],"a":1,"e":"正則化**過頭就是欠擬合**：訓練分數被罰下來，測試也一起掉（0.9532 → 0.9240）。"},{"q":"MaxAbsScaler 的公式與輸出範圍是？","o":["(x−μ)/σ，平均 0、標準差 1","(x−min)/(max−min)，[0,1]","log(1+x)，[0,∞)","x / max|x|，[−1,1]"],"a":3,"e":"原稿：**每個特徵除以其最大絕對值，使訓練資料縮放至 [−1,1]**；只有縮、沒有平移。"},{"q":"稀疏矩陣為什麼適合用 MaxAbsScaler？","o":["它不平移，0 仍是 0，稀疏度不變","它會把 0 平移成負值以保留資訊","它對離群值完全不敏感","它會自動壓縮矩陣的檔案大小"],"a":0,"e":"實測稀疏度 0.667 → **0.667 完全不變**；對照 `StandardScaler` 會把 0 變成 −μ/σ，稀疏矩陣瞬間變稠密。"},{"q":"FeatureUnion 與 Pipeline 的核心差別是？","o":["FeatureUnion 是串聯、Pipeline 是並聯","兩者完全等價","FeatureUnion 是並聯（多分支輸出橫向接起）、Pipeline 是串聯","FeatureUnion 只能用於文字特徵"],"a":2,"e":"原稿講的是「多層 FeatureUnion **並聯合併**不同來源」；Pipeline 則是前一步輸出餵給下一步的**串聯**。"},{"q":"本機實測 `SelectFromModel(threshold=\"mean\")` 在 breast_cancer（30 維）的結果是？","o":["篩成 15 維，準確率 0.9357→0.9181","篩成 9 維，準確率 0.9357→0.9415","篩成 9 維，準確率 0.9357→0.9181","篩成 20 維，準確率不變"],"a":1,"e":"30 維 → **9 維**（索引 0,2,3,6,7,20,22,23,27），準確率反而由 0.9357 升到 **0.9415**：降維確實能降雜訊。"},{"q":"Constant 常數模型（`DummyClassifier(strategy=\"most_frequent\")`）在 breast_cancer 的測試準確率是？","o":["0.5000","0.9357","1.0000","0.6257"],"a":3,"e":"等於**多數類比例 0.6257**——這就是「什麼都不學」的及格線；任何模型贏不了它就沒有價值。"},{"q":"原稿指出：迴歸的 Constant 基準若以「絕對誤差」評估，應取哪個統計量？","o":["中位數，因為它最小化絕對誤差（MAE）","平均數，因為它最小化 MAE","眾數，因為它最小化平方誤差","最大值，因為它最保守"],"a":0,"e":"平均數最小化 **MSE**、中位數最小化 **MAE**；原稿：「中位數適合以絕對誤差評估的基準」。"},{"q":"CN2 規則歸納是用什麼策略逐條學習規則的？","o":["梯度提升","隨機森林投票","序列覆蓋法：學一條規則 → 移掉被它覆蓋的樣本 → 再學下一條","核函數映射到高維"],"a":2,"e":"原稿：「以**序列覆蓋法**逐條學習 IF–THEN 規則，再處理尚未覆蓋的樣本。」"},{"q":"原稿提到 CN2 可以用什麼來評估候選規則？","o":["AUC 與 Brier score","熵或 Laplace 準確度","RMSE 與 R²","支援向量數"],"a":1,"e":"原稿：「可用**熵或 Laplace 準確度**評估候選規則」；Laplace 校正可避免覆蓋數過小的假規則。"},{"q":"本機自製最小版 CN2 在 iris 上學到幾條規則、測試準確率多少？","o":["10 條，0.9500","3 條，0.8000","8 條，0.7200","5 條，0.8667"],"a":3,"e":"學到 **5 條規則**（R1–R5）、覆蓋 93.3% 樣本，測試準確率 **0.8667**；規則本身可直接閱讀。"},{"q":"校準學習器（Platt scaling）的公式是？","o":["P(y=1|s) = 1 / (1 + exp(As + B))","P(y=1|s) = As + B","P(y=1|s) = exp(As + B)","P(y=1|s) = 1 / (As + B)"],"a":0,"e":"原稿給的就是 **Platt scaling**：P(y=1|s)=1/(1+exp(As+B))，A、B 由校準資料估計。"},{"q":"本機實測：對「本來就校準得不錯」的隨機森林再做 Platt 校準，結果如何？","o":["Brier 由 0.0399 改善到 0.0359","準確率由 0.9415 提升到 0.9883","Brier 由 0.0359 變差到 0.0399、ECE 由 0.0545 變差到 0.0738","完全沒有變化"],"a":2,"e":"**校準不是無腦加分**：RF 的 Brier／ECE 反而變差，且準確率前後都是 0.9415——呼應原稿「校準不保證分類準確率提升」。"},{"q":"kNN 被稱為「懶惰學習（lazy learning）」，意思是？","o":["訓練時需要迭代很多輪","訓練只是把資料記住，成本主要發生在預測階段","它不能處理分類問題","它不需要計算距離"],"a":1,"e":"原稿：「無需顯式模型訓練」；實測預測 171 筆耗時 0.0056 秒，成本全在預測。"},{"q":"本機實測 kNN（k=5）在 breast_cancer 上，未縮放 vs `StandardScaler` 後的測試準確率是？","o":["0.9591 vs 0.9240（縮放反而變差）","兩者相同","0.9766 vs 0.9064","0.9240 vs 0.9591（縮放後提升）"],"a":3,"e":"k=1/5/15 未縮放都卡在 **0.9240**，縮放後升到 **0.9591**——印證原稿「通常需要縮放」。"},{"q":"決策樹的資訊增益（IG）公式是？","o":["IG = H(parent) − Σ (n_c/n) H(c)","IG = Σ (n_c/n) H(c) − H(parent)","IG = 1 − Σ p_i²","IG = H(parent) + Σ H(c)"],"a":0,"e":"原稿：**IG = H(parent) − Σ (n_c/n) H(c)**；另一條是 Gini = 1 − Σ p_i²（不純度）。"},{"q":"本機實測決策樹完全不剪枝（`max_depth=None`）時的表現是？","o":["訓練 0.9181、測試 0.9181","訓練 0.9298、測試 0.9950","訓練 1.0000、測試 0.9181（過擬合）","訓練 0.9271、測試 0.9123"],"a":2,"e":"訓練集滿分、測試只有 0.9181；改成 `max_depth=5` 後測試反而升到 **0.9298** → 剪枝有效。"},{"q":"為什麼決策樹通常不需要特徵縮放？","o":["因為它使用梯度下降","因為它只比較特徵值的大小順序，縮放不改變切分結果","因為它會自動標準化輸入","因為它的葉節點數量固定"],"a":1,"e":"原稿：「通常不需特徵縮放」——樹的切分只依賴**排序**，不像 kNN／SVM／線性模型受尺度影響。"},{"q":"Extra Trees 與隨機森林在「切分點」上的差別是？","o":["Extra Trees 一定找最佳切點","兩者完全相同","Extra Trees 只用一個特徵","Extra Trees 隨機挑切分閾值，不逐一搜尋最佳切點"],"a":3,"e":"原稿：「類似隨機森林，但**隨機選取切分閾值**」——因此訓練更快（實測 0.067s vs 0.112s）。"},{"q":"Extra Trees 的 `bootstrap` 預設值是？","o":["False（每棵樹用全部樣本）","True（與隨機森林相同）","由 `n_estimators` 決定","由 `max_features` 決定"],"a":0,"e":"原稿：「預設通常使用**全部樣本**訓練各樹」——隨機性來自特徵與閾值，而不是抽樣本。"},{"q":"本機實測 diabetes 迴歸（各 200 棵），Extra Trees 與隨機森林的結果是？","o":["ET RMSE 52.964、RF RMSE 52.041","兩者 RMSE 完全相同","ET RMSE 52.041 且訓練更快（0.067s vs 0.112s）","ET 訓練更慢但 RMSE 更低"],"a":2,"e":"本資料 **ET 反而略勝**（52.041 vs 52.964）且快約 40%；原稿說 ET「偏差**可能**略高」，不是鐵律。"},{"q":"梯度提升中「平方誤差下即為殘差」的意思是？","o":["負梯度等於損失函數的值","當 L = ½(y−ŷ)² 時，負梯度正好等於 y − ŷ","殘差一定是負數","梯度提升只能使用平方誤差"],"a":1,"e":"原稿：「擬合前一輪的負梯度；**平方誤差下即為殘差**」——換成別的損失，殘差就不等於負梯度。"},{"q":"本機實測梯度提升 `learning_rate` 由 0.05 開到 0.5 的結果是？","o":["訓練與測試 RMSE 一起下降","訓練 RMSE 由 0.582 升到 30.471","測試 RMSE 由 62.757 降到 54.768","訓練 RMSE 由 30.471 降到 0.582，測試由 54.768 升到 62.757"],"a":3,"e":"學習率太大＝**衝過頭**：訓練幾乎背下資料（0.582），測試反而最差（62.757）。"},{"q":"SVM 的線性軟邊界目標函數是？","o":["min ½‖w‖² + C Σ ξ_i","min Σ (y_i − ŷ_i)²","max Σ cov(t, u)","min 1 − Σ p_i²"],"a":0,"e":"原稿：**min ½‖w‖² + C Σ ξ_i**——第一項求最大邊界，第二項容許犯錯，C 權衡兩者。"},{"q":"本機實測 SVM（RBF 核）未縮放 vs `StandardScaler` 後的測試準確率是？","o":["0.9766 vs 0.9064（未縮放較好）","兩者相同","0.9064 vs 0.9766（縮放後大幅提升）","0.9532 vs 0.9825"],"a":2,"e":"未縮放 0.9064、縮放後 **0.9766**（差 7 個百分點）——原稿「對特徵尺度敏感」的最佳實證。"},{"q":"本機實測 SVM 的 `C` 由 1.0 開到 100.0 時？","o":["訓練與測試一起提升","訓練 1.0000、測試由 0.9766 掉到 0.9240","兩者都不變","測試提升到 1.0000"],"a":1,"e":"C 大＝不准犯錯＝邊界硬：訓練集滿分但測試退步（0.9766 → 0.9240），典型**過擬合**。"},{"q":"SVM 中真正決定邊界位置的點稱為？","o":["質心","袋外樣本（OOB）","葉節點","支援向量"],"a":3,"e":"原稿講「最大邊界超平面」；只有落在邊界上／內的**支援向量**決定它（實測 91/398 個）。"},{"q":"線性迴歸的求解方式是？","o":["最小平方法，有閉式解（可用 SVD／lstsq）","梯度提升迭代","序列覆蓋法","二階泰勒展開"],"a":0,"e":"原稿：「最小平方法使殘差平方和最小」；實測與 `np.linalg.lstsq` 的差異僅 1.59e-12。"},{"q":"本機實測線性迴歸係數與 `np.linalg.lstsq` 閉式解的最大差異是？","o":["0.5","1.0e-3","1.59e-12（同一個最小平方解）","完全不同"],"a":2,"e":"兩者解出**同一組係數**，差異只是浮點誤差 → 證明 sklearn 內部就是解最小平方問題。"},{"q":"邏輯迴歸的 sigmoid 公式是？","o":["z = β0 + βᵀx","P(y=1|x) = 1 / (1 + e^−z)","P(y=1|x) = e^−z","P(y=1|x) = 1 / (1 + e^z)"],"a":1,"e":"原稿：先算線性分數 z，再用 **P(y=1|x)=1/(1+e^−z)** 轉成機率；注意指數是**負 z**。"},{"q":"本機實測邏輯迴歸的混淆矩陣 [[63, 1], [1, 106]] 代表什麼？","o":["171 筆全部答對","63 個假陽性、1 個假陰性","106 個假陽性","171 筆中只有 2 筆錯誤（FP=1、FN=1）"],"a":3,"e":"格式是 [[TN, FP], [FN, TP]]：TN=63、FP=1、FN=1、TP=106 → 準確率 0.9883。"},{"q":"單純貝氏（Naive Bayes）的核心假設是？","o":["在給定類別後，各特徵條件獨立","所有特徵必須是常態分布","特徵之間必須完全相關","類別標籤必須是二元"],"a":0,"e":"原稿：「假設在**給定類別後，各特徵條件獨立**」；這就是「單純（naive）」的意思。"},{"q":"本機實測 breast_cancer 的 30 個特徵中，|r| > 0.9 的有幾對？","o":["0 對","5 對","23 對（獨立假設明顯不成立）","30 對"],"a":2,"e":"**23 對**高度相關（例如半徑與周長）→ 獨立假設幾乎不可能成立，但 GaussianNB 仍有 0.9474。"},{"q":"計分表的總分與風險轉換公式是？","o":["S = Σ points_j；Risk = S / (1 + S)","S = Σ points_j；Risk = 1 / (1 + e^−(S−b))","Risk = Σ points_j；S = 1 / (1 + e^−Risk)","S = max(points_j)；Risk = 1 − e^−S"],"a":1,"e":"原稿給的是 **S = Σ points_j** 與 **Risk = 1/(1+e^−(S−b))**，並提醒實際計分表須依分數尺度換算。"},{"q":"計分表的整數配分通常是怎麼來的？","o":["隨機指派","由資料筆數決定","由 PCA 的主成分數決定","由邏輯迴歸係數（標準化後）乘上尺度常數再取整"],"a":3,"e":"標準做法：標準化特徵 → 訓練邏輯迴歸 → 以係數配分 → 取整 → 加總成總分（本機實測 S = Σ round(w_j·z_j·20) + 4）。"},{"q":"本機實測「整數計分 S」與「邏輯迴歸原始機率」的 AUC 是？","o":["0.9982 vs 0.9981（整數化幾乎沒有損失）","0.9000 vs 0.9981","0.5000 vs 0.9981","兩者完全相同到小數第四位"],"a":0,"e":"整數化後 AUC 幾乎不變（差 −0.0001）；原稿說「簡化可能損失資訊」，本機實測真正的損失來自**特徵數被壓縮**那一步。"},{"q":"AdaBoost 的投票權重公式是？","o":["α_t = ε_t","α_t = 1 − ε_t","α_t = ½ ln((1−ε_t)/ε_t)","α_t = ½ ln(ε_t/(1−ε_t))"],"a":2,"e":"原稿：**α_t = ½ ln((1−ε_t)/ε_t)**；錯誤率 0.5 時 α = 0，該學習器等於作廢。"},{"q":"本機實測：訓練標籤隨機翻 10% 後，AdaBoost 與隨機森林的測試準確率是？","o":["AdaBoost 0.9474、隨機森林 0.9181","AdaBoost 0.9181、隨機森林 0.9474","兩者都維持 0.9532","兩者都掉到 0.5 附近"],"a":1,"e":"AdaBoost 掉到 **0.9181**，隨機森林仍有 **0.9474**——印證原稿「對雜訊與離群值敏感」。"},{"q":"PLS 與 PCA 的核心差別是？","o":["PCA 使用 Y、PLS 不使用 Y","兩者完全相同","PLS 只能做分類","PLS 找與 Y 共變異最大的成分（有監督），PCA 只找 X 變異最大的方向"],"a":3,"e":"原稿：「投影至與目標**共變異最大**的潛在成分」——PLS 的成分是有監督的，PCA 不是。"},{"q":"本機實測 diabetes 上 PLS 的最佳成分數與 RMSE 是？","o":["3 個成分，RMSE 52.974","1 個成分，RMSE 52.974","10 個成分，RMSE 52.974","5 個成分，RMSE 56.183"],"a":0,"e":"成分數 1→2→3 誤差一路下降（56.183→53.680→**52.974**），5、10 又回升（53.280／53.120）。"},{"q":"曲線擬合與線性迴歸在「求解方式」上的差別是？","o":["曲線擬合有閉式解、線性迴歸沒有","兩者都必須用迭代法","曲線擬合通常需迭代求解（受初始值影響），線性迴歸有閉式解","兩者都只能用窮舉搜尋"],"a":2,"e":"原稿缺點欄：「非線性最佳化可能受**初始值**影響而難以收斂」；線性迴歸則有閉式解。"},{"q":"本機實測用直線硬擬合指數衰減資料的 RMSE 是？","o":["0.03855（與指數模型相同）","0.49267，約為指數模型（0.03855）的 13 倍","0.00038","1.0"],"a":1,"e":"指數模型 RMSE **0.03855**、直線 **0.49267**（差 13 倍）→ 函數形式選錯，怎麼調參都救不回來。"},{"q":"雙指數模型換初始值後得到 a/c、b/d 對調的解，且 RMSE 完全相同，這叫？","o":["過擬合","欠擬合","資料洩漏","參數不可辨識（identifiability）"],"a":3,"e":"兩條指數項可以互換 → **參數不可辨識**；RMSE 一樣，所以只看誤差看不出問題。"},{"q":"神經網路的層間運算是？","o":["a^(l) = σ(W^(l) a^(l−1) + b^(l))","a^(l) = W^(l) a^(l−1)","a^(l) = σ(W^(l) + b^(l))","a^(l) = a^(l−1) + b^(l)"],"a":0,"e":"原稿：每層把前一層輸出**加權**，再進行**非線性轉換**——σ 就是激活函數。"},{"q":"本機實測 MLPClassifier 在 breast_cancer 上，不同架構的結果是？","o":["(100, 50) 最好（0.9357）","三者完全相同","(10,) 最好（0.9357），比 (100, 50) 的 0.9240 高","(50,) 最好（0.9766）"],"a":2,"e":"569 筆資料撐不起 4 層網路：**(10,) 0.9357 > (50,) 0.9298 > (100,50) 0.9240**。"},{"q":"為什麼神經網路需要非線性激活函數？","o":["為了加快訓練速度","否則多層網路會退化成單層線性模型","為了減少參數量","為了讓輸入必須標準化"],"a":1,"e":"若每層都只是線性組合，多層疊起來仍等於一個線性模型——原稿強調「**非線性**激活函數」的原因。"},{"q":"原稿特別強調 SGD 的定位是？","o":["一種深度學習架構","一種集成方法","一種特徵縮放技術","最佳化方法，並非固定模型架構"],"a":3,"e":"原稿原文：「**SGD 是最佳化方法，並非固定模型架構**」——`loss` 換掉就變成另一個模型。"},{"q":"本機實測 `SGDClassifier` 與 `LogisticRegression`（批次解）在 breast_cancer 上的比較是？","o":["SGD 0.9766、批次解 0.9883（以精度換速度）","SGD 0.9883、批次解 0.9766","兩者完全相同","SGD 只有 0.5000"],"a":0,"e":"SGD 掃幾輪就停，精度略低於批次解；三種 `learning_rate` 名稱在此資料同分（0.9766）。"},{"q":"本機實測 `partial_fit` 逐批餵 5 批後，測試準確率的變化是？","o":["一直下降","一直維持 0.5000","由 0.9415 逐步爬到 0.9708","完全沒有變化"],"a":2,"e":"線上學習的實證：`[0.9415, 0.9357, 0.9649, 0.9591, **0.9708**]`——資料一批批來，模型持續變好。"},{"q":"Stacking 的元模型為什麼必須用折外預測（OOF）訓練？","o":["為了節省記憶體","否則會資料洩漏，元模型會高估基底模型","因為 sklearn 強制要求","為了讓訓練更快"],"a":1,"e":"原稿缺點欄明寫：「容易資料洩漏；元模型應使用**折外預測**訓練」。"},{"q":"本機實測 Stacking（4 個基底模型 + 邏輯迴歸元模型）的結果是？","o":["0.9883，比所有基底都好","0.9766，與 SVC 相同","0.9415，與隨機森林相同","0.9591，輸給最強的單一成員 SVC（0.9766）"],"a":3,"e":"**堆疊不是萬靈丹**：成員強弱差距大時，元模型無法補足弱成員的錯誤模式。"},{"q":"儲存模型時的正確做法是？","o":["存整條 Pipeline（含前處理），並記錄環境、特徵順序與模型版本","只存分類器即可","只存權重、不存前處理","把預測結果存成 CSV"],"a":0,"e":"原稿：存「模型與**前處理流程**」，並注意版本相容性、特徵順序與模型版本。"},{"q":"本機實測：載入模型時漏掉 scaler（只載分類器）的後果是？","o":["完全沒有影響","準確率略降 0.01","準確率由 0.9415 崩到 0.3743","準確率提升到 1.0000"],"a":2,"e":"漏掉前處理 = 訓練與推論的前後處理不一致：**0.9415 → 0.3743**（連多數類基準 0.6257 都不到）。"}];
+
+const LET = 'ABCD';
+const KEY = 'ml-models-mc-quiz-v1';
+const state = { answers:{}, revealed:false, filter:'all' };
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p && typeof p === 'object'){
+      state.answers = (p.answers && typeof p.answers === 'object') ? p.answers : {};
+      state.revealed = !!p.revealed;
+      state.filter = p.filter || 'all';
+    }
+  }catch(e){}
+}
+let savedTimer = null;
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const el = document.getElementById('saved');
+    if(el){ el.classList.add('on'); clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ el.classList.remove('on'); }, 1200); }
+  }catch(e){}
+}
+
+function tally(){
+  let answered = 0, score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    if(a !== undefined && a !== null){
+      answered++;
+      if(a === QUESTIONS[i].a) score++;
+    }
+  }
+  return { answered:answered, score:score, wrong:answered-score };
+}
+
+function isVisible(i){
+  const a = state.answers[i];
+  const has = (a !== undefined && a !== null);
+  if(state.filter === 'unanswered') return !has;
+  if(state.filter === 'wrong') return has && a !== QUESTIONS[i].a;
+  return true;
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdInline(s){
+  s = esc(s);
+  let out = '';
+  let bold = false;
+  let code = false;
+  let i = 0;
+  while(i < s.length){
+    if(s.charAt(i) === '*' && s.charAt(i + 1) === '*'){
+      bold = !bold;
+      out += bold ? '<b>' : '</b>';
+      i += 2;
+    } else if(s.charAt(i) === '`'){
+      code = !code;
+      out += code ? '<code>' : '</code>';
+      i += 1;
+    } else {
+      out += s.charAt(i);
+      i++;
+    }
+  }
+  return out;
+}
+
+function renderStats(){
+  const t = tally();
+  document.getElementById('nAns').textContent = t.answered;
+  document.getElementById('nScore').textContent = t.score;
+  document.getElementById('nWrong').textContent = t.wrong;
+  document.getElementById('bar').style.width = (t.answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('btnReveal').textContent = state.revealed ? '隱藏答案' : '顯示答案';
+  document.getElementById('hint').textContent = state.revealed
+    ? '已顯示正解與解析'
+    : '作答進度自動存在此瀏覽器，關掉再回來可繼續';
+}
+
+function renderNav(){
+  const nav = document.getElementById('navgrid');
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    const has = (a !== undefined && a !== null);
+    let cls = '';
+    if(has) cls = 'done';
+    if(state.revealed && has) cls = (a === QUESTIONS[i].a) ? 'right' : 'wrong';
+    html += '<button class="' + cls + '" data-goto="' + i + '">' + (i+1) + '</button>';
+  }
+  nav.innerHTML = html;
+}
+
+function renderQuestions(){
+  const box = document.getElementById('quiz');
+  let html = '';
+  let shown = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(!isVisible(i)) continue;
+    shown++;
+    const q = QUESTIONS[i];
+    if(i === 0 || i === 20 || i === 40){
+      const label = i === 0 ? '第一部分：樹集成、前處理與基準（1–20）'
+                  : i === 20 ? '第二部分：樹、線性與機率模型（21–40）'
+                  : '第三部分：Boosting、最佳化與工程落地（41–60）';
+      html += '<div class="parttitle">' + label + '</div>';
+    }
+    const picked = state.answers[i];
+    const hasPicked = (picked !== undefined && picked !== null);
+    let qcls = '';
+    if(state.revealed && hasPicked) qcls = (picked === q.a) ? 'correct' : 'incorrect';
+
+    html += '<article class="q ' + qcls + '" id="q' + (i+1) + '">';
+    html += '<div class="qhead"><span class="num">' + (i+1) + '</span>';
+    html += '<p class="qtext">' + mdInline(q.q) + '</p></div>';
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      let cls = 'opt';
+      if(hasPicked && picked === k) cls += ' picked';
+      let tag = '';
+      if(state.revealed){
+        if(k === q.a){ cls += ' right'; tag = '<span class="tag right">正解</span>'; }
+        else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
+      }
+      html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
+    html += '<span class="lt">' + LET[k] + '</span><span>' + esc(q.o[k]) + '</span>' + tag + '</li>';
+}
+    html += '</ul>';
+    if(state.revealed){
+      html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
+    }
+    html += '</article>';
+  }
+  if(shown === 0){
+    html = '<div class="empty">目前篩選條件下沒有題目 &#128522;<br>換個篩選，或按「全部 60 題」。</div>';
+  }
+  box.innerHTML = html;
+}
+
+function renderAll(){ renderStats(); renderNav(); renderQuestions(); }
+
+document.addEventListener('click', function(ev){
+  const opt = ev.target.closest ? ev.target.closest('.opt') : null;
+  if(opt){
+    state.answers[parseInt(opt.getAttribute('data-q'), 10)] = parseInt(opt.getAttribute('data-k'), 10);
+    saveState();
+    renderAll();
+    return;
+  }
+  const go = ev.target.closest ? ev.target.closest('[data-goto]') : null;
+  if(go){
+    const idx = parseInt(go.getAttribute('data-goto'), 10);
+    if(state.filter !== 'all'){ state.filter = 'all'; syncFilterButtons(); renderAll(); }
+    const el = document.getElementById('q' + (idx + 1));
+    if(el){
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      el.style.transition = 'box-shadow .3s';
+      el.style.boxShadow = '0 0 0 3px rgba(37,99,235,.35)';
+      setTimeout(function(){ el.style.boxShadow = ''; }, 900);
+    }
+    saveState();
+  }
+});
+
+function syncFilterButtons(){
+  const map = { all:'btnAll', unanswered:'btnUnans', wrong:'btnWrong' };
+  for(const k in map){
+    const b = document.getElementById(map[k]);
+    if(b) b.classList.toggle('active', state.filter === k);
+  }
+}
+
+function setFilter(f){
+  state.filter = f;
+  syncFilterButtons();
+  saveState();
+  renderAll();
+}
+
+function bind(){
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.revealed = !state.revealed; saveState(); renderAll();
+  });
+  document.getElementById('btnAll').addEventListener('click', function(){ setFilter('all'); });
+  document.getElementById('btnUnans').addEventListener('click', function(){ setFilter('unanswered'); });
+  document.getElementById('btnWrong').addEventListener('click', function(){ setFilter('wrong'); });
+  document.getElementById('btnTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('確定要清除全部作答紀錄嗎？此動作無法復原。')) return;
+    state.answers = {}; state.revealed = false; state.filter = 'all';
+    saveState(); syncFilterButtons(); renderAll();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && state.revealed){ state.revealed = false; saveState(); renderAll(); }
+  });
+}
+
+loadState();
+syncFilterButtons();
+renderAll();
+bind();
+</script>
+</body>
+</html>
