@@ -16,7 +16,34 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # 品質閘門：擋在部署前面。這裡是「唯一」執行 qa_notes.ps1 的地方
+  # （舊的 notes-qa.yml 已移除），閘門失敗就讓整個 workflow 停在第一步。
+  qa:
+    name: Notes QA gate (blocking)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run notes QA gate and publish summary
+        shell: pwsh
+        run: |
+          try {
+            $out = & ./tools/notes-qa/qa_notes.ps1 2>&1 | Out-String
+            $code = $LASTEXITCODE
+          } catch {
+            $out = $_ | Out-String
+            $code = 1
+          }
+          Write-Output $out
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value '### Notes QA result'
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value '```'
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value $out
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value '```'
+          exit $code
+
   build:
+    needs: qa
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source

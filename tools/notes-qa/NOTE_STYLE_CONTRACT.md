@@ -192,16 +192,18 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 
 
 ## 11. CI
 
-兩個 workflow 都放在 `.github\workflows\`，**已啟用**，而且**觸發條件刻意不重疊**（不浪費 CI 分鐘數）：
+閘門已經**接上部署**：`pages.yml` 的第一個 job 就是品質閘門，`build` 與 `deploy` 都 `needs` 它——
+**閘門不通過就不會部署**。
 
 | workflow | 觸發 | 做什麼 | 會擋部署嗎 |
 |---|---|---|---|
-| `notes-qa.yml` | push 動到 `source/**` | 跑品質閘門**一次**，把結果貼進 Actions 摘要 | 不會（`continue-on-error`） |
-| `notes-qa-tools.yml` | push 動到 `tools/notes-qa/**` | 跑 `selftest_tools.py`（工具回歸測試） | 不會（與 `pages.yml` 各自獨立） |
+| `pages.yml` | push 到 `main`（任何變更） | ① 跑品質閘門（結果貼進 Actions 摘要）→ ② `hexo generate` → ③ 部署 Pages | **會**（job `qa` 失敗就停在第一步） |
+| `notes-qa-tools.yml` | push 動到 `tools/notes-qa/**` | 跑 `selftest_tools.py`（工具回歸測試） | 不會（工具壞掉給紅燈，但不擋部署） |
 
-- `notes-qa.yml` 在**同一步**裡跑閘門 → 貼摘要 → 再以閘門的離開碼結束。所以失敗會顯示成紅色的 step，
-  但閘門只被執行一次（舊版會跑兩次，浪費 CI 分鐘數）。
-- `notes-qa-tools.yml` **故意不設** `continue-on-error`：工具壞掉是真缺陷，值得一個紅燈；
-  部署由 `pages.yml` 負責，本來就不受它影響。
-- 想停用某一個：直接刪掉 `.github\workflows\` 底下那個檔案即可。
+- 閘門在 `pages.yml` 裡**只被執行一次**：跑完 → 貼摘要 → 以閘門的離開碼結束該 job。
+- 舊的 `notes-qa.yml`（`continue-on-error: true`，永遠不會擋部署）**已移除**——
+  那正是「檢查存在、但驗證不痛」的寫照，留著只會製造綠燈假象。
+- 想讓某次修補繞過閘門：**不要**用 `continue-on-error`；正解是修好筆記。
+  真的非繞不可時，才暫時把 job `qa` 從 `needs` 拿掉，並在 commit 訊息說明原因與還原時間。
+- 想停用 `notes-qa-tools.yml`：直接刪掉 `.github\workflows\` 底下那個檔案即可。
 

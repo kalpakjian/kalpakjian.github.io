@@ -15,7 +15,7 @@
 | `normalize_crlf.ps1` | 把筆記裡的孤立 LF 正規化為 CRLF（`-DryRun` 可先預覽，不會寫檔） |
 | `selftest_tools.py` | **工具回歸測試**：用臨時 fixture 驗證上面每支工具（CI 會在工具變動時自動跑） |
 
-> CI：`.github\workflows\notes-qa.yml`（push 動到 `source/**` 時跑閘門，非阻擋式）與
+> CI：`.github\workflows\pages.yml`（push 到 `main` 時**先跑閘門，不通過就不部署**）與
 > `.github\workflows\notes-qa-tools.yml`（push 動到 `tools/notes-qa/**` 時跑上面的工具回歸測試）。
 > 詳見 `NOTE_STYLE_CONTRACT.md` §11。
 
