@@ -45,8 +45,8 @@
 | `source/_posts/<slug>.md` | 貼文（摘要＋連結） | 標題／數字一致 |
 | `source/img/covers/<slug>.png` | 封面 | 檔名與貼文 slug 相同 |
 
-**命名規則（2026-10-16 實測驗證）**：貼文檔名 = 封面檔名 = slug；frontmatter 的 `index_img` 必須等於 `banner_img`，且為 `/img/covers/<slug>.png`。實測 26 份貼文全部符合、26 張封面全部存在。
-`<slug>` 的後綴依系列而異：**IVDC 系列用 `<dir>-ivdc`，AutoML 系列用 `<dir>`**（見 §6 待對齊）。
+**命名規則（2026-10-16 決定並驗證）**：**slug = `source/` 目錄名，一律不加後綴**；貼文檔名 = 封面檔名 = slug；frontmatter 的 `index_img` 必須等於 `banner_img`，且為 `/img/covers/<slug>.png`。
+原本 IVDC 系列的 `-ivdc` 後綴已在 2026-10-16 全站移除（13 個貼文與封面改名、課程總覽頁的圖片連結同步），**舊網址以 meta refresh 轉址保留**在 `source/<yyyy>/<mm>/<dd>/<old-slug>/index.html`。
 
 **工作目錄（不是產出物，不要當成來源）**：
 - `_work/<topic>/` — 產線中途的腳本與暫存（`build_notes.py`、`build_quiz.py`、`verify_*.py`…）
@@ -65,10 +65,10 @@
 | `l7` | `local-llm-notes` | `local-llm-notes-ivdc` | 已驗證（`l7_chapters/ch03-gguf-quantization`） |
 | `l8` | `litellm-notes` | `litellm-notes-ivdc` | 已驗證（`make_cover_l89.py` docstring） |
 | `l9` | `streamlit-flask-notes` | `streamlit-flask-notes-ivdc` | 已驗證（同上） |
-| `ai_intro` / `cv_intro` / `llm_intro` | `ai-intro-notes` / `cv-intro-notes` / `llm-intro-notes` | `<dir>-ivdc` | 命名對應（推論） |
-| `opencv` / `popular` / `pe` / `rai` / `sf` | `opencv-notes` / `popular-llm-notes` / `prompt-engineering-notes` / `responsible-ai-notes` / `streamlit-flask-notes` | `<dir>-ivdc` | 命名對應（推論） |
-| `local_gpu_ml` / `nn5` | `local-gpu-ml-notes` / `neural-network-notes` | `<dir>-ivdc` | 命名對應（推論） |
-| `automl` / `gen` / `mlmodels` | `automl-notes` / `generalization-notes` / `ml-models-notes` | `<dir>`（**無 `-ivdc`**） | 已驗證（目錄與檔名一致） |
+| `ai_intro` / `cv_intro` / `llm_intro` | `ai-intro-notes` / `cv-intro-notes` / `llm-intro-notes` | `<dir>` | 命名對應（推論） |
+| `opencv` / `popular` / `pe` / `rai` / `sf` | `opencv-notes` / `popular-llm-notes` / `prompt-engineering-notes` / `responsible-ai-notes` / `streamlit-flask-notes` | `<dir>` | 命名對應（推論） |
+| `local_gpu_ml` / `nn5` | `local-gpu-ml-notes` / `neural-network-notes` | `<dir>` | 命名對應（推論） |
+| `automl` / `gen` / `mlmodels` | `automl-notes` / `generalization-notes` / `ml-models-notes` | `<dir>` | 已驗證（目錄與檔名一致） |
 | `ed_king_queen` | —（一次性封面） | — | 無對應筆記 |
 
 > `l6`–`l9` 是 IVDC LLM 課程的**課節編號**，課程總覽頁是 `/llm-course/`。
@@ -116,7 +116,7 @@
 ## 6. 待對齊（open questions，尚未決定）
 
 1. **互動測驗是附錄 E 還是 F？** 14 份用 **E**（16 份筆記中）；`generalization-notes`、`ml-models-notes` 用 **F**（這兩份另有「附錄 G：答錯題目 → 複習章節對照」）。契約 §3 範本寫的是 E。→ 需要選一個 canonical 並統一。
-2. **slug 要不要 `-ivdc` 後綴？** 13 份有、3 份 AutoML 沒有（貼文與封面內部一致，所以不會壞，只是兩套慣例並存）。
+2. ~~**slug 要不要 `-ivdc` 後綴？**~~ **已決定（2026-10-16）：全站移除。** 13 個貼文與封面改名為 `<dir>`、課程總覽頁（`cv-course`／`llm-course`）的圖片連結同步更新、舊網址以 meta refresh 轉址保留。`AGENT-HEALTH.md` 裡的規則以這裡為準。
 3. **`generalization-notes` 目前閘門 FAIL**（2026-10-16 實測）：`原稿` html 67／md 37 次、`教材` 8／5 次、`pN` 16／16 次；另有 1244 處孤立 LF、36 處「第 N 頁」。
 4. **`ml-models-notes` 硬性全過**，但 2332 處孤立 LF、106 處「第 N 頁」（警告級）。
 5. **頁首區塊不是每份都有**：`llm-intro-notes` 的 `<blockquote>` 不存在（閘門只在區塊存在時檢查）。契約 §3 寫「每份筆記固定格式」與現實不符 → 決定「補齊」或「改成選用」。
