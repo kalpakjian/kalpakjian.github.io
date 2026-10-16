@@ -12,8 +12,8 @@ tags:
   - IVDC
   - 學習筆記
   - 考試
-index_img: /img/covers/neural-network-notes-ivdc.png
-banner_img: /img/covers/neural-network-notes-ivdc.png
+index_img: /img/covers/neural-network-notes.png
+banner_img: /img/covers/neural-network-notes.png
 ---
 
 IVDC「Certificate in Application of Computer Vision Technology」課程的第 5 份課程《Neural Network, Activation Function and Machine Learning》（30 頁），我把它完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。

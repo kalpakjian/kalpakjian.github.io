@@ -11,13 +11,13 @@ tags:
 categories:
   - AI
   - 學習筆記
-cover: /img/covers/streamlit-flask-notes-ivdc.png
-banner_img: /img/covers/streamlit-flask-notes-ivdc.png
-index_img: /img/covers/streamlit-flask-notes-ivdc.png
+cover: /img/covers/streamlit-flask-notes.png
+banner_img: /img/covers/streamlit-flask-notes.png
+index_img: /img/covers/streamlit-flask-notes.png
 archive: true
 ---
 
-![Streamlit and Flask 學習筆記](/img/covers/streamlit-flask-notes-ivdc.png)
+![Streamlit and Flask 學習筆記](/img/covers/streamlit-flask-notes.png)
 
 IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 9 — Streamlit and Flask** 的完整學習筆記。
 

@@ -14,13 +14,13 @@ tags:
 categories:
   - AI
   - 學習筆記
-cover: /img/covers/local-llm-notes-ivdc.png
-banner_img: /img/covers/local-llm-notes-ivdc.png
-index_img: /img/covers/local-llm-notes-ivdc.png
+cover: /img/covers/local-llm-notes.png
+banner_img: /img/covers/local-llm-notes.png
+index_img: /img/covers/local-llm-notes.png
 archive: true
 ---
 
-![Local LLM Apps 學習筆記](/img/covers/local-llm-notes-ivdc.png)
+![Local LLM Apps 學習筆記](/img/covers/local-llm-notes.png)
 
 IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 — Local LLM Apps** 的完整學習筆記。
 

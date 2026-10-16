@@ -5,7 +5,7 @@ date: 2026-10-13 09:00:00
 
 ## 1 · Lesson 2 — Popular LLM Models
 
-![Popular LLM Models 學習筆記](/img/covers/popular-llm-notes-ivdc.png)
+![Popular LLM Models 學習筆記](/img/covers/popular-llm-notes.png)
 
 - **涵蓋**：**33 個章節**——三條主線一路展開：
   - **產品線**：ChatGPT（含 GPT 三個字母的展開）／Gemini（舊名 Bard）／Copilot／Llama（**開放權重**）／Grok（**xAI**）／Perplexity（**AI 搜尋引擎**）／Kimi／通義（**Qwen**）／DeepSeek，以及「**與 Google 搜尋有何不同**」的五層對比
@@ -23,7 +23,7 @@ date: 2026-10-13 09:00:00
 
 ## 2 · Lesson 3 — Introduction to LLM（Theory）
 
-![Introduction to LLM 學習筆記](/img/covers/llm-intro-notes-ivdc.png)
+![Introduction to LLM 學習筆記](/img/covers/llm-intro-notes.png)
 
 - **涵蓋**：**30 個章節**——LLM 的定義與「Large」的兩層意義、與早期 NLP 的差別、客製化 LLM、預訓練 vs 微調（含指令微調／分類微調）、Transformer 的 encoder／decoder、self-attention、BERT vs GPT、zero-shot／few-shot、token 與成本、自迴歸生成、GPT-3 規模，再到**後半的輸入處理管線實作**（分詞 → token ID → 特殊 token → 滑動視窗 → DataLoader → embedding → 位置編碼 → 完整管線）
   並把後半的程式碼**在本機實測**（PyTorch 2.14.1+cu132、tiktoken GPT-2）後把真實輸出寫進筆記
@@ -34,7 +34,7 @@ date: 2026-10-13 09:00:00
 
 ## 3 · Lesson 5 — Prompt Engineering
 
-![Prompt Engineering 學習筆記](/img/covers/prompt-engineering-notes-ivdc.png)
+![Prompt Engineering 學習筆記](/img/covers/prompt-engineering-notes.png)
 
 - **涵蓋**：**38 個章節**——從 prompt 的定義與四大要素（Instructions／Context／Input data／Output indicator）、temperature 與 top_p 兩顆確定性旋鈕、**六大任務**（摘要／問答／分類／角色扮演／程式生成／推理），到課程分出的**七大類技術**逐一展開：
   - **基礎**：Zero-Shot／Few-Shot（In-Context Learning）／Clear Instructions
@@ -53,7 +53,7 @@ date: 2026-10-13 09:00:00
 
 ## 4 · Lesson 6 — Hugging Face for LLM
 
-![Hugging Face for LLM 學習筆記](/img/covers/huggingface-notes-ivdc.png)
+![Hugging Face for LLM 學習筆記](/img/covers/huggingface-notes.png)
 
 - **涵蓋**：**43 個章節**——從「模型從哪裡來」一路講到「怎麼改、怎麼上線」：
   - **生態系三層架構**（課程骨架）：**① Hub ② Core ML Libraries ③ Inference & Deployment**
@@ -83,7 +83,7 @@ date: 2026-10-13 09:00:00
 
 ## 5 · Lesson 7 — Local LLM Apps
 
-![Local LLM Apps 學習筆記](/img/covers/local-llm-notes-ivdc.png)
+![Local LLM Apps 學習筆記](/img/covers/local-llm-notes.png)
 
 - **涵蓋**：**39 個章節**——四個桌面 App 各一段操作手冊，再加上 Lab 與 NLP 補充：
   - **LM Studio**：下載安裝 → 首跑引導（`google/gemma-3-4b`，3.34 GB）→ **`GPU Offload`／`Context Length`** → 從 Hugging Face 抓 **`TheBloke/deepseek-llm-7B-base-GGUF`（`Q4_K_S`，4.03 GB）** → **附加檔案問答**
@@ -112,7 +112,7 @@ date: 2026-10-13 09:00:00
 
 ## 6 · Lesson 8 — LiteLLM
 
-![LiteLLM 學習筆記](/img/covers/litellm-notes-ivdc.png)
+![LiteLLM 學習筆記](/img/covers/litellm-notes.png)
 
 - **涵蓋**：**18 格 notebook ＋ `lite.py`**、**22 個章節**——從 LiteLLM 的定位（**用 OpenAI chat 格式統一呼叫 146 個供應商**）、安裝與 API Key 管理，到五個供應商呼叫逐一拆解：
   - **五大供應商**：ChatGPT（`gpt-3.5-turbo`）／Claude-2（`claude-2`）／llama2 on Replicate（含 64 字元版本雜湊）／Command-Nightly（Cohere）／Azure OpenAI（`azure/` 前綴與 deployment-id）
@@ -132,7 +132,7 @@ date: 2026-10-13 09:00:00
 
 ## 7 · Lesson 9 — Streamlit and Flask
 
-![Streamlit and Flask 學習筆記](/img/covers/streamlit-flask-notes-ivdc.png)
+![Streamlit and Flask 學習筆記](/img/covers/streamlit-flask-notes.png)
 
 - **涵蓋**：`server.py`（12 行）＋ `app.py`（46 行）＋ `README.md`／`ReadMe.txt`、**22 個章節**——把三課串成一條線：
   - **Flask 後端**：微框架、`@app.route` 與 `methods`（不寫就只有 GET）、`request.get_json()`、`jsonify()` 的中文編碼、400／404／405／415／500 六個狀態碼

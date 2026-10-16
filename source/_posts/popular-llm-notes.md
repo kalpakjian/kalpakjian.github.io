@@ -10,13 +10,13 @@ tags:
 categories:
   - AI
   - 學習筆記
-cover: /img/covers/popular-llm-notes-ivdc.png
-banner_img: /img/covers/popular-llm-notes-ivdc.png
-index_img: /img/covers/popular-llm-notes-ivdc.png
+cover: /img/covers/popular-llm-notes.png
+banner_img: /img/covers/popular-llm-notes.png
+index_img: /img/covers/popular-llm-notes.png
 archive: true
 ---
 
-![Popular LLM Models 學習筆記](/img/covers/popular-llm-notes-ivdc.png)
+![Popular LLM Models 學習筆記](/img/covers/popular-llm-notes.png)
 
 IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 — Popular LLM Models** 的完整學習筆記。
 

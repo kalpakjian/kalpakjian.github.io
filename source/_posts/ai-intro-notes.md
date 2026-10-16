@@ -10,8 +10,8 @@ tags:
   - IVDC
   - 學習筆記
   - 考試
-index_img: /img/covers/ai-intro-notes-ivdc.png
-banner_img: /img/covers/ai-intro-notes-ivdc.png
+index_img: /img/covers/ai-intro-notes.png
+banner_img: /img/covers/ai-intro-notes.png
 ---
 
 最近為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程第一份課程《1 IVDC_Introduction to AI (icebreaking).pptx》（34 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。

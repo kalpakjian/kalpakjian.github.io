@@ -15,8 +15,8 @@ tags:
   - IVDC
   - 學習筆記
   - 考試
-index_img: /img/covers/llm-intro-notes-ivdc.png
-banner_img: /img/covers/llm-intro-notes-ivdc.png
+index_img: /img/covers/llm-intro-notes.png
+banner_img: /img/covers/llm-intro-notes.png
 ---
 
 為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Large Language Model (LLM)」的考試，我把課程第三份課程《3 IVDC_Introduction to LLM (adjusted).pdf》（**47 頁**）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。

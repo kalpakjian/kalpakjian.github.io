@@ -10,13 +10,13 @@ tags:
 categories:
   - AI
   - 學習筆記
-cover: /img/covers/litellm-notes-ivdc.png
-banner_img: /img/covers/litellm-notes-ivdc.png
-index_img: /img/covers/litellm-notes-ivdc.png
+cover: /img/covers/litellm-notes.png
+banner_img: /img/covers/litellm-notes.png
+index_img: /img/covers/litellm-notes.png
 archive: true
 ---
 
-![LiteLLM 學習筆記](/img/covers/litellm-notes-ivdc.png)
+![LiteLLM 學習筆記](/img/covers/litellm-notes.png)
 
 IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 8 — LiteLLM** 的完整學習筆記。
 

@@ -15,13 +15,13 @@ tags:
 categories:
   - AI
   - 學習筆記
-cover: /img/covers/huggingface-notes-ivdc.png
-banner_img: /img/covers/huggingface-notes-ivdc.png
-index_img: /img/covers/huggingface-notes-ivdc.png
+cover: /img/covers/huggingface-notes.png
+banner_img: /img/covers/huggingface-notes.png
+index_img: /img/covers/huggingface-notes.png
 archive: true
 ---
 
-![Hugging Face for LLM 學習筆記](/img/covers/huggingface-notes-ivdc.png)
+![Hugging Face for LLM 學習筆記](/img/covers/huggingface-notes.png)
 
 IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 6 — Hugging Face for LLM** 的完整學習筆記。
 
