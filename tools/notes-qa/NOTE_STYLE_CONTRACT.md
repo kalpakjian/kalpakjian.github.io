@@ -45,9 +45,16 @@
 
 ---
 
-## 3. 頁首區塊（每份筆記固定格式）
+## 3. 頁首資訊（兩個載體，別搞混）
 
-Markdown：
+頁首資訊有**兩個不同的載體**，寫在不同地方、管不同的事（2026-10-16 清查 16 份筆記後定案）：
+
+| 載體 | 在哪裡 | 內容 | 規定 |
+|---|---|---|---|
+| **副標 `<div class="sub">`** | 只在 `index.html`（md 沒有這一層） | 課程＋課節，例：`IVDC · Certificate in Application of Large Language Model (LLM)`<br>`Lesson 3 · Introduction to LLM` | **每一份都要有內容**（不要留空） |
+| **頁首區塊 `> 課程：…`** | md 的標題下方（html 對應 `<blockquote>`） | 課程／機構／涵蓋檔案／實測環境／測驗連結 | **選用、系列制**：目前只有 AutoML 系列（`automl-notes`、`generalization-notes`、`ml-models-notes`）採用；LLM／CV 系列用副標代替 |
+
+Markdown 頁首區塊（**採用時**的格式）：
 
 ```
 > 課程：Certificate in Application of Large Language Model (LLM) (Part-time) — Lesson N
@@ -59,7 +66,7 @@ Markdown：
 > 🖱️ **互動測驗（推薦）**：附錄 E 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
 ```
 
-HTML 對應：同一段放在 `<blockquote>` 裡，**每一行結尾加 `<br />`**
+HTML 對應：同一段放在 `<blockquote>` 裡，**每一行結尾加 `<br />`**，最後一行不用
 （否則瀏覽器會把整段擠成一行）。續行（同一句被折行）**不要**加 `<br />`。
 
 ---
@@ -165,7 +172,17 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 
 | 10 | 測驗 JSON 合法、題數與 nav 一致 | 測驗可用 |
 | 11 | 產生 `<li class="opt">` 選項列的測驗，必須同時引用選項陣列（`q.o[k]`） | 少這一行時每個選項都渲染成空的 `<li>`，讀者**完全看不到選項**（本站曾有 12 份測驗如此上線） |
 
+> ⚠️ **第 9 項目前是「休眠的檢查」**：它只在「`</h1>` 之後**緊接著**就是 `<blockquote>`」（中間只有空白）時才會執行，
+> 而本站每一頁的 `</h1>` 後面都是 `<hr>` 或 `<div class="sub">`，所以這項檢查對任何一份筆記都不會觸發（2026-10-16 實測）。
+> 後果：頁首區塊的換行目前**靠人工維持**——`generalization-notes` 就是這樣漏掉的（0 個 `<br />`，網頁上擠成一整段）。
+> 要讓它有牙齒：把判斷改成「跳過 `<div class="sub">…</div>` 與 `<hr>` 之後，再找第一個 `<blockquote>`」。
+> 要停用：把這一項從 `qa_notes.ps1` 移除，並在本檔同步刪掉。
+
 **警告（僅提示）**：孤立 LF、`第 N 頁` 這種寫法（可能是合法例子）。
+
+> 換行符號：`.gitattributes` 已把 `*.md`／`*.html` 設為 `text eol=crlf`，所以簽出（含 CI 的 Linux runner）
+> 一律是 CRLF，CI 不會再對這些檔案發 lone-LF 警告。本機若出現 LF 檔（例如 ComfyUI／外部工具寫出來的），
+> 跑 `normalize_crlf.ps1` 修；`-DryRun` 可先預覽。
 
 **自我測試樣本**：`tools\notes-qa\qa_selftest\bad-notes\` 是一份**故意有 13 種瑕疵**的假筆記，
 用來確認閘門還有效：
