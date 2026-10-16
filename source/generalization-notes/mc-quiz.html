@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>泛化能力 MC 模擬測驗（60 題）| AI Tech Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#e2e5ea; --txt:#1f2328; --dim:#5b636e;
+  --blue:#2563eb; --green:#15803d; --green-bg:#e8f6ec; --red:#b91c1c;
+  --red-bg:#fdeaea; --sel:#dbeafe; --sel-line:#2563eb;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",
+    "Microsoft JhengHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+a{color:var(--blue)}
+.topbar{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  padding:12px 20px 10px;
+}
+.topbar .row1{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px}
+.topbar h1{font-size:17px; margin:0; font-weight:700}
+.topbar .back{font-size:13px; color:var(--dim); text-decoration:none}
+.topbar .back:hover{color:var(--blue)}
+.stats{display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; font-size:14px; color:var(--dim)}
+.stats b{font-size:18px; color:var(--txt)}
+.stats .ok b{color:var(--green)}
+.stats .no b{color:var(--red)}
+.saved{font-size:12px; color:var(--green); opacity:0; transition:opacity .3s}
+.saved.on{opacity:1}
+.progress{height:6px; background:var(--line); border-radius:99px; margin-top:10px; overflow:hidden}
+.progress i{display:block; height:100%; width:0; background:var(--blue); border-radius:99px; transition:width .25s}
+.controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+button{
+  font:inherit; font-size:13px; padding:6px 13px; border-radius:8px;
+  border:1px solid var(--line); background:#fff; color:var(--txt); cursor:pointer;
+  transition:.15s;
+}
+button:hover{border-color:#b9c0c9; background:#fbfbfc}
+button.primary{background:var(--blue); border-color:var(--blue); color:#fff}
+button.primary:hover{background:#1d4ed8}
+button.active{background:var(--sel); border-color:var(--sel-line); color:#1e40af; font-weight:600}
+button.danger{color:var(--red); border-color:#f0c4c4}
+button.danger:hover{background:var(--red-bg)}
+.navwrap{padding:16px 20px 0}
+.navgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px}
+.navgrid button{padding:6px 0; font-size:13px; border-radius:7px; text-align:center; font-variant-numeric:tabular-nums}
+.navgrid button.done{background:#eef2ff; border-color:#c7d2fe; color:#3730a3}
+.navgrid button.right{background:var(--green-bg); border-color:#a7d7b6; color:var(--green); font-weight:700}
+.navgrid button.wrong{background:var(--red-bg); border-color:#eeb4b4; color:var(--red); font-weight:700}
+main{max-width:900px; margin:0 auto; padding:20px 20px 80px}
+.parttitle{
+  margin:34px 0 14px; font-size:15px; font-weight:700; color:var(--dim);
+  border-left:4px solid var(--blue); padding-left:10px;
+}
+.q{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px 18px; margin-bottom:14px;
+}
+.q.correct{border-color:#a7d7b6; background:var(--green-bg)}
+.q.incorrect{border-color:#eeb4b4; background:var(--red-bg)}
+.qhead{display:flex; gap:10px; align-items:flex-start}
+.num{
+  flex:0 0 auto; min-width:30px; height:26px; line-height:26px; text-align:center;
+  background:#eef1f5; border-radius:7px; font-size:13px; font-weight:700;
+  color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.qtext{margin:0; font-weight:600; font-size:16px}
+.opts{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:7px}
+.opt{
+  display:flex; gap:10px; align-items:flex-start; padding:9px 12px;
+  border:1px solid var(--line); border-radius:9px; background:#fff;
+  cursor:pointer; transition:.12s; user-select:none;
+}
+.opt:hover{border-color:#b9c0c9; background:#fbfbfc}
+.opt .lt{
+  flex:0 0 auto; width:22px; height:22px; line-height:22px; text-align:center;
+  border-radius:6px; background:#eef1f5; font-size:12px; font-weight:700; color:var(--dim);
+}
+.opt.picked{border-color:var(--sel-line); background:var(--sel)}
+.opt.picked .lt{background:var(--sel-line); color:#fff}
+.opt.right{border-color:#7cc08f; background:var(--green-bg)}
+.opt.right .lt{background:var(--green); color:#fff}
+.opt.wrong{border-color:#e39191; background:var(--red-bg)}
+.opt.wrong .lt{background:var(--red); color:#fff}
+.tag{font-size:11px; padding:1px 7px; border-radius:99px; margin-left:auto;
+     flex:0 0 auto; font-weight:700; align-self:center}
+.tag.right{background:var(--green); color:#fff}
+.tag.wrong{background:var(--red); color:#fff}
+.expl{
+  margin-top:12px; padding:11px 14px; background:#f8fafc; border-radius:9px;
+  border-left:3px solid var(--blue); font-size:14.5px; color:#333a44;
+}
+.expl b{color:var(--txt)}
+.empty{text-align:center; color:var(--dim); padding:50px 20px; font-size:15px}
+footer{
+  max-width:900px; margin:0 auto; padding:0 20px 60px; color:var(--dim);
+  font-size:13px; text-align:center;
+}
+@media print{
+  .topbar,.navwrap,footer,.controls{display:none !important}
+  body{background:#fff; font-size:12pt}
+  main{max-width:none; padding:0}
+  .q{break-inside:avoid; page-break-inside:avoid; border-color:#999}
+}
+@media (max-width:560px){
+  .topbar{padding:10px 14px 8px}
+  .topbar h1{font-size:15px}
+  main{padding:14px 14px 60px}
+  .navwrap{padding:12px 14px 0}
+  .q{padding:13px 14px}
+  .qtext{font-size:15px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="row1">
+    <h1>泛化能力 · MC 模擬測驗</h1>
+    <a class="back" href="index.html">&larr; 回到泛化能力學習筆記</a>
+    <span class="saved" id="saved">進度已儲存 &#10003;</span>
+  </div>
+  <div class="stats">
+    <span>已答 <b id="nAns">0</b> / 60</span>
+    <span class="ok">得分 <b id="nScore">0</b> / 60</span>
+    <span class="no">答錯 <b id="nWrong">0</b></span>
+    <span id="hint">作答進度自動存在此瀏覽器，關掉再回來可繼續</span>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <button id="btnReveal" class="primary">顯示答案</button>
+    <button id="btnAll" class="active">全部 60 題</button>
+    <button id="btnUnans">只看未答</button>
+    <button id="btnWrong">只看答錯</button>
+    <button id="btnTop">回到頂部</button>
+    <button id="btnReset" class="danger">重設全部</button>
+  </div>
+</header>
+
+<div class="navwrap">
+  <div class="navgrid" id="navgrid"></div>
+</div>
+
+<main id="quiz"></main>
+
+<footer>
+  <p>AutoML 應用證書課程（泛化能力課節）個人學習筆記 · 只考基本理論，不含程式碼</p>
+  <p>單一 HTML 檔、無外部資源，可離線使用 · 題庫涵蓋 PDF 第 2–10 頁的 9 個章節</p>
+</footer>
+<script>
+const QUESTIONS = [{"q":"「泛化能力（Generalization Capability）」的正確定義是？","o":["模型在訓練集上達到最高準確率的能力","模型訓練所花費的時間與記憶體效率","模型能把資料壓縮到最小檔案大小的能力","模型對未見過的新數據的適應與預測能力"],"a":3,"e":"泛化能力指的是模型面對**從未接觸過的新樣本**時，依然能給出準確預測的能力。"},{"q":"一個模型在訓練集上準確率 100%，這代表什麼？","o":["不能代表它聰明，可能只是把訓練資料（含噪聲）背了下來","代表它已具備最強的泛化能力","代表它的測試準確率一定也會是 100%","代表它一定沒有過擬合的問題"],"a":0,"e":"原稿強調「**訓練集表現好 ≠ 真正聰明**」；訓練集是模型看過答案的考卷，必須看它在**新資料**上的表現。"},{"q":"某模型訓練準確率 99%、測試準確率 62%，最可能的問題是？","o":["欠擬合","特徵不足","過擬合","資料標籤全部標錯"],"a":2,"e":"「**訓練極好、測試很差、落差大**」是過擬合的典型指紋。"},{"q":"「泛化」與「記憶」最關鍵的差別是？","o":["泛化學到一般規律，換一批資料仍有效；記憶只背下訓練樣本的細節","泛化只適用於分類問題，記憶只適用於迴歸問題","記憶的模型參數一定比較少","泛化不需要訓練資料"],"a":0,"e":"記憶 = 把訓練樣本的**細節與噪聲**學走；泛化 = 掌握數據背後的**一般規律**。"},{"q":"為什麼「只看訓練誤差」無法判斷泛化能力？","o":["因為訓練誤差的單位和測試誤差不同","因為訓練誤差無法被計算出來","因為訓練誤差低可能只是硬背；判斷泛化必須有一組模型沒見過的資料","因為訓練誤差永遠等於測試誤差"],"a":2,"e":"實測中 degree=15 的訓練誤差（1.907）甚至比 degree=2（1.580）**更大**，但測試誤差卻是 2.6 倍——訓練誤差單獨看會誤導。"},{"q":"原稿說泛化能力是「模型對未見過的新數據的適應與預測能力」，它被視為？","o":["只與資料清理有關的前處理步驟","衡量機器學習模型品質的核心指標","只在影像辨識領域才需要的指標","與模型上線無關的學術指標"],"a":1,"e":"原稿明言：**泛化能力是衡量機器學習模型品質的核心指標**，也是模型能否上線的門檻。"},{"q":"下列哪一組描述完全符合「過擬合」？","o":["訓練集與測試集表現都很差","訓練集與測試集表現都很好","訓練集表現極好、測試集表現很差","訓練集表現很差、測試集表現極好"],"a":2,"e":"過擬合 = 訓練極好、測試很差；欠擬合才是兩邊都差。"},{"q":"下列哪一組描述完全符合「欠擬合」？","o":["訓練集表現極好、測試集表現很差","訓練集與測試集表現都很好","訓練集表現普通、測試集表現極好","訓練集和測試集表現都很差，落差很小"],"a":3,"e":"欠擬合的指紋是「**兩邊都差且落差小**」——模型連訓練資料的基本規律都沒學會。"},{"q":"過擬合與欠擬合的共同點是？","o":["兩者的模型都比真實規律簡單","兩者的訓練誤差都趨近於 0","兩者都應該用正則化來解決","兩者都會導致模型在實際應用中失敗"],"a":3,"e":"原稿指出兩者「**都會導致模型在實際應用中失敗**」；但它們成因相反、解法也相反。"},{"q":"診斷模型問題時，第一步應該先看什麼？","o":["訓練所花的時間","資料的欄位數量","模型的檔案大小","訓練表現與測試（或驗證）表現之間的落差"],"a":3,"e":"**先看落差**：落差大 → 過擬合；落差小且兩邊都差 → 欠擬合。這是判斷方向的關鍵。"},{"q":"「模型太複雜、把訓練資料中的噪聲和細枝末節都學了進去」，這是？","o":["欠擬合的原因","過擬合的原因","資料洩漏的原因","特徵標準化的原因"],"a":1,"e":"原稿對過擬合成因的說明：把**噪聲**與**細枝末節**都學進去而失去對一般規律的掌握。"},{"q":"「模型過於簡單，或特徵提取不足，連訓練數據的基本規律都沒有學會」，這是？","o":["過擬合的原因","交叉驗證的原因","資料增強的原因","欠擬合的原因"],"a":3,"e":"這是原稿對欠擬合成因的原文說明，關鍵字是**過於簡單**與**特徵提取不足**。"},{"q":"模型複雜度與泛化能力的關係，可以描述為？","o":["複雜度越高，泛化能力一定越好","複雜度越低，泛化能力一定越好","複雜度與泛化能力完全無關","太簡單會欠擬合、太複雜會過擬合，中間存在泛化最佳的甜點區"],"a":3,"e":"測試誤差對複雜度呈 **U 形曲線**：兩端都差，最低點（甜點區）才是泛化最好的地方。"},{"q":"原稿對「過擬合」的表現描述是？","o":["在訓練集上準確率極高，但在測試集或新數據上表現很差，出現明顯落差","在訓練集與測試集上表現都很差","在訓練集上表現很差、測試集上表現極好","訓練與測試表現都很好且落差極小"],"a":0,"e":"這是原稿對過擬合表現的原文；關鍵是**明顯落差**。"},{"q":"下列何者「不是」過擬合的常見訊號？","o":["訓練與測試分數都很低，且兩者差距很小","訓練準確率接近 100%","驗證分數在訓練中段後不升反降","訓練損失幾乎被壓到 0"],"a":0,"e":"「兩邊都低、落差極小」是**欠擬合**的訊號，不是過擬合。"},{"q":"過擬合的標準解法，下列何者「不恰當」？","o":["再增加模型複雜度與特徵數量","加入 L1／L2 正則化","使用 Early Stopping 早停","使用集成學習降低單一模型風險"],"a":0,"e":"過擬合已經「太複雜」，再加複雜度只會更糟；應該用正則化、早停、集成或增加資料。"},{"q":"原稿用「學生只背考古題答案，換一道新題便完全不會作答」比喻？","o":["欠擬合","特徵工程","過擬合","交叉驗證"],"a":2,"e":"只背答案 = 記住訓練樣本（含噪聲）；換新題不會 = 測試誤差爆炸。這是**過擬合**的比喻。"},{"q":"原稿用「學生連課本都沒讀完，無論考什麼題型都無法作答」比喻？","o":["過擬合","資料洩漏","模型投票","欠擬合"],"a":3,"e":"課本沒讀完 = 模型容量不足或訓練不足；什麼題都不會 = 訓練與測試兩邊都錯。這是**欠擬合**的比喻。"},{"q":"一個模型訓練損失趨近 0、訓練準確率 1.0000，但驗證準確率反而下降。你應該？","o":["繼續訓練更多輪次以追求更低的訓練損失","加大模型容量讓訓練損失再低一點","直接把驗證集併入訓練集","採用早停，在驗證誤差開始上升時停止訓練"],"a":3,"e":"驗證分數不升反降就是過擬合開始的訊號；**早停**正是在這個點主動終止訓練。"},{"q":"關於「訓練誤差上升」的解讀，下列何者正確？","o":["一定代表模型退步了，必須立刻回滾","一定代表發生了資料洩漏","有時是好消息，代表模型從硬背訓練樣本轉為學習一般規律","代表測試誤差一定也會上升"],"a":2,"e":"實測中訓練資料量由 10 → 160 筆時，訓練 RMSE 由 1.097 升到 2.385，但驗證 RMSE 由 251,532 降到 2.566——**訓練誤差上升有時是好事**。"},{"q":"原稿對「欠擬合」的表現描述是？","o":["在訓練集上極好、測試集上很差","在訓練集和測試集上的表現都很差，無法捕捉數據中的任何有效規律","在訓練集上很差、測試集上極好","訓練與測試都很好但落差很大"],"a":1,"e":"這是原稿對欠擬合表現的原文；關鍵是**兩邊都差**。"},{"q":"下列何者「不是」欠擬合的常見原因？","o":["模型過於簡單","特徵提取不足","模型參數太多、把訓練資料的噪聲也學了進去","正則化懲罰項開得太重"],"a":2,"e":"「參數太多、學到噪聲」是**過擬合**的原因；欠擬合是容量不足或懲罰過重。"},{"q":"模型訓練 RMSE 4.111、測試 RMSE 4.565，最合理的診斷是？","o":["過擬合，因為測試誤差大於訓練誤差","欠擬合，因為兩邊都差且落差很小","泛化良好，因為數字很接近","資料洩漏，因為訓練誤差沒有歸零"],"a":1,"e":"落差只有 0.454、兩邊都爛 → **欠擬合**。過擬合的落差會是數倍等級。"},{"q":"面對欠擬合，下列哪一個做法是「正確」的？","o":["加強正則化以穩定模型","減少特徵數量讓模型更簡單","提高模型複雜度、增加有效特徵，或降低正則化強度","把測試集併入訓練集"],"a":2,"e":"欠擬合要**提高容量**；正則化與減特徵都會讓模型更簡單，方向完全相反。"},{"q":"對一個「欠擬合」的模型加重正則化，最可能的結果是？","o":["訓練誤差下降、測試誤差上升，成功解掉過擬合","模型更簡單，訓練與測試誤差同時變得更差","模型自動偵測到欠擬合並調整複雜度","完全沒有影響，正則化只作用於過擬合模型"],"a":1,"e":"正則化的作用是**限制模型複雜度**；模型已經太簡單時再加限制，只會更糟——這是本科最常見的陷阱。"},{"q":"下列哪一組「診斷 → 解法」的配對是正確的？","o":["訓練與測試都差 → 加重正則化","訓練與測試都差 → 提高模型複雜度或增加特徵","訓練好、測試差 → 提高模型複雜度","訓練好、測試差 → 減少訓練資料"],"a":1,"e":"欠擬合（兩邊都差）→ 提高複雜度／加特徵；過擬合（訓練好測試差）→ 正則化／早停／加資料。"},{"q":"將資料分為訓練集、驗證集與測試集時，原稿強調？","o":["模型只能通過訓練集學習，並在測試集上接受最終檢驗","三個集合可以互相交換使用，效果相同","驗證集也可以用來訓練模型參數","測試集應該在每次調參後重新使用以確認效果"],"a":0,"e":"原稿原文：**模型只能通過訓練集學習，並在測試集上接受最終檢驗**。"},{"q":"哪一個資料集合「絕對不能」拿來調超參數？","o":["驗證集（Validation Set）","訓練集（Training Set）","以上都可以","測試集（Test Set）"],"a":3,"e":"驗證集就是為了調參而存在；測試集只能用一次，一旦拿來調參就變成**資料洩漏**，分數不再誠實。"},{"q":"把測試集反覆用來調整超參數，最直接的後果是？","o":["模型會自動降低訓練速度","訓練集的準確率會下降","驗證集會被自動刪除","測試分數不再是對新資料的誠實估計（資料洩漏）"],"a":3,"e":"這叫**資料洩漏（Data Leakage）**：你等於讓模型間接看過考題，上線後會現形。"},{"q":"K 折交叉驗證的標準流程是？","o":["把資料隨機切成 K 份，只訓練其中一份","將數據分成 K 份，輪流將其中一份作為測試集，其餘作為訓練集","把同一份資料重複訓練 K 次但每次都當訓練集","把資料分成 K 份，全部只用來做特徵工程"],"a":1,"e":"這是原稿對 K-Fold CV 的原文定義；重點是**輪流**當驗證集。"},{"q":"交叉驗證最主要的好處是？","o":["減少因數據劃分隨機性帶來的偏差","讓模型訓練速度變快 K 倍","自動幫模型挑選最佳超參數","把測試集的比例提高到 50%"],"a":0,"e":"原稿原文：K 折 CV 的目的是**減少因數據劃分隨機性帶來的偏差**。"},{"q":"實測中，同一模型只用不同隨機種子做單次切分，準確率在 0.9580 ~ 0.9860 之間跳動。這說明？","o":["單次切分的結果受抽樣運氣影響，報告分數時應附上標準差或信賴區間","模型的準確率其實是隨機的，無法評估","應該改用更大的測試集比例來消除這個現象","這代表模型有嚴重的資料洩漏"],"a":0,"e":"極差達 **2.8 個百分點**；所以報告分數要寫成 0.9719 ± 0.0102，而不是單一個數字。"},{"q":"K 折交叉驗證中，常用的 K 值是？","o":["2 或 3","5 或 10","50 或 100","必須等於資料筆數的一半"],"a":1,"e":"實務與考試的標準答案都是 **K = 5 或 10**；本筆記的實測用 5 折。"},{"q":"在 train_test_split 中，分類問題為什麼建議加 stratify=y？","o":["讓切分速度更快","確保各子集合的類別比例一致，避免小類別整類落入單一集合","自動把資料標準化","把測試集比例強制設為 20%"],"a":1,"e":"stratify 做的是**分層抽樣**；沒有它，罕見類別可能整類掉進測試集，導致評估失真。"},{"q":"原稿說「增加數據量」能提升泛化能力，原因是？","o":["資料變多會讓模型訓練速度變快","更多樣化的數據能覆蓋更廣的特徵空間，讓模型見識更多真實世界的變化","資料變多會自動降低模型的參數數量","資料變多能讓測試集的比例提高"],"a":1,"e":"這是原稿對增加資料量的原文說明；資料量迫使模型不能逐點硬背。"},{"q":"實測中，同一個 degree=15 的過擬合模型，訓練資料從 10 筆增加到 160 筆，驗證 RMSE 如何變化？","o":["由 2.566 升到約 251,532","維持不變，因為模型複雜度沒改","先降到 0 再回升","由約 251,532 降到 2.566"],"a":3,"e":"資料量一大，高次多項式被迫把噪聲平均掉，**驗證 RMSE 收斂到 2.566**，落差由 251,531 收斂到 0.181。"},{"q":"原稿對「資料增強（Data Augmentation）」的定義是？","o":["把資料集複製多份以增加檔案數量","針對圖像、文本或音頻人為製造合理的變體，讓模型見過更多情境","把測試集的資料混入訓練集","自動刪除資料中的離群值"],"a":1,"e":"關鍵字是「**人為製造合理的變體**」，例如旋轉、縮放、噪聲注入。"},{"q":"下列哪一項是圖像資料增強的常見手法？","o":["把標籤改成隨機值","把圖片全部轉成同一種顏色","旋轉、縮放、平移、噪聲注入","刪除一半的訓練樣本"],"a":2,"e":"原稿列出的例子是**旋轉、縮放、噪聲注入**；本筆記另外實測了平移。"},{"q":"實測中，對 8×8 手寫數字做「平移 ±1 px（9 倍資料）」的結果是？","o":["準確率由 0.9619 提升到 0.9709，是有效的增強","準確率由 0.9619 掉到 0.9428","準確率完全不變","準確率直接掉到 0.5"],"a":0,"e":"±1 px 屬於**語意不變、幅度適中**的合理增強，因此有效（0.9619 → 0.9709）。"},{"q":"同一組實驗中，對 8×8 手寫數字做「左右鏡射（2 倍資料）」的結果是？","o":["準確率提升到 0.9709，因為資料變兩倍","準確率提升到 0.9860，因為增強越多越好","準確率掉到 0.9539，比不增強更差，因為鏡射破壞了字形語意","準確率不變，因為模型會自動忽略"],"a":2,"e":"手寫的「3」左右鏡射後就不再是「3」，等於**親手把標籤弄錯**；原稿強調的「**合理**的變體」就是這個意思。"},{"q":"實測中，用 np.roll 做平移增強導致準確率掉到 0.9037，原因是？","o":["np.roll 是環繞式位移，會把對邊像素捲過來，製造出原本不存在的結構","np.roll 只能用在灰階影像上","np.roll 會把影像解析度降低一半","np.roll 會把標籤順序打亂"],"a":0,"e":"正確做法是**邊緣補 0 的平移**（translate()），不要用會環繞的 np.roll。"},{"q":"原稿對「正則化（Regularization）」的定位是？","o":["防止過擬合的核心手段，透過限制模型複雜度來提升泛化能力","提升訓練速度的加速技巧","處理缺失值的資料清理方法","提高訓練集準確率的主要手段"],"a":0,"e":"原稿原文：正則化是**防止過擬合的核心手段**，作法是**限制模型複雜度**。"},{"q":"正則化的基本原理是？","o":["在訓練資料中加入隨機噪聲","在損失函數中加入權重懲罰項，限制模型參數的規模","把學習率調低一半","把訓練集與測試集合併"],"a":1,"e":"損失函數變成「擬合誤差 + α × 複雜度懲罰」；原稿說的是**加入權重懲罰項、限制參數規模**。"},{"q":"L1 正則化（Lasso）的特性是？","o":["把權重整體縮小但幾乎不會變成 0","完全不會改變權重的大小","只能用在神經網路上","會把不重要的權重壓成剛好 0，形成稀疏解，可用於特徵選擇"],"a":3,"e":"L1 的懲罰項是權重**絕對值和**，其菱形約束的角落在座標軸上，因此容易產生 0。"},{"q":"L2 正則化（Ridge）的特性是？","o":["把權重整體縮小，但很少壓成剛好 0","會把大量權重壓成剛好 0，形成稀疏解","會增加模型參數的數量","會把訓練資料標準化"],"a":0,"e":"L2 的懲罰項是權重**平方和**，效果是平滑收縮（shrinkage），適合「特徵都有用、只想抑制過擬合」的情境。"},{"q":"實測中，degree=9 多項式（10 個係數）下，Lasso 與 Ridge 的非零係數分別是？","o":["Lasso 9/10、Ridge 6/10，證明 L2 才會產生 0","兩者都是 10/10","Lasso 6/10、Ridge 9/10，證明 L1 才會產生 0","兩者都是 0/10"],"a":2,"e":"L1 把 4 個係數壓成 0（**特徵選擇**），L2 只把幅度縮小（最大絕對值 1.10 → 0.40）。"},{"q":"實測中，對 degree=15 的過擬合模型套 Ridge，測試 RMSE 最佳出現在？","o":["alpha = 0 時，因為不加懲罰最好","alpha = 10000 時，因為懲罰越強越好","alpha = 100 時，測試 RMSE 由 5.131 降到 2.546","alpha = 0.0001 時，因為微調最有效"],"a":2,"e":"正則化把測試誤差**改善了約 50%**（5.131 → 2.546）；alpha 太小（0.0001）幾乎沒作用，太大（10000）則開始欠擬合。"},{"q":"正則化的 alpha 開得太大，最可能的後果是？","o":["測試誤差會無限下降直到 0","模型會自動把 alpha 調小","完全沒有影響，alpha 只是裝飾參數","訓練與測試誤差同時變差，開始出現欠擬合"],"a":3,"e":"實測 alpha=10000 時訓練 RMSE 由 1.647 升到 2.202、測試由 2.546 升到 3.995——**正則化過度 = 親手製造欠擬合**。"},{"q":"原稿對 Dropout 的說明是？","o":["訓練過程中隨機關閉一部分神經元，迫使網路學習更具魯棒性的特徵組合","訓練時把所有神經元輸出加倍","推論時隨機關閉一半神經元以加速","把輸入特徵隨機刪除一半"],"a":0,"e":"原稿原文：隨機關閉一部分神經元，**避免對特定神經元的依賴**。補充兩個常考細節：Dropout **只在訓練時開啟**（推論時要用完整網路）；**sklearn 的 MLPClassifier 沒有 Dropout 參數**，需用 PyTorch／TensorFlow 等框架。"},{"q":"原稿提醒選擇模型規模時要避免的兩種情況是？","o":["「用大砲打蚊子」與「大材小用」","「用大砲打蚊子」與「資料增強」","「過度正則化」與「資料洩漏」","「交叉驗證」與「模型投票」"],"a":0,"e":"原稿原文即為此兩句；技術上分別對應**模型過大**與**模型過小**。"},{"q":"原稿對「早停法（Early Stopping）」的描述是？","o":["監控訓練集誤差，一旦訓練誤差歸零就停止","監控驗證集表現，一旦驗證集誤差開始上升便主動終止訓練","固定訓練 1000 輪後自動停止","監控測試集準確率，達到 100% 才停止"],"a":1,"e":"早停監控的是**驗證集**誤差——訓練誤差幾乎總是下降，用它當停止條件沒有意義。"},{"q":"實測中，MLPClassifier 開啟早停的結果是？","o":["迭代次數增加，測試準確率下降","迭代次數由 85 降到 47，測試準確率由 0.8392 升到 0.8951","迭代次數與準確率都不變","迭代次數減少，但測試準確率也大幅下降"],"a":1,"e":"早停**同時省算力又提升準確率**：少跑 45% 的迭代，準確率反而高 5.6 個百分點。"},{"q":"實測的驗證曲線中，決策樹 max_depth 由 1 增加到 5、再到 8 以上，分數如何變化？","o":["驗證分數持續上升，max_depth 越大越好","訓練與驗證分數都持續下降","兩者從頭到尾都完全不變","驗證分數先升（0.9015 → 0.9273）再降（0.9250），訓練分數最後到 1.0000，形成過擬合"],"a":3,"e":"max_depth=1 是**欠擬合**；max_depth=5 是甜點（0.9947 / 0.9273）；8 以上訓練滿分但驗證掉到 0.9250，是教科書級的**過擬合**指紋——**樹不是越深越好**。"},{"q":"隨機森林（Random Forest）的核心機制是？","o":["一棵接一棵序列訓練，每棵修正前一棵的錯誤","建立大量平行的決策樹，每棵用隨機抽樣的特徵／樣本，最後投票或平均","把所有決策樹串成單一條深鏈","只用一棵樹但把資料重複使用多次"],"a":1,"e":"隨機森林的關鍵字是**平行**與**隨機抽樣**；序列修正錯誤的是 GBDT。"},{"q":"梯度提升樹（GBDT）的核心機制是？","o":["大量樹平行訓練後取平均","只訓練一棵極深的樹","一棵接一棵序列訓練，每棵新樹專心修正前一棵的錯誤","把不同模型的預測結果投票"],"a":2,"e":"GBDT 的關鍵字是**序列**與**修正前一棵的錯誤**（梯度方向）。"},{"q":"原稿把「隨機森林、梯度提升樹、模型投票」三者並列在下列哪一類技術之下？","o":["正則化技術","資料增強","集成學習（Ensemble Learning）","交叉驗證"],"a":2,"e":"原稿把它們都放在「**集成學習**」之下，目的是「結合多個不同的模型，利用**群策群力**降低單一模型的過擬合風險」——多個模型各自記錯的地方不同，平均／投票後隨機錯誤會互相抵消。"},{"q":"實測中，投票集成（深樹＋森林＋GBDT）的測試準確率 0.9510，低於其成員隨機森林的 0.9860。這說明？","o":["集成學習的原理是錯的","隨機森林其實不屬於集成學習","集成不一定必勝；成員品質與多樣性才是關鍵","投票集成一定比任何單一模型差"],"a":2,"e":"把弱成員（訓練滿分的過擬合深樹）放進投票會**拖累整體**；換成剪枝樹後才升到 0.9580，但仍不及隨機森林。"},{"q":"原稿總結的「泛化能力四大提升策略」，正確順序是？","o":["正則化技術 → 擴充訓練數據 → 集成學習 → 架構與早停控制","集成學習 → 架構與早停控制 → 正則化技術 → 擴充訓練數據","擴充訓練數據 → 正則化技術 → 架構與早停控制 → 集成學習","擴充訓練數據 → 集成學習 → 正則化技術 → 架構與早停控制"],"a":2,"e":"原稿 p10 的四張卡片順序為 **01 擴充訓練數據、02 正則化技術、03 架構與早停控制、04 集成學習**。"},{"q":"下列何者「不是」原稿列出的提升泛化能力策略？","o":["擴充訓練數據與資料增強","使用 L1／L2 正則化與 Dropout","結合多模型進行集成學習","把測試集加入訓練資料以提高訓練分數"],"a":3,"e":"把測試集併入訓練是**資料洩漏**，會讓評估失真，不是提升泛化能力的方法。"},{"q":"面對一個訓練與驗證分數落差很大的模型，最不該做的第一件事是？","o":["立刻加大模型容量，追求更低的訓練誤差","檢查訓練與驗證的落差方向","考慮加入正則化或早停","考慮收集更多訓練資料"],"a":0,"e":"落差大代表**過擬合**；加大容量只會讓落差更大。診斷永遠先於優化。"}];
+
+const LET = 'ABCD';
+const KEY = 'generalization-mc-quiz-v1';
+const state = { answers:{}, revealed:false, filter:'all' };
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p && typeof p === 'object'){
+      state.answers = (p.answers && typeof p.answers === 'object') ? p.answers : {};
+      state.revealed = !!p.revealed;
+      state.filter = p.filter || 'all';
+    }
+  }catch(e){}
+}
+let savedTimer = null;
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const el = document.getElementById('saved');
+    if(el){ el.classList.add('on'); clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ el.classList.remove('on'); }, 1200); }
+  }catch(e){}
+}
+
+function tally(){
+  let answered = 0, score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    if(a !== undefined && a !== null){
+      answered++;
+      if(a === QUESTIONS[i].a) score++;
+    }
+  }
+  return { answered:answered, score:score, wrong:answered-score };
+}
+
+function isVisible(i){
+  const a = state.answers[i];
+  const has = (a !== undefined && a !== null);
+  if(state.filter === 'unanswered') return !has;
+  if(state.filter === 'wrong') return has && a !== QUESTIONS[i].a;
+  return true;
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdInline(s){
+  s = esc(s);
+  let out = '';
+  let bold = false;
+  let i = 0;
+  while(i < s.length){
+    if(s.charAt(i) === '*' && s.charAt(i + 1) === '*'){
+      bold = !bold;
+      out += bold ? '<b>' : '</b>';
+      i += 2;
+    } else {
+      out += s.charAt(i);
+      i++;
+    }
+  }
+  return out;
+}
+
+function renderStats(){
+  const t = tally();
+  document.getElementById('nAns').textContent = t.answered;
+  document.getElementById('nScore').textContent = t.score;
+  document.getElementById('nWrong').textContent = t.wrong;
+  document.getElementById('bar').style.width = (t.answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('btnReveal').textContent = state.revealed ? '隱藏答案' : '顯示答案';
+  document.getElementById('hint').textContent = state.revealed
+    ? '已顯示正解與解析'
+    : '作答進度自動存在此瀏覽器，關掉再回來可繼續';
+}
+
+function renderNav(){
+  const nav = document.getElementById('navgrid');
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    const has = (a !== undefined && a !== null);
+    let cls = '';
+    if(has) cls = 'done';
+    if(state.revealed && has) cls = (a === QUESTIONS[i].a) ? 'right' : 'wrong';
+    html += '<button class="' + cls + '" data-goto="' + i + '">' + (i+1) + '</button>';
+  }
+  nav.innerHTML = html;
+}
+
+function renderQuestions(){
+  const box = document.getElementById('quiz');
+  let html = '';
+  let shown = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(!isVisible(i)) continue;
+    shown++;
+    const q = QUESTIONS[i];
+    if(i === 0 || i === 26 || i === 41){
+      const label = i === 0 ? '第一部分：泛化能力與擬合診斷（1–26）'
+                  : i === 26 ? '第二部分：評估方法與資料擴充（27–41）'
+                  : '第三部分：正則化、架構控制與集成（42–60）';
+      html += '<div class="parttitle">' + label + '</div>';
+    }
+    const picked = state.answers[i];
+    const hasPicked = (picked !== undefined && picked !== null);
+    let qcls = '';
+    if(state.revealed && hasPicked) qcls = (picked === q.a) ? 'correct' : 'incorrect';
+
+    html += '<article class="q ' + qcls + '" id="q' + (i+1) + '">';
+    html += '<div class="qhead"><span class="num">' + (i+1) + '</span>';
+    html += '<p class="qtext">' + mdInline(q.q) + '</p></div>';
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      let cls = 'opt';
+      if(hasPicked && picked === k) cls += ' picked';
+      let tag = '';
+      if(state.revealed){
+        if(k === q.a){ cls += ' right'; tag = '<span class="tag right">正解</span>'; }
+        else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
+      }
+      html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
+    html += '<span class="lt">' + LET[k] + '</span><span>' + esc(q.o[k]) + '</span>' + tag + '</li>';
+}
+    html += '</ul>';
+    if(state.revealed){
+      html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
+    }
+    html += '</article>';
+  }
+  if(shown === 0){
+    html = '<div class="empty">目前篩選條件下沒有題目 &#128522;<br>換個篩選，或按「全部 60 題」。</div>';
+  }
+  box.innerHTML = html;
+}
+
+function renderAll(){ renderStats(); renderNav(); renderQuestions(); }
+
+document.addEventListener('click', function(ev){
+  const opt = ev.target.closest ? ev.target.closest('.opt') : null;
+  if(opt){
+    state.answers[parseInt(opt.getAttribute('data-q'), 10)] = parseInt(opt.getAttribute('data-k'), 10);
+    saveState();
+    renderAll();
+    return;
+  }
+  const go = ev.target.closest ? ev.target.closest('[data-goto]') : null;
+  if(go){
+    const idx = parseInt(go.getAttribute('data-goto'), 10);
+    if(state.filter !== 'all'){ state.filter = 'all'; syncFilterButtons(); renderAll(); }
+    const el = document.getElementById('q' + (idx + 1));
+    if(el){
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      el.style.transition = 'box-shadow .3s';
+      el.style.boxShadow = '0 0 0 3px rgba(37,99,235,.35)';
+      setTimeout(function(){ el.style.boxShadow = ''; }, 900);
+    }
+    saveState();
+  }
+});
+
+function syncFilterButtons(){
+  const map = { all:'btnAll', unanswered:'btnUnans', wrong:'btnWrong' };
+  for(const k in map){
+    const b = document.getElementById(map[k]);
+    if(b) b.classList.toggle('active', state.filter === k);
+  }
+}
+
+function setFilter(f){
+  state.filter = f;
+  syncFilterButtons();
+  saveState();
+  renderAll();
+}
+
+function bind(){
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.revealed = !state.revealed; saveState(); renderAll();
+  });
+  document.getElementById('btnAll').addEventListener('click', function(){ setFilter('all'); });
+  document.getElementById('btnUnans').addEventListener('click', function(){ setFilter('unanswered'); });
+  document.getElementById('btnWrong').addEventListener('click', function(){ setFilter('wrong'); });
+  document.getElementById('btnTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('確定要清除全部作答紀錄嗎？此動作無法復原。')) return;
+    state.answers = {}; state.revealed = false; state.filter = 'all';
+    saveState(); syncFilterButtons(); renderAll();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && state.revealed){ state.revealed = false; saveState(); renderAll(); }
+  });
+}
+
+loadState();
+syncFilterButtons();
+renderAll();
+bind();
+</script>
+</body>
+</html>
