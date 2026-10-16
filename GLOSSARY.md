@@ -69,7 +69,7 @@
 | `opencv` / `popular` / `pe` / `rai` / `sf` | `opencv-notes` / `popular-llm-notes` / `prompt-engineering-notes` / `responsible-ai-notes` / `streamlit-flask-notes` | `<dir>` | 命名對應（推論） |
 | `local_gpu_ml` / `nn5` | `local-gpu-ml-notes` / `neural-network-notes` | `<dir>` | 命名對應（推論） |
 | `automl` / `gen` / `mlmodels` | `automl-notes` / `generalization-notes` / `ml-models-notes` | `<dir>` | 已驗證（目錄與檔名一致） |
-| `ed_king_queen` | —（一次性封面） | — | 無對應筆記 |
+| `ed_king_queen` | `ai-intro-notes`（§8.1 的霓虹插圖，**不是封面**） | — | 已驗證（`embed_into_ai_intro.py` docstring） |
 
 > `l6`–`l9` 是 IVDC LLM 課程的**課節編號**，課程總覽頁是 `/llm-course/`。
 > 其餘代號只在 `_covergen/` 內部使用；**要引用某份筆記時請寫 `source/` 目錄名，不要寫代號**。
@@ -121,7 +121,7 @@
 4. **`ml-models-notes` 硬性全過**，但 2332 處孤立 LF、106 處「第 N 頁」（警告級）。
 5. **頁首區塊不是每份都有**：`llm-intro-notes` 的 `<blockquote>` 不存在（閘門只在區塊存在時檢查）。契約 §3 寫「每份筆記固定格式」與現實不符 → 決定「補齊」或「改成選用」。
 6. ~~**閘門是非阻擋的**~~ **已修（2026-10-16）**：閘門搬進 `pages.yml` 當第一個 job，`build` 與 `deploy` 都 `needs` 它——**不通過就不部署**。已用一個故意塞入的禁詞實測過：gate failure → build／deploy skipped。
-7. `ed_king_queen` 在 `_covergen/` 沒有對應筆記（一次性產物）。
+7. ~~`ed_king_queen` 在 `_covergen/` 沒有對應筆記（一次性產物）~~ **更正（2026-10-16）**：`_covergen/ed_king_queen/` 是 **`ai-intro-notes` §8.1「king − man + woman = queen」霓虹插圖的產線**（`gen_king_queen.py` 產圖 → `embed_into_ai_intro.py` 用位元組層編輯把同一段 `<figure>` 嵌進該筆記的 md 與 html）。它不是孤兒，只是資料夾名字看不出目標；已補進 §3 的代號表。
 
 > 實測基準：2026-10-16 執行 `pwsh -File tools/notes-qa/qa_notes.ps1` → 檢查 16 份、FAIL 1、警告 5；跳過 `coding-agent`、`dhh-rails-world-2026`（非筆記）。
 
