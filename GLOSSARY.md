@@ -117,10 +117,10 @@
 
 1. ~~**互動測驗是附錄 E 還是 F？**~~ **已決定（2026-10-16）：統一為「附錄 E」。** 那 2 份 AutoML 筆記原本多一個「離線執行與實測原始輸出」卡在 D，把後面全部往後推一格；現已把它移到文末成為 **附錄 G**，並把 一頁精華→**D**、互動測驗→**E**、答錯題目對照→**F**。16 份筆記的附錄字母順序現在完全一致，閘門 0 失敗。
 2. ~~**slug 要不要 `-ivdc` 後綴？**~~ **已決定（2026-10-16）：全站移除。** 13 個貼文與封面改名為 `<dir>`、課程總覽頁（`cv-course`／`llm-course`）的圖片連結同步更新、舊網址以 meta refresh 轉址保留。`AGENT-HEALTH.md` 裡的規則以這裡為準。
-3. **`generalization-notes` 目前閘門 FAIL**（2026-10-16 實測）：`原稿` html 67／md 37 次、`教材` 8／5 次、`pN` 16／16 次；另有 1244 處孤立 LF、36 處「第 N 頁」。
+3. ~~**`generalization-notes` 目前閘門 FAIL**~~ **已修（2026-10-16）**：禁詞與頁碼用 `yk_replace2.ps1` 清乾淨（`原稿` 104 處、`教材` 13 處、`pN` 31 處），16 份筆記現在 **0 失敗**。殘留警告：66 處「第 N 頁」寫法（advisory，與 `ml-models-notes` 的 106 處同性質）。
 4. **`ml-models-notes` 硬性全過**，但 2332 處孤立 LF、106 處「第 N 頁」（警告級）。
 5. **頁首區塊不是每份都有**：`llm-intro-notes` 的 `<blockquote>` 不存在（閘門只在區塊存在時檢查）。契約 §3 寫「每份筆記固定格式」與現實不符 → 決定「補齊」或「改成選用」。
-6. **閘門是非阻擋的**：`notes-qa.yml` 有 `continue-on-error: true`，所以第 3 點的 FAIL **不會擋部署**，只留在 Actions Step Summary。
+6. ~~**閘門是非阻擋的**~~ **已修（2026-10-16）**：閘門搬進 `pages.yml` 當第一個 job，`build` 與 `deploy` 都 `needs` 它——**不通過就不部署**。已用一個故意塞入的禁詞實測過：gate failure → build／deploy skipped。
 7. `ed_king_queen` 在 `_covergen/` 沒有對應筆記（一次性產物）。
 
 > 實測基準：2026-10-16 執行 `pwsh -File tools/notes-qa/qa_notes.ps1` → 檢查 16 份、FAIL 1、警告 5；跳過 `coding-agent`、`dhh-rails-world-2026`（非筆記）。
