@@ -23,7 +23,7 @@
 | **唯一來源** | single source | `<Name>_Study_Notes.md`；html 與 quiz 都由它衍生，改字要三邊同步 | 同上 | 主檔、來源檔 |
 | **頁首區塊** | header block | 標題下方那段 `<blockquote>` 出處說明（課程／機構／涵蓋檔案…） | 筆記頁首 | header、前言 |
 | **目錄** | TOC | 頁首之後的章節表格，`#` 欄放編號 | 筆記 | index、大綱 |
-| **附錄** | appendix | 章節之後的 A–G 區塊（速查表／常見錯誤／實測輸出／一頁精華／互動測驗…） | 筆記末段 | 附註、appendix 區 |
+| **附錄** | appendix | 章節之後的 A–G 區塊；**字母順序固定**：A 速查表 → B 常見錯誤 → C 延伸資源／離線提示 → D 一頁精華 → E 互動測驗 → F 答錯題目對照 → G 離線執行與實測原始輸出（目前只有 AutoML 系列有 G） | 筆記末段 | 附註、appendix 區 |
 | **互動測驗** | mc-quiz | `mc-quiz.html`，題庫在 `const QUESTIONS` | `source/<dir>/mc-quiz.html` | quiz 頁、測驗頁 |
 | **封面** | cover | `source/img/covers/<slug>.png`，走固定 **house style**（深色電影感、同一組基底） | `_covergen/` 產出 | 頭圖、banner 圖 |
 | **品質閘門** | quality gate | `tools/notes-qa/qa_notes.ps1`，11 項硬性 + 2 警告，離開碼 0／1 | `tools/notes-qa/` | ⛔ 測試（它是 gate，不是 test suite） |
@@ -115,7 +115,7 @@
 
 ## 6. 待對齊（open questions，尚未決定）
 
-1. **互動測驗是附錄 E 還是 F？** 14 份用 **E**（16 份筆記中）；`generalization-notes`、`ml-models-notes` 用 **F**（這兩份另有「附錄 G：答錯題目 → 複習章節對照」）。契約 §3 範本寫的是 E。→ 需要選一個 canonical 並統一。
+1. ~~**互動測驗是附錄 E 還是 F？**~~ **已決定（2026-10-16）：統一為「附錄 E」。** 那 2 份 AutoML 筆記原本多一個「離線執行與實測原始輸出」卡在 D，把後面全部往後推一格；現已把它移到文末成為 **附錄 G**，並把 一頁精華→**D**、互動測驗→**E**、答錯題目對照→**F**。16 份筆記的附錄字母順序現在完全一致，閘門 0 失敗。
 2. ~~**slug 要不要 `-ivdc` 後綴？**~~ **已決定（2026-10-16）：全站移除。** 13 個貼文與封面改名為 `<dir>`、課程總覽頁（`cv-course`／`llm-course`）的圖片連結同步更新、舊網址以 meta refresh 轉址保留。`AGENT-HEALTH.md` 裡的規則以這裡為準。
 3. **`generalization-notes` 目前閘門 FAIL**（2026-10-16 實測）：`原稿` html 67／md 37 次、`教材` 8／5 次、`pN` 16／16 次；另有 1244 處孤立 LF、36 處「第 N 頁」。
 4. **`ml-models-notes` 硬性全過**，但 2332 處孤立 LF、106 處「第 N 頁」（警告級）。
