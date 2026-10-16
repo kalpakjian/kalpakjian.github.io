@@ -19,7 +19,8 @@
     8. heading parity   : h2/h3 set identical between md and html
     9. header blockquote: rendered line by line (<br /> present)
                           -- only checked when a header block is actually there,
-                             i.e. a <blockquote> immediately after </h1>
+                             i.e. the first <blockquote> after </h1> once the
+                             subtitle <div class="sub"> and <hr> are skipped
    10. quiz            : QUESTIONS JSON parses, count matches the nav label
    11. quiz options    : a quiz that builds <li class="opt"> rows must also
                           reference the option array (q.o[k]); otherwise every
@@ -180,6 +181,11 @@ foreach ($d in $dirs) {
   }
 
   # 9) header blockquote rendered line by line (only when a header block is present)
+  #    A header block is the first <blockquote> after </h1> once the subtitle
+  #    <div class="sub"> and the <hr> separators are skipped. Requiring the
+  #    blockquote to sit immediately after </h1> made this check dead code on
+  #    this site (every page has a subtitle div in between), which is how
+  #    generalization-notes shipped a header with 0 <br /> in 2026-10.
   $main = $html.IndexOf('<main>')
   if ($main -ge 0) { $h1 = $html.IndexOf('</h1>', $main) } else { $h1 = $html.IndexOf('</h1>') }
   if ($h1 -ge 0) {
@@ -187,7 +193,9 @@ foreach ($d in $dirs) {
     $s = $html.IndexOf('<blockquote>', $after)
     if ($s -ge 0) {
       $between = $html.Substring($after, $s - $after)
-      if ($between -match '^\s*$') {
+      $probe = [regex]::Replace($between, '(?s)<div\s+class="sub">.*?</div>', '')
+      $probe = [regex]::Replace($probe, '<hr\s*/?>', '')
+      if ($probe -match '^\s*$') {
         $e = $html.IndexOf('</blockquote>', $s)
         $seg = $html.Substring($s, $e - $s)
         $nbr = ([regex]::Matches($seg, $brRx)).Count
