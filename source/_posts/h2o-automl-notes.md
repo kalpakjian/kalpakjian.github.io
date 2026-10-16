@@ -1,7 +1,7 @@
 ---
 title: H2O AutoML 實作 學習筆記：38 頁走完一條完全免費的 AutoML 生產線
 archive: true   # 已歸入「AutoML 應用證書課程」學習筆記，不列在首頁
-date: 2026-10-17 02:20:00
+date: 2026-10-16 21:30:00
 categories:
   - 學習資源
 tags:
