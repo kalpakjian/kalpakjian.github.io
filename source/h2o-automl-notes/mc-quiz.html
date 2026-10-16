@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H2O AutoML MC 模擬測驗（60 題）| AI Tech Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#e2e5ea; --txt:#1f2328; --dim:#5b636e;
+  --blue:#2563eb; --green:#15803d; --green-bg:#e8f6ec; --red:#b91c1c;
+  --red-bg:#fdeaea; --sel:#dbeafe; --sel-line:#2563eb;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",
+    "Microsoft JhengHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+a{color:var(--blue)}
+.topbar{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  padding:12px 20px 10px;
+}
+.topbar .row1{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px}
+.topbar h1{font-size:17px; margin:0; font-weight:700}
+.topbar .back{font-size:13px; color:var(--dim); text-decoration:none}
+.topbar .back:hover{color:var(--blue)}
+.stats{display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; font-size:14px; color:var(--dim)}
+.stats b{font-size:18px; color:var(--txt)}
+.stats .ok b{color:var(--green)}
+.stats .no b{color:var(--red)}
+.saved{font-size:12px; color:var(--green); opacity:0; transition:opacity .3s}
+.saved.on{opacity:1}
+.progress{height:6px; background:var(--line); border-radius:99px; margin-top:10px; overflow:hidden}
+.progress i{display:block; height:100%; width:0; background:var(--blue); border-radius:99px; transition:width .25s}
+.controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+button{
+  font:inherit; font-size:13px; padding:6px 13px; border-radius:8px;
+  border:1px solid var(--line); background:#fff; color:var(--txt); cursor:pointer;
+  transition:.15s;
+}
+button:hover{border-color:#b9c0c9; background:#fbfbfc}
+button.primary{background:var(--blue); border-color:var(--blue); color:#fff}
+button.primary:hover{background:#1d4ed8}
+button.active{background:var(--sel); border-color:var(--sel-line); color:#1e40af; font-weight:600}
+button.danger{color:var(--red); border-color:#f0c4c4}
+button.danger:hover{background:var(--red-bg)}
+.navwrap{padding:16px 20px 0}
+.navgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px}
+.navgrid button{padding:6px 0; font-size:13px; border-radius:7px; text-align:center; font-variant-numeric:tabular-nums}
+.navgrid button.done{background:#eef2ff; border-color:#c7d2fe; color:#3730a3}
+.navgrid button.right{background:var(--green-bg); border-color:#a7d7b6; color:var(--green); font-weight:700}
+.navgrid button.wrong{background:var(--red-bg); border-color:#eeb4b4; color:var(--red); font-weight:700}
+main{max-width:900px; margin:0 auto; padding:20px 20px 80px}
+.parttitle{
+  margin:34px 0 14px; font-size:15px; font-weight:700; color:var(--dim);
+  border-left:4px solid var(--blue); padding-left:10px;
+}
+.q{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px 18px; margin-bottom:14px;
+}
+.q.correct{border-color:#a7d7b6; background:var(--green-bg)}
+.q.incorrect{border-color:#eeb4b4; background:var(--red-bg)}
+.qhead{display:flex; gap:10px; align-items:flex-start}
+.num{
+  flex:0 0 auto; min-width:30px; height:26px; line-height:26px; text-align:center;
+  background:#eef1f5; border-radius:7px; font-size:13px; font-weight:700;
+  color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.qtext{margin:0; font-weight:600; font-size:16px}
+.opts{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:7px}
+.opt{
+  display:flex; gap:10px; align-items:flex-start; padding:9px 12px;
+  border:1px solid var(--line); border-radius:9px; background:#fff;
+  cursor:pointer; transition:.12s; user-select:none;
+}
+.opt:hover{border-color:#b9c0c9; background:#fbfbfc}
+.opt .lt{
+  flex:0 0 auto; width:22px; height:22px; line-height:22px; text-align:center;
+  border-radius:6px; background:#eef1f5; font-size:12px; font-weight:700; color:var(--dim);
+}
+.opt.picked{border-color:var(--sel-line); background:var(--sel)}
+.opt.picked .lt{background:var(--sel-line); color:#fff}
+.opt.right{border-color:#7cc08f; background:var(--green-bg)}
+.opt.right .lt{background:var(--green); color:#fff}
+.opt.wrong{border-color:#e39191; background:var(--red-bg)}
+.opt.wrong .lt{background:var(--red); color:#fff}
+.tag{font-size:11px; padding:1px 7px; border-radius:99px; margin-left:auto;
+     flex:0 0 auto; font-weight:700; align-self:center}
+.tag.right{background:var(--green); color:#fff}
+.tag.wrong{background:var(--red); color:#fff}
+.expl{
+  margin-top:12px; padding:11px 14px; background:#f8fafc; border-radius:9px;
+  border-left:3px solid var(--blue); font-size:14.5px; color:#333a44;
+}
+.expl b{color:var(--txt)}
+.empty{text-align:center; color:var(--dim); padding:50px 20px; font-size:15px}
+footer{
+  max-width:900px; margin:0 auto; padding:0 20px 60px; color:var(--dim);
+  font-size:13px; text-align:center;
+}
+@media print{
+  .topbar,.navwrap,footer,.controls{display:none !important}
+  body{background:#fff; font-size:12pt}
+  main{max-width:none; padding:0}
+  .q{break-inside:avoid; page-break-inside:avoid; border-color:#999}
+}
+@media (max-width:560px){
+  .topbar{padding:10px 14px 8px}
+  .topbar h1{font-size:15px}
+  main{padding:14px 14px 60px}
+  .navwrap{padding:12px 14px 0}
+  .q{padding:13px 14px}
+  .qtext{font-size:15px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="row1">
+    <h1>H2O AutoML 學習筆記 · MC 模擬測驗</h1>
+    <a class="back" href="index.html">&larr; 回到 H2O AutoML 學習筆記</a>
+    <span class="saved" id="saved">進度已儲存 &#10003;</span>
+  </div>
+  <div class="stats">
+    <span>已答 <b id="nAns">0</b> / 60</span>
+    <span class="ok">得分 <b id="nScore">0</b> / 60</span>
+    <span class="no">答錯 <b id="nWrong">0</b></span>
+    <span id="hint">作答進度自動存在此瀏覽器，關掉再回來可繼續</span>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <button id="btnReveal" class="primary">顯示答案</button>
+    <button id="btnAll" class="active">全部 60 題</button>
+    <button id="btnUnans">只看未答</button>
+    <button id="btnWrong">只看答錯</button>
+    <button id="btnTop">回到頂部</button>
+    <button id="btnReset" class="danger">重設全部</button>
+  </div>
+</header>
+
+<div class="navwrap">
+  <div class="navgrid" id="navgrid"></div>
+</div>
+
+<main id="quiz"></main>
+
+<footer>
+  <p>H2O AutoML 實作 · 開源 H2O-3 端到端演練 個人學習筆記</p>
+  <p>單一 HTML 檔、無外部資源，可離線使用</p>
+</footer>
+<script>
+const QUESTIONS = [{"q":"H2O 提供的網頁操作介面叫什麼？","o":["H2O Dashboard","H2O Flow","H2O Studio","H2O Notebook"],"a":1,"e":"H2O Flow 是 H2O-3 內建的網頁介面，以「cell」為單位執行指令。複習 §1.5。"},{"q":"H2O Flow 預設使用的埠號（port）是多少？","o":["54321","8888","3000","8080"],"a":0,"e":"`localhost:54321`——localhost 代表自己的電腦，54321 是 H2O 伺服器預設埠號。複習 §1.5。"},{"q":"啟動 H2O 伺服器的指令是哪一行？","o":["h2o start","python h2o.py","java -jar h2o.jar","h2o.init()"],"a":2,"e":"`java -jar h2o.jar` 會啟動伺服器並佔用終端機。`h2o.init()` 是 Python 端的連線指令。複習 §1.3。"},{"q":"H2O 支援的 Java 版本範圍是？","o":["Java 11 至 21","所有版本皆支援","Java 6 至 11","Java 8 至 17"],"a":3,"e":"只支援 **Java 8–17**；系統若是 Java 23 會直接噴錯。複習 §1.4。"},{"q":"Java 23 的環境下，課程提供的繞道參數是哪一個？","o":["-DallowJava=23","-Dsys.ai.h2o.debug.allowJavaVersions=23","--force-java-23","-Dh2o.java.skip=true"],"a":1,"e":"`-Dsys.ai.h2o.debug.allowJavaVersions=23` 只是**略過版本檢查**的除錯開關，不是真的支援。複習 §1.4。"},{"q":"啟動 h2o.jar 的那個終端機視窗可以關掉嗎？","o":["可以，關掉不影響","可以，只要瀏覽器還開著","不行，只能最小化","不行，必須一直保持在最上層"],"a":2,"e":"它正在運行支撐 WebUI 的**後台伺服器**，關掉等於把伺服器殺掉。複習 §1.4。"},{"q":"課程示範的 H2O 版本是？","o":["3.30.0.1","4.0.0","2.9.0","3.46.0.11"],"a":3,"e":"下載頁標示 Version 3.46.0.11，解壓後的資料夾與 python 套件都跟著這個版本。複習 §1.3。"},{"q":"為什麼終端機必須保持開啟狀態？","o":["因為它正在運行支撐 WebUI 的後台伺服器","因為 H2O 會持續寫入 log 到螢幕","為了讓 Java 保持在最新版本","為了讓瀏覽器能下載檔案"],"a":0,"e":"伺服器是常駐程序，關掉終端機就等於中斷服務。複習 §1.4。"},{"q":"課程把下載頁「Get started with H2O in 3 easy steps」第 2 步的指令區塊稱為什麼？","o":["macro","prompt","script","recipe"],"a":1,"e":"課程稱它為 prompt，做法是整段複製後貼到終端機。複習 §1.3。"},{"q":"H2O Flow 中，一條一條可以輸入指令並顯示結果的單位叫什麼？","o":["panel","node","cell","tab"],"a":2,"e":"Flow 是筆記本式的介面，每個 cell 左側有 `CS` 標籤，執行後結果直接顯示在下方。複習 §2.0。"},{"q":"在 Flow 中要匯入 CSV 檔，第一步要點哪個選單？","o":["Data ▾ → Import Files","Flow ▾ → Open","Admin ▾ → Upload","Model ▾ → Import"],"a":0,"e":"路徑是 **Data ▾ → Import Files**。複習 §2.1。"},{"q":"在 Import Files 頁面按放大鏡搜尋到檔案後，為什麼還要按「＋」？","o":["為了自動解析欄位型別","為了下載檔案到本機","為了預覽檔案內容","為了把檔案加入待匯入清單"],"a":3,"e":"搜尋只是找到檔案；按 ＋ 才會加入 `Selected Files`，`Import` 按鈕才會亮起。複習 §2.3。"},{"q":"Import 與 Parse 的差別是什麼？","o":["Import 搬進記憶體，Parse 解讀格式並產生 .hex","兩者完全相同，只是先後順序不同","Import 只能用於 CSV，Parse 只能用於 Excel","Import 解讀格式，Parse 搬進記憶體"],"a":0,"e":"Import 只是把檔案搬進 H2O；**Parse 才是真正讀懂它**（切欄、判型別、產生 `.hex`）。複習 §2.5。"},{"q":"Parse 完成後產生的資料框格式是？","o":[".parquet",".hex",".h2o",".csv"],"a":1,"e":"H2O 原生格式是 `.hex`，檔名來自 `destination_frame`。複習 §2.8。"},{"q":"為什麼要把 `Ticker` 欄位的型別設成 Enum？","o":["為了讓它變成預測目標","為了節省記憶體","為了讓模型把它當成類別而不是數量","為了加快 Parse 速度"],"a":2,"e":"股票代號是**代號**不是數量；留在 Numeric 會讓模型以為「3320 比 941 大 3 倍多」。複習 §2.6。"},{"q":"訓練資料的五個欄位中，哪一個是預測目標（response）？","o":["Close_Lag1","Ticker","Date","Close"],"a":3,"e":"`Close`（當月收盤價）是預測目標，其餘欄位是特徵。複習 §2.7。"},{"q":"`Close_Lag1` 代表什麼？","o":["當月收盤價","上月收盤價","股票代碼","月份"],"a":1,"e":"Lag1 = 延遲一期，也就是**上個月的收盤價**，是把時間序列轉成監督式學習的關鍵欄位。複習 §2.7。"},{"q":"`Month` 欄位的主要作用是？","o":["用來排序資料","標記資料年份","讓模型學到季節性","當成預測目標"],"a":2,"e":"Month（1–12）讓模型能學到季節性的週期變化。複習 §2.7。"},{"q":"`parseFiles` 指令中的 `destination_frame` 是什麼？","o":["解析後產生的 .hex 名稱","輸出 PDF 的路徑","模型的存放位置","原始 CSV 的檔名"],"a":0,"e":"`destination_frame: \"monthly_training_set.hex\"`——這個名字等一下 Run AutoML 要填進 `training_frame`。複習 §2.8。"},{"q":"Parse 完成後，Job 卡片的哪個欄位可以確認已經成功？","o":["Run Time = 00:00:00.45","Description = Parse","Type = Frame","Status = DONE"],"a":3,"e":"Status 顯示 `DONE`、Progress 100% 就代表解析完成。複習 §2.8。"},{"q":"要執行 AutoML，正確的選單路徑是？","o":["Model ▾ → Run AutoML…","Score ▾ → AutoML","Admin ▾ → Train","Data ▾ → Run AutoML"],"a":0,"e":"**Model ▾ → Run AutoML…** 是唯一的入口。複習 §3.1。"},{"q":"Run AutoML 的 `training_frame` 課堂填什麼？","o":["best_model","monthly_training_set.csv","monthly_training_set.hex","monthly_prediction_set.hex"],"a":2,"e":"填 Parse 產生的 `.hex`（不是 CSV）。複習 §3.2。"},{"q":"`response_column` 課堂填什麼？","o":["Date","Close","Ticker","Month"],"a":1,"e":"要預測的是**當月收盤價** `Close`。複習 §3.2。"},{"q":"`ignored_columns` 課堂填什麼？","o":["Ticker","Close_Lag1","Month","Date"],"a":3,"e":"忽略 `Date`——時間資訊已經由 `Month` 與 `Close_Lag1` 表達。複習 §3.3。"},{"q":"為什麼一定要把 `Date` 放進 ignored_columns？","o":["因為它會讓訓練變慢","因為未來（2024–2027）的日期根本不存在，模型可能死記時間戳","因為 H2O 不支援日期欄位","因為它與 Close 完全無關"],"a":1,"e":"直接餵日期會讓模型學到無法外推的規則；時間要用 Month 與 Lag 特徵表達。複習 §3.3。"},{"q":"課堂把 `max_runtime_secs` 設為多少？","o":["600","3600","60","300"],"a":3,"e":"設 300 秒（5 分鐘）是課堂的時間控制閥，確保下課前跑得完。複習 §3.4。"},{"q":"若 `max_runtime_secs` 與 `max_models` 都沒有指定，AutoML 預設會跑多久？","o":["3600 秒（1 小時）","跑到收斂為止","300 秒","1800 秒"],"a":0,"e":"官方說明：兩者都沒設時，`max_runtime_secs` 預設 **3600 秒**。複習 §3.4。"},{"q":"`max_models` 設為 0 代表什麼？","o":["使用預設的 10 個模型","不訓練任何模型","不限制模型數量","只訓練一個模型"],"a":2,"e":"0 = 數量不設限，但仍受 `max_runtime_secs` 的時間限制。複習 §3.4。"},{"q":"`seed` 設為 -1 代表什麼？","o":["自動挑選最佳種子","使用系統時間當種子，結果不可重現","關閉隨機性","固定使用第一個模型"],"a":1,"e":"官方說明：設成 -1 以外的值可讓結果**可重現**；-1 則不固定。複習 §3.4。"},{"q":"課堂要求取消勾選哪兩個 Expert 選項？","o":["max_models、max_runtime_secs","export_checkpoints_dir、seed","stopping_rounds、stopping_metric","keep_cross_validation_predictions、keep_cross_validation_models"],"a":3,"e":"取消 `keep_cross_validation_predictions` 與 `keep_cross_validation_models` 兩個勾選。複習 §3.4。"},{"q":"為什麼要取消那兩個交叉驗證勾選？","o":["因為它們與 Stacked Ensemble 衝突","因為它們會讓準確率下降","因為它們會佔用大量記憶體","因為它們會讓訓練時間變成兩倍"],"a":2,"e":"官方說明特別警告保留 CV 模型**會佔用大量記憶體**；我們只要最後的最佳模型。複習 §3.4。"},{"q":"`stopping_rounds: 3` 的意義是？","o":["連續 3 次沒有改善就提早停止","交叉驗證切 3 折","最多重試 3 次","總共只訓練 3 個模型"],"a":0,"e":"這是 early stopping：連續 3 次沒進步就停（設 0 = 關閉）。複習 §3.4。"},{"q":"`stopping_metric: AUTO` 在迴歸任務會使用哪個指標？","o":["accuracy","logloss","deviance","AUC"],"a":2,"e":"官方說明：AUTO 在分類用 logloss、**迴歸用 deviance**。複習 §3.4。"},{"q":"設定完成後，按哪個按鈕開始訓練？","o":["Build Models","Run Now","Start Training","Submit Job"],"a":0,"e":"參數表最下方的 **Build Models** 按鈕。複習 §3.5。"},{"q":"AutoML 訓練完成後，要點什麼才能看到結果？","o":["Refresh","View","Inspect","Download"],"a":1,"e":"點 **View** 就會開啟 Leaderboard。複習 §3.6。"},{"q":"Leaderboard 預設依哪個指標排序？","o":["rmsle（由大到小）","model_id 字母順序","mae（由小到大）","rmse（由小到大）"],"a":3,"e":"標題寫得很清楚：**models sorted in order of rmse, best first**。複習 §3.7。"},{"q":"課程示範中最佳模型的 rmse 大約是多少？","o":["144.68","0.1447","1.4468","14.468"],"a":2,"e":"`StackedEnsemble_BestOfFamily_6` 的 rmse ≈ **1.4468**（約為股價 55 元的 2.6%）。複習 §3.7。"},{"q":"課程示範中拿下第一名的模型屬於哪一種演算法？","o":["Generalized Linear Model","Gradient Boosting Machine（GBM）","Deep Learning","Stacked Ensemble"],"a":3,"e":"前幾名都是 **Stacked Ensemble**（堆疊集成）——把多個模型的預測再交給上層模型彙總。複習 §3.7。"},{"q":"Model ID 中的 `BestOfFamily` 代表什麼意思？","o":["每個演算法家族中表現最好的那一個","只用單一演算法訓練的模型","自動挑選的最佳參數組合","整個排行榜的第一名"],"a":0,"e":"BestOfFamily = **每個家族的最佳代表**，再拿這些代表去堆疊。複習 §3.7。"},{"q":"Model ID 結尾的 `20260707_121423` 代表什麼？","o":["模型版本號","訓練的時間戳","資料集的流水號","使用者的 ID"],"a":1,"e":"那是訓練的時間戳（2026-07-07 12:14:23），方便追蹤模型是哪一次跑出來的。複習 §3.7。"},{"q":"要把訓練好的模型帶出 H2O，有哪兩種操作方式？","o":["Data ▾ → Download，或 Score ▾ → Save","Admin ▾ → Download Logs，或 Flow ▾ → Save","只能透過 Python 的 h2o.save_model()","Model ▾ → Export Model…，或在最佳模型卡片上按 Export"],"a":3,"e":"兩個入口都通：**Model ▾ → Export Model…** 或模型卡片上的 **Export**。複習 §4.1。"},{"q":"匯出模型時，Path 的最後一段（例如 `best_model`）是檔名還是資料夾？","o":["是資料夾，裡面會有多個檔案","是壓縮檔名","沒有意義，會被忽略","是檔名，會產生單一檔案"],"a":0,"e":"它是**資料夾**，匯出後裡面會有多個檔案（模型本體、genmodel 等）。複習 §4.3。"},{"q":"如果 Overwrite 沒有勾選，而同一路徑已經匯出過一次，會發生什麼事？","o":["只匯出部分的檔案","自動覆蓋舊模型","匯出失敗","自動改名後匯出"],"a":2,"e":"`overwrite: false` 時第二次匯出會**失敗**；要嘛換名字、要嘛把 Overwrite 打勾。複習 §4.4。"},{"q":"課程匯出模型時使用的 format 是什麼？","o":["json","bin","pkl","onnx"],"a":1,"e":"`format: \"bin\"`——匯出完整模型，給 Python 的 `h2o.load_model()` 使用。複習 §4.4。"},{"q":"匯出成功後，Flow 會顯示什麼訊息？","o":["Build complete","Frame created","Job DONE","Model Exported — The specified model was exported successfully."],"a":3,"e":"會出現 **Model Exported** 卡片與「已成功匯出」的訊息。複習 §4.4。"},{"q":"MOJO（Model Object, Optimized）的主要用途是什麼？","o":["生產環境的快速評分（輕量部署格式）","把模型轉成 Excel 檔案","自動備份訓練資料","在 Flow 介面裡預覽模型結構"],"a":0,"e":"MOJO 是為**生產環境快速評分**設計的輕量格式，與本課用於 `load_model` 的完整匯出不同。複習 §4.1。"},{"q":"在 Python 中要把匯出的模型載入記憶體，要用哪個函式？","o":["h2o.import_model()","h2o.load_model(model_path)","h2o.get_model()","h2o.save_model()"],"a":1,"e":"`h2o.load_model(model_path)`，其中 `model_path` 就是 Flow 匯出的路徑。複習 §4.5。"},{"q":"預測程式中的 `model_path` 應該填什麼？","o":["輸出 CSV 的路徑","訓練資料 CSV 的路徑","Flow 匯出模型時填的那個路徑","Python 虛擬環境的路徑"],"a":2,"e":"要填 **Flow Export Model 時的路徑**（例如 `.../H2O_model/best_model`），程式才知道要載入哪個模型。複習 §4.5。"},{"q":"課程用哪一行指令建立 Python 虛擬環境？","o":["conda create .venv","python3 -m venv .venv","pip install venv","python3 new-env .venv"],"a":1,"e":"`python3 -m venv .venv` 建立獨立環境，再用 `source .venv/bin/activate` 啟用（Windows 是 `.\\\\.venv\\\\Scripts\\\\Activate.ps1`）。複習 §4.6。"},{"q":"安裝 H2O 的 Python 客戶端套件，指令是？","o":["pip install flow","pip install h2o-client","pip install h2o-automl","pip install h2o"],"a":3,"e":"`pip install h2o`——程式中 `import h2o` 用的就是它。複習 §4.6。"},{"q":"程式中 `tickers` 清單包含哪三檔港股？","o":["「0941」「3320」「1515」","「0005」「0388」「2318」","「2800」「2828」「3033」","「0700」「9988」「3690」"],"a":0,"e":"課程示範的是 **0941（中國移動）、3320（華潤醫藥）、1515（華潤醫療）**。複習 §4.5。"},{"q":"為什麼程式要用 `int(t)` 來比對 Ticker？","o":["因為要避免大小寫問題","因為字串比對比較慢","因為 CSV 裡的 Ticker 是整數，而清單是字串","因為 H2O 只接受整數"],"a":2,"e":"清單寫成 `\"0941\"` 是字串，但 CSV 的 `Ticker` 欄位是整數 941，所以要 `int(t)` 才能比對。複習 §4.5。"},{"q":"遞迴預測中，每一列的 `Close_Lag1` 是從哪裡來的？","o":["由 `Month` 欄位換算而來","全部都是真實的歷史收盤價","上一列的 `predict_Close`（第一列例外）","由 Excel 樞紐分析算出"],"a":2,"e":"除了第一列是真實收盤價之外，之後每一列的 `Close_Lag1` 都等於**上一列的預測值**——這就是遞迴預測。複習 §4.5、§4.7。"},{"q":"第一列的 `Close_Lag1` 代表什麼？","o":["2023 年 12 月底最後一個真實收盤價（種子價格）","該檔股票的平均價","上一年的預測值","零"],"a":0,"e":"程式的註解稱它為**種子價格**：用最後一個真實收盤價當作發動引擎的起點。複習 §4.5。"},{"q":"預測程式最後產出的檔名是？","o":["monthly_prediction_set.csv","trend_2024_2027.csv","best_model.csv","predict_Close.csv"],"a":1,"e":"輸出 `trend_2024_2027.csv`，欄位是 Date、Ticker、Month、Close_Lag1、predict_Close。複習 §4.7。"},{"q":"為什麼 2025 年之後，每年的預測值幾乎完全相同？","o":["因為 CSV 只存了第一年的資料","因為 Excel 的加總把數字平均掉了","因為程式有 bug，重複寫入同一筆資料","因為模型收斂成固定的 12 個月週期"],"a":3,"e":"特徵只有 `Close_Lag1` 與 `Month`，遞迴幾輪後模型會**收斂到固定的年度循環**，所以每年 1 月都是 `53.2405` 左右。複習 §4.7。"},{"q":"Excel 樞紐分析圖中，Legend／Axis／Values 三個區域分別放什麼欄位？","o":["Month／predict_Close／Ticker","Date／Ticker／Month","Ticker／Date／predict_Close","predict_Close／Ticker／Date"],"a":2,"e":"**Legend (Series) = Ticker、Axis (Categories) = Date、Values = predict_Close**。複習 §5.4。"},{"q":"為什麼最後要把樞紐分析圖改成折線圖（Line）？","o":["因為折線圖比較省空間","因為直條圖會擠成 144 根柱子，看不出走勢","因為 Excel 不支援直條圖的樞紐","因為折線圖才能顯示總計"],"a":1,"e":"48 個月 × 3 檔股票會擠成 144 根柱子；換成折線圖才看得出**隨時間的趨勢**。複習 §5.6。"},{"q":"課程提供哪兩種方式關閉 H2O 伺服器？","o":["Score ▾ → Close，或重新開機","Flow ▾ → Exit，或登出帳號","直接關閉瀏覽器分頁，或刪除 h2o.jar","Admin ▾ → Shut Down，或在終端機按 Ctrl + C"],"a":3,"e":"兩種都可以：Flow 的 **Admin ▾ → Shut Down**，或是在跑 `h2o.jar` 的終端機按 **Ctrl + C**。複習 §5.8。"},{"q":"在最終的折線圖上，為什麼 1515 與 3320 兩條線幾乎貼在底部？","o":["因為它們與 941 共用同一個 Y 軸，而股價相差約十倍","因為 Excel 把數字取對數了","因為它們的預測值都是零","因為這兩檔股票的資料有缺漏"],"a":0,"e":"941 約在 52–55 元、1515 與 3320 約在 5 元，**共用 Y 軸**會讓下方兩條線被壓扁；實務上可改用雙 Y 軸或分開畫。複習 §5.7。"}];
+
+const LET = 'ABCD';
+const KEY = 'h2o-automl-mc-quiz-v1';
+const state = { answers:{}, revealed:false, filter:'all' };
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p && typeof p === 'object'){
+      state.answers = (p.answers && typeof p.answers === 'object') ? p.answers : {};
+      state.revealed = !!p.revealed;
+      state.filter = p.filter || 'all';
+    }
+  }catch(e){}
+}
+let savedTimer = null;
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const el = document.getElementById('saved');
+    if(el){ el.classList.add('on'); clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ el.classList.remove('on'); }, 1200); }
+  }catch(e){}
+}
+
+function tally(){
+  let answered = 0, score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    if(a !== undefined && a !== null){
+      answered++;
+      if(a === QUESTIONS[i].a) score++;
+    }
+  }
+  return { answered:answered, score:score, wrong:answered-score };
+}
+
+function isVisible(i){
+  const a = state.answers[i];
+  const has = (a !== undefined && a !== null);
+  if(state.filter === 'unanswered') return !has;
+  if(state.filter === 'wrong') return has && a !== QUESTIONS[i].a;
+  return true;
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdInline(s){
+  s = esc(s);
+  let out = '';
+  let bold = false;
+  let i = 0;
+  while(i < s.length){
+    if(s.charAt(i) === '*' && s.charAt(i + 1) === '*'){
+      bold = !bold;
+      out += bold ? '<b>' : '</b>';
+      i += 2;
+    } else {
+      out += s.charAt(i);
+      i++;
+    }
+  }
+  return out;
+}
+
+function renderStats(){
+  const t = tally();
+  document.getElementById('nAns').textContent = t.answered;
+  document.getElementById('nScore').textContent = t.score;
+  document.getElementById('nWrong').textContent = t.wrong;
+  document.getElementById('bar').style.width = (t.answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('btnReveal').textContent = state.revealed ? '隱藏答案' : '顯示答案';
+  document.getElementById('hint').textContent = state.revealed
+    ? '已顯示正解與解析'
+    : '作答進度自動存在此瀏覽器，關掉再回來可繼續';
+}
+
+function renderNav(){
+  const nav = document.getElementById('navgrid');
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    const has = (a !== undefined && a !== null);
+    let cls = '';
+    if(has) cls = 'done';
+    if(state.revealed && has) cls = (a === QUESTIONS[i].a) ? 'right' : 'wrong';
+    html += '<button class="' + cls + '" data-goto="' + i + '">' + (i+1) + '</button>';
+  }
+  nav.innerHTML = html;
+}
+
+function renderQuestions(){
+  const box = document.getElementById('quiz');
+  let html = '';
+  let shown = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(!isVisible(i)) continue;
+    shown++;
+    const q = QUESTIONS[i];
+    if(i === 0 || i === 20 || i === 40){
+      const label = i === 0 ? '第一部分：環境建置與資料匯入（1–20）'
+                  : i === 20 ? '第二部分：Run AutoML 與模型匯出（21–40）'
+                  : '第三部分：模型匯出、程式化預測與視覺化（41–60）';
+      html += '<div class="parttitle">' + label + '</div>';
+    }
+    const picked = state.answers[i];
+    const hasPicked = (picked !== undefined && picked !== null);
+    let qcls = '';
+    if(state.revealed && hasPicked) qcls = (picked === q.a) ? 'correct' : 'incorrect';
+
+    html += '<article class="q ' + qcls + '" id="q' + (i+1) + '">';
+    html += '<div class="qhead"><span class="num">' + (i+1) + '</span>';
+    html += '<p class="qtext">' + mdInline(q.q) + '</p></div>';
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      let cls = 'opt';
+      if(hasPicked && picked === k) cls += ' picked';
+      let tag = '';
+      if(state.revealed){
+        if(k === q.a){ cls += ' right'; tag = '<span class="tag right">正解</span>'; }
+        else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
+      }
+      html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
+    html += '<span class="lt">' + LET[k] + '</span><span>' + esc(q.o[k]) + '</span>' + tag + '</li>';
+}
+    html += '</ul>';
+    if(state.revealed){
+      html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
+    }
+    html += '</article>';
+  }
+  if(shown === 0){
+    html = '<div class="empty">目前篩選條件下沒有題目 &#128522;<br>換個篩選，或按「全部 60 題」。</div>';
+  }
+  box.innerHTML = html;
+}
+
+function renderAll(){ renderStats(); renderNav(); renderQuestions(); }
+
+document.addEventListener('click', function(ev){
+  const opt = ev.target.closest ? ev.target.closest('.opt') : null;
+  if(opt){
+    state.answers[parseInt(opt.getAttribute('data-q'), 10)] = parseInt(opt.getAttribute('data-k'), 10);
+    saveState();
+    renderAll();
+    return;
+  }
+  const go = ev.target.closest ? ev.target.closest('[data-goto]') : null;
+  if(go){
+    const idx = parseInt(go.getAttribute('data-goto'), 10);
+    if(state.filter !== 'all'){ state.filter = 'all'; syncFilterButtons(); renderAll(); }
+    const el = document.getElementById('q' + (idx + 1));
+    if(el){
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      el.style.transition = 'box-shadow .3s';
+      el.style.boxShadow = '0 0 0 3px rgba(37,99,235,.35)';
+      setTimeout(function(){ el.style.boxShadow = ''; }, 900);
+    }
+    saveState();
+  }
+});
+
+function syncFilterButtons(){
+  const map = { all:'btnAll', unanswered:'btnUnans', wrong:'btnWrong' };
+  for(const k in map){
+    const b = document.getElementById(map[k]);
+    if(b) b.classList.toggle('active', state.filter === k);
+  }
+}
+
+function setFilter(f){
+  state.filter = f;
+  syncFilterButtons();
+  saveState();
+  renderAll();
+}
+
+function bind(){
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.revealed = !state.revealed; saveState(); renderAll();
+  });
+  document.getElementById('btnAll').addEventListener('click', function(){ setFilter('all'); });
+  document.getElementById('btnUnans').addEventListener('click', function(){ setFilter('unanswered'); });
+  document.getElementById('btnWrong').addEventListener('click', function(){ setFilter('wrong'); });
+  document.getElementById('btnTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('確定要清除全部作答紀錄嗎？此動作無法復原。')) return;
+    state.answers = {}; state.revealed = false; state.filter = 'all';
+    saveState(); syncFilterButtons(); renderAll();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && state.revealed){ state.revealed = false; saveState(); renderAll(); }
+  });
+}
+
+loadState();
+syncFilterButtons();
+renderAll();
+bind();
+</script>
+</body>
+</html>

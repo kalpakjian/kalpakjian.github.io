@@ -45,6 +45,7 @@ skip_render:
   - 'automl-notes/**'
   - 'generalization-notes/**'
   - 'ml-models-notes/**'
+  - 'h2o-automl-notes/**'
   # 舊網址轉址頁（2026-10-16 移除 -ivdc 後綴時建立）：原樣複製，不套主題外框
   - '2026/**'
 

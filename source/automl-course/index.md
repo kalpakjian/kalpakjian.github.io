@@ -65,6 +65,25 @@ date: 2026-10-16 21:30:00
 
 ---
 
+## 4 · H2O AutoML 實作（開源 H2O-3 端到端演練）
+
+![H2O AutoML 實作 學習筆記](/img/covers/h2o-automl-notes.png)
+
+- **定位**：AutoML 系列的**開源實作課節**，教材為獨立一份 **38 頁**簡報（⚠️ 幾乎都是截圖型頁面，關鍵內容在圖中，需要逐張判讀）
+- **五個階段**：環境建置（H2O-3 + Flow）→ 資料匯入與解析（Import／Parse／Ticker 設 Enum）→ Run AutoML（Leaderboard 依 RMSE 挑模型）→ 模型匯出與 Python **遞迴預測** → Excel 樞紐分析圖
+- **核心價值**：這是一條**完全免費、資料不離開本機**的生產線，而且補上前面兩份筆記沒有的「**訓練完之後怎麼用**」——把模型匯出、用程式呼叫、畫成圖
+- **特別之處**：把課程「一句指令 + 一張截圖」背後的原因全部補齊，包括五個最容易卡住的地方：
+  - **Java 版本**：H2O 只支援 **Java 8–17**；Java 23 的繞道參數只是略過版本檢查，不是真的支援
+  - **`Ticker` 必須設成 Enum**：否則模型會把股票代號當成數量
+  - **Import ≠ Parse**：前者只是搬進記憶體，後者才是讀懂格式並產生 `.hex`
+  - **`overwrite: false`**：同路徑第二次匯出會失敗
+  - **`h2o.jar` 的終端機不能關**：它正在跑 Flow 的後台伺服器
+- **最值得看的一段**：遞迴預測（`Close_Lag1` ← 上一列的 `predict_Close`）。因為特徵只有 `Close_Lag1` 與 `Month`，模型會**收斂成固定的 12 個月週期** —— 2025／2026／2027 年 1 月的預測值幾乎完全相同（`53.2405`），正好證明它只學到季節性與均值回歸，而不是趨勢
+- 另有 **6 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **👉 [看筆記](/h2o-automl-notes/)**
+
+---
+
 ## 筆記的共同規格
 
 | 項目 | 說明 |
@@ -88,6 +107,7 @@ date: 2026-10-16 21:30:00
 | **四** | 開源 AutoML 工具與綜合應用 | Google Colab、Python、TPOT | ✅ 同上 |
 | **延伸** | 泛化能力（Generalization Capability） | Python、scikit-learn、numpy | ✅ [泛化能力筆記](/generalization-notes/) |
 | **速查** | 機器學習模型速查（25 個模型卡） | Python、scikit-learn、LightGBM、XGBoost | ✅ [模型速查筆記](/ml-models-notes/) |
+| **開源實作** | H2O AutoML 實作（H2O-3 + Flow 端到端） | H2O-3、Flow、Python、pandas、Excel | ✅ [H2O AutoML 筆記](/h2o-automl-notes/) |
 
 ---
 
