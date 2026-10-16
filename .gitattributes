@@ -1,0 +1,9 @@
+# 換行符號政策（2026-10-16 定案）
+#
+# 筆記與頁面一律 CRLF：連「簽出」時就是 CRLF，包含 GitHub Actions 的 Linux runner，
+# 否則 CI 的 qa_notes.ps1 會對 LF 檔案發出 lone-LF 警告（見 NOTE_STYLE_CONTRACT §9）。
+#
+# 儲存庫內部（blob）仍是 LF —— 那是 git 的正規格式，eol=crlf 只影響簽出到工作目錄的結果。
+# 本機若仍有 LF 檔（例如外部工具產生的），跑 tools/notes-qa/normalize_crlf.ps1 修。
+*.md    text eol=crlf
+*.html  text eol=crlf
