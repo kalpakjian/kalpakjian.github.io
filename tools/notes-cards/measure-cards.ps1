@@ -9,7 +9,7 @@
 #>
 param(
   [string]$Root = '',
-  [ValidateSet('compact', 'large')][string]$Mode = 'compact',
+  [ValidateSet('mobile', 'compact', 'large')][string]$Mode = 'mobile',
   [string]$File = '',
   [switch]$SkipPdf
 )
@@ -27,7 +27,9 @@ if ([string]::IsNullOrWhiteSpace($Root)) {
   $Root = $dir
 }
 if ([string]::IsNullOrWhiteSpace($File)) {
-  if ($Mode -eq 'compact') { $File = 'cards.html' } else { $File = 'cards-large.html' }
+  if ($Mode -eq 'mobile') { $File = 'cards.html' }
+  elseif ($Mode -eq 'compact') { $File = 'cards-print.html' }
+  else { $File = 'cards-large.html' }
 }
 $srcDir = Join-Path $Root 'source\automl-notes'
 $toolsDir = Join-Path $Root 'tools\notes-cards'
@@ -53,16 +55,17 @@ $js = @'
 <script>
 window.addEventListener('load', function () {
   var px2mm = 1 / (96 / 25.4);
-  var out = [], max = 0, maxi = 0;
+  var out = [], max = 0, maxch = 0;
   var cards = document.querySelectorAll('.card');
   for (var i = 0; i < cards.length; i++) {
     var mm = cards[i].getBoundingClientRect().height * px2mm;
-    if (mm > max) { max = mm; maxi = i + 1; }
-    out.push(mm.toFixed(1));
+    var ch = cards[i].getAttribute('data-ch') || (i + 1);
+    if (mm > max) { max = mm; maxch = ch; }
+    out.push(ch + ':' + mm.toFixed(1));
   }
   var pre = document.createElement('pre');
   pre.id = 'measure';
-  pre.textContent = out.join(' ') + '||MAX=C' + maxi + ':' + max.toFixed(1) + 'mm||N=' + cards.length;
+  pre.textContent = out.join(' ') + '||MAX=ch' + maxch + ':' + max.toFixed(1) + 'mm||N=' + cards.length;
   document.body.appendChild(pre);
 });
 </script>
@@ -95,12 +98,20 @@ $mm = [regex]::Match($d, '<pre id="measure">(.*?)</pre>', [System.Text.RegularEx
 if (-not $mm.Success) { throw 'measure node not found - did the page script run?' }
 $payload = $mm.Groups[1].Value
 $parts = $payload.Split('||')
-$heights = $parts[0].Trim().Split(' ')
+$pairs = @()
+foreach ($p in $parts[0].Trim().Split(' ')) {
+  if ([string]::IsNullOrWhiteSpace($p)) { continue }
+  $kv = $p.Split(':')
+  if ($kv.Count -ge 2) { $pairs += [pscustomobject]@{ ch = [int]$kv[0]; h = [double]$kv[1] } }
+}
+$pairs = $pairs | Sort-Object ch
+$lines = @()
+foreach ($x in $pairs) { $lines += ('' + $x.ch + '|' + $x.h) }
 $heightsPath = Join-Path $toolsDir ('heights-' + $Mode + '.txt')
-[System.IO.File]::WriteAllLines($heightsPath, $heights, (New-Object System.Text.UTF8Encoding($false)))
+[System.IO.File]::WriteAllLines($heightsPath, $lines, (New-Object System.Text.UTF8Encoding($false)))
 Write-Output ('heights written: ' + $heightsPath)
-Write-Output ('cards=' + $heights.Count + '  ' + $parts[1] + '  (column limit ' + $contentH + 'mm, margin ' + $marginMm + 'mm)')
-Write-Output ('heights: ' + ($heights -join ' '))
+Write-Output ('cards=' + $lines.Count + '  ' + $parts[1] + '  (column limit ' + $contentH + 'mm, margin ' + $marginMm + 'mm)')
+Write-Output ('heights(ch|mm): ' + ($lines -join ' '))
 
 if (-not $SkipPdf) {
   $pdf = Join-Path $env:TEMP ('deck-' + $Mode + '.pdf')

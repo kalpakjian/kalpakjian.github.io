@@ -4,12 +4,12 @@ date: 2026-10-16 21:30:00
 ---
 
 <div style="border:2px solid #c0392b;background:#fff8f7;border-radius:10px;padding:14px 18px;margin:0 0 26px;">
-  <p style="margin:0 0 6px;font-weight:700;color:#c0392b;font-size:1.05em;">📌 置頂：AutoML 速記卡（20 張・考前速讀一疊搞定）</p>
-  <p style="margin:0 0 10px;">§1–§13 每章一張，加上附錄 A–F 與總複習卡；每張卡都有<strong>編號圓標</strong>與<strong>單元色帶</strong>（單元一～四、總結、附錄、總複習共 7 色）。</p>
+  <p style="margin:0 0 6px;font-weight:700;color:#c0392b;font-size:1.05em;">📌 置頂：AutoML 速記卡（20 張・手機／平板版・依考試重要性排序）</p>
+  <p style="margin:0 0 10px;">§1–§13 每章一張，加上附錄 A–F 與總複習卡；<strong>已依考試重要性排序</strong>（必考核心 → 高頻 → 基礎 → 實用），每張卡都有<strong>編號圓標</strong>與<strong>單元色帶</strong>（單元一～四、總結、附錄、總複習共 7 色），並附目錄可跳卡。</p>
   <p style="margin:0;">
-    <a href="/automl-notes/cards.html" style="display:inline-block;padding:6px 14px;background:#c0392b;color:#fff;border-radius:6px;text-decoration:none;font-weight:700;">→ 速記卡・緊湊版（每頁 3 張・7 頁）</a>
-    <a href="/automl-notes/cards-large.html" style="display:inline-block;padding:6px 14px;margin:6px 0 0 8px;border:1px solid #c0392b;color:#c0392b;border-radius:6px;text-decoration:none;font-weight:700;">大字版（每頁 2 張・10 頁）</a>
+    <a href="/automl-notes/cards.html" style="display:inline-block;padding:6px 14px;background:#c0392b;color:#fff;border-radius:6px;text-decoration:none;font-weight:700;">→ 速記卡（手機／平板版）</a>
     <a href="/automl-notes/summary.html" style="display:inline-block;padding:6px 14px;margin:6px 0 0 8px;border:1px solid #c0392b;color:#c0392b;border-radius:6px;text-decoration:none;font-weight:700;">精簡版（一頁式）</a>
+    <a href="/automl-notes/cards-print.html" style="display:inline-block;padding:6px 14px;margin:6px 0 0 8px;border:1px solid #c0392b;color:#c0392b;border-radius:6px;text-decoration:none;font-weight:700;">列印版（每頁 3 張）</a>
   </p>
 </div>
 

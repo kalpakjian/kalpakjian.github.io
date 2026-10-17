@@ -16,9 +16,10 @@
 #>
 param(
   [string]$Root = '',
-  [ValidateSet('compact', 'large')][string]$Mode = 'compact',
+  [ValidateSet('mobile', 'compact', 'large')][string]$Mode = 'mobile',
   [ValidateSet('masonry', 'pairs')][string]$Pack = 'masonry',
   [string]$Out = '',
+  [string]$Template = '',
   [double]$ColMax = 194.0,
   [double]$ColGap = 3.0
 )
@@ -39,7 +40,12 @@ if ([string]::IsNullOrWhiteSpace($Root)) {
 $srcDir = Join-Path $Root 'source\automl-notes'
 $toolsDir = Join-Path $Root 'tools\notes-cards'
 if ([string]::IsNullOrWhiteSpace($Out)) {
-  if ($Mode -eq 'compact') { $Out = 'cards.html' } else { $Out = 'cards-large.html' }
+  if ($Mode -eq 'mobile') { $Out = 'cards.html' }
+  elseif ($Mode -eq 'compact') { $Out = 'cards-print.html' }
+  else { $Out = 'cards-large.html' }
+}
+if ([string]::IsNullOrWhiteSpace($Template)) {
+  if ($Mode -eq 'mobile') { $Template = 'template-mobile.html' } else { $Template = 'template.html' }
 }
 
 function ReplaceFirst([string]$text, [string]$find, [string]$repl) {
@@ -60,7 +66,7 @@ function RenameFirstH1([string]$text, [string]$title) {
 function ReadLines([string]$p) { [System.IO.File]::ReadAllLines($p, [System.Text.Encoding]::UTF8) }
 
 $summary = [System.IO.File]::ReadAllText((Join-Path $srcDir 'summary.html'), $utf8)
-$template = [System.IO.File]::ReadAllText((Join-Path $toolsDir 'template.html'), $utf8)
+$template = [System.IO.File]::ReadAllText((Join-Path $toolsDir $Template), $utf8)
 $splits = ReadLines (Join-Path $toolsDir 'splits.txt')
 $groups = ReadLines (Join-Path $toolsDir 'groups.txt')
 
@@ -71,7 +77,9 @@ foreach ($l in (ReadLines (Join-Path $toolsDir 'labels.txt'))) {
   if ($eq -lt 1) { continue }
   $labels[$l.Substring(0, $eq).Trim()] = $l.Substring($eq + 1).Trim()
 }
-foreach ($k in @('body', 'title', 'print', 'pagehint', 'alt', 'pagemargin')) {
+$needKeys = @('body', 'title', 'alt')
+if ($Mode -ne 'mobile') { $needKeys += @('print', 'pagehint', 'pagemargin') }
+foreach ($k in $needKeys) {
   if (-not $labels.ContainsKey($Mode + '.' + $k)) { throw ('labels.txt is missing ' + $Mode + '.' + $k) }
 }
 
@@ -131,7 +139,9 @@ $all = ''
 foreach ($p in $parts) { $all += '<section class="card">' + $nl + $p + $nl + '</section>' + $nl }
 $cardList = @([regex]::Split($all, '(?=<section class="card">)') | Where-Object { $_.Trim() -ne '' })
 
-# 5) numbered badge + unit colour band + unit chip
+# 5) numbered badge + unit colour band + unit chip (chapter order first)
+$unitCls = @()
+$unitLabel = @()
 for ($i = 0; $i -lt $cardList.Count; $i++) {
   $n = $i + 1
   $cls = 'u6'
@@ -142,8 +152,10 @@ for ($i = 0; $i -lt $cardList.Count; $i++) {
     if ($gf.Count -lt 4) { continue }
     if ($n -ge [int]$gf[0] -and $n -le [int]$gf[1]) { $cls = $gf[2].Trim(); $label = $gf[3].Trim(); break }
   }
+  $unitCls += $cls
+  $unitLabel += $label
   $c = $cardList[$i]
-  $c = ReplaceFirst $c '<section class="card">' ('<section class="card ' + $cls + '">')
+  $c = ReplaceFirst $c '<section class="card">' ('<section class="card ' + $cls + '" data-ch="' + $n + '">')
   $i1 = $c.IndexOf('<h1')
   if ($i1 -lt 0) { throw ('card ' + $n + ' has no h1') }
   $gt = $c.IndexOf('>', $i1)
@@ -151,22 +163,81 @@ for ($i = 0; $i -lt $cardList.Count; $i++) {
   $cardList[$i] = $c.Substring(0, $gt + 1) + $inject + $c.Substring($gt + 1)
 }
 
-# 6) packing: pairs (fixed 2 per page) or masonry (fill each column up to ColMax)
-$heights = @()
+# 5b) importance order (order.txt): reorder, add tier chip, renumber the badge
+$orderPath = Join-Path $toolsDir 'order.txt'
+if (Test-Path $orderPath) {
+  $perm = @()
+  $tierOf = @{}
+  foreach ($l in (ReadLines $orderPath)) {
+    if ([string]::IsNullOrWhiteSpace($l)) { continue }
+    if ($l.TrimStart().StartsWith('#')) { continue }
+    $f = $l.Split('|')
+    if ($f.Count -lt 3) { continue }
+    $old = [int]$f[0].Trim()
+    $perm += $old
+    $tierOf[$old] = @{ cls = $f[1].Trim(); label = $f[2].Trim() }
+  }
+  if ($perm.Count -eq $cardList.Count) {
+    $ordered = @()
+    for ($k = 0; $k -lt $perm.Count; $k++) {
+      $old = $perm[$k]
+      if ($old -lt 1 -or $old -gt $cardList.Count) { throw ('order.txt refers to a non-existent card: ' + $old) }
+      $c = $cardList[$old - 1]
+      $ti = $tierOf[$old]
+      $c = ReplaceFirst $c ('class="card ' + $unitCls[$old - 1] + '"') ('class="card ' + $unitCls[$old - 1] + ' ' + $ti.cls + '"')
+      $c = ReplaceFirst $c ('<span class="chip">' + $unitLabel[$old - 1] + '</span>') ('<span class="chip">' + $unitLabel[$old - 1] + '</span><span class="tier">' + $ti.label + '</span>')
+      $c = ReplaceFirst $c ('<span class="badge">' + $old + '</span>') ('<span class="badge">' + ($k + 1) + '</span>')
+      $ordered += $c
+    }
+    $cardList = $ordered
+    Write-Output ('order.txt applied: ' + $perm.Count + ' cards ordered by exam importance')
+  } else {
+    Write-Output ('note: order.txt has ' + $perm.Count + ' entries but there are ' + $cardList.Count + ' cards -> chapter order kept')
+  }
+}
+
+# 5c) mobile: move badge/chip/tier out of <h1> into a header row
+if ($Mode -eq 'mobile') {
+  for ($k = 0; $k -lt $cardList.Count; $k++) {
+    $c = $cardList[$k]
+    $m = [regex]::Match($c, '(?s)<h1[^>]*>(\s*<span class="badge">\d+</span>\s*<span class="chip">[^<]*</span>\s*<span class="tier">[^<]*</span>)(.*?)</h1>')
+    if (-not $m.Success) { throw ('card ' + ($k + 1) + ': could not split the header spans') }
+    $head = $m.Groups[1].Value.Trim()
+    $title = $m.Groups[2].Value.Trim()
+    $cardList[$k] = $c.Replace($m.Value, '<div class="chead">' + $head + '</div>' + $nl + '<h1>' + $title + '</h1>')
+  }
+  Write-Output 'mobile: badge/chip/tier moved into a .chead header row'
+}
+
+# 6) packing: mobile = one card per panel; pairs = 2 per page; masonry = fill columns to ColMax
+$hmap = @{}
 $hp = Join-Path $toolsDir ('heights-' + $Mode + '.txt')
 if (Test-Path $hp) {
   foreach ($l in (ReadLines $hp)) {
-    if (-not [string]::IsNullOrWhiteSpace($l)) { $heights += [double]$l.Trim() }
+    if ([string]::IsNullOrWhiteSpace($l)) { continue }
+    $hf = $l.Split('|')
+    if ($hf.Count -ge 2) { $hmap[[int]$hf[0].Trim()] = [double]$hf[1].Trim() }
   }
 }
-if ($heights.Count -ne $cardList.Count) {
-  Write-Output ('note: heights missing or stale (' + $heights.Count + ' vs ' + $cardList.Count + ') -> one card per column')
+$heights = @()
+$stale = $false
+for ($k = 0; $k -lt $cardList.Count; $k++) {
+  $m = [regex]::Match($cardList[$k], 'data-ch="(\d+)"')
+  if (-not $m.Success) { $stale = $true; break }
+  $ch = [int]$m.Groups[1].Value
+  if (-not $hmap.ContainsKey($ch)) { $stale = $true; break }
+  $heights += $hmap[$ch]
+}
+if ($stale -or $heights.Count -ne $cardList.Count) {
+  Write-Output ('note: heights missing or stale (' + $hmap.Count + ' measured) -> one card per column')
   $heights = @()
   foreach ($c in $cardList) { $heights += 999.0 }
 }
 
 $sheets = ''
-if ($Pack -eq 'pairs') {
+if ($Mode -eq 'mobile') {
+  $sheets = ($cardList -join ($nl + $nl))
+} elseif ($Pack -eq 'pairs') {
   for ($k = 0; $k -lt $cardList.Count; $k += 2) {
     $sheets += '<div class="sheet">' + $nl + '<div class="col">' + $nl + $cardList[$k] + $nl + '</div>' + $nl
     if (($k + 1) -lt $cardList.Count) { $sheets += '<div class="col">' + $nl + $cardList[$k + 1] + $nl + '</div>' + $nl }
@@ -203,11 +274,18 @@ if ($Pack -eq 'pairs') {
 $body = $template
 $body = $body.Replace('@@BODYCLASS@@', $labels[$Mode + '.body'])
 $body = $body.Replace('@@TITLE@@', $labels[$Mode + '.title'])
-$body = $body.Replace('@@PRINTLABEL@@', $labels[$Mode + '.print'])
-$body = $body.Replace('@@PAGEHINT@@', $labels[$Mode + '.pagehint'])
 $body = $body.Replace('@@ALT_CARDS@@', $labels[$Mode + '.alt'])
-$body = $body.Replace('@@PAGEMARGIN@@', $labels[$Mode + '.pagemargin'])
-$deck = $body + $nl + $sheets + '</body>' + $nl + '</html>' + $nl
+$body = $body.Replace('@@COUNT@@', [string]$cardList.Count)
+$ph = @{ 'print' = '@@PRINTLABEL@@'; 'pagehint' = '@@PAGEHINT@@'; 'pagemargin' = '@@PAGEMARGIN@@'; 'footnote' = '@@FOOTNOTE@@' }
+foreach ($k in $ph.Keys) {
+  $key = $Mode + '.' + $k
+  if ($labels.ContainsKey($key)) { $body = $body.Replace($ph[$k], $labels[$key]) }
+}
+if ($body.Contains('@@CARDS@@')) {
+  $deck = $body.Replace('@@CARDS@@', $sheets)
+} else {
+  $deck = $body + $nl + $sheets + '</body>' + $nl + '</html>' + $nl
+}
 $outPath = Join-Path $srcDir $Out
 [System.IO.File]::WriteAllText($outPath, $deck, (New-Object System.Text.UTF8Encoding($false)))
 

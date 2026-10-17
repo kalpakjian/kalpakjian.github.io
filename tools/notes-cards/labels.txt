@@ -1,12 +1,16 @@
+mobile.body=mobile
+mobile.title=AutoML 速記卡｜手機・平板版（一張一頁・依考試重要性排序）
+mobile.alt=  <a href="cards-print.html">🖨️ 列印版（每頁 3 張）</a>
+mobile.footnote=排序依據：完整筆記附錄 F.1 高頻考點清單、E.4 評分參考與各章「最常錯」標記；要調整順序請改 tools/notes-cards/order.txt。
 compact.body=compact
-compact.title=AutoML 速記卡（全部章節・緊湊版 3 張／頁・A4 列印）
-compact.print=🖨 列印全部 20 張速記卡（A4 橫向・每頁 3 張・更省紙）
-compact.pagehint=每頁 3 張卡（約 7 頁）
-compact.alt=  <a href="cards-large.html">🔍 大字版（每頁 2 張）</a>
+compact.title=AutoML 速記卡（全部章節・列印版 3 張／頁・A4）
+compact.print=🖨 列印全部 20 張速記卡（A4 橫向・每頁 3 張・7 頁）
+compact.pagehint=每頁 3 張卡（共 7 頁）
+compact.alt=  <a href="cards.html">📱 手機／平板版（一張一頁）</a>
 compact.pagemargin=6mm
 large.body=large
-large.title=AutoML 速記卡（全部章節・大字版 2 張／頁・A4 列印）
-large.print=🖨 列印全部 20 張速記卡（A4 橫向・每頁 2 張）
+large.title=AutoML 速記卡（全部章節・列印大字版 2 張／頁・A4）
+large.print=🖨 列印全部 20 張速記卡（A4 橫向・每頁 2 張・10 頁）
 large.pagehint=每頁 2 張卡（共 10 頁）
-large.alt=  <a href="cards.html">⚡ 緊湊版（每頁 3 張・更省紙）</a>
+large.alt=  <a href="cards.html">📱 手機／平板版（一張一頁）</a>
 large.pagemargin=8mm
