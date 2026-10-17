@@ -212,7 +212,6 @@ hr { border:0; border-top:1px solid var(--border); margin:34px 0; }
 <tr><td>AI 履歷篩選系統</td><td>公平性、包容性</td><td>列出 3 個必須隱藏的欄位（性別、照片、年齡）；視障者無法上傳履歷 → 支援語音讀報軟體或純文字介面</td></tr>
 <tr><td>AI 醫療影像診斷系統</td><td>可靠性、安全性、隱私</td><td>信心指數低於 <strong>70%</strong> 時不給結論，強制顯示「需人工進階判定」；X 光片須移除姓名、身分證字號、就醫日期</td></tr>
 <tr><td>AI 貸款核發</td><td>透明度、問責制</td><td>必須解釋決策邏輯（例：近期信用卡遲繳紀錄過多）；問責聲明「AI 僅為輔助工具，最終核貸決策與責任由授信主管承擔」</td></tr>
-<tr><td>銀行信用卡自動審批（綜合）</td><td>全部六項</td><td>見上述完整流程</td></tr>
 </tbody>
 </table>
 
@@ -464,28 +463,20 @@ hr { border:0; border-top:1px solid var(--border); margin:34px 0; }
 <li><strong>設定與訓練</strong>：建立 <code>TPOTRegressor</code>，<code>fit</code> 後用 <code>.score()</code> 取得測試集 R²。</li>
 </ol>
 <pre><code>!pip install tpot
-
 import pandas as pd
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
+from tpot import TPOTRegressor
 
 housing = fetch_california_housing()
 X = pd.DataFrame(housing.data, columns=housing.feature_names)
 y = housing.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-from tpot import TPOTRegressor
-tpot = TPOTRegressor(
-    generations=1,        # 演化 1 代
-    population_size=20,   # 每代 20 個模型
-    n_jobs=1,             # 只用一個處理器
-    random_state=42,      # 固定亂數種子，確保結果一致
-    max_time_mins=2,      # 限制執行兩分鐘
-    cv=3                  # 3 折交叉驗證
-)
+tpot = TPOTRegressor(generations=1, population_size=20, n_jobs=1,
+                     random_state=42, max_time_mins=2, cv=3)
 tpot.fit(X_train, y_train)
-score = tpot.fitted_pipeline_.score(X_test, y_test)
-print("測試集分數 (R2 Score):", score)</code></pre>
+print("R2:", tpot.fitted_pipeline_.score(X_test, y_test))</code></pre>
 <table>
 <thead>
 <tr><th>參數</th><th>為什麼這樣設</th></tr>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>@@TITLE@@</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:10mm;background:#e9eef5;color:#1f2d3d;
+     font:9.8px/1.45 "Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif}
+body.compact{font-size:7.9px;line-height:1.32}
+
+/* ---------- page + column layout ---------- */
+.sheet{width:281mm;min-height:194mm;margin:0 auto 8mm;background:#fff;padding:0;
+       display:grid;grid-template-columns:1fr 1fr;gap:5mm;align-items:start}
+.col{display:flex;flex-direction:column;gap:3mm;min-width:0}
+
+/* ---------- card ---------- */
+.card{border:1.4px solid #c9d3df;border-left:6px solid #c9d3df;border-radius:6px;
+      padding:2.5mm 3mm;margin:0;background:#fff;
+      break-inside:avoid;page-break-inside:avoid}
+h1{font-size:13.5px;margin:0 0 1.2mm;color:#1a73e8;
+   border-bottom:2px solid #e6ebf1;padding-bottom:.8mm}
+.badge{display:inline-block;min-width:5mm;height:5mm;line-height:5mm;text-align:center;
+       border-radius:50%;background:#1f2d3d;color:#fff;font-size:9px;font-weight:700;
+       margin-right:1.6mm;vertical-align:1px}
+.chip{display:inline-block;background:#eef3f9;color:#57606a;border-radius:999px;
+      padding:0 2mm;font-size:8.6px;font-weight:700;margin-right:1.8mm;
+      vertical-align:1.5px;white-space:nowrap}
+h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
+table{border-collapse:collapse;width:100%;margin:0 0 1.2mm;font-size:9.6px}
+th,td{border:1px solid #c9d3df;padding:.45mm 1.1mm;text-align:left;vertical-align:top}
+th{background:#f5f8fc}
+ul{margin:0 0 1.2mm;padding-left:3.8mm}
+li{margin:0 0 .3mm}
+p{margin:0 0 1.2mm}
+code{background:#eef3f9;padding:0 .8mm;border-radius:3px;font-family:Consolas,monospace}
+pre{background:#0f2233;color:#e8f1fa;padding:1.2mm 2mm;border-radius:4px;font-size:9px;
+    margin:0 0 1.2mm;white-space:pre-wrap}
+.check{list-style:none;padding-left:0}
+.check li::before{content:"\2610 "}
+.trap{color:#b3261e}
+.note{background:#f0f6fc;border-left:3px solid #2c6fb1;padding:1mm 2.4mm;margin:0 0 1.2mm;font-size:9.8px}
+.warn{background:#fff4f2;border-left:3px solid #c0392b;padding:1mm 2.4mm;margin:0 0 1.2mm;font-size:9.8px}
+.note p,.warn p{margin:0 0 .6mm}
+
+/* ---------- unit colour bands ---------- */
+.card.u1{border-left-color:#c0392b}.card.u1 h1{color:#c0392b;border-bottom-color:#f0d2cd}
+.card.u1 .badge{background:#c0392b}
+.card.u2{border-left-color:#2c6fb1}.card.u2 h1{color:#2c6fb1;border-bottom-color:#d3e2f1}
+.card.u2 .badge{background:#2c6fb1}
+.card.u3{border-left-color:#1f8a70}.card.u3 h1{color:#1f8a70;border-bottom-color:#cfe9e2}
+.card.u3 .badge{background:#1f8a70}
+.card.u4{border-left-color:#8e44ad}.card.u4 h1{color:#8e44ad;border-bottom-color:#e7d5f0}
+.card.u4 .badge{background:#8e44ad}
+.card.u5{border-left-color:#b9770e}.card.u5 h1{color:#b9770e;border-bottom-color:#f2e0c2}
+.card.u5 .badge{background:#b9770e}
+.card.u6{border-left-color:#5b6b7c}.card.u6 h1{color:#5b6b7c;border-bottom-color:#dde3e9}
+.card.u6 .badge{background:#5b6b7c}
+.card.u7{border-left-color:#0f4c81}.card.u7 h1{color:#0f4c81;border-bottom-color:#cfe0ef}
+.card.u7 .badge{background:#0f4c81}
+
+/* ---------- compact typography ---------- */
+body.compact .card{padding:2mm 2.6mm;border-left-width:5px}
+body.compact h1{font-size:11.6px;margin:0 0 1mm}
+body.compact h3{font-size:9.4px;margin:.9mm 0 .4mm}
+body.compact table{font-size:8.3px;margin:0 0 .8mm}
+body.compact th,body.compact td{padding:.32mm .9mm}
+body.compact ul{margin:0 0 .8mm;padding-left:3.4mm}
+body.compact li{margin:0 0 .2mm}
+body.compact p{margin:0 0 .8mm}
+body.compact pre{font-size:7.9px;padding:1mm 1.6mm;margin:0 0 .8mm}
+body.compact .note,body.compact .warn{font-size:8.3px;padding:.8mm 2mm;margin:0 0 .8mm}
+body.compact .chip{font-size:7.6px;padding:0 1.6mm}
+body.compact .badge{min-width:4.4mm;height:4.4mm;line-height:4.4mm;font-size:8px;margin-right:1.3mm}
+
+/* ---------- site chrome ---------- */
+.sitebar{display:flex;gap:16px;flex-wrap:wrap;align-items:center;background:#fff;
+         border-bottom:1px solid #c9d3df;padding:8px 16px;font-size:13px}
+.sitebar a{color:#2c6fb1;text-decoration:none;font-weight:600}
+.sitebar a:hover{text-decoration:underline}
+.sitebar .hint{color:#57606a;margin-left:auto}
+.toolbar{position:fixed;right:14px;bottom:14px;z-index:9}
+.toolbar button{font-size:13px;padding:8px 14px;border:0;border-radius:20px;
+                background:#1a73e8;color:#fff;cursor:pointer}
+/* @print-css-start */
+@media print{
+  @page{size:A4 landscape;margin:@@PAGEMARGIN@@}
+  body{background:#fff;padding:0}
+  .sheet{width:auto;min-height:0;margin:0;page-break-after:always}
+  .sheet:last-of-type{page-break-after:auto}
+  .toolbar,.sitebar{display:none}
+}
+/* @print-css-end */
+</style>
+</head>
+<body class="@@BODYCLASS@@">
+<div class="sitebar">
+  <a href="./">← AutoML 學習筆記</a>
+  <a href="summary.html">⚡ 精簡版（一頁式）</a>
+  <a href="mc-quiz.html">🖱️ 互動測驗（60 題）</a>
+@@ALT_CARDS@@
+  <span class="hint">列印：Ctrl+P → A4 橫向 → @@PAGEHINT@@</span>
+</div>
+<div class="toolbar"><button onclick="window.print()">@@PRINTLABEL@@</button></div>

@@ -3,19 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AutoML 速記卡（四張・A4 列印版）</title>
+<title>AutoML 速記卡（全部章節・緊湊版 3 張／頁・A4 列印）</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;padding:10mm;background:#e9eef5;color:#1f2d3d;
-     font:11px/1.45 "Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif}
-.sheet{width:279mm;min-height:198mm;margin:0 auto 8mm;background:#fff;padding:0;
-       display:grid;grid-template-columns:1fr 1fr;gap:6mm;align-content:start}
-.card{border:1.4px solid #c9d3df;border-radius:6px;padding:2.5mm 3mm;margin:0;
+     font:9.8px/1.45 "Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif}
+body.compact{font-size:7.9px;line-height:1.32}
+
+/* ---------- page + column layout ---------- */
+.sheet{width:281mm;min-height:194mm;margin:0 auto 8mm;background:#fff;padding:0;
+       display:grid;grid-template-columns:1fr 1fr;gap:5mm;align-items:start}
+.col{display:flex;flex-direction:column;gap:3mm;min-width:0}
+
+/* ---------- card ---------- */
+.card{border:1.4px solid #c9d3df;border-left:6px solid #c9d3df;border-radius:6px;
+      padding:2.5mm 3mm;margin:0;background:#fff;
       break-inside:avoid;page-break-inside:avoid}
-h1{font-size:13.5px;margin:0 0 1.2mm;color:#1a73e8;border-bottom:2px solid #1a73e8;padding-bottom:.8mm}
-.meta{font-size:9px;color:#5b6b7c;margin:0 0 1.4mm}
-.lead{background:#f5f8fc;border-left:3px solid #1a73e8;padding:1mm 2.4mm;margin:0 0 1.4mm;font-size:10px}
-h2{font-size:11px;margin:1.6mm 0 .8mm;color:#0f4c81}
+h1{font-size:13.5px;margin:0 0 1.2mm;color:#1a73e8;
+   border-bottom:2px solid #e6ebf1;padding-bottom:.8mm}
+.badge{display:inline-block;min-width:5mm;height:5mm;line-height:5mm;text-align:center;
+       border-radius:50%;background:#1f2d3d;color:#fff;font-size:9px;font-weight:700;
+       margin-right:1.6mm;vertical-align:1px}
+.chip{display:inline-block;background:#eef3f9;color:#57606a;border-radius:999px;
+      padding:0 2mm;font-size:8.6px;font-weight:700;margin-right:1.8mm;
+      vertical-align:1.5px;white-space:nowrap}
+h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
 table{border-collapse:collapse;width:100%;margin:0 0 1.2mm;font-size:9.6px}
 th,td{border:1px solid #c9d3df;padding:.45mm 1.1mm;text-align:left;vertical-align:top}
 th{background:#f5f8fc}
@@ -28,39 +40,74 @@ pre{background:#0f2233;color:#e8f1fa;padding:1.2mm 2mm;border-radius:4px;font-si
 .check{list-style:none;padding-left:0}
 .check li::before{content:"\2610 "}
 .trap{color:#b3261e}
-h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
 .note{background:#f0f6fc;border-left:3px solid #2c6fb1;padding:1mm 2.4mm;margin:0 0 1.2mm;font-size:9.8px}
 .warn{background:#fff4f2;border-left:3px solid #c0392b;padding:1mm 2.4mm;margin:0 0 1.2mm;font-size:9.8px}
 .note p,.warn p{margin:0 0 .6mm}
-.toolbar{position:fixed;right:14px;bottom:14px;z-index:9}
-.toolbar button{font-size:13px;padding:8px 14px;border:0;border-radius:20px;background:#1a73e8;color:#fff;cursor:pointer}
-@media print{
-  @page{size:A4 landscape;margin:8mm}
-  body{background:#fff;padding:0;font-size:9.8px}
-  .sheet{width:auto;min-height:0;margin:0;page-break-after:always}
-  .sheet:last-of-type{page-break-after:auto}
-  .toolbar{display:none}
-}
+
+/* ---------- unit colour bands ---------- */
+.card.u1{border-left-color:#c0392b}.card.u1 h1{color:#c0392b;border-bottom-color:#f0d2cd}
+.card.u1 .badge{background:#c0392b}
+.card.u2{border-left-color:#2c6fb1}.card.u2 h1{color:#2c6fb1;border-bottom-color:#d3e2f1}
+.card.u2 .badge{background:#2c6fb1}
+.card.u3{border-left-color:#1f8a70}.card.u3 h1{color:#1f8a70;border-bottom-color:#cfe9e2}
+.card.u3 .badge{background:#1f8a70}
+.card.u4{border-left-color:#8e44ad}.card.u4 h1{color:#8e44ad;border-bottom-color:#e7d5f0}
+.card.u4 .badge{background:#8e44ad}
+.card.u5{border-left-color:#b9770e}.card.u5 h1{color:#b9770e;border-bottom-color:#f2e0c2}
+.card.u5 .badge{background:#b9770e}
+.card.u6{border-left-color:#5b6b7c}.card.u6 h1{color:#5b6b7c;border-bottom-color:#dde3e9}
+.card.u6 .badge{background:#5b6b7c}
+.card.u7{border-left-color:#0f4c81}.card.u7 h1{color:#0f4c81;border-bottom-color:#cfe0ef}
+.card.u7 .badge{background:#0f4c81}
+
+/* ---------- compact typography ---------- */
+body.compact .card{padding:2mm 2.6mm;border-left-width:5px}
+body.compact h1{font-size:11.6px;margin:0 0 1mm}
+body.compact h3{font-size:9.4px;margin:.9mm 0 .4mm}
+body.compact table{font-size:8.3px;margin:0 0 .8mm}
+body.compact th,body.compact td{padding:.32mm .9mm}
+body.compact ul{margin:0 0 .8mm;padding-left:3.4mm}
+body.compact li{margin:0 0 .2mm}
+body.compact p{margin:0 0 .8mm}
+body.compact pre{font-size:7.9px;padding:1mm 1.6mm;margin:0 0 .8mm}
+body.compact .note,body.compact .warn{font-size:8.3px;padding:.8mm 2mm;margin:0 0 .8mm}
+body.compact .chip{font-size:7.6px;padding:0 1.6mm}
+body.compact .badge{min-width:4.4mm;height:4.4mm;line-height:4.4mm;font-size:8px;margin-right:1.3mm}
+
+/* ---------- site chrome ---------- */
 .sitebar{display:flex;gap:16px;flex-wrap:wrap;align-items:center;background:#fff;
          border-bottom:1px solid #c9d3df;padding:8px 16px;font-size:13px}
 .sitebar a{color:#2c6fb1;text-decoration:none;font-weight:600}
 .sitebar a:hover{text-decoration:underline}
 .sitebar .hint{color:#57606a;margin-left:auto}
-@media print{.sitebar{display:none}}
+.toolbar{position:fixed;right:14px;bottom:14px;z-index:9}
+.toolbar button{font-size:13px;padding:8px 14px;border:0;border-radius:20px;
+                background:#1a73e8;color:#fff;cursor:pointer}
+/* @print-css-start */
+@media print{
+  @page{size:A4 landscape;margin:6mm}
+  body{background:#fff;padding:0}
+  .sheet{width:auto;min-height:0;margin:0;page-break-after:always}
+  .sheet:last-of-type{page-break-after:auto}
+  .toolbar,.sitebar{display:none}
+}
+/* @print-css-end */
 </style>
 </head>
-<body>
+<body class="compact">
 <div class="sitebar">
   <a href="./">← AutoML 學習筆記</a>
-  <a href="summary.html">⚡ 精簡版（一頁式精華）</a>
+  <a href="summary.html">⚡ 精簡版（一頁式）</a>
   <a href="mc-quiz.html">🖱️ 互動測驗（60 題）</a>
-  <span class="hint">列印：Ctrl+P → A4 橫向 → 每頁 2 張卡</span>
+<a href="cards-large.html">🔍 大字版（每頁 2 張）</a>
+  <span class="hint">列印：Ctrl+P → A4 橫向 → 每頁 3 張卡（約 7 頁）</span>
 </div>
-<div class="toolbar"><button onclick="window.print()">🖨 列印全部 20 張速記卡（A4 橫向・2 張／頁）</button></div>
+<div class="toolbar"><button onclick="window.print()">🖨 列印全部 20 張速記卡（A4 橫向・每頁 3 張・更省紙）</button></div>
 
 <div class="sheet">
-<section class="card">
-<h1 id="s0">§1 課程總覽與學習路徑（4 單元 × 20 個實習個案）</h1>
+<div class="col">
+<section class="card u1">
+<h1 id="s0"><span class="badge">1</span><span class="chip">單元一（§1–§4）</span>§1 課程總覽與學習路徑（4 單元 × 20 個實習個案）</h1>
 <p>每個單元的固定節奏：<strong>單元封面 → 概念頁 → 個案目標頁 → 三步驟操作</strong></p>
 <table>
 <thead>
@@ -95,8 +142,9 @@ h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
 <li><strong>用 §13 的 20 個個案總表自我盤點</strong>，缺哪一個就回頭補。</li>
 </ol>
 </section>
-<section class="card">
-<h1 id="s1">§2 從機器學習到 AutoML（三痛點 × 三突破 × 兩動作）</h1>
+
+<section class="card u1">
+<h1 id="s1"><span class="badge">2</span><span class="chip">單元一（§1–§4）</span>§2 從機器學習到 AutoML（三痛點 × 三突破 × 兩動作）</h1>
 <ul>
 <li><strong>傳統 ML 三痛點</strong>：流程繁瑣｜耗時費力（超參數調整可能耗費數週）｜高度依賴專家</li>
 <li><strong>AutoML 三突破</strong>：全自動化｜高效能（後台自動運行數十種演算法組合）｜低門檻</li>
@@ -119,10 +167,11 @@ h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
 </div>
 <p><strong>一句話記法</strong>：傳統 ML 是「自己動手做每一道菜」；AutoML 是「告訴廚房你想吃什麼，它自動端出最好的那道」。</p>
 </section>
+
 </div>
-<div class="sheet">
-<section class="card">
-<h1 id="s2">§3 負責任 AI 六大原則（公 · 可 · 隱 · 包 · 透 · 問）</h1>
+<div class="col">
+<section class="card u1">
+<h1 id="s2"><span class="badge">3</span><span class="chip">單元一（§1–§4）</span>§3 負責任 AI 六大原則（公 · 可 · 隱 · 包 · 透 · 問）</h1>
 <p><strong>速記口訣：公 · 可 · 隱 · 包 · 透 · 問</strong></p>
 <table>
 <thead>
@@ -158,8 +207,13 @@ h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
 </tbody>
 </table>
 </section>
-<section class="card">
-<h1 id="s3">§4 倫理風險評估工作坊（敏感特徵 × 兩組對策）</h1>
+
+</div>
+</div>
+<div class="sheet">
+<div class="col">
+<section class="card u1">
+<h1 id="s3"><span class="badge">4</span><span class="chip">單元一（§1–§4）</span>§4 倫理風險評估工作坊（敏感特徵 × 兩組對策）</h1>
 <p>情境：你是「未來銀行」的數位轉型經理，高層希望下個月上線 AutoML 信用卡自動審批系統；若直接把過去 10 年歷史資料丟給 AutoML，可能引發公關危機與客訴。</p>
 <h3>工作坊四步流程</h3>
 <table>
@@ -203,14 +257,12 @@ h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
 <tr><td>AI 履歷篩選系統</td><td>公平性、包容性</td><td>列出 3 個必須隱藏的欄位（性別、照片、年齡）；視障者無法上傳履歷 → 支援語音讀報軟體或純文字介面</td></tr>
 <tr><td>AI 醫療影像診斷系統</td><td>可靠性、安全性、隱私</td><td>信心指數低於 <strong>70%</strong> 時不給結論，強制顯示「需人工進階判定」；X 光片須移除姓名、身分證字號、就醫日期</td></tr>
 <tr><td>AI 貸款核發</td><td>透明度、問責制</td><td>必須解釋決策邏輯（例：近期信用卡遲繳紀錄過多）；問責聲明「AI 僅為輔助工具，最終核貸決策與責任由授信主管承擔」</td></tr>
-<tr><td>銀行信用卡自動審批（綜合）</td><td>全部六項</td><td>見上述完整流程</td></tr>
 </tbody>
 </table>
 </section>
-</div>
-<div class="sheet">
-<section class="card">
-<h1 id="s4">§5 分類與迴歸（判斷口訣 + 四題演練）</h1>
+
+<section class="card u2">
+<h1 id="s4"><span class="badge">5</span><span class="chip">單元二（§5–§7）</span>§5 分類與迴歸（判斷口訣 + 四題演練）</h1>
 <p><strong>判斷口訣：問「會不會／是誰」＝分類；問「多少」＝迴歸。</strong></p>
 <table>
 <thead>
@@ -239,8 +291,11 @@ h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
 <p><strong>最常錯的一題</strong>：預測「機台明天<strong>會不會</strong>故障」是<strong>分類</strong>（會／不會），不是迴歸——因為問的是「會不會」，不是「多久後故障」或「故障機率是多少」。</p>
 </div>
 </section>
-<section class="card">
-<h1>§6 模型效能評估指標（Accuracy / AUC / RMSE）</h1>
+
+</div>
+<div class="col">
+<section class="card u2">
+<h1><span class="badge">6</span><span class="chip">單元二（§5–§7）</span>§6 模型效能評估指標（Accuracy / AUC / RMSE）</h1>
 <table>
 <thead>
 <tr><th>指標</th><th>適用</th><th>定義</th><th>數值範圍與方向</th><th>主要限制</th></tr>
@@ -289,10 +344,13 @@ h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
   AUC      = 0.934   ← 但這才是好模型</code></pre>
 <p><strong>關鍵洞察</strong>：模型 B 的準確率比模型 A 更低，但 B 才是有用的模型；只看 Accuracy 會讓你選錯模型。</p>
 </section>
+
+</div>
 </div>
 <div class="sheet">
-<section class="card">
-<h1 id="s5">§7 無代碼影像分類實作（Teachable Machine）</h1>
+<div class="col">
+<section class="card u2">
+<h1 id="s5"><span class="badge">7</span><span class="chip">單元二（§5–§7）</span>§7 無代碼影像分類實作（Teachable Machine）</h1>
 <p>全課程唯一完全不需要寫一行程式碼的端到端實作：數據收集 → 模型訓練 → 效能評估。</p>
 <table>
 <thead>
@@ -338,8 +396,9 @@ h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
 </table>
 <p><strong>這個實作真正教會你的事</strong>：你餵什麼角度的照片，模型就只認得那個角度；AutoML 再怎麼自動化，也無法憑空補上你沒給的資料多樣性。</p>
 </section>
-<section class="card">
-<h1 id="s6">§8 Azure ML Studio 四大核心模組</h1>
+
+<section class="card u3">
+<h1 id="s6"><span class="badge">8</span><span class="chip">單元三（§8–§9）</span>§8 Azure ML Studio 四大核心模組</h1>
 <h3>四大核心模組</h3>
 <table>
 <thead>
@@ -359,10 +418,11 @@ h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
 <li><strong>Endpoint</strong>：初次進入時為空（尚未訓練出模型）；訓練完成後會出現可即時呼叫的 REST API 端點。</li>
 </ul>
 </section>
+
 </div>
-<div class="sheet">
-<section class="card">
-<h1>§9 Azure 客戶流失預測實戰（六步 + API 部署）</h1>
+<div class="col">
+<section class="card u3">
+<h1><span class="badge">9</span><span class="chip">單元三（§8–§9）</span>§9 Azure 客戶流失預測實戰（六步 + API 部署）</h1>
 <table>
 <thead>
 <tr><th>步驟</th><th>動作</th><th>關鍵設定</th></tr>
@@ -409,8 +469,13 @@ h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
 </tbody>
 </table>
 </section>
-<section class="card">
-<h1 id="s7">§10 開源 AutoML：TPOT 與遺傳演算法</h1>
+
+</div>
+</div>
+<div class="sheet">
+<div class="col">
+<section class="card u4">
+<h1 id="s7"><span class="badge">10</span><span class="chip">單元四（§10–§12）</span>§10 開源 AutoML：TPOT 與遺傳演算法</h1>
 <h3>為什麼選擇 TPOT</h3>
 <ul>
 <li><strong>完全免費、高度客製化</strong>：無需付費授權，可依需求調整搜尋空間。</li>
@@ -462,10 +527,11 @@ h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
 </tbody>
 </table>
 </section>
+
 </div>
-<div class="sheet">
-<section class="card">
-<h1>§11 TPOT 房價預測實戰（Colab）</h1>
+<div class="col">
+<section class="card u4">
+<h1><span class="badge">11</span><span class="chip">單元四（§10–§12）</span>§11 TPOT 房價預測實戰（Colab）</h1>
 <ol>
 <li><strong>環境準備</strong>：登入 Google 帳號進入 Colab → 新增筆記本 → 重新命名為 <code>TPOT_California_Housing.ipynb</code> → 點右上角「連線」分配免費雲端運算資源。</li>
 <li><strong>安裝 TPOT</strong>：<code>!pip install tpot</code>，執行後確認沒有紅色錯誤訊息、最後顯示 <code>Successfully installed tpot...</code>。</li>
@@ -473,28 +539,20 @@ h3{font-size:10.8px;margin:1.4mm 0 .6mm;color:#0f4c81}
 <li><strong>設定與訓練</strong>：建立 <code>TPOTRegressor</code>，<code>fit</code> 後用 <code>.score()</code> 取得測試集 R²。</li>
 </ol>
 <pre><code>!pip install tpot
-
 import pandas as pd
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
+from tpot import TPOTRegressor
 
 housing = fetch_california_housing()
 X = pd.DataFrame(housing.data, columns=housing.feature_names)
 y = housing.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-from tpot import TPOTRegressor
-tpot = TPOTRegressor(
-    generations=1,        # 演化 1 代
-    population_size=20,   # 每代 20 個模型
-    n_jobs=1,             # 只用一個處理器
-    random_state=42,      # 固定亂數種子，確保結果一致
-    max_time_mins=2,      # 限制執行兩分鐘
-    cv=3                  # 3 折交叉驗證
-)
+tpot = TPOTRegressor(generations=1, population_size=20, n_jobs=1,
+                     random_state=42, max_time_mins=2, cv=3)
 tpot.fit(X_train, y_train)
-score = tpot.fitted_pipeline_.score(X_test, y_test)
-print("測試集分數 (R2 Score):", score)</code></pre>
+print("R2:", tpot.fitted_pipeline_.score(X_test, y_test))</code></pre>
 <table>
 <thead>
 <tr><th>參數</th><th>為什麼這樣設</th></tr>
@@ -509,8 +567,9 @@ print("測試集分數 (R2 Score):", score)</code></pre>
 </table>
 <p>觀察進化過程：輸出日誌會顯示 Generation 1, 2, 3...，並顯示每一代找到的最佳內部交叉驗證分數（通常是負的 MSE，數值越接近 0 越好）。</p>
 </section>
-<section class="card">
-<h1>§11（續）R² 解讀、優化策略與本機實測</h1>
+
+<section class="card u4">
+<h1><span class="badge">12</span><span class="chip">單元四（§10–§12）</span>§11（續）R² 解讀、優化策略與本機實測</h1>
 <table>
 <thead>
 <tr><th>項目</th><th>說明</th></tr>
@@ -542,10 +601,13 @@ print("測試集分數 (R2 Score):", score)</code></pre>
 設定 C：generations=10, population_size=60 → 約 22 分鐘，R² ≈ 0.68</code></pre>
 <p><strong>關鍵洞察</strong>：從 A 到 B，時間增加 9 倍，R² 只從 0.60 提升到 0.66——這就是「邊際效益遞減」。TPOT 很快就能找到「還不錯」的模型，但要再往上推每一分都很貴；實務上要在可接受的時間預算內取平衡，而不是無腦加大參數。</p>
 </section>
+
+</div>
 </div>
 <div class="sheet">
-<section class="card">
-<h1>§12 導出最佳 Pipeline（白盒模型）</h1>
+<div class="col">
+<section class="card u4">
+<h1><span class="badge">13</span><span class="chip">單元四（§10–§12）</span>§12 導出最佳 Pipeline（白盒模型）</h1>
 <ul>
 <li><strong>導出指令</strong>：<code>print(tpot.fitted_pipeline_)</code>；執行後若無錯誤訊息，代表結果已成功生成。</li>
 <li><strong>儲存成果</strong>：點 Colab 左側 3 點選「copy cell output」複製輸出 → 貼到 Word 存成 <code>best_model_pipeline.docx</code>。</li>
@@ -574,8 +636,11 @@ print("測試集分數 (R2 Score):", score)</code></pre>
 </tbody>
 </table>
 </section>
-<section class="card">
-<h1 id="s8">§13 20 個實習個案總表與兩題情境題</h1>
+
+</div>
+<div class="col">
+<section class="card u5">
+<h1 id="s8"><span class="badge">14</span><span class="chip">總結（§13）</span>§13 20 個實習個案總表與兩題情境題</h1>
 <table>
 <thead>
 <tr><th>個案</th><th>名稱</th><th>工具</th><th>對應章節</th></tr>
@@ -626,10 +691,13 @@ print("測試集分數 (R2 Score):", score)</code></pre>
 </tbody>
 </table>
 </section>
+
+</div>
 </div>
 <div class="sheet">
-<section class="card">
-<h1 id="s9">附錄 A–B：名詞速查、十大陷阱、易混淆四組</h1>
+<div class="col">
+<section class="card u6">
+<h1 id="s9"><span class="badge">15</span><span class="chip">附錄 A–F</span>附錄 A–B：名詞速查、十大陷阱、易混淆四組</h1>
 <h3>附錄 A：名詞速查（英文 → 中文）</h3>
 <p>AutoML 自動化機器學習｜Classification 分類｜Regression 迴歸｜Pipeline 流程／管線｜Hyperparameter Tuning 超參數調整｜One-Hot Encoding 獨熱編碼｜Auto Imputation 自動填補｜Auto Encoding 自動編碼｜Accuracy 準確率｜AUC ROC 曲線下面積｜RMSE 均方根誤差｜R² 決定係數｜Feature Importance 特徵重要性｜Endpoint 部署端點｜Workspace 工作區｜Compute Cluster 計算叢集｜Tabular Dataset 表格數據集｜Genetic Algorithm 遺傳演算法｜Generations 演化代數｜Population Size 族群大小｜Cross Validation 交叉驗證｜Human-in-the-loop 人類介入｜GDPR 一般資料保護規則｜Responsible AI 負責任 AI｜Generalization 泛化能力</p>
 <h3>附錄 B：十大陷阱總表</h3>
@@ -663,8 +731,9 @@ print("測試集分數 (R2 Score):", score)</code></pre>
 </tbody>
 </table>
 </section>
-<section class="card">
-<h1>附錄 C：Prompt 範本集（7 支）與使用技巧</h1>
+
+<section class="card u6">
+<h1><span class="badge">16</span><span class="chip">附錄 A–F</span>附錄 C：Prompt 範本集（7 支）與使用技巧</h1>
 <table>
 <thead>
 <tr><th>#</th><th>用途</th><th>Prompt</th></tr>
@@ -681,10 +750,11 @@ print("測試集分數 (R2 Score):", score)</code></pre>
 </table>
 <p><strong>使用技巧</strong>：填空要具體（[主題]、[欄位名稱] 一定換成真實內容）｜要求格式（加上「請用表格呈現」「請用繁體中文」）｜追問要保留（Prompt 4 生成偏見資料後可追問「請說明這份資料中哪些群體被系統性排除」）。</p>
 </section>
+
 </div>
-<div class="sheet">
-<section class="card">
-<h1>附錄 D：一頁精華（考前 10 分鐘）</h1>
+<div class="col">
+<section class="card u6">
+<h1><span class="badge">17</span><span class="chip">附錄 A–F</span>附錄 D：一頁精華（考前 10 分鐘）</h1>
 <pre><code>AutoML 應用證書 全課程骨架
 │
 ├─ 為什麼需要 AutoML ── 傳統 ML 三痛點：流程繁瑣 / 耗時費力 / 高度依賴專家
@@ -712,8 +782,13 @@ print("測試集分數 (R2 Score):", score)</code></pre>
 └─ TPOT 兩個旋鈕 ── generations（演化幾代）× population_size（每代幾個模型）
    導出指令 ── print(tpot.fitted_pipeline_) ← 白盒模型、可獨立部署</code></pre>
 </section>
-<section class="card">
-<h1>附錄 E–F：60 題測驗、錯題對照、高頻考點</h1>
+
+</div>
+</div>
+<div class="sheet">
+<div class="col">
+<section class="card u6">
+<h1><span class="badge">18</span><span class="chip">附錄 A–F</span>附錄 E–F：60 題測驗、錯題對照、高頻考點</h1>
 <table>
 <thead>
 <tr><th>項目</th><th>內容</th></tr>
@@ -779,10 +854,11 @@ print("測試集分數 (R2 Score):", score)</code></pre>
 </tbody>
 </table>
 </section>
+
 </div>
-<div class="sheet">
-<section class="card">
-<h1 id="exam">總複習卡（上）：骨架、必背口訣、三大陷阱</h1>
+<div class="col">
+<section class="card u7">
+<h1 id="exam"><span class="badge">19</span><span class="chip">總複習</span>總複習卡（上）：骨架、必背口訣、三大陷阱</h1>
 <h3>一、骨架一句話</h3>
 <p>4 單元 / 20 個案；三條路線＝無代碼（示範級、不能部署）→ 企業雲端（Azure，可部署 API）→ 開源（TPOT，透明可導出）</p>
 <h3>二、必背口訣</h3>
@@ -807,8 +883,9 @@ print("測試集分數 (R2 Score):", score)</code></pre>
 <li><strong>RMSE / R²</strong>：RMSE 越小越好、對離群值極敏感；R² 0–1、越大越好</li>
 </ol>
 </section>
-<section class="card">
-<h1>總複習卡（下）：關鍵數字、平台二選一、最後 30 秒覆核</h1>
+
+<section class="card u7">
+<h1><span class="badge">20</span><span class="chip">總複習</span>總複習卡（下）：關鍵數字、平台二選一、最後 30 秒覆核</h1>
 <table>
 <thead>
 <tr><th>項目</th><th>值</th></tr>
@@ -840,6 +917,8 @@ print("測試集分數 (R2 Score):", score)</code></pre>
 <li>雲端最小節點是 0 嗎？（閒置不計費）</li>
 </ul>
 </section>
+
+</div>
 </div>
 </body>
 </html>

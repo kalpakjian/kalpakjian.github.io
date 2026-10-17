@@ -1,0 +1,12 @@
+compact.body=compact
+compact.title=AutoML 速記卡（全部章節・緊湊版 3 張／頁・A4 列印）
+compact.print=🖨 列印全部 20 張速記卡（A4 橫向・每頁 3 張・更省紙）
+compact.pagehint=每頁 3 張卡（約 7 頁）
+compact.alt=  <a href="cards-large.html">🔍 大字版（每頁 2 張）</a>
+compact.pagemargin=6mm
+large.body=large
+large.title=AutoML 速記卡（全部章節・大字版 2 張／頁・A4 列印）
+large.print=🖨 列印全部 20 張速記卡（A4 橫向・每頁 2 張）
+large.pagehint=每頁 2 張卡（共 10 頁）
+large.alt=  <a href="cards.html">⚡ 緊湊版（每頁 3 張・更省紙）</a>
+large.pagemargin=8mm
