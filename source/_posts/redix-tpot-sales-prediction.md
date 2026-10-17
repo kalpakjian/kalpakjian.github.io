@@ -243,27 +243,7 @@ set_param_recursive(exported_pipeline.steps, "random_state", 42)
 
 ---
 
-## 8. 想自己跑一遍？三個指令
-
-```powershell
-# 1) 建環境（conda 預設 channel 的 Python ＋ pip 裝 TPOT）
-C:\Users\princ\miniconda3\Scripts\conda.exe create -n tpot111_defaults python=3.12 -y
-C:\Users\princ\miniconda3\envs\tpot111_defaults\python.exe -m pip install --upgrade pip "setuptools<81"
-C:\Users\princ\miniconda3\envs\tpot111_defaults\python.exe -m pip install tpot
-
-# 2) 跑實習（課堂版 6.5 秒；加 --handout 會連圖表與 A4 講義一起產出）
-C:\Users\princ\miniconda3\envs\tpot111_defaults\python.exe redix_tpot_local.py --handout
-
-# 3) 把最佳管線匯出成可讀程式碼
-C:\Users\princ\miniconda3\envs\tpot111_defaults\python.exe tpot_export_code.py --joblib redix_best.joblib --out redix_best_pipeline.py
-```
-
-> ⚠️ `"setuptools<81"` 不能省：setuptools 81 起移除 `pkg_resources`，而 TPOT 相依的 `stopit` 仍會 import 它。
-> ⚠️ 寫成 `.py` 腳本時要加 `if __name__ == "__main__":`，否則 Windows 上的 dask 會報 `No valid workers found`。
-
----
-
-## 9. 小結：三個可以帶走的觀念
+## 8. 小結：三個可以帶走的觀念
 
 1. **先選對指標，再談模型**。這份資料 91.8% 都會成交，accuracy 92% 卻一無是處——請看 **ROC-AUC** 與**平衡準確率**。
 2. **AutoML 給你效能，解釋性要自己補**。TPOT 幫你搜出管線，但「為什麼是這些特徵」要用**置換重要度**＋（線性模型的）**勝算比**自己補上；兩種方法互相印證時，結論才可信。
