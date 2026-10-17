@@ -239,6 +239,8 @@ set_param_recursive(exported_pipeline.steps, "random_state", 42)
 | `redix_predictions_chart.png` | 15 筆預測與門檻線（本文用圖） |
 | `redix_threshold_curve.png` | 門檻調校曲線（本文用圖） |
 
+📄 **可下載**：[一頁 A4 講義（PDF）](/redix-tpot/handout.pdf) —— 把上面四張圖整合成一頁（A4 橫向），可直接列印發給學員或投影講解。
+
 ---
 
 ## 8. 想自己跑一遍？三個指令
