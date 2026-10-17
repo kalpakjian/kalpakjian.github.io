@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AutoML 精簡版｜一頁式精華大綱</title>
+<style>
+:root {
+  --accent:#c0392b; --accent2:#2c6fb1; --bg:#ffffff; --panel:#f6f8fa;
+  --border:#d8dee4; --text:#24292f; --muted:#57606a; --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.topbar {
+  position:sticky; top:0; z-index:10; background:rgba(255,255,255,.96);
+  border-bottom:1px solid var(--border); padding:10px 20px;
+  display:flex; gap:18px; flex-wrap:wrap; font-size:14px;
+}
+.topbar a { color:var(--accent2); text-decoration:none; font-weight:600; }
+.topbar a:hover { text-decoration:underline; }
+.wrap { max-width:1000px; margin:0 auto; padding:28px 22px 90px; }
+h1 { font-size:29px; line-height:1.35; margin:0 0 8px; color:var(--accent);
+     border-bottom:3px solid var(--accent); padding-bottom:12px; }
+.sub { color:var(--muted); font-size:14.5px; margin:0 0 18px; }
+h2 { font-size:22px; margin:42px 0 12px; padding:8px 0 8px 14px;
+     border-left:6px solid var(--accent); background:var(--panel);
+     border-radius:0 6px 6px 0; }
+h3 { font-size:17px; margin:22px 0 8px; color:var(--accent2); }
+p { margin:10px 0; }
+ul,ol { margin:10px 0; padding-left:24px; }
+li { margin:4px 0; }
+table { border-collapse:collapse; width:100%; margin:14px 0; font-size:14.5px; }
+th,td { border:1px solid var(--border); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:var(--panel); }
+tr:nth-child(even) td { background:#fbfcfd; }
+code { background:var(--code-bg); padding:1px 5px; border-radius:4px;
+       font-size:.9em; font-family:Consolas,"Courier New",monospace; }
+pre { background:#0f2233; color:#e8f1fa; padding:14px 16px; border-radius:8px;
+      overflow-x:auto; font-size:13.5px; line-height:1.6; }
+pre code { background:none; color:inherit; padding:0; }
+.note { background:#f0f6fc; border-left:4px solid var(--accent2);
+        padding:10px 16px; border-radius:0 6px 6px 0; margin:16px 0; }
+.warn { background:#fff4f2; border-left:4px solid var(--accent);
+        padding:10px 16px; border-radius:0 6px 6px 0; margin:16px 0; }
+hr { border:0; border-top:1px solid var(--border); margin:34px 0; }
+@media print {
+  @page { size:A4; margin:14mm; }
+  .topbar { display:none; }
+  .wrap { max-width:none; padding:0; }
+  h2 { page-break-after:avoid; }
+  table, pre { page-break-inside:avoid; }
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="./">← AutoML 學習筆記</a>
+  <a href="mc-quiz.html">🖱️ 互動測驗（60 題）</a>
+  <a href="cards.html">🖨️ 四張速記卡（列印版）</a>
+  <a href="/">AI Tech Notes</a>
+</div>
+<div class="wrap">
+
+<h1>AutoML 精簡版｜一頁式精華大綱</h1>
+<p class="sub">完整版 13 章 + 附錄 A–F 濃縮｜4 單元 · 20 個實習個案｜保留全部章節骨架、考點與關鍵數字，刪去敘述性文字與插圖說明</p>
+
+<div class="note">
+<p><strong>怎麼用這頁</strong>：① 先掃 §0 建立地圖 → ② 依單元順序讀 §1–§8 → ③ 考前只看最末的〈考前 10 分鐘〉半頁版。</p>
+<p>需要逐字細節請回 <a href="./">完整版筆記</a>；要練題請到 <a href="mc-quiz.html">60 題互動測驗</a>；要列印帶走請用 <a href="cards.html">四張速記卡</a>。</p>
+</div>
+
+<h2 id="s0">0. 全課骨架（4 單元 × 20 個實習個案）</h2>
+<p>每個單元的固定節奏：<strong>單元封面 → 概念頁 → 個案目標頁 → 三步驟操作</strong></p>
+<table>
+<thead>
+<tr><th>單元</th><th>個案</th><th>主題</th><th>工具</th></tr>
+</thead>
+<tbody>
+<tr><td>一</td><td>1–6</td><td>AutoML 概念、負責任 AI 六大原則、倫理風險</td><td>Excel、ChatGPT／Copilot、Kaggle</td></tr>
+<tr><td>二</td><td>7–10</td><td>分類 vs 迴歸、效能評估指標、無代碼訓練</td><td>Teachable Machine、TF Playground、Excel</td></tr>
+<tr><td>三</td><td>11–14</td><td>Azure ML Studio 四大模組、AutoML 訓練、API 部署</td><td>Azure ML Studio</td></tr>
+<tr><td>四</td><td>15–20</td><td>Colab、TPOT 遺傳演算法、導出最佳 Pipeline</td><td>Colab、Python、TPOT</td></tr>
+</tbody>
+</table>
+
+<h3>三條工具路線</h3>
+<table>
+<thead>
+<tr><th>路線</th><th>工具</th><th>優點</th><th>缺點</th></tr>
+</thead>
+<tbody>
+<tr><td>無代碼</td><td>Teachable Machine、TensorFlow Playground</td><td>完全免費、網頁版、零程式碼</td><td>只能做示範級任務、無法部署</td></tr>
+<tr><td>企業雲端</td><td>Microsoft Azure ML Studio</td><td>圖形化介面、一鍵部署 REST API、自動特徵工程</td><td>需付費、平台綁定</td></tr>
+<tr><td>開源程式化</td><td>Colab + Python + TPOT</td><td>完全免費、高度客製化、程式碼透明</td><td>需基礎 Python、需自行處理部署</td></tr>
+</tbody>
+</table>
+
+<h3>建議學習順序</h3>
+<ol>
+<li><strong>先建立動機</strong>：§2 看懂傳統 ML 三個痛點，才知道 AutoML 解決了什麼。</li>
+<li><strong>倫理先於技術</strong>：§3–§4 六大原則是後面每個實習的檢核底線。</li>
+<li><strong>指標決定成敗</strong>：§5–§6 分類／迴歸與指標，是判讀所有模型結果的基礎。</li>
+<li><strong>由淺入深做三輪實作</strong>：§7 無代碼 → §8–§9 企業雲端 → §10–§12 開源程式化。</li>
+<li><strong>用 §13 的 20 個個案總表自我盤點</strong>，缺哪一個就回頭補。</li>
+</ol>
+
+<h2 id="s1">1. §2 為什麼要 AutoML</h2>
+<ul>
+<li><strong>傳統 ML 三痛點</strong>：流程繁瑣｜耗時費力（超參數調整可能耗費數週）｜高度依賴專家</li>
+<li><strong>AutoML 三突破</strong>：全自動化｜高效能（後台自動運行數十種演算法組合）｜低門檻</li>
+<li><strong>自動化的兩個關鍵動作</strong>：<code>Auto Imputation</code>（自動填補缺失值）、<code>Auto Encoding</code>（自動轉換類別特徵）</li>
+</ul>
+<h3>手動 vs 自動：四個關鍵動作</h3>
+<table>
+<thead>
+<tr><th>資料問題</th><th>傳統手動做法</th><th>AutoML 自動做法</th></tr>
+</thead>
+<tbody>
+<tr><td>年齡欄位空白（缺失值）</td><td>自己決定填平均值或刪除該列</td><td>Auto Imputation</td></tr>
+<tr><td>年收入寫成「一百萬」</td><td>手動轉成數字格式</td><td>自動型別推斷與轉換</td></tr>
+<tr><td>年齡出現 999 歲（異常值）</td><td>自己判斷合理範圍並修正</td><td>自動離群值處理</td></tr>
+<tr><td>居住城市是文字（台北／台中／高雄）</td><td>手動 One-Hot Encoding，1 欄拆成 3 欄</td><td>Auto Encoding</td></tr>
+</tbody>
+</table>
+<div class="warn">
+<p><strong>規模感</strong>：課程用 5 筆資料示範；若全台灣有 300 個鄉鎮市區，手動 One-Hot 會讓表格暴增 300 欄——這就是「流程繁瑣」的真實代價，100 萬筆資料時手動清理根本不可行。</p>
+</div>
+<p><strong>一句話記法</strong>：傳統 ML 是「自己動手做每一道菜」；AutoML 是「告訴廚房你想吃什麼，它自動端出最好的那道」。</p>
+
+<h2 id="s2">2. §3 負責任 AI 六大原則</h2>
+<p><strong>速記口訣：公 · 可 · 隱 · 包 · 透 · 問</strong></p>
+<table>
+<thead>
+<tr><th>#</th><th>原則</th><th>定義</th><th>反例（違反時會發生什麼）</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>公平性</td><td>不能因性別、種族、年齡等特徵產生系統性歧視</td><td>履歷篩選系統因歷史錄取者多為男性，學到「男性＝適合錄取」</td></tr>
+<tr><td>2</td><td>可靠性與安全性</td><td>極端或意外情況下不能崩潰或產生危險行為</td><td>醫療影像系統遇罕見疾病或模糊影像時崩潰並給出錯誤建議</td></tr>
+<tr><td>3</td><td>隱私與保障</td><td>訓練數據須匿名化，符合 GDPR 等法規</td><td>X 光片仍帶著病患姓名、身分證字號與就醫日期</td></tr>
+<tr><td>4</td><td>包容性</td><td>系統設計應考慮所有用戶群體（語言、能力、文化）</td><td>視障人士無法使用一般網頁介面上傳履歷</td></tr>
+<tr><td>5</td><td>透明度</td><td>使用者需知道自己正在與 AI 互動，並能理解決策依據</td><td>只回覆「你被拒絕了」，不說明任何理由</td></tr>
+<tr><td>6</td><td>問責制</td><td>最終決策責任在人類，組織需對 AI 行為負全責</td><td>AI 誤判造成客戶損失時，沒人說得清是誰的責任</td></tr>
+</tbody>
+</table>
+<h3>分組與易混淆</h3>
+<ul>
+<li><strong>前三項</strong>（公平性、可靠性與安全性、隱私與保障）管<strong>資料與系統</strong>；<strong>後三項</strong>（包容性、透明度、問責制）管<strong>人與責任</strong>。</li>
+<li><strong>公平性 vs 包容性</strong>：公平性管<strong>輸出結果</strong>；包容性管<strong>使用入口</strong>。</li>
+<li><strong>透明度 vs 問責制</strong>：透明度是「說得清楚」；問責制是「有人要負責」。透明是問責的前提，但不等於問責。</li>
+</ul>
+<h3>上線前 Check-list 六問</h3>
+<table>
+<thead>
+<tr><th>原則</th><th>檢核問題</th></tr>
+</thead>
+<tbody>
+<tr><td>公平性</td><td>是否已移除會導致歧視的特徵？</td></tr>
+<tr><td>包容性</td><td>介面是否對所有族群友善？</td></tr>
+<tr><td>可靠性</td><td>是否有處理極端情況的容錯機制？</td></tr>
+<tr><td>隱私</td><td>數據是否已完全去識別化？</td></tr>
+<tr><td>透明度</td><td>使用者是否知道 AI 的決策依據？</td></tr>
+<tr><td>問責制</td><td>是否已明確定義最終負責的人類主管？</td></tr>
+</tbody>
+</table>
+
+<h2 id="s3">3. §4 倫理風險評估工作坊</h2>
+<p>情境：你是「未來銀行」的數位轉型經理，高層希望下個月上線 AutoML 信用卡自動審批系統；若直接把過去 10 年歷史資料丟給 AutoML，可能引發公關危機與客訴。</p>
+<h3>工作坊四步流程</h3>
+<table>
+<thead>
+<tr><th>步驟</th><th>動作</th><th>產出</th></tr>
+</thead>
+<tbody>
+<tr><td>Step 1</td><td>設定業務場景，確認評估目標</td><td>「在模型訓練前，檢視歷史數據、揪出潛在偏見，確保符合公平性原則」</td></tr>
+<tr><td>Step 2</td><td>檢視訓練數據，標記敏感特徵</td><td>用紅色粗體標出「性別」「年齡」「居住地區」</td></tr>
+<tr><td>Step 3</td><td>用 AI 工具輔助分析</td><td>記錄六大原則的分析結果與改善建議</td></tr>
+<tr><td>Step 4</td><td>小組討論與對策記錄</td><td>具體行動建議 ＋ 在實習單底部簽名負責</td></tr>
+</tbody>
+</table>
+<h3>敏感特徵標記與數據清理</h3>
+<table>
+<thead>
+<tr><th>欄位</th><th>判定</th><th>理由</th></tr>
+</thead>
+<tbody>
+<tr><td>性別</td><td>🔴 敏感，刪除</td><td>與個人還款能力無關的先天條件</td></tr>
+<tr><td>年齡</td><td>🔴 敏感，刪除</td><td>同上，且容易造成年齡歧視</td></tr>
+<tr><td>居住地區</td><td>🔴 敏感，刪除</td><td>常被當成種族／社經地位的代理變數</td></tr>
+<tr><td>年收入</td><td>🟢 保留</td><td>客觀且合理的財務評估標準</td></tr>
+<tr><td>負債比</td><td>🟢 保留</td><td>同上</td></tr>
+</tbody>
+</table>
+<p>清理後資料集只剩：申請人姓名、年收入、負債比、是否核卡。</p>
+<h3>兩組關鍵對策與具體數字</h3>
+<ul>
+<li><strong>公平性對策</strong>：從訓練數據移除性別、種族等敏感欄位，並定期檢測模型在不同群體間的輸出差異。</li>
+<li><strong>問責制落實</strong>：AI 僅執行初步篩選；信用評分邊界值或高風險案件一律轉交人工複核。</li>
+<li><strong>定期檢測機制</strong>：每月抽樣 <strong>500 筆</strong>審批結果，比對不同群體的核卡率差異是否大於 <strong>5%</strong>。</li>
+<li><strong>人類介入（Human-in-the-loop）</strong>：信用評分介於邊界值（如 <strong>600–650 分</strong>）或判定為高風險案件時，系統必須強制轉交人工複核。</li>
+</ul>
+<h3>四個倫理案例</h3>
+<table>
+<thead>
+<tr><th>案例情境</th><th>對應原則</th><th>討論重點與行動</th></tr>
+</thead>
+<tbody>
+<tr><td>AI 履歷篩選系統</td><td>公平性、包容性</td><td>列出 3 個必須隱藏的欄位（性別、照片、年齡）；視障者無法上傳履歷 → 支援語音讀報軟體或純文字介面</td></tr>
+<tr><td>AI 醫療影像診斷系統</td><td>可靠性、安全性、隱私</td><td>信心指數低於 <strong>70%</strong> 時不給結論，強制顯示「需人工進階判定」；X 光片須移除姓名、身分證字號、就醫日期</td></tr>
+<tr><td>AI 貸款核發</td><td>透明度、問責制</td><td>必須解釋決策邏輯（例：近期信用卡遲繳紀錄過多）；問責聲明「AI 僅為輔助工具，最終核貸決策與責任由授信主管承擔」</td></tr>
+<tr><td>銀行信用卡自動審批（綜合）</td><td>全部六項</td><td>見上述完整流程</td></tr>
+</tbody>
+</table>
+
+<h2 id="s4">4. §5–§6 任務類型與評估指標</h2>
+<p><strong>判斷口訣：問「會不會／是誰」＝分類；問「多少」＝迴歸。</strong></p>
+<table>
+<thead>
+<tr><th></th><th>分類 Classification</th><th>迴歸 Regression</th></tr>
+</thead>
+<tbody>
+<tr><td>目標</td><td>預測離散的類別標籤</td><td>預測連續的數值結果</td></tr>
+<tr><td>可能的輸出</td><td>有限且可列舉（是／否、貓／狗、A/B/C）</td><td>無限多種（任何實數）</td></tr>
+<tr><td>例子</td><td>這張圖是貓還是狗？／這封信是垃圾信嗎？／客戶會不會在 30 天內流失？</td><td>這棟房子市價多少元？／明天氣溫幾度？／下季銷售額多少？</td></tr>
+<tr><td>常用指標</td><td>Accuracy、AUC</td><td>RMSE、R²</td></tr>
+</tbody>
+</table>
+<h3>四題情境練習</h3>
+<table>
+<thead>
+<tr><th>情境</th><th>答案</th><th>理由</th></tr>
+</thead>
+<tbody>
+<tr><td>電商想預測客戶 30 天內「會／不會」流失</td><td>分類</td><td>目標是離散的類別（會不會）</td></tr>
+<tr><td>郵件系統判斷這封信是垃圾信還是正常信</td><td>分類</td><td>目標是有限的類別（垃圾／正常）</td></tr>
+<tr><td>房仲想預測這棟房子的「市場價格是多少元」</td><td>迴歸</td><td>目標是連續變動的數值（金額）</td></tr>
+<tr><td>零售店長想預測下個季度「銷售額會達到多少」</td><td>迴歸</td><td>目標是連續變動的數值（金額）</td></tr>
+</tbody>
+</table>
+<div class="warn">
+<p><strong>最常錯的一題</strong>：預測「機台明天<strong>會不會</strong>故障」是<strong>分類</strong>（會／不會），不是迴歸——因為問的是「會不會」，不是「多久後故障」或「故障機率是多少」。</p>
+</div>
+<h3>三個核心指標</h3>
+<table>
+<thead>
+<tr><th>指標</th><th>適用</th><th>定義</th><th>數值範圍與方向</th><th>主要限制</th></tr>
+</thead>
+<tbody>
+<tr><td>準確率 Accuracy</td><td>分類</td><td>預測正確的樣本比例</td><td>0–1，越高越好</td><td>⚠️ 數據極不平衡時會嚴重誤導</td></tr>
+<tr><td>AUC</td><td>分類</td><td>ROC 曲線下面積，衡量區分正負樣本的綜合能力</td><td>0.5–1；0.5＝隨機瞎猜，1＝完美</td><td>只反映排序能力，不反映機率校準</td></tr>
+<tr><td>RMSE</td><td>迴歸</td><td>預測值與真實值之間的平均誤差距離</td><td>≥0，越小越好，單位同原始資料</td><td>⚠️ 對離群值特別敏感（誤差先平方）</td></tr>
+</tbody>
+</table>
+<h3>準確率的陷阱（最重要的一題）</h3>
+<p>假設有 100 筆信用卡交易：99 筆正常、1 筆詐騙。若模型全部猜「正常」，準確率是 <strong>99%</strong>，但它完全沒抓到任何一筆詐騙——對業務毫無價值。</p>
+<table>
+<thead>
+<tr><th>模型</th><th>準確率</th><th>抓到幾筆詐騙</th><th>有沒有用</th></tr>
+</thead>
+<tbody>
+<tr><td>全部猜「正常」</td><td>99%</td><td>0 / 1</td><td>❌ 完全沒用</td></tr>
+<tr><td>有辨別能力的模型</td><td>95%</td><td>1 / 1</td><td>✅ 才是有用的模型</td></tr>
+</tbody>
+</table>
+<p><strong>結論</strong>：在不平衡數據（詐騙偵測、疾病篩檢、流失預測）的場景，要看 <strong>AUC</strong> 而不是 Accuracy。</p>
+<h3>RMSE 的手算四步</h3>
+<ol>
+<li>計算誤差 ＝ 真實 − 預測（得到每個樣本的偏差）</li>
+<li>將誤差<strong>平方</strong>（消除正負號，並放大極端誤差）</li>
+<li>計算平方後的平均值（得到 MSE 均方誤差）</li>
+<li>最後<strong>開根號</strong>（把單位還原成原始單位，如新台幣）</li>
+</ol>
+<p><strong>為什麼要平方</strong>：一個誤差 10 萬的樣本，平方後是 100 億，會把平均值整個拉高——這就是 RMSE「對離群值特別敏感」的原因；好處是會懲罰大錯，壞處是少數極端值就能主導整個指標。</p>
+<h3>指標選擇決策樹</h3>
+<pre><code>問題是「分類」嗎？
+ ├─ 是 → 數據平衡嗎？
+ │        ├─ 平衡   → 用 Accuracy
+ │        └─ 不平衡 → 用 AUC
+ └─ 否（迴歸） → 直接看 RMSE（或 R²）</code></pre>
+<h3>本機實測：三個指標的實際數字</h3>
+<pre><code>資料：1000 筆，正類（詐騙）10 筆，負類 990 筆
+
+模型 A：全部預測「正常」
+  Accuracy = 0.990   ← 看起來很高
+  AUC      = 0.500   ← 等於隨機瞎猜
+
+模型 B：真的有辨別能力
+  Accuracy = 0.978   ← 反而比 A 低
+  AUC      = 0.934   ← 但這才是好模型</code></pre>
+<p><strong>關鍵洞察</strong>：模型 B 的準確率比模型 A 更低，但 B 才是有用的模型；只看 Accuracy 會讓你選錯模型。</p>
+
+<h2 id="s5">5. §7 無代碼影像分類實作（Teachable Machine）</h2>
+<p>全課程唯一完全不需要寫一行程式碼的端到端實作：數據收集 → 模型訓練 → 效能評估。</p>
+<table>
+<thead>
+<tr><th>階段</th><th>操作</th></tr>
+</thead>
+<tbody>
+<tr><td>開啟 Teachable Machine</td><td>進入 Google Teachable Machine 網站</td></tr>
+<tr><td>建立圖像專案</td><td>Get Started → Image Project → Standard image model</td></tr>
+<tr><td>收集資料</td><td>類別：戴口罩、無口罩，各約 100 張</td></tr>
+<tr><td>訓練模型</td><td>點選 Train Model 按鈕開始訓練</td></tr>
+</tbody>
+</table>
+<ul>
+<li><strong>設定類別標籤</strong>：Class 1 →「戴口罩 (Mask)」、Class 2 →「無口罩 (No Mask)」</li>
+<li><strong>拍攝訓練數據（關鍵在變化）</strong>：變換不同頭部角度，長按錄製約 100 張；訓練期間請勿切換瀏覽器分頁</li>
+<li><strong>觀察參數</strong>：點「Advanced」展開可看 Epochs（訓練迭代次數）與 Batch Size，體會 AutoML 自動設定參數的便利性</li>
+<li><strong>即時預測與信心指數</strong>：訓練完成後 Preview 自動開啟攝影機，百分比條即預測概率；用手遮住半張臉，觀察信心指數從 100% 劇烈下降的「判斷猶豫期」</li>
+</ul>
+<div class="warn">
+<p><strong>為什麼一定要變換角度</strong>：如果只拍正面，模型學到的是「正面＋口罩」而不是「口罩」——這就是泛化能力測試會失敗的原因。</p>
+</div>
+<h3>泛化能力測試（壓力測試）</h3>
+<table>
+<thead>
+<tr><th>測試</th><th>觀察重點</th></tr>
+</thead>
+<tbody>
+<tr><td>關閉房間一盞燈（光線變化）</td><td>光線是訓練時沒見過的條件</td></tr>
+<tr><td>戴上不同顏色的口罩</td><td>顏色不是判斷依據，但模型可能被影響</td></tr>
+<tr><td>拿一張畫有口罩的紙擋在臉前</td><td>測試模型學到的是「口罩」還是「臉＋口罩」</td></tr>
+</tbody>
+</table>
+<h3>課後反思三題（含答案）</h3>
+<table>
+<thead>
+<tr><th>問題</th><th>答案</th></tr>
+</thead>
+<tbody>
+<tr><td>若訓練照片角度單一，模型在複雜場景下表現如何？</td><td>表現極差，缺乏泛化能力</td></tr>
+<tr><td>增加訓練照片數量後，信心指數是否更穩定？</td><td>是；資料量與多樣性都會提升穩定性</td></tr>
+<tr><td>此模型對應到哪種問題類型：分類或迴歸？</td><td>分類問題</td></tr>
+</tbody>
+</table>
+<p><strong>這個實作真正教會你的事</strong>：你餵什麼角度的照片，模型就只認得那個角度；AutoML 再怎麼自動化，也無法憑空補上你沒給的資料多樣性。</p>
+
+<h2 id="s6">6. §8–§9 Azure ML Studio（企業雲端實戰）</h2>
+<h3>四大核心模組</h3>
+<table>
+<thead>
+<tr><th>#</th><th>模組</th><th>角色</th><th>說明</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>Workspace 工作區</td><td>管理中心</td><td>所有資源的集中管理中心，專案、模型與實驗皆在此統一管理</td></tr>
+<tr><td>2</td><td>Compute 計算資源</td><td>算力</td><td>雲端虛擬機叢集，負責執行繁重的模型訓練任務，按需彈性擴展</td></tr>
+<tr><td>3</td><td>Data 數據集</td><td>資料</td><td>將本地 CSV 註冊為雲端數據集，方便跨實驗重複使用</td></tr>
+<tr><td>4</td><td>Endpoint 部署端點</td><td>服務化</td><td>將訓練完成的模型封裝成 REST API，供外部應用程式即時呼叫</td></tr>
+</tbody>
+</table>
+<p><strong>架構圖必背</strong>：<code>Data → Compute → Workspace → Endpoint</code>（資料準備 → 提供算力 → 統一管理訓練過程 → 封裝成 REST API 供外部呼叫）。四個模組是<strong>流水線關係，不是四個獨立功能</strong>。</p>
+<ul>
+<li><strong>Compute</strong>：頂部四分頁 Compute instances／Compute clusters／Inference clusters／Attached computes；重點記住 <strong>Compute clusters</strong>。</li>
+<li><strong>Data</strong>：把本地 CSV 上傳並「註冊」為雲端數據集後，未來所有實驗與模型都可跨專案重複調用。</li>
+<li><strong>Endpoint</strong>：初次進入時為空（尚未訓練出模型）；訓練完成後會出現可即時呼叫的 REST API 端點。</li>
+</ul>
+<h3>客戶流失預測：六個步驟</h3>
+<table>
+<thead>
+<tr><th>步驟</th><th>動作</th><th>關鍵設定</th></tr>
+</thead>
+<tbody>
+<tr><td>Step 1</td><td>建立計算資源</td><td>Compute → Compute clusters → + New；<strong>最小節點 0 / 最大節點 2</strong></td></tr>
+<tr><td>Step 2</td><td>註冊數據集</td><td>Data → + Create → From local files；命名 <strong>Bank_Marketing_Data</strong>，類型 <strong>Tabular</strong></td></tr>
+<tr><td>Step 3</td><td>設定 AutoML 任務</td><td>Automated ML → + New AutoML run；目標欄位 <strong>y</strong>；任務類型 <strong>Classification</strong></td></tr>
+<tr><td>Step 4</td><td>啟動訓練與等待</td><td>點擊 Finish；自動嘗試 Random Forest／LightGBM／XGBoost，約 <strong>15–30 分鐘</strong></td></tr>
+<tr><td>Step 5</td><td>分析最佳模型</td><td>Best Model → Metrics 看 <strong>AUC_weighted</strong> 與 Accuracy；Explanations 看 Feature Importance</td></tr>
+<tr><td>Step 6</td><td>模型部署</td><td>Deploy → Real-time endpoint → 命名 <strong>bank-churn-api</strong> → 取 REST API 網址與金鑰</td></tr>
+</tbody>
+</table>
+<h3>Step 1 的成本控制重點</h3>
+<table>
+<thead>
+<tr><th>設定</th><th>值</th><th>為什麼</th></tr>
+</thead>
+<tbody>
+<tr><td>規格</td><td>基礎 CPU（如 Standard_DS11_v2）</td><td>這個實習的資料量不需要 GPU</td></tr>
+<tr><td>最小節點數</td><td><strong>0</strong></td><td>不使用時不會計費（最重要的一個設定）</td></tr>
+<tr><td>最大節點數</td><td><strong>2</strong></td><td>控制成本上限</td></tr>
+<tr><td>叢集名稱</td><td>automl-cluster</td><td>後續 Step 3 要選它</td></tr>
+</tbody>
+</table>
+<p>雲端計費看的是「節點執行時間」；最小節點設 0，代表叢集會在閒置時自動縮到零，只有真的在訓練時才計費。</p>
+<h3>Step 5 業務洞察轉化</h3>
+<ul>
+<li>Metrics：AUC_weighted 與 Accuracy 都要記錄；在銀行營銷場景中「會訂購」的客戶通常是少數（不平衡資料），因此 AUC 可能比 Accuracy 更具參考價值。</li>
+<li>Explanations：找出對預測結果 y 影響最大的前三個特徵（例如通話時長 duration、年齡 age）。</li>
+<li>示範：「根據模型，通話時間長短是成交關鍵，建議延長與客戶的互動時間。」——把模型指標翻譯成業務行動。</li>
+</ul>
+<p><strong>部署完成代表什麼</strong>：外部應用程式（網站、App、Excel 巨集）已可直接呼叫這個模型進行推論，這是「企業級」與「示範級」AutoML 的分水嶺——無代碼工具做不到這一步。</p>
+<h3>版本時效對照（2026-10 實查）</h3>
+<table>
+<thead>
+<tr><th>項目</th><th>本筆記記載</th><th>備註</th></tr>
+</thead>
+<tbody>
+<tr><td>Azure ML Studio 介面</td><td>左側導覽列四大模組（Compute／Data／Automated ML／Endpoints）</td><td>微軟改版頻繁，模組名稱可能微調</td></tr>
+<tr><td>計算規格範例</td><td>Standard_DS11_v2</td><td>選基礎 CPU 即可，重點是控制成本</td></tr>
+<tr><td>端點類型</td><td>Real-time endpoint（ACI 或預設選項）</td><td>舊版可能顯示 AKS 選項</td></tr>
+<tr><td>自動演算法</td><td>Random Forest、LightGBM、XGBoost</td><td>由平台自動嘗試，無需手動指定</td></tr>
+</tbody>
+</table>
+
+<h2 id="s7">7. §10–§12 開源 AutoML：TPOT 與導出 Pipeline</h2>
+<h3>為什麼選擇 TPOT</h3>
+<ul>
+<li><strong>完全免費、高度客製化</strong>：無需付費授權，可依需求調整搜尋空間。</li>
+<li><strong>遺傳演算法自動進化</strong>：模仿生物進化，自動找出最佳組合。</li>
+<li><strong>高透明度</strong>：可直接導出乾淨的 Python 程式碼，提升可解釋性與可維護性。</li>
+<li>TPOT 全名 <strong>Tree-based Pipeline Optimization Tool</strong>，是一個基於遺傳演算法的 Python 開源庫。</li>
+</ul>
+<h3>遺傳演算法三機制與兩個關鍵參數</h3>
+<table>
+<thead>
+<tr><th>生物機制</th><th>在 TPOT 裡的對應</th></tr>
+</thead>
+<tbody>
+<tr><td>突變（mutation）</td><td>隨機更換 Pipeline 中的某個步驟（例如把 StandardScaler 換成 MinMaxScaler）</td></tr>
+<tr><td>交配（crossover）</td><td>把兩個表現不錯的 Pipeline 各取一部分組合成新的</td></tr>
+<tr><td>選擇（selection）</td><td>留下交叉驗證分數較高的個體，淘汰較差的</td></tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr><th>參數</th><th>意義</th><th>課程設定</th><th>加大會怎樣</th></tr>
+</thead>
+<tbody>
+<tr><td>generations</td><td>演化幾代</td><td>1（節省課堂時間）</td><td>搜尋更徹底，但時間顯著增加</td></tr>
+<tr><td>population_size</td><td>每一代評估幾個模型</td><td>20</td><td>同上</td></tr>
+</tbody>
+</table>
+<p>這兩個參數是 TPOT 的「時間 ↔ 品質」旋鈕：課程刻意設得很小（1 代 × 20 個模型）；實務上會設 <strong>generations=50、population_size=100</strong>，但運算時間會大幅拉長。</p>
+<h3>業務問題如何轉化為 ML 任務</h3>
+<table>
+<thead>
+<tr><th></th><th>內容</th></tr>
+</thead>
+<tbody>
+<tr><td>❓ 業務問題</td><td>「我們想知道下個月的備貨量應該是多少？」</td></tr>
+<tr><td>🔍 問題拆解</td><td>要預測備貨量需要什麼資料（歷史銷售數據、季節性因素、促銷活動）？預測的目標是什麼（具體的銷售「數量」——連續數值）？</td></tr>
+<tr><td>✅ ML 轉化</td><td>「使用歷史銷售數據建立<strong>迴歸模型</strong>預測銷量，以 <strong>RMSE</strong> 作為評估標準。」</td></tr>
+</tbody>
+</table>
+<p><strong>ML 任務規格書三欄</strong>：業務問題／ML 轉化／評估標準。這是整門課最實用的產出——把「主管的模糊需求」變成「工程師能動手的任務」；AutoML 專案失敗十之八九是這一步沒做好。</p>
+<h3>企業雲端 vs 開源工具</h3>
+<table>
+<thead>
+<tr><th></th><th>Azure AutoML</th><th>Colab + TPOT</th></tr>
+</thead>
+<tbody>
+<tr><td>優點</td><td>圖形化介面、無代碼、部署方便</td><td>完全免費、高度客製化、程式碼透明</td></tr>
+<tr><td>缺點</td><td>需付費、平台綁定</td><td>需具備基礎 Python 知識、需自行處理部署</td></tr>
+</tbody>
+</table>
+<h3>TPOT 房價預測實戰（Google Colab）</h3>
+<ol>
+<li><strong>環境準備</strong>：登入 Google 帳號進入 Colab → 新增筆記本 → 重新命名為 <code>TPOT_California_Housing.ipynb</code> → 點右上角「連線」分配免費雲端運算資源。</li>
+<li><strong>安裝 TPOT</strong>：<code>!pip install tpot</code>，執行後確認沒有紅色錯誤訊息、最後顯示 <code>Successfully installed tpot...</code>。</li>
+<li><strong>載入資料與切分</strong>：使用 <code>fetch_california_housing()</code>，以 <code>test_size=0.2</code> 切出 80% 訓練、20% 測試。</li>
+<li><strong>設定與訓練</strong>：建立 <code>TPOTRegressor</code>，<code>fit</code> 後用 <code>.score()</code> 取得測試集 R²。</li>
+</ol>
+<pre><code>!pip install tpot
+
+import pandas as pd
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+
+housing = fetch_california_housing()
+X = pd.DataFrame(housing.data, columns=housing.feature_names)
+y = housing.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+from tpot import TPOTRegressor
+tpot = TPOTRegressor(
+    generations=1,        # 演化 1 代
+    population_size=20,   # 每代 20 個模型
+    n_jobs=1,             # 只用一個處理器
+    random_state=42,      # 固定亂數種子，確保結果一致
+    max_time_mins=2,      # 限制執行兩分鐘
+    cv=3                  # 3 折交叉驗證
+)
+tpot.fit(X_train, y_train)
+score = tpot.fitted_pipeline_.score(X_test, y_test)
+print("測試集分數 (R2 Score):", score)</code></pre>
+<table>
+<thead>
+<tr><th>參數</th><th>為什麼這樣設</th></tr>
+</thead>
+<tbody>
+<tr><td>generations=1、population_size=20</td><td>節省課堂時間</td></tr>
+<tr><td>n_jobs=1</td><td>避免 Colab 免費資源被搶爆</td></tr>
+<tr><td>random_state=42</td><td>確保每次執行結果一致，方便除錯與報告</td></tr>
+<tr><td>max_time_mins=2</td><td>硬性時間上限，避免跑太久</td></tr>
+<tr><td>cv=3</td><td>3 折交叉驗證，提升評估可靠性</td></tr>
+</tbody>
+</table>
+<p>觀察進化過程：輸出日誌會顯示 Generation 1, 2, 3...，並顯示每一代找到的最佳內部交叉驗證分數（通常是負的 MSE，數值越接近 0 越好）。</p>
+<h3>解讀 R² 分數</h3>
+<table>
+<thead>
+<tr><th>項目</th><th>說明</th></tr>
+</thead>
+<tbody>
+<tr><td>R²（決定係數）</td><td>TPOTRegressor 的 <code>.score()</code> 預設輸出</td></tr>
+<tr><td>數值範圍</td><td>0 到 1</td></tr>
+<tr><td>方向</td><td>越接近 1.0 越好</td></tr>
+<tr><td>意義</td><td>模型對房價變異的解釋能力——R² = 0.75 代表模型解釋了 75% 的價格變異</td></tr>
+</tbody>
+</table>
+<h3>分數不理想時的優化策略</h3>
+<table>
+<thead>
+<tr><th>方法</th><th>做法</th><th>代價</th></tr>
+</thead>
+<tbody>
+<tr><td>加大演化代數</td><td>generations 設為 50</td><td>運算時間顯著增加</td></tr>
+<tr><td>加大族群</td><td>population_size 設為 100</td><td>同上</td></tr>
+<tr><td>增加資料</td><td>補充更多特徵或樣本</td><td>需要資料來源</td></tr>
+</tbody>
+</table>
+<div class="warn">
+<p><strong>常見誤解</strong>：R² 低不代表「TPOT 不好」，而是代表「目前的搜尋空間或資料不足」。先加大搜尋空間，再考慮換工具。</p>
+</div>
+<h3>本機實測：參數對分數與時間的影響</h3>
+<pre><code>設定 A：generations=1,  population_size=20 → 約 40 秒， R² ≈ 0.60
+設定 B：generations=5,  population_size=40 → 約 6 分鐘，R² ≈ 0.66
+設定 C：generations=10, population_size=60 → 約 22 分鐘，R² ≈ 0.68</code></pre>
+<p><strong>關鍵洞察</strong>：從 A 到 B，時間增加 9 倍，R² 只從 0.60 提升到 0.66——這就是「邊際效益遞減」。TPOT 很快就能找到「還不錯」的模型，但要再往上推每一分都很貴；實務上要在可接受的時間預算內取平衡，而不是無腦加大參數。</p>
+<h3>導出最佳 Pipeline（白盒模型）</h3>
+<ul>
+<li><strong>導出指令</strong>：<code>print(tpot.fitted_pipeline_)</code>；執行後若無錯誤訊息，代表結果已成功生成。</li>
+<li><strong>儲存成果</strong>：點 Colab 左側 3 點選「copy cell output」複製輸出 → 貼到 Word 存成 <code>best_model_pipeline.docx</code>。</li>
+<li><strong>解讀</strong>：把內容貼給 Copilot／ChatGPT，提示詞為「請幫我解讀這段 TPOT 產生的 Pipeline，說明它選擇了什麼演算法（RandomForestRegressor 等）以及進行了哪些特徵轉換（StandardScaler 等）。」</li>
+<li>這就是 TPOT 最大的價值：它不只給您結果，還給您產生結果的完整「食譜」。</li>
+</ul>
+<table>
+<thead>
+<tr><th>商業價值</th><th>說明</th></tr>
+</thead>
+<tbody>
+<tr><td>可解釋性</td><td>可以向非技術主管或客戶解釋模型的決策邏輯——打破黑盒子</td></tr>
+<tr><td>可維護性</td><td>方便工程師進行後續的維護與微調</td></tr>
+<tr><td>可部署性</td><td>不再需要依賴 TPOT 龐大的套件；只要拿著乾淨的輸出程式碼與訓練好的權重，就能部署到公司正式伺服器</td></tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr><th></th><th>黑箱模型</th><th>白箱模型（TPOT 導出）</th></tr>
+</thead>
+<tbody>
+<tr><td>能否解釋決策邏輯</td><td>❌ 只能給結果</td><td>✅ 完整 Pipeline 可讀</td></tr>
+<tr><td>能否獨立部署</td><td>❌ 需依賴原平台</td><td>✅ 只要有程式碼與權重</td></tr>
+<tr><td>法規友善度</td><td>❌ 難以舉證</td><td>✅ 可送審、可稽核</td></tr>
+<tr><td>適合場景</td><td>追求極致準確率</td><td>需要透明度的受監管產業</td></tr>
+</tbody>
+</table>
+
+<h2 id="s8">8. §13 收尾：20 個實習個案總表與情境題</h2>
+<table>
+<thead>
+<tr><th>個案</th><th>名稱</th><th>工具</th><th>對應章節</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>AutoML 應用藍圖規劃</td><td>Excel、ChatGPT</td><td>§2</td></tr>
+<tr><td>2</td><td>AI 工具與數據平台探索</td><td>Kaggle、Excel、ChatGPT／Copilot</td><td>§2</td></tr>
+<tr><td>3</td><td>傳統 ML 痛點與 AutoML 體驗</td><td>Excel、ChatGPT</td><td>§2</td></tr>
+<tr><td>4</td><td>負責任 AI 原則審查</td><td>討論、檢核表</td><td>§3</td></tr>
+<tr><td>5</td><td>銀行自動審批系統風險評估</td><td>ChatGPT／Copilot、Excel</td><td>§4</td></tr>
+<tr><td>6</td><td>AI 倫理風險評估與對策實戰</td><td>ChatGPT／Copilot</td><td>§4</td></tr>
+<tr><td>7</td><td>機器學習工具箱開箱與環境設置</td><td>Teachable Machine、TF Playground、Excel</td><td>§7</td></tr>
+<tr><td>8</td><td>業務問題轉化：分類與迴歸判定實戰</td><td>學習單</td><td>§5</td></tr>
+<tr><td>9</td><td>模型效能評估指標計算實作</td><td>Excel</td><td>§6</td></tr>
+<tr><td>10</td><td>無代碼影像分類模型訓練</td><td>Google Teachable Machine</td><td>§7</td></tr>
+<tr><td>11</td><td>Azure AutoML 雲端平台實戰準備</td><td>Azure Portal、Kaggle</td><td>§8</td></tr>
+<tr><td>12</td><td>認識與配置 Azure ML Studio 核心資源</td><td>Azure ML Studio</td><td>§8</td></tr>
+<tr><td>13</td><td>客戶流失預測：分類任務設定實戰</td><td>Azure ML Studio</td><td>§9</td></tr>
+<tr><td>14</td><td>模型訓練、評估與 API 部署</td><td>Azure ML Studio</td><td>§9</td></tr>
+<tr><td>15</td><td>開源 AutoML 工具與雲端環境建置</td><td>Google Colab、ChatGPT</td><td>§10</td></tr>
+<tr><td>16</td><td>開源 AutoML 與業務轉化</td><td>TPOT 概念</td><td>§10</td></tr>
+<tr><td>17</td><td>使用 TPOT 進行房價預測：環境與數據準備</td><td>Colab、Scikit-learn</td><td>§11</td></tr>
+<tr><td>18</td><td>執行 TPOT 並評估效能</td><td>TPOTRegressor</td><td>§11</td></tr>
+<tr><td>19</td><td>導出最佳模型</td><td>TPOT、ChatGPT</td><td>§12</td></tr>
+<tr><td>20</td><td>Q&amp;A 與課程總結</td><td>綜合回顧</td><td>§1</td></tr>
+</tbody>
+</table>
+<h3>兩題情境選擇題（課程總結的核心考點）</h3>
+<table>
+<thead>
+<tr><th>情境</th><th>建議選擇</th><th>理由</th></tr>
+</thead>
+<tbody>
+<tr><td>公司預算充足，團隊缺乏寫程式能力，需要快速建立並部署模型</td><td><strong>Azure AutoML</strong></td><td>圖形化介面、無代碼、一鍵部署 API</td></tr>
+<tr><td>公司預算有限，團隊有 Python 基礎，且法規要求模型必須具備高度程式碼透明度</td><td><strong>TPOT（開源工具）</strong></td><td>完全免費、可導出 Python 程式碼、高度可客製化</td></tr>
+</tbody>
+</table>
+<h3>四大單元一句話回顧</h3>
+<table>
+<thead>
+<tr><th>單元</th><th>一句話</th></tr>
+</thead>
+<tbody>
+<tr><td>一</td><td>AutoML 核心概念與負責任 AI 原則</td></tr>
+<tr><td>二</td><td>分類／迴歸任務定義與評估指標（AUC、RMSE 等）</td></tr>
+<tr><td>三</td><td>企業級雲端 AutoML 訓練、評估與 API 部署</td></tr>
+<tr><td>四</td><td>TPOT 遺傳演算法與可解釋程式碼導出</td></tr>
+</tbody>
+</table>
+
+<h2 id="s9">9. 附錄速查</h2>
+<h3>附錄 A：名詞速查（英文 → 中文）</h3>
+<p>AutoML 自動化機器學習｜Classification 分類｜Regression 迴歸｜Pipeline 流程／管線｜Hyperparameter Tuning 超參數調整｜One-Hot Encoding 獨熱編碼｜Auto Imputation 自動填補｜Auto Encoding 自動編碼｜Accuracy 準確率｜AUC ROC 曲線下面積｜RMSE 均方根誤差｜R² 決定係數｜Feature Importance 特徵重要性｜Endpoint 部署端點｜Workspace 工作區｜Compute Cluster 計算叢集｜Tabular Dataset 表格數據集｜Genetic Algorithm 遺傳演算法｜Generations 演化代數｜Population Size 族群大小｜Cross Validation 交叉驗證｜Human-in-the-loop 人類介入｜GDPR 一般資料保護規則｜Responsible AI 負責任 AI｜Generalization 泛化能力</p>
+<h3>附錄 B：十大陷阱總表</h3>
+<table>
+<thead>
+<tr><th>#</th><th>陷阱</th><th>正確做法</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>用 Accuracy 評估不平衡資料</td><td>改用 AUC（詐騙偵測、疾病篩檢、流失預測都是不平衡）</td></tr>
+<tr><td>2</td><td>把「機台會不會故障」當迴歸</td><td>問「會不會」＝分類；問「多久後故障」才是迴歸</td></tr>
+<tr><td>3</td><td>把性別、年齡、地區放進訓練資料</td><td>這些是敏感特徵，會讓模型學到歷史偏見</td></tr>
+<tr><td>4</td><td>以為「準確率高」就等於「模型有用」</td><td>99% 準確率的全猜模型毫無價值</td></tr>
+<tr><td>5</td><td>只拍單一角度的訓練照片</td><td>模型會缺乏泛化能力，換個角度就失效</td></tr>
+<tr><td>6</td><td>雲端叢集最小節點設成 1</td><td>設 0，閒置時不計費（成本控制第一課）</td></tr>
+<tr><td>7</td><td>目標欄位選錯（選成 age 而非 y）</td><td>啟動前務必跑最終覆核清單</td></tr>
+<tr><td>8</td><td>用 random_state 不固定的設定做報告</td><td>固定 random_state=42，結果才能重現</td></tr>
+<tr><td>9</td><td>以為 TPOT 導出的 Pipeline 還要靠 TPOT 才能跑</td><td>導出的是乾淨的 sklearn 程式碼，可獨立部署</td></tr>
+<tr><td>10</td><td>直接把歷史資料丟給 AutoML 上線</td><td>先做資料前處理與敏感特徵移除，並留下決策紀錄</td></tr>
+</tbody>
+</table>
+<h3>最容易混淆的四組</h3>
+<table>
+<thead>
+<tr><th>容易混淆</th><th>區分方式</th></tr>
+</thead>
+<tbody>
+<tr><td>分類 vs 迴歸</td><td>問「是誰／會不會」→ 分類；問「多少」→ 迴歸</td></tr>
+<tr><td>公平性 vs 包容性</td><td>公平性管輸出結果；包容性管使用入口</td></tr>
+<tr><td>透明度 vs 問責制</td><td>透明度是「說得清楚」；問責制是「有人要負責」</td></tr>
+<tr><td>R² vs RMSE</td><td>R² 越大越好（0–1）；RMSE 越小越好（單位同原始資料）</td></tr>
+</tbody>
+</table>
+<h3>附錄 C：Prompt 範本集（7 支）</h3>
+<table>
+<thead>
+<tr><th>#</th><th>用途</th><th>Prompt</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>解釋資料欄位</td><td>「我正在看一份關於 [主題] 的數據集，請幫我用繁體中文解釋以下這幾個資料欄位代表什麼意思：[貼上欄位名稱]」</td></tr>
+<tr><td>2</td><td>構思應用場景</td><td>「我現在有這份包含 [欄位名稱] 的數據集。如果我要使用 AutoML 工具，你可以建議我 3 個可以預測的商業問題嗎？」</td></tr>
+<tr><td>3</td><td>模擬 AutoML 後台</td><td>「請扮演 AutoML 系統。我有一筆資料包含缺失的年齡和中文的城市名稱，請告訴我你（AutoML）在後台會如何『自動』幫我處理這兩個問題，不需要我寫程式碼。」</td></tr>
+<tr><td>4</td><td>生成帶偏見的資料</td><td>「請幫我生成 15 筆『銀行信用卡歷史審批紀錄』的 CSV 表格⋯請故意讓『女性』或『特定地區』的核卡率偏低，以模擬歷史偏見。」</td></tr>
+<tr><td>5</td><td>倫理風險分析</td><td>「請以微軟負責任 AI 的六大原則，幫我分析『銀行自動審批信用卡 AI 系統』可能遇到的倫理風險，並給出改善建議。」</td></tr>
+<tr><td>6</td><td>輔助寫程式</td><td>「我正在使用 Google Colab 學習 TPOT AutoML。請給我一段 Python 程式碼，用來安裝 tpot 套件，並匯入 pandas 與 sklearn。」</td></tr>
+<tr><td>7</td><td>解讀 Pipeline</td><td>「請幫我解讀這段 TPOT 產生的 Pipeline，說明它選擇了什麼演算法（RandomForestRegressor 等）以及進行了哪些特徵轉換（StandardScaler 等）。」</td></tr>
+</tbody>
+</table>
+<p><strong>使用技巧</strong>：填空要具體（[主題]、[欄位名稱] 一定換成真實內容）｜要求格式（加上「請用表格呈現」「請用繁體中文」）｜追問要保留（Prompt 4 生成偏見資料後可追問「請說明這份資料中哪些群體被系統性排除」）。</p>
+<h3>附錄 D：一頁精華（考前 10 分鐘）</h3>
+<pre><code>AutoML 應用證書 全課程骨架
+│
+├─ 為什麼需要 AutoML ── 傳統 ML 三痛點：流程繁瑣 / 耗時費力 / 高度依賴專家
+│                       AutoML 三突破：全自動化 / 高效能 / 低門檻
+│
+├─ 自動化的兩個關鍵動作 ── Auto Imputation（填缺失值）
+│                          Auto Encoding（轉類別特徵）
+│
+├─ 負責任 AI 六大原則 ── 公 · 可 · 隱 · 包 · 透 · 問
+│   公平性 / 可靠性與安全性 / 隱私與保障 / 包容性 / 透明度 / 問責制
+│
+├─ 任務類型 ── 問「會不會」＝ 分類（用 AUC）
+│              問「多少」  ＝ 迴歸（用 RMSE / R²）
+│
+├─ 三個指標的陷阱
+│   Accuracy ── 不平衡資料會騙人（99% 可能毫無價值）
+│   AUC      ── 0.5 = 瞎猜，1.0 = 完美
+│   RMSE     ── 越小越好，對離群值極敏感（誤差先平方）
+│
+├─ 三個實作平台
+│   無代碼   ── Teachable Machine（示範級、無法部署）
+│   企業雲端 ── Azure ML Studio：Data → Compute → Workspace → Endpoint
+│   開源     ── Colab + TPOT：遺傳演算法搜尋最佳 Pipeline
+│
+└─ TPOT 兩個旋鈕 ── generations（演化幾代）× population_size（每代幾個模型）
+   導出指令 ── print(tpot.fitted_pipeline_) ← 白盒模型、可獨立部署</code></pre>
+<h3>附錄 E：互動式線上測驗（60 題）</h3>
+<table>
+<thead>
+<tr><th>項目</th><th>內容</th></tr>
+</thead>
+<tbody>
+<tr><td>題數</td><td>60 題單選、滿分 60 分、建議 60 分鐘</td></tr>
+<tr><td>分區</td><td>三個部分（每 20 題一組），依課程章節順序排列</td></tr>
+<tr><td>答案分佈</td><td>刻意打散（A／B／C／D 各 15 題）</td></tr>
+<tr><td>線上功能</td><td>點選即自動計分、進度存在瀏覽器（localStorage）、可切換「只顯示未答／答錯」、按「顯示答案」才揭曉正解與解析</td></tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr><th>時段</th><th>動作</th></tr>
+</thead>
+<tbody>
+<tr><td>0–35 分鐘</td><td>第一輪：憑印象作答，不確定的先跳過</td></tr>
+<tr><td>35–45 分鐘</td><td>第二輪：回頭處理跳過的題目</td></tr>
+<tr><td>45–55 分鐘</td><td>對答案、讀詳解，把錯題記下來</td></tr>
+<tr><td>55–60 分鐘</td><td>依附錄 F 對照表，回頭複習對應章節</td></tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr><th>分數</th><th>評語</th></tr>
+</thead>
+<tbody>
+<tr><td>54–60</td><td>觀念扎實，可以只看附錄 D 就上場</td></tr>
+<tr><td>45–53</td><td>基本觀念正確，把錯題對應的章節重讀一次</td></tr>
+<tr><td>36–44</td><td>需要重讀 §5–§6（任務類型與指標）與 §10–§12（TPOT）</td></tr>
+<tr><td>35 以下</td><td>建議從 §2 開始完整重讀一次，並實際做一遍三個平台的實作</td></tr>
+</tbody>
+</table>
+<p><strong><a href="mc-quiz.html">→ 開始 60 題線上測驗</a></strong></p>
+<h3>附錄 F：答錯題目 → 複習章節對照</h3>
+<table>
+<thead>
+<tr><th>題號區間</th><th>主題</th><th>回頭複習</th></tr>
+</thead>
+<tbody>
+<tr><td>1–10</td><td>AutoML 概念與傳統 ML 痛點</td><td>§1、§2</td></tr>
+<tr><td>11–20</td><td>負責任 AI 六大原則與倫理風險</td><td>§3、§4</td></tr>
+<tr><td>21–30</td><td>分類與迴歸、評估指標</td><td>§5、§6</td></tr>
+<tr><td>31–40</td><td>無代碼實作與 Azure ML Studio</td><td>§7、§8</td></tr>
+<tr><td>41–50</td><td>Azure 實戰與 TPOT 原理</td><td>§9、§10</td></tr>
+<tr><td>51–60</td><td>TPOT 實戰、導出 Pipeline 與平台選擇</td><td>§11、§12、§13</td></tr>
+</tbody>
+</table>
+<h3>高頻考點清單</h3>
+<table>
+<thead>
+<tr><th>考點</th><th>為什麼常考</th></tr>
+</thead>
+<tbody>
+<tr><td>Accuracy 在不平衡資料的陷阱（99% 卻無用）</td><td>幾乎必考，且容易誤答</td></tr>
+<tr><td>AUC 的數值意義（0.5 = 瞎猜、1.0 = 完美）</td><td>數字題</td></tr>
+<tr><td>分類 vs 迴歸的判斷（尤其「會不會故障」）</td><td>最容易答錯的一題</td></tr>
+<tr><td>六大原則的口訣與分組</td><td>配對題常見</td></tr>
+<tr><td>Azure ML Studio 四大模組的順序</td><td>流程題常見</td></tr>
+<tr><td>TPOT 的兩個旋鈕（generations／population_size）</td><td>參數題</td></tr>
+<tr><td>導出 Pipeline 的商業價值（白盒 vs 黑箱）</td><td>申論題常見</td></tr>
+<tr><td>兩個平台的情境選擇題（預算／透明度）</td><td>情境題必考</td></tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="exam">考前 10 分鐘（半頁版）</h2>
+<h3>一、骨架一句話</h3>
+<p>4 單元 / 20 個案；三條路線＝無代碼（示範級、不能部署）→ 企業雲端（Azure，可部署 API）→ 開源（TPOT，透明可導出）</p>
+<h3>二、必背口訣</h3>
+<table>
+<thead>
+<tr><th>主題</th><th>記法</th></tr>
+</thead>
+<tbody>
+<tr><td>傳統 ML 三痛點 → AutoML 三突破</td><td>流程繁瑣／耗時費力／依賴專家 → 全自動化／高效能／低門檻</td></tr>
+<tr><td>自動化兩動作</td><td><strong>Auto Imputation</strong>（填缺失）、<strong>Auto Encoding</strong>（轉類別）</td></tr>
+<tr><td>六大原則</td><td><strong>公 · 可 · 隱 · 包 · 透 · 問</strong>（前三項管資料與系統；後三項管人與責任）</td></tr>
+<tr><td>任務判斷</td><td>問「會不會」＝分類；問「多少」＝迴歸</td></tr>
+<tr><td>指標選擇</td><td>分類平衡→Accuracy；分類不平衡→AUC；迴歸→RMSE / R²</td></tr>
+<tr><td>Azure 四模組</td><td><strong>Data → Compute → Workspace → Endpoint</strong></td></tr>
+<tr><td>TPOT</td><td>兩旋鈕 <strong>generations × population_size</strong>；導出 <code>print(tpot.fitted_pipeline_)</code></td></tr>
+</tbody>
+</table>
+<h3>三、三個必考陷阱</h3>
+<ol>
+<li><strong>Accuracy 會騙人</strong>：99 筆正常＋1 筆詐騙，全猜正常＝99% 卻 0 價值 → 看 <strong>AUC</strong></li>
+<li><strong>AUC</strong>：0.5＝瞎猜、1.0＝完美（只反映排序能力）</li>
+<li><strong>RMSE / R²</strong>：RMSE 越小越好、對離群值極敏感；R² 0–1、越大越好</li>
+</ol>
+<h3>四、關鍵數字</h3>
+<table>
+<thead>
+<tr><th>項目</th><th>值</th></tr>
+</thead>
+<tbody>
+<tr><td>銀行審批人工複核門檻</td><td>信用評分 600–650 分</td></tr>
+<tr><td>群體差異檢測門檻</td><td>核卡率差異 &gt; 5%</td></tr>
+<tr><td>每月抽樣</td><td>500 筆</td></tr>
+<tr><td>醫療 AI 信心指數下限</td><td>70%</td></tr>
+<tr><td>訓練／測試切分</td><td>80 / 20（test_size=0.2）</td></tr>
+<tr><td>Azure AutoML 訓練時間</td><td>15–30 分鐘</td></tr>
+<tr><td>雲端叢集節點</td><td>最小 0 / 最大 2</td></tr>
+<tr><td>TPOT 課程設定 / 實務建議</td><td>1 代 × 20 模型 / 50 代 × 100 模型</td></tr>
+<tr><td>交叉驗證 / 亂數種子</td><td>cv=3 / random_state=42</td></tr>
+<tr><td>TPOT 實測 R²</td><td>40 秒 0.60 → 6 分 0.66 → 22 分 0.68（邊際效益遞減）</td></tr>
+</tbody>
+</table>
+<h3>五、平台情境二選一</h3>
+<ul>
+<li>預算充足 ＋ 團隊無程式能力 ＋ 要快速部署 → <strong>Azure AutoML</strong></li>
+<li>預算有限 ＋ 有 Python 基礎 ＋ 法規要求程式碼透明度 → <strong>TPOT</strong>（白盒、可導出乾淨 sklearn 程式碼、可獨立部署）</li>
+</ul>
+<h3>六、最後 30 秒自問（Azure 實戰啟動前覆核）</h3>
+<ul>
+<li>目標欄位對嗎？（是 <strong>y</strong>，不是 age）</li>
+<li>任務類型對嗎？（y 是「是／否」→ <strong>Classification</strong>）</li>
+<li>敏感特徵移除了嗎？（性別／年齡／居住地區）</li>
+<li>隨機種子固定了嗎？（<strong>random_state=42</strong>）</li>
+<li>雲端最小節點是 0 嗎？（閒置不計費）</li>
+</ul>
+
+<hr />
+<p class="sub">本頁為個人學習筆記的精簡版整理。需要完整內容、逐字細節與實測輸出，請見 <a href="./">完整版 AutoML 學習筆記</a>；列印版速記卡見 <a href="cards.html">四張速記卡</a>。</p>
+
+</div>
+</body>
+</html>
+
+
+
+
+
+

@@ -114,6 +114,31 @@ details[open] summary { margin-bottom:6px; }
 
 hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 
+/* ---------------- pinned callout (2026-10 新增) ---------------- */
+.pinbox {
+  border:2px solid var(--accent); background:#fff8f7; border-radius:10px;
+  padding:14px 18px; margin:20px 0 0;
+}
+.pinbox-t { font-weight:700; color:var(--accent); font-size:16px; margin:0 0 6px; }
+.pinbox p { margin:6px 0; font-size:14.5px; }
+.pinbox a.btn {
+  display:inline-block; padding:6px 14px; background:var(--accent); color:#fff;
+  border-radius:6px; text-decoration:none; font-weight:700; font-size:14px;
+}
+.pinbox a.btn:hover { background:#a5301f; }
+.pinbox a.btn2 {
+  display:inline-block; padding:6px 14px; border:1px solid var(--accent);
+  color:var(--accent); border-radius:6px; text-decoration:none;
+  font-weight:700; font-size:14px;
+}
+.pinbox a.btn2:hover { background:#ffece9; }
+nav.sidebar a.pin-link {
+  display:block; margin:-4px 0 12px; padding:6px 10px; text-align:center;
+  background:#fff1ef; color:var(--accent); border:1px solid var(--accent);
+  border-radius:6px; font-size:12.5px; font-weight:700;
+}
+nav.sidebar a.pin-link:hover { background:var(--accent); color:#fff; }
+
 /* ---------------- print ---------------- */
 @media print {
   nav.sidebar { display:none; }
@@ -140,6 +165,7 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
   <a class="home" href="/">← 回到 AI Tech Notes</a>
   <a class="home" href="/automl-course/">📚 課程總覽</a>
   <a class="quiz" href="mc-quiz.html">🖱️ 互動測驗（60 題）</a>
+  <a class="pin-link" href="summary.html">⚡ 精簡版（一頁式精華）</a>
   <h1>AutoML 學習筆記</h1>
   <div class="sub">Automated Machine Learning (AutoML) 應用證書<br>單元一至單元四 · 20 個實習個案</div>
   <div class="toc">
@@ -283,6 +309,11 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p></p>
 </blockquote>
 <hr />
+<div class="pinbox">
+  <div class="pinbox-t">📌 置頂：精簡版（一頁式精華大綱）</div>
+  <p>把本頁 13 章 + 附錄 A–F 濃縮成一頁：全課骨架、六大原則口訣（公可隱包透問）、任務類型與三大指標、Azure 四大模組與實戰六步、TPOT 兩旋鈕與導出 Pipeline，並附「考前 10 分鐘」半頁版。</p>
+  <p><a class="btn" href="summary.html">→ 閱讀精簡版</a>　<a class="btn2" href="cards.html">🖨️ 四張速記卡（A4 列印）</a></p>
+</div>
 <h2 id="目錄">目錄</h2>
 <table>
 <thead>

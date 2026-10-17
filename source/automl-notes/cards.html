@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AutoML 速記卡（四張・A4 列印版）</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:10mm;background:#e9eef5;color:#1f2d3d;
+     font:11px/1.45 "Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif}
+.sheet{width:279mm;min-height:198mm;margin:0 auto 8mm;background:#fff;padding:0;
+       display:grid;grid-template-columns:1fr 1fr;gap:6mm;align-content:start}
+.card{border:1.4px solid #c9d3df;border-radius:6px;padding:2.5mm 3mm;margin:0;
+      break-inside:avoid;page-break-inside:avoid}
+h1{font-size:13.5px;margin:0 0 1.2mm;color:#1a73e8;border-bottom:2px solid #1a73e8;padding-bottom:.8mm}
+.meta{font-size:9px;color:#5b6b7c;margin:0 0 1.4mm}
+.lead{background:#f5f8fc;border-left:3px solid #1a73e8;padding:1mm 2.4mm;margin:0 0 1.4mm;font-size:10px}
+h2{font-size:11px;margin:1.6mm 0 .8mm;color:#0f4c81}
+table{border-collapse:collapse;width:100%;margin:0 0 1.2mm;font-size:9.6px}
+th,td{border:1px solid #c9d3df;padding:.45mm 1.1mm;text-align:left;vertical-align:top}
+th{background:#f5f8fc}
+ul{margin:0 0 1.2mm;padding-left:3.8mm}
+li{margin:0 0 .3mm}
+p{margin:0 0 1.2mm}
+code{background:#eef3f9;padding:0 .8mm;border-radius:3px;font-family:Consolas,monospace}
+pre{background:#0f2233;color:#e8f1fa;padding:1.2mm 2mm;border-radius:4px;font-size:9px;
+    margin:0 0 1.2mm;white-space:pre-wrap}
+.check{list-style:none;padding-left:0}
+.check li::before{content:"\2610 "}
+.trap{color:#b3261e}
+.toolbar{position:fixed;right:14px;bottom:14px;z-index:9}
+.toolbar button{font-size:13px;padding:8px 14px;border:0;border-radius:20px;background:#1a73e8;color:#fff;cursor:pointer}
+@media print{
+  @page{size:A4 landscape;margin:8mm}
+  body{background:#fff;padding:0;font-size:9.8px}
+  .sheet{width:auto;min-height:0;margin:0;page-break-after:always}
+  .sheet:last-of-type{page-break-after:auto}
+  .toolbar{display:none}
+}
+.sitebar{display:flex;gap:16px;flex-wrap:wrap;align-items:center;background:#fff;
+         border-bottom:1px solid #c9d3df;padding:8px 16px;font-size:13px}
+.sitebar a{color:#2c6fb1;text-decoration:none;font-weight:600}
+.sitebar a:hover{text-decoration:underline}
+.sitebar .hint{color:#57606a;margin-left:auto}
+@media print{.sitebar{display:none}}
+</style>
+</head>
+<body>
+<div class="sitebar">
+  <a href="./">← AutoML 學習筆記</a>
+  <a href="summary.html">⚡ 精簡版（一頁式精華）</a>
+  <a href="mc-quiz.html">🖱️ 互動測驗（60 題）</a>
+  <span class="hint">列印：Ctrl+P → A4 橫向 → 每頁 2 張卡</span>
+</div>
+<div class="toolbar"><button onclick="window.print()">🖨 列印（A4・2 張卡／頁）</button></div>
+
+<div class="sheet">
+    <section class="card">
+      <h1>速記卡 1｜單元一：AutoML 核心概念與負責任 AI</h1>
+      <p class="meta">個案 1–6 ｜ 工具：Excel、ChatGPT／Copilot、Kaggle ｜ 對應章節 §1–§4</p>
+      <p class="lead"><b>一句話</b>：AutoML 把「清理資料 → 特徵工程 → 挑演算法 → 調參」整條手動管線自動化；但<b>倫理判斷與指標選擇的責任仍在人身上</b>。</p>
+
+      <h2>必背三組</h2>
+      <table>
+        <tr><th style="width:24%">主題</th><th>內容</th></tr>
+        <tr><td>傳統 ML 三痛點</td><td>流程繁瑣｜耗時費力（超參數調整可能數週）｜高度依賴專家</td></tr>
+        <tr><td>AutoML 三突破</td><td>全自動化｜高效能（後台跑數十種演算法組合）｜低門檻</td></tr>
+        <tr><td>自動化兩動作</td><td><b>Auto Imputation</b>（自動填缺失值）、<b>Auto Encoding</b>（自動轉類別特徵）</td></tr>
+      </table>
+      <p><b>手動 vs 自動</b>：年齡空白→Auto Imputation｜「一百萬」→自動型別推斷｜999 歲→自動離群值處理｜城市文字→Auto Encoding（One-Hot）　<b>規模感</b>：300 個鄉鎮市區手動 One-Hot＝暴增 300 欄</p>
+
+      <h2>六大原則（口訣：公 · 可 · 隱 · 包 · 透 · 問）</h2>
+      <table>
+        <tr><th style="width:6%">#</th><th style="width:26%">原則</th><th>反例</th></tr>
+        <tr><td>1</td><td>公平性</td><td>履歷篩選學到「男性＝適合錄取」</td></tr>
+        <tr><td>2</td><td>可靠性與安全性</td><td>醫療影像遇罕見疾病崩潰</td></tr>
+        <tr><td>3</td><td>隱私與保障</td><td>X 光片仍帶姓名、身分證字號（GDPR）</td></tr>
+        <tr><td>4</td><td>包容性</td><td>視障者無法上傳履歷</td></tr>
+        <tr><td>5</td><td>透明度</td><td>只回「你被拒絕了」，不說明理由</td></tr>
+        <tr><td>6</td><td>問責制</td><td>誤判造成損失時沒人說得清責任</td></tr>
+      </table>
+      <p><b>分組</b>：前三項管<b>資料與系統</b>｜後三項管<b>人與責任</b>；公平性管輸出、包容性管入口；透明度≠問責制<br>
+      <b>上線 Check-list 六問</b>：移除歧視特徵？／介面對所有族群友善？／極端情況有容錯？／數據去識別化？／使用者知道決策依據？／已定義負責的人類主管？</p>
+
+      <h2>倫理風險工作坊（銀行信用卡自動審批）</h2>
+      <ul>
+        <li><b>四步</b>：設定場景與目標 → 標記敏感特徵（紅字）→ AI 輔助分析 → 小組對策＋簽名負責</li>
+        <li><b>敏感特徵 🔴 刪除</b>：性別、年齡、居住地區（與還款能力無關、易成代理變數）｜<b>可保留 🟢</b>：年收入、負債比</li>
+        <li><b>兩對策</b>：公平性（移除敏感欄位＋定期檢測群體差異）｜問責制（AI 僅初篩，邊界／高風險轉人工複核）</li>
+        <li><b>關鍵數字</b>：每月抽樣 <b>500 筆</b>、群體核卡率差異 <b>&gt; 5%</b> 要檢查、信用評分 <b>600–650 分</b>強制人工複核、醫療 AI 信心指數 <b>&lt; 70%</b> 不給結論</li>
+        <li><b>四案例</b>：履歷篩選（公平＋包容）｜醫療影像（可靠＋安全＋隱私）｜貸款核發（透明＋問責）｜信用卡審批（六項全部）</li>
+      </ul>
+
+      <h2>高頻陷阱</h2>
+      <p class="trap">③ 把性別／年齡／地區放進訓練資料　⑩ 直接把歷史資料丟給 AutoML 上線</p>
+
+      <h2>60 秒自我檢核</h2>
+      <ul class="check">
+        <li>能默寫六大原則口訣（公可隱包透問）並分組？</li>
+        <li>能說出 AutoML 兩個關鍵動作（Imputation／Encoding）？</li>
+        <li>能寫出 500 筆／&gt; 5%／600–650 分三個數字？</li>
+      </ul>
+    </section>
+    <section class="card">
+      <h1>速記卡 2｜單元二：任務類型與評估指標＋無代碼實作</h1>
+      <p class="meta">個案 7–10 ｜ 工具：Teachable Machine、TensorFlow Playground、Excel ｜ 對應章節 §5–§7</p>
+      <p class="lead"><b>一句話</b>：先判斷任務類型（分類／迴歸），再選對應指標；<b>指標選錯，模型再好也會判錯</b>。</p>
+
+      <h2>任務類型判斷</h2>
+      <table>
+        <tr><th style="width:14%"></th><th style="width:43%">分類 Classification</th><th>迴歸 Regression</th></tr>
+        <tr><td>目標</td><td>離散類別標籤</td><td>連續數值結果</td></tr>
+        <tr><td>輸出</td><td>有限可列舉（是／否、貓／狗）</td><td>無限多種（任何實數）</td></tr>
+        <tr><td>指標</td><td>Accuracy、AUC</td><td>RMSE、R²</td></tr>
+      </table>
+      <ul>
+        <li><b>口訣</b>：問「會不會／是誰」＝<b>分類</b>；問「多少」＝<b>迴歸</b></li>
+        <li>四題：30 天流失→分類｜垃圾信→分類｜房價多少→迴歸｜下季銷售額→迴歸</li>
+        <li class="trap">⚠ 最常錯：「機台明天<b>會不會</b>故障」＝<b>分類</b>（問「多久後故障」才是迴歸）</li>
+      </ul>
+
+      <h2>三個核心指標</h2>
+      <table>
+        <tr><th style="width:18%">指標</th><th style="width:40%">範圍與方向</th><th>主要限制</th></tr>
+        <tr><td>Accuracy</td><td>0–1，越高越好</td><td>不平衡資料會嚴重誤導</td></tr>
+        <tr><td>AUC</td><td>0.5＝瞎猜、1＝完美</td><td>只反映排序能力，不反映機率校準</td></tr>
+        <tr><td>RMSE</td><td>≥0，越小越好，單位同原始資料</td><td>對離群值極敏感（誤差先平方）</td></tr>
+      </table>
+      <ul>
+        <li><b>準確率陷阱</b>：100 筆中 99 正常、1 詐騙；全猜正常＝<b>99% 準確率卻 0 價值</b>（抓到 0/1 筆）→ 不平衡場景看 <b>AUC</b></li>
+        <li><b>RMSE 手算四步</b>：誤差 → 平方 → 取平均（MSE）→ 開根號</li>
+        <li><b>指標決策樹</b>：是分類嗎？平衡→Accuracy／不平衡→AUC；迴歸→RMSE（或 R²）</li>
+        <li><b>本機實測</b>：模型 A 0.990／AUC 0.500（瞎猜） vs 模型 B 0.978／AUC <b>0.934（才是有用的模型）</b></li>
+      </ul>
+
+      <h2>無代碼實作（Google Teachable Machine）</h2>
+      <ul>
+        <li><b>四階段</b>：Image Project → Standard image model → 收資料（戴口罩／無口罩<b>各約 100 張</b>）→ Train Model</li>
+        <li><b>關鍵動作</b>：變換不同頭部角度拍攝；訓練中勿切換分頁；Advanced 可看 Epochs／Batch Size</li>
+        <li><b>信心指數</b>：手遮半張臉，觀察由 100% 劇烈下降的「判斷猶豫期」</li>
+        <li><b>壓力測試</b>：關一盞燈（未見過的光線）／換口罩顏色／拿畫有口罩的紙</li>
+        <li><b>反思三答</b>：角度單一→泛化極差｜資料量與多樣性↑→信心更穩｜口罩分類＝分類問題</li>
+      </ul>
+
+      <h2>高頻陷阱</h2>
+      <p class="trap">① 用 Accuracy 評估不平衡資料（改用 AUC）　② 把「會不會故障」當迴歸　⑤ 只拍單一角度的訓練照片</p>
+
+      <h2>60 秒自我檢核</h2>
+      <ul class="check">
+        <li>能對任一情境立即判斷分類／迴歸？</li>
+        <li>能解釋為何 99% 準確率的模型毫無價值？</li>
+        <li>能背出 RMSE 手算四步與 AUC 的 0.5／1.0 意義？</li>
+      </ul>
+    </section>
+</div>
+
+<div class="sheet">
+    <section class="card">
+      <h1>速記卡 3｜單元三：Azure ML Studio 企業雲端實戰</h1>
+      <p class="meta">個案 11–14 ｜ 工具：Azure ML Studio ｜ 對應章節 §8–§9</p>
+      <p class="lead"><b>一句話</b>：Azure AutoML 的價值鏈＝資料註冊 → 雲端算力訓練 → 自動選演算法 → <b>部署成 REST API</b>，這是「企業級」與「示範級」的分水嶺。</p>
+
+      <h2>四大模組</h2>
+      <table>
+        <tr><th style="width:5%">#</th><th style="width:25%">模組</th><th style="width:13%">角色</th><th>說明</th></tr>
+        <tr><td>1</td><td>Workspace 工作區</td><td>管理中心</td><td>專案、模型與實驗的集中管理中心</td></tr>
+        <tr><td>2</td><td>Compute 計算資源</td><td>算力</td><td>雲端 VM 叢集，執行繁重訓練、按需擴展</td></tr>
+        <tr><td>3</td><td>Data 數據集</td><td>資料</td><td>本地 CSV 註冊為雲端數據集，跨實驗重用</td></tr>
+        <tr><td>4</td><td>Endpoint 部署端點</td><td>服務化</td><td>封裝成 REST API 供外部即時呼叫</td></tr>
+      </table>
+      <ul>
+        <li><b>架構圖必背</b>：<code>Data → Compute → Workspace → Endpoint</code>（<b>流水線關係，不是四個獨立功能</b>）</li>
+        <li>導覽重點：Compute 四分頁（instances／clusters／inference clusters／attached，記住 <b>clusters</b>）｜Data 註冊後免重複上傳｜Endpoint 初次為空</li>
+      </ul>
+
+      <h2>實戰六步（客戶流失預測，目標欄位 y）</h2>
+      <table>
+        <tr><th style="width:11%">步驟</th><th style="width:20%">動作</th><th>關鍵設定</th></tr>
+        <tr><td>Step 1</td><td>建立計算資源</td><td>Compute clusters → + New；<b>最小節點 0 / 最大 2</b>；基礎 CPU（Standard_DS11_v2）；名稱 automl-cluster</td></tr>
+        <tr><td>Step 2</td><td>註冊數據集</td><td>Data → + Create → From local files；命名 <b>Bank_Marketing_Data</b>；類型 <b>Tabular</b>；確認欄位解析</td></tr>
+        <tr><td>Step 3</td><td>設定 AutoML 任務</td><td>實驗 <b>bank-churn-prediction</b>；目標欄位 <b>y</b>；任務 <b>Classification</b>；綁定 automl-cluster</td></tr>
+        <tr><td>Step 4</td><td>啟動訓練</td><td>自動嘗試 <b>Random Forest／LightGBM／XGBoost</b>；約 <b>15–30 分鐘</b></td></tr>
+        <tr><td>Step 5</td><td>分析最佳模型</td><td>Metrics 記錄 <b>AUC_weighted</b> 與 Accuracy；Explanations 找前三個重要特徵 → 寫成業務行動</td></tr>
+        <tr><td>Step 6</td><td>模型部署</td><td>Deploy → <b>Real-time endpoint</b>（ACI）；命名 <b>bank-churn-api</b>；取 REST 網址與金鑰</td></tr>
+      </table>
+      <ul>
+        <li><b>啟動前覆核（四項）</b>：☐ 數據集正確　☐ 目標欄位為 y　☐ 任務為 Classification　☐ 叢集已綁定</li>
+        <li><b>成本控制</b>：計費看「節點執行時間」；最小節點設 <b>0</b> → 閒置自動縮到零，只有真的在訓練時才計費</li>
+      </ul>
+
+      <h2>版本時效對照（2026-10 實查）</h2>
+      <p><b>四大模組</b> Compute／Data／Automated ML／Endpoints（微軟改版頻繁，名稱可能微調）｜<b>計算規格</b> Standard_DS11_v2（基礎 CPU 即可，重點是控成本）｜<b>端點</b> Real-time endpoint（ACI 或預設選項；舊版可能顯示 AKS）｜<b>自動演算法</b> Random Forest、LightGBM、XGBoost（平台自動嘗試，無需手動指定）</p>
+
+      <h2>高頻陷阱</h2>
+      <p class="trap">⑥ 雲端叢集最小節點設成 1（<b>應設 0</b>）　⑦ 目標欄位選錯（選成 age 而非 y）</p>
+
+      <h2>60 秒自我檢核</h2>
+      <ul class="check">
+        <li>能畫出四大模組與流程順序？</li>
+        <li>能說出六步中每一步的關鍵設定（0/2 節點、y、Classification、15–30 分）？</li>
+        <li>能解釋為何最小節點要設 0？</li>
+      </ul>
+    </section>
+    <section class="card">
+      <h1>速記卡 4｜單元四：TPOT 開源 AutoML 與導出 Pipeline</h1>
+      <p class="meta">個案 15–20 ｜ 工具：Colab、Python、TPOT ｜ 對應章節 §10–§13</p>
+      <p class="lead"><b>一句話</b>：TPOT 用遺傳演算法搜尋最佳 Pipeline，並導出成<b>乾淨的 sklearn 程式碼</b>——白盒、可解釋、可獨立部署。</p>
+
+      <h2>遺傳演算法三機制 × 兩個旋鈕</h2>
+      <ul>
+        <li><b>突變</b>：換掉 Pipeline 某步驟（StandardScaler→MinMaxScaler）｜<b>交配</b>：兩個好 Pipeline 各取一部分｜<b>選擇</b>：留交叉驗證分數高者</li>
+        <li><b>兩旋鈕</b>：<code>generations</code>（課程 <b>1</b>／實務 50）× <code>population_size</code>（課程 <b>20</b>／實務 100）</li>
+      </ul>
+
+      <h2>業務問題 → ML 任務（三步）</h2>
+      <p>業務問題（下月備貨量？）→ 問題拆解（要什麼資料／目標是「數量」＝連續值）→ <b>ML 轉化</b>（用歷史銷售建<b>迴歸模型</b>，以 <b>RMSE</b> 評估）<br>
+      → 規格書三欄：業務問題／ML 轉化／評估標準</p>
+
+      <h2>Colab 實戰程式骨架（加州房價）</h2>
+      <pre>X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+tpot = TPOTRegressor(generations=1, population_size=20, n_jobs=1,
+                     random_state=42, max_time_mins=2, cv=3)
+tpot.fit(X_train, y_train);  tpot.fitted_pipeline_.score(X_test, y_test)   # → R²</pre>
+
+      <h2>R² 與優化</h2>
+      <ul>
+        <li><b>R²</b>：0–1、越大越好；<b>0.75＝解釋 75% 的價格變異</b>；分數低≠TPOT 不好，而是搜尋空間或資料不足</li>
+        <li><b>優化</b>：加大 <code>generations</code>(50)／<code>population_size</code>(100)／補資料 → 代價是運算時間大增</li>
+        <li><b>本機實測</b>：1×20≈40 秒 <b>0.60</b> → 5×40≈6 分 <b>0.66</b> → 10×60≈22 分 <b>0.68</b>（<b>邊際效益遞減</b>）</li>
+      </ul>
+
+      <h2>導出與白盒價值</h2>
+      <ul>
+        <li><code>print(tpot.fitted_pipeline_)</code> → copy cell output → 存 docx → 用 AI 解讀演算法與特徵轉換</li>
+        <li>價值：<b>可解釋</b>（向主管說明決策邏輯）／<b>可維護</b>／<b>可部署</b>（不需依賴 TPOT，只要程式碼＋權重）</li>
+        <li><b>黑箱</b>：只能給結果／需依賴平台／難舉證　｜　<b>白箱</b>：Pipeline 可讀／可獨立部署／可送審稽核</li>
+      </ul>
+
+      <h2>平台情境二選一（§13 考點）</h2>
+      <ul>
+        <li>預算充足＋無程式能力＋要快速部署 → <b>Azure AutoML</b></li>
+        <li>預算有限＋有 Python＋法規要求程式碼透明 → <b>TPOT</b></li>
+      </ul>
+
+      <h2>高頻陷阱</h2>
+      <p class="trap">⑧ random_state 不固定（固定 <b>42</b>）　⑨ 以為導出的 Pipeline 還要靠 TPOT（其實是乾淨 sklearn 程式碼）</p>
+
+      <h2>60 秒自我檢核</h2>
+      <ul class="check">
+        <li>能說出三機制與兩個旋鈕？</li>
+        <li>能講出 R² 的範圍、方向與 0.75 的意義？</li>
+        <li>能講出白盒 vs 黑箱三個差異＋平台情境二選一？</li>
+      </ul>
+    </section>
+</div>
+
+</body>
+</html>
