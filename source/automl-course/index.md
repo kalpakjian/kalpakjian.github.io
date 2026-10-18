@@ -235,8 +235,9 @@ date: 2026-10-16 21:30:00
   - **模型線**：五種核心監督模型（CN2／kNN／決策樹／隨機森林／梯度提升）＋ 九種入門演算法（SVM／線性迴歸／邏輯迴歸／樸素貝氏／評分表／AdaBoost／PLS／Curve Fit／神經網絡／SGD）
   - **元件線**：四個核心模型元件 —— **Constant（基準）→ Stacking（整合）→ Save Model → Load Model**
 - **特別之處**：這是本站**第一次把「GUI 工具」本身當成考科**來整理——所有數字都用 **Orange 3.40.0 的 Python API** 在本機跑出來（`Orange.data.Table("iris")` 等），不是抄課本的
-- **跨單元對照（§19）**：新增〈為什麼有了 TPOT 還需要 Orange〉一節，把本課節的 **No-Code 視覺化工具** 與第四單元的 **TPOT** 放在同一張表上：**TPOT 是優化器（自動找模型）、Orange 是互動環境（幫人懂資料）**；並點出 TPOT 的結構限制是「**搜尋空間 ＝ scikit-learn 的零件箱**」——sklearn 沒有的 **CN2／Scoring Sheet／Nomogram**，它永遠搜不到
-- **自動化與部署（§20）**：新增〈CLI、Python API 與無頭模式〉一節，回答「能不能不開 GUI 跑」——實測結論是 **Orange 有 API，沒有批次 CLI**：`orange-canvas` 是 GUI 啟動器（參數表裡沒有任何 `--no-gui`／`--batch`），無頭工作流官方標記為 **wontfix**、指定改用 Python 腳本；另收錄 `model(test)` **回傳 numpy 類別索引而非表格**、四個 API 陷阱、以及 `Save Model` → `.pkcls` → 跨行程部署骨架
+- **跨單元對照（§12）**：新增〈為什麼有了 TPOT 還需要 Orange〉一節，把本課節的 **No-Code 視覺化工具** 與第四單元的 **TPOT** 放在同一張表上：**TPOT 是優化器（自動找模型）、Orange 是互動環境（幫人懂資料）**；並點出 TPOT 的結構限制是「**搜尋空間 ＝ scikit-learn 的零件箱**」——sklearn 沒有的 **CN2／Scoring Sheet／Nomogram**，它永遠搜不到
+- **自動化與部署（§13）**：新增〈CLI、Python API 與無頭模式〉一節，回答「能不能不開 GUI 跑」——實測結論是 **Orange 有 API，沒有批次 CLI**：`orange-canvas` 是 GUI 啟動器（參數表裡沒有任何 `--no-gui`／`--batch`），無頭工作流官方標記為 **wontfix**、指定改用 Python 腳本；另收錄 `model(test)` **回傳 numpy 類別索引而非表格**、四個 API 陷阱、以及 `Save Model` → `.pkcls` → 跨行程部署骨架
+- 📐 **編排：概念＋API 優先**——純 GUI 操作走查已移除（兩個工作流範例整節刪除），元件資訊收斂成 **§1.4 一張總表** ＋ **附錄 A「元件 ↔ Python API」對照**；章節編號由 §0–§20 縮為 **§0–§13**
 - **本機實測**（Windows / Python **3.11.16** / **Orange 3.40.0** / scikit-learn **1.9.1**，全部 `random_state=42`，原始輸出全文收錄於附錄 D）：
   - **把 20 個元件全部跑一遍**：kNN **0.9667**｜邏輯迴歸 **0.9667**｜Stacking **0.9667**｜SVM／AdaBoost／Calibrated **0.9600**｜梯度提升／神經網路 **0.9533**｜決策樹／隨機森林 **0.9467**｜CN2 **0.8933**｜樸素貝氏 **0.8733**｜SGD **0.8333**｜**Constant 0.3333**
   - **Constant = 0.3333 正好等於 50/150，AUC = 0.5000** —— 這就是「基準線」的實體
@@ -247,7 +248,7 @@ date: 2026-10-16 21:30:00
   - **Save／Load Model**：`.pkcls` 約 **179 KB**，載入後預測與原模型**完全一致**
   - **迴歸**（housing）：線性 **RMSE 4.8467 / R² 0.7217**｜PLS（2 成分）**5.0814 / 0.6941**｜Curve Fit **6.2289 / 0.5404**
 - **另外收錄**：原稿文字層的 **18 個錯字對照表**（`cdit Domain`＝Edit Domain、`Cank`＝Rank、`M ySBL`＝MySQL、`Csabkimg`＝Stacking…，還有 **Orange 官方自己把 Descent 拼成 `Decent`**）
-- 另有 **20 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- 另有 **13 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
 - **👉 [看筆記](/orange-ai-notes/)** ｜ [互動測驗 60 題](/orange-ai-notes/mc-quiz.html)
 
 ---
@@ -282,7 +283,7 @@ date: 2026-10-16 21:30:00
 | **實作延伸** | 用 TPOT 預測無人機訂單成交率（準確率陷阱 → 特徵重要性 → 門檻調校） | Python、TPOT 1.1.0、scikit-learn、dask | ✅ [Redix TPOT 文章](/2026/10/18/redix-tpot-sales-prediction/) ｜ [A4 講義 PDF](/redix-tpot/handout.pdf) |
 | **實作延伸** | Azure ML AutoML 實作全紀錄（建立算力 → 資料註冊 → 訓練 → 部署 REST 端點） | Azure Machine Learning Studio、Azure for Students | ✅ [Azure ML AutoML 文章](/2026/10/18/azure-automl-bank-churn-walkthrough/) |
 | **實作延伸** | 手寫 Ridge vs TPOT AutoML：房價迴歸對照（雜訊底線 → 11 條候選管線 → 390 條 TPOT 管線） | Python、TPOT 1.1.0、scikit-learn、dask | ✅ [房價 Ridge vs TPOT 文章](/2026/10/18/house-price-ridge-vs-tpot/) |
-| **No-Code 工具** | Orange AI 視覺化資料探勘（Widget／Channel → 20 個模型元件 → Constant／Stacking／Save-Load → 與 TPOT 的定位對照 → CLI／API／無頭模式） | Orange 3.40、Python（Orange API） | ✅ [Orange AI 筆記](/orange-ai-notes/) |
+| **No-Code 工具** | Orange AI 視覺化資料探勘（概念＋API 優先：元件生態總表 → 五種核心模型 → 九種入門演算法 → Constant／Stacking／Save-Load → 與 TPOT 的定位對照 → CLI／API／無頭模式） | Orange 3.40、Python（Orange API） | ✅ [Orange AI 筆記](/orange-ai-notes/) |
 
 ---
 
