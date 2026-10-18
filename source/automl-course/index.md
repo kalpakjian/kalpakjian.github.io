@@ -203,6 +203,27 @@ date: 2026-10-16 21:30:00
 
 ---
 
+## 10 · 手寫 Ridge vs TPOT：房價迴歸的對照（迴歸題實作延伸）
+
+![手寫 Ridge vs TPOT AutoML：同一份房價資料](/img/covers/house-price-ridge-vs-tpot.png)
+
+- **定位**：單元四（開源 AutoML：TPOT）的**迴歸題實作延伸**——前一篇（Redix）是分類題、AutoML 贏；這一篇刻意挑**迴歸題**，而且**先量出資料的雜訊底線**，再用同一把尺看 AutoML 到底換到什麼
+- **核心命題**：**AutoML 的「最佳」是有預算前提的最佳**——500 筆房價、100 筆待預測，TPOT 花 11.8 分鐘搜了 390 條管線，最後與手寫 Ridge **打平**（p = 0.6932）
+- **三個教學重點**：
+  - **先量天花板**：OLS 殘差 σ = **25,263 USD** 就是這個題目的極限；Ridge 的 25,696 只比它高 **1.7%** → 搜尋再多也只是在同一塊高原上採樣
+  - **線性完勝樹**：11 條候選管線裡 Ridge **25,696** 打敗隨機森林 37,125（差 45%）——**關係本來就是線性的**，AutoML 的價值在「有東西可探索」時才成立
+  - **贏家詛咒**：TPOT 內部 5 折（390 條取最小值）必然偏樂觀；要用**獨立協定**（RepeatedKFold 5×4）重評才是 25,700
+- **本機實測**（Python 3.11.16 ／ **TPOT 1.1.0** ／ scikit-learn 1.9.1 ／ 執行緒式 dask client，不用 Colab）：
+  - 手寫 Ridge：CV RMSE **25,696 ± 2,154**、10 折 OOF R² **0.9719**、MAE 20,874、MAPE 4.33%
+  - TPOT：CV RMSE **25,700 ± 2,139**、**11.8 分鐘／13 代／390 條管線**、5 步堆疊集成（VarianceThreshold → FeatureUnion(原始 11 欄 ∪ LinearSVR ∪ MLPRegressor(41) ∪ LinearSVR) → ARDRegression）
+  - 配對檢定：t = +0.401、**p = 0.6932**（Wilcoxon p = 0.4524）；100 筆預測相關係數 **0.99999**、平均差 452 USD（最大 1,363 USD）
+  - 對「無雜訊公式」欄位：TPOT 誤差 **350 USD** vs Ridge 701 USD——**公式學得更準，但優勢被雜訊吃掉**
+  - TPOT 1.1.0 API 差異（`scorers`／`search_space`／`verbose`／`client` 位置）＋ **`tpot.export()` 已移除** → 自製轉碼工具修掉 `KFold` 未 import 的 bug，**往返測試 PASS**（100/100 筆完全相同）
+- **附圖**：1 張封面 ＋ **5 張實跑圖表**（六格診斷儀表板／11 條管線 CV 對照＋雜訊底線／兩條路線管線對照／預測一致度／公式還原度）
+- **👉 [看文章](/2026/10/18/house-price-ridge-vs-tpot/)**
+
+---
+
 ## 筆記的共同規格
 
 | 項目 | 說明 |
@@ -232,6 +253,7 @@ date: 2026-10-16 21:30:00
 | **統計入門** | 線性迴歸入門：用一條直線看懂關係（四個角色 → 斜率／截距 → 殘差 → 最小平方法） | Python、numpy、scikit-learn | ✅ [線性迴歸入門筆記](/linear-regression-notes/) |
 | **實作延伸** | 用 TPOT 預測無人機訂單成交率（準確率陷阱 → 特徵重要性 → 門檻調校） | Python、TPOT 1.1.0、scikit-learn、dask | ✅ [Redix TPOT 文章](/2026/10/18/redix-tpot-sales-prediction/) ｜ [A4 講義 PDF](/redix-tpot/handout.pdf) |
 | **實作延伸** | Azure ML AutoML 實作全紀錄（建立算力 → 資料註冊 → 訓練 → 部署 REST 端點） | Azure Machine Learning Studio、Azure for Students | ✅ [Azure ML AutoML 文章](/2026/10/18/azure-automl-bank-churn-walkthrough/) |
+| **實作延伸** | 手寫 Ridge vs TPOT AutoML：房價迴歸對照（雜訊底線 → 11 條候選管線 → 390 條 TPOT 管線） | Python、TPOT 1.1.0、scikit-learn、dask | ✅ [房價 Ridge vs TPOT 文章](/2026/10/18/house-price-ridge-vs-tpot/) |
 
 ---
 
