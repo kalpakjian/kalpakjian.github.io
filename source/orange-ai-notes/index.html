@@ -517,10 +517,10 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <main>
 <h1 id="orange-ai-學習筆記考試溫習版">Orange AI 學習筆記（考試溫習版）</h1>
 <blockquote>
-<p>課程歸屬：<strong>AutoML 應用證書課程 · 第 7 節 — Orange AI 視覺化資料探勘</strong>
+<p>課程歸屬：<strong>AutoML 應用證書課程 · 第 11 節 — Orange AI 視覺化資料探勘</strong>
 教材來源：<code>Presentation-Orange AI in detail.pdf</code>（<strong>59 頁</strong>）
 本筆記按 PDF 原稿的每一個標題逐一重寫，並補上參數說明、實測數字與考點。
-🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
+🖱️ <strong>互動測驗（推薦）</strong>：附錄 F 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p>
 <p>⚠️ <strong>關於原稿</strong>：這份簡報有 <strong>12 頁是「純圖片頁」</strong>（p1、p2–p7、p9、p43 沒有文字層，全部是 960×540 的整頁點陣圖），
 用任何 PDF 工具抽取都只會得到空白或一個 <code>preencoded.png</code> 字串。
 本筆記已把這些頁面逐頁<strong>渲染成圖後判讀</strong>再寫成文字，因此內容是完整的。
@@ -2878,7 +2878,7 @@ wᵢ：第 i 個特徵的係數（coefficient）—— 「xᵢ 每增加 1 單�
 <blockquote>
 <p><strong>考點</strong>：原稿的「房價預測」正是 <code>housing</code> 資料集，<strong>RMSE 4.8467 ≈ 誤差約 4,847 美元</strong>。
 R² = 0.7217 的意思是「模型解釋了 72.17% 的變異」；<strong>R² 最大是 1.0</strong>，
-而「全部猜平均值」的模型 R² <strong>正好是 0</strong>（見附錄 B）。</p>
+而「全部猜平均值」的模型 R² <strong>正好是 0</strong>——這正是 §11.2 的 <code>Constant</code> 在<strong>迴歸任務</strong>上的行為。</p>
 </blockquote>
 <p><strong>Orange 裡 Linear Regression 元件的設定（補充）</strong></p>
 <table>
