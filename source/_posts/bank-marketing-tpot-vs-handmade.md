@@ -158,6 +158,8 @@ TPOT 只給你一個管線物件，**不會告訴你它為什麼這樣判斷**�
 
 ![特徵重要性（投影大圖）](/img/bank-marketing-tpot-vs-handmade/feature-importance_big.png)
 
+![特徵重要性由單一特徵主導](/img/bank-marketing-tpot-vs-handmade/ch04-one-dominant-feature.jpg)
+
 > 兩個發現：
 > ① **兩種方法指向同一個結論**——`duration` 一枝獨秀（置換重要度 0.303、勝算比 4.18），`poutcome_success` 與房貸狀態是次要訊號。
 > ② TPOT 的管線把其他特徵的貢獻幾乎「吃掉」了（`pdays`、`previous`、`campaign` 都是 0.0000）→ **AutoML 給你效能，解釋性要自己補**。
