@@ -224,6 +224,32 @@ date: 2026-10-16 21:30:00
 
 ---
 
+## 11 · Orange AI 視覺化資料探勘（No-Code 工具實作）
+
+![Orange AI 視覺化資料探勘 學習筆記](/img/covers/orange-ai-notes.png)
+
+- **定位**：AutoML 系列的**視覺化 No-Code 工具**課節，教材為獨立一份 **59 頁**簡報（⚠️ **第 1 頁是封面頁，正文自第 2 頁起算**；且 **12 頁是「純圖片頁」**——p1–p9 與 p17、p43 沒有文字層，全部是 960×540 整頁點陣圖，用任何工具抽取只會得到空白或 `preencoded.png`，筆記已逐頁渲染判讀）
+- **核心命題**：**不寫一行程式碼，也能把資料探勘做完** —— 用拖拉 Widget、接 Channel 的方式，把「資料匯入 → 檢視探索 → 處理 → 建模 → 評估 → 輸出」整條流程拼出來
+- **三條主線**：
+  - **平台線**：Widget（元件）＋ Channel（通道）＝ Workflow（`.ows`）；**Data 面板 12 元件（4+4+4）**、**Model 面板 20 元件**
+  - **模型線**：五種核心監督模型（CN2／kNN／決策樹／隨機森林／梯度提升）＋ 九種入門演算法（SVM／線性迴歸／邏輯迴歸／樸素貝氏／評分表／AdaBoost／PLS／Curve Fit／神經網絡／SGD）
+  - **元件線**：四個核心模型元件 —— **Constant（基準）→ Stacking（整合）→ Save Model → Load Model**
+- **特別之處**：這是本站**第一次把「GUI 工具」本身當成考科**來整理——所有數字都用 **Orange 3.40.0 的 Python API** 在本機跑出來（`Orange.data.Table("iris")` 等），不是抄課本的
+- **本機實測**（Windows / Python **3.11.16** / **Orange 3.40.0** / scikit-learn **1.9.1**，全部 `random_state=42`，原始輸出全文收錄於附錄 D）：
+  - **把 20 個元件全部跑一遍**：kNN **0.9667**｜邏輯迴歸 **0.9667**｜Stacking **0.9667**｜SVM／AdaBoost／Calibrated **0.9600**｜梯度提升／神經網路 **0.9533**｜決策樹／隨機森林 **0.9467**｜CN2 **0.8933**｜樸素貝氏 **0.8733**｜SGD **0.8333**｜**Constant 0.3333**
+  - **Constant = 0.3333 正好等於 50/150，AUC = 0.5000** —— 這就是「基準線」的實體
+  - **最反直覺的一組**：決策樹與隨機森林 **CA 完全相同（0.9467）**，但 **AUC 是 0.9613 → 0.9954** —— 只看準確率會誤判「森林沒用」
+  - **Stacking（0.9667）只追平最強的單一成員**，沒有超越 —— 與其他筆記的結論一致：整合不是萬靈丹
+  - **CN2 真的把 15 條 IF–THEN 規則印出來**（最後一條是 `IF TRUE THEN …` 的預設規則）
+  - **評分表只支援二元分類**：拿 3 類的 iris 會直接報 `ValueError: Too many target variable values.`；改用 `heart_disease` 後 **CA 0.8416 vs Constant 0.5413**，而且**只用 5 個整數配分**（可手算）
+  - **Save／Load Model**：`.pkcls` 約 **179 KB**，載入後預測與原模型**完全一致**
+  - **迴歸**（housing）：線性 **RMSE 4.8467 / R² 0.7217**｜PLS（2 成分）**5.0814 / 0.6941**｜Curve Fit **6.2289 / 0.5404**
+- **另外收錄**：原稿文字層的 **18 個錯字對照表**（`cdit Domain`＝Edit Domain、`Cank`＝Rank、`M ySBL`＝MySQL、`Csabkimg`＝Stacking…，還有 **Orange 官方自己把 Descent 拼成 `Decent`**）
+- 另有 **18 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **👉 [看筆記](/orange-ai-notes/)** ｜ [互動測驗 60 題](/orange-ai-notes/mc-quiz.html)
+
+---
+
 ## 筆記的共同規格
 
 | 項目 | 說明 |
@@ -254,6 +280,7 @@ date: 2026-10-16 21:30:00
 | **實作延伸** | 用 TPOT 預測無人機訂單成交率（準確率陷阱 → 特徵重要性 → 門檻調校） | Python、TPOT 1.1.0、scikit-learn、dask | ✅ [Redix TPOT 文章](/2026/10/18/redix-tpot-sales-prediction/) ｜ [A4 講義 PDF](/redix-tpot/handout.pdf) |
 | **實作延伸** | Azure ML AutoML 實作全紀錄（建立算力 → 資料註冊 → 訓練 → 部署 REST 端點） | Azure Machine Learning Studio、Azure for Students | ✅ [Azure ML AutoML 文章](/2026/10/18/azure-automl-bank-churn-walkthrough/) |
 | **實作延伸** | 手寫 Ridge vs TPOT AutoML：房價迴歸對照（雜訊底線 → 11 條候選管線 → 390 條 TPOT 管線） | Python、TPOT 1.1.0、scikit-learn、dask | ✅ [房價 Ridge vs TPOT 文章](/2026/10/18/house-price-ridge-vs-tpot/) |
+| **No-Code 工具** | Orange AI 視覺化資料探勘（Widget／Channel → 20 個模型元件 → Constant／Stacking／Save-Load） | Orange 3.40、Python（Orange API） | ✅ [Orange AI 筆記](/orange-ai-notes/) |
 
 ---
 
