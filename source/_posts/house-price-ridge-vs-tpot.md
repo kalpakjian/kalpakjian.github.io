@@ -38,6 +38,8 @@ banner_img: /img/covers/house-price-ridge-vs-tpot.png
 
 目標值：平均 **536,576 USD**、中位數 529,000、範圍 136,000–934,000。**所有價格都是 1,000 的倍數**（四捨五入過的整數），這個細節後面會用到。
 
+![500 筆成交紀錄要濃縮成 100 間房的估價](/img/house-price-ridge-vs-tpot/ch01-500-to-100.jpg)
+
 ---
 
 ## 2. 手寫路線第一步：先量天花板，不要先挑模型
@@ -53,6 +55,10 @@ banner_img: /img/covers/house-price-ridge-vs-tpot.png
 | 殘差最大絕對值 | 75,877 USD |
 
 **這個 25,263 就是雜訊底線。** 它代表「即使模型完美學到背後的真實關係，在這種雜訊水準下，對新資料的 RMSE 也不可能明顯低於 25,263」。後面所有模型都要跟這個數字比，而不是跟 0 比。
+
+![所有光束都停在同一條天花板上，就是雜訊底線](/img/house-price-ridge-vs-tpot/ch02-noise-floor.jpg)
+
+> 圖：本章插圖由本機 ComfyUI 的 Qwen-Image 2.1 生成（本站 house style，無文字）。
 
 特徵與目標的相關（數值欄）：
 
@@ -101,6 +107,8 @@ banner_img: /img/covers/house-price-ridge-vs-tpot.png
 
 > 紅虛線是第 2 節量出來的雜訊底線 **25,263**。Ridge 的 25,696 只比它高 **1.7%**——也就是說，**這條線以上的空間幾乎都被雜訊佔滿了**，模型再好也只能貼著這條線跑。
 
+![11 根高度差很多的光柱，最左邊那根就是 Ridge](/img/house-price-ridge-vs-tpot/ch03-eleven-candidates.jpg)
+
 ---
 
 ## 4. 手寫路線第三步：檢查那 100 筆的「答案欄位」
@@ -116,6 +124,8 @@ banner_img: /img/covers/house-price-ridge-vs-tpot.png
 | 殘差最大絕對值 | 552 USD |
 
 R² 幾乎是 1、殘差只有 285——**這個欄位不是某個模型的預測，而是一條「沒有雜訊的價格公式」**（殘差 285 只是它被四捨五入到 1,000 的結果）。
+
+![一條筆直的光束穿過緊緊貼著它的粒子雲](/img/house-price-ridge-vs-tpot/ch04-clean-formula.jpg)
 
 這件事有兩個用途：
 
@@ -179,6 +189,8 @@ StandardScaler
 
 ![兩條路線的管線對照](/img/house-price-ridge-vs-tpot/two-pipelines.png)
 
+![層層堆疊的透明艙室，最後收束成頂端一道細光](/img/house-price-ridge-vs-tpot/ch05-stacked-pipeline.jpg)
+
 > 一個細節值得記：**它花了 11.8 分鐘，只為了把 Ridge 的 25,696 變成 25,700**（後面第 7 節）。AutoML 的搜尋空間允許很複雜的結構，它也真的找到了一個很複雜的結構——但這份資料不需要。
 
 ---
@@ -213,6 +225,8 @@ StandardScaler
 | 四捨五入到 1,000 後完全相同的筆數 | **55 / 100** |
 
 ![兩條路線對 100 筆的預測一致度](/img/house-price-ridge-vs-tpot/ridge-vs-tpot.png)
+
+![兩條完全不同的光路，最後收束成同一道光](/img/house-price-ridge-vs-tpot/ch06-statistical-tie.jpg)
 
 > 這張圖是本文最重要的一張：**左圖的點幾乎貼在對角線上**。兩條路線（一條 0 秒、一條 11.8 分鐘）在 100 筆上給出幾乎相同的答案。
 
@@ -347,6 +361,7 @@ reload 模型 → 預測：max |reloaded - in-memory| = 0.00e+00 USD
 
 | 類型 | 內容 |
 |---|---|
+| 插圖 | **1 張封面**（種子 7321）＋ **6 張章節插圖**（種子 7121–7126）——本機 ComfyUI 的 Qwen-Image 2.1、1344×768、house style 無文字；封面 3 個候選中挑 1 |
 | CSV | `house_price_predictions.csv`（Ridge，100 筆 × 18 欄）、`house_price_tpot_predictions.csv`（TPOT，100 筆 × 19 欄，含兩條路線並列與差異） |
 | TXT | `house_price_report.txt`（手寫路線完整報告）、`house_price_tpot_report.txt`（TPOT 執行報告）、`house_price_ridge_vs_tpot.txt`（對照報告） |
 | PNG | [六格診斷儀表板](/img/house-price-ridge-vs-tpot/eda-dashboard.png)、[11 條管線 CV 對照](/img/house-price-ridge-vs-tpot/model-comparison.png)、[管線對照圖](/img/house-price-ridge-vs-tpot/two-pipelines.png)、[預測一致度](/img/house-price-ridge-vs-tpot/ridge-vs-tpot.png)、[公式還原度](/img/house-price-ridge-vs-tpot/given-recovery.png) |
