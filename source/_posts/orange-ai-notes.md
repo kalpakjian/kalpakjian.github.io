@@ -125,7 +125,7 @@ Logistic Regression 0.9667、SVM 0.9600、Random Forest 0.9533、**Stacking 0.96
 
 課程簡報只教 GUI 操作，但有兩個問題實務上一定會被問到，所以筆記各補了一節：
 
-- **§12 為什麼有了 TPOT 還需要 Orange**：把兩者放在同一張表上——**TPOT 是優化器（自動找模型）、Orange 是互動環境（幫人懂資料）**。最鋒利的一點是 **TPOT 的搜尋空間 ＝ scikit-learn 的零件箱**，所以 sklearn 根本沒有的 **CN2／Scoring Sheet／Nomogram**，它**永遠搜不到**。
+- **§12 為什麼有了 TPOT 還需要 Orange**：把兩者放在同一張表上——**TPOT 是優化器（自動找模型）、Orange 是互動環境（幫人懂資料）**。最鋒利的一點是 **TPOT 的搜尋空間 ＝ scikit-learn 的零件箱**，所以 sklearn 根本沒有的 **CN2／Scoring Sheet／Nomogram**，它**永遠搜不到**。另加 **§12.6** 回答實務問題：**先跑 Orange 再跑 TPOT 會不會好一點？** —— **分數不會**（三次搜尋：兩次打平、一次贏在雜訊內），但**省時間、知道何時該停**；而且前處理從 Orange 搬進 TPOT 是有摩擦的。
 - **§13 CLI、Python API 與無頭模式**：實測結論是 **Orange 有 API，沒有批次 CLI**。`orange-canvas` 是 GUI 啟動器，參數表裡沒有任何 `--no-gui`／`--batch`；無頭工作流官方標記為 **wontfix**，指定改用 Python 腳本。順帶收錄一個很容易踩的落差：**`model(test)` 回傳的是 numpy 類別索引，不是一張表**。
 
 > 📐 **這一版把 GUI 操作走查整段拿掉了。** 原本照課程順序逐頁寫的「點 File → 雙擊 → 選檔」這類步驟已移除，

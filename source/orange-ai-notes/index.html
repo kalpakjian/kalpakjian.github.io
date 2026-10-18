@@ -364,6 +364,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#125-考場速答背這三句就夠">12.5 考場速答（背這三句就夠）</a>
 </li>
+<li><a href="#126-實戰先跑-orange-再跑-tpot會好一點嗎">12.6 實戰：先跑 Orange 再跑 TPOT，會好一點嗎？</a>
+</li>
 </ul>
 </li>
 <li><a href="#13-clipython-api-與無頭模式部署視角">13. CLI、Python API 與無頭模式（部署視角）</a>
@@ -4757,6 +4759,138 @@ TPOT 沒有這個概念——你給它資料它就開始搜，<strong>它不會�
 <p><strong>最後一句</strong>：<strong>TPOT 的最佳是「有預算前提的最佳」，Orange 的價值是「幫你決定這個預算值不值得花」。</strong></p>
 </blockquote>
 <hr>
+<hr>
+<h3 id="126-實戰先跑-orange-再跑-tpot會好一點嗎">12.6 實戰：先跑 Orange 再跑 TPOT，會好一點嗎？</h3>
+<p><strong>會，但省的不是分數 —— 是時間和誤判。</strong></p>
+<table>
+<thead>
+<tr>
+<th>「好一點」指什麼</th>
+<th>先跑 Orange？</th>
+<th>實測證據</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>模型分數</strong>（AUC／RMSE）</td>
+<td>❌ <strong>不會</strong></td>
+<td>本站三次 TPOT 搜尋：無人機 <strong>0.8666 vs 手寫 0.8671</strong>（輸）、銀行 <strong>+0.0024</strong>（雜訊內）、房價 <strong>打平</strong>（p = 0.6932）</td>
+</tr>
+<tr>
+<td><strong>省時間</strong></td>
+<td>✅ <strong>會</strong></td>
+<td>房價 <strong>11.8 分鐘</strong>、無人機 <strong>6 分鐘</strong> → Orange 幾秒就知道「已經到底，不用搜」</td>
+</tr>
+<tr>
+<td><strong>知道何時該停</strong></td>
+<td>✅ <strong>會</strong></td>
+<td>房價 RMSE <strong>25,780 ≈ 雜訊底線 25,263</strong> → 早該停</td>
+</tr>
+<tr>
+<td><strong>少犯錯</strong></td>
+<td>⚠️ <strong>看情況</strong></td>
+<td>見 §12.6.3</td>
+</tr>
+</tbody>
+</table>
+<h4 id="1261-為什麼分數不會變好">12.6.1 為什麼「分數不會變好」</h4>
+<p>因為<strong>上限在資料，不在工具</strong>。三次都是同一個模式：</p>
+<table>
+<thead>
+<tr>
+<th>資料集</th>
+<th>TPOT 搜尋規模</th>
+<th>相對手寫模型</th>
+<th>結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>房價</td>
+<td><strong>390 條管線、11.8 分鐘</strong></td>
+<td>打平（p = 0.6932）</td>
+<td>撞到雜訊底線 σ = 25,263</td>
+</tr>
+<tr>
+<td>銀行</td>
+<td><strong>460 條管線</strong></td>
+<td><strong>+0.0024 AUC</strong></td>
+<td>在雜訊帶內（13/25 折）</td>
+</tr>
+<tr>
+<td>無人機</td>
+<td>12 世代 × 40 族群、<strong>361 秒</strong></td>
+<td><strong>−0.0005</strong></td>
+<td>輸給手寫 LogReg</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Orange 事前清洗改變不了這件事</strong> —— 資料的訊號量就那麼多。
+這也回頭印證了 §12.4：<strong>TPOT 的最佳是「有預算前提的最佳」。</strong></p>
+</blockquote>
+<h4 id="1262-一個容易忽略的成本搬運">12.6.2 一個容易忽略的成本：搬運</h4>
+<p>Orange 的前處理<strong>不會自動轉移到 TPOT</strong>：</p>
+<ul>
+<li>在 Orange 拉的 <code>Normalize</code>／<code>Impute</code>，TPOT <strong>完全不知道</strong> → 要在 Python 管線裡重寫一遍，
+  或走 <code>.tab</code> 往返（會丟掉部分型態定義）</li>
+<li>⚠️ <strong>最危險的</strong>：若在 Orange 裡對<strong>整份資料</strong>做前處理，再切 train／test 給 TPOT → <strong>洩漏</strong></li>
+</ul>
+<blockquote>
+<p><strong>所以「Orange → TPOT」這個流程本身是有摩擦的，不是無痛的。</strong>
+前處理必須發生在 CV 迴圈<strong>裡面</strong>，這件事不會因為你用了 GUI 就改變。</p>
+</blockquote>
+<h4 id="1263-什麼時候真的值得先跑-orange">12.6.3 什麼時候真的值得先跑 Orange？</h4>
+<p><strong>效益與「資料陌生程度」成正比</strong>：</p>
+<div class="codehilite"><pre><span></span><code>  已有客製檢查腳本的資料集        → 效益 ≈ 0
+  第一次拿到、還沒寫任何檢查的 CSV → 效益最大
+</code></pre></div>
+
+<p>以本站三份實戰資料集為例：</p>
+<table>
+<thead>
+<tr>
+<th>Orange 會提醒的事</th>
+<th>實際上</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>銀行 <code>duration</code> 是洩漏</td>
+<td>已用 <strong>5 變體 × 25 折消融實驗</strong>量出來（0.8642 → 0.5866）</td>
+</tr>
+<tr>
+<td>銀行 <code>pdays = 999</code> 是哨兵值</td>
+<td>已手動修正（<code>was_contacted_before</code> ＋ <code>pdays_recency</code>）</td>
+</tr>
+<tr>
+<td>無人機 <code>Record_ID</code> 不該當特徵</td>
+<td>一開始就排除了</td>
+</tr>
+<tr>
+<td>房價是否撞到雜訊底線</td>
+<td>已先量出 σ = 25,263</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>估算</strong>：在已經很熟的資料上先跑 Orange，大約省 <strong>18 分鐘</strong>，抓到 <strong>0 個</strong>真正做錯的東西。
+這不是 Orange 沒用 —— 是<strong>程式化的檢查本來就比 GUI 更徹底</strong>
+（Orange 不會幫你跑 25 折消融實驗，也不會幫你算重要性加權）。</p>
+</blockquote>
+<p><strong>但如果是明天拿到一份沒見過的 CSV</strong>，Orange 讓你在寫任何一行建模程式之前就知道：
+型態對不對？有沒有 ID／哨兵值？該用哪個指標？基準線在哪？有沒有明顯洩漏？預測集在不在訓練分布內？</p>
+<blockquote>
+<p>💡 <strong>實務建議</strong>：如果你要的是「一個可以直接套進 TPOT 流程的固定前置步驟」，
+<strong>用程式化的檢查（pandas）比用 GUI 更適合</strong> ——
+沒有搬運成本、輸出直接是 DataFrame、可以進 CI、可以跟 TPOT 共用同一個環境。</p>
+</blockquote>
+<h4 id="1264-結論">12.6.4 結論</h4>
+<blockquote>
+<p><strong>「先跑 Orange」不會讓 TPOT 的分數變好 —— TPOT 對這類資料集本來就加不了分。</strong>
+<strong>它會讓你更快問對問題、更早停手、更少搬運錯誤。</strong>
+<strong>而在已經很熟的資料上，這三件事用程式做更徹底。</strong></p>
+</blockquote>
 <hr>
 <h2 id="13-clipython-api-與無頭模式部署視角">13. CLI、Python API 與無頭模式（部署視角）</h2>
 <blockquote>
