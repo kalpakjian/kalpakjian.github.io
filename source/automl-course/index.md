@@ -181,6 +181,28 @@ date: 2026-10-16 21:30:00
 
 ---
 
+## 9 · Azure ML AutoML 實作全紀錄（雲端平台實作延伸）
+
+![Azure ML AutoML 實作全紀錄](/img/covers/azure-automl-bank-churn-walkthrough.png)
+
+- **定位**：單元三（Azure AutoML 雲端平台實戰）的**實作延伸**——把單元三的六步價值鏈在 Azure ML Studio 上真的走完一次；形式是**部落格文章**（不是單檔筆記頁）
+- **核心命題**：**知道有「資料註冊 → 雲端算力 → 自動選演算法 → 部署成 REST API」這四件事，和真的把它跑完一次，是兩件不同的事**——尤其在雲端，每一個欄位都對應一筆帳單
+- **三個教學重點**：
+  - **成本控制**：叢集設**最小節點 0／最大節點 1**（不是常見範例的 0/2），實測證明**單一節點足以跑完**；但**設 0 不等於不用等**，首次啟用仍要佈建時間
+  - **timeout 不是「保證總時長」**：設 **30 分鐘**，實際 Duration **38 分 15.16 秒**才結束（畫面附 timeout 警告）——排程要留餘裕
+  - **部署尾段多一步**：**Consume 分頁才是交付終點**——REST 網址 ＋ Primary／Secondary key ＋ JavaScript／Python／C#／JSON 四種呼叫範例
+- **畫面實測**（工作區 `Practice`／`germanywestcentral`／Azure for Students）：
+  - 計算叢集 **Standard_DS11_v2**（2 cores／14 GB／$0.17/hr）、最小 0／最大 1、閒置縮放 **120 秒**
+  - 資料資產 `training`／**`bank_marketing_train.csv`**（**81.38 KiB**）、存放區 `workspaceblobstore`
+  - 任務 **Classification**、目標欄位 **`y (String)`**（標籤不必先轉 0/1）、任務 VM `Standard_DS3_v2`、instances 1
+  - **Enable early termination 已勾選** ＋ `Experiment timeout = 30`（其餘限制欄位留白）
+  - 最佳模型 **VotingEnsemble**、**AUC weighted 0.87459**、Sampling **100.00%**
+  - 端點 **`practice-zmrf`**、部署 VM `Standard_D2as_v4`（$0.10/hr）；部署時出現配額警告 `Current usage/limit: 0/4`
+- **附圖**：1 張封面 ＋ **19 張操作截圖**（六個步驟逐步，含實測值對照表）
+- **👉 [看文章](/2026/10/18/azure-automl-bank-churn-walkthrough/)**
+
+---
+
 ## 筆記的共同規格
 
 | 項目 | 說明 |
@@ -209,6 +231,7 @@ date: 2026-10-16 21:30:00
 | **導讀** | 《最新機器學習的教科書》DM2155 導讀（橋樑書：基礎數學 ＋ Python 實作） | Python、Jupyter、Keras、TensorFlow | ✅ [導讀筆記](/ml-textbook-notes/) |
 | **統計入門** | 線性迴歸入門：用一條直線看懂關係（四個角色 → 斜率／截距 → 殘差 → 最小平方法） | Python、numpy、scikit-learn | ✅ [線性迴歸入門筆記](/linear-regression-notes/) |
 | **實作延伸** | 用 TPOT 預測無人機訂單成交率（準確率陷阱 → 特徵重要性 → 門檻調校） | Python、TPOT 1.1.0、scikit-learn、dask | ✅ [Redix TPOT 文章](/2026/10/18/redix-tpot-sales-prediction/) ｜ [A4 講義 PDF](/redix-tpot/handout.pdf) |
+| **實作延伸** | Azure ML AutoML 實作全紀錄（建立算力 → 資料註冊 → 訓練 → 部署 REST 端點） | Azure Machine Learning Studio、Azure for Students | ✅ [Azure ML AutoML 文章](/2026/10/18/azure-automl-bank-churn-walkthrough/) |
 
 ---
 
