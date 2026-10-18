@@ -6326,12 +6326,12 @@ TPOT 沒有這個概念——你給它資料它就開始搜，<strong>它不會�
 <tr>
 <td><strong>第一部分：平台與資料工具箱</strong></td>
 <td>1–20</td>
-<td>Widget／Channel、範例工作流、Data 面板 12 元件、Model 面板 20 元件</td>
+<td>Widget／Channel、Data 面板 12 元件、Model 面板 20 元件、<strong>TPOT 定位對照（§12）</strong>、<strong>CLI／API／無頭模式（§13）</strong></td>
 </tr>
 <tr>
 <td><strong>第二部分：機器學習模型</strong></td>
 <td>21–45</td>
-<td>五種核心模型、模型對比與選擇、九種入門演算法</td>
+<td>五種核心模型、模型對比與選擇、九種入門演算法、<strong><code>model(test)</code> 的回傳型別（§13.6.1）</strong></td>
 </tr>
 <tr>
 <td><strong>第三部分：Orange 模型元件與實作</strong></td>
@@ -6340,6 +6340,11 @@ TPOT 沒有這個概念——你給它資料它就開始搜，<strong>它不會�
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p>📐 <strong>本卷已改版</strong>：原本 5 題考「範例工作流」的 GUI 走查（<code>File → Data Table</code>、虛線、
+Scatter Plot 選取），那些章節已從筆記移除，因此換成 <strong>§12／§13 的 8 題</strong>。
+正解分布維持 <strong>A／B／C／D 各 15 題</strong>。</p>
+</blockquote>
 <h3 id="f3-時間分配建議">F.3 時間分配建議</h3>
 <table>
 <thead>
@@ -6406,8 +6411,9 @@ TPOT 沒有這個概念——你給它資料它就開始搜，<strong>它不會�
 <hr>
 <h2 id="附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</h2>
 <blockquote>
-<p>題號對應 <code>mc-quiz.html</code> 的題目順序（每 5 題為一組）。
-章節編號對應<strong>本版（概念＋API 優先）</strong>的 §0–§13。</p>
+<p>題號對應 <code>mc-quiz.html</code> 的題目順序。
+章節編號對應<strong>本版（概念＋API 優先）</strong>的 §0–§13。
+其中<strong>第 5–10、15、29 題是為 §12／§13 新補的</strong>（原 GUI 走查題已移除）。</p>
 </blockquote>
 <table>
 <thead>
@@ -6419,19 +6425,24 @@ TPOT 沒有這個概念——你給它資料它就開始搜，<strong>它不會�
 </thead>
 <tbody>
 <tr>
-<td>1–5</td>
-<td>Orange 平台、Widget／Channel／Workflow、封面頁判定</td>
-<td>§1.1–§1.3</td>
+<td>1–4</td>
+<td>Widget／Channel／Workflow、<code>.ows</code> 存檔格式</td>
+<td>§1.2</td>
 </tr>
 <tr>
-<td>6–10</td>
-<td>資料元件（File／Datasets／Data Table／Edit Domain）</td>
-<td>§1.4.1</td>
+<td><strong>5–10</strong></td>
+<td><strong>TPOT vs Orange 的本質差異、TPOT 搜尋空間的上限、Brush &amp; Link、三次搜尋結果、先跑 Orange 的效益、<code>orange-canvas</code></strong></td>
+<td><strong>§12.1、§12.2.1–§12.2.2、§12.6、§13.2</strong></td>
 </tr>
 <tr>
-<td>11–15</td>
-<td>20 個模型元件清單、SGD 設定面板、面板顏色</td>
+<td>11–14</td>
+<td>20 個模型元件清單、<code>Decent</code> 錯字、SGD 預設值</td>
 <td>§1.4.2</td>
+</tr>
+<tr>
+<td>15</td>
+<td>無頭工作流的官方立場（wontfix）</td>
+<td>§13.3</td>
 </tr>
 <tr>
 <td>16–20</td>
@@ -6444,14 +6455,19 @@ TPOT 沒有這個概念——你給它資料它就開始搜，<strong>它不會�
 <td>§2、§8、附錄 B.4</td>
 </tr>
 <tr>
-<td>26–30</td>
+<td>26–28</td>
 <td>CN2 規則、kNN（縮放敏感、訓練快預測慢）</td>
 <td>§3.1、§3.2</td>
 </tr>
 <tr>
-<td>31–35</td>
-<td>決策樹、隨機森林（兩層隨機）、梯度提升（殘差）</td>
-<td>§3.3–§3.5</td>
+<td>29</td>
+<td><code>model(test)</code> 回傳 numpy 類別索引（不是表格）</td>
+<td>§13.6.1</td>
+</tr>
+<tr>
+<td>30–35</td>
+<td>kNN 優點、決策樹、隨機森林（兩層隨機）、梯度提升（殘差）</td>
+<td>§3.2–§3.5</td>
 </tr>
 <tr>
 <td>36–40</td>
