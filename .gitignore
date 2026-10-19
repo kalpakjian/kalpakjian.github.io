@@ -8,3 +8,7 @@ public/
 _multiconfig.yml
 _covergen/
 _work/
+
+# Python 快取（tools/ 底下的腳本會產生）
+__pycache__/
+*.pyc
