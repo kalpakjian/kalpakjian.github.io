@@ -5,6 +5,11 @@ For notes that have NO build script (opencv-notes, streamlit-flask-notes, ...)
 the md and the html are maintained in parallel, so both must be edited and kept
 in sync (the QA gate checks heading parity between the two).
 
+art_index counts "real" diagrams only: fenced blocks whose box-drawing chars are
+just decorative separators inside a copy-pasteable code block are skipped, using
+the same judgement as inventory.py (so `python inventory.py <note>` and this
+tool's art#N always refer to the same block).
+
 Usage:
     python embed_figs.py <note-dir> <plan.json>
 
@@ -15,6 +20,7 @@ plan.json:
    "caption": "圖 1：..."}
 ]
 """
+import html as htmllib
 import io
 import json
 import os
@@ -24,6 +30,9 @@ import sys
 sys.stdout.reconfigure(encoding="utf-8")
 
 REPO = r"C:\Users\princ\blog"
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from inventory import is_code_block  # noqa: E402  (same directory)
 
 
 def responsive(svg):
@@ -68,11 +77,12 @@ def _md_spans(text):
 
 
 def replace_md(text, n, fig):
-    """Replace the n-th fenced block that contains box-drawing art."""
+    """Replace the n-th fenced block that is a real diagram (not decorative art)."""
     lines, spans = _md_spans(text)
     k = 0
     for a, b in spans:
-        if _has_art("\n".join(lines[a + 1:b])):
+        body = "\n".join(lines[a + 1:b])
+        if _has_art(body) and not is_code_block(body):
             k += 1
             if k == n:
                 return "\n".join(lines[:a] + [fig] + lines[b + 1:])
@@ -93,11 +103,17 @@ def _html_spans(text):
     return merged
 
 
+def _plain(seg):
+    """Rendered code block -> plain text (pygments splits it into spans)."""
+    return htmllib.unescape(re.sub(r"<[^>]+>", "", seg))
+
+
 def replace_html(text, n, fig):
-    """Replace the n-th rendered code block that contains box-drawing art."""
+    """Replace the n-th rendered code block that is a real diagram."""
     k = 0
     for s, e in _html_spans(text):
-        if _has_art(text[s:e]):
+        seg = text[s:e]
+        if _has_art(seg) and not is_code_block(_plain(seg)):
             k += 1
             if k == n:
                 return text[:s] + fig + text[e:]
