@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="本機實測結果：贏家詛咒與測試集大小" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">本機實測結果：贏家詛咒與測試集大小</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">內部 CV 0.9822 vs 測試集 0.9474</text>
+<text x="48" y="120" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① 內部 CV 分數 vs 測試集分數</text>
+<text x="60" y="152" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">內部交叉驗證最佳（在約 100 條裡挑最好的）</text>
+<rect x="60" y="160" width="236" height="26" rx="6" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="306" y="180" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9822</text>
+<text x="60" y="218" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">測試集實際分數（沒看過的 38 筆）</text>
+<rect x="60" y="226" width="227" height="26" rx="6" fill="#1c2230" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="297" y="246" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9474</text>
+<text x="60" y="286" font-size="12.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">差距 0.0348 → 贏家詛咒</text>
+<text x="480" y="120" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② 測試集只有 38 筆：錯 1 筆就掉 2.6%</text>
+<rect x="480" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="498" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="516" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="534" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="552" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="570" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="588" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="606" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="624" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="642" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="660" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="678" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="696" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="714" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="732" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="750" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="768" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="786" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="804" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="480" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="498" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="516" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="534" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="552" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="570" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="588" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="606" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="624" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="642" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="660" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="678" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="696" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="714" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="732" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="750" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="768" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="786" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="804" y="172" width="15" height="15" rx="3" fill="#f472b655" stroke="#f472b6" stroke-width="1.2"/>
+<text x="480" y="216" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一格 = 1 筆；錯 1 筆 = 1 ÷ 38 ≈ 2.6%</text>
+<text x="48" y="340" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">③ 搜尋時間：約 51 秒（多次實測 45.6～51.7 秒）</text>
+<rect x="48" y="356" width="300" height="22" rx="6" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="360" y="373" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5 代 × 20 族群 ≈ 100 條管線</text>
+<text x="48" y="470" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">課堂簡報的 0.973 與本機 0.9474 只差一題——不要把單一分數當成絕對值。</text>
+</svg>

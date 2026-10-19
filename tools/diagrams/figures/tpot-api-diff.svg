@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" role="img" aria-label="0.x 教學文 → TPOT 1.1.0：六行改寫對照" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="638.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.x 教學文 → TPOT 1.1.0：六行改寫對照</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一列都是本機實際跑出來的結果</text>
+<rect x="70" y="108" width="330" height="44" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="235.0" y="135.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.x 教學文寫的</text>
+<rect x="500" y="108" width="340" height="44" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="670.0" y="135.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 1.1.0 要改成</text>
+<rect x="70" y="170" width="330" height="52" rx="8" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="500" y="170" width="340" height="52" rx="8" fill="#1c2230" stroke="#3fb95055" stroke-width="1.5"/>
+<text x="82" y="202" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">verbosity=2</text>
+<text x="512" y="202" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">verbose=2</text>
+<path d="M 408 196 L 492 196" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="70" y="240" width="330" height="52" rx="8" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="500" y="240" width="340" height="52" rx="8" fill="#1c2230" stroke="#3fb95055" stroke-width="1.5"/>
+<text x="82" y="272" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">config_dict='Default'</text>
+<text x="512" y="272" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">search_space='linear'</text>
+<path d="M 408 266 L 492 266" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="70" y="310" width="330" height="52" rx="8" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="500" y="310" width="340" height="52" rx="8" fill="#1c2230" stroke="#3fb95055" stroke-width="1.5"/>
+<text x="82" y="342" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">tpot.export('pipeline.py')</text>
+<text x="512" y="342" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">joblib.dump(tpot.fitted_pipeline_, ...)</text>
+<path d="M 408 336 L 492 336" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="70" y="380" width="330" height="52" rx="8" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="500" y="380" width="340" height="52" rx="8" fill="#1c2230" stroke="#3fb95055" stroke-width="1.5"/>
+<text x="82" y="412" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">tpot.score(X_test, y_test)</text>
+<text x="512" y="412" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">accuracy_score(y_test, tpot.predict(X_test))</text>
+<path d="M 408 406 L 492 406" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="70" y="450" width="330" height="52" rx="8" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="500" y="450" width="340" height="52" rx="8" fill="#1c2230" stroke="#3fb95055" stroke-width="1.5"/>
+<text x="82" y="482" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">tpot._fitted_pipeline</text>
+<text x="512" y="482" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">tpot.fitted_pipeline_</text>
+<path d="M 408 476 L 492 476" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="70" y="520" width="330" height="52" rx="8" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="500" y="520" width="340" height="52" rx="8" fill="#1c2230" stroke="#3fb95055" stroke-width="1.5"/>
+<text x="82" y="552" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">TPOTClassifier()</text>
+<text x="512" y="552" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">TPOTClassifier(processes=False, generations=5)</text>
+<path d="M 408 546 L 492 546" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="48" y="600" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一列都是本機實際跑出來的結果；完整 traceback 收在附錄 B.2。</text>
+</svg>

@@ -35,25 +35,51 @@
 
 ## 0. 30 秒總複習（考前最後掃描）
 
-```
-資料 ──train_test_split(random_state=42)──► 訓練集 (X_train, y_train) ＋ 測試集 (X_test, y_test)
-                                                │
-                                                ▼
-                    TPOTClassifier(generations=5, population_size=20,
-                                   scorers=['accuracy'], cv=5,
-                                   verbose=2, random_state=42)
-                                                │
-                                        .fit(X_train, y_train)
-                                                │
-                    ┌───────────────────────────┴───────────────────────────┐
-                    │  基因演算法：初始族群 → 適者生存 → 交配與突變 → 迭代  │
-                    │  每一代都在「繁衍 + 淘汰」，最後留下冠軍模型          │
-                    └───────────────────────────┬───────────────────────────┘
-                                                ▼
-     accuracy_score(y_test, tpot.predict(X_test))  ──►  準確率（本機實測 0.9474）
-                                                ▼
-                        最佳管線（Pipeline）：前處理 + 特徵選擇 + 模型 + 參數
-```
+<!-- SVGFIG -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-label="TPOT 完整流程：30 秒總複習" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="598.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 完整流程：30 秒總複習</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從資料到準確率，中間那格就是基因演算法</text>
+<rect x="240" y="108" width="420" height="52" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="450.0" y="132.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">資料 + 答案</text>
+<text x="450.0" y="154.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">X 特徵（150×4）＋ y 標籤（3 類）</text>
+<path d="M 450 160 L 450 186" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="468" y="180" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">train_test_split(random_state=42)</text>
+<rect x="240" y="188" width="420" height="52" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="450.0" y="212.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練集 / 測試集</text>
+<text x="450.0" y="234.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">112 筆 ／ 38 筆（留一份當期末考）</text>
+<path d="M 450 240 L 450 266" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="468" y="260" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOTClassifier(...)：設定預算與指標</text>
+<rect x="150" y="268" width="600" height="104" rx="12" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="174" y="296" font-size="14" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基因演算法（四個步驟循環）</text>
+<rect x="170" y="310" width="128" height="44" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="234.0" y="336.5" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">初始族群</text>
+<rect x="312" y="310" width="128" height="44" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="376.0" y="336.5" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">適者生存</text>
+<path d="M 299 332.0 L 309 332.0" fill="none" stroke="#7d8590" stroke-width="1.6" marker-end="url(#m7d8590)"/>
+<rect x="454" y="310" width="128" height="44" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="518.0" y="336.5" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">交配與突變</text>
+<path d="M 441 332.0 L 451 332.0" fill="none" stroke="#7d8590" stroke-width="1.6" marker-end="url(#m7d8590)"/>
+<rect x="596" y="310" width="128" height="44" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="660.0" y="336.5" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">迭代</text>
+<path d="M 583 332.0 L 593 332.0" fill="none" stroke="#7d8590" stroke-width="1.6" marker-end="url(#m7d8590)"/>
+<path d="M 450 372 L 450 398" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="468" y="392" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">.fit(X_train, y_train)：開始演化搜尋</text>
+<rect x="240" y="400" width="420" height="52" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="450.0" y="424.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">最佳管線 fitted_pipeline_</text>
+<text x="450.0" y="446.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">本機實測：邏輯迴歸 ＋ 前處理（不是隨機森林）</text>
+<path d="M 450 452 L 450 478" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="468" y="472" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">accuracy_score(y_test, tpot.predict(X_test))</text>
+<rect x="240" y="480" width="420" height="52" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="450.0" y="504.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">準確率 0.9474（36/38）</text>
+<text x="450.0" y="526.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">內部 CV 0.9822 → 贏家詛咒</text>
+<text x="48" y="570" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">本機實測：5 代 × 20 族群 ≈ 100 條管線，約 51 秒跑完。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 11：TPOT 完整流程——資料 → 切分 → 設定預算 → 演化搜尋（基因演算法四步驟循環）→ 最佳管線 → 打分數。本機實測約 51 秒、準確率 0.9474。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /SVGFIG -->
 
 | 你會用到的函式 | 一句話記法 |
 |---|---|
@@ -296,6 +322,48 @@ print("測試集分數：", model.score(Xn_te, yn_te))   # 只有 0.84
 > **考點**：組合數是**相乘**成長的。多一個要決定的維度，不是「多一點」，而是「乘上好幾倍」。
 > 這就是簡報說的「排列組合地獄」。
 
+<!-- SVGFIG -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="排列組合爆炸：為什麼人工調參不可能窮舉" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">排列組合爆炸：為什麼人工調參不可能窮舉</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4 演算法 × 3 前處理 × 3 參數 = 279 種（本機實算）</text>
+<text x="48" y="120" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">組合數是「相乘」成長的</text>
+<rect x="60" y="140" width="240" height="44" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="180.0" y="166.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4 種演算法</text>
+<text x="150" y="196" font-size="18" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">×</text>
+<rect x="60" y="206" width="240" height="44" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="180.0" y="232.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3 種前處理</text>
+<text x="150" y="262" font-size="18" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">×</text>
+<rect x="60" y="272" width="240" height="44" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="180.0" y="298.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3 個超參數</text>
+<path d="M 150 316 L 150 340" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="60" y="342" width="240" height="58" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="180.0" y="369.0" font-size="17" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">279 種組合</text>
+<text x="180.0" y="391.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">本機實算（僅 4 個模型）</text>
+<text x="60" y="424" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">再多一種前處理 → 465 種</text>
+<text x="430" y="120" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">組合數（前處理種類越多，組合數越大）</text>
+<path d="M 415 400 L 862 400" fill="none" stroke="#7d8590" stroke-width="1.5"/>
+<text x="408" y="340" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">組合數</text>
+<rect x="430" y="375.0" width="90" height="25.0" rx="6" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="475" y="365.0" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">93</text>
+<text x="475" y="424" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1 種</text>
+<rect x="540" y="325.0" width="90" height="75.0" rx="6" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="585" y="315.0" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">279</text>
+<text x="585" y="424" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3 種</text>
+<rect x="650" y="275.0" width="90" height="125.0" rx="6" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="695" y="265.0" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">465</text>
+<text x="695" y="424" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5 種</text>
+<rect x="760" y="200.0" width="90" height="200.0" rx="6" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<text x="805" y="190.0" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">744</text>
+<text x="805" y="424" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8 種</text>
+<text x="48" y="470" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GridSearchCV 18 條管線 × 5 折 = 90 次 fit → 3.94 秒；要覆蓋 279 種組合約 61 秒（本機實測推估）。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 13：組合數是相乘成長的——本機實算 279 種組合；前處理增加到 8 種就變 744 種。GridSearchCV 只跑 18 條管線就要 3.94 秒。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /SVGFIG -->
+
 ### 3.3 人工調參要多久？本機實測
 
 用 `GridSearchCV` 跑一個**很小的**網格（2 前處理 × 3 `n_estimators` × 3 `max_depth` = 18 條管線、
@@ -371,20 +439,60 @@ print("測試集分數：", model.score(Xn_te, yn_te))   # 只有 0.84
 
 ### 4.3 TPOT 的完整工作流程
 
-```
-① 你準備資料（清理、編碼、切分）        ← 這一步 TPOT 不幫你
-        │
-② train_test_split → X_train / X_test   ← 留下期末考卷
-        │
-③ TPOTClassifier(...)  →  tpot.fit(X_train, y_train)
-        │        └─ 基因演算法開始搜尋（第 5 章）
-        │
-④ 得到最佳管線：tpot.fitted_pipeline_
-        │
-⑤ 打分數：accuracy_score(y_test, tpot.predict(X_test))
-        │
-⑥ 部署：joblib.dump(tpot.fitted_pipeline_, "model.joblib")
-```
+<!-- SVGFIG -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-label="TPOT 六步工作流程：誰負責哪一段" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="558.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 六步工作流程：誰負責哪一段</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">右欄標出「TPOT 幫你／你決定」</text>
+<text x="750" y="100" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">誰負責</text>
+<rect x="110" y="106" width="620" height="54" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="142" cy="133.0" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="142" y="138.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="170" y="130.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你準備資料（清理、編碼、切分）</text>
+<text x="170" y="151.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 只吃乾淨的數值矩陣</text>
+<text x="750" y="138" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 不幫你</text>
+<path d="M 420 160 L 420 172" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="110" y="174" width="620" height="54" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="142" cy="201.0" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="142" y="206.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="170" y="198.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">train_test_split → X_train / X_test</text>
+<text x="170" y="219.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">留一份沒看過的當期末考</text>
+<text x="750" y="206" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你決定</text>
+<path d="M 420 228 L 420 240" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="110" y="242" width="620" height="54" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="142" cy="269.0" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="142" y="274.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="170" y="266.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOTClassifier(...) 設定預算與指標</text>
+<text x="170" y="287.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">generations、population_size、scorers、cv</text>
+<text x="750" y="274" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 幫你</text>
+<path d="M 420 296 L 420 308" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="110" y="310" width="620" height="54" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="142" cy="337.0" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="142" y="342.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="170" y="334.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">.fit(X_train, y_train) 開始搜尋</text>
+<text x="170" y="355.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基因演算法：約 100 條管線輪流上場</text>
+<text x="750" y="342" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 幫你</text>
+<path d="M 420 364 L 420 376" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="110" y="378" width="620" height="54" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="142" cy="405.0" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="142" y="410.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="170" y="402.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">最佳管線 fitted_pipeline_</text>
+<text x="170" y="423.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">前處理 ＋ 特徵選擇 ＋ 模型 ＋ 參數</text>
+<text x="750" y="410" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 幫你</text>
+<path d="M 420 432 L 420 444" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="110" y="446" width="620" height="54" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<circle cx="142" cy="473.0" r="15" fill="#3fb950" opacity="0.92"/>
+<text x="142" y="478.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<text x="170" y="470.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">打分數與部署</text>
+<text x="170" y="491.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">accuracy_score(...) ／ joblib.dump(...)</text>
+<text x="750" y="478" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你決定</text>
+<text x="48" y="536" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 只負責「找模型」這一段；定義問題、清理資料、選指標、判讀結果仍然是人的工作。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 12：TPOT 六步工作流程——TPOT 只負責「找模型」（第 3～5 步），準備資料、切分、打分數與部署仍由人負責。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /SVGFIG -->
 
 ### 4.4 什麼時候該用 TPOT？什麼時候不該？
 
@@ -453,6 +561,36 @@ for node in tpot.fitted_pipeline_.topo_sorted_nodes:
 | 3 | **交配與突變** | 將表現優異的模型特徵互相結合，或隨機微調參數，產生下一代模型 | `crossover_probability`、`mutate_probability` |
 | 4 | **不斷迭代** | 經過多代的繁衍與優化，最後存活下來的就是效能最強的「冠軍模型」 | `generations`（繁衍幾代） |
 
+<!-- SVGFIG -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-label="基因演算法：四個步驟的循環" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="478.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基因演算法：四個步驟的循環</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">初始族群 → 適者生存 → 交配與突變 → 不斷迭代</text>
+<rect x="110" y="110" width="300" height="62" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="260.0" y="139.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① 初始族群</text>
+<text x="260.0" y="161.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">隨機生成一批模型（population_size）</text>
+<rect x="490" y="110" width="300" height="62" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="640.0" y="139.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② 適者生存</text>
+<text x="640.0" y="161.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">用 CV 分數淘汰差的（scorers ＋ cv）</text>
+<rect x="490" y="300" width="300" height="62" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="640.0" y="329.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">③ 交配與突變</text>
+<text x="640.0" y="351.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">結合好的、隨機微調（0.2 ／ 0.7）</text>
+<rect x="110" y="300" width="300" height="62" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="260.0" y="329.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">④ 不斷迭代</text>
+<text x="260.0" y="351.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">繁衍 5 代 → 冠軍模型（generations）</text>
+<path d="M 412 141 L 486 141" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 640 174 L 640 296" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 488 331 L 414 331" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 260 298 L 260 176" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="450" y="240" font-size="13" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一代都在「繁衍 + 淘汰」</text>
+<text x="48" y="420" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">本機實測：5 代 × 20 族群 ≈ 100 條管線、約 51 秒；預算越大通常分數越好（但不保證）。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 14：基因演算法四步驟——每一代都在繁衍與淘汰，最後留下冠軍模型；預算越大通常分數越好。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /SVGFIG -->
+
 ### 5.2 名詞對照：生物學 ↔ TPOT
 
 | 生物學 | TPOT | 白話 |
@@ -506,10 +644,48 @@ Generation: 100%|██████████| 5/5 [01:04<00:00, 12.89s/it]
 因為一條管線在 TPOT 內部是一張**有向圖（Directed Graph）**：每個節點是一個 sklearn 元件
 （Scaler、Selector、Classifier…），邊代表「資料從哪裡流到哪裡」。
 
-```
-原始特徵 ──► StandardScaler ──► SelectPercentile ──► RandomForest ──► 預測
-                    └──────────────►（也可以同時餵給 PCA → 再合併）
-```
+<!-- SVGFIG -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" role="img" aria-label="樹狀管線：分叉再合併" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="638.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">樹狀管線：分叉再合併</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">為什麼它叫 Tree-based Pipeline</text>
+<rect x="300" y="108" width="300" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="450.0" y="131.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">原始特徵</text>
+<text x="450.0" y="153.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">150 筆 × 4 欄</text>
+<path d="M 450 158 L 450 208" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 240 208 L 660 208" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 240 208 L 240 230" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 450 208 L 450 230" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 660 208 L 660 230" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="150" y="232" width="180" height="48" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="240.0" y="260.5" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">StandardScaler</text>
+<rect x="360" y="232" width="180" height="48" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="450.0" y="260.5" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">MinMaxScaler</text>
+<rect x="570" y="232" width="180" height="48" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="660.0" y="260.5" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Normalizer</text>
+<path d="M 240 280 L 240 304" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 450 280 L 450 304" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 660 280 L 660 304" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 240 304 L 660 304" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 450 304 L 450 354" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="240" y="356" width="420" height="52" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="450.0" y="380.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FeatureUnion</text>
+<text x="450.0" y="402.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">把多條支線的特徵併在一起</text>
+<path d="M 450 408 L 450 434" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="280" y="436" width="340" height="52" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="450.0" y="460.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SelectPercentile</text>
+<text x="450.0" y="482.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">percentile ≈ 87%</text>
+<path d="M 450 488 L 450 514" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="240" y="516" width="420" height="52" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="450.0" y="540.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LogisticRegression</text>
+<text x="450.0" y="562.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">C ≈ 27020 · penalty=elasticnet · solver=saga</text>
+<text x="48" y="606" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 允許「分叉再合併」，這就是它叫「樹狀」的原因；本機實測的最佳管線正是這條。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 15：樹狀管線示意——多條前處理支線經 FeatureUnion 合併後再進模型；本機實測的最佳管線正是這條。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /SVGFIG -->
 
 這張圖允許「**分叉再合併**」（特徵工程常這樣做），所以比單純的「一條直線 Pipeline」更靈活。
 
@@ -811,6 +987,48 @@ pip install "tpot==1.1.0"
 > 簡報把步驟 4 的五段程式碼**全部貼在同一個格子裡**（見步驟 5 的說明），
 > 所以其實只需要一個 Cell。
 
+<!-- SVGFIG -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-label="Colab 五步流程" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="558.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Colab 五步流程</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從開筆記本到印出準確率</text>
+<rect x="110" y="106" width="620" height="60" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="142" cy="136.0" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="142" y="141.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="170" y="133.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">開啟 Google Colab 並新增筆記本</text>
+<text x="170" y="154.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">colab.research.google.com → 新增筆記本（New Notebook）</text>
+<path d="M 420 166 L 420 180" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="110" y="182" width="620" height="60" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="142" cy="212.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="142" y="217.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="170" y="209.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">安裝 TPOT 工具包</text>
+<text x="170" y="230.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">!pip install tpot（驚嘆號＝作業系統指令；約 10～20 秒）</text>
+<path d="M 420 242 L 420 256" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="110" y="258" width="620" height="60" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="142" cy="288.0" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="142" y="293.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="170" y="285.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">建立程式碼區塊（Cell）</text>
+<text x="170" y="306.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">點「+ 程式碼 (+ Code)」開一個空白儲存格</text>
+<path d="M 420 318 L 420 332" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="110" y="334" width="620" height="60" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="142" cy="364.0" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="142" y="369.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="170" y="361.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">貼上五段程式</text>
+<text x="170" y="382.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">匯入套件 → 切分資料 → 設定參數 → fit → 打分數</text>
+<path d="M 420 394 L 420 408" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="110" y="410" width="620" height="60" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<circle cx="142" cy="440.0" r="15" fill="#3fb950" opacity="0.92"/>
+<text x="142" y="445.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="170" y="437.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">執行並檢視成果</text>
+<text x="170" y="458.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Shift + Enter → 進度條 Generation 5/5 → 印出準確率</text>
+<text x="48" y="520" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">課堂上大約要等 2～3 分鐘；本機（processes=False）實測 5 代 × 20 族群約 51 秒。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 16：Colab 實作五步——開筆記本 → !pip install tpot → 開程式碼區塊 → 貼五段程式→ Shift+Enter 執行並看進度條。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /SVGFIG -->
+
 ### 9.2 步驟 4 第一部分：匯入必備套件
 
 簡報的程式碼：
@@ -972,6 +1190,69 @@ featureunion-1     → FeatureUnion(...)
 featureunion-2     → FeatureUnion(...)
 logisticregression → LogisticRegression(C≈27020.69, penalty='elasticnet', solver='saga')
 ```
+
+<!-- SVGFIG -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="本機實測結果：贏家詛咒與測試集大小" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">本機實測結果：贏家詛咒與測試集大小</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">內部 CV 0.9822 vs 測試集 0.9474</text>
+<text x="48" y="120" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① 內部 CV 分數 vs 測試集分數</text>
+<text x="60" y="152" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">內部交叉驗證最佳（在約 100 條裡挑最好的）</text>
+<rect x="60" y="160" width="236" height="26" rx="6" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="306" y="180" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9822</text>
+<text x="60" y="218" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">測試集實際分數（沒看過的 38 筆）</text>
+<rect x="60" y="226" width="227" height="26" rx="6" fill="#1c2230" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="297" y="246" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9474</text>
+<text x="60" y="286" font-size="12.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">差距 0.0348 → 贏家詛咒</text>
+<text x="480" y="120" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② 測試集只有 38 筆：錯 1 筆就掉 2.6%</text>
+<rect x="480" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="498" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="516" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="534" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="552" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="570" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="588" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="606" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="624" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="642" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="660" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="678" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="696" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="714" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="732" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="750" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="768" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="786" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="804" y="152" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="480" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="498" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="516" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="534" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="552" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="570" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="588" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="606" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="624" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="642" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="660" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="678" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="696" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="714" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="732" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="750" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="768" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="786" y="172" width="15" height="15" rx="3" fill="#1c2230" stroke="#30363d" stroke-width="1.2"/>
+<rect x="804" y="172" width="15" height="15" rx="3" fill="#f472b655" stroke="#f472b6" stroke-width="1.2"/>
+<text x="480" y="216" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一格 = 1 筆；錯 1 筆 = 1 ÷ 38 ≈ 2.6%</text>
+<text x="48" y="340" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">③ 搜尋時間：約 51 秒（多次實測 45.6～51.7 秒）</text>
+<rect x="48" y="356" width="300" height="22" rx="6" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="360" y="373" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5 代 × 20 族群 ≈ 100 條管線</text>
+<text x="48" y="470" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">課堂簡報的 0.973 與本機 0.9474 只差一題——不要把單一分數當成絕對值。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 17：本機實測——內部交叉驗證 0.9822 比測試集 0.9474 樂觀（贏家詛咒）；測試集只有 38 筆，錯 1 筆就差 2.6%。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /SVGFIG -->
 
 **三個值得注意的細節：**
 
@@ -1187,16 +1468,52 @@ logisticregression → LogisticRegression(C≈27020.69, penalty='elasticnet', so
 
 ### B.4 一張圖記住「錯誤 → 修正」
 
-```
-0.x 教學文寫的                    1.1.0 要改成
-──────────────────────────────────────────────────────────
-verbosity=2                    →  verbose=2
-config_dict='Default'          →  search_space='linear'
-tpot.export('pipeline.py')     →  joblib.dump(tpot.fitted_pipeline_, ...)
-tpot.score(X_test, y_test)     →  accuracy_score(y_test, tpot.predict(X_test))
-tpot._fitted_pipeline          →  tpot.fitted_pipeline_
-TPOTClassifier()               →  TPOTClassifier(processes=False, generations=5)
-```
+<!-- SVGFIG -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" role="img" aria-label="0.x 教學文 → TPOT 1.1.0：六行改寫對照" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="638.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.x 教學文 → TPOT 1.1.0：六行改寫對照</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一列都是本機實際跑出來的結果</text>
+<rect x="70" y="108" width="330" height="44" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="235.0" y="135.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.x 教學文寫的</text>
+<rect x="500" y="108" width="340" height="44" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="670.0" y="135.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 1.1.0 要改成</text>
+<rect x="70" y="170" width="330" height="52" rx="8" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="500" y="170" width="340" height="52" rx="8" fill="#1c2230" stroke="#3fb95055" stroke-width="1.5"/>
+<text x="82" y="202" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">verbosity=2</text>
+<text x="512" y="202" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">verbose=2</text>
+<path d="M 408 196 L 492 196" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="70" y="240" width="330" height="52" rx="8" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="500" y="240" width="340" height="52" rx="8" fill="#1c2230" stroke="#3fb95055" stroke-width="1.5"/>
+<text x="82" y="272" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">config_dict='Default'</text>
+<text x="512" y="272" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">search_space='linear'</text>
+<path d="M 408 266 L 492 266" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="70" y="310" width="330" height="52" rx="8" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="500" y="310" width="340" height="52" rx="8" fill="#1c2230" stroke="#3fb95055" stroke-width="1.5"/>
+<text x="82" y="342" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">tpot.export('pipeline.py')</text>
+<text x="512" y="342" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">joblib.dump(tpot.fitted_pipeline_, ...)</text>
+<path d="M 408 336 L 492 336" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="70" y="380" width="330" height="52" rx="8" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="500" y="380" width="340" height="52" rx="8" fill="#1c2230" stroke="#3fb95055" stroke-width="1.5"/>
+<text x="82" y="412" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">tpot.score(X_test, y_test)</text>
+<text x="512" y="412" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">accuracy_score(y_test, tpot.predict(X_test))</text>
+<path d="M 408 406 L 492 406" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="70" y="450" width="330" height="52" rx="8" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="500" y="450" width="340" height="52" rx="8" fill="#1c2230" stroke="#3fb95055" stroke-width="1.5"/>
+<text x="82" y="482" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">tpot._fitted_pipeline</text>
+<text x="512" y="482" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">tpot.fitted_pipeline_</text>
+<path d="M 408 476 L 492 476" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="70" y="520" width="330" height="52" rx="8" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="500" y="520" width="340" height="52" rx="8" fill="#1c2230" stroke="#3fb95055" stroke-width="1.5"/>
+<text x="82" y="552" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">TPOTClassifier()</text>
+<text x="512" y="552" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">TPOTClassifier(processes=False, generations=5)</text>
+<path d="M 408 546 L 492 546" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="48" y="600" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一列都是本機實際跑出來的結果；完整 traceback 收在附錄 B.2。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 18：API 對照——verbosity→verbose、score()→accuracy_score、export()→joblib 等六處改寫；左欄寫法在 1.1.0 會直接報錯。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /SVGFIG -->
 
 ---
 ## 附錄 C：簡報頁面索引對照

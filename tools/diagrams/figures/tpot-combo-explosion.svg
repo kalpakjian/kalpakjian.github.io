@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="排列組合爆炸：為什麼人工調參不可能窮舉" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">排列組合爆炸：為什麼人工調參不可能窮舉</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4 演算法 × 3 前處理 × 3 參數 = 279 種（本機實算）</text>
+<text x="48" y="120" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">組合數是「相乘」成長的</text>
+<rect x="60" y="140" width="240" height="44" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="180.0" y="166.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4 種演算法</text>
+<text x="150" y="196" font-size="18" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">×</text>
+<rect x="60" y="206" width="240" height="44" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="180.0" y="232.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3 種前處理</text>
+<text x="150" y="262" font-size="18" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">×</text>
+<rect x="60" y="272" width="240" height="44" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="180.0" y="298.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3 個超參數</text>
+<path d="M 150 316 L 150 340" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="60" y="342" width="240" height="58" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="180.0" y="369.0" font-size="17" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">279 種組合</text>
+<text x="180.0" y="391.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">本機實算（僅 4 個模型）</text>
+<text x="60" y="424" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">再多一種前處理 → 465 種</text>
+<text x="430" y="120" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">組合數（前處理種類越多，組合數越大）</text>
+<path d="M 415 400 L 862 400" fill="none" stroke="#7d8590" stroke-width="1.5"/>
+<text x="408" y="340" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">組合數</text>
+<rect x="430" y="375.0" width="90" height="25.0" rx="6" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="475" y="365.0" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">93</text>
+<text x="475" y="424" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1 種</text>
+<rect x="540" y="325.0" width="90" height="75.0" rx="6" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="585" y="315.0" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">279</text>
+<text x="585" y="424" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3 種</text>
+<rect x="650" y="275.0" width="90" height="125.0" rx="6" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="695" y="265.0" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">465</text>
+<text x="695" y="424" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5 種</text>
+<rect x="760" y="200.0" width="90" height="200.0" rx="6" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<text x="805" y="190.0" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">744</text>
+<text x="805" y="424" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8 種</text>
+<text x="48" y="470" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GridSearchCV 18 條管線 × 5 折 = 90 次 fit → 3.94 秒；要覆蓋 279 種組合約 61 秒（本機實測推估）。</text>
+</svg>
