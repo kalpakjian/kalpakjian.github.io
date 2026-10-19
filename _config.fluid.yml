@@ -20,7 +20,7 @@ navbar:
       submenu:
         - { name: 'IVDC 電腦視覺課程', link: '/cv-course/', icon: 'iconfont icon-note' }
         - { name: 'IVDC LLM 與生成式 AI 課程', link: '/llm-course/', icon: 'iconfont icon-note' }
-        - { name: 'AutoML 應用證書課程', link: '/automl-course/', icon: 'iconfont icon-note' }
+        - { name: 'AutoML 專區', link: '/automl/', icon: 'iconfont icon-notebook' }
     - { key: 'archive', link: '/archives/', icon: 'iconfont icon-archive-fill' }
     - { key: 'category', link: '/categories/', icon: 'iconfont icon-category-fill' }
     - { key: 'tag', link: '/tags/', icon: 'iconfont icon-tags-fill' }
