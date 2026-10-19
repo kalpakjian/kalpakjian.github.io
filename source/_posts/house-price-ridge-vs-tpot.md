@@ -1,5 +1,6 @@
 ---
 title: 手寫 Ridge vs TPOT AutoML：同一份房價資料，AutoML 花 12 分鐘換到什麼？
+archive: true   # 已歸入「AutoML 應用證書課程」實作延伸，不列在首頁
 date: 2026-10-18 23:00:00
 categories:
   - 學習資源

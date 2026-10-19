@@ -1,5 +1,6 @@
 ---
 title: 手寫模型 vs TPOT AutoML：同一份銀行行銷資料，差別到底在哪？
+archive: true   # 已歸入「AutoML 應用證書課程」實作延伸，不列在首頁
 date: 2026-10-18 20:00:00
 categories:
   - 學習資源

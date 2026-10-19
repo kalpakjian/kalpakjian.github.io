@@ -1,5 +1,6 @@
 ---
 title: Azure ML AutoML 實作全紀錄：從建立算力到 REST 端點，bank 流失預測六步走完
+archive: true   # 已歸入「AutoML 應用證書課程」實作延伸，不列在首頁
 date: 2026-10-18 22:00:00
 categories:
   - 學習資源
