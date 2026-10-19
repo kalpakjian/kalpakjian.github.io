@@ -258,13 +258,30 @@ CPU / GPU（CUDA / Metal / ROCm）
 
 以 `Q4_K_M` 為例：
 
-```
-Q  4  _  K  _  M
-│  │     │     └── 變體：S(small) / M(medium) / L(large)
-│  │     └──────── K = k-quant（新一代量化方法，混合精度）
-│  └────────────── 4 = 每個權重約 4 bits
-└───────────────── Q = Quantized（量化）
-```
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" role="img" aria-label="量化命名怎麼讀：Q4_K_M" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="398.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">量化命名怎麼讀：Q4_K_M</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一個字元一個意思</text>
+<text x="450" y="134" font-size="30" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">Q4_K_M</text>
+<rect x="180" y="169" width="46" height="34" rx="8" fill="#0d1117" stroke="#2dd4bf99" stroke-width="1.5"/>
+<text x="203.0" y="193" font-size="13" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">Q</text>
+<text x="246" y="194" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Quantized（量化）</text>
+<rect x="180" y="215" width="46" height="34" rx="8" fill="#0d1117" stroke="#58a6ff99" stroke-width="1.5"/>
+<text x="203.0" y="239" font-size="13" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">4</text>
+<text x="246" y="240" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每個權重約 4 bits</text>
+<rect x="180" y="261" width="46" height="34" rx="8" fill="#0d1117" stroke="#fbbf2499" stroke-width="1.5"/>
+<text x="203.0" y="285" font-size="13" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">K</text>
+<text x="246" y="286" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">k-quant（新一代量化方法，混合精度）</text>
+<rect x="180" y="307" width="46" height="34" rx="8" fill="#0d1117" stroke="#c084fc99" stroke-width="1.5"/>
+<text x="203.0" y="331" font-size="13" fill="#c084fc" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">M</text>
+<text x="246" y="332" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">變體：S(small) / M(medium) / L(large)</text>
+<text x="48" y="366" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">讀法：Q＝量化、4＝4 bits、K＝k-quant、M＝中size；數字越小越省記憶體、品質越低。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 40：Q4_K_M 的解剖——Q（Quantized）、4（每個權重約 4 bits）、K（k-quant，混合精度）、M（中 size）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 ### 4.2 常見等級速查表
 
@@ -788,11 +805,24 @@ ollama version is 0.40.3
 
 ### 11.3 `:` 後面的東西是什麼——tag
 
-```
-llama3.2:1b
-   │      └── tag（標籤）：指定版本／參數量／量化
-   └───────── 模型名稱
-```
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 330" role="img" aria-label="llama3.2:1b 怎麼讀" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="328.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">llama3.2:1b 怎麼讀</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">冒號前面是模型、後面是 tag</text>
+<text x="450" y="134" font-size="28" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">llama3.2:1b</text>
+<rect x="180" y="175" width="84" height="34" rx="8" fill="#0d1117" stroke="#2dd4bf99" stroke-width="1.5"/>
+<text x="222.0" y="199" font-size="13" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">llama3.2</text>
+<text x="284" y="200" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型名稱</text>
+<rect x="180" y="221" width="46" height="34" rx="8" fill="#0d1117" stroke="#58a6ff99" stroke-width="1.5"/>
+<text x="203.0" y="245" font-size="13" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">:1b</text>
+<text x="246" y="246" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">tag（標籤）：指定版本／參數量／量化</text>
+<text x="48" y="300" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">冒號後面是 tag：同一個模型可以有 llama3.2:1b、llama3.2:3b 等多種版本。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 41：Ollama 模型名稱的解剖——llama3.2 是模型名稱，:1b 是 tag（指定版本／參數量／量化）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 | 寫法 | 意思 |
 |---|---|
@@ -2043,32 +2073,68 @@ Landscapes:
 
 ### 24.1 第一問：你要「用現成 App」還是「自己寫程式」？
 
-```
-你要做什麼？
-├── 只想跟模型聊天 / 問自己的文件
-│     └── → 用現成 App（往下走 24.2）
-└── 要寫 Python、要接自己的系統、要自動化
-      └── → 用 Ollama 的 REST API（§14、§26、§27、§30）
-```
+<!-- FIG3 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" role="img" aria-label="第一問：你要做什麼？" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="378.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第一問：你要做什麼？</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">用現成 App，還是自己寫程式</text>
+<rect x="300" y="110" width="300" height="56" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="450.0" y="143.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你要做什麼？</text>
+<rect x="48" y="220" width="390" height="86" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="68" y="254" font-size="14" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只想跟模型聊天／問自己的文件</text>
+<text x="68" y="280" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 用現成 App（§24.2 往下走）</text>
+<rect x="462" y="220" width="390" height="86" rx="12" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="482" y="254" font-size="14" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要寫 Python、要接自己的系統、要自動化</text>
+<text x="482" y="280" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 用 Ollama 的 REST API（§14、§26、§27、§30）</text>
+<path d="M 450 166 L 450 196" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 243 196 L 657 196" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 243 196 L 243 218" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 657 196 L 657 218" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="48" y="350" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">這是最重要的分岔：課程前半教你用 App，lesson67 之後的 Lab 全部要你自己寫；兩者都要會。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 42：第一問——只想聊天／問文件就用現成 App；要寫 Python、接自己的系統、要自動化，就走 Ollama 的 REST API。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG3 -->
 
 **這是最重要的分岔**：課程前半都在教你**用 App**；
 但 `lesson67\**` 的 Lab 全部在教你**自己寫**。**兩者都要會。**
 
 ### 24.2 第二問：你的資料在哪裡？
 
-```
-你的文件在哪？
-├── 只有一兩份，想馬上問
-│     └── → LM Studio（對話附加檔案，§9）
-├── 一整批文件，想長期管理、分主題
-│     ├── 要團隊共用、要接雲端模型
-│     │     └── → AnythingLLM（工作區，§16–§18）
-│     └── 只有我自己、不想裝太多東西
-│           └── → GPT4All（My Documents，§21–§22）
-└── 沒有文件，只是要聊天
-      ├── 想要漂亮介面 → LM Studio
-      └── 想用指令、要快   → Ollama
-```
+<!-- FIG4 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-label="第二問：你的文件在哪裡？" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第二問：你的文件在哪裡？</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">文件量與管理需求決定用哪個 App</text>
+<rect x="48" y="106" width="904" height="326" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你的文件在哪？</text>
+<path d="M 100 184 L 100 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只有一兩份文件，想馬上問　→　LM Studio（對話附加檔案，§9）</text>
+<path d="M 100 220 L 114 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="226" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一整批文件，想長期管理、分主題</text>
+<path d="M 156 230 L 156 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 256 L 170 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="262" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要團隊共用、要接雲端模型　→　AnythingLLM（工作區，§16–§18）</text>
+<path d="M 156 266 L 156 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 292 L 170 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="298" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只有我自己、不想裝太多東西　→　GPT4All（My Documents，§21–§22）</text>
+<path d="M 100 328 L 114 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="334" font-size="13.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">沒有文件，只是要聊天</text>
+<path d="M 156 338 L 156 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 364 L 170 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="370" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">想要漂亮介面　→　LM Studio</text>
+<path d="M 156 374 L 156 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 400 L 170 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="406" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">想用指令、要快　→　Ollama</text>
+<text x="48" y="472" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">文件越少越隨便挑（LM Studio 附加檔案），文件越多越需要工作區管理（AnythingLLM／GPT4All）。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 43：第二問——一兩份文件用 LM Studio 附加檔案；一整批文件要長期管理就用 AnythingLLM（團隊／雲端）或 GPT4All（個人、輕量）；沒有文件只是聊天，漂亮介面選 LM Studio、要指令要快選 Ollama。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG4 -->
 
 ### 24.3 第三問：你的硬體
 
@@ -2357,10 +2423,35 @@ r = client.chat(model="smollm:latest", messages=[
 到目前為止，所有路徑都是「**Python → HTTP → Ollama → 模型**」（§14、§26）。
 LangChain 這一格示範的是**另一條路**：
 
-```
-路徑 A（§14、§26）  Python ──HTTP──▶ Ollama（獨立行程）──▶ GGUF
-路徑 B（課程）      Python ──直接載入 GGUF──▶ 同一個行程內推論
-```
+<!-- FIG5 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 320" role="img" aria-label="兩條跑本機模型的路" style="width:100%;height:auto;display:block">
+<defs><marker id="m30363d" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#30363d"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="318.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩條跑本機模型的路</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HTTP 給獨立行程，或同一個行程直接載入</text>
+<text x="48" y="157" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">路徑 A（§14、§26）</text>
+<rect x="260" y="130" width="69.0" height="44" rx="22" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="294.5" y="157" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Python</text>
+<path d="M 335.0 152 L 443.0 152" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<text x="389.0" y="142" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HTTP</text>
+<rect x="449.0" y="130" width="144.0" height="44" rx="22" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="521.0" y="157" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ollama（獨立行程）</text>
+<path d="M 599.0 152 L 707.0 152" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<rect x="713.0" y="130" width="56.0" height="44" rx="22" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="741.0" y="157" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GGUF</text>
+<text x="48" y="227" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">路徑 B（課程）</text>
+<rect x="260" y="200" width="69.0" height="44" rx="22" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="294.5" y="227" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Python</text>
+<path d="M 335.0 222 L 443.0 222" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<text x="389.0" y="212" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">直接載入 GGUF</text>
+<rect x="449.0" y="200" width="130.0" height="44" rx="22" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="514.0" y="227" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個行程內推論</text>
+<text x="48" y="290" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">路徑 A 是「兩個行程、用 HTTP 講話」；路徑 B 是「同一個行程、直接把 GGUF 載進來」。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 44：兩條路——路徑 A（Python 用 HTTP 呼叫獨立的 Ollama 行程，再讀 GGUF）；路徑 B（Python 在同一個行程內直接載入 GGUF 推論）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG5 -->
 
 | | 路徑 A（Ollama） | 路徑 B（`LlamaCpp`） |
 |---|---|---|
@@ -2924,18 +3015,29 @@ Settings.embed_model = HuggingFaceEmbedding(
     model_name="sentence-transformers/all-MiniLM-L6-v2")                # ← 本機
 ```
 
-```
-        ┌─────────────── 雲端 ───────────────┐
-        │  Groq：llama-3.1-8b-instant        │  ← 生成（要 API key、要網路）
-        └────────────────────────────────────┘
-                       ▲
-                  檢索到的段落
-                       │
-        ┌─────────────── 本機 ───────────────┐
-        │  all-MiniLM-L6-v2（嵌入）           │  ← 嵌入（不用 key、不外洩）
-        │  VectorStoreIndex（索引）           │
-        └────────────────────────────────────┘
-```
+<!-- FIG6 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-label="混合架構：雲端生成 ＋ 本機嵌入" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="478.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">混合架構：雲端生成 ＋ 本機嵌入</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">嵌入放本機、生成放雲端</text>
+<rect x="170" y="130" width="480" height="90" rx="12" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="190" y="162" font-size="14.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">雲端</text>
+<text x="190" y="192" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Groq：llama-3.1-8b-instant</text>
+<text x="670" y="192" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 生成（要 API key、要網路）</text>
+<rect x="170" y="300" width="480" height="110" rx="12" fill="#1c2230" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="190" y="332" font-size="14.5" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">本機</text>
+<text x="190" y="362" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">all-MiniLM-L6-v2（嵌入）</text>
+<text x="190" y="388" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">VectorStoreIndex（索引）</text>
+<text x="670" y="374" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 嵌入（不用 key、不外洩）</text>
+<path d="M 410 296 L 410 224" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="424" y="264" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">檢索到的段落</text>
+<text x="48" y="450" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">嵌入要跑很多次（每個段落一次）→ 放本機免費又保護隱私；生成只要跑一次 → 用雲端拿更好的品質。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 45：混合架構——本機跑 all-MiniLM-L6-v2 做嵌入、VectorStoreIndex 做索引，把檢索到的段落送上雲端（Groq llama-3.1-8b-instant）生成答案。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG6 -->
 
 **為什麼這樣混？** 因為**嵌入要跑很多次**（每個段落一次），
 放本機**免費又保護隱私**；而**生成只要跑一次**，用雲端可以拿到**更好的品質**。

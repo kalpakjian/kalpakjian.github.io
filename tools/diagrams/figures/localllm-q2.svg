@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-label="第二問：你的文件在哪裡？" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第二問：你的文件在哪裡？</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">文件量與管理需求決定用哪個 App</text>
+<rect x="48" y="106" width="904" height="326" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你的文件在哪？</text>
+<path d="M 100 184 L 100 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只有一兩份文件，想馬上問　→　LM Studio（對話附加檔案，§9）</text>
+<path d="M 100 220 L 114 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="226" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一整批文件，想長期管理、分主題</text>
+<path d="M 156 230 L 156 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 256 L 170 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="262" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要團隊共用、要接雲端模型　→　AnythingLLM（工作區，§16–§18）</text>
+<path d="M 156 266 L 156 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 292 L 170 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="298" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只有我自己、不想裝太多東西　→　GPT4All（My Documents，§21–§22）</text>
+<path d="M 100 328 L 114 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="334" font-size="13.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">沒有文件，只是要聊天</text>
+<path d="M 156 338 L 156 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 364 L 170 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="370" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">想要漂亮介面　→　LM Studio</text>
+<path d="M 156 374 L 156 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 400 L 170 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="406" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">想用指令、要快　→　Ollama</text>
+<text x="48" y="472" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">文件越少越隨便挑（LM Studio 附加檔案），文件越多越需要工作區管理（AnythingLLM／GPT4All）。</text>
+</svg>

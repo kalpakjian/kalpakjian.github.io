@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-label="混合架構：雲端生成 ＋ 本機嵌入" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="478.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">混合架構：雲端生成 ＋ 本機嵌入</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">嵌入放本機、生成放雲端</text>
+<rect x="170" y="130" width="480" height="90" rx="12" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="190" y="162" font-size="14.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">雲端</text>
+<text x="190" y="192" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Groq：llama-3.1-8b-instant</text>
+<text x="670" y="192" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 生成（要 API key、要網路）</text>
+<rect x="170" y="300" width="480" height="110" rx="12" fill="#1c2230" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="190" y="332" font-size="14.5" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">本機</text>
+<text x="190" y="362" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">all-MiniLM-L6-v2（嵌入）</text>
+<text x="190" y="388" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">VectorStoreIndex（索引）</text>
+<text x="670" y="374" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 嵌入（不用 key、不外洩）</text>
+<path d="M 410 296 L 410 224" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="424" y="264" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">檢索到的段落</text>
+<text x="48" y="450" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">嵌入要跑很多次（每個段落一次）→ 放本機免費又保護隱私；生成只要跑一次 → 用雲端拿更好的品質。</text>
+</svg>

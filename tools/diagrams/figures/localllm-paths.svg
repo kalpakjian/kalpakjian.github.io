@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 320" role="img" aria-label="兩條跑本機模型的路" style="width:100%;height:auto;display:block">
+<defs><marker id="m30363d" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#30363d"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="318.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩條跑本機模型的路</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HTTP 給獨立行程，或同一個行程直接載入</text>
+<text x="48" y="157" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">路徑 A（§14、§26）</text>
+<rect x="260" y="130" width="69.0" height="44" rx="22" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="294.5" y="157" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Python</text>
+<path d="M 335.0 152 L 443.0 152" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<text x="389.0" y="142" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HTTP</text>
+<rect x="449.0" y="130" width="144.0" height="44" rx="22" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="521.0" y="157" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ollama（獨立行程）</text>
+<path d="M 599.0 152 L 707.0 152" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<rect x="713.0" y="130" width="56.0" height="44" rx="22" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="741.0" y="157" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GGUF</text>
+<text x="48" y="227" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">路徑 B（課程）</text>
+<rect x="260" y="200" width="69.0" height="44" rx="22" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="294.5" y="227" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Python</text>
+<path d="M 335.0 222 L 443.0 222" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<text x="389.0" y="212" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">直接載入 GGUF</text>
+<rect x="449.0" y="200" width="130.0" height="44" rx="22" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="514.0" y="227" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個行程內推論</text>
+<text x="48" y="290" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">路徑 A 是「兩個行程、用 HTTP 講話」；路徑 B 是「同一個行程、直接把 GGUF 載進來」。</text>
+</svg>

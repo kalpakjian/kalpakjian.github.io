@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 330" role="img" aria-label="llama3.2:1b 怎麼讀" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="328.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">llama3.2:1b 怎麼讀</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">冒號前面是模型、後面是 tag</text>
+<text x="450" y="134" font-size="28" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">llama3.2:1b</text>
+<rect x="180" y="175" width="84" height="34" rx="8" fill="#0d1117" stroke="#2dd4bf99" stroke-width="1.5"/>
+<text x="222.0" y="199" font-size="13" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">llama3.2</text>
+<text x="284" y="200" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型名稱</text>
+<rect x="180" y="221" width="46" height="34" rx="8" fill="#0d1117" stroke="#58a6ff99" stroke-width="1.5"/>
+<text x="203.0" y="245" font-size="13" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">:1b</text>
+<text x="246" y="246" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">tag（標籤）：指定版本／參數量／量化</text>
+<text x="48" y="300" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">冒號後面是 tag：同一個模型可以有 llama3.2:1b、llama3.2:3b 等多種版本。</text>
+</svg>

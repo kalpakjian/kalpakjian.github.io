@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" role="img" aria-label="量化命名怎麼讀：Q4_K_M" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="398.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">量化命名怎麼讀：Q4_K_M</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一個字元一個意思</text>
+<text x="450" y="134" font-size="30" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">Q4_K_M</text>
+<rect x="180" y="169" width="46" height="34" rx="8" fill="#0d1117" stroke="#2dd4bf99" stroke-width="1.5"/>
+<text x="203.0" y="193" font-size="13" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">Q</text>
+<text x="246" y="194" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Quantized（量化）</text>
+<rect x="180" y="215" width="46" height="34" rx="8" fill="#0d1117" stroke="#58a6ff99" stroke-width="1.5"/>
+<text x="203.0" y="239" font-size="13" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">4</text>
+<text x="246" y="240" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每個權重約 4 bits</text>
+<rect x="180" y="261" width="46" height="34" rx="8" fill="#0d1117" stroke="#fbbf2499" stroke-width="1.5"/>
+<text x="203.0" y="285" font-size="13" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">K</text>
+<text x="246" y="286" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">k-quant（新一代量化方法，混合精度）</text>
+<rect x="180" y="307" width="46" height="34" rx="8" fill="#0d1117" stroke="#c084fc99" stroke-width="1.5"/>
+<text x="203.0" y="331" font-size="13" fill="#c084fc" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">M</text>
+<text x="246" y="332" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">變體：S(small) / M(medium) / L(large)</text>
+<text x="48" y="366" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">讀法：Q＝量化、4＝4 bits、K＝k-quant、M＝中size；數字越小越省記憶體、品質越低。</text>
+</svg>

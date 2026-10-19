@@ -1,0 +1,32 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/localllm-qkm.svg",
+    "caption": "圖 40：Q4_K_M 的解剖——Q（Quantized）、4（每個權重約 4 bits）、K（k-quant，混合精度）、M（中 size）。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 2,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/localllm-tag.svg",
+    "caption": "圖 41：Ollama 模型名稱的解剖——llama3.2 是模型名稱，:1b 是 tag（指定版本／參數量／量化）。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 3,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/localllm-q1.svg",
+    "caption": "圖 42：第一問——只想聊天／問文件就用現成 App；要寫 Python、接自己的系統、要自動化，就走 Ollama 的 REST API。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 4,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/localllm-q2.svg",
+    "caption": "圖 43：第二問——一兩份文件用 LM Studio 附加檔案；一整批文件要長期管理就用 AnythingLLM（團隊／雲端）或 GPT4All（個人、輕量）；沒有文件只是聊天，漂亮介面選 LM Studio、要指令要快選 Ollama。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 5,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/localllm-paths.svg",
+    "caption": "圖 44：兩條路——路徑 A（Python 用 HTTP 呼叫獨立的 Ollama 行程，再讀 GGUF）；路徑 B（Python 在同一個行程內直接載入 GGUF 推論）。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 6,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/localllm-rag.svg",
+    "caption": "圖 45：混合架構——本機跑 all-MiniLM-L6-v2 做嵌入、VectorStoreIndex 做索引，把檢索到的段落送上雲端（Groq llama-3.1-8b-instant）生成答案。｜手繪 SVG 圖表"
+  }
+]
