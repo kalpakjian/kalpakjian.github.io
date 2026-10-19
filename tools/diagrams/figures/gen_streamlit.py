@@ -9,7 +9,10 @@ import os
 import sys
 
 sys.stdout.reconfigure(encoding="utf-8")
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, _HERE)                     # same dir (figures/)
+sys.path.insert(0, os.path.dirname(_HERE))    # parent dir (svglib.py)
+sys.path.insert(0, os.path.dirname(_HERE))   # 上一層：svglib.py 在這裡
 from svglib import Svg, C, MUT, TXT, CARD2  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))

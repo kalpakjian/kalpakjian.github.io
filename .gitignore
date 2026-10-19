@@ -12,3 +12,6 @@ _work/
 # Python 快取（tools/ 底下的腳本會產生）
 __pycache__/
 *.pyc
+
+# 圖表工具的衍生檔（量測用 HTML，隨時可重新產生）
+tools/diagrams/**/_m_*.html
