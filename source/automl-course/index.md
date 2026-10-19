@@ -160,7 +160,33 @@ date: 2026-10-16 21:30:00
 
 ---
 
-## 8 · 用 TPOT 預測無人機訂單成交率（開源 AutoML 實作延伸）
+## 8 · 什麼是 TPOT？（單元四課堂版：Colab + TPOT 入門）
+
+![什麼是 TPOT？學習筆記](/img/covers/tpot-notes.png)
+
+- **定位**：單元四（開源 AutoML：Google Colab + TPOT）的**課堂版講義**，教材為 **18 頁／10 張投影片**（⚠️ 第 1 頁是內容首頁、不是封面；PDF 頁碼與投影片編號不同，附錄 C 有完整對照）
+- **核心命題**：TPOT 幫你決定「**怎麼做模型**」（演算法 ＋ 前處理 ＋ 超參數），但**不幫你決定「做什麼問題」**——定義問題、清理資料、選評估指標仍然是人的工作
+- **四段推進**：
+  - **觀念段**：機器學習複習（資料 ＋ 答案 → 規則）→ 調參的「排列組合地獄」→ TPOT 是什麼、在 AutoML 生態的定位
+  - **原理段**：基因演算法四步驟（初始族群 → 適者生存 → 交配與突變 → 不斷迭代）＋ 自動化改裝賽車的比喻
+  - **實作段**：Colab 五步（開筆記本 → `!pip install tpot` → 開程式碼區塊 → 五段程式 → 執行並看進度條）
+  - **總結段**：三個重點回顧，以及「準確率 0.97 代表什麼」的判讀
+- **特別之處**：**講義的程式碼是 TPOT 0.x 寫法，在 1.1.0 上有三行會直接壞掉**，筆記把每一則真實錯誤訊息都記錄下來：
+  - `verbosity=2` → `TypeError: TPOTEstimator.__init__() got an unexpected keyword argument 'verbosity'`（1.1.0 是 `verbose`）
+  - `tpot.score(...)` → `AttributeError: 'TPOTClassifier' object has no attribute 'score'`（改用 `accuracy_score` ＋ `predict`）
+  - `tpot.export(...)` → `AttributeError: module 'tpot' has no attribute 'export'`（改用 `joblib` 存 `fitted_pipeline_`）
+  - 外加一個教學文不會提的坑：本機（Windows）TPOT 預設的 dask 子行程會 `RuntimeError: Nanny failed to start.`，要加 `processes=False`；而 dask 用 multiprocessing spawn 時會**重新 import 主程式**，所以腳本必須包在 `if __name__ == "__main__":` 裡（本機實測整份腳本真的被跑了兩遍）
+- **本機實測**（Python 3.11.16 ／ **TPOT 1.1.0** ／ scikit-learn 1.9.1 ／ 鳶尾花，原始輸出全文收錄於附錄 D）：
+  - 講義設定（5 代 × 20 族群、約 100 個模型）**約 51 秒**跑完，測試集準確率 **0.9474**（36/38）
+  - 內部交叉驗證 **0.9822** vs 測試集 **0.9474** → 贏家詛咒；測試集只有 38 筆，錯 1 題就差 2.6%（講義的 0.973 與本機只差一題）
+  - 最佳管線：`Normalizer(l1) → SelectPercentile(≈87%) → FeatureUnion ×2 → LogisticRegression(elasticnet)`（**不是隨機森林**——TPOT 只在意分數）
+  - 資料切分的代價：有雜訊的資料上決策樹訓練 **1.0000**、測試只有 **0.8400**
+- 另有 **10 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
+- **👉 [看筆記](/tpot-notes/)** ｜ [互動測驗 60 題](/tpot-notes/mc-quiz.html)
+
+---
+
+## 9 · 用 TPOT 預測無人機訂單成交率（開源 AutoML 實作延伸）
 
 ![用 TPOT 預測無人機訂單成交率](/img/covers/redix-tpot-sales-prediction.png)
 
@@ -181,7 +207,7 @@ date: 2026-10-16 21:30:00
 
 ---
 
-## 9 · Azure ML AutoML 實作全紀錄（雲端平台實作延伸）
+## 10 · Azure ML AutoML 實作全紀錄（雲端平台實作延伸）
 
 ![Azure ML AutoML 實作全紀錄](/img/covers/azure-automl-bank-churn-walkthrough.png)
 
@@ -203,7 +229,7 @@ date: 2026-10-16 21:30:00
 
 ---
 
-## 10 · 手寫 Ridge vs TPOT：房價迴歸的對照（迴歸題實作延伸）
+## 11 · 手寫 Ridge vs TPOT：房價迴歸的對照（迴歸題實作延伸）
 
 ![手寫 Ridge vs TPOT AutoML：同一份房價資料](/img/covers/house-price-ridge-vs-tpot.png)
 
@@ -224,7 +250,7 @@ date: 2026-10-16 21:30:00
 
 ---
 
-## 11 · Orange AI 視覺化資料探勘（No-Code 工具實作）
+## 12 · Orange AI 視覺化資料探勘（No-Code 工具實作）
 
 ![Orange AI 視覺化資料探勘 學習筆記](/img/covers/orange-ai-notes.png)
 
@@ -253,7 +279,7 @@ date: 2026-10-16 21:30:00
 
 ---
 
-## 12 · RMSE 與迴歸模型評估（迴歸題的指標與 TPOT 實作）
+## 13 · RMSE 與迴歸模型評估（迴歸題的指標與 TPOT 實作）
 
 ![RMSE 與迴歸模型評估 學習筆記](/img/covers/rmse-notes.png)
 
@@ -296,6 +322,7 @@ date: 2026-10-16 21:30:00
 | **二** | 核心算法與模型評估 | Teachable Machine、TF Playground、Excel | ✅ 同上 |
 | **三** | Azure AutoML 雲端平台實戰 | Azure Machine Learning Studio | ✅ 同上 |
 | **四** | 開源 AutoML 工具與綜合應用 | Google Colab、Python、TPOT | ✅ 同上 |
+| **四（課堂版）** | 什麼是 TPOT？（AutoML 觀念 → 基因演算法 → Colab 五步實作 → 講義程式碼 vs 1.1.0 差異） | Google Colab、Python、TPOT 1.1.0、scikit-learn | ✅ [TPOT 入門筆記](/tpot-notes/) |
 | **延伸** | 泛化能力（Generalization Capability） | Python、scikit-learn、numpy | ✅ [泛化能力筆記](/generalization-notes/) |
 | **延伸** | 評估指標與 K-Means 聚類（單元二延伸） | Python、scikit-learn、numpy、StandardScaler | ✅ [評估指標與 K-Means 筆記](/automl-unit2-extra-notes/) |
 | **速查** | 機器學習模型速查（25 個模型卡） | Python、scikit-learn、LightGBM、XGBoost | ✅ [模型速查筆記](/ml-models-notes/) |
