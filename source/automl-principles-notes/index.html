@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AutoML 十課自學筆記｜原理為主體、本機實作、附錄分離</title>
-<meta name="description" content="AutoML 十課自學教材：原理優先、本機實作、雲端只講概念、無介面操作指南。附環境建置、問題記錄簿、版本對照。">
+<meta name="description" content="AutoML 十課自學筆記：原理優先、本機實作、雲端只講概念、無介面操作指南。附環境建置、問題記錄簿、版本對照。">
 <style>
 :root{--fg:#1f2328;--muted:#57606a;--line:#d0d7de;--accent:#0969da;--code:#f6f8fa}
 *{box-sizing:border-box}
@@ -58,7 +58,7 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 <nav>
 <div class="banner" style="margin-bottom:14px"><strong>AutoML 十課</strong><br>
 <span style="color:#57606a">原理層穩定／附錄層會過期</span></div>
-<h2><a href="#guide">使用說明（維護公約）</a></h2><div class="lv2"><a href="#guide-一-這份教材是什麼">一、這份教材是什麼</a></div><div class="lv2"><a href="#guide-二-教材的兩層架構-最重要的一件事">二、教材的兩層架構（最重要的一件事）</a></div><div class="lv2"><a href="#guide-三-維護公約-五條">三、維護公約（五條）</a></div><div class="lv3"><a href="#guide-公約-1-主體凍結">公約 1｜主體凍結</a></div><div class="lv3"><a href="#guide-公約-2-主體不寫這四樣東西">公約 2｜主體不寫這四樣東西</a></div><div class="lv3"><a href="#guide-公約-3-引用要標日期">公約 3｜引用要標日期</a></div><div class="lv3"><a href="#guide-公約-4-附錄-b-只增不刪">公約 4｜附錄 B 只增不刪</a></div><div class="lv3"><a href="#guide-公約-5-定期重跑自檢">公約 5｜定期重跑自檢</a></div><div class="lv2"><a href="#guide-四-檔案清單">四、檔案清單</a></div><div class="lv2"><a href="#guide-五-自學路徑建議">五、自學路徑建議</a></div><div class="lv2"><a href="#guide-六-名詞定義">六、名詞定義</a></div><div class="lv2"><a href="#guide-七-文件資訊">七、文件資訊</a></div><h2><a href="#outline">十課大綱</a></h2><div class="lv2"><a href="#outline-一-課程定位">一、課程定位</a></div><div class="lv2"><a href="#outline-二-十課總表">二、十課總表</a></div><div class="lv2"><a href="#outline-三-依賴關係">三、依賴關係</a></div><div class="lv2"><a href="#outline-四-每一課的固定結構">四、每一課的固定結構</a></div><div class="lv2"><a href="#outline-五-十課的原理要點">五、十課的原理要點</a></div><div class="lv3"><a href="#outline-l1-automl-的定位與原理總覽">L1｜AutoML 的定位與原理總覽</a></div><div class="lv3"><a href="#outline-l2-迴歸問題與誤差的本質">L2｜迴歸問題與誤差的本質</a></div><div class="lv3"><a href="#outline-l3-分類問題與評估的本質">L3｜分類問題與評估的本質</a></div><div class="lv3"><a href="#outline-l4-資料與任務轉化">L4｜資料與任務轉化</a></div><div class="lv3"><a href="#outline-l5-自動搜尋的原理">L5｜自動搜尋的原理</a></div><div class="lv3"><a href="#outline-l6-遺傳規劃與-tpot-的原理">L6｜遺傳規劃與 TPOT 的原理</a></div><div class="lv3"><a href="#outline-l7-集成與多引擎比較的原理">L7｜集成與多引擎比較的原理</a></div><div class="lv3"><a href="#outline-l8-雲端-automl-的原理與取捨">L8｜雲端 AutoML 的原理與取捨</a></div><div class="lv3"><a href="#outline-l9-可解釋性-漂移與負責任-ai-的原理">L9｜可解釋性、漂移與負責任 AI 的原理</a></div><div class="lv3"><a href="#outline-l10-從實驗到生產">L10｜從實驗到生產</a></div><div class="lv2"><a href="#outline-六-自我檢核方式">六、自我檢核方式</a></div><div class="lv2"><a href="#outline-七-與舊教材的對應">七、與舊教材的對應</a></div><div class="lv2"><a href="#outline-八-文件資訊">八、文件資訊</a></div><h2><a href="#L01">第 1 課｜AutoML 的定位與原理</a></h2><div class="lv2"><a href="#L01-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L01-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L01-三-原理-i-automl-自動化了什麼-45-分">三、原理 I｜AutoML 自動化了什麼（45 分）</a></div><div class="lv3"><a href="#L01-3-1-傳統機器學習流程的六個步驟">3.1 傳統機器學習流程的六個步驟</a></div><div class="lv3"><a href="#L01-3-2-三個自動化層次-本課核心">3.2 三個自動化層次（本課核心）</a></div><div class="lv3"><a href="#L01-3-3-為什麼這三件事可以自動化-兩個前提">3.3 為什麼這三件事可以自動化（兩個前提）</a></div><div class="lv3"><a href="#L01-3-4-一個常見誤解">3.4 一個常見誤解</a></div><div class="lv2"><a href="#L01-四-原理-ii-三個能力邊界-15-分">四、原理 II｜三個能力邊界（15 分）</a></div><div class="lv2"><a href="#L01-五-最小示範-40-分">五、最小示範（40 分）</a></div><div class="lv3"><a href="#L01-5-1-做法-三步-不要多做">5.1 做法（三步，不要多做）</a></div><div class="lv3"><a href="#L01-5-2-三個不要">5.2 三個不要</a></div><div class="lv3"><a href="#L01-5-3-看到結果後-自問三題">5.3 看到結果後，自問三題</a></div><div class="lv2"><a href="#L01-六-原理-iii-工具地景-用兩個問題分四類-30-分">六、原理 III｜工具地景：用兩個問題分四類（30 分）</a></div><div class="lv3"><a href="#L01-6-1-四類工具">6.1 四類工具</a></div><div class="lv3"><a href="#L01-6-2-這個分類的用途">6.2 這個分類的用途</a></div><div class="lv3"><a href="#L01-6-3-後續課程怎麼對應">6.3 後續課程怎麼對應</a></div><div class="lv2"><a href="#L01-七-原理-iv-什麼時候不該用-automl-10-分">七、原理 IV｜什麼時候不該用 AutoML（10 分）</a></div><div class="lv2"><a href="#L01-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L01-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L01-九-練習">九、練習</a></div><div class="lv2"><a href="#L01-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L01-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L01-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L02">第 2 課｜迴歸問題與誤差的本質</a></h2><div class="lv2"><a href="#L02-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L02-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L02-三-原理-i-殘差是唯一原料-45-分">三、原理 I｜殘差是唯一原料（45 分）</a></div><div class="lv3"><a href="#L02-3-1-迴歸問題的定義">3.1 迴歸問題的定義</a></div><div class="lv3"><a href="#L02-3-2-誤差-殘差-y-ŷ">3.2 誤差 = 殘差 = y − ŷ</a></div><div class="lv3"><a href="#L02-3-3-三種加工方式-三個指標家族">3.3 三種加工方式 → 三個指標家族</a></div><div class="lv3"><a href="#L02-3-4-為什麼要開根號">3.4 為什麼要開根號？</a></div><div class="lv3"><a href="#L02-3-5-單位與尺度的兩個推論">3.5 單位與尺度的兩個推論</a></div><div class="lv2"><a href="#L02-四-原理-ii-平方的凸性-極端值的放大-15-分">四、原理 II｜平方的凸性：極端值的放大（15 分）</a></div><div class="lv3"><a href="#L02-4-1-數學直覺">4.1 數學直覺</a></div><div class="lv3"><a href="#L02-4-2-rmse-mae-恆成立">4.2 RMSE ≥ MAE 恆成立</a></div><div class="lv3"><a href="#L02-4-3-實務含義">4.3 實務含義</a></div><div class="lv2"><a href="#L02-五-原理-iii-r²-與-相對於什麼基準-35-分">五、原理 III｜R² 與「相對於什麼基準」（35 分）</a></div><div class="lv3"><a href="#L02-5-1-r²-的定義">5.1 R² 的定義</a></div><div class="lv3"><a href="#L02-5-2-三個直接推論">5.2 三個直接推論</a></div><div class="lv3"><a href="#L02-5-3-r²-與-rmse-的代數關係">5.3 R² 與 RMSE 的代數關係</a></div><div class="lv3"><a href="#L02-5-4-為何要兩個都看">5.4 為何要兩個都看</a></div><div class="lv2"><a href="#L02-六-最小示範-35-分">六、最小示範（35 分）</a></div><div class="lv3"><a href="#L02-6-1-示範-①-手算驗證-所有指標都只是殘差的函數">6.1 示範 ① 手算驗證：所有指標都只是殘差的函數</a></div><div class="lv3"><a href="#L02-6-2-示範-②-加入一個離群值-平方如何放大極端值">6.2 示範 ② 加入一個離群值：平方如何放大極端值</a></div><div class="lv3"><a href="#L02-6-3-示範-③-rmse-mae-比值-誤差離散度診斷器">6.3 示範 ③ RMSE / MAE 比值：誤差離散度診斷器</a></div><div class="lv3"><a href="#L02-6-4-示範-④-mape-的三個數學地雷">6.4 示範 ④ MAPE 的三個數學地雷</a></div><div class="lv3"><a href="#L02-6-5-示範小結-自己抄一次">6.5 示範小結（自己抄一次）</a></div><div class="lv2"><a href="#L02-七-原理-iv-指標是選擇-不是事實-20-分">七、原理 IV｜指標是選擇，不是事實（20 分）</a></div><div class="lv3"><a href="#L02-7-1-決策表-本課核心產出">7.1 決策表（本課核心產出）</a></div><div class="lv3"><a href="#L02-7-2-四個常見誤解-要主動破除">7.2 四個常見誤解（要主動破除）</a></div><div class="lv3"><a href="#L02-7-3-為何不要只看-r²-給主管的一頁">7.3 為何不要只看 R²（給主管的一頁）</a></div><div class="lv2"><a href="#L02-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L02-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L02-九-練習">九、練習</a></div><div class="lv2"><a href="#L02-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L02-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L02-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L03">第 3 課｜分類問題與評估的本質</a></h2><div class="lv2"><a href="#L03-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L03-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L03-三-原理-i-混淆矩陣-四格資訊結構-40-分">三、原理 I｜混淆矩陣：四格資訊結構（40 分）</a></div><div class="lv3"><a href="#L03-3-1-分類問題的定義">3.1 分類問題的定義</a></div><div class="lv3"><a href="#L03-3-2-四格的業務含義">3.2 四格的業務含義</a></div><div class="lv3"><a href="#L03-3-3-所有分類指標都是這四格的函數">3.3 所有分類指標都是這四格的函數</a></div><div class="lv2"><a href="#L03-四-原理-ii-accuracy-為什麼會騙人-20-分">四、原理 II｜Accuracy 為什麼會騙人（20 分）</a></div><div class="lv3"><a href="#L03-4-1-數學理由">4.1 數學理由</a></div><div class="lv3"><a href="#L03-4-2-這個陷阱的實務後果">4.2 這個陷阱的實務後果</a></div><div class="lv3"><a href="#L03-4-3-一個可以直接用的檢查">4.3 一個可以直接用的檢查</a></div><div class="lv2"><a href="#L03-五-原理-iii-門檻-vs-auc-35-分">五、原理 III｜門檻 vs AUC（35 分）</a></div><div class="lv3"><a href="#L03-5-1-門檻是-決策變數-不是模型屬性">5.1 門檻是「決策變數」，不是模型屬性</a></div><div class="lv3"><a href="#L03-5-2-門檻該設在哪-取決於成本">5.2 門檻該設在哪？取決於成本</a></div><div class="lv3"><a href="#L03-5-3-auc-衡量的是-排序能力">5.3 AUC 衡量的是「排序能力」</a></div><div class="lv3"><a href="#L03-5-4-三個指標各說一句話">5.4 三個指標各說一句話</a></div><div class="lv2"><a href="#L03-六-最小示範-40-分">六、最小示範（40 分）</a></div><div class="lv3"><a href="#L03-6-1-示範設定">6.1 示範設定</a></div><div class="lv3"><a href="#L03-6-2-實測輸出-①-混淆矩陣與-accuracy-的謊言">6.2 實測輸出 ①：混淆矩陣與「Accuracy 的謊言」</a></div><div class="lv3"><a href="#L03-6-3-實測輸出-②-移動門檻-指標反向移動">6.3 實測輸出 ②：移動門檻，指標反向移動</a></div><div class="lv3"><a href="#L03-6-4-實測輸出-③-auc-完全不動">6.4 實測輸出 ③：AUC 完全不動</a></div><div class="lv3"><a href="#L03-6-5-自問三題">6.5 自問三題</a></div><div class="lv2"><a href="#L03-七-原理-iv-不平衡的根源與四種對策-15-分">七、原理 IV｜不平衡的根源與四種對策（15 分）</a></div><div class="lv3"><a href="#L03-7-1-根源-不是模型-是資料分佈">7.1 根源：不是模型，是資料分佈</a></div><div class="lv3"><a href="#L03-7-2-四種對策與適用順序">7.2 四種對策與適用順序</a></div><div class="lv3"><a href="#L03-7-3-常見誤解">7.3 常見誤解</a></div><div class="lv2"><a href="#L03-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L03-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L03-九-練習">九、練習</a></div><div class="lv2"><a href="#L03-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L03-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L03-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L04">第 4 課｜資料與任務轉化</a></h2><div class="lv2"><a href="#L04-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L04-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L04-三-原理-i-切分方式-你對未來的假設-40-分">三、原理 I｜切分方式＝你對未來的假設（40 分）</a></div><div class="lv3"><a href="#L04-3-1-模型只能學到-訓練資料的分佈">3.1 模型只能學到「訓練資料的分佈」</a></div><div class="lv3"><a href="#L04-3-2-兩種切分-兩種假設">3.2 兩種切分，兩種假設</a></div><div class="lv3"><a href="#L04-3-3-隨機切分為什麼會-作弊">3.3 隨機切分為什麼會「作弊」</a></div><div class="lv3"><a href="#L04-3-4-判斷流程">3.4 判斷流程</a></div><div class="lv3"><a href="#L04-3-5-一個常被忽略的細節">3.5 一個常被忽略的細節</a></div><div class="lv2"><a href="#L04-四-原理-ii-三種洩漏與因果順序-25-分">四、原理 II｜三種洩漏與因果順序（25 分）</a></div><div class="lv3"><a href="#L04-4-1-洩漏的定義-用因果-不用技巧">4.1 洩漏的定義（用因果，不用技巧）</a></div><div class="lv3"><a href="#L04-4-2-三種洩漏">4.2 三種洩漏</a></div><div class="lv3"><a href="#L04-4-3-為什麼前處理洩漏最難察覺">4.3 為什麼前處理洩漏最難察覺</a></div><div class="lv3"><a href="#L04-4-4-為什麼一定要包進管線-真正理由">4.4 為什麼一定要包進管線（真正理由）</a></div><div class="lv2"><a href="#L04-五-最小示範-40-分">五、最小示範（40 分）</a></div><div class="lv3"><a href="#L04-5-1-實測輸出-①-隨機切分-vs-時間切分">5.1 實測輸出 ①：隨機切分 vs 時間切分</a></div><div class="lv3"><a href="#L04-5-2-實測輸出-②-目標洩漏">5.2 實測輸出 ②：目標洩漏</a></div><div class="lv3"><a href="#L04-5-3-實測輸出-③-前處理洩漏-本課最有說服力的一段">5.3 實測輸出 ③：前處理洩漏（本課最有說服力的一段）</a></div><div class="lv3"><a href="#L04-5-4-三個示範的共同結論">5.4 三個示範的共同結論</a></div><div class="lv2"><a href="#L04-六-原理-iii-特徵工程的原理-30-分">六、原理 III｜特徵工程的原理（30 分）</a></div><div class="lv3"><a href="#L04-6-1-三種時間相關特徵">6.1 三種時間相關特徵</a></div><div class="lv3"><a href="#L04-6-2-判斷準則-時間軸上畫一條線">6.2 判斷準則：時間軸上畫一條線</a></div><div class="lv3"><a href="#L04-6-3-常見的-假特徵">6.3 常見的「假特徵」</a></div><div class="lv2"><a href="#L04-七-原理-iv-類別不平衡的根源與對策-15-分">七、原理 IV｜類別不平衡的根源與對策（15 分）</a></div><div class="lv3"><a href="#L04-7-1-不平衡的兩種來源">7.1 不平衡的兩種來源</a></div><div class="lv3"><a href="#L04-7-2-對策順序-與第-3-課一致">7.2 對策順序（與第 3 課一致）</a></div><div class="lv3"><a href="#L04-7-3-重採樣的三個陷阱">7.3 重採樣的三個陷阱</a></div><div class="lv2"><a href="#L04-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L04-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L04-九-練習">九、練習</a></div><div class="lv2"><a href="#L04-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L04-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L04-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L05">第 5 課｜自動搜尋的原理</a></h2><div class="lv2"><a href="#L05-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L05-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L05-三-原理-i-組合爆炸與搜尋成本-35-分">三、原理 I｜組合爆炸與搜尋成本（35 分）</a></div><div class="lv3"><a href="#L05-3-1-成本公式-本課最重要的一行">3.1 成本公式（本課最重要的一行）</a></div><div class="lv3"><a href="#L05-3-2-候選數是-相乘-的">3.2 候選數是「相乘」的</a></div><div class="lv3"><a href="#L05-3-3-三個乘數的實際影響">3.3 三個乘數的實際影響</a></div><div class="lv2"><a href="#L05-四-原理-ii-四種搜尋策略的取捨-20-分">四、原理 II｜四種搜尋策略的取捨（20 分）</a></div><div class="lv3"><a href="#L05-4-1-為什麼隨機搜尋在高維不輸窮舉">4.1 為什麼隨機搜尋在高維不輸窮舉</a></div><div class="lv2"><a href="#L05-五-原理-iii-交叉驗證-回報遞減-cv-選擇偏誤-30-分">五、原理 III｜交叉驗證、回報遞減、CV 選擇偏誤（30 分）</a></div><div class="lv3"><a href="#L05-5-1-交叉驗證的統計意義">5.1 交叉驗證的統計意義</a></div><div class="lv3"><a href="#L05-5-2-回報遞減">5.2 回報遞減</a></div><div class="lv3"><a href="#L05-5-3-cv-選擇偏誤-本課最反直覺的一段">5.3 CV 選擇偏誤（本課最反直覺的一段）</a></div><div class="lv3"><a href="#L05-5-4-對策-三條-全部與搜尋無關">5.4 對策（三條，全部與搜尋無關）</a></div><div class="lv2"><a href="#L05-六-最小示範-50-分">六、最小示範（50 分）</a></div><div class="lv3"><a href="#L05-6-1-示範-①-組合爆炸-35-分段的驗證">6.1 示範 ①：組合爆炸（35 分段的驗證）</a></div><div class="lv3"><a href="#L05-6-2-示範-②-回報遞減-實測">6.2 示範 ②：回報遞減（實測）</a></div><div class="lv3"><a href="#L05-6-3-示範-③-cv-選擇偏誤-實測-本課最有價值的一段">6.3 示範 ③：CV 選擇偏誤（實測，本課最有價值的一段）</a></div><div class="lv3"><a href="#L05-6-4-示範-④-窮舉-vs-隨機-實測">6.4 示範 ④：窮舉 vs 隨機（實測）</a></div><div class="lv2"><a href="#L05-七-原理-iv-主要指標決定搜尋方向-15-分">七、原理 IV｜主要指標決定搜尋方向（15 分）</a></div><div class="lv3"><a href="#L05-7-1-搜尋目標-你設的主要指標">7.1 搜尋目標 = 你設的主要指標</a></div><div class="lv3"><a href="#L05-7-2-預設值陷阱">7.2 預設值陷阱</a></div><div class="lv3"><a href="#L05-7-3-多目標的可能性">7.3 多目標的可能性</a></div><div class="lv2"><a href="#L05-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L05-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L05-九-練習">九、練習</a></div><div class="lv2"><a href="#L05-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L05-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L05-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L06">第 6 課｜遺傳規劃與 TPOT 的原理</a></h2><div class="lv2"><a href="#L06-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L06-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L06-三-原理-i-搜尋的對象-從-參數向量-到-管線樹-45-分">三、原理 I｜搜尋的對象：從「參數向量」到「管線樹」（45 分）</a></div><div class="lv3"><a href="#L06-3-1-傳統超參數搜尋的假設">3.1 傳統超參數搜尋的假設</a></div><div class="lv3"><a href="#L06-3-2-tpot-的做法-把-結構-也變成搜尋變數">3.2 TPOT 的做法：把「結構」也變成搜尋變數</a></div><div class="lv3"><a href="#L06-3-3-為何-結構空間-遠大於-參數空間">3.3 為何「結構空間」遠大於「參數空間」</a></div><div class="lv3"><a href="#L06-3-4-白盒-vs-黑盒-本課的價值主張">3.4 白盒 vs 黑盒（本課的價值主張）</a></div><div class="lv3"><a href="#L06-3-5-什麼是-搜尋空間-檔次">3.5 什麼是「搜尋空間」檔次</a></div><div class="lv2"><a href="#L06-四-原理-ii-演化的四個機制-15-分">四、原理 II｜演化的四個機制（15 分）</a></div><div class="lv3"><a href="#L06-4-1-四個機制">4.1 四個機制</a></div><div class="lv3"><a href="#L06-4-2-為何演化-有效-這才是重點">4.2 為何演化「有效」（這才是重點）</a></div><div class="lv3"><a href="#L06-4-3-選擇壓力-太強與太弱都不行">4.3 選擇壓力：太強與太弱都不行</a></div><div class="lv3"><a href="#L06-4-4-多目標優選-進階但重要">4.4 多目標優選（進階但重要）</a></div><div class="lv2"><a href="#L06-五-原理-iii-預算與收斂-30-分">五、原理 III｜預算與收斂（30 分）</a></div><div class="lv3"><a href="#L06-5-1-預算三要素">5.1 預算三要素</a></div><div class="lv3"><a href="#L06-5-2-回報遞減曲線">5.2 回報遞減曲線</a></div><div class="lv3"><a href="#L06-5-3-cv-選擇偏誤-最容易被忽略的陷阱">5.3 CV 選擇偏誤（最容易被忽略的陷阱）</a></div><div class="lv3"><a href="#L06-5-4-兩種停止條件的取捨">5.4 兩種停止條件的取捨</a></div><div class="lv2"><a href="#L06-六-最小示範-35-分">六、最小示範（35 分）</a></div><div class="lv3"><a href="#L06-6-1-示範設計">6.1 示範設計</a></div><div class="lv3"><a href="#L06-6-2-實測輸出-逐代最佳分數-這是本課的核心證據">6.2 實測輸出：逐代最佳分數（這是本課的核心證據）</a></div><div class="lv3"><a href="#L06-6-3-從實測輸出可以證明的四件事">6.3 從實測輸出可以證明的四件事</a></div><div class="lv3"><a href="#L06-6-4-實測輸出-兩組找到的-結構-證明搜尋的是樹-不是參數">6.4 實測輸出：兩組找到的「結構」（證明搜尋的是樹，不是參數）</a></div><div class="lv3"><a href="#L06-6-5-自問練習-建議先自己想-再看括號裡的答案">6.5 自問練習（建議先自己想，再看括號裡的答案）</a></div><div class="lv2"><a href="#L06-七-原理-iv-兩條哲學路線的取捨-25-分">七、原理 IV｜兩條哲學路線的取捨（25 分）</a></div><div class="lv3"><a href="#L06-7-1-兩條路線">7.1 兩條路線</a></div><div class="lv3"><a href="#L06-7-2-選型判準-原理層">7.2 選型判準（原理層）</a></div><div class="lv3"><a href="#L06-7-3-白盒管線的交付價值-三個層次">7.3 白盒管線的交付價值（三個層次）</a></div><div class="lv3"><a href="#L06-7-4-常見誤解">7.4 常見誤解</a></div><div class="lv2"><a href="#L06-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L06-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L06-九-練習">九、練習</a></div><div class="lv2"><a href="#L06-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L06-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L06-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L07">第 7 課｜集成與多引擎比較的原理</a></h2><div class="lv2"><a href="#L07-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L07-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L07-三-原理-i-偏差與變異數-40-分">三、原理 I｜偏差與變異數（40 分）</a></div><div class="lv3"><a href="#L07-3-1-誤差的兩個來源">3.1 誤差的兩個來源</a></div><div class="lv3"><a href="#L07-3-2-集成的兩個攻擊點">3.2 集成的兩個攻擊點</a></div><div class="lv3"><a href="#L07-3-3-為什麼-平均-能降低變異數">3.3 為什麼「平均」能降低變異數</a></div><div class="lv2"><a href="#L07-四-原理-ii-三種手法的分工-20-分">四、原理 II｜三種手法的分工（20 分）</a></div><div class="lv2"><a href="#L07-五-最小示範-45-分">五、最小示範（45 分）</a></div><div class="lv3"><a href="#L07-5-1-實測輸出-①-同一個模型-換-10-個隨機種子">5.1 實測輸出 ①：同一個模型，換 10 個隨機種子</a></div><div class="lv3"><a href="#L07-5-2-一個不能忽略的對照-ridge">5.2 一個不能忽略的對照：Ridge</a></div><div class="lv3"><a href="#L07-5-3-實測輸出-②-排行榜的排名會跳">5.3 實測輸出 ②：排行榜的排名會跳</a></div><div class="lv2"><a href="#L07-六-原理-iii-兩條哲學路線與排行榜-30-分">六、原理 III｜兩條哲學路線與排行榜（30 分）</a></div><div class="lv3"><a href="#L07-6-1-兩條路線">6.1 兩條路線</a></div><div class="lv3"><a href="#L07-6-2-選型判準">6.2 選型判準</a></div><div class="lv3"><a href="#L07-6-3-排行榜的正確用法">6.3 排行榜的正確用法</a></div><div class="lv2"><a href="#L07-七-原理-iv-沒有免費午餐-四角取捨-15-分">七、原理 IV｜沒有免費午餐：四角取捨（15 分）</a></div><div class="lv2"><a href="#L07-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L07-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L07-九-練習">九、練習</a></div><div class="lv2"><a href="#L07-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L07-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L07-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L08">第 8 課｜雲端 AutoML 的原理與取捨</a></h2><div class="lv2"><a href="#L08-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L08-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L08-三-原理-i-雲端賣什麼-40-分">三、原理 I｜雲端賣什麼（40 分）</a></div><div class="lv3"><a href="#L08-3-1-三個真實的產品">3.1 三個真實的產品</a></div><div class="lv3"><a href="#L08-3-2-為什麼企業願意付錢">3.2 為什麼企業願意付錢</a></div><div class="lv3"><a href="#L08-3-3-反過來-什麼情況雲端不划算">3.3 反過來：什麼情況雲端不划算</a></div><div class="lv2"><a href="#L08-四-原理-ii-五大概念-本機對照-25-分">四、原理 II｜五大概念 ↔ 本機對照（25 分）</a></div><div class="lv3"><a href="#L08-4-1-這張對照表的用途">4.1 這張對照表的用途</a></div><div class="lv3"><a href="#L08-4-2-作業-job-的參數在原理上對應什麼">4.2 作業（Job）的參數在原理上對應什麼</a></div><div class="lv2"><a href="#L08-五-原理-iii-成本結構-短時訓練-vs-常駐端點-30-分">五、原理 III｜成本結構：短時訓練 vs 常駐端點（30 分）</a></div><div class="lv3"><a href="#L08-5-1-兩種完全不同的計費模式">5.1 兩種完全不同的計費模式</a></div><div class="lv3"><a href="#L08-5-2-用一組真實的課程數字理解">5.2 用一組真實的課程數字理解</a></div><div class="lv3"><a href="#L08-5-3-從這組數字讀出四件事">5.3 從這組數字讀出四件事</a></div><div class="lv3"><a href="#L08-5-4-成本決策的兩個原則">5.4 成本決策的兩個原則</a></div><div class="lv2"><a href="#L08-六-案例解讀-35-分-取代實作">六、案例解讀（35 分，取代實作）</a></div><div class="lv3"><a href="#L08-6-1-案例背景-課程範例參考執行">6.1 案例背景（課程範例參考執行）</a></div><div class="lv3"><a href="#L08-6-2-用前七課的原理逐項解讀">6.2 用前七課的原理逐項解讀</a></div><div class="lv3"><a href="#L08-6-3-自問三題">6.3 自問三題</a></div><div class="lv2"><a href="#L08-七-原理-iv-資料主權-合規與上雲五判準-20-分">七、原理 IV｜資料主權、合規與上雲五判準（20 分）</a></div><div class="lv3"><a href="#L08-7-1-上雲的五個判準">7.1 上雲的五個判準</a></div><div class="lv3"><a href="#L08-7-2-資料主權的三個層次">7.2 資料主權的三個層次</a></div><div class="lv3"><a href="#L08-7-3-混合模式-實務最常見">7.3 混合模式（實務最常見）</a></div><div class="lv2"><a href="#L08-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L08-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L08-九-練習">九、練習</a></div><div class="lv2"><a href="#L08-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L08-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L08-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L09">第 9 課｜可解釋性、漂移與負責任 AI</a></h2><div class="lv2"><a href="#L09-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L09-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L09-三-原理-i-解釋-擾動-觀察-35-分">三、原理 I｜解釋＝擾動＋觀察（35 分）</a></div><div class="lv3"><a href="#L09-3-1-所有解釋方法的共同骨架">3.1 所有解釋方法的共同骨架</a></div><div class="lv3"><a href="#L09-3-2-一個關鍵區別">3.2 一個關鍵區別</a></div><div class="lv3"><a href="#L09-3-3-為什麼需要解釋">3.3 為什麼需要解釋</a></div><div class="lv2"><a href="#L09-四-原理-ii-重要性沒有唯一答案-20-分">四、原理 II｜重要性沒有唯一答案（20 分）</a></div><div class="lv3"><a href="#L09-4-1-兩種常見定義-測不同的東西">4.1 兩種常見定義，測不同的東西</a></div><div class="lv3"><a href="#L09-4-2-共線性會-分攤-重要性">4.2 共線性會「分攤」重要性</a></div><div class="lv3"><a href="#L09-4-3-相關不等於因果-本課最重要的警告">4.3 相關不等於因果（本課最重要的警告）</a></div><div class="lv2"><a href="#L09-五-原理-iii-漂移-分佈的統計檢定-35-分">五、原理 III｜漂移＝分佈的統計檢定（35 分）</a></div><div class="lv3"><a href="#L09-5-1-兩種漂移">5.1 兩種漂移</a></div><div class="lv3"><a href="#L09-5-2-psi-把漂移變成一個數字">5.2 PSI：把漂移變成一個數字</a></div><div class="lv3"><a href="#L09-5-3-psi-的三個實務限制">5.3 PSI 的三個實務限制</a></div><div class="lv2"><a href="#L09-六-最小示範-45-分">六、最小示範（45 分）</a></div><div class="lv3"><a href="#L09-6-1-實測輸出-①-擾動-觀察">6.1 實測輸出 ①：擾動＋觀察</a></div><div class="lv3"><a href="#L09-6-2-實測輸出-②-同一棵樹-兩種重要性-兩個排名">6.2 實測輸出 ②：同一棵樹，兩種重要性，兩個排名</a></div><div class="lv3"><a href="#L09-6-3-實測輸出-③-psi-漂移偵測">6.3 實測輸出 ③：PSI 漂移偵測</a></div><div class="lv3"><a href="#L09-6-4-一個必須記錄的實測坑-樣本數">6.4 一個必須記錄的實測坑（樣本數）</a></div><div class="lv2"><a href="#L09-七-原理-iv-公平性的定義衝突與負責任-ai-15-分">七、原理 IV｜公平性的定義衝突與負責任 AI（15 分）</a></div><div class="lv3"><a href="#L09-7-1-公平性沒有單一定義-這是數學結論-不是立場問題">7.1 公平性沒有單一定義（這是數學結論，不是立場問題）</a></div><div class="lv3"><a href="#L09-7-2-負責任-ai-六原則的實務含義">7.2 負責任 AI 六原則的實務含義</a></div><div class="lv3"><a href="#L09-7-3-三個可落地的檢查">7.3 三個可落地的檢查</a></div><div class="lv2"><a href="#L09-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L09-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L09-九-練習">九、練習</a></div><div class="lv2"><a href="#L09-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L09-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L09-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L10">第 10 課｜從實驗到生產的原理</a></h2><div class="lv2"><a href="#L10-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L10-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L10-三-原理-i-三道鴻溝-35-分">三、原理 I｜三道鴻溝（35 分）</a></div><div class="lv3"><a href="#L10-3-1-鴻溝一-環境可重現性">3.1 鴻溝一：環境可重現性</a></div><div class="lv3"><a href="#L10-3-2-鴻溝二-資料分佈改變">3.2 鴻溝二：資料分佈改變</a></div><div class="lv3"><a href="#L10-3-3-鴻溝三-監控缺失">3.3 鴻溝三：監控缺失</a></div><div class="lv3"><a href="#L10-3-4-三道鴻溝的共同點">3.4 三道鴻溝的共同點</a></div><div class="lv2"><a href="#L10-四-原理-ii-可重現性三要素-20-分">四、原理 II｜可重現性三要素（20 分）</a></div><div class="lv3"><a href="#L10-4-1-三要素">4.1 三要素</a></div><div class="lv3"><a href="#L10-4-2-可重現性的三個實作習慣">4.2 可重現性的三個實作習慣</a></div><div class="lv3"><a href="#L10-4-3-一個常被忽略的細節">4.3 一個常被忽略的細節</a></div><div class="lv2"><a href="#L10-五-原理-iii-模型是會衰減的資產-35-分">五、原理 III｜模型是會衰減的資產（35 分）</a></div><div class="lv3"><a href="#L10-5-1-為什麼模型會衰減">5.1 為什麼模型會衰減</a></div><div class="lv3"><a href="#L10-5-2-監控什麼-三層">5.2 監控什麼（三層）</a></div><div class="lv3"><a href="#L10-5-3-重訓的四個觸發條件">5.3 重訓的四個觸發條件</a></div><div class="lv3"><a href="#L10-5-4-重訓不是萬靈丹">5.4 重訓不是萬靈丹</a></div><div class="lv2"><a href="#L10-六-綜合演練-50-分">六、綜合演練（50 分）</a></div><div class="lv3"><a href="#L10-6-1-演練步驟-照順序做-不要跳">6.1 演練步驟（照順序做，不要跳）</a></div><div class="lv3"><a href="#L10-6-2-一頁式報告模板">6.2 一頁式報告模板</a></div><div class="lv3"><a href="#L10-6-3-交付檢查清單-可重現性">6.3 交付檢查清單（可重現性）</a></div><div class="lv2"><a href="#L10-七-原理-iv-風險與成本評估框架-10-分">七、原理 IV｜風險與成本評估框架（10 分）</a></div><div class="lv3"><a href="#L10-7-1-四格框架">7.1 四格框架</a></div><div class="lv3"><a href="#L10-7-2-ml-專案常見的六個風險">7.2 ML 專案常見的六個風險</a></div><div class="lv3"><a href="#L10-7-3-成本的三個面向-不只算錢">7.3 成本的三個面向（不只算錢）</a></div><div class="lv2"><a href="#L10-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L10-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L10-九-練習-本課的練習就是綜合演練">九、練習（本課的練習就是綜合演練）</a></div><div class="lv2"><a href="#L10-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L10-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L10-十二-文件資訊">十二、文件資訊</a></div><div class="lv2"><a href="#L10-附-十課總回顧">附：十課總回顧</a></div><h2><a href="#appendix">附錄 A～E</a></h2><div class="lv2"><a href="#appendix">---</a></div><div class="lv2"><a href="#appendix-a-1-為什麼要獨立成附錄">A-1 為什麼要獨立成附錄</a></div><div class="lv2"><a href="#appendix-a-2-已驗證環境快照">A-2 已驗證環境快照</a></div><div class="lv3"><a href="#appendix-硬體-作業系統">硬體／作業系統</a></div><div class="lv3"><a href="#appendix-python-環境-主要">Python 環境（主要）</a></div><div class="lv3"><a href="#appendix-系統-python-用於-l2-的示範-不需要-automl-套件">系統 Python（用於 L2 的示範，不需要 AutoML 套件）</a></div><div class="lv3"><a href="#appendix-已確認的-api-事實-2026-10-19-實測">已確認的 API 事實（2026-10-19 實測）</a></div><div class="lv2"><a href="#appendix-a-3-一次性建置步驟">A-3 一次性建置步驟</a></div><div class="lv2"><a href="#appendix-a-4-環境自檢清單-每次開始實作前跑一次">A-4 環境自檢清單（每次開始實作前跑一次）</a></div><div class="lv2"><a href="#appendix-a-5-何時需要重建環境">A-5 何時需要重建環境</a></div><div class="lv2"><a href="#appendix-a-6-疑難排解">A-6 疑難排解</a></div><div class="lv2"><a href="#appendix_1">---</a></div><div class="lv2"><a href="#appendix-b-0-這本記錄簿的規則">B-0 這本記錄簿的規則</a></div><div class="lv2"><a href="#appendix-b-1-問題索引">B-1 問題索引</a></div><div class="lv2"><a href="#appendix-b-001-缺-pkg_resources">B-001｜缺 pkg_resources</a></div><div class="lv2"><a href="#appendix-b-002-防火牆彈窗">B-002｜防火牆彈窗</a></div><div class="lv2"><a href="#appendix-b-003-防毒軟體隔離-python-exe">B-003｜防毒軟體隔離 python.exe</a></div><div class="lv2"><a href="#appendix-b-004-verbosity-參數不存在">B-004｜verbosity 參數不存在</a></div><div class="lv2"><a href="#appendix-b-005-export-方法不存在">B-005｜export() 方法不存在</a></div><div class="lv2"><a href="#appendix-b-006-score-方法不存在">B-006｜score() 方法不存在</a></div><div class="lv2"><a href="#appendix-b-007-squared-參數不存在">B-007｜squared 參數不存在</a></div><div class="lv2"><a href="#appendix-b-008-小資料-一代-跑超過-6-分鐘">B-008｜小資料「一代」跑超過 6 分鐘</a></div><div class="lv2"><a href="#appendix-b-009-tpot-builtins-不存在">B-009｜tpot.builtins 不存在</a></div><div class="lv2"><a href="#appendix-b-010-h2o-客戶端與伺服器版本不相容">B-010｜H2O 客戶端與伺服器版本不相容</a></div><div class="lv2"><a href="#appendix-b-011-h2o-伺服器因-java-版本無法啟動">B-011｜H2O 伺服器因 Java 版本無法啟動</a></div><div class="lv2"><a href="#appendix-b-012-timeouterror-no-valid-workers-found">B-012｜TimeoutError: No valid workers found</a></div><div class="lv2"><a href="#appendix-b-013-重導向輸出時中文變成亂碼">B-013｜重導向輸出時中文變成亂碼</a></div><div class="lv2"><a href="#appendix-b-014-同時設定世代數與時間預算-提示訊息">B-014｜「同時設定世代數與時間預算」提示訊息</a></div><div class="lv2"><a href="#appendix-b-015-用-conda-forge-安裝導致環境異常">B-015｜用 conda-forge 安裝導致環境異常</a></div><div class="lv2"><a href="#appendix-b-2-問題記錄簿範本-新增問題時複製此段">B-2 問題記錄簿範本（新增問題時複製此段）</a></div><div class="lv2"><a href="#appendix_2">---</a></div><div class="lv2"><a href="#appendix-c-1-主體為什麼不寫版本">C-1 主體為什麼不寫版本</a></div><div class="lv2"><a href="#appendix-c-2-工具重大改版對照-原理層面-只記錄-發生了什麼變化">C-2 工具重大改版對照（原理層面：只記錄「發生了什麼變化」）</a></div><div class="lv2"><a href="#appendix-c-3-教材內部不一致的統一記錄">C-3 教材內部不一致的統一記錄</a></div><div class="lv2"><a href="#appendix-c-4-選型時的維護狀態提醒">C-4 選型時的維護狀態提醒</a></div><div class="lv2"><a href="#appendix_3">---</a></div><div class="lv2"><a href="#appendix-d-1-執行示範程式的標準指令">D-1 執行示範程式的標準指令</a></div><div class="lv2"><a href="#appendix-d-2-常用參數速查-tpot-1-1-0">D-2 常用參數速查（TPOT 1.1.0）</a></div><div class="lv2"><a href="#appendix-d-3-指標函式速查">D-3 指標函式速查</a></div><div class="lv2"><a href="#appendix-d-4-匯出管線的三步工具鏈">D-4 匯出管線的三步工具鏈</a></div><div class="lv2"><a href="#appendix-d-5-檔案路徑速查">D-5 檔案路徑速查</a></div><div class="lv2"><a href="#appendix_4">---</a></div><div class="lv2"><a href="#appendix-e-1-資料集清單">E-1 資料集清單</a></div><div class="lv2"><a href="#appendix-e-2-程式清單">E-2 程式清單</a></div><div class="lv3"><a href="#appendix-參考日誌-可直接比對輸出">參考日誌（可直接比對輸出）</a></div><div class="lv2"><a href="#appendix-e-3-實測數據表">E-3 實測數據表</a></div><div class="lv3"><a href="#appendix-環境快照">環境快照</a></div><div class="lv3"><a href="#appendix-實測結果">實測結果</a></div><div class="lv3"><a href="#appendix-更新方式">更新方式</a></div><div class="lv2"><a href="#appendix-附錄文件資訊">附錄文件資訊</a></div>
+<h2><a href="#guide">使用說明（維護公約）</a></h2><div class="lv2"><a href="#guide-一-這份筆記是什麼">一、這份筆記是什麼</a></div><div class="lv2"><a href="#guide-二-筆記的兩層架構-最重要的一件事">二、筆記的兩層架構（最重要的一件事）</a></div><div class="lv2"><a href="#guide-三-維護公約-五條">三、維護公約（五條）</a></div><div class="lv3"><a href="#guide-公約-1-主體凍結">公約 1｜主體凍結</a></div><div class="lv3"><a href="#guide-公約-2-主體不寫這四樣東西">公約 2｜主體不寫這四樣東西</a></div><div class="lv3"><a href="#guide-公約-3-引用要標日期">公約 3｜引用要標日期</a></div><div class="lv3"><a href="#guide-公約-4-附錄-b-只增不刪">公約 4｜附錄 B 只增不刪</a></div><div class="lv3"><a href="#guide-公約-5-定期重跑自檢">公約 5｜定期重跑自檢</a></div><div class="lv2"><a href="#guide-四-檔案清單">四、檔案清單</a></div><div class="lv2"><a href="#guide-五-自學路徑建議">五、自學路徑建議</a></div><div class="lv2"><a href="#guide-六-名詞定義">六、名詞定義</a></div><div class="lv2"><a href="#guide-七-文件資訊">七、文件資訊</a></div><h2><a href="#outline">十課大綱</a></h2><div class="lv2"><a href="#outline-一-課程定位">一、課程定位</a></div><div class="lv2"><a href="#outline-二-十課總表">二、十課總表</a></div><div class="lv2"><a href="#outline-三-依賴關係">三、依賴關係</a></div><div class="lv2"><a href="#outline-四-每一課的固定結構">四、每一課的固定結構</a></div><div class="lv2"><a href="#outline-五-十課的原理要點">五、十課的原理要點</a></div><div class="lv3"><a href="#outline-l1-automl-的定位與原理總覽">L1｜AutoML 的定位與原理總覽</a></div><div class="lv3"><a href="#outline-l2-迴歸問題與誤差的本質">L2｜迴歸問題與誤差的本質</a></div><div class="lv3"><a href="#outline-l3-分類問題與評估的本質">L3｜分類問題與評估的本質</a></div><div class="lv3"><a href="#outline-l4-資料與任務轉化">L4｜資料與任務轉化</a></div><div class="lv3"><a href="#outline-l5-自動搜尋的原理">L5｜自動搜尋的原理</a></div><div class="lv3"><a href="#outline-l6-遺傳規劃與-tpot-的原理">L6｜遺傳規劃與 TPOT 的原理</a></div><div class="lv3"><a href="#outline-l7-集成與多引擎比較的原理">L7｜集成與多引擎比較的原理</a></div><div class="lv3"><a href="#outline-l8-雲端-automl-的原理與取捨">L8｜雲端 AutoML 的原理與取捨</a></div><div class="lv3"><a href="#outline-l9-可解釋性-漂移與負責任-ai-的原理">L9｜可解釋性、漂移與負責任 AI 的原理</a></div><div class="lv3"><a href="#outline-l10-從實驗到生產">L10｜從實驗到生產</a></div><div class="lv2"><a href="#outline-六-自我檢核方式">六、自我檢核方式</a></div><div class="lv2"><a href="#outline-七-與舊課程的對應">七、與舊課程的對應</a></div><div class="lv2"><a href="#outline-八-文件資訊">八、文件資訊</a></div><h2><a href="#L01">第 1 課｜AutoML 的定位與原理</a></h2><div class="lv2"><a href="#L01-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L01-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L01-三-原理-i-automl-自動化了什麼-45-分">三、原理 I｜AutoML 自動化了什麼（45 分）</a></div><div class="lv3"><a href="#L01-3-1-傳統機器學習流程的六個步驟">3.1 傳統機器學習流程的六個步驟</a></div><div class="lv3"><a href="#L01-3-2-三個自動化層次-本課核心">3.2 三個自動化層次（本課核心）</a></div><div class="lv3"><a href="#L01-3-3-為什麼這三件事可以自動化-兩個前提">3.3 為什麼這三件事可以自動化（兩個前提）</a></div><div class="lv3"><a href="#L01-3-4-一個常見誤解">3.4 一個常見誤解</a></div><div class="lv2"><a href="#L01-四-原理-ii-三個能力邊界-15-分">四、原理 II｜三個能力邊界（15 分）</a></div><div class="lv2"><a href="#L01-五-最小示範-40-分">五、最小示範（40 分）</a></div><div class="lv3"><a href="#L01-5-1-做法-三步-不要多做">5.1 做法（三步，不要多做）</a></div><div class="lv3"><a href="#L01-5-2-三個不要">5.2 三個不要</a></div><div class="lv3"><a href="#L01-5-3-看到結果後-自問三題">5.3 看到結果後，自問三題</a></div><div class="lv2"><a href="#L01-六-原理-iii-工具地景-用兩個問題分四類-30-分">六、原理 III｜工具地景：用兩個問題分四類（30 分）</a></div><div class="lv3"><a href="#L01-6-1-四類工具">6.1 四類工具</a></div><div class="lv3"><a href="#L01-6-2-這個分類的用途">6.2 這個分類的用途</a></div><div class="lv3"><a href="#L01-6-3-後續課程怎麼對應">6.3 後續課程怎麼對應</a></div><div class="lv2"><a href="#L01-七-原理-iv-什麼時候不該用-automl-10-分">七、原理 IV｜什麼時候不該用 AutoML（10 分）</a></div><div class="lv2"><a href="#L01-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L01-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L01-九-練習">九、練習</a></div><div class="lv2"><a href="#L01-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L01-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L01-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L02">第 2 課｜迴歸問題與誤差的本質</a></h2><div class="lv2"><a href="#L02-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L02-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L02-三-原理-i-殘差是唯一原料-45-分">三、原理 I｜殘差是唯一原料（45 分）</a></div><div class="lv3"><a href="#L02-3-1-迴歸問題的定義">3.1 迴歸問題的定義</a></div><div class="lv3"><a href="#L02-3-2-誤差-殘差-y-ŷ">3.2 誤差 = 殘差 = y − ŷ</a></div><div class="lv3"><a href="#L02-3-3-三種加工方式-三個指標家族">3.3 三種加工方式 → 三個指標家族</a></div><div class="lv3"><a href="#L02-3-4-為什麼要開根號">3.4 為什麼要開根號？</a></div><div class="lv3"><a href="#L02-3-5-單位與尺度的兩個推論">3.5 單位與尺度的兩個推論</a></div><div class="lv2"><a href="#L02-四-原理-ii-平方的凸性-極端值的放大-15-分">四、原理 II｜平方的凸性：極端值的放大（15 分）</a></div><div class="lv3"><a href="#L02-4-1-數學直覺">4.1 數學直覺</a></div><div class="lv3"><a href="#L02-4-2-rmse-mae-恆成立">4.2 RMSE ≥ MAE 恆成立</a></div><div class="lv3"><a href="#L02-4-3-實務含義">4.3 實務含義</a></div><div class="lv2"><a href="#L02-五-原理-iii-r²-與-相對於什麼基準-35-分">五、原理 III｜R² 與「相對於什麼基準」（35 分）</a></div><div class="lv3"><a href="#L02-5-1-r²-的定義">5.1 R² 的定義</a></div><div class="lv3"><a href="#L02-5-2-三個直接推論">5.2 三個直接推論</a></div><div class="lv3"><a href="#L02-5-3-r²-與-rmse-的代數關係">5.3 R² 與 RMSE 的代數關係</a></div><div class="lv3"><a href="#L02-5-4-為何要兩個都看">5.4 為何要兩個都看</a></div><div class="lv2"><a href="#L02-六-最小示範-35-分">六、最小示範（35 分）</a></div><div class="lv3"><a href="#L02-6-1-示範-①-手算驗證-所有指標都只是殘差的函數">6.1 示範 ① 手算驗證：所有指標都只是殘差的函數</a></div><div class="lv3"><a href="#L02-6-2-示範-②-加入一個離群值-平方如何放大極端值">6.2 示範 ② 加入一個離群值：平方如何放大極端值</a></div><div class="lv3"><a href="#L02-6-3-示範-③-rmse-mae-比值-誤差離散度診斷器">6.3 示範 ③ RMSE / MAE 比值：誤差離散度診斷器</a></div><div class="lv3"><a href="#L02-6-4-示範-④-mape-的三個數學地雷">6.4 示範 ④ MAPE 的三個數學地雷</a></div><div class="lv3"><a href="#L02-6-5-示範小結-自己抄一次">6.5 示範小結（自己抄一次）</a></div><div class="lv2"><a href="#L02-七-原理-iv-指標是選擇-不是事實-20-分">七、原理 IV｜指標是選擇，不是事實（20 分）</a></div><div class="lv3"><a href="#L02-7-1-決策表-本課核心產出">7.1 決策表（本課核心產出）</a></div><div class="lv3"><a href="#L02-7-2-四個常見誤解-要主動破除">7.2 四個常見誤解（要主動破除）</a></div><div class="lv3"><a href="#L02-7-3-為何不要只看-r²-給主管的一頁">7.3 為何不要只看 R²（給主管的一頁）</a></div><div class="lv2"><a href="#L02-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L02-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L02-九-練習">九、練習</a></div><div class="lv2"><a href="#L02-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L02-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L02-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L03">第 3 課｜分類問題與評估的本質</a></h2><div class="lv2"><a href="#L03-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L03-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L03-三-原理-i-混淆矩陣-四格資訊結構-40-分">三、原理 I｜混淆矩陣：四格資訊結構（40 分）</a></div><div class="lv3"><a href="#L03-3-1-分類問題的定義">3.1 分類問題的定義</a></div><div class="lv3"><a href="#L03-3-2-四格的業務含義">3.2 四格的業務含義</a></div><div class="lv3"><a href="#L03-3-3-所有分類指標都是這四格的函數">3.3 所有分類指標都是這四格的函數</a></div><div class="lv2"><a href="#L03-四-原理-ii-accuracy-為什麼會騙人-20-分">四、原理 II｜Accuracy 為什麼會騙人（20 分）</a></div><div class="lv3"><a href="#L03-4-1-數學理由">4.1 數學理由</a></div><div class="lv3"><a href="#L03-4-2-這個陷阱的實務後果">4.2 這個陷阱的實務後果</a></div><div class="lv3"><a href="#L03-4-3-一個可以直接用的檢查">4.3 一個可以直接用的檢查</a></div><div class="lv2"><a href="#L03-五-原理-iii-門檻-vs-auc-35-分">五、原理 III｜門檻 vs AUC（35 分）</a></div><div class="lv3"><a href="#L03-5-1-門檻是-決策變數-不是模型屬性">5.1 門檻是「決策變數」，不是模型屬性</a></div><div class="lv3"><a href="#L03-5-2-門檻該設在哪-取決於成本">5.2 門檻該設在哪？取決於成本</a></div><div class="lv3"><a href="#L03-5-3-auc-衡量的是-排序能力">5.3 AUC 衡量的是「排序能力」</a></div><div class="lv3"><a href="#L03-5-4-三個指標各說一句話">5.4 三個指標各說一句話</a></div><div class="lv2"><a href="#L03-六-最小示範-40-分">六、最小示範（40 分）</a></div><div class="lv3"><a href="#L03-6-1-示範設定">6.1 示範設定</a></div><div class="lv3"><a href="#L03-6-2-實測輸出-①-混淆矩陣與-accuracy-的謊言">6.2 實測輸出 ①：混淆矩陣與「Accuracy 的謊言」</a></div><div class="lv3"><a href="#L03-6-3-實測輸出-②-移動門檻-指標反向移動">6.3 實測輸出 ②：移動門檻，指標反向移動</a></div><div class="lv3"><a href="#L03-6-4-實測輸出-③-auc-完全不動">6.4 實測輸出 ③：AUC 完全不動</a></div><div class="lv3"><a href="#L03-6-5-自問三題">6.5 自問三題</a></div><div class="lv2"><a href="#L03-七-原理-iv-不平衡的根源與四種對策-15-分">七、原理 IV｜不平衡的根源與四種對策（15 分）</a></div><div class="lv3"><a href="#L03-7-1-根源-不是模型-是資料分佈">7.1 根源：不是模型，是資料分佈</a></div><div class="lv3"><a href="#L03-7-2-四種對策與適用順序">7.2 四種對策與適用順序</a></div><div class="lv3"><a href="#L03-7-3-常見誤解">7.3 常見誤解</a></div><div class="lv2"><a href="#L03-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L03-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L03-九-練習">九、練習</a></div><div class="lv2"><a href="#L03-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L03-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L03-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L04">第 4 課｜資料與任務轉化</a></h2><div class="lv2"><a href="#L04-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L04-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L04-三-原理-i-切分方式-你對未來的假設-40-分">三、原理 I｜切分方式＝你對未來的假設（40 分）</a></div><div class="lv3"><a href="#L04-3-1-模型只能學到-訓練資料的分佈">3.1 模型只能學到「訓練資料的分佈」</a></div><div class="lv3"><a href="#L04-3-2-兩種切分-兩種假設">3.2 兩種切分，兩種假設</a></div><div class="lv3"><a href="#L04-3-3-隨機切分為什麼會-作弊">3.3 隨機切分為什麼會「作弊」</a></div><div class="lv3"><a href="#L04-3-4-判斷流程">3.4 判斷流程</a></div><div class="lv3"><a href="#L04-3-5-一個常被忽略的細節">3.5 一個常被忽略的細節</a></div><div class="lv2"><a href="#L04-四-原理-ii-三種洩漏與因果順序-25-分">四、原理 II｜三種洩漏與因果順序（25 分）</a></div><div class="lv3"><a href="#L04-4-1-洩漏的定義-用因果-不用技巧">4.1 洩漏的定義（用因果，不用技巧）</a></div><div class="lv3"><a href="#L04-4-2-三種洩漏">4.2 三種洩漏</a></div><div class="lv3"><a href="#L04-4-3-為什麼前處理洩漏最難察覺">4.3 為什麼前處理洩漏最難察覺</a></div><div class="lv3"><a href="#L04-4-4-為什麼一定要包進管線-真正理由">4.4 為什麼一定要包進管線（真正理由）</a></div><div class="lv2"><a href="#L04-五-最小示範-40-分">五、最小示範（40 分）</a></div><div class="lv3"><a href="#L04-5-1-實測輸出-①-隨機切分-vs-時間切分">5.1 實測輸出 ①：隨機切分 vs 時間切分</a></div><div class="lv3"><a href="#L04-5-2-實測輸出-②-目標洩漏">5.2 實測輸出 ②：目標洩漏</a></div><div class="lv3"><a href="#L04-5-3-實測輸出-③-前處理洩漏-本課最有說服力的一段">5.3 實測輸出 ③：前處理洩漏（本課最有說服力的一段）</a></div><div class="lv3"><a href="#L04-5-4-三個示範的共同結論">5.4 三個示範的共同結論</a></div><div class="lv2"><a href="#L04-六-原理-iii-特徵工程的原理-30-分">六、原理 III｜特徵工程的原理（30 分）</a></div><div class="lv3"><a href="#L04-6-1-三種時間相關特徵">6.1 三種時間相關特徵</a></div><div class="lv3"><a href="#L04-6-2-判斷準則-時間軸上畫一條線">6.2 判斷準則：時間軸上畫一條線</a></div><div class="lv3"><a href="#L04-6-3-常見的-假特徵">6.3 常見的「假特徵」</a></div><div class="lv2"><a href="#L04-七-原理-iv-類別不平衡的根源與對策-15-分">七、原理 IV｜類別不平衡的根源與對策（15 分）</a></div><div class="lv3"><a href="#L04-7-1-不平衡的兩種來源">7.1 不平衡的兩種來源</a></div><div class="lv3"><a href="#L04-7-2-對策順序-與第-3-課一致">7.2 對策順序（與第 3 課一致）</a></div><div class="lv3"><a href="#L04-7-3-重採樣的三個陷阱">7.3 重採樣的三個陷阱</a></div><div class="lv2"><a href="#L04-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L04-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L04-九-練習">九、練習</a></div><div class="lv2"><a href="#L04-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L04-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L04-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L05">第 5 課｜自動搜尋的原理</a></h2><div class="lv2"><a href="#L05-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L05-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L05-三-原理-i-組合爆炸與搜尋成本-35-分">三、原理 I｜組合爆炸與搜尋成本（35 分）</a></div><div class="lv3"><a href="#L05-3-1-成本公式-本課最重要的一行">3.1 成本公式（本課最重要的一行）</a></div><div class="lv3"><a href="#L05-3-2-候選數是-相乘-的">3.2 候選數是「相乘」的</a></div><div class="lv3"><a href="#L05-3-3-三個乘數的實際影響">3.3 三個乘數的實際影響</a></div><div class="lv2"><a href="#L05-四-原理-ii-四種搜尋策略的取捨-20-分">四、原理 II｜四種搜尋策略的取捨（20 分）</a></div><div class="lv3"><a href="#L05-4-1-為什麼隨機搜尋在高維不輸窮舉">4.1 為什麼隨機搜尋在高維不輸窮舉</a></div><div class="lv2"><a href="#L05-五-原理-iii-交叉驗證-回報遞減-cv-選擇偏誤-30-分">五、原理 III｜交叉驗證、回報遞減、CV 選擇偏誤（30 分）</a></div><div class="lv3"><a href="#L05-5-1-交叉驗證的統計意義">5.1 交叉驗證的統計意義</a></div><div class="lv3"><a href="#L05-5-2-回報遞減">5.2 回報遞減</a></div><div class="lv3"><a href="#L05-5-3-cv-選擇偏誤-本課最反直覺的一段">5.3 CV 選擇偏誤（本課最反直覺的一段）</a></div><div class="lv3"><a href="#L05-5-4-對策-三條-全部與搜尋無關">5.4 對策（三條，全部與搜尋無關）</a></div><div class="lv2"><a href="#L05-六-最小示範-50-分">六、最小示範（50 分）</a></div><div class="lv3"><a href="#L05-6-1-示範-①-組合爆炸-35-分段的驗證">6.1 示範 ①：組合爆炸（35 分段的驗證）</a></div><div class="lv3"><a href="#L05-6-2-示範-②-回報遞減-實測">6.2 示範 ②：回報遞減（實測）</a></div><div class="lv3"><a href="#L05-6-3-示範-③-cv-選擇偏誤-實測-本課最有價值的一段">6.3 示範 ③：CV 選擇偏誤（實測，本課最有價值的一段）</a></div><div class="lv3"><a href="#L05-6-4-示範-④-窮舉-vs-隨機-實測">6.4 示範 ④：窮舉 vs 隨機（實測）</a></div><div class="lv2"><a href="#L05-七-原理-iv-主要指標決定搜尋方向-15-分">七、原理 IV｜主要指標決定搜尋方向（15 分）</a></div><div class="lv3"><a href="#L05-7-1-搜尋目標-你設的主要指標">7.1 搜尋目標 = 你設的主要指標</a></div><div class="lv3"><a href="#L05-7-2-預設值陷阱">7.2 預設值陷阱</a></div><div class="lv3"><a href="#L05-7-3-多目標的可能性">7.3 多目標的可能性</a></div><div class="lv2"><a href="#L05-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L05-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L05-九-練習">九、練習</a></div><div class="lv2"><a href="#L05-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L05-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L05-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L06">第 6 課｜遺傳規劃與 TPOT 的原理</a></h2><div class="lv2"><a href="#L06-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L06-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L06-三-原理-i-搜尋的對象-從-參數向量-到-管線樹-45-分">三、原理 I｜搜尋的對象：從「參數向量」到「管線樹」（45 分）</a></div><div class="lv3"><a href="#L06-3-1-傳統超參數搜尋的假設">3.1 傳統超參數搜尋的假設</a></div><div class="lv3"><a href="#L06-3-2-tpot-的做法-把-結構-也變成搜尋變數">3.2 TPOT 的做法：把「結構」也變成搜尋變數</a></div><div class="lv3"><a href="#L06-3-3-為何-結構空間-遠大於-參數空間">3.3 為何「結構空間」遠大於「參數空間」</a></div><div class="lv3"><a href="#L06-3-4-白盒-vs-黑盒-本課的價值主張">3.4 白盒 vs 黑盒（本課的價值主張）</a></div><div class="lv3"><a href="#L06-3-5-什麼是-搜尋空間-檔次">3.5 什麼是「搜尋空間」檔次</a></div><div class="lv2"><a href="#L06-四-原理-ii-演化的四個機制-15-分">四、原理 II｜演化的四個機制（15 分）</a></div><div class="lv3"><a href="#L06-4-1-四個機制">4.1 四個機制</a></div><div class="lv3"><a href="#L06-4-2-為何演化-有效-這才是重點">4.2 為何演化「有效」（這才是重點）</a></div><div class="lv3"><a href="#L06-4-3-選擇壓力-太強與太弱都不行">4.3 選擇壓力：太強與太弱都不行</a></div><div class="lv3"><a href="#L06-4-4-多目標優選-進階但重要">4.4 多目標優選（進階但重要）</a></div><div class="lv2"><a href="#L06-五-原理-iii-預算與收斂-30-分">五、原理 III｜預算與收斂（30 分）</a></div><div class="lv3"><a href="#L06-5-1-預算三要素">5.1 預算三要素</a></div><div class="lv3"><a href="#L06-5-2-回報遞減曲線">5.2 回報遞減曲線</a></div><div class="lv3"><a href="#L06-5-3-cv-選擇偏誤-最容易被忽略的陷阱">5.3 CV 選擇偏誤（最容易被忽略的陷阱）</a></div><div class="lv3"><a href="#L06-5-4-兩種停止條件的取捨">5.4 兩種停止條件的取捨</a></div><div class="lv2"><a href="#L06-六-最小示範-35-分">六、最小示範（35 分）</a></div><div class="lv3"><a href="#L06-6-1-示範設計">6.1 示範設計</a></div><div class="lv3"><a href="#L06-6-2-實測輸出-逐代最佳分數-這是本課的核心證據">6.2 實測輸出：逐代最佳分數（這是本課的核心證據）</a></div><div class="lv3"><a href="#L06-6-3-從實測輸出可以證明的四件事">6.3 從實測輸出可以證明的四件事</a></div><div class="lv3"><a href="#L06-6-4-實測輸出-兩組找到的-結構-證明搜尋的是樹-不是參數">6.4 實測輸出：兩組找到的「結構」（證明搜尋的是樹，不是參數）</a></div><div class="lv3"><a href="#L06-6-5-自問練習-建議先自己想-再看括號裡的答案">6.5 自問練習（建議先自己想，再看括號裡的答案）</a></div><div class="lv2"><a href="#L06-七-原理-iv-兩條哲學路線的取捨-25-分">七、原理 IV｜兩條哲學路線的取捨（25 分）</a></div><div class="lv3"><a href="#L06-7-1-兩條路線">7.1 兩條路線</a></div><div class="lv3"><a href="#L06-7-2-選型判準-原理層">7.2 選型判準（原理層）</a></div><div class="lv3"><a href="#L06-7-3-白盒管線的交付價值-三個層次">7.3 白盒管線的交付價值（三個層次）</a></div><div class="lv3"><a href="#L06-7-4-常見誤解">7.4 常見誤解</a></div><div class="lv2"><a href="#L06-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L06-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L06-九-練習">九、練習</a></div><div class="lv2"><a href="#L06-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L06-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L06-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L07">第 7 課｜集成與多引擎比較的原理</a></h2><div class="lv2"><a href="#L07-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L07-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L07-三-原理-i-偏差與變異數-40-分">三、原理 I｜偏差與變異數（40 分）</a></div><div class="lv3"><a href="#L07-3-1-誤差的兩個來源">3.1 誤差的兩個來源</a></div><div class="lv3"><a href="#L07-3-2-集成的兩個攻擊點">3.2 集成的兩個攻擊點</a></div><div class="lv3"><a href="#L07-3-3-為什麼-平均-能降低變異數">3.3 為什麼「平均」能降低變異數</a></div><div class="lv2"><a href="#L07-四-原理-ii-三種手法的分工-20-分">四、原理 II｜三種手法的分工（20 分）</a></div><div class="lv2"><a href="#L07-五-最小示範-45-分">五、最小示範（45 分）</a></div><div class="lv3"><a href="#L07-5-1-實測輸出-①-同一個模型-換-10-個隨機種子">5.1 實測輸出 ①：同一個模型，換 10 個隨機種子</a></div><div class="lv3"><a href="#L07-5-2-一個不能忽略的對照-ridge">5.2 一個不能忽略的對照：Ridge</a></div><div class="lv3"><a href="#L07-5-3-實測輸出-②-排行榜的排名會跳">5.3 實測輸出 ②：排行榜的排名會跳</a></div><div class="lv2"><a href="#L07-六-原理-iii-兩條哲學路線與排行榜-30-分">六、原理 III｜兩條哲學路線與排行榜（30 分）</a></div><div class="lv3"><a href="#L07-6-1-兩條路線">6.1 兩條路線</a></div><div class="lv3"><a href="#L07-6-2-選型判準">6.2 選型判準</a></div><div class="lv3"><a href="#L07-6-3-排行榜的正確用法">6.3 排行榜的正確用法</a></div><div class="lv2"><a href="#L07-七-原理-iv-沒有免費午餐-四角取捨-15-分">七、原理 IV｜沒有免費午餐：四角取捨（15 分）</a></div><div class="lv2"><a href="#L07-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L07-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L07-九-練習">九、練習</a></div><div class="lv2"><a href="#L07-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L07-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L07-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L08">第 8 課｜雲端 AutoML 的原理與取捨</a></h2><div class="lv2"><a href="#L08-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L08-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L08-三-原理-i-雲端賣什麼-40-分">三、原理 I｜雲端賣什麼（40 分）</a></div><div class="lv3"><a href="#L08-3-1-三個真實的產品">3.1 三個真實的產品</a></div><div class="lv3"><a href="#L08-3-2-為什麼企業願意付錢">3.2 為什麼企業願意付錢</a></div><div class="lv3"><a href="#L08-3-3-反過來-什麼情況雲端不划算">3.3 反過來：什麼情況雲端不划算</a></div><div class="lv2"><a href="#L08-四-原理-ii-五大概念-本機對照-25-分">四、原理 II｜五大概念 ↔ 本機對照（25 分）</a></div><div class="lv3"><a href="#L08-4-1-這張對照表的用途">4.1 這張對照表的用途</a></div><div class="lv3"><a href="#L08-4-2-作業-job-的參數在原理上對應什麼">4.2 作業（Job）的參數在原理上對應什麼</a></div><div class="lv2"><a href="#L08-五-原理-iii-成本結構-短時訓練-vs-常駐端點-30-分">五、原理 III｜成本結構：短時訓練 vs 常駐端點（30 分）</a></div><div class="lv3"><a href="#L08-5-1-兩種完全不同的計費模式">5.1 兩種完全不同的計費模式</a></div><div class="lv3"><a href="#L08-5-2-用一組真實的課程數字理解">5.2 用一組真實的課程數字理解</a></div><div class="lv3"><a href="#L08-5-3-從這組數字讀出四件事">5.3 從這組數字讀出四件事</a></div><div class="lv3"><a href="#L08-5-4-成本決策的兩個原則">5.4 成本決策的兩個原則</a></div><div class="lv2"><a href="#L08-六-案例解讀-35-分-取代實作">六、案例解讀（35 分，取代實作）</a></div><div class="lv3"><a href="#L08-6-1-案例背景-課程範例參考執行">6.1 案例背景（課程範例參考執行）</a></div><div class="lv3"><a href="#L08-6-2-用前七課的原理逐項解讀">6.2 用前七課的原理逐項解讀</a></div><div class="lv3"><a href="#L08-6-3-自問三題">6.3 自問三題</a></div><div class="lv2"><a href="#L08-七-原理-iv-資料主權-合規與上雲五判準-20-分">七、原理 IV｜資料主權、合規與上雲五判準（20 分）</a></div><div class="lv3"><a href="#L08-7-1-上雲的五個判準">7.1 上雲的五個判準</a></div><div class="lv3"><a href="#L08-7-2-資料主權的三個層次">7.2 資料主權的三個層次</a></div><div class="lv3"><a href="#L08-7-3-混合模式-實務最常見">7.3 混合模式（實務最常見）</a></div><div class="lv2"><a href="#L08-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L08-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L08-九-練習">九、練習</a></div><div class="lv2"><a href="#L08-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L08-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L08-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L09">第 9 課｜可解釋性、漂移與負責任 AI</a></h2><div class="lv2"><a href="#L09-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L09-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L09-三-原理-i-解釋-擾動-觀察-35-分">三、原理 I｜解釋＝擾動＋觀察（35 分）</a></div><div class="lv3"><a href="#L09-3-1-所有解釋方法的共同骨架">3.1 所有解釋方法的共同骨架</a></div><div class="lv3"><a href="#L09-3-2-一個關鍵區別">3.2 一個關鍵區別</a></div><div class="lv3"><a href="#L09-3-3-為什麼需要解釋">3.3 為什麼需要解釋</a></div><div class="lv2"><a href="#L09-四-原理-ii-重要性沒有唯一答案-20-分">四、原理 II｜重要性沒有唯一答案（20 分）</a></div><div class="lv3"><a href="#L09-4-1-兩種常見定義-測不同的東西">4.1 兩種常見定義，測不同的東西</a></div><div class="lv3"><a href="#L09-4-2-共線性會-分攤-重要性">4.2 共線性會「分攤」重要性</a></div><div class="lv3"><a href="#L09-4-3-相關不等於因果-本課最重要的警告">4.3 相關不等於因果（本課最重要的警告）</a></div><div class="lv2"><a href="#L09-五-原理-iii-漂移-分佈的統計檢定-35-分">五、原理 III｜漂移＝分佈的統計檢定（35 分）</a></div><div class="lv3"><a href="#L09-5-1-兩種漂移">5.1 兩種漂移</a></div><div class="lv3"><a href="#L09-5-2-psi-把漂移變成一個數字">5.2 PSI：把漂移變成一個數字</a></div><div class="lv3"><a href="#L09-5-3-psi-的三個實務限制">5.3 PSI 的三個實務限制</a></div><div class="lv2"><a href="#L09-六-最小示範-45-分">六、最小示範（45 分）</a></div><div class="lv3"><a href="#L09-6-1-實測輸出-①-擾動-觀察">6.1 實測輸出 ①：擾動＋觀察</a></div><div class="lv3"><a href="#L09-6-2-實測輸出-②-同一棵樹-兩種重要性-兩個排名">6.2 實測輸出 ②：同一棵樹，兩種重要性，兩個排名</a></div><div class="lv3"><a href="#L09-6-3-實測輸出-③-psi-漂移偵測">6.3 實測輸出 ③：PSI 漂移偵測</a></div><div class="lv3"><a href="#L09-6-4-一個必須記錄的實測坑-樣本數">6.4 一個必須記錄的實測坑（樣本數）</a></div><div class="lv2"><a href="#L09-七-原理-iv-公平性的定義衝突與負責任-ai-15-分">七、原理 IV｜公平性的定義衝突與負責任 AI（15 分）</a></div><div class="lv3"><a href="#L09-7-1-公平性沒有單一定義-這是數學結論-不是立場問題">7.1 公平性沒有單一定義（這是數學結論，不是立場問題）</a></div><div class="lv3"><a href="#L09-7-2-負責任-ai-六原則的實務含義">7.2 負責任 AI 六原則的實務含義</a></div><div class="lv3"><a href="#L09-7-3-三個可落地的檢查">7.3 三個可落地的檢查</a></div><div class="lv2"><a href="#L09-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L09-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L09-九-練習">九、練習</a></div><div class="lv2"><a href="#L09-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L09-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L09-十二-文件資訊">十二、文件資訊</a></div><h2><a href="#L10">第 10 課｜從實驗到生產的原理</a></h2><div class="lv2"><a href="#L10-一-學習目標">一、學習目標</a></div><div class="lv2"><a href="#L10-二-自學進度建議-約-3-小時">二、自學進度建議（約 3 小時）</a></div><div class="lv2"><a href="#L10-三-原理-i-三道鴻溝-35-分">三、原理 I｜三道鴻溝（35 分）</a></div><div class="lv3"><a href="#L10-3-1-鴻溝一-環境可重現性">3.1 鴻溝一：環境可重現性</a></div><div class="lv3"><a href="#L10-3-2-鴻溝二-資料分佈改變">3.2 鴻溝二：資料分佈改變</a></div><div class="lv3"><a href="#L10-3-3-鴻溝三-監控缺失">3.3 鴻溝三：監控缺失</a></div><div class="lv3"><a href="#L10-3-4-三道鴻溝的共同點">3.4 三道鴻溝的共同點</a></div><div class="lv2"><a href="#L10-四-原理-ii-可重現性三要素-20-分">四、原理 II｜可重現性三要素（20 分）</a></div><div class="lv3"><a href="#L10-4-1-三要素">4.1 三要素</a></div><div class="lv3"><a href="#L10-4-2-可重現性的三個實作習慣">4.2 可重現性的三個實作習慣</a></div><div class="lv3"><a href="#L10-4-3-一個常被忽略的細節">4.3 一個常被忽略的細節</a></div><div class="lv2"><a href="#L10-五-原理-iii-模型是會衰減的資產-35-分">五、原理 III｜模型是會衰減的資產（35 分）</a></div><div class="lv3"><a href="#L10-5-1-為什麼模型會衰減">5.1 為什麼模型會衰減</a></div><div class="lv3"><a href="#L10-5-2-監控什麼-三層">5.2 監控什麼（三層）</a></div><div class="lv3"><a href="#L10-5-3-重訓的四個觸發條件">5.3 重訓的四個觸發條件</a></div><div class="lv3"><a href="#L10-5-4-重訓不是萬靈丹">5.4 重訓不是萬靈丹</a></div><div class="lv2"><a href="#L10-六-綜合演練-50-分">六、綜合演練（50 分）</a></div><div class="lv3"><a href="#L10-6-1-演練步驟-照順序做-不要跳">6.1 演練步驟（照順序做，不要跳）</a></div><div class="lv3"><a href="#L10-6-2-一頁式報告模板">6.2 一頁式報告模板</a></div><div class="lv3"><a href="#L10-6-3-交付檢查清單-可重現性">6.3 交付檢查清單（可重現性）</a></div><div class="lv2"><a href="#L10-七-原理-iv-風險與成本評估框架-10-分">七、原理 IV｜風險與成本評估框架（10 分）</a></div><div class="lv3"><a href="#L10-7-1-四格框架">7.1 四格框架</a></div><div class="lv3"><a href="#L10-7-2-ml-專案常見的六個風險">7.2 ML 專案常見的六個風險</a></div><div class="lv3"><a href="#L10-7-3-成本的三個面向-不只算錢">7.3 成本的三個面向（不只算錢）</a></div><div class="lv2"><a href="#L10-八-自我檢核-理解題">八、自我檢核（理解題）</a></div><div class="lv3"><a href="#L10-答案與解說">答案與解說</a></div><div class="lv2"><a href="#L10-九-練習-本課的練習就是綜合演練">九、練習（本課的練習就是綜合演練）</a></div><div class="lv2"><a href="#L10-十-自學提醒與常見卡點">十、自學提醒與常見卡點</a></div><div class="lv2"><a href="#L10-十一-本課引用的附錄">十一、本課引用的附錄</a></div><div class="lv2"><a href="#L10-十二-文件資訊">十二、文件資訊</a></div><div class="lv2"><a href="#L10-附-十課總回顧">附：十課總回顧</a></div><h2><a href="#appendix">附錄 A～E</a></h2><div class="lv2"><a href="#appendix">---</a></div><div class="lv2"><a href="#appendix-a-1-為什麼要獨立成附錄">A-1 為什麼要獨立成附錄</a></div><div class="lv2"><a href="#appendix-a-2-已驗證環境快照">A-2 已驗證環境快照</a></div><div class="lv3"><a href="#appendix-硬體-作業系統">硬體／作業系統</a></div><div class="lv3"><a href="#appendix-python-環境-主要">Python 環境（主要）</a></div><div class="lv3"><a href="#appendix-系統-python-用於-l2-的示範-不需要-automl-套件">系統 Python（用於 L2 的示範，不需要 AutoML 套件）</a></div><div class="lv3"><a href="#appendix-已確認的-api-事實-2026-10-19-實測">已確認的 API 事實（2026-10-19 實測）</a></div><div class="lv2"><a href="#appendix-a-3-一次性建置步驟">A-3 一次性建置步驟</a></div><div class="lv2"><a href="#appendix-a-4-環境自檢清單-每次開始實作前跑一次">A-4 環境自檢清單（每次開始實作前跑一次）</a></div><div class="lv2"><a href="#appendix-a-5-何時需要重建環境">A-5 何時需要重建環境</a></div><div class="lv2"><a href="#appendix-a-6-疑難排解">A-6 疑難排解</a></div><div class="lv2"><a href="#appendix_1">---</a></div><div class="lv2"><a href="#appendix-b-0-這本記錄簿的規則">B-0 這本記錄簿的規則</a></div><div class="lv2"><a href="#appendix-b-1-問題索引">B-1 問題索引</a></div><div class="lv2"><a href="#appendix-b-001-缺-pkg_resources">B-001｜缺 pkg_resources</a></div><div class="lv2"><a href="#appendix-b-002-防火牆彈窗">B-002｜防火牆彈窗</a></div><div class="lv2"><a href="#appendix-b-003-防毒軟體隔離-python-exe">B-003｜防毒軟體隔離 python.exe</a></div><div class="lv2"><a href="#appendix-b-004-verbosity-參數不存在">B-004｜verbosity 參數不存在</a></div><div class="lv2"><a href="#appendix-b-005-export-方法不存在">B-005｜export() 方法不存在</a></div><div class="lv2"><a href="#appendix-b-006-score-方法不存在">B-006｜score() 方法不存在</a></div><div class="lv2"><a href="#appendix-b-007-squared-參數不存在">B-007｜squared 參數不存在</a></div><div class="lv2"><a href="#appendix-b-008-小資料-一代-跑超過-6-分鐘">B-008｜小資料「一代」跑超過 6 分鐘</a></div><div class="lv2"><a href="#appendix-b-009-tpot-builtins-不存在">B-009｜tpot.builtins 不存在</a></div><div class="lv2"><a href="#appendix-b-010-h2o-客戶端與伺服器版本不相容">B-010｜H2O 客戶端與伺服器版本不相容</a></div><div class="lv2"><a href="#appendix-b-011-h2o-伺服器因-java-版本無法啟動">B-011｜H2O 伺服器因 Java 版本無法啟動</a></div><div class="lv2"><a href="#appendix-b-012-timeouterror-no-valid-workers-found">B-012｜TimeoutError: No valid workers found</a></div><div class="lv2"><a href="#appendix-b-013-重導向輸出時中文變成亂碼">B-013｜重導向輸出時中文變成亂碼</a></div><div class="lv2"><a href="#appendix-b-014-同時設定世代數與時間預算-提示訊息">B-014｜「同時設定世代數與時間預算」提示訊息</a></div><div class="lv2"><a href="#appendix-b-015-用-conda-forge-安裝導致環境異常">B-015｜用 conda-forge 安裝導致環境異常</a></div><div class="lv2"><a href="#appendix-b-2-問題記錄簿範本-新增問題時複製此段">B-2 問題記錄簿範本（新增問題時複製此段）</a></div><div class="lv2"><a href="#appendix_2">---</a></div><div class="lv2"><a href="#appendix-c-1-主體為什麼不寫版本">C-1 主體為什麼不寫版本</a></div><div class="lv2"><a href="#appendix-c-2-工具重大改版對照-原理層面-只記錄-發生了什麼變化">C-2 工具重大改版對照（原理層面：只記錄「發生了什麼變化」）</a></div><div class="lv2"><a href="#appendix-c-3-課程內部不一致的統一記錄">C-3 課程內部不一致的統一記錄</a></div><div class="lv2"><a href="#appendix-c-4-選型時的維護狀態提醒">C-4 選型時的維護狀態提醒</a></div><div class="lv2"><a href="#appendix_3">---</a></div><div class="lv2"><a href="#appendix-d-1-執行示範程式的標準指令">D-1 執行示範程式的標準指令</a></div><div class="lv2"><a href="#appendix-d-2-常用參數速查-tpot-1-1-0">D-2 常用參數速查（TPOT 1.1.0）</a></div><div class="lv2"><a href="#appendix-d-3-指標函式速查">D-3 指標函式速查</a></div><div class="lv2"><a href="#appendix-d-4-匯出管線的三步工具鏈">D-4 匯出管線的三步工具鏈</a></div><div class="lv2"><a href="#appendix-d-5-檔案路徑速查">D-5 檔案路徑速查</a></div><div class="lv2"><a href="#appendix_4">---</a></div><div class="lv2"><a href="#appendix-e-1-資料集清單">E-1 資料集清單</a></div><div class="lv2"><a href="#appendix-e-2-程式清單">E-2 程式清單</a></div><div class="lv3"><a href="#appendix-參考日誌-可直接比對輸出">參考日誌（可直接比對輸出）</a></div><div class="lv2"><a href="#appendix-e-3-實測數據表">E-3 實測數據表</a></div><div class="lv3"><a href="#appendix-環境快照">環境快照</a></div><div class="lv3"><a href="#appendix-實測結果">實測結果</a></div><div class="lv3"><a href="#appendix-更新方式">更新方式</a></div><div class="lv2"><a href="#appendix-附錄文件資訊">附錄文件資訊</a></div>
 </nav>
 <main>
 <div class="banner">
@@ -70,22 +70,22 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 全部 10 張另見 <a href="./figures.html">圖表總覽</a> ｜ <a href="./cards.html">速記卡</a>。
 </div>
 <section class="lesson" id="guide">
-<h1 id="guide-使用說明-automl-十課自學教材">使用說明｜AutoML 十課自學教材</h1>
+<h1 id="guide-使用說明-automl-十課自學筆記">使用說明｜AutoML 十課自學筆記</h1>
 <blockquote>
-<p><strong>本頁放在教材最前面，是讀者看到的第一頁。</strong>
+<p><strong>本頁放在筆記最前面，是讀者看到的第一頁。</strong>
 建立日期：2026-10-19　｜　版本：v1.0</p>
 </blockquote>
 <hr>
-<h2 id="guide-一-這份教材是什麼">一、這份教材是什麼</h2>
-<p>一套 <strong>10 課 × 約 3 小時</strong> 的 AutoML <strong>自學</strong>教材，主體講<strong>原理</strong>，實作只用來<strong>證明原理</strong>。</p>
-<p><strong>這是自學教材，沒有教師視角</strong>：不含課堂節奏、講師提醒、學員管理、出堂考這類內容。
+<h2 id="guide-一-這份筆記是什麼">一、這份筆記是什麼</h2>
+<p>一套 <strong>10 課 × 約 3 小時</strong> 的 AutoML <strong>自學</strong>課程，主體講<strong>原理</strong>，實作只用來<strong>證明原理</strong>。</p>
+<p><strong>這是自學筆記，沒有教師視角</strong>：不含課堂節奏、講師提醒、學員管理、出堂考這類內容。
 讀者就是學習者，所有內容以「你自己讀、自己跑、自己檢核」為前提寫成。</p>
 <p>三個前提（與原始課程材料不同之處）：</p>
 <table>
 <thead>
 <tr>
 <th>項目</th>
-<th>本教材的做法</th>
+<th>本筆記的做法</th>
 </tr>
 </thead>
 <tbody>
@@ -104,7 +104,7 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 </tbody>
 </table>
 <hr>
-<h2 id="guide-二-教材的兩層架構-最重要的一件事">二、教材的兩層架構（最重要的一件事）</h2>
+<h2 id="guide-二-筆記的兩層架構-最重要的一件事">二、筆記的兩層架構（最重要的一件事）</h2>
 <pre><code>┌─ 主體（原理層｜穩定）────────────────────────────────────┐
 │  十課 × 約 3 小時                                        │
 │  讀者只需要懂原理，就能換工具、換版本、換平台            │
@@ -124,7 +124,7 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 <p><strong>為什麼要分兩層？</strong>
 原理不會過期（殘差、交叉驗證、遺傳演算法，十年後還是一樣）；
 但「安裝指令、套件版本、錯誤訊息、平台路徑」<strong>每年都不一樣</strong>。
-混在一起寫，教材就會跟著版本一起爛掉。</p>
+混在一起寫，筆記就會跟著版本一起爛掉。</p>
 <hr>
 <h2 id="guide-三-維護公約-五條">三、維護公約（五條）</h2>
 <h3 id="guide-公約-1-主體凍結">公約 1｜主體凍結</h3>
@@ -159,7 +159,7 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 <tbody>
 <tr>
 <td><code>00_使用說明（維護公約）.md</code></td>
-<td>本頁；教材最前面</td>
+<td>本頁；筆記最前面</td>
 <td>否</td>
 </tr>
 <tr>
@@ -185,7 +185,7 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 </tbody>
 </table>
 <p><strong>為什麼示範程式不放 OneDrive？</strong>
-教材要備份、要同步；執行環境要<strong>短路徑、可重建</strong>。
+筆記要備份、要同步；執行環境要<strong>短路徑、可重建</strong>。
 兩者目的不同，所以分開放（原因見附錄 A-1）。</p>
 <hr>
 <h2 id="guide-五-自學路徑建議">五、自學路徑建議</h2>
@@ -214,7 +214,7 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 <td>只讀 <code>01_十課大綱.md</code> 第五節（各課原理要點）＋附錄 D</td>
 </tr>
 <tr>
-<td><strong>要改教材</strong></td>
+<td><strong>要改筆記</strong></td>
 <td>遵守第三節五條公約</td>
 </tr>
 </tbody>
@@ -247,7 +247,7 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 </tr>
 <tr>
 <td><strong>原理／實作分離</strong></td>
-<td>本教材的核心結構原則</td>
+<td>本筆記的核心結構原則</td>
 </tr>
 </tbody>
 </table>
@@ -263,7 +263,7 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 <tbody>
 <tr>
 <td>文件名稱</td>
-<td>AutoML 十課自學教材｜使用說明（維護公約）</td>
+<td>AutoML 十課自學筆記｜使用說明（維護公約）</td>
 </tr>
 <tr>
 <td>建立日期</td>
@@ -271,15 +271,15 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 </tr>
 <tr>
 <td>適用範圍</td>
-<td>十課全套教材</td>
+<td>十課全套筆記</td>
 </tr>
 <tr>
-<td>與舊教材關係</td>
+<td>與舊課程關係</td>
 <td>由《AutoML 單元1-4 學習筆記》《第8及9堂 extra notes》《H2O AutoML 學習筆記》《AutoML 學習筆記》重新編排而成</td>
 </tr>
 <tr>
-<td>舊教材處置</td>
-<td>保留不刪（封存），新教材獨立發展</td>
+<td>舊課程處置</td>
+<td>保留不刪（封存），新筆記獨立發展</td>
 </tr>
 </tbody>
 </table>
@@ -593,11 +593,11 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 <p>原則：<strong>檢核理解，不檢核記憶</strong>。即使換了工具版本，你也應該答得出來。</p>
 </blockquote>
 <hr>
-<h2 id="outline-七-與舊教材的對應">七、與舊教材的對應</h2>
+<h2 id="outline-七-與舊課程的對應">七、與舊課程的對應</h2>
 <table>
 <thead>
 <tr>
-<th>舊教材</th>
+<th>舊課程</th>
 <th>新位置</th>
 </tr>
 </thead>
@@ -623,7 +623,7 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 <td>L6（遺傳規劃）＋ L9（解釋性與漂移）</td>
 </tr>
 <tr>
-<td>H2O 教材</td>
+<td>H2O 課程</td>
 <td>L7（改為原理＋引擎比較）</td>
 </tr>
 <tr>
@@ -631,7 +631,7 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 <td>L2（整堂的原理基礎）</td>
 </tr>
 <tr>
-<td>各種 GUI 操作教材</td>
+<td>各種 GUI 操作課程</td>
 <td><strong>封存不採用</strong></td>
 </tr>
 </tbody>
@@ -674,7 +674,7 @@ figure.fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);
 </svg><figcaption>圖 1-1｜AutoML 自動化的是「搜尋」，不是「判斷」（可列印；全部圖表見 <a href="./figures.html">圖表總覽</a>）</figcaption></figure>
 
 <blockquote>
-<p><strong>用途</strong>：自學教材　｜　<strong>層級</strong>：原理層（不寫版本號／安裝指令／平台路徑，那些都在附錄）
+<p><strong>用途</strong>：自學筆記　｜　<strong>層級</strong>：原理層（不寫版本號／安裝指令／平台路徑，那些都在附錄）
 <strong>前置</strong>：無（本課是起點）
 <strong>示範</strong>：觸發一次自動搜尋，只看它組出什麼管線（環境建置見附錄 A）
 <strong>相關附錄</strong>：附錄 A（環境）、附錄 B（問題）、附錄 D（參數）、附錄 E（實測）
@@ -1224,7 +1224,7 @@ AutoML 優化的是<strong>你給它的目標</strong>。目標沒定義好、�
 </tr>
 <tr>
 <td>用途</td>
-<td>自學教材</td>
+<td>自學筆記</td>
 </tr>
 <tr>
 <td>建立日期</td>
@@ -1254,7 +1254,7 @@ AutoML 優化的是<strong>你給它的目標</strong>。目標沒定義好、�
 </svg><figcaption>圖 2-1｜平方如何放大極端值：RMSE vs MAE（可列印；全部圖表見 <a href="./figures.html">圖表總覽</a>）</figcaption></figure>
 
 <blockquote>
-<p><strong>用途</strong>：自學教材　｜　<strong>層級</strong>：原理層（不寫版本號／安裝指令／平台路徑，那些都在附錄）
+<p><strong>用途</strong>：自學筆記　｜　<strong>層級</strong>：原理層（不寫版本號／安裝指令／平台路徑，那些都在附錄）
 <strong>前置</strong>：第 1 課（AutoML 的定位與原理總覽）
 <strong>示範程式</strong>：<code>C:\ml\automl\demos\L02_metrics_demo.py</code>（只依賴 numpy + scikit-learn，版本無關）
 <strong>相關附錄</strong>：附錄 A（環境）、附錄 B（問題）、附錄 D（參數）、附錄 E（實測）
@@ -1741,7 +1741,7 @@ RMSE = √36.6667                              = 6.0553
 </tr>
 <tr>
 <td>用途</td>
-<td>自學教材</td>
+<td>自學筆記</td>
 </tr>
 <tr>
 <td>建立日期</td>
@@ -1771,7 +1771,7 @@ RMSE = √36.6667                              = 6.0553
 </svg><figcaption>圖 3-1｜門檻是決策變數，AUC 是排序能力（可列印；全部圖表見 <a href="./figures.html">圖表總覽</a>）</figcaption></figure>
 
 <blockquote>
-<p><strong>用途</strong>：自學教材　｜　<strong>層級</strong>：原理層
+<p><strong>用途</strong>：自學筆記　｜　<strong>層級</strong>：原理層
 <strong>前置</strong>：第 2 課（迴歸問題與誤差的本質）
 <strong>示範</strong>：<code>C:\ml\automl\demos\L03_classification_demo.py</code>（只依賴 numpy + scikit-learn）
 <strong>相關附錄</strong>：附錄 A（環境）、附錄 B（問題）、附錄 D（參數）、附錄 E（實測）
@@ -2416,7 +2416,7 @@ RMSE = √36.6667                              = 6.0553
 </tr>
 <tr>
 <td>用途</td>
-<td>自學教材</td>
+<td>自學筆記</td>
 </tr>
 <tr>
 <td>建立日期</td>
@@ -2446,7 +2446,7 @@ RMSE = √36.6667                              = 6.0553
 </svg><figcaption>圖 4-1｜切分方式＝你對未來的假設（可列印；全部圖表見 <a href="./figures.html">圖表總覽</a>）</figcaption></figure>
 
 <blockquote>
-<p><strong>用途</strong>：自學教材　｜　<strong>層級</strong>：原理層
+<p><strong>用途</strong>：自學筆記　｜　<strong>層級</strong>：原理層
 <strong>前置</strong>：第 2、3 課（指標要先懂，才知道洩漏為什麼可怕）
 <strong>示範</strong>：<code>C:\ml\automl\demos\L04_split_demo.py</code>（只依賴 numpy + scikit-learn）
 <strong>相關附錄</strong>：附錄 A（環境）、附錄 B（問題）、附錄 D（參數）、附錄 E（實測）
@@ -2935,7 +2935,7 @@ pipe.fit(X_tr)                            # ← 統計量只從訓練集算
 </tr>
 <tr>
 <td>用途</td>
-<td>自學教材</td>
+<td>自學筆記</td>
 </tr>
 <tr>
 <td>建立日期</td>
@@ -2965,7 +2965,7 @@ pipe.fit(X_tr)                            # ← 統計量只從訓練集算
 </svg><figcaption>圖 5-1｜回報遞減與 CV 選擇偏誤（可列印；全部圖表見 <a href="./figures.html">圖表總覽</a>）</figcaption></figure>
 
 <blockquote>
-<p><strong>用途</strong>：自學教材　｜　<strong>層級</strong>：原理層
+<p><strong>用途</strong>：自學筆記　｜　<strong>層級</strong>：原理層
 <strong>前置</strong>：第 4 課（資料沒切好，搜尋再聰明也沒用）
 <strong>示範</strong>：<code>C:\ml\automl\demos\L05_search_demo.py</code>（只依賴 numpy + scikit-learn）
 <strong>相關附錄</strong>：附錄 A（環境）、附錄 B（問題）、附錄 D（參數）、附錄 E（實測）
@@ -3494,7 +3494,7 @@ pipe.fit(X_tr)                            # ← 統計量只從訓練集算
 </tr>
 <tr>
 <td>用途</td>
-<td>自學教材</td>
+<td>自學筆記</td>
 </tr>
 <tr>
 <td>建立日期</td>
@@ -3525,7 +3525,7 @@ pipe.fit(X_tr)                            # ← 統計量只從訓練集算
 </svg><figcaption>圖 6-1｜演化的收斂曲線與搜尋到的管線結構（可列印；全部圖表見 <a href="./figures.html">圖表總覽</a>）</figcaption></figure>
 
 <blockquote>
-<p><strong>用途</strong>：自學教材　｜　<strong>層級</strong>：原理層
+<p><strong>用途</strong>：自學筆記　｜　<strong>層級</strong>：原理層
 <strong>前置</strong>：第 5 課（自動搜尋的原理）
 <strong>示範程式</strong>：<code>C:\ml\automl\demos\L06_tpot_evolution_demo.py</code>
 <strong>相關附錄</strong>：附錄 A（環境）、附錄 B（問題）、附錄 C（版本）、附錄 D（參數）、附錄 E（實測）
@@ -4182,7 +4182,7 @@ Best roc_auc_score score: 0.9978276353276353
 </tr>
 <tr>
 <td>用途</td>
-<td>自學教材</td>
+<td>自學筆記</td>
 </tr>
 <tr>
 <td>建立日期</td>
@@ -4212,7 +4212,7 @@ Best roc_auc_score score: 0.9978276353276353
 </svg><figcaption>圖 7-1｜偏差－變異數：分數會跳，集成在攻擊哪一邊（可列印；全部圖表見 <a href="./figures.html">圖表總覽</a>）</figcaption></figure>
 
 <blockquote>
-<p><strong>用途</strong>：自學教材　｜　<strong>層級</strong>：原理層
+<p><strong>用途</strong>：自學筆記　｜　<strong>層級</strong>：原理層
 <strong>前置</strong>：第 5、6 課（搜尋與演化）
 <strong>示範</strong>：<code>C:\ml\automl\demos\L07_ensemble_demo.py</code>（只依賴 numpy + scikit-learn）
 <strong>相關附錄</strong>：附錄 A（環境）、附錄 B（問題）、附錄 C（版本）、附錄 D（參數）、附錄 E（實測）
@@ -4675,7 +4675,7 @@ Best roc_auc_score score: 0.9978276353276353
 </tr>
 <tr>
 <td>用途</td>
-<td>自學教材</td>
+<td>自學筆記</td>
 </tr>
 <tr>
 <td>建立日期</td>
@@ -4705,7 +4705,7 @@ Best roc_auc_score score: 0.9978276353276353
 </svg><figcaption>圖 8-1｜雲端成本結構與概念對照（可列印；全部圖表見 <a href="./figures.html">圖表總覽</a>）</figcaption></figure>
 
 <blockquote>
-<p><strong>用途</strong>：自學教材　｜　<strong>層級</strong>：原理層（<strong>本課無程式實作</strong>）
+<p><strong>用途</strong>：自學筆記　｜　<strong>層級</strong>：原理層（<strong>本課無程式實作</strong>）
 <strong>前置</strong>：第 5～7 課（先懂搜尋與集成，才看得懂雲端在做什麼）
 <strong>示範</strong>：<strong>無</strong>。本課用「案例數字解讀」取代實作
 <strong>相關附錄</strong>：附錄 A（環境對照）、附錄 C（版本）、附錄 D（參數概念）
@@ -5330,7 +5330,7 @@ Best roc_auc_score score: 0.9978276353276353
 </tr>
 <tr>
 <td>用途</td>
-<td>自學教材</td>
+<td>自學筆記</td>
 </tr>
 <tr>
 <td>建立日期</td>
@@ -5360,7 +5360,7 @@ Best roc_auc_score score: 0.9978276353276353
 </svg><figcaption>圖 9-1｜PSI：把「分佈移動」變成一個可設閾值的數字（可列印；全部圖表見 <a href="./figures.html">圖表總覽</a>）</figcaption></figure>
 
 <blockquote>
-<p><strong>用途</strong>：自學教材　｜　<strong>層級</strong>：原理層
+<p><strong>用途</strong>：自學筆記　｜　<strong>層級</strong>：原理層
 <strong>前置</strong>：第 6 或 7 課（要先有一個模型可以解釋）
 <strong>示範</strong>：<code>C:\ml\automl\demos\L09_explain_drift_demo.py</code>（只依賴 numpy + scikit-learn）
 <strong>相關附錄</strong>：附錄 A（環境）、附錄 B（問題）、附錄 D（參數）、附錄 E（實測）
@@ -5935,7 +5935,7 @@ PSI 卻可能高達 <strong>0.09 ~ 0.15</strong>——足以誤判為「中度�
 </tr>
 <tr>
 <td>用途</td>
-<td>自學教材</td>
+<td>自學筆記</td>
 </tr>
 <tr>
 <td>建立日期</td>
@@ -5965,7 +5965,7 @@ PSI 卻可能高達 <strong>0.09 ~ 0.15</strong>——足以誤判為「中度�
 </svg><figcaption>圖 10-1｜從實驗到生產的三道鴻溝（可列印；全部圖表見 <a href="./figures.html">圖表總覽</a>）</figcaption></figure>
 
 <blockquote>
-<p><strong>用途</strong>：自學教材　｜　<strong>層級</strong>：原理層
+<p><strong>用途</strong>：自學筆記　｜　<strong>層級</strong>：原理層
 <strong>前置</strong>：第 4、9 課（洩漏與監控是生產階段的核心風險）
 <strong>示範</strong>：<strong>無程式示範</strong>；本課用「檢查清單」取代
 <strong>相關附錄</strong>：附錄 A（環境）、附錄 B（問題）、附錄 D（工具鏈）、附錄 E（實測）
@@ -6617,7 +6617,7 @@ PSI 卻可能高達 <strong>0.09 ~ 0.15</strong>——足以誤判為「中度�
 </tr>
 <tr>
 <td>用途</td>
-<td>自學教材（全套課程收尾）</td>
+<td>自學筆記（全套課程收尾）</td>
 </tr>
 <tr>
 <td>建立日期</td>
@@ -6763,8 +6763,8 @@ PSI 卻可能高達 <strong>0.09 ~ 0.15</strong>——足以誤判為「中度�
 </tbody>
 </table>
 <p><strong>另一件事</strong>：示範程式放在 <code>C:\ml\automl\demos\</code>（短英文路徑），
-教材文件放在 OneDrive Documents。
-理由：<strong>教材要備份同步，執行環境要短路徑、可重建</strong>——兩者目的不同。</p>
+筆記文件放在 OneDrive Documents。
+理由：<strong>筆記要備份同步，執行環境要短路徑、可重建</strong>——兩者目的不同。</p>
 <blockquote>
 <p>已知風險：中文／長路徑會造成偶發編碼錯誤（見附錄 B）。</p>
 </blockquote>
@@ -6982,7 +6982,7 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\ml\automl\demos\L06_tpot_evol
 </thead>
 <tbody>
 <tr>
-<td>套件升版導致教材示範失效</td>
+<td>套件升版導致筆記示範失效</td>
 <td>先記錄到附錄 B／C，再決定 pin 舊版或改寫示範</td>
 </tr>
 <tr>
@@ -7034,8 +7034,8 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\ml\automl\demos\L06_tpot_evol
 <td>各課寫「見附錄 B-013」，不重複內容</td>
 </tr>
 <tr>
-<td><strong>不記錄教材錯誤</strong></td>
-<td>教材內部矛盾屬附錄 C-3</td>
+<td><strong>不記錄課程錯誤</strong></td>
+<td>課程內部矛盾屬附錄 C-3</td>
 </tr>
 </tbody>
 </table>
@@ -7290,7 +7290,7 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\ml\automl\demos\L06_tpot_evol
 <tbody>
 <tr>
 <td>首次遇到</td>
-<td>2026-10（教材改版驗證）</td>
+<td>2026-10（筆記改版驗證）</td>
 </tr>
 <tr>
 <td>環境</td>
@@ -7310,7 +7310,7 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\ml\automl\demos\L06_tpot_evol
 </tr>
 <tr>
 <td>影響範圍</td>
-<td>所有舊教材的程式碼</td>
+<td>所有舊課程的程式碼</td>
 </tr>
 <tr>
 <td>狀態</td>
@@ -7349,7 +7349,7 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\ml\automl\demos\L06_tpot_evol
 </tr>
 <tr>
 <td>影響範圍</td>
-<td>所有舊教材的「匯出最佳模型」段落</td>
+<td>所有舊課程的「匯出最佳模型」段落</td>
 </tr>
 <tr>
 <td>狀態</td>
@@ -7388,7 +7388,7 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\ml\automl\demos\L06_tpot_evol
 </tr>
 <tr>
 <td>影響範圍</td>
-<td>教材中「評估效能」段落</td>
+<td>課程中「評估效能」段落</td>
 </tr>
 <tr>
 <td>狀態</td>
@@ -7431,7 +7431,7 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\ml\automl\demos\L06_tpot_evol
 </tr>
 <tr>
 <td>影響範圍</td>
-<td>所有計算 RMSE 的教材程式（含 L2）</td>
+<td>所有計算 RMSE 的課程程式（含 L2）</td>
 </tr>
 <tr>
 <td>狀態</td>
@@ -7454,7 +7454,7 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\ml\automl\demos\L06_tpot_evol
 </tr>
 <tr>
 <td>環境</td>
-<td>2 萬筆迴歸資料、教材原參數（世代 1 × 族群 20 × 3 折）</td>
+<td>2 萬筆迴歸資料、課程原參數（世代 1 × 族群 20 × 3 折）</td>
 </tr>
 <tr>
 <td><strong>症狀</strong></td>
@@ -7509,7 +7509,7 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\ml\automl\demos\L06_tpot_evol
 </tr>
 <tr>
 <td>影響範圍</td>
-<td>教材「參考答案」段落</td>
+<td>課程「參考答案」段落</td>
 </tr>
 <tr>
 <td>狀態</td>
@@ -7583,7 +7583,7 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\ml\automl\demos\L06_tpot_evol
 </tr>
 <tr>
 <td>解法</td>
-<td>使用指定的繞道方式啟動（原教材已記錄該頁最容易卡住）</td>
+<td>使用指定的繞道方式啟動（原課程已記錄該頁最容易卡住）</td>
 </tr>
 <tr>
 <td>影響範圍</td>
@@ -7797,7 +7797,7 @@ $env:PYTHONUTF8='1'                                       # 讓 Python 輸出 UT
 <h2 id="appendix-c-1-主體為什麼不寫版本">C-1 主體為什麼不寫版本</h2>
 <p><strong>公約</strong>：主體（大綱、各課）<strong>不寫</strong>版本號與 API 名稱。</p>
 <p><strong>理由</strong>：
-1. 寫了會過期 → 教材跟著版本一起爛。
+1. 寫了會過期 → 筆記跟著版本一起爛。
 2. 版本差異<strong>不影響原理</strong>：殘差還是殘差、演化還是演化。
 3. 要學的是「遇到 API 變了怎麼辦」，而不是背住某個版本的名字。</p>
 <p><strong>主體遇到版本問題時的正確寫法</strong>：</p>
@@ -7849,7 +7849,7 @@ $env:PYTHONUTF8='1'                                       # 讓 Python 輸出 UT
 <td>預設世代數</td>
 <td>100</td>
 <td><strong>不設限（受時間預算限制）</strong></td>
-<td>行為與教材不符</td>
+<td>行為與課程不符</td>
 </tr>
 <tr>
 <td>預設優選準則</td>
@@ -7867,7 +7867,7 @@ $env:PYTHONUTF8='1'                                       # 讓 Python 輸出 UT
 <td>日誌格式</td>
 <td>逐代文字行</td>
 <td>進度條 ＋ 最佳分數行</td>
-<td>教材截圖過時</td>
+<td>課程截圖過時</td>
 </tr>
 <tr>
 <td>詳細程度等級含義</td>
@@ -7883,7 +7883,7 @@ $env:PYTHONUTF8='1'                                       # 讓 Python 輸出 UT
 </tr>
 </tbody>
 </table>
-<h2 id="appendix-c-3-教材內部不一致的統一記錄">C-3 教材內部不一致的統一記錄</h2>
+<h2 id="appendix-c-3-課程內部不一致的統一記錄">C-3 課程內部不一致的統一記錄</h2>
 <table>
 <thead>
 <tr>
@@ -8020,8 +8020,8 @@ with local_cluster(n_workers=4) as (client, cluster):
 </table>
 <p><strong><code>verbose</code> 等級含義</strong>：<code>0</code> 靜音／<code>1</code> 進度條／<code>3</code> 每代最佳個體／<code>5</code> 錯誤詳情</p>
 <blockquote>
-<p>⚠️ 舊教材的 <code>verbosity=</code> 已改名（B-004）；等級含義也改變了（C-2）。
-⚠️ 其他搜尋空間檔次名稱請查該版本官方文件，<strong>不要</strong>沿用舊教材的名稱。</p>
+<p>⚠️ 舊課程的 <code>verbosity=</code> 已改名（B-004）；等級含義也改變了（C-2）。
+⚠️ 其他搜尋空間檔次名稱請查該版本官方文件，<strong>不要</strong>沿用舊課程的名稱。</p>
 </blockquote>
 <h2 id="appendix-d-3-指標函式速查">D-3 指標函式速查</h2>
 <pre><code class="language-python">from sklearn.metrics import (
@@ -8064,7 +8064,7 @@ with local_cluster(n_workers=4) as (client, cluster):
 </table>
 <h2 id="appendix-d-4-匯出管線的三步工具鏈">D-4 匯出管線的三步工具鏈</h2>
 <blockquote>
-<p>舊教材的「直接匯出程式碼」方法已移除（B-005）。現行做法為三步：</p>
+<p>舊課程的「直接匯出程式碼」方法已移除（B-005）。現行做法為三步：</p>
 </blockquote>
 <pre><code class="language-powershell"># 步驟 1：在程式中存下管線
 #   import joblib; joblib.dump(tpot.fitted_pipeline_, &quot;best.joblib&quot;)
@@ -8101,7 +8101,7 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\Users\princ\OneDrive\Document
 <td><code>C:\ml\automl\demos\</code></td>
 </tr>
 <tr>
-<td>教材文件</td>
+<td>筆記文件</td>
 <td><code>C:\Users\princ\OneDrive\Documents\AutoML 十課\</code></td>
 </tr>
 <tr>
@@ -8173,7 +8173,7 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\Users\princ\OneDrive\Document
 </tbody>
 </table>
 <blockquote>
-<p>⚠️ 部分資料集原教材提及但未在本機清單中確認（例如漂移示範用的房價樣本）；
+<p>⚠️ 部分資料集原課程提及但未在本機清單中確認（例如漂移示範用的房價樣本）；
 開始實作前請先跑一次附錄 A-4 自檢，缺檔就補。</p>
 </blockquote>
 <h2 id="appendix-e-2-程式清單">E-2 程式清單</h2>
@@ -8317,7 +8317,7 @@ C:\Users\princ\venvs\tpot111\Scripts\python.exe C:\Users\princ\OneDrive\Document
 </tr>
 <tr>
 <td style="text-align: center;">5</td>
-<td>加州房價迴歸（教材原參數）</td>
+<td>加州房價迴歸（課程原參數）</td>
 <td>世代 1 × 族群 20 × 3 折</td>
 <td><strong>單一代 &gt; 6 分鐘未結束</strong>（見 B-008）</td>
 <td>2026-10-18</td>

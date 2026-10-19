@@ -1,5 +1,5 @@
 ---
-title: AutoML 專區｜教材總入口
+title: AutoML 專區｜筆記總入口
 date: 2026-10-19 22:00:00
 ---
 
@@ -24,7 +24,7 @@ date: 2026-10-19 22:00:00
 
 ### ② AutoML 應用證書課程（ERB・操作導向）
 
-- 來源：100 頁主教材 ＋ 33 頁補充教材；四個單元、20 個實習個案
+- 來源：100 頁主課程 ＋ 33 頁補充課程；四個單元、20 個實習個案
 - 三條工具路線：無代碼（Teachable Machine／TensorFlow Playground）、企業雲端（Azure ML Studio）、開源程式化（Colab ＋ TPOT）
 - 含負責任 AI 六大原則、數據漂移監控、模型解釋性儀表板
 
