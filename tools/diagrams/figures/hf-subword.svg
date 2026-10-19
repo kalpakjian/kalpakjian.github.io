@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="子詞分詞的兩條路" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="798.5" height="418.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">子詞分詞的兩條路</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先大後小（Unigram）vs 先小後大（BPE / WordPiece）</text>
+<rect x="48" y="106" width="704" height="254" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">子詞分詞（subword tokenization）</text>
+<path d="M 100 184 L 100 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">由上而下（top-down，先大後小）</text>
+<path d="M 156 194 L 156 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 220 L 170 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="226" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Unigram language model（SentencePiece 的一種模式）</text>
+<path d="M 100 256 L 114 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="262" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">由下而上（bottom-up，先小後大）</text>
+<path d="M 156 266 L 156 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 292 L 170 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="298" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BPE　←　貪婪，純計數</text>
+<path d="M 156 302 L 156 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 328 L 170 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="334" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">WordPiece　←　貪婪變體，用似然評分</text>
+<text x="48" y="396" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩條路的差別在「合併的方向」：Unigram 從大往小拆，BPE／WordPiece 從小往大併。</text>
+</svg>

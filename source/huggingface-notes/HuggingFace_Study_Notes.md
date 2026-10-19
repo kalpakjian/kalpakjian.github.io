@@ -316,15 +316,31 @@ tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
 
 ### 5.2 資料流向
 
-```
-   ①  Hub（靜態資產）
-        │  from_pretrained() / load_dataset()
-        ▼
-   ②  Core Libraries（在你的程式裡）
-        │  LoraConfig() / Trainer / save_pretrained()
-        ▼
-   ③  Inference & Deployment（給別人用）
-```
+<!-- FIG5 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-label="三層生態的資料流向" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="468.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三層生態的資料流向</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從 Hub 拿資產 → 在程式裡用 → 部署給別人用</text>
+<rect x="200" y="140" width="500" height="64" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="450.0" y="170.0" font-size="14.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">①  Hugging Face Hub</text>
+<text x="450.0" y="192.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">靜態資產：模型／資料集／Spaces</text>
+<path d="M 450 204 L 450 238" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="462" y="228" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">from_pretrained() / load_dataset()</text>
+<rect x="200" y="240" width="500" height="64" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="450.0" y="270.0" font-size="14.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">②  Core Libraries</text>
+<text x="450.0" y="292.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">在你的程式裡：transformers／datasets／peft</text>
+<path d="M 450 304 L 450 338" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="462" y="328" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LoraConfig() / Trainer / save_pretrained()</text>
+<rect x="200" y="340" width="500" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="450.0" y="370.0" font-size="14.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">③  Inference &amp; Deployment</text>
+<text x="450.0" y="392.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">給別人用：accelerate／optimum／TGI／Endpoints</text>
+<text x="48" y="444" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三層之間只有兩個動作：把資產拿進來（from_pretrained）、把結果送出去（save_pretrained / 部署）。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 48：三層生態的資料流向——① Hub（靜態資產）用 from_pretrained()／load_dataset() 進到 ② Core Libraries（在你的程式裡），再用 save_pretrained()／Trainer 交棒給 ③ Inference & Deployment。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG5 -->
 
 ### 5.3 對照表：三層各有哪些成員
 
@@ -1699,14 +1715,33 @@ XLNet 同樣用的是 SentencePiece。
 
 ### 20.3 演算法分類的另一個角度
 
-```
-子詞分詞
-├── 由上而下（top-down，先大後小）
-│   └── Unigram language model（SentencePiece 的一種模式）
-└── 由下而上（bottom-up，先小後大）
-    ├── BPE              ← 貪婪，純計數
-    └── WordPiece        ← 貪婪變體，用似然評分
-```
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="子詞分詞的兩條路" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="798.5" height="418.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">子詞分詞的兩條路</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先大後小（Unigram）vs 先小後大（BPE / WordPiece）</text>
+<rect x="48" y="106" width="704" height="254" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">子詞分詞（subword tokenization）</text>
+<path d="M 100 184 L 100 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">由上而下（top-down，先大後小）</text>
+<path d="M 156 194 L 156 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 220 L 170 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="226" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Unigram language model（SentencePiece 的一種模式）</text>
+<path d="M 100 256 L 114 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="262" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">由下而上（bottom-up，先小後大）</text>
+<path d="M 156 266 L 156 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 292 L 170 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="298" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BPE　←　貪婪，純計數</text>
+<path d="M 156 302 L 156 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 328 L 170 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="334" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">WordPiece　←　貪婪變體，用似然評分</text>
+<text x="48" y="396" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩條路的差別在「合併的方向」：Unigram 從大往小拆，BPE／WordPiece 從小往大併。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 44：子詞分詞的兩條路——由上而下的 Unigram language model，與由下而上的 BPE（貪婪、純計數）和 WordPiece（貪婪變體、用似然評分）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 > 💡 **考點**：**WordPiece 可以視為「BPE 的改良版」**——
 > 兩者都是「由下而上、逐步合併」，差別只在**合併的評分準則**。
@@ -2245,12 +2280,28 @@ model = get_peft_model(model, LoraConfig(r=16, lora_alpha=32, task_type="CAUSAL_
 
 這是**課程最關鍵的觀念**：
 
-```
-PEFT（參數高效微調）
-  └── Adapter（抽象概念：在模型裡插入小可訓練模組）
-        ├── LoRA   ：用兩個低秩矩陣 A、B 當作「adapter」
-        └── QLoRA  ：LoRA ＋ 4-bit 量化
-```
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" role="img" aria-label="PEFT 家族：概念與實作" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="798.5" height="338.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">PEFT 家族：概念與實作</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Adapter 是概念，LoRA / QLoRA 是它的實作</text>
+<rect x="48" y="106" width="704" height="182" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">PEFT（參數高效微調）</text>
+<path d="M 100 184 L 100 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Adapter　——　抽象概念：在模型裡插入小可訓練模組</text>
+<path d="M 156 194 L 156 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 220 L 170 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="226" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LoRA　：用兩個低秩矩陣 A、B 當作「adapter」</text>
+<path d="M 156 230 L 156 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 256 L 170 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="262" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">QLoRA　：LoRA ＋ 4-bit 量化</text>
+<text x="48" y="322" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">考點：Adapter 是一個概念，LoRA 與 QLoRA 是它的具體實作。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 45：PEFT 家族——Adapter 是「在模型裡插入小可訓練模組」的抽象概念，LoRA（兩個低秩矩陣 A、B）與 QLoRA（LoRA ＋ 4-bit 量化）是具體實作。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 > 💡 **考點（高頻）**：**「Adapter」是一個概念，LoRA 與 QLoRA 是它的具體實作。**
 > 所以課程把 Adapters 放在 LoRA／QLoRA **之後**講，順序是對的
@@ -2788,14 +2839,36 @@ Hint: A new version of huggingface_hub (2.2.0) is available! You are using versi
 
 ### 32.2 它就是 repo 裡的 `README.md`
 
-```
-model-repo/
-├── README.md              ← Model Card（含 YAML frontmatter）
-├── config.json
-├── model.safetensors
-├── tokenizer_config.json
-└── vocab.json
-```
+<!-- FIG3 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" role="img" aria-label="model-repo/ 裡面有什麼" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="418.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">model-repo/ 裡面有什麼</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Hub 上一個模型資料夾的標準長相</text>
+<rect x="48" y="106" width="804" height="254" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">model-repo/</text>
+<text x="250" y="148" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">←　Hub 上的一個模型資料夾（repo）</text>
+<path d="M 100 184 L 100 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">README.md</text>
+<text x="340" y="190" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—　Model Card：Intended use／Limitations／Evaluation／Training data</text>
+<path d="M 100 220 L 114 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="226" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">config.json</text>
+<text x="340" y="226" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—　模型架構設定</text>
+<path d="M 100 256 L 114 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="262" font-size="12.5" fill="#58a6ff" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">model.safetensors</text>
+<text x="340" y="262" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—　權重本體（就是那幾 GB）</text>
+<path d="M 100 292 L 114 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="298" font-size="12.5" fill="#c084fc" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">tokenizer_config.json</text>
+<text x="340" y="298" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—　分詞器設定</text>
+<path d="M 100 328 L 114 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="334" font-size="12.5" fill="#3fb950" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">vocab.json</text>
+<text x="340" y="334" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—　詞表（token ↔ id）</text>
+<text x="48" y="396" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">repo 就是一個資料夾：README.md 是 Model Card，其餘是設定與權重本體。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 46：model-repo/ 的內容——README.md 就是 Model Card，其餘是架構設定、權重本體、分詞器設定與詞表。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG3 -->
 
 Model Card 的 `README.md` 開頭是 **YAML frontmatter**，Hub 會依它產生篩選標籤：
 
@@ -3688,26 +3761,55 @@ Are this object's requirements defined correctly?
 
 #### 完整根因鏈（逐層追出來的）
 
-```
-torch       2.14.1+cu132    (CUDA 13.2)
-torchaudio  2.11.0+cu130    (CUDA 13.0)   ← 版本不符
-   │
-   ├─ torchaudio/_extension/utils.py:124  _check_cuda_version()
-   │     → RuntimeError: Detected that PyTorch and TorchAudio were compiled
-   │       with different CUDA versions.
-   │
-   ├─ transformers/audio_utils.py:58
-   │     if is_torchaudio_available():
-   │         import torchaudio          ← 這一行的 import 炸了
-   │
-   ├─ transformers/processing_utils.py → modeling_layers.py
-   │     → models/bloom/modeling_bloom.py:26  from ...modeling_layers import ...
-   │
-   ├─ transformers 的 lazy-import 對 BloomPreTrainedModel 失敗
-   │
-   └─ peft/utils/constants.py:16
-         from transformers import BloomPreTrainedModel   ← peft 死在這裡
-```
+<!-- FIG4 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 870" role="img" aria-label="torchaudio 版本不符的根因鏈" style="width:100%;height:auto;display:block">
+<defs><marker id="m30363d" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#30363d"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="868.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">torchaudio 版本不符的根因鏈</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從 CUDA 版本不一致，一路炸到 peft 匯入失敗</text>
+<rect x="48" y="110" width="904" height="110" rx="12" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="76" y="144" font-size="14.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">觸發點：兩套 CUDA 版本不一致</text>
+<text x="76" y="174" font-size="12.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">torch　　　 2.14.1+cu132　（CUDA 13.2）</text>
+<text x="76" y="198" font-size="12.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">torchaudio　2.11.0+cu130　（CUDA 13.0）　← 版本不符</text>
+<path d="M 80 220 L 80 248" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<rect x="48" y="250" width="904" height="72" rx="12" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="80" cy="286" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="80" y="290.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="108" y="280" font-size="12" fill="#fbbf24" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">torchaudio/_extension/utils.py:124</text>
+<text x="108" y="304" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">_check_cuda_version() → RuntimeError: PyTorch 與 TorchAudio 的 CUDA 版本不同</text>
+<path d="M 80 322 L 80 340" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<rect x="48" y="342" width="904" height="72" rx="12" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="80" cy="378" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="80" y="382.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="108" y="372" font-size="12" fill="#58a6ff" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">transformers/audio_utils.py:58</text>
+<text x="108" y="396" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">if is_torchaudio_available():　import torchaudio　← 這一行炸了</text>
+<path d="M 80 414 L 80 432" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<rect x="48" y="434" width="904" height="72" rx="12" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="80" cy="470" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="80" y="474.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="108" y="464" font-size="12" fill="#c084fc" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">transformers/processing_utils.py → modeling_layers.py</text>
+<text x="108" y="488" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ models/bloom/modeling_bloom.py:26　from ...modeling_layers import ...</text>
+<path d="M 80 506 L 80 524" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<rect x="48" y="526" width="904" height="72" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="80" cy="562" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="80" y="566.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="108" y="556" font-size="12" fill="#2dd4bf" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">transformers 的 lazy-import</text>
+<text x="108" y="580" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">對 BloomPreTrainedModel 失敗</text>
+<path d="M 80 598 L 80 616" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<rect x="48" y="618" width="904" height="72" rx="12" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="80" cy="654" r="15" fill="#f472b6" opacity="0.92"/>
+<text x="80" y="658.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="108" y="648" font-size="12" fill="#f472b6" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">peft/utils/constants.py:16</text>
+<text x="108" y="672" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">from transformers import BloomPreTrainedModel　← peft 死在這裡</text>
+<rect x="48" y="730" width="904" height="76" rx="12" fill="#0d1117" stroke="#f472b666" stroke-width="1.5"/>
+<text x="76" y="762" font-size="13.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">表面症狀（錯誤訊息完全指錯方向）</text>
+<text x="76" y="788" font-size="12" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">ModuleNotFoundError: Could not import module 'BloomPreTrainedModel'.</text>
+<text x="48" y="840" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">根因是「torch 與 torchaudio 的 CUDA 版本不一致」；peft 只是最後一個受害者。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 47：完整根因鏈——torch 與 torchaudio 的 CUDA 版本不一致，讓 transformers 的 lazy-import 對 BloomPreTrainedModel 失敗，最後 peft 匯入時報出完全指錯方向的 ModuleNotFoundError。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG4 -->
 
 **本機實測的關鍵程式碼**（`transformers/audio_utils.py`）：
 

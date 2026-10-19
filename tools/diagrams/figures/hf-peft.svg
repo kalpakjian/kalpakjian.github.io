@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" role="img" aria-label="PEFT 家族：概念與實作" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="798.5" height="338.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">PEFT 家族：概念與實作</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Adapter 是概念，LoRA / QLoRA 是它的實作</text>
+<rect x="48" y="106" width="704" height="182" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">PEFT（參數高效微調）</text>
+<path d="M 100 184 L 100 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Adapter　——　抽象概念：在模型裡插入小可訓練模組</text>
+<path d="M 156 194 L 156 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 220 L 170 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="226" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LoRA　：用兩個低秩矩陣 A、B 當作「adapter」</text>
+<path d="M 156 230 L 156 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 256 L 170 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="262" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">QLoRA　：LoRA ＋ 4-bit 量化</text>
+<text x="48" y="322" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">考點：Adapter 是一個概念，LoRA 與 QLoRA 是它的具體實作。</text>
+</svg>

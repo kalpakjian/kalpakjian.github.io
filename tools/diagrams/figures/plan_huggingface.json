@@ -1,0 +1,22 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/hf-subword.svg",
+    "caption": "圖 44：子詞分詞的兩條路——由上而下的 Unigram language model，與由下而上的 BPE（貪婪、純計數）和 WordPiece（貪婪變體、用似然評分）。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 2,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/hf-peft.svg",
+    "caption": "圖 45：PEFT 家族——Adapter 是「在模型裡插入小可訓練模組」的抽象概念，LoRA（兩個低秩矩陣 A、B）與 QLoRA（LoRA ＋ 4-bit 量化）是具體實作。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 3,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/hf-model-repo.svg",
+    "caption": "圖 46：model-repo/ 的內容——README.md 就是 Model Card，其餘是架構設定、權重本體、分詞器設定與詞表。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 4,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/hf-cuda-chain.svg",
+    "caption": "圖 47：完整根因鏈——torch 與 torchaudio 的 CUDA 版本不一致，讓 transformers 的 lazy-import 對 BloomPreTrainedModel 失敗，最後 peft 匯入時報出完全指錯方向的 ModuleNotFoundError。｜手繪 SVG 圖表"
+  }
+]

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" role="img" aria-label="model-repo/ 裡面有什麼" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="418.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">model-repo/ 裡面有什麼</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Hub 上一個模型資料夾的標準長相</text>
+<rect x="48" y="106" width="804" height="254" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">model-repo/</text>
+<text x="250" y="148" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">←　Hub 上的一個模型資料夾（repo）</text>
+<path d="M 100 184 L 100 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">README.md</text>
+<text x="340" y="190" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—　Model Card：Intended use／Limitations／Evaluation／Training data</text>
+<path d="M 100 220 L 114 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="226" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">config.json</text>
+<text x="340" y="226" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—　模型架構設定</text>
+<path d="M 100 256 L 114 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="262" font-size="12.5" fill="#58a6ff" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">model.safetensors</text>
+<text x="340" y="262" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—　權重本體（就是那幾 GB）</text>
+<path d="M 100 292 L 114 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="298" font-size="12.5" fill="#c084fc" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">tokenizer_config.json</text>
+<text x="340" y="298" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—　分詞器設定</text>
+<path d="M 100 328 L 114 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="334" font-size="12.5" fill="#3fb950" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">vocab.json</text>
+<text x="340" y="334" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—　詞表（token ↔ id）</text>
+<text x="48" y="396" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">repo 就是一個資料夾：README.md 是 Model Card，其餘是設定與權重本體。</text>
+</svg>
