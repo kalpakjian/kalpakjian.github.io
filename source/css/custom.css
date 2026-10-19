@@ -122,10 +122,23 @@ body {
   }
 }
 
-/* ===== 首頁資源總覽：專題 / 學習筆記 / 文章 ===== */
+/* ===== 首頁資源總覽：專題（左欄）/ 學習筆記（右欄）/ 文章 ===== */
 /* 由 scripts/home-resources.js 注入；沿用本站既有的 rgba 中性色＋強調色寫法，深色模式自動相容 */
+/* 兩欄只輸出標題（連到各系列總覽頁）；章節等子頁面入口由導覽列與各總覽頁提供 */
+.home-resources-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px 34px;
+  margin: 0 0 2.5rem;
+}
+
 .home-resources {
   margin: 0 0 2.5rem;
+}
+
+.home-resources-col {
+  margin: 0;
+  min-width: 0;
 }
 
 .home-resources-title {
@@ -144,87 +157,26 @@ body {
   font-size: 1.4rem;
 }
 
-.home-resources-sub {
-  margin: 6px 0 18px;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: var(--sec-text-color);
+/* 只列標題：沒有小標、簡介與膠囊連結；分隔線用虛線，讀起來像目錄 */
+.res-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
 }
 
-.home-resources-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
+.res-list li + li {
+  border-top: 1px dashed rgba(128, 128, 128, 0.3);
 }
 
-.res-card {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 18px;
-  border: 1px solid rgba(128, 128, 128, 0.28);
-  border-left: 4px solid var(--custom-accent);
-  border-radius: 12px;
-  background: rgba(128, 128, 128, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.res-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.res-kicker {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--custom-accent);
-}
-
-.res-title {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 700;
-  line-height: 1.45;
-}
-
-.home-resources .res-title a {
+.res-list a {
+  display: block;
+  padding: 9px 2px;
+  font-size: 1rem;
+  line-height: 1.55;
   color: var(--text-color);
 }
 
-.home-resources .res-title a:hover {
-  color: var(--custom-accent);
-  text-decoration: none;
-}
-
-.res-desc {
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.65;
-  color: var(--sec-text-color);
-}
-
-.res-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 4px;
-}
-
-.home-resources .res-link {
-  display: inline-block;
-  padding: 3px 10px;
-  font-size: 0.78rem;
-  line-height: 1.6;
-  border: 1px solid rgba(128, 128, 128, 0.35);
-  border-radius: 999px;
-  background: rgba(128, 128, 128, 0.08);
-  color: var(--sec-text-color);
-}
-
-.home-resources .res-link:hover {
-  border-color: var(--custom-accent);
+.res-list a:hover {
   color: var(--custom-accent);
   text-decoration: none;
 }
@@ -236,9 +188,11 @@ body {
   scroll-margin-top: 84px;
 }
 
-@media (max-width: 640px) {
-  .home-resources-grid {
+/* 窄螢幕：兩欄堆疊成單欄（專題在上、學習筆記在下） */
+@media (max-width: 768px) {
+  .home-resources-2col {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
 }
 
