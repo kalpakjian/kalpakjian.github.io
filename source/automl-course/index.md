@@ -5,7 +5,7 @@ date: 2026-10-16 21:30:00
 
 <div style="border:1px solid #d0d7de;border-left:4px solid #0969da;background:#f6f8fa;border-radius:8px;padding:10px 14px;margin:0 0 22px;">
 📚 本頁是 <a href="/automl/"><strong>AutoML 專區</strong></a> 的一部分。
-想找<b>原理導向、可長期沿用</b>的自編教材，見
+想找<b>原理導向、可長期沿用</b>的自編筆記，見
 <a href="/automl-principles-course/"><strong>AutoML 十課</strong></a>。
 </div>
 
