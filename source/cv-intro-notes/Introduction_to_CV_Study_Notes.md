@@ -4,16 +4,37 @@
 
 ## 0. 30 秒總複習（考前最後掃描）
 
-```
-電腦視覺（Computer Vision）
-  ├─ 商業應用：零售、安防、工業檢測、醫療、自駕、農業…
-  ├─ 2024 世界機器人大會：超現實圍棋博弈（人機對弈展示）
-  └─ 核心技術：CNN（卷積神經網路）
-        ├─ 定義：處理「網格狀資料」（影像、音訊）的神經網路
-        ├─ 關鍵：卷積層自動學習「階層式特徵」（由低階到高階）
-        ├─ 架構：encoder（多個逐漸變窄的 block 堆疊 →「deep」）
-        └─ 核心思想：參數重用（parameter sharing）
-```
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-label="電腦視覺與 CNN：一頁看懂" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">電腦視覺與 CNN：一頁看懂</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">應用場景、關鍵技術與四個核心觀念</text>
+<rect x="48" y="106" width="904" height="372" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="17" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">電腦視覺（Computer Vision）</text>
+<path d="M 100 184 L 100 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">商業應用：零售、安防、工業檢測、醫療、自駕、農業…</text>
+<path d="M 100 220 L 114 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="226" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2024 世界機器人大會：超現實圍棋博弈（人機對弈展示）</text>
+<path d="M 100 256 L 114 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="262" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">核心技術：CNN（卷積神經網路）</text>
+<path d="M 134 266 L 134 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 134 292 L 148 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="154" y="298" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">定義：處理「網格狀資料」（影像、音訊）的神經網路</text>
+<path d="M 134 302 L 134 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 134 328 L 148 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="154" y="334" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">關鍵：卷積層自動學習「階層式特徵」（由低階到高階）</text>
+<path d="M 134 338 L 134 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 134 364 L 148 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="154" y="370" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">架構：encoder（多個逐漸變窄的 block 堆疊 →「deep」）</text>
+<path d="M 134 374 L 134 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 134 400 L 148 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="154" y="406" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">核心思想：參數重用（parameter sharing）</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：電腦視覺的三個分支——應用場景、世界機器人大會案例，以及核心技術 CNN 的四個觀念。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 | 你會用到的關鍵詞 | 一句話記法 |
 |---|---|
@@ -108,13 +129,40 @@
 
 ### 3.2 什麼是「階層式」特徵
 
-```
-輸入影像
-  └─ 低階特徵：邊緣、線條、角點
-        └─ 中階特徵：紋理、圓形、局部形狀
-              └─ 高階特徵：眼睛、車輪、人臉等「物件部件」
-                    └─ 整體：可辨識的物件類別
-```
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="CNN 學到的階層式特徵" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker><marker id="m2dd4bf" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker><marker id="m58a6ff" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker><marker id="mc084fc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">CNN 學到的階層式特徵</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從邊緣到物件：網路越深，看到的東西越抽象</text>
+<path d="M 90 150 L 90 440" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 90 412 L 90 440" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="22" y="152" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">低階</text>
+<text x="22" y="442" font-size="13" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">高階</text>
+<rect x="120" y="120" width="560" height="54" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="400.0" y="145.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸入影像</text>
+<text x="400.0" y="167.0" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">原始像素</text>
+<path d="M 160 174 L 160 188" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="150" y="190" width="560" height="54" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="430.0" y="215.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">低階特徵</text>
+<text x="430.0" y="237.0" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">邊緣、線條、角點</text>
+<path d="M 190 244 L 190 258" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#m2dd4bf)"/>
+<rect x="180" y="260" width="560" height="54" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="460.0" y="285.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">中階特徵</text>
+<text x="460.0" y="307.0" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">紋理、圓形、局部形狀</text>
+<path d="M 220 314 L 220 328" fill="none" stroke="#58a6ff" stroke-width="2" marker-end="url(#m58a6ff)"/>
+<rect x="210" y="330" width="560" height="54" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="490.0" y="355.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">高階特徵</text>
+<text x="490.0" y="377.0" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">眼睛、車輪、人臉等「物件部件」</text>
+<path d="M 250 384 L 250 398" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#mc084fc)"/>
+<rect x="240" y="400" width="560" height="54" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="520.0" y="425.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">整體</text>
+<text x="520.0" y="447.0" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">可辨識的物件類別</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：階層式特徵——低階看到邊緣與角點，中階組出紋理與形狀，高階才認得出眼睛、車輪等物件部件。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 > **考點**：CNN 定義的兩個關鍵字是「**grid-like structure**」與「**hierarchical representations**」；
 > 常見陷阱：把 CNN 說成「只能處理影像」——課程明講也包含**音訊**等網格狀資料。
