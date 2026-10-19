@@ -1,0 +1,67 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-xy.svg",
+    "caption": "圖 14：X 與 y——左邊是模型看得到的特徵表，右邊是模型要學著猜的品種（這就是「標記」）。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 2,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-tree-sensitive.svg",
+    "caption": "圖 15：同一份鳶尾花資料，切點從 2.45 改成 2.50 就長出不同的樹——這就是高變異數，也是隨機森林存在的理由。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 3,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-accuracy.svg",
+    "caption": "圖 16：準確度（CA）與可解釋性的取捨——kNN／邏輯迴歸／Stacking 並列 0.9667，而 CN2 規則（0.8933）與樸素貝氏（0.8733）可解釋但沒那麼準。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 4,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-q4.svg",
+    "caption": "圖 17：決策流程——先問需不需要解釋（要文字規則用 CN2、只要看得懂用決策樹），再問資料量與準確度（隨機森林／梯度提升／邏輯迴歸）。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 5,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-svm.svg",
+    "caption": "圖 18：SVM 的間隔——決策邊界（超平面）上下各一條虛線，SVM 要讓兩條虛線的距離最大化；真正決定這條線的只有支持向量。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 6,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-sigmoid.svg",
+    "caption": "圖 19：邏輯迴歸的核心——sigmoid 把任意實數壓到 0～1；z = 0 時機率正好 0.5，那就是分類門檻。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 7,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-bayes.svg",
+    "caption": "圖 20：貝氏定理——分類版本是「後驗機率 ∝ 先驗機率 × 似然」；「樸素」指假設每個特徵彼此獨立，所以似然可以直接相乘。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 8,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-constant.svg",
+    "caption": "圖 21：Constant 的工作流——File 接 Constant 再分頭接 Test and Score（先量基準線）與 Predictions（查看預測結果）。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 9,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-stacking.svg",
+    "caption": "圖 22：Stacking——第 1 層是三個基礎學習器（Logistic／RandomForest／SVM），它們的預測當成新特徵，交給第 2 層的元學習器做最終預測。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 10,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-loadmodel.svg",
+    "caption": "圖 23：Load Model——① 拖入元件、② 選 .pkcls／.pkreg、③ 接上新資料、④ 看 Predictions；順序不能顛倒。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 11,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-saveload.svg",
+    "caption": "圖 24：完整閉環——訓練階段（File → Preprocess → 模型元件 → Save Model → .pkcls）與推論階段（File → Load Model → Predictions），所以推論完全不需要重新訓練。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 12,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-examflow.svg",
+    "caption": "圖 25：考試畫圖題——File 先接 Constant 量基準線，Stacking 再量整合後的提升，Save Model 存成 model.pkcls，最後用 Load Model 載入並輸出 Predictions。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 13,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/orangeai-orange-tpot.svg",
+    "caption": "圖 26：先後關係——Orange 先探索並建立 Constant 基準（決定用哪個指標），TPOT 再在定義好的空間裡搜出最佳管線，最後拉回 Orange 用視覺化檢查。｜手繪 SVG 圖表"
+  }
+]

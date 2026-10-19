@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-label="Orange 與 TPOT：不是二選一，是有先後" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="618.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Orange 與 TPOT：不是二選一，是有先後</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">上游省下的時間比下游多榨的分數更值錢</text>
+<rect x="140" y="150" width="620" height="90" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="170" y="190" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Orange：探索、理解、建立 Constant 基準</text>
+<text x="170" y="218" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">決定「這題該用哪一個指標衡量」</text>
+<path d="M 450 240 L 450 294" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="140" y="300" width="620" height="90" rx="12" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="170" y="340" font-size="15" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT：在你定義好的空間裡搜出最佳管線</text>
+<text x="170" y="368" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">把搜尋空間交給演化演算法</text>
+<path d="M 450 390 L 450 444" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="140" y="450" width="620" height="90" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="170" y="490" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Orange：把結果拉回來，用視覺化檢查</text>
+<text x="170" y="518" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「這個模型是不是在胡說」</text>
+<text x="466" y="272" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你已經知道要解什麼問題了</text>
+<text x="466" y="422" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">拿到一條候選管線</text>
+<text x="48" y="580" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Orange 在上游幫你省下的時間，比 TPOT 在下游多榨出的分數更值錢。</text>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" role="img" aria-label="準確度 vs 可解釋性" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="658.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">準確度 vs 可解釋性</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">本機實測 CA：越準的越像黑箱</text>
+<text x="48" y="128" font-size="13" fill="#8b949e" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">準確度（CA，本機實測）</text>
+<path d="M 150 220 L 150 156" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="140" y="180" font-size="12.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">高</text>
+<text x="140" y="550" font-size="12.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">低</text>
+<path d="M 150 560 L 866 560" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="170" y="586" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">低</text>
+<text x="846" y="586" font-size="12.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">高</text>
+<text x="866" y="610" font-size="13" fill="#8b949e" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">可解釋性</text>
+<circle cx="250" cy="175" r="7" fill="#58a6ff"/>
+<text x="250" y="162" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">kNN (0.9667)</text>
+<circle cx="520" cy="175" r="7" fill="#58a6ff"/>
+<text x="520" y="162" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">邏輯迴歸 (0.9667)</text>
+<circle cx="790" cy="175" r="7" fill="#58a6ff"/>
+<text x="790" y="162" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Stacking (0.9667)</text>
+<circle cx="250" cy="233" r="7" fill="#58a6ff"/>
+<text x="250" y="220" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVM (0.9600)</text>
+<circle cx="520" cy="233" r="7" fill="#58a6ff"/>
+<text x="520" y="220" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AdaBoost (0.9600)</text>
+<circle cx="790" cy="233" r="7" fill="#58a6ff"/>
+<text x="790" y="220" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Calibrated (0.9600)</text>
+<circle cx="385" cy="291" r="7" fill="#58a6ff"/>
+<text x="385" y="278" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">梯度提升 (0.9533)</text>
+<circle cx="650" cy="291" r="7" fill="#58a6ff"/>
+<text x="650" y="278" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">神經網路 (0.9533)</text>
+<circle cx="385" cy="349" r="7" fill="#58a6ff"/>
+<text x="385" y="336" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">隨機森林 (0.9467)</text>
+<circle cx="790" cy="349" r="7" fill="#58a6ff"/>
+<text x="790" y="336" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">決策樹 (0.9467)</text>
+<circle cx="790" cy="407" r="7" fill="#58a6ff"/>
+<text x="790" y="394" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">CN2 規則 (0.8933)</text>
+<circle cx="650" cy="465" r="7" fill="#58a6ff"/>
+<text x="650" y="452" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">樸素貝氏 (0.8733)</text>
+<circle cx="520" cy="523" r="7" fill="#58a6ff"/>
+<text x="520" y="510" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SGD (0.8333)</text>
+<text x="48" y="634" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">左邊＝黑箱、右邊＝白箱：（神經網路／SVM／隨機森林）在左，（CN2 規則／決策樹／計分表）在右。</text>
+</svg>

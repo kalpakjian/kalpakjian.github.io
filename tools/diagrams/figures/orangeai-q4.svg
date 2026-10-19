@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" role="img" aria-label="選模型的四組問答" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="538.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">選模型的四組問答</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">需要能解釋？資料量大嗎？在乎準確度？</text>
+<rect x="48" y="106" width="904" height="362" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">需要能解釋？</text>
+<path d="M 100 184 L 100 436" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">是　→　需要「文字規則」嗎？</text>
+<path d="M 156 194 L 156 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 220 L 170 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="226" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">是　→　CN2 規則歸納</text>
+<path d="M 156 230 L 156 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 256 L 170 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="262" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">否　→　決策樹（還能看圖）</text>
+<path d="M 100 292 L 114 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="298" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">否　→　資料量大嗎？</text>
+<path d="M 156 302 L 156 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 328 L 170 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="334" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">小（&lt; 幾千筆）→　kNN 或 決策樹</text>
+<path d="M 156 338 L 156 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 364 L 170 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="370" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">大　→　在乎準確度？</text>
+<path d="M 212 374 L 212 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 212 400 L 226 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="232" y="406" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">是　→　隨機森林（快一點）或 梯度提升（準一點）</text>
+<path d="M 212 410 L 212 436" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 212 436 L 226 436" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="232" y="442" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">否　→　邏輯迴歸（快、穩、可解釋）</text>
+<text x="48" y="508" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩條規則會重疊：資料量小與資源有限時，課程都推 kNN 與 CN2——但實測的 SGD 只有 0.8333，輕量不等於準。</text>
+</svg>

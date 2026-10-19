@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" role="img" aria-label="SVM 在最大化什麼" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="458.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVM 在最大化什麼</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">決策邊界兩側各留一條間隔，把它撐到最寬</text>
+<circle cx="180" cy="150" r="7" fill="#2dd4bf"/>
+<circle cx="250" cy="138" r="7" fill="#2dd4bf"/>
+<circle cx="320" cy="152" r="7" fill="#2dd4bf"/>
+<circle cx="400" cy="140" r="7" fill="#2dd4bf"/>
+<circle cx="470" cy="152" r="7" fill="#2dd4bf"/>
+<rect x="193" y="343" width="14" height="14" rx="2" fill="#f472b6"/>
+<rect x="263" y="355" width="14" height="14" rx="2" fill="#f472b6"/>
+<rect x="333" y="341" width="14" height="14" rx="2" fill="#f472b6"/>
+<rect x="413" y="353" width="14" height="14" rx="2" fill="#f472b6"/>
+<rect x="483" y="341" width="14" height="14" rx="2" fill="#f472b6"/>
+<circle cx="260" cy="205" r="10" fill="#2dd4bf"/>
+<circle cx="400" cy="205" r="10" fill="#2dd4bf"/>
+<rect x="290" y="285" width="20" height="20" rx="2" fill="#f472b6"/>
+<rect x="430" y="285" width="20" height="20" rx="2" fill="#f472b6"/>
+<path d="M 100 205 L 640 205" stroke="#7d8590" stroke-width="1.5" stroke-dasharray="7 6" fill="none"/>
+<path d="M 100 295 L 640 295" stroke="#7d8590" stroke-width="1.5" stroke-dasharray="7 6" fill="none"/>
+<path d="M 100 250 L 640 250" fill="none" stroke="#e6edf3" stroke-width="2.5"/>
+<text x="660" y="209" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 間隔上緣（margin）</text>
+<text x="660" y="255" font-size="12" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 決策邊界（超平面）</text>
+<text x="660" y="299" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 間隔下緣</text>
+<text x="660" y="340" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVM 要讓上下兩條虛線</text>
+<text x="660" y="360" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">之間的距離最大化</text>
+<text x="48" y="400" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">● 類別 A　　■ 類別 B　　— 決策邊界　　- - 間隔（margin）　　◎ 支持向量（離邊界最近的點）</text>
+<text x="48" y="434" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真正決定這條線的只有支持向量——其他點移開一點都不影響結果。</text>
+</svg>

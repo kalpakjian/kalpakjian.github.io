@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="部署：Save Model → .pkcls → 自己包一層服務" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">部署：Save Model → .pkcls → 自己包一層服務</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Orange 沒有 REST API，官方路線就是存檔再載入</text>
+<rect x="300" y="120" width="300" height="54" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="450.0" y="152.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練（GUI 或腳本）</text>
+<path d="M 450 174 L 450 204" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="240" y="208" width="220" height="54" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="350.0" y="240.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Save Model</text>
+<path d="M 464 235 L 514 235" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="520" y="208" width="220" height="54" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="630.0" y="240.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">model.pkcls</text>
+<path d="M 350 262 L 350 294" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="366" y="285" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">↑ 把「模型 ＋ domain」一起序列化</text>
+<rect x="180" y="298" width="340" height="54" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="350.0" y="329.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">新的行程：Load Model（或 pickle.load）</text>
+<path d="M 350 352 L 350 384" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="150" y="388" width="400" height="54" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="350.0" y="419.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">接一批「只有特徵、沒有答案」的新資料</text>
+<path d="M 554 415 L 604 415" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="610" y="388" width="200" height="54" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="710.0" y="420.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">預測結果</text>
+<text x="48" y="480" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Orange 沒有 REST API——官方路線就是 Save Model 存檔，再在新行程裡 Load Model 接資料預測。</text>
+</svg>

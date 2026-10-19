@@ -1226,15 +1226,43 @@ numpy   2.4.6
 <strong>不是</strong>在說這門課屬於非監督學習。這是一個很容易被誘答的地方。</p>
 </blockquote>
 <h3 id="24-標記數據到底是什麼">2.4 「標記數據」到底是什麼</h3>
-<div class="codehilite"><pre><span></span><code><span class="err">特徵（</span><span class="n">features</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">independent</span><span class="w"> </span><span class="n">variables</span><span class="err">）</span><span class="w">     </span><span class="err">目標（</span><span class="n">target</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">dependent</span><span class="w"> </span><span class="n">variable</span><span class="err">）</span>
-<span class="err">┌────────┬────────┬────────┐</span><span class="w">                </span><span class="err">┌──────────┐</span>
-<span class="err">│</span><span class="w"> </span><span class="err">花萼長</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="err">花萼寬</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="err">花瓣長</span><span class="w"> </span><span class="err">│</span><span class="w">  </span><span class="o">...</span><span class="w">           </span><span class="err">│</span><span class="w">  </span><span class="err">品種</span><span class="w">    </span><span class="err">│</span>
-<span class="err">├────────┼────────┼────────┤</span><span class="w">                </span><span class="err">├──────────┤</span>
-<span class="err">│</span><span class="w">  </span><span class="mf">5.1</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="mf">3.5</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="mf">1.4</span><span class="w">   </span><span class="err">│</span><span class="w">                </span><span class="err">│</span><span class="w"> </span><span class="n">setosa</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">←</span><span class="w"> </span><span class="err">這就是「標記」</span>
-<span class="err">│</span><span class="w">  </span><span class="mf">7.0</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="mf">3.2</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="mf">4.7</span><span class="w">   </span><span class="err">│</span><span class="w">                </span><span class="err">│</span><span class="w"> </span><span class="n">versicolor</span><span class="err">│</span>
-<span class="err">└────────┴────────┴────────┘</span><span class="w">                </span><span class="err">└──────────┘</span>
-<span class="w">        </span><span class="err">（</span><span class="n">X</span><span class="err">：模型看得到的）</span><span class="w">                        </span><span class="err">（</span><span class="n">y</span><span class="err">：模型要學著猜的）</span>
-</code></pre></div>
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" role="img" aria-label="特徵 X 與目標 y：什麼是「標記」" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="438.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">特徵 X 與目標 y：什麼是「標記」</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一列都有正確答案，才叫有標記</text>
+<text x="255" y="150" font-size="13" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">特徵（features / independent variables）</text>
+<rect x="90" y="170" width="330" height="118" rx="10" fill="#0d1117" stroke="#2dd4bf66" stroke-width="1.5"/>
+<path d="M 90 212 L 420 212" fill="none" stroke="#2dd4bf66" stroke-width="1.5"/>
+<path d="M 200 170 L 200 288" fill="none" stroke="#30363d" stroke-width="1"/>
+<path d="M 310 170 L 310 288" fill="none" stroke="#30363d" stroke-width="1"/>
+<path d="M 90 250 L 420 250" fill="none" stroke="#30363d" stroke-width="1"/>
+<text x="145.0" y="196.0" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">花萼長</text>
+<text x="255.0" y="196.0" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">花萼寬</text>
+<text x="365.0" y="196.0" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">花瓣長</text>
+<text x="145.0" y="236.0" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5.1</text>
+<text x="255.0" y="236.0" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3.5</text>
+<text x="365.0" y="236.0" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.4</text>
+<text x="145.0" y="274.0" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7.0</text>
+<text x="255.0" y="274.0" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3.2</text>
+<text x="365.0" y="274.0" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4.7</text>
+<text x="430" y="226" font-size="18" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">…</text>
+<text x="660" y="150" font-size="13" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">目標（target）</text>
+<rect x="560" y="170" width="200" height="118" rx="10" fill="#0d1117" stroke="#fbbf2466" stroke-width="1.5"/>
+<path d="M 560 212 L 760 212" fill="none" stroke="#fbbf2466" stroke-width="1.5"/>
+<path d="M 560 250 L 760 250" fill="none" stroke="#30363d" stroke-width="1"/>
+<text x="660.0" y="196.0" font-size="12.5" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">品種</text>
+<text x="660.0" y="236.0" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">setosa</text>
+<text x="660.0" y="274.0" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">versicolor</text>
+<text x="775" y="245" font-size="12" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 這就是「標記」</text>
+<text x="255" y="340" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">（X：模型看得到的）</text>
+<text x="660" y="340" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">（y：模型要學著猜的）</text>
+<text x="48" y="400" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">有標記＝每一列都有正確答案（y），模型才有東西可以學；這跟「監督／非監督」是同一件事的兩種說法。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 14：X 與 y——左邊是模型看得到的特徵表，右邊是模型要學著猜的品種（這就是「標記」）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 <p><strong>Orange 的術語對照</strong>（很重要，<code>Edit Domain</code> 那一章會用到）：</p>
 <table>
@@ -1563,12 +1591,52 @@ numpy   2.4.6
 </tbody>
 </table>
 <p><strong>為什麼「對細微變化過於敏感」（課程的缺點）</strong></p>
-<div class="codehilite"><pre><span></span><code>       petal length ≤ 2.45 ?                換一個切點：
-        ├─ 是 → setosa                       petal length ≤ 2.50 ?
-        └─ 否 → petal width ≤ 1.75 ?          ├─ 是 → setosa
-                 ├─ 是 → versicolor            └─ 否 → …
-                 └─ 否 → virginica
-</code></pre></div>
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-label="決策樹對切點有多敏感" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="478.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">決策樹對切點有多敏感</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2.45 改成 2.50，整棵樹就長得不一樣</text>
+<rect x="60" y="150" width="320" height="48" rx="10" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="220" y="180" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">petal length ≤ 2.45 ?</text>
+<rect x="70" y="250" width="130" height="44" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="135.0" y="276.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">setosa</text>
+<rect x="230" y="250" width="150" height="56" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="305.0" y="282.14" font-size="11.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">petal width ≤ 1.75 ?</text>
+<path d="M 220 198 L 220 226" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 135 226 L 305 226" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 135 226 L 135 248" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 305 226 L 305 248" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="140" y="218" font-size="11.5" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">是</text>
+<text x="310" y="218" font-size="11.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">否</text>
+<path d="M 305 306 L 305 336" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 235 336 L 375 336" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 235 336 L 235 358" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 375 336 L 375 358" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="240" y="328" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">是</text>
+<text x="380" y="328" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">否</text>
+<rect x="170" y="360" width="130" height="44" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="235.0" y="386.32" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">versicolor</text>
+<rect x="310" y="360" width="130" height="44" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="375.0" y="386.32" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">virginica</text>
+<rect x="490" y="150" width="320" height="48" rx="10" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="650" y="180" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">petal length ≤ 2.50 ?</text>
+<rect x="500" y="250" width="130" height="44" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="565.0" y="276.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">setosa</text>
+<rect x="660" y="250" width="130" height="44" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="725.0" y="276.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">…</text>
+<path d="M 650 198 L 650 226" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 565 226 L 725 226" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 565 226 L 565 248" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 725 226 L 725 248" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="570" y="218" font-size="11.5" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">是</text>
+<text x="730" y="218" font-size="11.5" fill="#8b949e" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">否</text>
+<text x="48" y="450" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">換一個切點（2.45 → 2.50）整棵樹就長得不一樣——這就是「高變異數」，也是隨機森林要存在的原因。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 15：同一份鳶尾花資料，切點從 2.45 改成 2.50 就長出不同的樹——這就是高變異數，也是隨機森林存在的理由。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 <p>只要訓練資料多了幾筆、或某個門檻從 <code>2.45</code> 變成 <code>2.50</code>，<strong>整棵樹的形狀就可能完全不同</strong>。
 這就是「<strong>高變異數（high variance）</strong>」——也是隨機森林要存在的原因。</p>
@@ -2092,20 +2160,52 @@ R² 0.7217 代表線性迴歸解釋了 72.17% 的變異。</p>
 <h3 id="41-準確度-vs-可解釋性">4.1 準確度 vs 可解釋性</h3>
 <p>課程這一頁<strong>沒有文字層</strong>（是純圖表），但標題就點出核心張力：<strong>準確度與可解釋性通常互相拉扯</strong>。
 下圖是依課程主題、並用 §3.6 的<strong>本機實測數字</strong>補完的版本：</p>
-<div class="codehilite"><pre><span></span><code>準確度（CA）
-  高 │  ● kNN (0.9667)  ● 邏輯迴歸 (0.9667)  ● Stacking (0.9667)
-     │      ● SVM (0.9600)  ● AdaBoost (0.9600)  ● Calibrated (0.9600)
-     │          ● 梯度提升 (0.9533)  ● 神經網路 (0.9533)
-     │              ● 決策樹 (0.9467)  ● 隨機森林 (0.9467)
-     │
-     │  ● CN2 規則 (0.8933)
-     │  ● 樸素貝氏 (0.8733)
-     │  ● SGD (0.8333)
-  低 │
-     └──────────────────────────────────────────────→ 可解釋性
-        低                                        高
-        （神經網路／SVM／隨機森林）      （CN2 規則／決策樹／計分表）
-</code></pre></div>
+<!-- FIG3 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" role="img" aria-label="準確度 vs 可解釋性" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="658.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">準確度 vs 可解釋性</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">本機實測 CA：越準的越像黑箱</text>
+<text x="48" y="128" font-size="13" fill="#8b949e" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">準確度（CA，本機實測）</text>
+<path d="M 150 220 L 150 156" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="140" y="180" font-size="12.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">高</text>
+<text x="140" y="550" font-size="12.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">低</text>
+<path d="M 150 560 L 866 560" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="170" y="586" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">低</text>
+<text x="846" y="586" font-size="12.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">高</text>
+<text x="866" y="610" font-size="13" fill="#8b949e" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">可解釋性</text>
+<circle cx="250" cy="175" r="7" fill="#58a6ff"/>
+<text x="250" y="162" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">kNN (0.9667)</text>
+<circle cx="520" cy="175" r="7" fill="#58a6ff"/>
+<text x="520" y="162" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">邏輯迴歸 (0.9667)</text>
+<circle cx="790" cy="175" r="7" fill="#58a6ff"/>
+<text x="790" y="162" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Stacking (0.9667)</text>
+<circle cx="250" cy="233" r="7" fill="#58a6ff"/>
+<text x="250" y="220" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVM (0.9600)</text>
+<circle cx="520" cy="233" r="7" fill="#58a6ff"/>
+<text x="520" y="220" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AdaBoost (0.9600)</text>
+<circle cx="790" cy="233" r="7" fill="#58a6ff"/>
+<text x="790" y="220" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Calibrated (0.9600)</text>
+<circle cx="385" cy="291" r="7" fill="#58a6ff"/>
+<text x="385" y="278" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">梯度提升 (0.9533)</text>
+<circle cx="650" cy="291" r="7" fill="#58a6ff"/>
+<text x="650" y="278" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">神經網路 (0.9533)</text>
+<circle cx="385" cy="349" r="7" fill="#58a6ff"/>
+<text x="385" y="336" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">隨機森林 (0.9467)</text>
+<circle cx="790" cy="349" r="7" fill="#58a6ff"/>
+<text x="790" y="336" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">決策樹 (0.9467)</text>
+<circle cx="790" cy="407" r="7" fill="#58a6ff"/>
+<text x="790" y="394" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">CN2 規則 (0.8933)</text>
+<circle cx="650" cy="465" r="7" fill="#58a6ff"/>
+<text x="650" y="452" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">樸素貝氏 (0.8733)</text>
+<circle cx="520" cy="523" r="7" fill="#58a6ff"/>
+<text x="520" y="510" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SGD (0.8333)</text>
+<text x="48" y="634" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">左邊＝黑箱、右邊＝白箱：（神經網路／SVM／隨機森林）在左，（CN2 規則／決策樹／計分表）在右。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 16：準確度（CA）與可解釋性的取捨——kNN／邏輯迴歸／Stacking 並列 0.9667，而 CN2 規則（0.8933）與樸素貝氏（0.8733）可解釋但沒那麼準。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG3 -->
 
 <table>
 <thead>
@@ -2251,16 +2351,42 @@ R² 0.7217 代表線性迴歸解釋了 72.17% 的變異。</p>
 <p><strong>沒有萬能模型</strong>——根據<strong>問題特性、數據規模與資源條件</strong>，選擇最適合的工具。</p>
 </blockquote>
 <p><strong>補充：一張決策流程圖（把四條規則串起來）</strong></p>
-<div class="codehilite"><pre><span></span><code>需要能解釋？
-├─ 是 → 需要「文字規則」嗎？
-│        ├─ 是 → CN2 規則歸納
-│        └─ 否 → 決策樹（還能看圖）
-└─ 否 → 資料量大嗎？
-         ├─ 小（&lt; 幾千筆）→ kNN 或 決策樹
-         └─ 大 → 在乎準確度？
-                  ├─ 是 → 隨機森林（快一點）或 梯度提升（準一點）
-                  └─ 否 → 邏輯迴歸（快、穩、可解釋）
-</code></pre></div>
+<!-- FIG4 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" role="img" aria-label="選模型的四組問答" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="538.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">選模型的四組問答</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">需要能解釋？資料量大嗎？在乎準確度？</text>
+<rect x="48" y="106" width="904" height="362" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">需要能解釋？</text>
+<path d="M 100 184 L 100 436" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">是　→　需要「文字規則」嗎？</text>
+<path d="M 156 194 L 156 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 220 L 170 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="226" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">是　→　CN2 規則歸納</text>
+<path d="M 156 230 L 156 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 256 L 170 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="262" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">否　→　決策樹（還能看圖）</text>
+<path d="M 100 292 L 114 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="298" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">否　→　資料量大嗎？</text>
+<path d="M 156 302 L 156 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 328 L 170 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="334" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">小（&lt; 幾千筆）→　kNN 或 決策樹</text>
+<path d="M 156 338 L 156 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 364 L 170 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="370" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">大　→　在乎準確度？</text>
+<path d="M 212 374 L 212 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 212 400 L 226 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="232" y="406" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">是　→　隨機森林（快一點）或 梯度提升（準一點）</text>
+<path d="M 212 410 L 212 436" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 212 436 L 226 436" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="232" y="442" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">否　→　邏輯迴歸（快、穩、可解釋）</text>
+<text x="48" y="508" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩條規則會重疊：資料量小與資源有限時，課程都推 kNN 與 CN2——但實測的 SGD 只有 0.8333，輕量不等於準。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 17：決策流程——先問需不需要解釋（要文字規則用 CN2、只要看得懂用決策樹），再問資料量與準確度（隨機森林／梯度提升／邏輯迴歸）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG4 -->
 
 <blockquote>
 <p>⚠️ <strong>注意兩條規則的重疊</strong>：課程在「數據量較小」與「計算資源有限」兩題都推薦了
@@ -2312,16 +2438,40 @@ R² 0.7217 代表線性迴歸解釋了 72.17% 的變異。</p>
 </table>
 <p><strong>補充：SVM 到底在最大化什麼</strong></p>
 <p>SVM 不只是「畫一條線分開」，而是<strong>找那條「離兩邊都最遠」的線</strong>：</p>
-<div class="codehilite"><pre><span></span><code>        ●  ●                        ← 類別 A
-     ●   ●   ●
-    ──────────────  ← 決策邊界（超平面）
-      ↑      ↑
-   支持向量  支持向量                ← 距離邊界最近的那幾個點
-    ──────────────
-    ──────────────  ← 間隔（margin），SVM 要把它最大化
-        ■  ■
-     ■   ■   ■                     ← 類別 B
-</code></pre></div>
+<!-- FIG5 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" role="img" aria-label="SVM 在最大化什麼" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="458.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVM 在最大化什麼</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">決策邊界兩側各留一條間隔，把它撐到最寬</text>
+<circle cx="180" cy="150" r="7" fill="#2dd4bf"/>
+<circle cx="250" cy="138" r="7" fill="#2dd4bf"/>
+<circle cx="320" cy="152" r="7" fill="#2dd4bf"/>
+<circle cx="400" cy="140" r="7" fill="#2dd4bf"/>
+<circle cx="470" cy="152" r="7" fill="#2dd4bf"/>
+<rect x="193" y="343" width="14" height="14" rx="2" fill="#f472b6"/>
+<rect x="263" y="355" width="14" height="14" rx="2" fill="#f472b6"/>
+<rect x="333" y="341" width="14" height="14" rx="2" fill="#f472b6"/>
+<rect x="413" y="353" width="14" height="14" rx="2" fill="#f472b6"/>
+<rect x="483" y="341" width="14" height="14" rx="2" fill="#f472b6"/>
+<circle cx="260" cy="205" r="10" fill="#2dd4bf"/>
+<circle cx="400" cy="205" r="10" fill="#2dd4bf"/>
+<rect x="290" y="285" width="20" height="20" rx="2" fill="#f472b6"/>
+<rect x="430" y="285" width="20" height="20" rx="2" fill="#f472b6"/>
+<path d="M 100 205 L 640 205" stroke="#7d8590" stroke-width="1.5" stroke-dasharray="7 6" fill="none"/>
+<path d="M 100 295 L 640 295" stroke="#7d8590" stroke-width="1.5" stroke-dasharray="7 6" fill="none"/>
+<path d="M 100 250 L 640 250" fill="none" stroke="#e6edf3" stroke-width="2.5"/>
+<text x="660" y="209" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 間隔上緣（margin）</text>
+<text x="660" y="255" font-size="12" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 決策邊界（超平面）</text>
+<text x="660" y="299" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 間隔下緣</text>
+<text x="660" y="340" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVM 要讓上下兩條虛線</text>
+<text x="660" y="360" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">之間的距離最大化</text>
+<text x="48" y="400" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">● 類別 A　　■ 類別 B　　— 決策邊界　　- - 間隔（margin）　　◎ 支持向量（離邊界最近的點）</text>
+<text x="48" y="434" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真正決定這條線的只有支持向量——其他點移開一點都不影響結果。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 18：SVM 的間隔——決策邊界（超平面）上下各一條虛線，SVM 要讓兩條虛線的距離最大化；真正決定這條線的只有支持向量。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG5 -->
 
 <table>
 <thead>
@@ -2559,20 +2709,34 @@ R² = 0.7217 的意思是「模型解釋了 72.17% 的變異」；<strong>R² �
 </tbody>
 </table>
 <p><strong>補充：S 形曲線就是 sigmoid 函數</strong></p>
-<div class="codehilite"><pre><span></span><code>             1
-σ(z) = ─────────────         z = w₀ + w₁x₁ + … + wₚxₚ
-        1 + e^(−z)
-
-σ(z)
-1.0 ┤                          ╭─────────
-    │                      ╭───╯
-0.5 ┤                  ╭───╯        ← z = 0 時機率正好 0.5（這就是分類門檻）
-    │              ╭───╯
-0.0 ┤─────────────╯
-    └──────────────────────────────→ z
-      負很多        0        正很多
-      （機率→0）         （機率→1）
-</code></pre></div>
+<!-- FIG6 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="sigmoid：S 形曲線" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">sigmoid：S 形曲線</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">σ(z) = 1 / (1 + e^(−z))，輸出直接當機率</text>
+<text x="80" y="200" font-size="17" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">σ(z)  =</text>
+<text x="300" y="178" font-size="15" fill="#e6edf3" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">1</text>
+<path d="M 250 192 L 350 192" fill="none" stroke="#e6edf3" stroke-width="1.5"/>
+<text x="300" y="222" font-size="15" fill="#e6edf3" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">1 + e^(−z)</text>
+<text x="80" y="270" font-size="14" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">z = w₀ + w₁x₁ + … + wₚxₚ</text>
+<polyline points="520.0,399.5 522.9,399.5 525.8,399.4 528.6,399.3 531.5,399.3 534.4,399.2 537.3,399.1 540.2,399.0 543.1,398.9 546.0,398.8 548.8,398.7 551.7,398.5 554.6,398.4 557.5,398.2 560.4,398.0 563.2,397.8 566.1,397.6 569.0,397.3 571.9,397.0 574.8,396.7 577.7,396.4 580.5,396.0 583.4,395.6 586.3,395.2 589.2,394.7 592.1,394.1 595.0,393.5 597.9,392.9 600.7,392.2 603.6,391.4 606.5,390.5 609.4,389.6 612.3,388.5 615.1,387.4 618.0,386.2 620.9,384.8 623.8,383.4 626.7,381.8 629.6,380.0 632.5,378.2 635.3,376.2 638.2,374.0 641.1,371.6 644.0,369.1 646.9,366.4 649.8,363.5 652.6,360.4 655.5,357.2 658.4,353.7 661.3,350.1 664.2,346.2 667.0,342.2 669.9,338.0 672.8,333.6 675.7,329.1 678.6,324.5 681.5,319.7 684.4,314.9 687.2,310.0 690.1,305.0 693.0,300.0 695.9,295.0 698.8,290.0 701.6,285.1 704.5,280.3 707.4,275.5 710.3,270.9 713.2,266.4 716.1,262.0 719.0,257.8 721.8,253.8 724.7,249.9 727.6,246.3 730.5,242.8 733.4,239.6 736.2,236.5 739.1,233.6 742.0,230.9 744.9,228.4 747.8,226.0 750.7,223.8 753.5,221.8 756.4,220.0 759.3,218.2 762.2,216.6 765.1,215.2 768.0,213.8 770.9,212.6 773.7,211.5 776.6,210.4 779.5,209.5 782.4,208.6 785.3,207.8 788.1,207.1 791.0,206.5 793.9,205.9 796.8,205.3 799.7,204.8 802.6,204.4 805.5,204.0 808.3,203.6 811.2,203.3 814.1,203.0 817.0,202.7 819.9,202.4 822.8,202.2 825.6,202.0 828.5,201.8 831.4,201.6 834.3,201.5 837.2,201.3 840.0,201.2 842.9,201.1 845.8,201.0 848.7,200.9 851.6,200.8 854.5,200.7 857.4,200.7 860.2,200.6 863.1,200.5 866.0,200.5" fill="none" stroke="#58a6ff" stroke-width="2.5"/>
+<path d="M 520 400 L 520 196" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 520 400 L 872 400" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="510" y="209" font-size="12" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.0</text>
+<text x="510" y="305" font-size="12" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.5</text>
+<text x="510" y="401" font-size="12" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0</text>
+<text x="540" y="424" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">負很多（機率→0）</text>
+<text x="690" y="424" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text>
+<text x="830" y="424" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">正很多（機率→1）</text>
+<path d="M 520 300 L 690 300" stroke="#7d8590" stroke-width="1.5" stroke-dasharray="7 6" fill="none"/>
+<text x="540" y="322" font-size="11.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">z = 0 → 機率 0.5</text>
+<text x="48" y="490" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">S 形曲線把任意實數壓到 0～1 之間；z = 0 時機率正好 0.5，那就是分類門檻。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 19：邏輯迴歸的核心——sigmoid 把任意實數壓到 0～1；z = 0 時機率正好 0.5，那就是分類門檻。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG6 -->
 
 <table>
 <thead>
@@ -2711,16 +2875,34 @@ R² = 0.7217 的意思是「模型解釋了 72.17% 的變異」；<strong>R² �
 </tbody>
 </table>
 <p><strong>補充：貝葉斯定理與「樸素」兩個字</strong></p>
-<div class="codehilite"><pre><span></span><code>                  P(B | A) · P(A)
-    P(A | B)  =  ──────────────────
-                        P(B)
-
-    換成分類的語言：
-
-    P(類別 | 特徵)  ∝  P(類別) × Π P(特徵ᵢ | 類別)
-       ↑                 ↑            ↑
-    後驗機率          先驗機率      似然（每個特徵各自算，然後相乘）
-</code></pre></div>
+<!-- FIG7 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" role="img" aria-label="貝氏定理與「樸素」兩個字" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="458.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">貝氏定理與「樸素」兩個字</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">後驗 ∝ 先驗 × 似然</text>
+<text x="100" y="210" font-size="17" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">P(A | B)  =</text>
+<text x="420" y="182" font-size="15" fill="#e6edf3" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">P(B | A) · P(A)</text>
+<path d="M 340 196 L 500 196" fill="none" stroke="#e6edf3" stroke-width="1.5"/>
+<text x="420" y="228" font-size="15" fill="#e6edf3" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">P(B)</text>
+<text x="100" y="300" font-size="13.5" fill="#8b949e" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">換成分類的語言：</text>
+<text x="100" y="348" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">P(類別 | 特徵)</text>
+<text x="300" y="348" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">∝</text>
+<text x="336" y="348" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">P(類別)</text>
+<text x="452" y="348" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">×</text>
+<text x="488" y="348" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">Π P(特徵ᵢ | 類別)</text>
+<path d="M 203 372 L 203 356" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="203" y="394" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">後驗機率</text>
+<path d="M 376 372 L 376 356" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="376" y="394" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先驗機率</text>
+<path d="M 640 372 L 640 356" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="640" y="394" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">似然（每個特徵各自算，然後相乘）</text>
+<text x="48" y="440" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「樸素」＝假設每個特徵彼此獨立，所以可以把所有似然直接相乘。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 20：貝氏定理——分類版本是「後驗機率 ∝ 先驗機率 × 似然」；「樸素」指假設每個特徵彼此獨立，所以似然可以直接相乘。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG7 -->
 
 <table>
 <thead>
@@ -3840,14 +4022,36 @@ Constant 的 AUC 永遠接近 0.5，因為它<strong>對每一筆都給同一個
 </tbody>
 </table>
 <p><strong>圖上四個標籤（課程標註）</strong>：</p>
-<div class="codehilite"><pre><span></span><code>   拖入資料集          連接
-  ┌──────────┐      ┌──────────┐      ┌─────────────┐
-  │ File     │─────▶│ Constant │─────▶│ Test and    │
-  │ (資料集) │      │          │      │ Score       │
-  └──────────┘      └──────────┘      └─────────────┘
-                          │
-                          └──────────▶ Predictions（查看預測結果）
-</code></pre></div>
+<!-- FIG8 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" role="img" aria-label="Constant：最笨的基準線" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="438.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Constant：最笨的基準線</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先知道「什麼都不學」能拿幾分</text>
+<rect x="60" y="180" width="180" height="70" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="150.0" y="213.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">File</text>
+<text x="150.0" y="235.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">（資料集）</text>
+<path d="M 244 215 L 296 215" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="271" y="205" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">拖入資料集</text>
+<rect x="300" y="180" width="180" height="70" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="390.0" y="213.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Constant</text>
+<text x="390.0" y="235.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">（基準）</text>
+<path d="M 484 215 L 536 215" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="511" y="205" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">連接</text>
+<rect x="540" y="180" width="200" height="70" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="640.0" y="220.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Test and Score</text>
+<path d="M 390 250 L 390 310" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 390 310 L 536 310" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="540" y="280" width="200" height="60" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="640.0" y="315.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Predictions</text>
+<text x="752" y="219" font-size="12" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 先量基準線</text>
+<text x="752" y="315" font-size="12" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 查看預測結果</text>
+<text x="48" y="400" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Constant 是最笨的模型（永遠猜最常見的類別）——用它當基準線，才知道其他模型有沒有真的學到東西。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 21：Constant 的工作流——File 接 Constant 再分頭接 Test and Score（先量基準線）與 Predictions（查看預測結果）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG8 -->
 
 <blockquote>
 <p><strong>考點</strong>：<code>Constant</code> 在 <strong>Model 面板</strong>（不是 Evaluate），路徑就是 <strong>Model → Constant</strong>。
@@ -3905,20 +4109,46 @@ Constant 的 AUC 永遠接近 0.5，因為它<strong>對每一筆都給同一個
 </tbody>
 </table>
 <p><strong>補充：一張圖看懂兩層架構</strong></p>
-<div class="codehilite"><pre><span></span><code>                    ┌──────────────┐
-   原始資料 X ─────▶│ 基礎學習器 1 │──┐
-                    │ (Logistic)   │  │  預測結果
-                    └──────────────┘  │  當成「新特徵」
-                    ┌──────────────┐  │
-             X ────▶│ 基礎學習器 2 │──┼──▶ ┌──────────────┐
-                    │(RandomForest)│  │    │  元學習器    │──▶ 最終預測
-                    └──────────────┘  │    │ (Logistic)   │
-                    ┌──────────────┐  │    └──────────────┘
-             X ────▶│ 基礎學習器 3 │──┘
-                    │ (SVM)        │
-                    └──────────────┘
-                    ↑ 第 1 層（Level-0）        ↑ 第 2 層（Level-1）
-</code></pre></div>
+<!-- FIG9 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="Stacking 的兩層架構" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Stacking 的兩層架構</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器的預測，變成元學習器的新特徵</text>
+<rect x="48" y="254" width="140" height="56" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="118.0" y="286.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">原始資料 X</text>
+<path d="M 188 282 L 206 282" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 206 182 L 206 382" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 206 182 L 228 182" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="230" y="150" width="260" height="64" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="360.0" y="180.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器 1</text>
+<text x="360.0" y="202.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Logistic</text>
+<path d="M 490 182 L 510 182" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 206 282 L 228 282" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="230" y="250" width="260" height="64" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="360.0" y="280.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器 2</text>
+<text x="360.0" y="302.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RandomForest</text>
+<path d="M 490 282 L 510 282" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 206 382 L 228 382" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="230" y="350" width="260" height="64" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="360.0" y="380.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器 3</text>
+<text x="360.0" y="402.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVM</text>
+<path d="M 490 382 L 510 382" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 510 182 L 510 382" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 510 282 L 536 282" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="540" y="250" width="220" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="650.0" y="280.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">元學習器</text>
+<text x="650.0" y="302.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Logistic（Level-1）</text>
+<path d="M 764 282 L 830 282" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="797" y="272" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">最終預測</text>
+<text x="206" y="430" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">↑ 第 1 層（Level-0）</text>
+<text x="510" y="430" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">↑ 第 2 層（Level-1）</text>
+<text x="48" y="480" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器的預測結果會被當成「新特徵」，餵給第二層的元學習器做最終決策。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 22：Stacking——第 1 層是三個基礎學習器（Logistic／RandomForest／SVM），它們的預測當成新特徵，交給第 2 層的元學習器做最終預測。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG9 -->
 
 <table>
 <thead>
@@ -4231,31 +4461,83 @@ pickle 存的是 <strong>Python 物件</strong>，所以它會綁定：
 </tbody>
 </table>
 <p><strong>圖上四個標籤（課程標註，依操作順序）</strong>：</p>
-<div class="codehilite"><pre><span></span><code><span class="w">   </span><span class="err">拖入元件</span><span class="w">  </span><span class="err">→</span><span class="w">  </span><span class="err">選擇模型</span><span class="w">  </span><span class="err">→</span><span class="w">  </span><span class="err">連接資料</span><span class="w">  </span><span class="err">→</span><span class="w">  </span><span class="err">查看預測</span>
-<span class="w">   </span><span class="err">┌──────────┐</span><span class="w">   </span><span class="err">┌──────────┐</span><span class="w">   </span><span class="err">┌──────────┐</span><span class="w">   </span><span class="err">┌─────────────┐</span>
-<span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="n">Load</span><span class="w">    </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="p">.</span><span class="n">pkcls</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="err">新資料</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">Predictions</span><span class="w"> </span><span class="err">│</span>
-<span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="n">Model</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="p">.</span><span class="n">pkreg</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">  </span><span class="p">(</span><span class="n">File</span><span class="p">)</span><span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">             </span><span class="err">│</span>
-<span class="w">   </span><span class="err">└──────────┘</span><span class="w">   </span><span class="err">└──────────┘</span><span class="w">   </span><span class="err">└──────────┘</span><span class="w">   </span><span class="err">└─────────────┘</span>
-</code></pre></div>
+<!-- FIG10 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" role="img" aria-label="Load Model 的四個步驟" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="378.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Load Model 的四個步驟</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">拖入元件 → 選擇模型 → 連接資料 → 查看預測</text>
+<rect x="48" y="190" width="180" height="80" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="138.0" y="228.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① Load Model</text>
+<text x="138.0" y="250.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">拖入元件</text>
+<path d="M 232 230 L 254 230" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="258" y="190" width="180" height="80" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="348.0" y="228.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② .pkcls / .pkreg</text>
+<text x="348.0" y="250.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">選擇模型</text>
+<path d="M 442 230 L 464 230" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="468" y="190" width="180" height="80" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="558.0" y="228.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">③ 新資料（File）</text>
+<text x="558.0" y="250.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">連接資料</text>
+<path d="M 652 230 L 674 230" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="678" y="190" width="180" height="80" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="768.0" y="228.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">④ Predictions</text>
+<text x="768.0" y="250.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">查看預測</text>
+<text x="48" y="340" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">順序不能顛倒：先選模型檔，再接資料——這四個標籤就是課程標在圖上的操作順序。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 23：Load Model——① 拖入元件、② 選 .pkcls／.pkreg、③ 接上新資料、④ 看 Predictions；順序不能顛倒。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG10 -->
 
 <blockquote>
 <p><strong>考點</strong>：課程把四個標籤排在圖上（拖入元件 → 選擇模型 → 連接資料 → 查看預測）。
 這個順序就是答題順序，<strong>不能顛倒</strong>——尤其是「<strong>先選模型檔，再接資料</strong>」。</p>
 </blockquote>
 <h3 id="103-save--load-的完整閉環補充把-810-串起來">10.3 Save / Load 的完整閉環（補充，把 §8–§10 串起來）</h3>
-<div class="codehilite"><pre><span></span><code>   ┌──────────── 訓練階段（做一次）────────────┐   ┌──── 推論階段（做很多次）────┐
-   │                                          │   │                             │
-   │  File ──▶ Preprocess ──▶ 模型元件        │   │   File（新資料）            │
-   │                            │             │   │        │                    │
-   │                            ├──▶ Test and Score（評估）  │                    │
-   │                            │             │   │        ▼                    │
-   │                            ▼             │   │   Load Model ◀── .pkcls     │
-   │                      Save Model ────────▶│   │        │                    │
-   │                            │             │   │        ▼                    │
-   │                            ▼             │   │   Predictions（預測結果）    │
-   │                         .pkcls           │   │                             │
-   └──────────────────────────────────────────┘   └─────────────────────────────┘
-</code></pre></div>
+<!-- FIG11 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="Save / Load 的完整閉環" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Save / Load 的完整閉環</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練做一次、推論做很多次</text>
+<rect x="48" y="140" width="490" height="300" rx="14" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="76" y="172" font-size="14.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練階段（做一次）</text>
+<rect x="64" y="190" width="110" height="46" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="119.0" y="217.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">File</text>
+<path d="M 178 213 L 192 213" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="196" y="190" width="130" height="46" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="261.0" y="217.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Preprocess</text>
+<path d="M 330 213 L 344 213" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="348" y="190" width="150" height="46" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="423.0" y="217.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型元件</text>
+<path d="M 423 236 L 423 248" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 235 248 L 423 248" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 235 248 L 235 261" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 423 248 L 423 261" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="140" y="265" width="190" height="46" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="235.0" y="292.32" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Test and Score（評估）</text>
+<rect x="348" y="265" width="150" height="46" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="423.0" y="292.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Save Model</text>
+<path d="M 423 311 L 423 336" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="348" y="340" width="150" height="46" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="423.0" y="367.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">.pkcls</text>
+<rect x="566" y="140" width="286" height="300" rx="14" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<text x="594" y="172" font-size="14.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">推論階段（做很多次）</text>
+<rect x="594" y="190" width="230" height="46" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="709.0" y="217.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">File（新資料）</text>
+<path d="M 709 236 L 709 261" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="594" y="265" width="230" height="46" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="709.0" y="292.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Load Model</text>
+<text x="600" y="254" font-size="11.5" fill="#3fb950" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">◀ .pkcls</text>
+<path d="M 709 311 L 709 336" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="594" y="340" width="230" height="46" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="709.0" y="367.5" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Predictions（預測結果）</text>
+<text x="48" y="480" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練一次可能要幾小時，推論只要幾毫秒——這就是課程那句「完全無需重新訓練」的價值。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 24：完整閉環——訓練階段（File → Preprocess → 模型元件 → Save Model → .pkcls）與推論階段（File → Load Model → Predictions），所以推論完全不需要重新訓練。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG11 -->
 
 <blockquote>
 <p><strong>考點</strong>：這條閉環的價值就是課程那句「<strong>完全無需重新訓練</strong>」。
@@ -4352,29 +4634,50 @@ pickle 存的是 <strong>Python 物件</strong>，所以它會綁定：
 </tbody>
 </table>
 <h3 id="113-把四個元件串成一條完整流程考試畫圖題">11.3 把四個元件串成一條完整流程（考試畫圖題）</h3>
-<div class="codehilite"><pre><span></span><code>   File（資料）
-      │
-      ▼
-   ┌──────────────┐        ┌─────────────┐
-   │  Constant    │───────▶│ Test and    │  ← 先量基準線
-   │  （基準）     │        │ Score       │
-   └──────────────┘        └─────────────┘
-                                  ▲
-   ┌──────────────┐               │
-   │  Stacking    │───────────────┘  ← 再量整合後的提升
-   │ （基礎＋元）  │
-   └──────┬───────┘
-          │
-          ▼
-   ┌──────────────┐
-   │  Save Model  │──▶  model.pkcls
-   └──────────────┘
-                            │
-   ┌──────────────┐         │
-   │  File（新）   │─────────┼────▶ ┌──────────────┐      ┌─────────────┐
-   └──────────────┘         └─────▶│  Load Model  │─────▶│ Predictions │
-                                   └──────────────┘      └─────────────┘
-</code></pre></div>
+<!-- FIG12 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-label="四個元件串成一條完整流程" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="618.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">四個元件串成一條完整流程</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">考試畫圖題的標準答案</text>
+<rect x="60" y="150" width="160" height="56" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="140.0" y="176.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">File</text>
+<text x="140.0" y="198.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">（資料）</text>
+<path d="M 224 178 L 266 178" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="270" y="150" width="180" height="56" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="360.0" y="176.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Constant</text>
+<text x="360.0" y="198.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">（基準）</text>
+<path d="M 454 178 L 496 178" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="500" y="150" width="200" height="56" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="600.0" y="182.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Test and Score</text>
+<text x="712" y="183" font-size="12" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 先量基準線</text>
+<rect x="270" y="260" width="180" height="56" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="360.0" y="286.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Stacking</text>
+<text x="360.0" y="308.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">（基礎＋元）</text>
+<path d="M 454 288 L 600 288" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 600 288 L 600 210" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="614" y="240" font-size="12" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 再量整合後的提升</text>
+<path d="M 360 316 L 360 348" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="270" y="350" width="180" height="56" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="360.0" y="382.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Save Model</text>
+<path d="M 454 378 L 525 378" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 525 378 L 525 426" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 525 426 L 525 448" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="534" y="400" font-size="12" fill="#3fb950" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">model.pkcls</text>
+<rect x="240" y="450" width="160" height="56" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="320.0" y="482.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">File（新）</text>
+<path d="M 404 478 L 436 478" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="440" y="450" width="170" height="56" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="525.0" y="482.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Load Model</text>
+<path d="M 614 478 L 646 478" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="650" y="450" width="170" height="56" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="735.0" y="482.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Predictions</text>
+<text x="48" y="560" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">考試畫圖題的標準答案：Constant 先量基準線，Stacking 再量提升，最後 Save Model → Load Model → Predictions。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 25：考試畫圖題——File 先接 Constant 量基準線，Stacking 再量整合後的提升，Save Model 存成 model.pkcls，最後用 Load Model 載入並輸出 Predictions。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG12 -->
 
 <h3 id="114-全課程一頁對照">11.4 全課程一頁對照</h3>
 <table>
@@ -4711,22 +5014,31 @@ TPOT 沒有這個概念——你給它資料它就開始搜，<strong>它不會�
 但「<strong>搜尋空間 ＝ scikit-learn 的零件箱</strong>」這個結構限制<strong>依然成立</strong>。</p>
 </blockquote>
 <h3 id="124-正確的用法不是二選一而是有先後">12.4 正確的用法：不是二選一，而是有先後</h3>
-<div class="codehilite"><pre><span></span><code>   ┌───────────────────────────────────────────────┐
-   │  Orange：探索、理解、建立 Constant 基準        │
-   │  決定「這題該用哪一個指標衡量」                 │
-   └──────────────────────┬────────────────────────┘
-                          │  你已經知道要解什麼問題了
-                          ▼
-   ┌───────────────────────────────────────────────┐
-   │  TPOT：在你定義好的空間裡搜出最佳管線          │
-   └──────────────────────┬────────────────────────┘
-                          │  拿到一條候選管線
-                          ▼
-   ┌───────────────────────────────────────────────┐
-   │  Orange：把結果拉回來，用視覺化檢查            │
-   │  「這個模型是不是在胡說」                       │
-   └───────────────────────────────────────────────┘
-</code></pre></div>
+<!-- FIG13 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-label="Orange 與 TPOT：不是二選一，是有先後" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="618.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Orange 與 TPOT：不是二選一，是有先後</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">上游省下的時間比下游多榨的分數更值錢</text>
+<rect x="140" y="150" width="620" height="90" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="170" y="190" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Orange：探索、理解、建立 Constant 基準</text>
+<text x="170" y="218" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">決定「這題該用哪一個指標衡量」</text>
+<path d="M 450 240 L 450 294" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="140" y="300" width="620" height="90" rx="12" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="170" y="340" font-size="15" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT：在你定義好的空間裡搜出最佳管線</text>
+<text x="170" y="368" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">把搜尋空間交給演化演算法</text>
+<path d="M 450 390 L 450 444" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="140" y="450" width="620" height="90" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="170" y="490" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Orange：把結果拉回來，用視覺化檢查</text>
+<text x="170" y="518" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「這個模型是不是在胡說」</text>
+<text x="466" y="272" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你已經知道要解什麼問題了</text>
+<text x="466" y="422" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">拿到一條候選管線</text>
+<text x="48" y="580" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Orange 在上游幫你省下的時間，比 TPOT 在下游多榨出的分數更值錢。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 26：先後關係——Orange 先探索並建立 Constant 基準（決定用哪個指標），TPOT 再在定義好的空間裡搜出最佳管線，最後拉回 Orange 用視覺化檢查。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG13 -->
 
 <p>用本站〈房價〉那篇當證據：<strong>如果先開 Orange 看一眼資料的雜訊底線，就會知道 Ridge 已經夠了</strong>，那 11.8 分鐘可以直接省下來。</p>
 <blockquote>
@@ -5206,17 +5518,36 @@ TPOT 沒有這個概念——你給它資料它就開始搜，<strong>它不會�
 </blockquote>
 <h3 id="138-部署save-model--pkcls--自己包一層服務">13.8 部署：<code>Save Model</code> → <code>.pkcls</code> → 自己包一層服務</h3>
 <p><strong>Orange 沒有 REST API</strong>（官方沒有提供任何 HTTP 服務）。官方路線就是 §10 那個元件：</p>
-<div class="codehilite"><pre><span></span><code><span class="w">   </span><span class="err">訓練（</span><span class="n">GUI</span><span class="w"> </span><span class="err">或腳本）</span>
-<span class="w">        </span><span class="err">│</span>
-<span class="w">        </span><span class="err">▼</span>
-<span class="w">   </span><span class="n">Save</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="err">──▶</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">pkcls</span><span class="w">   </span><span class="err">←</span><span class="w"> </span><span class="err">把「模型</span><span class="w"> </span><span class="err">＋</span><span class="w"> </span><span class="n">domain</span><span class="err">」一起序列化</span>
-<span class="w">        </span><span class="err">│</span>
-<span class="w">        </span><span class="err">▼</span>
-<span class="w">   </span><span class="err">新的行程：</span><span class="n">Load</span><span class="w"> </span><span class="n">Model</span><span class="err">（或</span><span class="w"> </span><span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="err">）</span>
-<span class="w">        </span><span class="err">│</span>
-<span class="w">        </span><span class="err">▼</span>
-<span class="w">   </span><span class="err">接一批「只有特徵、沒有答案」的新資料</span><span class="w"> </span><span class="err">──▶</span><span class="w"> </span><span class="err">預測結果</span>
-</code></pre></div>
+<!-- FIG14 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="部署：Save Model → .pkcls → 自己包一層服務" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">部署：Save Model → .pkcls → 自己包一層服務</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Orange 沒有 REST API，官方路線就是存檔再載入</text>
+<rect x="300" y="120" width="300" height="54" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="450.0" y="152.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練（GUI 或腳本）</text>
+<path d="M 450 174 L 450 204" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="240" y="208" width="220" height="54" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="350.0" y="240.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Save Model</text>
+<path d="M 464 235 L 514 235" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="520" y="208" width="220" height="54" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="630.0" y="240.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">model.pkcls</text>
+<path d="M 350 262 L 350 294" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="366" y="285" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">↑ 把「模型 ＋ domain」一起序列化</text>
+<rect x="180" y="298" width="340" height="54" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="350.0" y="329.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">新的行程：Load Model（或 pickle.load）</text>
+<path d="M 350 352 L 350 384" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="150" y="388" width="400" height="54" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="350.0" y="419.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">接一批「只有特徵、沒有答案」的新資料</text>
+<path d="M 554 415 L 604 415" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="610" y="388" width="200" height="54" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="710.0" y="420.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">預測結果</text>
+<text x="48" y="480" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Orange 沒有 REST API——官方路線就是 Save Model 存檔，再在新行程裡 Load Model 接資料預測。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 27：部署流程——訓練完成後 Save Model 序列化出 model.pkcls（模型＋domain），在新行程裡 Load Model 接一批只有特徵的新資料，得到預測結果。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG14 -->
 
 <p><strong>本機實測（兩個獨立行程）</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="o">[</span><span class="n">save</span><span class="o">]</span><span class="w">  </span><span class="n">訓練完成</span><span class="err">，</span><span class="n">模型已存檔</span>

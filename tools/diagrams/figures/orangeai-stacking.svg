@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="Stacking 的兩層架構" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Stacking 的兩層架構</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器的預測，變成元學習器的新特徵</text>
+<rect x="48" y="254" width="140" height="56" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="118.0" y="286.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">原始資料 X</text>
+<path d="M 188 282 L 206 282" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 206 182 L 206 382" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 206 182 L 228 182" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="230" y="150" width="260" height="64" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="360.0" y="180.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器 1</text>
+<text x="360.0" y="202.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Logistic</text>
+<path d="M 490 182 L 510 182" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 206 282 L 228 282" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="230" y="250" width="260" height="64" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="360.0" y="280.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器 2</text>
+<text x="360.0" y="302.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RandomForest</text>
+<path d="M 490 282 L 510 282" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 206 382 L 228 382" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="230" y="350" width="260" height="64" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="360.0" y="380.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器 3</text>
+<text x="360.0" y="402.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVM</text>
+<path d="M 490 382 L 510 382" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 510 182 L 510 382" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 510 282 L 536 282" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="540" y="250" width="220" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="650.0" y="280.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">元學習器</text>
+<text x="650.0" y="302.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Logistic（Level-1）</text>
+<path d="M 764 282 L 830 282" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="797" y="272" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">最終預測</text>
+<text x="206" y="430" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">↑ 第 1 層（Level-0）</text>
+<text x="510" y="430" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">↑ 第 2 層（Level-1）</text>
+<text x="48" y="480" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器的預測結果會被當成「新特徵」，餵給第二層的元學習器做最終決策。</text>
+</svg>

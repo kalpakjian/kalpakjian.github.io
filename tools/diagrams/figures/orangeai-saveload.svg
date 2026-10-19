@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="Save / Load 的完整閉環" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Save / Load 的完整閉環</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練做一次、推論做很多次</text>
+<rect x="48" y="140" width="490" height="300" rx="14" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="76" y="172" font-size="14.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練階段（做一次）</text>
+<rect x="64" y="190" width="110" height="46" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="119.0" y="217.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">File</text>
+<path d="M 178 213 L 192 213" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="196" y="190" width="130" height="46" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="261.0" y="217.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Preprocess</text>
+<path d="M 330 213 L 344 213" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="348" y="190" width="150" height="46" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="423.0" y="217.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型元件</text>
+<path d="M 423 236 L 423 248" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 235 248 L 423 248" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 235 248 L 235 261" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 423 248 L 423 261" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="140" y="265" width="190" height="46" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="235.0" y="292.32" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Test and Score（評估）</text>
+<rect x="348" y="265" width="150" height="46" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="423.0" y="292.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Save Model</text>
+<path d="M 423 311 L 423 336" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="348" y="340" width="150" height="46" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="423.0" y="367.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">.pkcls</text>
+<rect x="566" y="140" width="286" height="300" rx="14" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<text x="594" y="172" font-size="14.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">推論階段（做很多次）</text>
+<rect x="594" y="190" width="230" height="46" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="709.0" y="217.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">File（新資料）</text>
+<path d="M 709 236 L 709 261" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="594" y="265" width="230" height="46" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="709.0" y="292.68" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Load Model</text>
+<text x="600" y="254" font-size="11.5" fill="#3fb950" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">◀ .pkcls</text>
+<path d="M 709 311 L 709 336" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="594" y="340" width="230" height="46" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="709.0" y="367.5" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Predictions（預測結果）</text>
+<text x="48" y="480" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練一次可能要幾小時，推論只要幾毫秒——這就是課程那句「完全無需重新訓練」的價值。</text>
+</svg>
