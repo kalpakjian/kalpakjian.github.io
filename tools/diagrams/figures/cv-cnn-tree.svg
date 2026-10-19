@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-label="電腦視覺與 CNN：一頁看懂" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">電腦視覺與 CNN：一頁看懂</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">應用場景、關鍵技術與四個核心觀念</text>
+<rect x="48" y="106" width="904" height="372" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="17" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">電腦視覺（Computer Vision）</text>
+<path d="M 100 184 L 100 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">商業應用：零售、安防、工業檢測、醫療、自駕、農業…</text>
+<path d="M 100 220 L 114 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="226" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2024 世界機器人大會：超現實圍棋博弈（人機對弈展示）</text>
+<path d="M 100 256 L 114 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="262" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">核心技術：CNN（卷積神經網路）</text>
+<path d="M 134 266 L 134 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 134 292 L 148 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="154" y="298" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">定義：處理「網格狀資料」（影像、音訊）的神經網路</text>
+<path d="M 134 302 L 134 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 134 328 L 148 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="154" y="334" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">關鍵：卷積層自動學習「階層式特徵」（由低階到高階）</text>
+<path d="M 134 338 L 134 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 134 364 L 148 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="154" y="370" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">架構：encoder（多個逐漸變窄的 block 堆疊 →「deep」）</text>
+<path d="M 134 374 L 134 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 134 400 L 148 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="154" y="406" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">核心思想：參數重用（parameter sharing）</text>
+</svg>

@@ -1,0 +1,12 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:\\Users\\princ\\blog\\_work\\diagrams\\\\cv-cnn-tree.svg",
+    "caption": "圖 1：電腦視覺的三個分支——應用場景、世界機器人大會案例，以及核心技術 CNN 的四個觀念。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 2,
+    "svg": "C:\\Users\\princ\\blog\\_work\\diagrams\\\\cv-feature-ladder.svg",
+    "caption": "圖 2：階層式特徵——低階看到邊緣與角點，中階組出紋理與形狀，高階才認得出眼睛、車輪等物件部件。｜手繪 SVG 圖表"
+  }
+]

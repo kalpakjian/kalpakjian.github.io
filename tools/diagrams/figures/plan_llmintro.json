@@ -1,0 +1,7 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:\\Users\\princ\\blog\\_work\\diagrams\\\\llm-concept-tree.svg",
+    "caption": "圖 43：LLM 的概念全貌——七個主分支與兩則補充，最後是從文字到模型主層的輸入管線（tokenize → token ID → embedding → positional embedding → LLM 主層）。｜手繪 SVG 圖表"
+  }
+]

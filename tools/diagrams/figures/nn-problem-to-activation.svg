@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-label="問題類型 → 激活函數" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker><marker id="mc084fc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="298.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">問題類型 → 激活函數</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先分類問題，再挑輸出層</text>
+<rect x="60" y="135" width="130" height="48" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="125.0" y="164.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Problem</text>
+<rect x="270" y="74" width="180" height="44" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="360.0" y="101.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Classification</text>
+<rect x="270" y="200" width="180" height="44" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="360.0" y="227.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Regression</text>
+<rect x="530" y="20" width="280" height="40" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="670.0" y="44.32" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Binary Classification → TLU</text>
+<rect x="530" y="76" width="280" height="40" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="670.0" y="100.32" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Multiclass Classification → Softmax</text>
+<rect x="530" y="132" width="280" height="40" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="670.0" y="156.32" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Multilabel Classification → Sigmoid</text>
+<path d="M 190 159 L 230 159" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 230 159 L 230 96" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 230 96 L 268 96" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 190 159 L 230 159" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 230 159 L 230 222" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 230 222 L 268 222" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 450 96 L 490 96" fill="none" stroke="#c084fc" stroke-width="2"/>
+<path d="M 490 96 L 490 40" fill="none" stroke="#c084fc" stroke-width="2"/>
+<path d="M 490 40 L 528 40" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#mc084fc)"/>
+<path d="M 450 96 L 490 96" fill="none" stroke="#c084fc" stroke-width="2"/>
+<path d="M 490 96 L 490 96" fill="none" stroke="#c084fc" stroke-width="2"/>
+<path d="M 490 96 L 528 96" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#mc084fc)"/>
+<path d="M 450 96 L 490 96" fill="none" stroke="#c084fc" stroke-width="2"/>
+<path d="M 490 96 L 490 152" fill="none" stroke="#c084fc" stroke-width="2"/>
+<path d="M 490 152 L 528 152" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#mc084fc)"/>
+<text x="48" y="268" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先問「這是什麼類型的問題」，再決定輸出層要用哪個激活函數——二元分類用 TLU、多類別用 Softmax、多標籤用 Sigmoid、迴歸用 ReLU。</text>
+</svg>

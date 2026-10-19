@@ -1,0 +1,12 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:\\Users\\princ\\blog\\_work\\diagrams\\\\automl-metric-decision.svg",
+    "caption": "圖 14：指標決策樹——分類再看資料是否平衡（平衡用 Accuracy、不平衡用 AUC），迴歸直接看 RMSE 或 R²。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 2,
+    "svg": "C:\\Users\\princ\\blog\\_work\\diagrams\\\\automl-course-skeleton.svg",
+    "caption": "圖 15：課程骨架——從「為什麼需要 AutoML」到「TPOT 的兩個旋鈕」，七個主題各自的重點與產出。｜手繪 SVG 圖表"
+  }
+]

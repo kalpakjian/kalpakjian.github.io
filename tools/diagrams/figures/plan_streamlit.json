@@ -1,0 +1,17 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:/Users/princ/blog/_work/diagrams/streamlit-arch-overview.svg",
+    "caption": "圖 23：四層架構速覽——瀏覽器只跟 Streamlit 講話，Streamlit 再分頭呼叫 Flask（問候）與 LiteLLM（問 LLM）。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 2,
+    "svg": "C:/Users/princ/blog/_work/diagrams/streamlit-app-blocks.svg",
+    "caption": "圖 24：app.py 內部的兩個區塊——一個頁面可以有兩條互不相干的後端路線；中間的 st.divider() 只是視覺分隔，不影響流程。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 3,
+    "svg": "C:/Users/princ/blog/_work/diagrams/streamlit-arch-full.svg",
+    "caption": "圖 25：完整架構——從瀏覽器點擊到 Ollama 回應，每一層的檔案、埠號與實際呼叫的函式。｜手繪 SVG 圖表"
+  }
+]

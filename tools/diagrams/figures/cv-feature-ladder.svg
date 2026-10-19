@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="CNN 學到的階層式特徵" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker><marker id="m2dd4bf" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker><marker id="m58a6ff" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker><marker id="mc084fc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">CNN 學到的階層式特徵</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從邊緣到物件：網路越深，看到的東西越抽象</text>
+<path d="M 90 150 L 90 440" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 90 412 L 90 440" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="22" y="152" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">低階</text>
+<text x="22" y="442" font-size="13" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">高階</text>
+<rect x="120" y="120" width="560" height="54" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="400.0" y="145.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸入影像</text>
+<text x="400.0" y="167.0" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">原始像素</text>
+<path d="M 160 174 L 160 188" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="150" y="190" width="560" height="54" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="430.0" y="215.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">低階特徵</text>
+<text x="430.0" y="237.0" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">邊緣、線條、角點</text>
+<path d="M 190 244 L 190 258" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#m2dd4bf)"/>
+<rect x="180" y="260" width="560" height="54" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="460.0" y="285.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">中階特徵</text>
+<text x="460.0" y="307.0" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">紋理、圓形、局部形狀</text>
+<path d="M 220 314 L 220 328" fill="none" stroke="#58a6ff" stroke-width="2" marker-end="url(#m58a6ff)"/>
+<rect x="210" y="330" width="560" height="54" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="490.0" y="355.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">高階特徵</text>
+<text x="490.0" y="377.0" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">眼睛、車輪、人臉等「物件部件」</text>
+<path d="M 250 384 L 250 398" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#mc084fc)"/>
+<rect x="240" y="400" width="560" height="54" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="520.0" y="425.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">整體</text>
+<text x="520.0" y="447.0" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">可辨識的物件類別</text>
+</svg>

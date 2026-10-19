@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="app.py 的兩個 UI 區塊" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="538.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">app.py 的兩個 UI 區塊</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一個頁面、兩條後端路線</text>
+<rect x="80" y="120" width="740" height="330" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="102" y="152" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">app.py（Streamlit，埠 8501）</text>
+<rect x="110" y="172" width="680" height="96" rx="10" fill="#0d1117" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="450.0" y="218.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">區塊 1：問候</text>
+<text x="450.0" y="240.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸入名字 → POST /greet → Flask（埠 5000）</text>
+<path d="M 110 296 L 790 296" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="450" y="290" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">st.divider()</text>
+<rect x="110" y="316" width="680" height="96" rx="10" fill="#0d1117" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="450.0" y="362.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">區塊 2：問 LLM</text>
+<text x="450.0" y="384.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸入問題 → completion() → Ollama（埠 11434）</text>
+</svg>

@@ -1,0 +1,7 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:\\Users\\princ\\blog\\_work\\diagrams\\\\litellm-proxy-gateway.svg",
+    "caption": "圖 24：LiteLLM Proxy 的角色——唯一的對外入口，向下分流到本機 Ollama 與雲端 LLM，並把金鑰、預算與用量記在 Postgres。｜手繪 SVG 圖表"
+  }
+]

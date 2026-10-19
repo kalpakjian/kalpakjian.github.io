@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 370" role="img" aria-label="指標怎麼挑：兩個問題就問完" style="width:100%;height:auto;display:block">
+<defs><marker id="m30363d" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#30363d"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="368.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">指標怎麼挑：兩個問題就問完</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先問任務類型，再問資料平衡嗎</text>
+<rect x="60" y="150" width="230" height="56" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="175.0" y="183.22" font-size="14.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">問題是「分類」嗎？</text>
+<rect x="360" y="84" width="210" height="56" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="465.0" y="117.22" font-size="14.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">數據平衡嗎？</text>
+<rect x="360" y="246" width="210" height="56" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="465.0" y="279.22" font-size="14.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">看 RMSE（或 R²）</text>
+<rect x="660" y="36" width="200" height="46" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="760.0" y="64.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">用 Accuracy</text>
+<rect x="660" y="116" width="200" height="46" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="760.0" y="144.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">用 AUC</text>
+<path d="M 290 178 L 325 178" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 325 178 L 325 112" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 325 112 L 358 112" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<path d="M 290 178 L 325 178" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 325 178 L 325 274" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 325 274 L 358 274" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<path d="M 570 112 L 615 112" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 615 112 L 615 59" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 615 59 L 658 59" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<path d="M 570 112 L 615 112" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 615 112 L 615 139" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 615 139 L 658 139" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<text x="296" y="170" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">是</text>
+<text x="332" y="214" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">否（迴歸）</text>
+<text x="668" y="58" font-size="12" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">平衡</text>
+<text x="668" y="138" font-size="12" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不平衡</text>
+</svg>
