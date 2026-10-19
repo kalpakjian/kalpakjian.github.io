@@ -4,30 +4,65 @@
 
 ## 0. 30 秒總複習（考前最後掃描）
 
-```
-Prompt Engineering = 設計並最佳化「餵給語言模型的指令與上下文」，讓同一個模型產出你要的結果
-
-  一堂課的四個 Part（課程分章）
-  ├─ Part 1  基礎：prompt 元素 → 解碼參數 → 六大任務 → 七大類技術
-  │     基礎技術：Zero-Shot／Few-Shot／Clear Instructions
-  │     上下文與角色：System／Role／Contextual／Markdown
-  │     推理與規劃：CoT／TCoT／SoT／Step-Back
-  ├─ Part 2  進階：Least-to-Most／ToT／iToT／SG-ICL
-  │     專業與前沿：CAI／Perspective-Taking／Analogical／Multi-Modal／
-  │                 Persona Consistency／Predictive
-  │     知識與工具：Generate Knowledge／PAL／ReAct
-  ├─ Part 3  工具與應用：Tools & IDEs／LLM + 外部工具／Data-Augmented Generation
-  └─ Part 4  結論與未來：Model Safety／Prompt Injection·Leaking·Jailbreaking／RLHF
-
-  一句話選技術
-  ├─ 要「格式穩定」        → Clear Instructions、Markdown、System Prompting
-  ├─ 要「算得對」          → CoT、TCoT、PAL（把計算交給 Python）
-  ├─ 要「大綱先行」        → SoT
-  ├─ 要「先想通則再解題」  → Step-Back、Least-to-Most
-  ├─ 要「多路探索再選」    → ToT、iToT
-  ├─ 要「有憑據、能查證」  → Generate Knowledge、ReAct、DAG
-  └─ 要「安全、合規」      → CAI、System Prompting 的安全界線
-```
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 850" role="img" aria-label="Prompt Engineering：全課大綱" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="848.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Prompt Engineering：全課大綱</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">四個 Part 與「一句話選技術」對照表</text>
+<rect x="48" y="106" width="904" height="366" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一堂課的四個 Part（課程分章）</text>
+<path d="M 100 184 L 100 440" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Part 1　基礎：prompt 元素 → 解碼參數 → 六大任務 → 七大類技術</text>
+<path d="M 156 194 L 156 216" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 216 L 170 216" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="222" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎技術：Zero-Shot／Few-Shot／Clear Instructions</text>
+<path d="M 156 226 L 156 248" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 248 L 170 248" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="254" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">上下文與角色：System／Role／Contextual／Markdown</text>
+<path d="M 156 258 L 156 280" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 280 L 170 280" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="286" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">推理與規劃：CoT／TCoT／SoT／Step-Back</text>
+<path d="M 100 312 L 114 312" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="318" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Part 2　進階：Least-to-Most／ToT／iToT／SG-ICL</text>
+<path d="M 156 322 L 156 344" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 344 L 170 344" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="350" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">專業與前沿：CAI／Perspective-Taking／Analogical／Multi-Modal／Persona Consistency／Predictive</text>
+<path d="M 156 354 L 156 376" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 376 L 170 376" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="382" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">知識與工具：Generate Knowledge／PAL／ReAct</text>
+<path d="M 100 408 L 114 408" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="414" font-size="13.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Part 3　工具與應用：Tools &amp; IDEs／LLM + 外部工具／Data-Augmented Generation</text>
+<path d="M 100 440 L 114 440" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="446" font-size="13.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Part 4　結論與未來：Model Safety／Prompt Injection·Leaking·Jailbreaking／RLHF</text>
+<text x="48" y="522" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一句話選技術：先問你要什麼</text>
+<rect x="48" y="542" width="442" height="54" rx="10" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="64" y="564" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要「格式穩定」</text>
+<text x="64" y="584" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ Clear Instructions、Markdown、System Prompting</text>
+<rect x="510" y="542" width="442" height="54" rx="10" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="526" y="564" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要「算得對」</text>
+<text x="526" y="584" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ CoT、TCoT、PAL（把計算交給 Python）</text>
+<rect x="48" y="604" width="442" height="54" rx="10" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="64" y="626" font-size="13.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要「大綱先行」</text>
+<text x="64" y="646" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ SoT（Skeleton-of-Thought）</text>
+<rect x="510" y="604" width="442" height="54" rx="10" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="526" y="626" font-size="13.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要「先想通則再解題」</text>
+<text x="526" y="646" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ Step-Back、Least-to-Most</text>
+<rect x="48" y="666" width="442" height="54" rx="10" fill="#1c2230" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="64" y="688" font-size="13.5" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要「多路探索再選」</text>
+<text x="64" y="708" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ ToT、iToT（思維樹／交錯思維樹）</text>
+<rect x="510" y="666" width="442" height="54" rx="10" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<text x="526" y="688" font-size="13.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要「有憑據、能查證」</text>
+<text x="526" y="708" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ Generate Knowledge、ReAct、DAG</text>
+<rect x="48" y="728" width="442" height="54" rx="10" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="64" y="750" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要「安全、合規」</text>
+<text x="64" y="770" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ CAI、System Prompting 的安全界線</text>
+<text x="48" y="822" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">上半是課程的四個 Part；下半是「一句話選技術」——先問你要什麼，再挑對應的技術。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 39：全課大綱——Part 1 基礎／Part 2 進階／Part 3 工具與應用／Part 4 結論與未來，以及「先問你要什麼，再挑技術」的七條對照。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 | 你會用到的關鍵詞 | 一句話記法 |
 |---|---|
@@ -1596,14 +1631,33 @@ PAL 把「算」這一步交給 **Python 直譯器**，模型只負責**把題�
 
 ### 31.3 流程圖
 
-```
-  ┌─────────────┐    ┌──────────────────┐    ┌─────────────┐
-  │  自然語言題目 │ →  │  LLM 產生 Python  │ →  │ Python 執行  │
-  │  (problem)   │    │  程式（中間步驟）  │    │  得到數值結果 │
-  └─────────────┘    └──────────────────┘    └─────────────┘
-                                                     ↓
-                                            最終答案（可信的計算）
-```
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" role="img" aria-label="PAL：把計算外包給 Python" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="378.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">PAL：把計算外包給 Python</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型只負責翻譯題目，算術交給直譯器</text>
+<rect x="48" y="140" width="220" height="84" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="158.0" y="180.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">自然語言題目</text>
+<text x="158.0" y="202.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">problem</text>
+<rect x="320" y="140" width="220" height="84" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="430.0" y="180.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LLM 產生 Python 程式</text>
+<text x="430.0" y="202.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">中間推理步驟</text>
+<rect x="592" y="140" width="220" height="84" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="702.0" y="180.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Python 執行</text>
+<text x="702.0" y="202.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">得到數值結果</text>
+<path d="M 272 182 L 316 182" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 544 182 L 588 182" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 702 226 L 702 260" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="562" y="262" width="280" height="60" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="702.0" y="290.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">最終答案</text>
+<text x="702.0" y="312.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">可信的計算</text>
+<text x="48" y="356" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">CoT 用文字算數（可能算錯）；PAL 只負責把題目翻成程式，把「算」外包給 Python 直譯器。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 40：PAL 流程——自然語言題目 → LLM 產生 Python 程式（中間推理步驟）→ Python 執行得到數值 → 可信的最終答案。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 > **考點**：PAL 的三個關鍵詞——**generate programs as intermediate reasoning steps**、
 > **offloads the solution step to a runtime**、**Python interpreter**。
@@ -1643,20 +1697,38 @@ PAL 把「算」這一步交給 **Python 直譯器**，模型只負責**把題�
 
 ### 32.3 迴圈結構
 
-```
-   ┌──────────────────────────────────────────┐
-   │                                          │
-   ↓                                          │
-Thought（推理：我現在需要知道什麼？）            │
-   ↓                                          │
-Action（行動：去查 / 去算 / 去呼叫工具）          │
-   ↓                                          │
-Observation（觀察：工具回傳了什麼？）            │
-   ↓                                          │
-   └──────────── 還沒答完就再一輪 ─────────────┘
-                     ↓ 答完了
-                  Final Answer
-```
+<!-- FIG3 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-label="ReAct：推理與行動交錯的迴圈" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="558.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">ReAct：推理與行動交錯的迴圈</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Thought → Action → Observation，直到答得出來</text>
+<rect x="120" y="140" width="560" height="64" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="400.0" y="170.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Thought</text>
+<text x="400.0" y="192.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">推理：我現在需要知道什麼？</text>
+<rect x="120" y="240" width="560" height="64" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="400.0" y="270.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Action</text>
+<text x="400.0" y="292.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">行動：去查 / 去算 / 去呼叫工具</text>
+<rect x="120" y="340" width="560" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="400.0" y="370.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Observation</text>
+<text x="400.0" y="392.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">觀察：工具回傳了什麼？</text>
+<path d="M 400 204 L 400 238" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 400 304 L 400 338" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 680 372 L 800 372" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 800 372 L 800 172" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 800 172 L 684 172" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="740" y="362" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">還沒答完就再一輪</text>
+<path d="M 400 404 L 400 440" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="412" y="428" font-size="12" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">答完了</text>
+<rect x="240" y="444" width="320" height="56" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="400.0" y="470.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Final Answer</text>
+<text x="400.0" y="492.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">把 Observation 整理成最終回答</text>
+<text x="48" y="540" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">ReAct 把「推理」與「行動」交錯起來：每一輪都先想、再查、再看結果，直到能回答為止。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 41：ReAct 迴圈——Thought（我需要知道什麼）→ Action（去查／去算）→ Observation（工具回傳什麼），還沒答完就再一輪，答完了才輸出 Final Answer。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG3 -->
 
 > **考點**：ReAct 的三個關鍵詞——**interleaved**（交錯）、**reasoning traces + actions**、
 > **external tools**。它與 CoT 的差別是「**會動手查**」，與 PAL 的差別是

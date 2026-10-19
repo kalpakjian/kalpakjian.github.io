@@ -1,0 +1,17 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/prompteng-outline.svg",
+    "caption": "圖 39：全課大綱——Part 1 基礎／Part 2 進階／Part 3 工具與應用／Part 4 結論與未來，以及「先問你要什麼，再挑技術」的七條對照。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 2,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/prompteng-pal.svg",
+    "caption": "圖 40：PAL 流程——自然語言題目 → LLM 產生 Python 程式（中間推理步驟）→ Python 執行得到數值 → 可信的最終答案。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 3,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/prompteng-react.svg",
+    "caption": "圖 41：ReAct 迴圈——Thought（我需要知道什麼）→ Action（去查／去算）→ Observation（工具回傳什麼），還沒答完就再一輪，答完了才輸出 Final Answer。｜手繪 SVG 圖表"
+  }
+]
