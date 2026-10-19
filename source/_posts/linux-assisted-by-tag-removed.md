@@ -1,5 +1,5 @@
 ---
-title: Linux 為什麼不要「AI 標籤」了？Linus：規定你「不准用哪種工具」，這種規則很蠢
+title: Linux 為什麼不要「AI 標籤」了？Linus：這種規則很蠢
 date: 2026-10-19 21:00:00
 categories:
   - AI 研究追蹤
