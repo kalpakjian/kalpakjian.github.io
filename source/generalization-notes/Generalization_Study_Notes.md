@@ -156,11 +156,44 @@
 
 模型複雜度是一條光譜，兩個極端就是欠擬合與過擬合，中間存在一個「剛剛好」的甜點區（sweet spot）：
 
-```
-太簡單 ─────────── 剛剛好 ─────────── 太複雜
-欠擬合          泛化能力最佳            過擬合
-(兩邊都差)      (測試誤差最低)         (訓練極好/測試很差)
-```
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 450" role="img" aria-label="模型複雜度光譜：不是二選一" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="448.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型複雜度光譜：不是二選一</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">左邊太簡單、右邊太複雜，中間才是甜點區</text>
+<text x="48" y="120" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型複雜度（由左至右遞增）</text>
+<path d="M 70 132 L 838 132" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="66" y="150" width="250" height="52" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="191.0" y="181.76" font-size="16" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">太簡單</text>
+<rect x="66" y="218" width="250" height="172" rx="12" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="82" y="250" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">欠擬合</text>
+<text x="82" y="280" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練與測試都差（例：0.61 / 0.58）</text>
+<text x="82" y="305" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">落差小：兩邊都沒學好</text>
+<text x="82" y="330" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">解法：提高複雜度、加特徵</text>
+<text x="82" y="355" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　　降低正則化</text>
+<rect x="325" y="150" width="250" height="52" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="450.0" y="181.76" font-size="16" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">剛剛好</text>
+<rect x="325" y="218" width="250" height="172" rx="12" fill="#1c2230" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="341" y="250" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">甜點區（泛化最佳）</text>
+<text x="341" y="280" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">測試誤差最低（實測 degree=2）</text>
+<text x="341" y="305" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練 1.580／測試 2.005</text>
+<text x="341" y="330" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">落差小、兩邊都好</text>
+<text x="341" y="355" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">想再推一點：集成學習</text>
+<rect x="584" y="150" width="250" height="52" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="709.0" y="181.76" font-size="16" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">太複雜</text>
+<rect x="584" y="218" width="250" height="172" rx="12" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<text x="600" y="250" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">過擬合</text>
+<text x="600" y="280" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練極好（常接近 100%）</text>
+<text x="600" y="305" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">落差大（例：0.99 / 0.62）</text>
+<text x="600" y="330" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">解法：加資料、正則化、早停</text>
+<text x="600" y="355" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　　集成</text>
+<text x="48" y="424" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩邊都差＝欠擬合；兩邊都好但落差大＝過擬合；中間測試誤差最低的那一段才是甜點區。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 10：複雜度光譜——欠擬合（兩邊都差）、甜點區（測試誤差最低）、過擬合（落差大）各自的症狀與解法方向。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 ### 2.3 實測：複雜度光譜真的長這樣
 
@@ -812,18 +845,39 @@ lasso.fit(X_train, y_train)
 
 ### 9.2 診斷決策流程（把整節課串起來）
 
-```
-① 先量測：訓練分數 vs 交叉驗證分數（§5）
-        │
-        ├── 落差大（如 0.99 / 0.62） ──► 過擬合（§3）
-        │        解法：① 加資料 ② 正則化 ③ 早停 ④ 集成
-        │
-        ├── 都差且落差小（如 0.61 / 0.58）──► 欠擬合（§4）
-        │        解法：提高複雜度、加特徵、降低正則化
-        │
-        └── 都好（如 0.97 / 0.95）──► 泛化良好
-                 想再推一點：集成學習、更多資料
-```
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="診斷決策流程：把整節課串起來" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">診斷決策流程：把整節課串起來</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先量測訓練分數與交叉驗證分數，再看落差</text>
+<rect x="48" y="110" width="360" height="58" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="228.0" y="137.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① 先量測（§5）</text>
+<text x="228.0" y="159.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練分數 vs 交叉驗證分數</text>
+<path d="M 100 168 L 100 416" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 100 236 L 158 236" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="160" y="200" width="690" height="72" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="192" cy="236.0" r="15" fill="#f472b6" opacity="0.92"/>
+<text x="192" y="241.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="220" y="233.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">落差大（如 0.99 / 0.62）　→　過擬合（§3）</text>
+<text x="220" y="254.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">解法：① 加資料　② 正則化　③ 早停　④ 集成</text>
+<path d="M 100 326 L 158 326" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="160" y="290" width="690" height="72" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="192" cy="326.0" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="192" y="331.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="220" y="323.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">都差且落差小（如 0.61 / 0.58）　→　欠擬合（§4）</text>
+<text x="220" y="344.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">解法：提高複雜度、加特徵、降低正則化</text>
+<path d="M 100 416 L 158 416" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="160" y="380" width="690" height="72" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<circle cx="192" cy="416.0" r="15" fill="#3fb950" opacity="0.92"/>
+<text x="192" y="421.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="220" y="413.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">都好（如 0.97 / 0.95）　→　泛化良好</text>
+<text x="220" y="434.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">想再推一點：集成學習、更多資料</text>
+<text x="48" y="500" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">診斷的第一步永遠是「先看落差」：落差大＝過擬合；落差小又兩邊都差＝欠擬合；兩邊都好＝泛化良好。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 11：診斷決策流程——落差大＝過擬合（加資料／正則化／早停／集成）；落差小又兩邊都差＝欠擬合（提高複雜度、加特徵）；兩邊都好＝泛化良好。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 ### 9.3 四句話記住整節課
 

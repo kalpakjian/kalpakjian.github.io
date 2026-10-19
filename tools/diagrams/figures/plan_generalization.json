@@ -1,0 +1,12 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/generalization-spectrum.svg",
+    "caption": "圖 10：複雜度光譜——欠擬合（兩邊都差）、甜點區（測試誤差最低）、過擬合（落差大）各自的症狀與解法方向。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 2,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/generalization-diagnosis.svg",
+    "caption": "圖 11：診斷決策流程——落差大＝過擬合（加資料／正則化／早停／集成）；落差小又兩邊都差＝欠擬合（提高複雜度、加特徵）；兩邊都好＝泛化良好。｜手繪 SVG 圖表"
+  }
+]
