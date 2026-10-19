@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RMSE 學習筆記</title>
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/">← 回到 AI Tech Notes</a>
+  <a class="home" href="/automl-course/">📚 課程專題</a>
+  <a class="quiz" href="mc-quiz.html">🖱️ 互動測驗（30 題）</a>
+  <h1>RMSE 學習筆記</h1>
+  <div class="sub">迴歸模型的誤差評估與 AutoML 實作<br>TPOT · RMSE／MAE／MAPE／R² · 常見錯誤</div>
+  <div class="toc">
+<ul>
+<li><a href="#課程總覽">課程總覽</a><ul>
+<li><a href="#這份筆記的實測基礎">這份筆記的實測基礎</a></li>
+</ul>
+</li>
+<li><a href="#一先釐清問題r²-與-rmse-都是指標不是模型">一、先釐清問題：R² 與 RMSE 都是指標，不是模型</a><ul>
+<li><a href="#11-課程的提問">1.1 課程的提問</a></li>
+<li><a href="#12-把問題翻譯成三個可回答的問題">1.2 把問題翻譯成三個可回答的問題</a></li>
+<li><a href="#13-先判斷你的問題是分類還是迴歸">1.3 先判斷：你的問題是分類還是迴歸</a></li>
+</ul>
+</li>
+<li><a href="#二四個評估指標r²rmsemaemape">二、四個評估指標：R²／RMSE／MAE／MAPE</a><ul>
+<li><a href="#21-速查表">2.1 速查表</a></li>
+<li><a href="#22-rmse均方根誤差">2.2 RMSE（均方根誤差）</a></li>
+<li><a href="#23-mae平均絕對誤差">2.3 MAE（平均絕對誤差）</a></li>
+<li><a href="#24-mape平均絕對百分比誤差">2.4 MAPE（平均絕對百分比誤差）</a></li>
+<li><a href="#25-手算實例">2.5 手算實例</a></li>
+<li><a href="#26-該用哪個指標決策表">2.6 該用哪個指標：決策表</a></li>
+</ul>
+</li>
+<li><a href="#三tpot-迴歸實作以-rmse-為優化目標">三、TPOT 迴歸實作：以 RMSE 為優化目標</a><ul>
+<li><a href="#31-安裝">3.1 安裝</a></li>
+<li><a href="#32-重要tpot-012-與-1x-的-api-不一樣">3.2 重要：TPOT 0.12 與 1.x 的 API 不一樣</a></li>
+<li><a href="#33-現行版寫法tpot-1x建議">3.3 現行版寫法（TPOT 1.x，建議）</a></li>
+<li><a href="#34-舊版寫法tpot-012x課程原樣">3.4 舊版寫法（TPOT 0.12.x，課程原樣）</a></li>
+<li><a href="#35-scorers-字串速查">3.5 scorers 字串速查</a></li>
+<li><a href="#36-常用參數速查">3.6 常用參數速查</a></li>
+<li><a href="#37-匯出最佳模型">3.7 匯出最佳模型</a></li>
+</ul>
+</li>
+<li><a href="#四常用迴歸模型推薦">四、常用迴歸模型推薦</a><ul>
+<li><a href="#41-三大類模型">4.1 三大類模型</a></li>
+<li><a href="#42-為什麼樹模型在表格資料上幾乎無敵">4.2 為什麼樹模型在表格資料上幾乎無敵</a></li>
+</ul>
+</li>
+<li><a href="#五多模型-rmse-比較範例">五、多模型 RMSE 比較範例</a><ul>
+<li><a href="#51-完整程式本機實跑通過">5.1 完整程式（本機實跑通過）</a></li>
+<li><a href="#52-一次輸出四個指標">5.2 一次輸出四個指標</a></li>
+</ul>
+</li>
+<li><a href="#六離群值outlier與-rmse-的關係">六、離群值（Outlier）與 RMSE 的關係</a><ul>
+<li><a href="#61-什麼是離群值">6.1 什麼是離群值</a></li>
+<li><a href="#62-為什麼離群值對-rmse-特別致命">6.2 為什麼離群值對 RMSE 特別致命</a></li>
+<li><a href="#63-遇到離群值怎麼辦四種策略">6.3 遇到離群值怎麼辦：四種策略</a></li>
+</ul>
+</li>
+<li><a href="#七實務建議什麼時候用哪個指標">七、實務建議：什麼時候用哪個指標</a><ul>
+<li><a href="#71-三個核心建議">7.1 三個核心建議</a></li>
+<li><a href="#72-為什麼模型比較不要只看-r²">7.2 為什麼模型比較不要只看 R²</a></li>
+<li><a href="#73-在-automl-pipeline-中的實務配置">7.3 在 AutoML pipeline 中的實務配置</a></li>
+<li><a href="#74-四個容易被忽略但很重要的要點">7.4 四個容易被忽略但很重要的要點</a></li>
+</ul>
+</li>
+<li><a href="#八常見錯誤與陷阱">八、常見錯誤與陷阱</a><ul>
+<li><a href="#81-mape-的分母寫成-mae">8.1 MAPE 的分母寫成 MAE</a></li>
+<li><a href="#82-squaredfalse-已被移除">8.2 squared=False 已被移除</a></li>
+<li><a href="#83-r²-模型不存在">8.3 「R² 模型」不存在</a></li>
+<li><a href="#84-tpot-版本陷阱">8.4 TPOT 版本陷阱</a></li>
+<li><a href="#85-mape-的三個地雷">8.5 MAPE 的三個地雷</a></li>
+<li><a href="#86-rmse-不能跨資料集比較">8.6 RMSE 不能跨資料集比較</a></li>
+<li><a href="#87-四個常見的評估流程錯誤">8.7 四個常見的評估流程錯誤</a></li>
+<li><a href="#88-neg-方向陷阱">8.8 neg_ 方向陷阱</a></li>
+</ul>
+</li>
+<li><a href="#九重點速查">九、重點速查</a><ul>
+<li><a href="#91-四個指標一句話記憶">9.1 四個指標：一句話記憶</a></li>
+<li><a href="#92-公式卡">9.2 公式卡</a></li>
+<li><a href="#93-複製即用三件套">9.3 複製即用：三件套</a></li>
+<li><a href="#94-交報告前檢查清單">9.4 交報告前檢查清單</a></li>
+</ul>
+</li>
+<li><a href="#十實測記錄">十、實測記錄</a><ul>
+<li><a href="#101-環境">10.1 環境</a></li>
+<li><a href="#102-驗證項目與結果">10.2 驗證項目與結果</a></li>
+</ul>
+</li>
+<li><a href="#附錄-a互動式線上測驗">附錄 A：互動式線上測驗</a></li>
+<li><a href="#附錄-b名詞對照表">附錄 B：名詞對照表</a></li>
+</ul>
+  </div>
+</nav>
+<main>
+<h1 id="rmse-與迴歸模型評估學習筆記">RMSE 與迴歸模型評估學習筆記</h1>
+<blockquote>
+<p><p><strong>課程</strong>：自動化機器學習（AutoML）應用證書 — 迴歸模型評估與 TPOT 實作<br />
+<strong>機構</strong>：匯縱專業發展中心（IVDC）<br />
+<strong>涵蓋檔案</strong>：<code>什麼是 RMSE.pptx</code>（14 頁、16:9、全繁體中文課程）<br />
+<strong>一句話總結</strong>：先講清楚「R² 與 RMSE 都是指標、不是模型」，再用 TPOT 以 RMSE 為優化目標自動搜尋迴歸模型，最後把 RMSE／MAE／MAPE 的定義、手算與常見錯誤一次補齊。<br />
+<strong>適合對象</strong>：已會基本 Python 與 scikit-learn，想用 AutoML 解決迴歸問題的學員<br />
+<strong>實測環境</strong>：Python 3.11.16、scikit-learn 1.9.1、XGBoost 3.2.0、LightGBM 4.7.0（本機實跑，輸出直接寫進內文）<br />
+🖱️ <strong>互動測驗（推薦）</strong>：附錄 A 提供 <strong>30 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong><br />
+<strong>整理日期</strong>：2026-10-19</p></p>
+</blockquote>
+<hr />
+<h2 id="課程總覽">課程總覽</h2>
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<img alt="圖 1：RMSE 與迴歸誤差示意" src="data:image/jpeg;base64,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" style="max-width:100%;height:auto;border-radius:8px;display:block;margin:0 auto">
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：這份筆記的主題——一條擬合迴歸線穿過資料點，每個點都掛著長短不一的誤差線；右上角那顆遠離群集的亮點就是離群值，也正是 RMSE 對它特別敏感的原因。｜Qwen-Image 2.1 生成插圖</figcaption>
+</figure>
+
+<table>
+<thead>
+<tr>
+<th>區塊</th>
+<th>主題</th>
+<th>學完會什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>一</strong></td>
+<td>R² 與 RMSE 的定位</td>
+<td>分清「指標」與「模型」，把模糊的提問翻譯成三個可回答的問題</td>
+</tr>
+<tr>
+<td><strong>二</strong></td>
+<td>四個評估指標</td>
+<td>RMSE／MAE／MAPE／R² 的定義、手算、該用哪一個</td>
+</tr>
+<tr>
+<td><strong>三</strong></td>
+<td>TPOT 迴歸實作</td>
+<td>用 <code>TPOTRegressor</code> 把 RMSE 當優化目標，並處理新舊版 API 差異</td>
+</tr>
+<tr>
+<td><strong>四</strong></td>
+<td>常用迴歸模型</td>
+<td>梯度提升樹／集成／線性正則化三類的選擇依據</td>
+</tr>
+<tr>
+<td><strong>五</strong></td>
+<td>多模型比較</td>
+<td>在同一份資料上比 RMSE，並一次輸出四個指標</td>
+</tr>
+<tr>
+<td><strong>六</strong></td>
+<td>離群值</td>
+<td>為什麼 RMSE 對離群值特別敏感，四種處理策略</td>
+</tr>
+<tr>
+<td><strong>七</strong></td>
+<td>實務建議</td>
+<td>什麼情境用哪個指標、Adjusted R²、四個容易忽略的要點</td>
+</tr>
+<tr>
+<td><strong>八</strong></td>
+<td>常見錯誤</td>
+<td>兩處技術錯誤 + 六類陷阱，每一項都有可執行的修正</td>
+</tr>
+<tr>
+<td><strong>九</strong></td>
+<td>重點速查</td>
+<td>一頁帶走公式、程式碼與檢查清單</td>
+</tr>
+</tbody>
+</table>
+<h3 id="這份筆記的實測基礎">這份筆記的實測基礎</h3>
+<p>本筆記的程式碼與數字都在本機實跑過（Python 3.11.16、scikit-learn 1.9.1），
+包含 RMSE／MAE 手算、修正後的 MAPE 範例，以及三個模型在同一份資料上的 RMSE 比較。
+完整記錄見第十節。</p>
+<hr />
+<h2 id="一先釐清問題r²-與-rmse-都是指標不是模型">一、先釐清問題：R² 與 RMSE 都是指標，不是模型</h2>
+<h3 id="11-課程的提問">1.1 課程的提問</h3>
+<p>課程用一頁投影片提出這個問題：</p>
+<blockquote>
+<p>「除了 R² 模型，可以用其他 RMSE 模型做預測嗎？請建議。」</p>
+</blockquote>
+<p>這句話裡藏了兩個很常見的初學者誤解：</p>
+<table>
+<thead>
+<tr>
+<th>常見誤解</th>
+<th>正確觀念</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「<strong>R² 模型</strong>」</td>
+<td>R² 不是模型，是<strong>評估指標</strong>（決定係數）。沒有所謂的「R² 模型」。</td>
+</tr>
+<tr>
+<td>「<strong>RMSE 模型</strong>」</td>
+<td>RMSE 同樣不是模型，也是<strong>評估指標</strong>（均方根誤差）。</td>
+</tr>
+<tr>
+<td>「用 RMSE 做預測」</td>
+<td>指標不會做預測，只有<strong>模型</strong>（迴歸器）才會做預測；指標是用來<strong>打分數</strong>的。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-把問題翻譯成三個可回答的問題">1.2 把問題翻譯成三個可回答的問題</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>真正的問題</th>
+<th>答案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>我可以用 <strong>RMSE 取代 R²</strong> 來評估迴歸模型嗎？</td>
+<td>可以，而且對「想知道平均誤差多大」的情境更直觀（RMSE 與預測目標同單位）。</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>我可以讓 AutoML <strong>以 RMSE 為優化目標</strong>去搜尋模型嗎？</td>
+<td>可以。TPOT 只要把 <code>scorers</code> 設成 <code>'neg_root_mean_squared_error'</code>。</td>
+</tr>
+<tr>
+<td>Q3</td>
+<td>有沒有<strong>推薦的迴歸模型</strong>？</td>
+<td>有，見第四節：梯度提升樹系列最推薦。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>一句話總結</strong>：R² 和 RMSE 是「體檢報告上的兩個數字」，不是「兩種藥」。
+你可以選擇看哪個數字，也可以要求 AutoML「照 RMSE 這個數字來挑最好的藥」。</p>
+</blockquote>
+<h3 id="13-先判斷你的問題是分類還是迴歸">1.3 先判斷：你的問題是分類還是迴歸</h3>
+<table>
+<thead>
+<tr>
+<th>比較項</th>
+<th>分類（Classification）</th>
+<th>迴歸（Regression）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>預測什麼</td>
+<td><strong>類別</strong>（是／否、A／B／C）</td>
+<td><strong>連續數值</strong>（房價、分數、銷售額）</td>
+</tr>
+<tr>
+<td>典型指標</td>
+<td>Accuracy、AUC、F1</td>
+<td><strong>RMSE、MAE、MAPE、R²</strong></td>
+</tr>
+<tr>
+<td>TPOT 入口</td>
+<td><code>TPOTClassifier</code></td>
+<td><strong><code>TPOTRegressor</code></strong></td>
+</tr>
+<tr>
+<td>課程案例</td>
+<td>客戶流失預測、鐵達尼號生存率</td>
+<td>房價預測</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>用錯指標比用錯模型更糟：拿 Accuracy 去評估迴歸問題，等於拿體重計量身高。</p>
+</blockquote>
+<hr />
+<h2 id="二四個評估指標r²rmsemaemape">二、四個評估指標：R²／RMSE／MAE／MAPE</h2>
+<h3 id="21-速查表">2.1 速查表</h3>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>全名</th>
+<th>公式</th>
+<th>單位</th>
+<th>範圍</th>
+<th>方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>R²</strong></td>
+<td>決定係數</td>
+<td><code>1 − SS_res / SS_tot</code></td>
+<td>無單位</td>
+<td>(−∞, 1]</td>
+<td>越大越好</td>
+</tr>
+<tr>
+<td><strong>RMSE</strong></td>
+<td>均方根誤差</td>
+<td><code>√( (1/n) Σ(y−ŷ)² )</code></td>
+<td>與 y 同單位</td>
+<td>[0, ∞)</td>
+<td>越小越好</td>
+</tr>
+<tr>
+<td><strong>MAE</strong></td>
+<td>平均絕對誤差</td>
+<td><code>(1/n) Σ\|y−ŷ\|</code></td>
+<td>與 y 同單位</td>
+<td>[0, ∞)</td>
+<td>越小越好</td>
+</tr>
+<tr>
+<td><strong>MAPE</strong></td>
+<td>平均絕對百分比誤差</td>
+<td><code>(1/n) Σ\|y−ŷ\| / \|y\| × 100%</code></td>
+<td>%</td>
+<td>[0, ∞)</td>
+<td>越小越好</td>
+</tr>
+</tbody>
+</table>
+<p>其中 <code>y</code> 是真實值、<code>ŷ</code> 是預測值、<code>n</code> 是樣本數。</p>
+<h3 id="22-rmse均方根誤差">2.2 RMSE（均方根誤差）</h3>
+<p>計算三步驟：</p>
+<ol>
+<li><strong>平方</strong>：把每個誤差 <code>(y − ŷ)</code> 平方，負數變正數，避免正負誤差互相抵消</li>
+<li><strong>求平均</strong>：把所有平方後的誤差加總再除以 n</li>
+<li><strong>開根號</strong>：把單位還原回原本的 y 單位（平方過的單位沒有物理意義）</li>
+</ol>
+<p>三個關鍵特性：</p>
+<ul>
+<li><strong>單位直觀</strong>：RMSE 是 5 且 y 是「房價（萬元）」，就代表平均誤差約 5 萬元，可以直接對業務說明</li>
+<li><strong>對大誤差極敏感</strong>：因為先平方，誤差 10 的懲罰是誤差 1 的 100 倍；一個離群值就能大幅拉高 RMSE</li>
+<li><strong>恆等式</strong>：<code>RMSE ≥ MAE</code> 永遠成立，只有當所有誤差大小完全相同時兩者相等</li>
+</ul>
+<h3 id="23-mae平均絕對誤差">2.3 MAE（平均絕對誤差）</h3>
+<p>做法是直接對每個誤差取絕對值（負變正）再取平均。</p>
+<ul>
+<li>計算直觀，不需要「平方又開方」</li>
+<li><strong>對離群值穩健</strong>：每個誤差只按比例計分，不會被放大</li>
+<li>缺點：給出的是絕對數值，難以判斷「這個誤差算大還是小」（誤差 4.67 是大還是小，取決於 y 的量級）</li>
+</ul>
+<h3 id="24-mape平均絕對百分比誤差">2.4 MAPE（平均絕對百分比誤差）</h3>
+<p>做法是把 MAE 的誤差再除以真實值，變成百分比。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>MAE 的局限</th>
+<th>MAPE 的優勢</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>呈現</td>
+<td>「誤差是 4.67 個單位」</td>
+<td>「誤差是 5%」</td>
+</tr>
+<tr>
+<td>判斷難度</td>
+<td>需要知道 y 的量級才能判斷大小</td>
+<td>一目了然，跨不同量級資料也能比較</td>
+</tr>
+<tr>
+<td>商業溝通</td>
+<td>老闆或客戶較難理解</td>
+<td>「預測誤差 5%」比「誤差 4.67 個單位」好懂</td>
+</tr>
+</tbody>
+</table>
+<p><strong>MAPE 的三個先天缺陷</strong>（課程沒有提，但實務很重要）：</p>
+<ol>
+<li><strong>真實值為 0 時無定義</strong>（除以 0）——銷售量、流量這類含 0 的資料不可用</li>
+<li><strong>對「低估」與「高估」懲罰不對稱</strong>——真實值 100、預測 200 是 100% 誤差；但真實值 200、預測 100 只有 50% 誤差</li>
+<li><strong>小數值主導</strong>——真實值 1 的資料若誤差 1，就貢獻 100% 誤差，會讓 MAPE 被小量級樣本綁架</li>
+</ol>
+<h3 id="25-手算實例">2.5 手算實例</h3>
+<p><strong>已知</strong>：模型在三筆資料上的誤差（真實 − 預測）分別是 <code>1, −3, 10</code>。</p>
+<p><strong>RMSE</strong></p>
+<div class="codehilite"><pre><span></span><code>先平方：1² + (−3)² + 10² = 1 + 9 + 100 = 110
+求平均：110 ÷ 3 ≈ 36.6667
+開根號：√36.6667 ≈ 6.0553  →  6.06
+</code></pre></div>
+
+<p><strong>MAE</strong></p>
+<div class="codehilite"><pre><span></span><code>取絕對值：|1| + |−3| + |10| = 1 + 3 + 10 = 14
+求平均：14 ÷ 3 ≈ 4.6667  →  4.67
+</code></pre></div>
+
+<p>結論：<code>RMSE (6.06) &gt; MAE (4.67)</code>，印證了 RMSE 會因為那個較大的誤差「10」而受到較大影響。</p>
+<p><strong>MAPE 需要先補上真實值才能算</strong></p>
+<p>MAPE 的分母是<strong>每一筆的真實值</strong>，不是 MAE。假設這三筆的真實值是 <code>100, 200, 300</code>，
+則預測值 = 真實值 − 誤差 = <code>99, 203, 290</code>：</p>
+<div class="codehilite"><pre><span></span><code>第 1 筆：|100 − 99|  ÷ 100 = 1 ÷ 100   = 1.00%
+第 2 筆：|200 − 203| ÷ 200 = 3 ÷ 200   = 1.50%
+第 3 筆：|300 − 290| ÷ 300 = 10 ÷ 300  = 3.33%
+MAPE = (1.00% + 1.50% + 3.33%) ÷ 3 ≈ 1.94%
+</code></pre></div>
+
+<p><strong>同一組資料的完整成績單</strong>（本機實測）：</p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>數值</th>
+<th>解讀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R²</td>
+<td>0.9945</td>
+<td>解釋了 99.45% 的變異，模型很好</td>
+</tr>
+<tr>
+<td>RMSE</td>
+<td>6.0553</td>
+<td>平均誤差約 6.06 個單位（會被大誤差拉高）</td>
+</tr>
+<tr>
+<td>MAE</td>
+<td>4.6667</td>
+<td>平均誤差約 4.67 個單位</td>
+</tr>
+<tr>
+<td>MAPE</td>
+<td>1.94%</td>
+<td>平均百分比誤差約 2%，非常小</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注意：RMSE 6.06 對應的 MAPE 只有 1.94%，因為真實值的量級是 100–300。
+<strong>同一個 RMSE，在不同量級的資料上意義完全不同</strong>，這就是 MAPE 存在的價值。</p>
+</blockquote>
+<h3 id="26-該用哪個指標決策表">2.6 該用哪個指標：決策表</h3>
+<table>
+<thead>
+<tr>
+<th>你的情境</th>
+<th>建議指標</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需要向非技術人員解釋誤差</td>
+<td>RMSE</td>
+<td>與原始單位一致（「誤差約 5 萬元」）</td>
+</tr>
+<tr>
+<td>資料含離群值、不想被單筆拉走</td>
+<td>MAE</td>
+<td>對離群值穩健</td>
+</tr>
+<tr>
+<td>比較不同量級或不同單位的資料集</td>
+<td>MAPE</td>
+<td>百分比化，可跨資料集比較</td>
+</tr>
+<tr>
+<td>比較不同模型的解釋力（不同特徵組合）</td>
+<td>R² / Adjusted R²</td>
+<td>直接反映解釋了多少變異</td>
+</tr>
+<tr>
+<td>比較不同模型（同一份資料）</td>
+<td>RMSE / MAE</td>
+<td>R² 會隨特徵數量上升，不公平</td>
+</tr>
+<tr>
+<td>做模型選擇或調參</td>
+<td>RMSE（或 MSE）</td>
+<td>平方可微，對梯度優化友善，也是 TPOT 的優化目標之一</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="三tpot-迴歸實作以-rmse-為優化目標">三、TPOT 迴歸實作：以 RMSE 為優化目標</h2>
+<h3 id="31-安裝">3.1 安裝</h3>
+<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>tpot
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Google Colab：儲存格開頭加 !</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">tpot</span>
+</code></pre></div>
+
+<p>目前最新版本是 <strong>TPOT 1.1.0</strong>。</p>
+<h3 id="32-重要tpot-012-與-1x-的-api-不一樣">3.2 重要：TPOT 0.12 與 1.x 的 API 不一樣</h3>
+<p>課程示範的寫法屬於 <strong>TPOT 0.12.x（舊版）</strong>。若環境安裝的是 <strong>TPOT 1.x，那段程式會直接報錯</strong>：</p>
+<div class="codehilite"><pre><span></span><code>TypeError: TPOTRegressor.__init__() got an unexpected keyword argument &#39;scoring&#39;
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>TPOT 0.12.x（課程寫法）</th>
+<th>TPOT 1.x（現行 1.1.0）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>優化目標</td>
+<td><code>scoring='neg_root_mean_squared_error'</code></td>
+<td><strong><code>scorers=['neg_root_mean_squared_error']</code></strong>（複數、用 list）</td>
+</tr>
+<tr>
+<td>顯示訊息</td>
+<td><code>verbosity=2</code></td>
+<td><strong><code>verbose=2</code></strong></td>
+</tr>
+<tr>
+<td>匯出最佳程式碼</td>
+<td><code>tpot.export('best.py')</code></td>
+<td><strong>已移除</strong>，改用 <code>fitted_pipeline_</code> + <code>joblib</code></td>
+</tr>
+<tr>
+<td>搜尋空間</td>
+<td>固定（樹狀 pipeline）</td>
+<td>新增 <code>search_space='linear'</code>／<code>'graph'</code>／<code>'mdr'</code></td>
+</tr>
+<tr>
+<td>多目標優化</td>
+<td>無</td>
+<td>新增 <code>other_objective_functions</code></td>
+</tr>
+<tr>
+<td>預設目標</td>
+<td>—</td>
+<td><code>scorers=['neg_mean_squared_error']</code>（預設是 MSE，不是 RMSE）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-現行版寫法tpot-1x建議">3.3 現行版寫法（TPOT 1.x，建議）</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ===== 以 RMSE 為優化目標的 TPOTRegressor（TPOT 1.x）=====</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">root_mean_squared_error</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tpot</span><span class="w"> </span><span class="kn">import</span> <span class="n">TPOTRegressor</span>
+
+<span class="c1"># 1. 準備資料（此處用模擬資料，實務請換成你的 DataFrame）</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="c1"># 2. 初始化 TPOT，並把優化目標設為 RMSE</span>
+<span class="n">tpot</span> <span class="o">=</span> <span class="n">TPOTRegressor</span><span class="p">(</span>
+    <span class="n">scorers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;neg_root_mean_squared_error&quot;</span><span class="p">],</span>  <span class="c1"># 1.x 是 scorers（複數）</span>
+    <span class="n">scorers_weights</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">population_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>        <span class="c1"># 每代 20 條 pipeline</span>
+    <span class="n">generations</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>             <span class="c1"># 繁衍 5 代</span>
+    <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>                      <span class="c1"># 5 折交叉驗證</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>           <span class="c1"># 固定種子，結果可重現</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>                 <span class="c1"># 1.x 是 verbose（不是 verbosity）</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># 3. 開始自動搜尋</span>
+<span class="n">tpot</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># 4. 預測與評估</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">tpot</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">root_mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;測試集 RMSE: </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;最佳 pipeline:&quot;</span><span class="p">,</span> <span class="n">tpot</span><span class="o">.</span><span class="n">fitted_pipeline_</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="34-舊版寫法tpot-012x課程原樣">3.4 舊版寫法（TPOT 0.12.x，課程原樣）</h3>
+<blockquote>
+<p>僅適用於 <code>pip install "tpot==0.12.2"</code> 或更早版本。</p>
+</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">tpot</span><span class="w"> </span><span class="kn">import</span> <span class="n">TPOTRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">tpot</span> <span class="o">=</span> <span class="n">TPOTRegressor</span><span class="p">(</span>
+    <span class="n">generations</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">population_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_root_mean_squared_error&#39;</span><span class="p">,</span>  <span class="c1"># 舊版寫法</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span>                             <span class="c1"># 舊版寫法</span>
+<span class="p">)</span>
+<span class="n">tpot</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">tpot</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>   <span class="c1"># 通用寫法，新舊版皆可</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;測試集 RMSE: </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">tpot</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">&#39;tpot_best_pipeline.py&#39;</span><span class="p">)</span>      <span class="c1"># 舊版才有</span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>相容性技巧</strong>：<code>np.sqrt(mean_squared_error(y, p))</code> 這個寫法所有版本都適用，
+是跨版本最安全的 RMSE 計算方式。</p>
+</blockquote>
+<h3 id="35-scorers-字串速查">3.5 <code>scorers</code> 字串速查</h3>
+<table>
+<thead>
+<tr>
+<th>想優化的指標</th>
+<th>字串</th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RMSE</strong></td>
+<td><code>neg_root_mean_squared_error</code></td>
+<td>本篇主角</td>
+</tr>
+<tr>
+<td>MSE</td>
+<td><code>neg_mean_squared_error</code></td>
+<td>TPOT 1.x 預設值</td>
+</tr>
+<tr>
+<td>MAE</td>
+<td><code>neg_mean_absolute_error</code></td>
+<td>對離群值穩健</td>
+</tr>
+<tr>
+<td>MAPE</td>
+<td><code>neg_mean_absolute_percentage_error</code></td>
+<td>y 不可含 0</td>
+</tr>
+<tr>
+<td>R²</td>
+<td><code>r2</code></td>
+<td>越大越好</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>為什麼誤差類指標都要加 <code>neg_</code>？</strong>
+scikit-learn 的 scorer 統一約定「數值越大越好」（因為要最大化分數），
+但 RMSE 是越小越好，所以取負號。<strong>分數越接近 0 越好</strong>，這是最容易搞混的坑。</p>
+</blockquote>
+<h3 id="36-常用參數速查">3.6 常用參數速查</h3>
+<table>
+<thead>
+<tr>
+<th>參數</th>
+<th>意義</th>
+<th>建議值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>population_size</code></td>
+<td>每一代產生幾條 pipeline</td>
+<td>教學 20；實務 50–100</td>
+</tr>
+<tr>
+<td><code>generations</code></td>
+<td>繁衍幾代</td>
+<td>5 起；時間有限時改用 <code>max_time_mins</code></td>
+</tr>
+<tr>
+<td><code>cv</code></td>
+<td>交叉驗證折數</td>
+<td>5 或 10</td>
+</tr>
+<tr>
+<td><code>max_time_mins</code></td>
+<td>總執行時間上限（分鐘）</td>
+<td>預設 60</td>
+</tr>
+<tr>
+<td><code>max_eval_time_mins</code></td>
+<td>單一 pipeline 評估上限（分鐘）</td>
+<td>預設 10</td>
+</tr>
+<tr>
+<td><code>n_jobs</code></td>
+<td>平行核心數</td>
+<td><code>-1</code>（用滿 CPU）</td>
+</tr>
+<tr>
+<td><code>random_state</code></td>
+<td>隨機種子</td>
+<td><code>42</code>（可重現）</td>
+</tr>
+<tr>
+<td><code>search_space</code></td>
+<td>（1.x 新增）pipeline 結構</td>
+<td><code>'linear'</code>（一般）／<code>'graph'</code>（更複雜）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="37-匯出最佳模型">3.7 匯出最佳模型</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># TPOT 1.x：沒有 .export()，改用 joblib 保存整條 pipeline</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">tpot</span><span class="o">.</span><span class="n">fitted_pipeline_</span><span class="p">,</span> <span class="s2">&quot;best_pipeline.joblib&quot;</span><span class="p">)</span>
+
+<span class="c1"># 之後載入使用</span>
+<span class="n">best</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;best_pipeline.joblib&quot;</span><span class="p">)</span>
+<span class="n">y_new</span> <span class="o">=</span> <span class="n">best</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># TPOT 0.12.x：可直接匯出成一份可讀的 .py 檔</span>
+<span class="n">tpot</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s2">&quot;tpot_best_pipeline.py&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="四常用迴歸模型推薦">四、常用迴歸模型推薦</h2>
+<h3 id="41-三大類模型">4.1 三大類模型</h3>
+<table>
+<thead>
+<tr>
+<th>類別</th>
+<th>模型</th>
+<th>類別名稱</th>
+<th>特色</th>
+<th>適用時機</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>梯度提升樹</strong>（最推薦）</td>
+<td>XGBoost</td>
+<td><code>xgboost.XGBRegressor</code></td>
+<td>處理複雜非線性關係極佳、抗過擬合能力強</td>
+<td>表格資料首選</td>
+</tr>
+<tr>
+<td></td>
+<td>LightGBM</td>
+<td><code>lightgbm.LGBMRegressor</code></td>
+<td>訓練速度極快、記憶體消耗低</td>
+<td>大規模資料（百萬筆以上）</td>
+</tr>
+<tr>
+<td></td>
+<td>CatBoost</td>
+<td><code>catboost.CatBoostRegressor</code></td>
+<td>對類別型特徵處理極佳、調參需求低</td>
+<td>欄位多為文字類別</td>
+</tr>
+<tr>
+<td><strong>集成學習</strong></td>
+<td>隨機森林</td>
+<td><code>sklearn.ensemble.RandomForestRegressor</code></td>
+<td>穩定度高、不易過擬合</td>
+<td>做 baseline 基準模型</td>
+</tr>
+<tr>
+<td><strong>線性與正則化</strong></td>
+<td>Ridge</td>
+<td><code>sklearn.linear_model.Ridge</code></td>
+<td>L₂ 正則化，抑制係數過大</td>
+<td>特徵高度相關（共線性）</td>
+</tr>
+<tr>
+<td></td>
+<td>Lasso</td>
+<td><code>sklearn.linear_model.Lasso</code></td>
+<td>L₁ 正則化，可把不重要特徵係數壓成 0</td>
+<td>需要自動特徵篩選</td>
+</tr>
+<tr>
+<td></td>
+<td>ElasticNet</td>
+<td><code>sklearn.linear_model.ElasticNet</code></td>
+<td>L₁ + L₂ 混合</td>
+<td>特徵極多、又想要稀疏解</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-為什麼樹模型在表格資料上幾乎無敵">4.2 為什麼樹模型在表格資料上幾乎無敵</h3>
+<table>
+<thead>
+<tr>
+<th>原因</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不需特徵縮放</td>
+<td>對數值範圍不敏感，省去標準化步驟</td>
+</tr>
+<tr>
+<td>自動捕捉非線性</td>
+<td>靠特徵切分點組合出任意形狀的關係</td>
+</tr>
+<tr>
+<td>自動處理交互作用</td>
+<td>例如「房價 = f(面積 × 地點)」不需手動造特徵</td>
+</tr>
+<tr>
+<td>對離群值相對穩健</td>
+<td>切分只看排序，不看數值大小</td>
+</tr>
+<tr>
+<td>可輸出特徵重要性</td>
+<td>有助解釋模型</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>實務順序建議</strong>：先跑 <code>RandomForestRegressor</code> 拿 baseline，
+再用 <code>XGBoost</code> 或 <code>LightGBM</code> 提升，若特徵多且線性明顯，加測 <code>Ridge</code>／<code>Lasso</code> 比較。</p>
+</blockquote>
+<hr />
+<h2 id="五多模型-rmse-比較範例">五、多模型 RMSE 比較範例</h2>
+<h3 id="51-完整程式本機實跑通過">5.1 完整程式（本機實跑通過）</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">root_mean_squared_error</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xgboost</span><span class="w"> </span><span class="kn">import</span> <span class="n">XGBRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lightgbm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LGBMRegressor</span>
+
+<span class="c1"># 1. 準備資料（模擬資料；實務請替換成你的 X / y）</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="c1"># 2. 宣告要比較的迴歸模型</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Random Forest&quot;</span><span class="p">:</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="s2">&quot;XGBoost&quot;</span><span class="p">:</span> <span class="n">XGBRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="s2">&quot;LightGBM&quot;</span><span class="p">:</span> <span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="c1"># 3. 逐一訓練並計算 RMSE</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">rmse</span> <span class="o">=</span> <span class="n">root_mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">14s</span><span class="si">}</span><span class="s2"> RMSE = </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>實跑輸出：</p>
+<div class="codehilite"><pre><span></span><code>Random Forest  RMSE = 1.2485
+XGBoost        RMSE = 1.1395
+LightGBM       RMSE = 1.2174
+</code></pre></div>
+
+<p>此例中 <strong>XGBoost 的 RMSE 最低（1.1395）</strong>，是三者中表現最好的模型。</p>
+<h3 id="52-一次輸出四個指標">5.2 一次輸出四個指標</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">r2_score</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span>
+    <span class="n">mean_absolute_percentage_error</span><span class="p">,</span> <span class="n">root_mean_squared_error</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;一次輸出四個迴歸指標&quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;R2&quot;</span><span class="p">:</span>   <span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span>
+        <span class="s2">&quot;RMSE&quot;</span><span class="p">:</span> <span class="n">root_mean_squared_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span>
+        <span class="s2">&quot;MAE&quot;</span><span class="p">:</span>  <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span>
+        <span class="s2">&quot;MAPE&quot;</span><span class="p">:</span> <span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--- </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> ---&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">:</span><span class="s2">5s</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="c1"># 用法：evaluate(y_test, preds, name=&quot;XGBoost&quot;)</span>
+</code></pre></div>
+
+<blockquote>
+<p>若 y 含有 0，請不要計算 MAPE（會得到 inf 或巨大值），改用 MAE／RMSE。</p>
+</blockquote>
+<hr />
+<h2 id="六離群值outlier與-rmse-的關係">六、離群值（Outlier）與 RMSE 的關係</h2>
+<h3 id="61-什麼是離群值">6.1 什麼是離群值</h3>
+<p>課程的定義是：在資料中<strong>明顯偏離大多數觀測值</strong>的數據點，通常比其他數據大很多或小很多，
+像是「異常值」。</p>
+<p>三個特徵：</p>
+<table>
+<thead>
+<tr>
+<th>特徵</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>數值極端</td>
+<td>例如大部分房價在 500–800 萬，但有一筆是 3000 萬</td>
+</tr>
+<tr>
+<td>分布不一致</td>
+<td>在統計圖（如箱型圖）中，離群值會落在「鬍鬚」之外</td>
+</tr>
+<tr>
+<td>可能來源</td>
+<td>① 測量錯誤（輸入錯誤、儀器誤差）② 特殊情況（極端天氣、突發事件）③ 真實存在的異本（例如豪宅價格、罕見疾病病例）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-為什麼離群值對-rmse-特別致命">6.2 為什麼離群值對 RMSE 特別致命</h3>
+<p>回到 RMSE 的定義：<code>√( (1/n) Σ(y−ŷ)² )</code>，誤差<strong>先平方</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>誤差大小</th>
+<th>平方後</th>
+<th>佔這組資料 RMSE 的貢獻（以 1, 3, 10 為例）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1 / 110 ≈ 0.9%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>9</td>
+<td>9 / 110 ≈ 8.2%</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td><strong>100</strong></td>
+<td><strong>100 / 110 ≈ 90.9%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>光是<strong>一筆</strong>誤差 10 的資料，就決定了 RMSE 的 90.9%。
+這就是課程所說的「RMSE 會放大（懲罰）較大的誤差」。</p>
+<h3 id="63-遇到離群值怎麼辦四種策略">6.3 遇到離群值怎麼辦：四種策略</h3>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>做法</th>
+<th>適用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>檢查與修正</td>
+<td>先確認是「測量錯誤」還是「真實資料」</td>
+<td>永遠先做這一步</td>
+</tr>
+<tr>
+<td>改用 MAE</td>
+<td>MAE 對離群值穩健，不被單筆綁架</td>
+<td>離群值是雜訊、無法清除時</td>
+</tr>
+<tr>
+<td>資料轉換</td>
+<td>對 y 取 <code>log</code>，壓縮極端值</td>
+<td>右偏分布（房價、收入）</td>
+</tr>
+<tr>
+<td>用穩健模型</td>
+<td>Huber／Quantile Regressor、樹模型</td>
+<td>需要自動抗噪</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>不要看到離群值就無腦刪除</strong>：若是「豪宅價格」這類真實資料，刪掉等於讓模型永遠學不會預測豪宅。</p>
+</blockquote>
+<hr />
+<h2 id="七實務建議什麼時候用哪個指標">七、實務建議：什麼時候用哪個指標</h2>
+<h3 id="71-三個核心建議">7.1 三個核心建議</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>建議</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>同時使用 R² + RMSE</strong></td>
+<td>R² 看模型<strong>解釋力</strong>、RMSE 看<strong>預測誤差大小</strong>，兩者互補，避免單一指標誤導</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>加入 MAE 或 MAPE</strong></td>
+<td>MAE 避免 RMSE 被大誤差主導；MAPE 適合商業場景，誤差以百分比呈現</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>模型比較時用 RMSE／MAE</strong></td>
+<td>因為 R² 會隨變數數量上升，拿來比不同模型不公平</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72-為什麼模型比較不要只看-r²">7.2 為什麼模型比較不要只看 R²</h3>
+<p>R² 有個致命特性：<strong>只要增加特徵，R² 就只會上升（或持平），不會下降</strong>，即使那個特徵毫無用處。</p>
+<p>解法是 <strong>Adjusted R²（調整後決定係數）</strong>：</p>
+<div class="codehilite"><pre><span></span><code>Adjusted R² = 1 − (1 − R²) × (n − 1) / (n − k − 1)
+              n = 樣本數，k = 特徵數
+</code></pre></div>
+
+<p>它會對「特徵數量」施加懲罰，特徵增加但沒有實質貢獻時，Adjusted R² 反而會下降。</p>
+<h3 id="73-在-automl-pipeline-中的實務配置">7.3 在 AutoML pipeline 中的實務配置</h3>
+<table>
+<thead>
+<tr>
+<th>你的目標</th>
+<th>建議指標</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>預測精度檢驗（房價、分數、銷售額）</td>
+<td>RMSE</td>
+<td>與原始單位一致，最直觀</td>
+</tr>
+<tr>
+<td>模型解釋力比較（不同特徵組合）</td>
+<td>R² / Adjusted R²</td>
+<td>直接反映解釋了多少變異</td>
+</tr>
+<tr>
+<td>讓 AutoML 自動挑最好的模型</td>
+<td><code>scorers=['neg_root_mean_squared_error']</code></td>
+<td>把 RMSE 當優化目標</td>
+</tr>
+<tr>
+<td>商業報告給非技術主管看</td>
+<td>MAPE</td>
+<td>「誤差 5%」比「誤差 4.67 個單位」好懂</td>
+</tr>
+</tbody>
+</table>
+<h3 id="74-四個容易被忽略但很重要的要點">7.4 四個容易被忽略但很重要的要點</h3>
+<ol>
+<li><strong>一定要用測試集（或交叉驗證）評估</strong>——在訓練集上算 RMSE 一定很漂亮，那只是背答案</li>
+<li><strong>先做 baseline 再談優化</strong>——先用 <code>DummyRegressor</code>（永遠預測平均值）或隨機森林拿一個基準 RMSE，才知道後面的模型進步了多少</li>
+<li><strong>特徵工程通常比換模型更有用</strong>——同一個 XGBoost，餵好的特徵與爛的特徵，RMSE 可能差好幾倍</li>
+<li><strong>資料洩漏會讓 RMSE 假性變好</strong>——把預測目標的相關欄位或未來資訊放進特徵，會得到超低的 RMSE，但上線後完全失效</li>
+</ol>
+<hr />
+<h2 id="八常見錯誤與陷阱">八、常見錯誤與陷阱</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>項目</th>
+<th>類型</th>
+<th>嚴重度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#81-mape-的分母寫成-mae">8.1</a></td>
+<td>MAPE 的分母寫成 MAE</td>
+<td>內容錯誤</td>
+<td>高</td>
+</tr>
+<tr>
+<td><a href="#82-squaredfalse-已被移除">8.2</a></td>
+<td><code>squared=False</code> 已被移除</td>
+<td>程式碼失效</td>
+<td>高</td>
+</tr>
+<tr>
+<td><a href="#83-r²-模型不存在">8.3</a></td>
+<td>「R² 模型」不存在</td>
+<td>觀念澄清</td>
+<td>中</td>
+</tr>
+<tr>
+<td><a href="#84-tpot-版本陷阱">8.4</a></td>
+<td>TPOT API 版本不相容</td>
+<td>版本相容</td>
+<td>中</td>
+</tr>
+<tr>
+<td><a href="#85-mape-的三個地雷">8.5</a></td>
+<td>MAPE 的三個地雷</td>
+<td>指標限制</td>
+<td>中</td>
+</tr>
+<tr>
+<td><a href="#86-rmse-不能跨資料集比較">8.6</a></td>
+<td>RMSE 不能跨資料集比較</td>
+<td>結果解讀</td>
+<td>中</td>
+</tr>
+<tr>
+<td><a href="#87-四個常見的評估流程錯誤">8.7</a></td>
+<td>四個評估流程錯誤</td>
+<td>流程習慣</td>
+<td>中</td>
+</tr>
+<tr>
+<td><a href="#88-neg-方向陷阱">8.8</a></td>
+<td><code>neg_</code> 方向搞反</td>
+<td>方向判斷</td>
+<td>中</td>
+</tr>
+</tbody>
+</table>
+<h3 id="81-mape-的分母寫成-mae">8.1 MAPE 的分母寫成 MAE</h3>
+<p><strong>課程的寫法</strong>：以 MAE（4.67）當作「基準」，計算 1、3、10 與基準的差異百分比
+（79%、36%、114%），再平均得出 MAPE 約為 76%。</p>
+<p><strong>為什麼是錯的</strong>，有三個層面的問題：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>問題</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>分母用錯</strong></td>
+<td>MAPE 的分母是每一筆的真實值 <code>\|y\|</code>，不是 MAE。MAE 是一個統計結果，不能拿來當基準。</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>循環論證</strong></td>
+<td>1、3、10 正是已經用來算出 MAE 的那組誤差。再用它們去除以 MAE，只是在測量「這組誤差彼此的離散程度」，與預測準不準無關。</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>數字無法解讀</strong></td>
+<td>76% 對應不到任何真實的預測情境，無法說明模型好壞。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>正確做法</strong>：MAPE 需要「真實值 + 預測值」的配對資料。沿用同一組誤差，
+補上真實值 100、200、300 之後：</p>
+<div class="codehilite"><pre><span></span><code>真實值 100, 200, 300 ／ 預測值 99, 203, 290
+MAPE = (1.00% + 1.50% + 3.33%) ÷ 3 ≈ 1.94%
+</code></pre></div>
+
+<p>換句話說，只要在課程那張投影片補上一句「假設這三筆的真實值為 100、200、300」，
+就能正確示範 MAPE，不必改動其他內容。</p>
+<h3 id="82-squaredfalse-已被移除">8.2 <code>squared=False</code> 已被移除</h3>
+<p><strong>課程的程式碼</strong>寫成：</p>
+<div class="codehilite"><pre><span></span><code><span class="n">rmse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>   <span class="c1"># 新版會報錯</span>
+</code></pre></div>
+
+<p><strong>本機實測</strong>（scikit-learn 1.9.1）的結果是：</p>
+<div class="codehilite"><pre><span></span><code>TypeError: got an unexpected keyword argument &#39;squared&#39;
+</code></pre></div>
+
+<p><code>squared</code> 參數在 <strong>scikit-learn 1.4 被棄用</strong>，並在 <strong>1.6 版正式移除</strong>。三種可用的替代寫法：</p>
+<table>
+<thead>
+<tr>
+<th>寫法</th>
+<th>適用版本</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>root_mean_squared_error(y, p)</code></td>
+<td>sklearn ≥ 1.4</td>
+<td>官方推薦，語意最清楚</td>
+</tr>
+<tr>
+<td><code>np.sqrt(mean_squared_error(y, p))</code></td>
+<td>所有版本</td>
+<td>最安全，跨版本通用</td>
+</tr>
+<tr>
+<td><code>mean_squared_error(y, p) ** 0.5</code></td>
+<td>所有版本</td>
+<td>等價寫法</td>
+</tr>
+</tbody>
+</table>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">root_mean_squared_error</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">root_mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>      <span class="c1"># 推薦</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>  <span class="c1"># 通用</span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>教學建議</strong>：教課時統一使用 <code>np.sqrt(mean_squared_error(...))</code>，
+學生無論裝哪個版本的 scikit-learn 都能跑。</p>
+</blockquote>
+<h3 id="83-r²-模型不存在">8.3 「R² 模型」不存在</h3>
+<ul>
+<li>R²、RMSE、MAE、MAPE 都是<strong>評估指標</strong>，用來替模型打分數</li>
+<li><strong>模型</strong>才是做預測的東西：<code>XGBRegressor</code>、<code>RandomForestRegressor</code>、<code>LinearRegression</code></li>
+<li>正確說法：「用 RMSE <strong>評估</strong> XGBoost 模型」或「用 RMSE 當<strong>優化目標</strong>讓 TPOT 搜尋模型」</li>
+</ul>
+<h3 id="84-tpot-版本陷阱">8.4 TPOT 版本陷阱</h3>
+<p>見第三節。三個最常踩的雷：</p>
+<table>
+<thead>
+<tr>
+<th>舊寫法（0.12）</th>
+<th>新寫法（1.x）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scoring='neg_root_mean_squared_error'</code></td>
+<td><code>scorers=['neg_root_mean_squared_error']</code></td>
+</tr>
+<tr>
+<td><code>verbosity=2</code></td>
+<td><code>verbose=2</code></td>
+</tr>
+<tr>
+<td><code>tpot.export('best.py')</code></td>
+<td>沒有這個方法，改用 <code>joblib.dump(tpot.fitted_pipeline_, ...)</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="85-mape-的三個地雷">8.5 MAPE 的三個地雷</h3>
+<table>
+<thead>
+<tr>
+<th>地雷</th>
+<th>後果</th>
+<th>解法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>真實值含 0</td>
+<td>除以 0，得到 <code>inf</code></td>
+<td>改用 MAE／RMSE，或改用 sMAPE</td>
+</tr>
+<tr>
+<td>不對稱懲罰</td>
+<td>低估被罰得比高估重</td>
+<td>明白其偏向，或改用 sMAPE</td>
+</tr>
+<tr>
+<td>小數值主導</td>
+<td>少量級樣本綁架整體 MAPE</td>
+<td>分層計算，或改用 WAPE</td>
+</tr>
+</tbody>
+</table>
+<h3 id="86-rmse-不能跨資料集比較">8.6 RMSE 不能跨資料集比較</h3>
+<p>RMSE 的數值綁定預測目標的單位與量級：</p>
+<ul>
+<li>房價（單位：萬元）RMSE = 5，代表誤差 5 萬元</li>
+<li>房價（單位：元）RMSE = 50000，也代表誤差 5 萬元</li>
+</ul>
+<p><strong>兩者是同一個模型</strong>。所以：</p>
+<ul>
+<li>不可以說「我的 RMSE 是 5，你的 RMSE 是 500，我的模型比較好」，這是無效比較</li>
+<li>只有在同一份資料、同一個目標變數、同一種單位下，RMSE 才能比大小</li>
+<li>跨資料集比較請用 MAPE 或 R²</li>
+</ul>
+<h3 id="87-四個常見的評估流程錯誤">8.7 四個常見的評估流程錯誤</h3>
+<table>
+<thead>
+<tr>
+<th>錯誤</th>
+<th>後果</th>
+<th>正確做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在訓練集上算 RMSE</td>
+<td>分數虛高（背答案）</td>
+<td>用 <code>train_test_split</code> 或交叉驗證</td>
+</tr>
+<tr>
+<td>沒有設 <code>random_state</code></td>
+<td>每次結果不同、無法複現</td>
+<td>統一設 <code>random_state=42</code></td>
+</tr>
+<tr>
+<td>沒有 baseline</td>
+<td>不知道模型到底有沒有用</td>
+<td>先跑 <code>DummyRegressor</code> 或隨機森林</td>
+</tr>
+<tr>
+<td>前處理用了全資料</td>
+<td>資料洩漏，分數假性變好</td>
+<td>前處理包進 Pipeline，只在訓練折上 fit</td>
+</tr>
+</tbody>
+</table>
+<h3 id="88-neg-方向陷阱">8.8 <code>neg_</code> 方向陷阱</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 錯誤直覺：想讓 RMSE 越小越好，就去最大化 RMSE</span>
+<span class="c1"># 正確：scorer 一律「越大越好」，所以用 -RMSE，數值越接近 0 越好</span>
+<span class="n">scorers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;neg_root_mean_squared_error&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+<p>記法：<code>neg_</code> 開頭的分數，<strong>−5 比 −10 好</strong>（因為 −5 較大，且對應 RMSE 5 &lt; 10）。</p>
+<hr />
+<h2 id="九重點速查">九、重點速查</h2>
+<h3 id="91-四個指標一句話記憶">9.1 四個指標：一句話記憶</h3>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>一句話</th>
+<th>方向</th>
+<th>怕不怕離群值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R²</td>
+<td>「解釋了多少變異」</td>
+<td>越大越好（最大 1）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>RMSE</td>
+<td>「平均誤差（單位同 y）」</td>
+<td>越小越好</td>
+<td>很怕</td>
+</tr>
+<tr>
+<td>MAE</td>
+<td>「平均誤差（不平方）」</td>
+<td>越小越好</td>
+<td>不怕</td>
+</tr>
+<tr>
+<td>MAPE</td>
+<td>「平均誤差佔真實值的百分比」</td>
+<td>越小越好</td>
+<td>怕（小值樣本）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="92-公式卡">9.2 公式卡</h3>
+<div class="codehilite"><pre><span></span><code>R²    = 1 − Σ(y − ŷ)² / Σ(y − ȳ)²
+RMSE  = √( (1/n) Σ(y − ŷ)² )
+MAE   = (1/n) Σ |y − ŷ|
+MAPE  = (1/n) Σ |y − ŷ| / |y|  × 100%
+</code></pre></div>
+
+<p>恆等式：<code>RMSE ≥ MAE</code>（所有誤差大小完全相同時等號成立）。</p>
+<h3 id="93-複製即用三件套">9.3 複製即用：三件套</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ① 指標計算（所有 scikit-learn 版本通用）</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">r2_score</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span>
+    <span class="n">mean_absolute_percentage_error</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">rmse</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>  <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">p</span><span class="p">)))</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">mae</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>   <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">mape</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>  <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">r2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+
+<span class="c1"># ② AutoML：以 RMSE 為優化目標（TPOT 1.x）</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tpot</span><span class="w"> </span><span class="kn">import</span> <span class="n">TPOTRegressor</span>
+<span class="n">tpot</span> <span class="o">=</span> <span class="n">TPOTRegressor</span><span class="p">(</span>
+    <span class="n">scorers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;neg_root_mean_squared_error&quot;</span><span class="p">],</span>
+    <span class="n">population_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">generations</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">tpot</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;測試集 RMSE:&quot;</span><span class="p">,</span> <span class="n">rmse</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">tpot</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)))</span>
+
+<span class="c1"># ③ 手動比較多模型</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xgboost</span><span class="w"> </span><span class="kn">import</span> <span class="n">XGBRegressor</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;RF&quot;</span><span class="p">:</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+                    <span class="s2">&quot;XGB&quot;</span><span class="p">:</span> <span class="n">XGBRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)}</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> RMSE = </span><span class="si">{</span><span class="n">rmse</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="94-交報告前檢查清單">9.4 交報告前檢查清單</h3>
+<ul>
+<li>有切分訓練／測試集（或交叉驗證），不是只看訓練集分數</li>
+<li>有設 <code>random_state</code>，結果可重現</li>
+<li>有跑 baseline（Dummy 或隨機森林）作為對照</li>
+<li>至少同時報告 2 個以上指標（例如 R² + RMSE + MAE）</li>
+<li>若報告 MAPE，已確認 y 不含 0</li>
+<li>若比較多個模型，用 RMSE／MAE 而非 R²</li>
+<li>已檢查離群值並說明處理方式</li>
+<li>已排除資料洩漏（前處理包在 Pipeline 內）</li>
+</ul>
+<hr />
+<h2 id="十實測記錄">十、實測記錄</h2>
+<h3 id="101-環境">10.1 環境</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td>3.11.16</td>
+</tr>
+<tr>
+<td>scikit-learn</td>
+<td>1.9.1</td>
+</tr>
+<tr>
+<td>XGBoost</td>
+<td>3.2.0</td>
+</tr>
+<tr>
+<td>LightGBM</td>
+<td>4.7.0</td>
+</tr>
+<tr>
+<td>pandas</td>
+<td>3.0.6</td>
+</tr>
+<tr>
+<td>TPOT</td>
+<td>1.1.0（最新版）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="102-驗證項目與結果">10.2 驗證項目與結果</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>驗證項目</th>
+<th>方法</th>
+<th>結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>mean_squared_error(..., squared=False)</code></td>
+<td>實際執行</td>
+<td>失敗：<code>TypeError: got an unexpected keyword argument 'squared'</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>root_mean_squared_error</code> 是否存在</td>
+<td><code>hasattr</code> 檢查</td>
+<td>存在（sklearn ≥ 1.4）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>手算範例：RMSE／MAE</td>
+<td>實際執行</td>
+<td>RMSE = 6.0553、MAE = 4.6667</td>
+</tr>
+<tr>
+<td>4</td>
+<td>修正後 MAPE 範例</td>
+<td>實際執行</td>
+<td>MAPE = 0.0194，即 1.94%（R² = 0.9945）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>多模型 RMSE 比較程式</td>
+<td>實際執行</td>
+<td>隨機森林 1.2485／XGBoost 1.1395／LightGBM 1.2174</td>
+</tr>
+<tr>
+<td>6</td>
+<td>兩種 RMSE 寫法一致性</td>
+<td>實際執行比對</td>
+<td>兩者結果相同（1.2174）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>TPOT 最新版本</td>
+<td>版本查詢</td>
+<td>1.1.0</td>
+</tr>
+<tr>
+<td>8</td>
+<td>TPOT 1.1.0 的 <code>TPOTRegressor</code> 參數</td>
+<td>逐項比對套件原始碼</td>
+<td>確認參數為 <code>scorers</code>、<code>scorers_weights</code>、<code>verbose</code>、<code>population_size</code>、<code>generations</code>、<code>cv</code>、<code>search_space</code>、<code>n_jobs</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>TPOT 1.1.0 是否仍有 <code>export()</code></td>
+<td>全文搜尋套件原始碼</td>
+<td>確認已移除，只剩 <code>fitted_pipeline_</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>第三節的 TPOT 程式<strong>未在本機執行</strong>（本機的 TPOT 因缺少 <code>setuptools</code> 而匯入失敗），
+但所有參數名稱都已逐項比對套件原始碼確認。若要在本機執行，先補上相依套件：</p>
+</blockquote>
+<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>setuptools<span class="w"> </span>tpot
+</code></pre></div>
+
+<hr />
+<h2 id="附錄-a互動式線上測驗">附錄 A：互動式線上測驗</h2>
+<p>附錄 A 提供 <strong>30 題線上測驗</strong>，涵蓋指標定義、手算、TPOT API、離群值與常見錯誤：</p>
+<ul>
+<li>即時計分與進度條</li>
+<li>作答進度自動存在瀏覽器，關掉再回來可繼續</li>
+<li>可切換「全部題目／只看未答／只看答錯」</li>
+</ul>
+<p><strong><a href="mc-quiz.html">開始作答 →</a></strong></p>
+<hr />
+<h2 id="附錄-b名詞對照表">附錄 B：名詞對照表</h2>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>縮寫</th>
+<th>一句話</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>均方根誤差</td>
+<td>Root Mean Square Error</td>
+<td>RMSE</td>
+<td>平均誤差，單位同預測目標，對離群值極敏感</td>
+</tr>
+<tr>
+<td>平均絕對誤差</td>
+<td>Mean Absolute Error</td>
+<td>MAE</td>
+<td>平均誤差，對離群值穩健</td>
+</tr>
+<tr>
+<td>平均絕對百分比誤差</td>
+<td>Mean Absolute Percentage Error</td>
+<td>MAPE</td>
+<td>誤差佔真實值的百分比，可跨量級比較</td>
+</tr>
+<tr>
+<td>決定係數</td>
+<td>Coefficient of Determination</td>
+<td>R²</td>
+<td>模型解釋了多少變異</td>
+</tr>
+<tr>
+<td>調整後決定係數</td>
+<td>Adjusted R²</td>
+<td>—</td>
+<td>對特徵數量施加懲罰的 R²</td>
+</tr>
+<tr>
+<td>離群值</td>
+<td>Outlier</td>
+<td>—</td>
+<td>明顯偏離大多數觀測值的數據點</td>
+</tr>
+<tr>
+<td>資料洩漏</td>
+<td>Data Leakage</td>
+<td>—</td>
+<td>訓練時用到不該知道的資訊，分數假性變好</td>
+</tr>
+<tr>
+<td>自動化機器學習</td>
+<td>Automated Machine Learning</td>
+<td>AutoML</td>
+<td>自動搜尋前處理、模型與超參數的整條 pipeline</td>
+</tr>
+<tr>
+<td>樹狀管道優化工具</td>
+<td>Tree-based Pipeline Optimization Tool</td>
+<td>TPOT</td>
+<td>用基因演算法搜尋最佳 pipeline 的開源 AutoML 工具</td>
+</tr>
+</tbody>
+</table>
+</main>
+</div>
+</body>
+</html>

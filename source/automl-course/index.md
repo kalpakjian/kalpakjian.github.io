@@ -253,13 +253,35 @@ date: 2026-10-16 21:30:00
 
 ---
 
+## 12 · RMSE 與迴歸模型評估（迴歸題的指標與 TPOT 實作）
+
+![RMSE 與迴歸模型評估 學習筆記](/img/covers/rmse-notes.png)
+
+- **定位**：AutoML 系列的**評估指標課節**，教材為獨立一份 **14 頁**簡報
+- **核心命題**：**R² 與 RMSE 都是評估指標，不是模型**——指標不會做預測，只有模型才會；而 AutoML 可以把 RMSE 直接當成優化目標
+- **三條主線**：
+  - **觀念線**：R²／RMSE／MAE／MAPE 四個指標的定義、單位、方向，以及「該用哪一個」的決策表
+  - **實作線**：TPOT 以 `scorers=['neg_root_mean_squared_error']` 為優化目標，並處理 0.12 → 1.x 的 API 差異
+  - **除錯線**：八個常見錯誤（其中兩個是課程本身寫錯的），每一項都有可執行的修正
+- **特別之處**：整理過程中實測揪出兩個技術錯誤——
+  - MAPE 用 **MAE 當分母**（循環論證）會得到 76%；補上真實值後正確答案是 **1.94%**
+  - `mean_squared_error(..., squared=False)` 在 scikit-learn **1.9.1 直接拋 `TypeError`**（1.4 棄用、1.6 移除）
+- **本機實測**（Windows / Python 3.11.16 / scikit-learn 1.9.1 / XGBoost 3.2.0 / LightGBM 4.7.0）：
+  - 誤差 1／−3／10：RMSE **6.0553**、MAE **4.6667**；單一誤差 10 佔 RMSE 貢獻 **90.9%**
+  - 三個模型同資料比 RMSE：隨機森林 **1.2485**｜XGBoost **1.1395**｜LightGBM **1.2174**
+  - TPOT 最新版 **1.1.0**：參數是 `scorers`／`verbose`，且 **`export()` 已移除**
+- 另有 **1 張 Qwen-Image 2.1 封面插圖**（內嵌，維持單檔離線）
+- **👉 [看筆記](/rmse-notes/)** ｜ [互動測驗 30 題](/rmse-notes/mc-quiz.html)
+
+---
+
 ## 筆記的共同規格
 
 | 項目 | 說明 |
 |---|---|
 | 格式 | **單一 HTML 檔、零外部資源**，下載後可離線雙擊開啟 |
 | 版面 | 左側固定側邊欄 + **自動產生的巢狀目錄樹**（不會有壞連結） |
-| 測驗 | **60 題互動 MC**：即時計分、進度存 localStorage、可列印 |
+| 測驗 | **30–60 題互動 MC**：即時計分、進度存 localStorage、可列印 |
 | 附錄 | 名詞速查表、常見錯誤與陷阱、Prompt 範本集、一頁精華（考前 10 分鐘） |
 | 原始檔 | 每頁都可下載原始 Markdown |
 | 來源 | 依課程大綱逐節重寫，並補上考點、指令與實測數據 |
@@ -284,6 +306,7 @@ date: 2026-10-16 21:30:00
 | **實作延伸** | Azure ML AutoML 實作全紀錄（建立算力 → 資料註冊 → 訓練 → 部署 REST 端點） | Azure Machine Learning Studio、Azure for Students | ✅ [Azure ML AutoML 文章](/2026/10/18/azure-automl-bank-churn-walkthrough/) |
 | **實作延伸** | 手寫 Ridge vs TPOT AutoML：房價迴歸對照（雜訊底線 → 11 條候選管線 → 390 條 TPOT 管線） | Python、TPOT 1.1.0、scikit-learn、dask | ✅ [房價 Ridge vs TPOT 文章](/2026/10/18/house-price-ridge-vs-tpot/) |
 | **No-Code 工具** | Orange AI 視覺化資料探勘（概念＋API 優先：元件生態總表 → 五種核心模型 → 九種入門演算法 → Constant／Stacking／Save-Load → 與 TPOT 的定位對照 → CLI／API／無頭模式） | Orange 3.40、Python（Orange API） | ✅ [Orange AI 筆記](/orange-ai-notes/) |
+| **評估指標** | RMSE 與迴歸模型評估（指標 vs 模型 → 四指標決策表 → TPOT 以 RMSE 為優化目標 → 八個常見錯誤） | Python、TPOT 1.1.0、scikit-learn、XGBoost、LightGBM | ✅ [RMSE 筆記](/rmse-notes/) |
 
 ---
 
