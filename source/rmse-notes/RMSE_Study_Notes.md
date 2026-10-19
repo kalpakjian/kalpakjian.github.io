@@ -359,6 +359,108 @@ tpot.export("tpot_best_pipeline.py")
 > **實務順序建議**：先跑 `RandomForestRegressor` 拿 baseline，
 > 再用 `XGBoost` 或 `LightGBM` 提升，若特徵多且線性明顯，加測 `Ridge`／`Lasso` 比較。
 
+### 4.3 集成學習：Stacking 的兩層架構
+
+前面三類模型講的都是「挑一個最好的」。**集成學習**換一個思路：與其挑一個，不如**讓多個模型一起判斷**。
+
+- **Bagging**（例如隨機森林）：**同一種**模型訓練很多棵樹，再投票／平均
+- **Stacking（堆疊集成）**：**不同種**模型的預測結果，再餵給一個「元學習器」做最後判斷
+
+<!-- RMSE-FIGURE:stacking -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 700" role="img" aria-label="Stacking 兩層架構" style="width:100%;height:auto;display:block">
+<defs>
+<marker id="mIn" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker>
+<marker id="mTeal" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker>
+<marker id="mAmber" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker>
+<linearGradient id="gTeal" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#14b8a6"/><stop offset="100%" stop-color="#2dd4bf"/></linearGradient>
+<linearGradient id="gAmber" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient>
+<radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fbbf24" stop-opacity="0.16"/><stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/></radialGradient>
+</defs>
+<rect x="0.75" y="0.75" width="1358.5" height="698.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="54" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">堆疊集成（Stacking）：兩層架構</text>
+<text x="48" y="84" font-size="15" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器的預測結果不是答案，而是第 2 層的「新特徵」</text>
+<rect x="48" y="250" width="150" height="140" rx="14" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+<text x="123.0" y="298" font-size="16" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">原始資料</text>
+<text x="123.0" y="332" font-size="24" fill="#22d3ee" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">X</text>
+<text x="123.0" y="358" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">特徵矩陣</text>
+<path d="M 198 320.0 L 222 320.0" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 222 168.0 L 222 472.0" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 222 168.0 L 245 168.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#mIn)"/>
+<path d="M 222 320.0 L 245 320.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#mIn)"/>
+<path d="M 222 472.0 L 245 472.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#mIn)"/>
+<rect x="246" y="120" width="300" height="96" rx="12" fill="#161b22" stroke="#2a6f68" stroke-width="1.5"/>
+<circle cx="286" cy="168.0" r="19" fill="url(#gTeal)"/>
+<text x="286" y="174.0" font-size="17" fill="#04231f" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="322" y="162.0" font-size="17" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Logistic Regression</text>
+<text x="322" y="188.0" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器 1 · 預測 ŷ₁</text>
+<path d="M 546 168.0 L 605 168.0" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#mTeal)"/>
+<rect x="246" y="272" width="300" height="96" rx="12" fill="#161b22" stroke="#2a6f68" stroke-width="1.5"/>
+<circle cx="286" cy="320.0" r="19" fill="url(#gTeal)"/>
+<text x="286" y="326.0" font-size="17" fill="#04231f" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="322" y="314.0" font-size="17" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RandomForest</text>
+<text x="322" y="340.0" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器 2 · 預測 ŷ₂</text>
+<path d="M 546 320.0 L 605 320.0" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#mTeal)"/>
+<rect x="246" y="424" width="300" height="96" rx="12" fill="#161b22" stroke="#2a6f68" stroke-width="1.5"/>
+<circle cx="286" cy="472.0" r="19" fill="url(#gTeal)"/>
+<text x="286" y="478.0" font-size="17" fill="#04231f" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="322" y="466.0" font-size="17" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVM</text>
+<text x="322" y="492.0" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎學習器 3 · 預測 ŷ₃</text>
+<path d="M 546 472.0 L 605 472.0" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#mTeal)"/>
+<text x="694.0" y="96" font-size="13" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">預測結果</text>
+<text x="694.0" y="118" font-size="14.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">↓ 當成新特徵</text>
+<rect x="606" y="146.0" width="176" height="44" rx="10" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="694.0" y="174.0" font-size="15.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">z₁ = ŷ₁</text>
+<path d="M 782 168.0 L 825 168.0" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mAmber)"/>
+<rect x="606" y="298.0" width="176" height="44" rx="10" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="694.0" y="326.0" font-size="15.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">z₂ = ŷ₂</text>
+<path d="M 782 320.0 L 825 320.0" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mAmber)"/>
+<rect x="606" y="450.0" width="176" height="44" rx="10" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="694.0" y="478.0" font-size="15.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">z₃ = ŷ₃</text>
+<path d="M 782 472.0 L 825 472.0" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mAmber)"/>
+<path d="M 826 168.0 L 826 472.0" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<path d="M 826 320.0 L 851 320.0" fill="none" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#mAmber)"/>
+<ellipse cx="978.0" cy="320.0" rx="150" ry="110" fill="url(#glow)"/>
+<rect x="852" y="250" width="252" height="140" rx="14" fill="#161b22" stroke="#8a6414" stroke-width="2"/>
+<circle cx="896" cy="320.0" r="24" fill="url(#gAmber)"/>
+<text x="896" y="328.0" font-size="22" fill="#2b1a00" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Σ</text>
+<text x="936" y="308" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">元學習器</text>
+<text x="936" y="334" font-size="13.5" fill="#fbbf24" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Logistic Regression</text>
+<text x="936" y="356" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸入：z₁, z₂, z₃</text>
+<path d="M 1104 320.0 L 1153 320.0" fill="none" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#mAmber)"/>
+<rect x="1154" y="280" width="158" height="80" rx="14" fill="#0f2a2a" stroke="#2a6f68" stroke-width="2"/>
+<text x="1233.0" y="316" font-size="16" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">最終預測</text>
+<text x="1233.0" y="344" font-size="20" fill="#22d3ee" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">ŷ</text>
+<path d="M 246 566 L 246 578 L 546 578 L 546 566" fill="none" stroke="#2dd4bf" stroke-width="1.8"/>
+<text x="396.0" y="608" font-size="15" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 1 層（Level-0）：基礎學習器</text>
+<path d="M 852 566 L 852 578 L 1104 578 L 1104 566" fill="none" stroke="#fbbf24" stroke-width="1.8"/>
+<text x="978.0" y="608" font-size="15" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 2 層（Level-1）：元學習器</text>
+<text x="48" y="664" font-size="14" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一列樣本都會被三個基礎學習器各預測一次，這三個預測值排成一列，就是元學習器看到的特徵。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：Stacking 的兩層架構——第 1 層的三個基礎學習器各自預測，輸出的 ŷ₁／ŷ₂／ŷ₃ 被排成一列當成「新特徵」z₁／z₂／z₃，再交給第 2 層的元學習器做最終判斷。</figcaption>
+</figure>
+<!-- /RMSE-FIGURE -->
+
+| 角色 | 在第幾層 | 做什麼 |
+|---|---|---|
+| 基礎學習器（base learner） | 第 1 層（Level-0） | 各自用自己的演算法對 X 做預測，例如 Logistic Regression、RandomForest、SVM |
+| 新特徵（meta-features） | 兩層之間 | 把每個基礎學習器的預測值 `ŷ₁ ŷ₂ ŷ₃` 排成一列，當成**新的特徵** `z₁ z₂ z₃` |
+| 元學習器（meta learner） | 第 2 層（Level-1） | 只吃 `z₁ z₂ z₃`（不看原始 X），學「該相信誰多一點」，輸出最終預測 |
+
+三個關鍵觀念：
+
+1. **預測結果變成特徵**——這是 Stacking 與眾不同的地方。基礎學習器的輸出不是答案，而是**下一層的輸入**
+2. **兩層的訓練必須分開**——如果直接拿基礎學習器在訓練集上的預測去訓練元學習器，它會學到「過度樂觀」的訊號；
+   實務上要用**交叉驗證產生的 out-of-fold 預測**來當 `z`
+3. **元學習器通常用簡單模型**（線性迴歸／Logistic）——它的工作只是「加權平均」，
+   用太複雜的模型反而容易過擬合
+
+> **跟 AutoML 的關係**：TPOT 搜尋的 pipeline 內部就是這種疊法。
+> TPOT 1.x 的 `linear` 搜尋空間結構是
+> 「Selector →（轉換器）→**（內部迴歸器，可選）**→ 最終迴歸器」——
+> 那個「內部迴歸器」層就是 Stacking 的基礎學習器。
+> 所以 TPOT 找到的最佳解常常本身就是一個 Stacking 結構，這也是 AutoML 常常贏過手動調單一模型的原因之一。
+
 ---
 
 ## 五、多模型 RMSE 比較範例
