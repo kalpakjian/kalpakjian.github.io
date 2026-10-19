@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 770" role="img" aria-label="Responsible AI：全書大綱樹" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="768.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Responsible AI：全書大綱樹</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">六個主分支與各自的考點關鍵字</text>
+<rect x="48" y="106" width="904" height="590" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Responsible AI（負責任的 AI）</text>
+<path d="M 100 184 L 100 664" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">為什麼要做　—　Challenges on AI：不透明、偏誤、隱私、問責、就業衝擊</text>
+<path d="M 100 216 L 114 216" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="222" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">怎麼做</text>
+<path d="M 156 226 L 156 248" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 248 L 170 248" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="254" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① Ethical AI Principles（12 項倫理原則）</text>
+<path d="M 156 258 L 156 280" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 280 L 170 280" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="286" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② AI Practice Guide（6 階段專案生命週期）</text>
+<path d="M 100 312 L 114 312" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="318" font-size="13.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">電腦視覺的四大倫理議題</text>
+<path d="M 156 322 L 156 344" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 344 L 170 344" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="350" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Privacy and Surveillance　隱私與監控（人臉辨識、無同意追蹤）</text>
+<path d="M 156 354 L 156 376" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 376 L 170 376" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="382" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Bias and Discrimination　偏見與歧視（資料不具代表性）</text>
+<path d="M 156 386 L 156 408" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 408 L 170 408" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="414" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Data Security and Consent　資料安全與同意（外洩、不知情蒐集）</text>
+<path d="M 156 418 L 156 440" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 440 L 170 440" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="446" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Accountability and Transparency　問責與透明（黑箱、責任歸屬）</text>
+<path d="M 100 472 L 114 472" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="478" font-size="13.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">香港法規</text>
+<path d="M 156 482 L 156 504" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 504 L 170 504" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="510" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">PDPO《個人資料（私隱）條例》Cap. 486，1996/12/20 生效</text>
+<path d="M 212 514 L 212 536" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 212 536 L 226 536" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="232" y="542" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">六項保護原則 DPP1–DPP6（收集／保留／使用／保安／開放／查閱更正）</text>
+<path d="M 100 568 L 114 568" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="574" font-size="13.5" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">社會影響</text>
+<path d="M 156 578 L 156 600" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 600 L 170 600" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="606" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">正面：提升公共安全、改善醫療服務</text>
+<path d="M 156 610 L 156 632" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 156 632 L 170 632" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="176" y="638" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">挑戰：就業與勞動力變化、社會不平等、對人類行為的影響</text>
+<path d="M 100 664 L 114 664" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="670" font-size="13.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">六項倫理使用建議　＋　結論：創新與倫理責任必須平衡</text>
+<text x="48" y="736" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">六個主分支（為什麼做／怎麼做／四大議題／香港法規／社會影響／結論）；縮排細項是考點關鍵字，考前照這棵樹往下唸即可。</text>
+</svg>
