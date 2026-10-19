@@ -48,15 +48,40 @@
 
 ### 1.1 三個元件、兩種角色
 
-```text
-使用者瀏覽器
-    │
-    ▼
-Streamlit 前端 (app.py) ──HTTP──▶ Flask 後端 (server.py)
-    │
-    ▼
-LiteLLM ──HTTP──▶ Ollama (http://127.0.0.1:11434)
-```
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-label="Streamlit + Flask + LiteLLM 四層架構" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker><marker id="m58a6ff" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker><marker id="mc084fc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="478.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Streamlit + Flask + LiteLLM 四層架構</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">誰呼叫誰、走哪個埠</text>
+<rect x="120" y="120" width="360" height="62" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="300.0" y="156.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">使用者瀏覽器</text>
+<rect x="120" y="216" width="360" height="62" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="300.0" y="245.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Streamlit 前端</text>
+<text x="300.0" y="267.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">app.py（埠 8501）</text>
+<rect x="120" y="312" width="360" height="62" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="300.0" y="341.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LiteLLM</text>
+<text x="300.0" y="363.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">model = ollama/smollm</text>
+<rect x="600" y="216" width="250" height="62" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="725.0" y="245.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Flask 後端</text>
+<text x="725.0" y="267.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">server.py（埠 5000）</text>
+<rect x="600" y="312" width="250" height="62" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="725.0" y="341.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ollama</text>
+<text x="725.0" y="363.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">127.0.0.1:11434</text>
+<path d="M 300 182 L 300 214" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="309" y="202" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HTTP :8501</text>
+<path d="M 480 247 L 598 247" fill="none" stroke="#58a6ff" stroke-width="2" marker-end="url(#m58a6ff)"/>
+<text x="539" y="239" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">POST /greet</text>
+<path d="M 300 278 L 300 310" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#mc084fc)"/>
+<text x="310" y="298" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">completion()</text>
+<path d="M 480 343 L 598 343" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mfbbf24)"/>
+<text x="539" y="335" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HTTP</text>
+<text x="48" y="430" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">瀏覽器只跟 Streamlit 講話；Streamlit 再分頭呼叫 Flask（問候）與 LiteLLM（問 LLM），LiteLLM 最後把請求轉給本機 Ollama。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 23：四層架構速覽——瀏覽器只跟 Streamlit 講話，Streamlit 再分頭呼叫 Flask（問候）與 LiteLLM（問 LLM）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 | 元件 | 角色 | 埠號 | 負責什麼 |
 |---|---|---|---|
@@ -1226,19 +1251,26 @@ with st.spinner("Thinking..."):
 
 ### 17.1 `app.py` 的兩個獨立功能
 
-```text
-┌─────────────────────────────────────────────┐
-│  app.py（Streamlit，埠 8501）                │
-│                                             │
-│  區塊 1：問候                                 │
-│    輸入名字 → POST /greet → Flask(5000)      │
-│                                             │
-│  ─────────── st.divider() ───────────       │
-│                                             │
-│  區塊 2：問 LLM                               │
-│    輸入問題 → completion() → Ollama(11434)   │
-└─────────────────────────────────────────────┘
-```
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="app.py 的兩個 UI 區塊" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="538.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">app.py 的兩個 UI 區塊</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一個頁面、兩條後端路線</text>
+<rect x="80" y="120" width="740" height="330" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="102" y="152" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">app.py（Streamlit，埠 8501）</text>
+<rect x="110" y="172" width="680" height="96" rx="10" fill="#0d1117" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="450.0" y="218.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">區塊 1：問候</text>
+<text x="450.0" y="240.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸入名字 → POST /greet → Flask（埠 5000）</text>
+<path d="M 110 296 L 790 296" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="450" y="290" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">st.divider()</text>
+<rect x="110" y="316" width="680" height="96" rx="10" fill="#0d1117" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="450.0" y="362.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">區塊 2：問 LLM</text>
+<text x="450.0" y="384.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸入問題 → completion() → Ollama（埠 11434）</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 24：app.py 內部的兩個區塊——一個頁面可以有兩條互不相干的後端路線；中間的 st.divider() 只是視覺分隔，不影響流程。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 **關鍵觀察**：**區塊 2 完全繞過 Flask**，由 Streamlit **直接**呼叫 Ollama。
 
@@ -1433,36 +1465,53 @@ port 5000 open（Flask 未啟動）= False
 
 ### 19.1 全景圖
 
-```text
-┌──────────────────────────────────────────────────────────────┐
-│  使用者瀏覽器                                                  │
-│  http://localhost:8501                                        │
-└────────────────────────┬─────────────────────────────────────┘
-                         │  WebSocket / HTTP
-                         ▼
-┌──────────────────────────────────────────────────────────────┐
-│  Streamlit 前端  app.py                                        │
-│                                                                │
-│  ┌─────────────────────┐    ┌──────────────────────────────┐  │
-│  │ 區塊 1：問候          │    │ 區塊 2：問 LLM                │  │
-│  │ st.text_input(name) │    │ st.text_input(question)      │  │
-│  │ st.button           │    │ st.button("Ask LLM")         │  │
-│  └──────────┬──────────┘    └──────────────┬───────────────┘  │
-└─────────────┼──────────────────────────────┼──────────────────┘
-              │ requests.post                │ completion()
-              │ json={"name": ...}           │ api_base=...
-              ▼                              ▼
-┌──────────────────────────┐   ┌──────────────────────────────┐
-│  Flask 後端 server.py     │   │  LiteLLM                     │
-│  @app.route('/greet',    │   │  model="ollama/smollm"       │
-│              POST)       │   └──────────────┬───────────────┘
-│  request.get_json()      │                  │ HTTP
-│  jsonify({...})          │                  ▼
-└──────────────────────────┘   ┌──────────────────────────────┐
-                               │  Ollama  http://127.0.0.1:   │
-                               │          11434               │
-                               └──────────────────────────────┘
-```
+<!-- FIG3 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 760" role="img" aria-label="Streamlit + Flask + LiteLLM 完整架構" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker><marker id="m58a6ff" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker><marker id="mc084fc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker></defs>
+<rect x="0.75" y="0.75" width="958.5" height="758.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Streamlit + Flask + LiteLLM 完整架構</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從瀏覽器點擊到 Ollama 回應的完整路徑</text>
+<rect x="300" y="110" width="360" height="62" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="480.0" y="139.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">使用者瀏覽器</text>
+<text x="480.0" y="161.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">http://localhost:8501</text>
+<path d="M 480 172 L 480 220" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="489" y="200" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">WebSocket / HTTP</text>
+<rect x="150" y="222" width="660" height="196" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="172" y="252" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Streamlit 前端　app.py</text>
+<rect x="167" y="272" width="266" height="124" rx="10" fill="#0d1117" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="183" y="300" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">區塊 1：問候</text>
+<text x="183" y="324" font-size="11.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">st.text_input(name)</text>
+<text x="183" y="346" font-size="11.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">st.button(...)</text>
+<text x="183" y="368" font-size="11.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">→ requests.post</text>
+<rect x="525" y="272" width="270" height="124" rx="10" fill="#0d1117" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="541" y="300" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">區塊 2：問 LLM</text>
+<text x="541" y="324" font-size="11.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">st.text_input(question)</text>
+<text x="541" y="346" font-size="11.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">st.button("Ask LLM")</text>
+<text x="541" y="368" font-size="11.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">→ completion()</text>
+<path d="M 300 396 L 300 466" fill="none" stroke="#58a6ff" stroke-width="2" marker-end="url(#m58a6ff)"/>
+<text x="309" y="440" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">requests.post</text>
+<path d="M 660 396 L 660 466" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#mc084fc)"/>
+<text x="669" y="440" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">completion()</text>
+<rect x="170" y="468" width="260" height="126" rx="10" fill="#0d1117" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="186" y="496" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Flask 後端　server.py</text>
+<text x="186" y="520" font-size="11.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">@app.route('/greet',</text>
+<text x="186" y="542" font-size="11.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">          POST)</text>
+<text x="186" y="564" font-size="11.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">request.get_json()</text>
+<text x="186" y="586" font-size="11.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">jsonify({...})</text>
+<rect x="530" y="468" width="260" height="88" rx="10" fill="#0d1117" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="546" y="496" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LiteLLM</text>
+<text x="546" y="520" font-size="11.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">model="ollama/smollm"</text>
+<path d="M 660 556 L 660 604" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mfbbf24)"/>
+<text x="669" y="586" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HTTP</text>
+<rect x="530" y="606" width="260" height="76" rx="10" fill="#0d1117" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="546" y="634" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ollama</text>
+<text x="546" y="658" font-size="11.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">http://127.0.0.1:11434</text>
+<text x="48" y="722" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩條獨立的後端路線：問候走 Flask（自己寫的 API），問 LLM 走 LiteLLM（統一模型介面），LiteLLM 再轉給本機 Ollama。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 25：完整架構——從瀏覽器點擊到 Ollama 回應，每一層的檔案、埠號與實際呼叫的函式。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG3 -->
 
 ### 19.2 區塊 1 的完整資料流（6 步）
 
