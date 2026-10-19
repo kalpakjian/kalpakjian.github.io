@@ -114,31 +114,6 @@ details[open] summary { margin-bottom:6px; }
 
 hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 
-/* ---------------- pinned callout (2026-10 新增) ---------------- */
-.pinbox {
-  border:2px solid var(--accent); background:#fff8f7; border-radius:10px;
-  padding:14px 18px; margin:20px 0 0;
-}
-.pinbox-t { font-weight:700; color:var(--accent); font-size:16px; margin:0 0 6px; }
-.pinbox p { margin:6px 0; font-size:14.5px; }
-.pinbox a.btn {
-  display:inline-block; padding:6px 14px; background:var(--accent); color:#fff;
-  border-radius:6px; text-decoration:none; font-weight:700; font-size:14px;
-}
-.pinbox a.btn:hover { background:#a5301f; }
-.pinbox a.btn2 {
-  display:inline-block; padding:6px 14px; border:1px solid var(--accent);
-  color:var(--accent); border-radius:6px; text-decoration:none;
-  font-weight:700; font-size:14px;
-}
-.pinbox a.btn2:hover { background:#ffece9; }
-nav.sidebar a.pin-link {
-  display:block; margin:-4px 0 12px; padding:6px 10px; text-align:center;
-  background:#fff1ef; color:var(--accent); border:1px solid var(--accent);
-  border-radius:6px; font-size:12.5px; font-weight:700;
-}
-nav.sidebar a.pin-link:hover { background:var(--accent); color:#fff; }
-
 /* ---------------- print ---------------- */
 @media print {
   nav.sidebar { display:none; }
@@ -163,10 +138,8 @@ nav.sidebar a.pin-link:hover { background:var(--accent); color:#fff; }
 <div class="layout">
 <nav class="sidebar">
   <a class="home" href="/">← 回到 AI Tech Notes</a>
-  <a class="home" href="/automl-course/">📚 課程總覽</a>
+  <a class="home" href="/automl-course/">📚 課程專題</a>
   <a class="quiz" href="mc-quiz.html">🖱️ 互動測驗（60 題）</a>
-  <a class="pin-link" href="summary.html">⚡ 精簡版（一頁式精華）</a>
-  <a class="pin-link" href="cards.html">📇 速記卡 20 張（依考頻排序）</a>
   <h1>AutoML 學習筆記</h1>
   <div class="sub">Automated Machine Learning (AutoML) 應用證書<br>單元一至單元四 · 20 個實習個案</div>
   <div class="toc">
@@ -252,7 +225,7 @@ nav.sidebar a.pin-link:hover { background:var(--accent); color:#fff; }
 <li><a href="#113-載入資料與切分">11.3 載入資料與切分</a></li>
 <li><a href="#114-設定-tpotregressor">11.4 設定 TPOTRegressor</a></li>
 <li><a href="#115-訓練與評估">11.5 訓練與評估</a></li>
-<li><a href="#116-解讀-r-分數">11.6 解讀 R² 分數</a></li>
+<li><a href="#116-解讀-r²-分數">11.6 解讀 R² 分數</a></li>
 <li><a href="#117-分數不理想時的優化策略">11.7 分數不理想時的優化策略</a></li>
 <li><a href="#118-本機實測參數對分數與時間的影響">11.8 本機實測：參數對分數與時間的影響</a></li>
 </ul>
@@ -310,12 +283,6 @@ nav.sidebar a.pin-link:hover { background:var(--accent); color:#fff; }
 🖱️ <strong>互動測驗（推薦）</strong>：附錄 E 提供 <strong>60 題線上測驗</strong>（即時計分、進度自動儲存）→ <strong><a href="mc-quiz.html">開始作答</a></strong></p></p>
 </blockquote>
 <hr />
-<div class="pinbox">
-  <div class="pinbox-t">📌 置頂：速記卡（20 張・手機／平板版）＋ 精簡版（一頁式）</div>
-  <p><strong>速記卡（20 張）</strong>：§1–§13 每章一張，加上附錄 A–F 與總複習卡；<strong>已依考試重要性排序</strong>（必考核心 → 高頻 → 基礎 → 實用），每張都有編號圓標與單元色帶，附目錄可跳卡。</p>
-  <p><strong>精簡版</strong>：把本頁 13 章 + 附錄 A–F 濃縮成一頁，並附「考前 10 分鐘」半頁版。</p>
-  <p><a class="btn" href="cards.html">📇 速記卡（手機／平板版）</a>　<a class="btn2" href="summary.html">⚡ 精簡版（一頁式）</a>　<a class="btn2" href="cards-print.html">🖨️ 列印版</a></p>
-</div>
 <h2 id="目錄">目錄</h2>
 <table>
 <thead>
@@ -1081,12 +1048,43 @@ nav.sidebar a.pin-link:hover { background:var(--accent); color:#fff; }
 <p>💡 <strong>為什麼要平方</strong>：一個誤差 10 萬的樣本，平方後是 100 億，會把平均值整個拉高——這就是 RMSE「對離群值特別敏感」的原因。好處是它會懲罰大錯，壞處是少數極端值就能主導整個指標。</p>
 </blockquote>
 <h3 id="64-指標選擇決策樹">6.4 指標選擇決策樹</h3>
-<div class="codehilite"><pre><span></span><code>問題是「分類」嗎？
-  ├─ 是 → 數據平衡嗎？
-  │        ├─ 平衡   → 用 Accuracy
-  │        └─ 不平衡 → 用 AUC
-  └─ 否（迴歸） → 直接看 RMSE（或 R²）
-</code></pre></div>
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 370" role="img" aria-label="指標怎麼挑：兩個問題就問完" style="width:100%;height:auto;display:block">
+<defs><marker id="m30363d" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#30363d"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="368.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">指標怎麼挑：兩個問題就問完</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先問任務類型，再問資料平衡嗎</text>
+<rect x="60" y="150" width="230" height="56" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="175.0" y="183.22" font-size="14.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">問題是「分類」嗎？</text>
+<rect x="360" y="84" width="210" height="56" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="465.0" y="117.22" font-size="14.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">數據平衡嗎？</text>
+<rect x="360" y="246" width="210" height="56" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="465.0" y="279.22" font-size="14.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">看 RMSE（或 R²）</text>
+<rect x="660" y="36" width="200" height="46" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="760.0" y="64.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">用 Accuracy</text>
+<rect x="660" y="116" width="200" height="46" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="760.0" y="144.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">用 AUC</text>
+<path d="M 290 178 L 325 178" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 325 178 L 325 112" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 325 112 L 358 112" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<path d="M 290 178 L 325 178" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 325 178 L 325 274" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 325 274 L 358 274" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<path d="M 570 112 L 615 112" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 615 112 L 615 59" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 615 59 L 658 59" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<path d="M 570 112 L 615 112" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 615 112 L 615 139" fill="none" stroke="#30363d" stroke-width="2"/>
+<path d="M 615 139 L 658 139" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<text x="296" y="170" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">是</text>
+<text x="332" y="214" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">否（迴歸）</text>
+<text x="668" y="58" font-size="12" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">平衡</text>
+<text x="668" y="138" font-size="12" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不平衡</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 14：指標決策樹——分類再看資料是否平衡（平衡用 Accuracy、不平衡用 AUC），迴歸直接看 RMSE 或 R²。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 <blockquote>
 <p>📌 <strong>把這張決策樹畫在實習手冊上</strong>，作為未來評估 AutoML 模型產出結果的隨身指南。</p>
@@ -1790,7 +1788,7 @@ nav.sidebar a.pin-link:hover { background:var(--accent); color:#fff; }
 </code></pre></div>
 
 <p><strong>觀察進化過程</strong>：輸出日誌會顯示 TPOT 正在進行 <code>Generation 1, 2, 3...</code>，並顯示每一代找到的最佳內部交叉驗證分數（通常是<strong>負的 MSE</strong>，數值越接近 0 越好）。</p>
-<h3 id="116-解讀-r-分數">11.6 解讀 R² 分數</h3>
+<h3 id="116-解讀-r²-分數">11.6 解讀 R² 分數</h3>
 <table>
 <thead>
 <tr>
@@ -2495,34 +2493,63 @@ nav.sidebar a.pin-link:hover { background:var(--accent); color:#fff; }
 </table>
 <hr />
 <h2 id="附錄-d一頁精華考前-10-分鐘">附錄 D：一頁精華（考前 10 分鐘）</h2>
-<div class="codehilite"><pre><span></span><code>AutoML 應用證書 全課程骨架
-  │
-  ├─ 為什麼需要 AutoML ── 傳統 ML 三痛點：流程繁瑣 / 耗時費力 / 高度依賴專家
-  │                        AutoML 三突破：全自動化 / 高效能 / 低門檻
-  │
-  ├─ 自動化的兩個關鍵動作 ── Auto Imputation（填缺失值）
-  │                          Auto Encoding（轉類別特徵）
-  │
-  ├─ 負責任 AI 六大原則 ── 公 · 可 · 隱 · 包 · 透 · 問
-  │     公平性 / 可靠性與安全性 / 隱私與保障 / 包容性 / 透明度 / 問責制
-  │
-  ├─ 任務類型 ── 問「會不會」＝ 分類（用 AUC）
-  │              問「多少」  ＝ 迴歸（用 RMSE / R²）
-  │
-  ├─ 三個指標的陷阱
-  │     Accuracy ── 不平衡資料會騙人（99% 可能毫無價值）
-  │     AUC      ── 0.5 = 瞎猜，1.0 = 完美
-  │     RMSE     ── 越小越好，對離群值極敏感（誤差先平方）
-  │
-  ├─ 三個實作平台
-  │     無代碼   ── Teachable Machine（示範級、無法部署）
-  │     企業雲端 ── Azure ML Studio：Data → Compute → Workspace → Endpoint
-  │     開源     ── Colab + TPOT：遺傳演算法搜尋最佳 Pipeline
-  │
-  └─ TPOT 兩個旋鈕 ── generations（演化幾代）
-                      population_size（每代幾個模型）
-       導出指令     ── print(tpot.fitted_pipeline_)   ← 白盒模型、可獨立部署
-</code></pre></div>
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" role="img" aria-label="AutoML 應用證書：全課程骨架" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="638.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AutoML 應用證書：全課程骨架</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">七個主題，一張圖看完</text>
+<rect x="48" y="120" width="430" height="104" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="82" cy="154" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="82" y="158.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="108" y="159" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">為什麼需要 AutoML</text>
+<text x="108" y="184" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">傳統 ML 三痛點：流程繁瑣、耗時費力、高度依賴專家</text>
+<text x="108" y="205" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AutoML 三突破：全自動化、高效能、低門檻</text>
+<rect x="510" y="120" width="430" height="104" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="544" cy="154" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="544" y="158.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="570" y="159" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">自動化的兩個關鍵動作</text>
+<text x="570" y="184" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Auto Imputation：自動填缺失值</text>
+<text x="570" y="205" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Auto Encoding：自動轉類別特徵</text>
+<rect x="48" y="236" width="430" height="104" rx="12" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="82" cy="270" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="82" y="274.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="108" y="275" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">負責任 AI 六大原則</text>
+<text x="108" y="300" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">公 · 可 · 隱 · 包 · 透 · 問</text>
+<text x="108" y="321" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">公平性／可靠性與安全性／隱私與保障</text>
+<text x="108" y="342" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">包容性／透明度／問責制</text>
+<rect x="510" y="236" width="430" height="104" rx="12" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="544" cy="270" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="544" y="274.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="570" y="275" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">任務類型</text>
+<text x="570" y="300" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">問「會不會」＝ 分類（用 AUC）</text>
+<text x="570" y="321" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">問「多少」＝ 迴歸（用 RMSE / R²）</text>
+<rect x="48" y="352" width="430" height="104" rx="12" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="82" cy="386" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="82" y="390.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="108" y="391" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三個指標的陷阱</text>
+<text x="108" y="416" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Accuracy：不平衡資料會騙人</text>
+<text x="108" y="437" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AUC：0.5 = 瞎猜，1.0 = 完美</text>
+<text x="108" y="458" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RMSE：對離群值極敏感（誤差先平方）</text>
+<rect x="510" y="352" width="430" height="104" rx="12" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="544" cy="386" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="544" y="390.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<text x="570" y="391" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三個實作平台</text>
+<text x="570" y="416" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">無代碼：Teachable Machine（示範級）</text>
+<text x="570" y="437" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">企業雲端：Azure ML Studio（Data → Compute）</text>
+<text x="570" y="458" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">開源：Colab + TPOT（遺傳演算法搜尋 Pipeline）</text>
+<rect x="48" y="468" width="430" height="104" rx="12" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="82" cy="502" r="15" fill="#f472b6" opacity="0.92"/>
+<text x="82" y="506.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7</text>
+<text x="108" y="507" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 的兩個旋鈕</text>
+<text x="108" y="532" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">generations：演化幾代</text>
+<text x="108" y="553" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">population_size：每代幾個模型</text>
+<text x="108" y="574" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">導出：print(tpot.fitted_pipeline_)</text>
+<text x="48" y="604" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">整門課的骨架：先懂痛點與倫理，再分任務類型挑指標，最後在三個平台上實作。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 15：課程骨架——從「為什麼需要 AutoML」到「TPOT 的兩個旋鈕」，七個主題各自的重點與產出。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 <table>
 <thead>
