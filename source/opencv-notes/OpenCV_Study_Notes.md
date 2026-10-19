@@ -1894,50 +1894,109 @@ if len(good) > 10:
 
 ### 15.2 全課程流程圖（一頁看懂）
 
-```
-                    ┌─────────────────────────┐
-                    │  1. 讀取 cv2.imread()    │  ← 得到 BGR 的 NumPy 矩陣
-                    └───────────┬─────────────┘
-                                ▼
-                    ┌─────────────────────────┐
-                    │ 2. 色彩空間 cvtColor()   │  BGR → RGB / Gray / HSV / LAB
-                    └───────────┬─────────────┘
-                                ▼
-                    ┌─────────────────────────┐
-                    │ 3. 前處理                │  resize → blur → threshold
-                    └───────────┬─────────────┘
-                                ▼
-        ┌───────────────────────┼───────────────────────┐
-        ▼                       ▼                       ▼
-┌───────────────┐     ┌─────────────────┐     ┌──────────────────┐
-│ 4. 矩陣運算    │     │ 5. 繪圖標註      │     │ 6. 幾何變換       │
-│ ROI/遮罩/混合  │     │ line/rect/text  │     │ warpAffine/Persp │
-└───────────────┘     └─────────────────┘     └──────────────────┘
-                                ▼
-                    ┌─────────────────────────┐
-                    │ 7. 濾波                  │  Gaussian / Median / Bilateral / Morphology
-                    └───────────┬─────────────┘
-                                ▼
-                    ┌─────────────────────────┐
-                    │ 8. 邊緣 Canny()          │
-                    └───────────┬─────────────┘
-                                ▼
-                    ┌─────────────────────────┐
-                    │ 9. 輪廓 / 邊界框         │  findContours → boundingRect
-                    └───────────┬─────────────┘
-                                ▼
-                    ┌─────────────────────────┐
-                    │ 10. 特徵 ORB_create()    │  keypoints + descriptors
-                    └───────────┬─────────────┘
-                                ▼
-                    ┌─────────────────────────┐
-                    │ 11. 匹配 BFMatcher       │  + Lowe ratio test
-                    └───────────┬─────────────┘
-                                ▼
-                    ┌─────────────────────────┐
-                    │ 12. Homography + RANSAC  │  → 辨識 / 拼接 / AR
-                    └─────────────────────────┘
-```
+<!-- OPENCV-FIGURE:pipeline -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1170" role="img" aria-label="OpenCV 12 步影像處理流程" style="width:100%;height:auto;display:block">
+<defs>
+<marker id="ain" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker>
+<marker id="apar" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker>
+<marker id="aana" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker>
+<marker id="afeat" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker>
+<marker id="agray" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker>
+</defs>
+<rect x="0.75" y="0.75" width="898.5" height="1168.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">OpenCV 影像處理 12 步流程</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從讀取到 Homography：每一步用哪個 API、拿到什麼產出</text>
+<rect x="150" y="120" width="600" height="64" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="182" cy="152.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="182" y="157.5" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="210" y="147" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">讀取　cv2.imread()</text>
+<text x="210" y="168" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">得到 BGR 的 NumPy 矩陣</text>
+<rect x="150" y="202" width="600" height="64" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="182" cy="234.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="182" y="239.5" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="210" y="229" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">色彩空間　cvtColor()</text>
+<text x="210" y="250" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BGR → RGB / Gray / HSV / LAB</text>
+<rect x="150" y="284" width="600" height="64" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="182" cy="316.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="182" y="321.5" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="210" y="311" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">前處理</text>
+<text x="210" y="332" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">resize → blur → threshold</text>
+<path d="M 450.0 184 L 450.0 200" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#ain)"/>
+<path d="M 450.0 266 L 450.0 282" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#ain)"/>
+<path d="M 450.0 348 L 450.0 372" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 200.0 372 L 700.0 372" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 200.0 372 L 200.0 394" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#apar)"/>
+<path d="M 450.0 372 L 450.0 394" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#apar)"/>
+<path d="M 700.0 372 L 700.0 394" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#apar)"/>
+<rect x="90" y="396" width="220" height="84" rx="10" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="114" cy="420" r="13" fill="#58a6ff" opacity="0.92"/>
+<text x="114" y="425" font-size="12.5" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="134" y="426" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">矩陣運算</text>
+<text x="106" y="456" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">ROI / 遮罩 / 混合</text>
+<rect x="340" y="396" width="220" height="84" rx="10" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="364" cy="420" r="13" fill="#58a6ff" opacity="0.92"/>
+<text x="364" y="425" font-size="12.5" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="384" y="426" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">繪圖標註</text>
+<text x="356" y="456" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">line / rect / text</text>
+<rect x="590" y="396" width="220" height="84" rx="10" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="614" cy="420" r="13" fill="#58a6ff" opacity="0.92"/>
+<text x="614" y="425" font-size="12.5" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<text x="634" y="426" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">幾何變換</text>
+<text x="606" y="456" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">warpAffine / Perspective</text>
+<path d="M 200.0 480 L 200.0 504" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 450.0 480 L 450.0 504" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 700.0 480 L 700.0 504" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 200.0 504 L 700.0 504" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 450.0 504 L 450.0 538" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#aana)"/>
+<rect x="150" y="540" width="600" height="64" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="182" cy="572.0" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="182" y="577.5" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7</text>
+<text x="210" y="567" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">濾波</text>
+<text x="210" y="588" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Gaussian / Median / Bilateral / Morphology</text>
+<rect x="150" y="622" width="600" height="64" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="182" cy="654.0" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="182" y="659.5" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text>
+<text x="210" y="649" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">邊緣　Canny()</text>
+<text x="210" y="670" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Canny 邊緣偵測</text>
+<rect x="150" y="704" width="600" height="64" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="182" cy="736.0" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="182" y="741.5" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">9</text>
+<text x="210" y="731" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輪廓 / 邊界框</text>
+<text x="210" y="752" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">findContours → boundingRect</text>
+<rect x="150" y="786" width="600" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="182" cy="818.0" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="182" y="823.5" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">10</text>
+<text x="210" y="813" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">特徵　ORB_create()</text>
+<text x="210" y="834" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">keypoints + descriptors</text>
+<rect x="150" y="868" width="600" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="182" cy="900.0" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="182" y="905.5" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">11</text>
+<text x="210" y="895" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">匹配　BFMatcher</text>
+<text x="210" y="916" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+ Lowe ratio test</text>
+<rect x="150" y="950" width="600" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="182" cy="982.0" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="182" y="987.5" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">12</text>
+<text x="210" y="977" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Homography + RANSAC</text>
+<text x="210" y="998" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 辨識 / 拼接 / AR</text>
+<path d="M 450.0 604 L 450.0 620" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#aana)"/>
+<path d="M 450.0 686 L 450.0 702" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#aana)"/>
+<path d="M 450.0 768 L 450.0 784" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#afeat)"/>
+<path d="M 450.0 850 L 450.0 866" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#afeat)"/>
+<path d="M 450.0 932 L 450.0 948" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#afeat)"/>
+<circle cx="55" cy="1056" r="7" fill="#2dd4bf"/>
+<text x="70" y="1060" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸入／前處理</text>
+<circle cx="270" cy="1056" r="7" fill="#58a6ff"/>
+<text x="285" y="1060" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">平行處理</text>
+<circle cx="485" cy="1056" r="7" fill="#fbbf24"/>
+<text x="500" y="1060" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">影像分析</text>
+<circle cx="700" cy="1056" r="7" fill="#c084fc"/>
+<text x="715" y="1060" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">特徵與匹配</text>
+<text x="48" y="1102" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">步驟 4–6 是三條平行路線：影像可以只做其中一項，也可以依序組合。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：OpenCV 的 12 步影像處理流程。步驟 4–6 是三條平行路線，其餘是主線；顏色代表四個階段（輸入／前處理 → 平行處理 → 影像分析 → 特徵與匹配）。</figcaption>
+</figure>
+<!-- /OPENCV-FIGURE -->
 
 ### 15.3 考試前最後檢查清單
 
