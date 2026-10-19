@@ -4,19 +4,56 @@
 
 ## 0. 30 秒總複習（考前最後掃描）
 
-```
-LLM = Large Language Model（大型語言模型）
-  ├─ 定義：為了「理解、生成、回應」人類文字而設計的神經網路
-  │     └─ 「Large」有兩層意思：參數量（tens/hundreds of billions）+ 訓練資料量
-  ├─ 與早期 NLP 的差別：早期為「單一特定任務」而設計；LLM 跨任務通用
-  ├─ 成功的兩個原因：① transformer 架構 ② 海量訓練資料
-  ├─ 訓練兩階段：pretraining（大而雜）→ finetuning（小而專）
-  │     └─ 兩種微調：instruction-finetuning／classification finetuning
-  ├─ 架構：encoder（讀懂輸入）＋ decoder（生成輸出）＋ self-attention
-  ├─ 兩大流派：BERT（encoder、遮字填空、分類）／ GPT（decoder、生成、自迴歸）
-  └─ 輸入處理管線：
-        文字 → tokenize → token ID → embedding → ＋positional embedding → LLM 主層
-```
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-label="LLM 是什麼：一頁看懂" style="width:100%;height:auto;display:block">
+<defs><marker id="m2dd4bf" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="598.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LLM 是什麼：一頁看懂</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">定義、來由、訓練、架構、流派與輸入管線</text>
+<rect x="48" y="106" width="904" height="366" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="148" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LLM = Large Language Model（大型語言模型）</text>
+<path d="M 100 184 L 100 436" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">定義：為了「理解、生成、回應」人類文字而設計的神經網路</text>
+<path d="M 134 194 L 134 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 134 220 L 148 220" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="154" y="226" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「Large」有兩層意思：參數量（tens / hundreds of billions）＋ 訓練資料量</text>
+<path d="M 100 256 L 114 256" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="262" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">與早期 NLP 的差別：早期為「單一特定任務」而設計；LLM 跨任務通用</text>
+<path d="M 100 292 L 114 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="298" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">成功的兩個原因：① transformer 架構　② 海量訓練資料</text>
+<path d="M 100 328 L 114 328" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="334" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練兩階段：pretraining（大而雜）→ finetuning（小而專）</text>
+<path d="M 134 338 L 134 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 134 364 L 148 364" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="154" y="370" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩種微調：instruction-finetuning／classification finetuning</text>
+<path d="M 100 400 L 114 400" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="406" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">架構：encoder（讀懂輸入）＋ decoder（生成輸出）＋ self-attention</text>
+<path d="M 100 436 L 114 436" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="442" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩大流派：BERT（encoder、遮字填空、分類）／ GPT（decoder、生成、自迴歸）</text>
+<text x="76" y="506" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸入處理管線</text>
+<rect x="76" y="524" width="51.0" height="38" rx="19" fill="#0d1117" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="101.5" y="548" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">文字</text>
+<path d="M 131.0 543 L 159.0 543" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#m2dd4bf)"/>
+<rect x="163.0" y="524" width="78.0" height="38" rx="19" fill="#0d1117" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="202.0" y="548" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">tokenize</text>
+<path d="M 245.0 543 L 273.0 543" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#m2dd4bf)"/>
+<rect x="277.0" y="524" width="78.0" height="38" rx="19" fill="#0d1117" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="316.0" y="548" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">token ID</text>
+<path d="M 359.0 543 L 387.0 543" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#m2dd4bf)"/>
+<rect x="391.0" y="524" width="84.5" height="38" rx="19" fill="#0d1117" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="433.25" y="548" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">embedding</text>
+<path d="M 479.5 543 L 507.5 543" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#m2dd4bf)"/>
+<rect x="511.5" y="524" width="168.5" height="38" rx="19" fill="#0d1117" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="595.75" y="548" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">＋positional embedding</text>
+<path d="M 684.0 543 L 712.0 543" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#m2dd4bf)"/>
+<rect x="716.0" y="524" width="77.0" height="38" rx="19" fill="#0d1117" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="754.5" y="548" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LLM 主層</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 43：LLM 的概念全貌——七個主分支與兩則補充，最後是從文字到模型主層的輸入管線（tokenize → token ID → embedding → positional embedding → LLM 主層）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 | 你會用到的關鍵詞 | 一句話記法 |
 |---|---|
