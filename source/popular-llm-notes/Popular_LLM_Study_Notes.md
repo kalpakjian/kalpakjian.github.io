@@ -731,16 +731,33 @@ Grok 的賣點是**即時存取 X 平台上的貼文**——這是其他通用�
 一個介面、多個模型：使用者不必分別訂閱 ChatGPT／Gemini／Claude，
 而是透過第三方 App **同時接多個模型**，依需求切換。
 
-```
-       ┌──────────────┐
-       │  聚合 App     │
-       │ （單一介面）  │
-       └──┬───┬───┬───┘
-          │   │   │
-     ┌────▼┐ ┌▼───┐ ┌▼────┐
-     │ GPT │ │Gemini│ │Claude│  …
-     └─────┘ └─────┘ └──────┘
-```
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" role="img" aria-label="聚合 App：一個介面、多個模型" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="378.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">聚合 App：一個介面、多個模型</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">使用者不必分別訂閱每一家</text>
+<rect x="300" y="116" width="300" height="62" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="450.0" y="145.0" font-size="16" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">聚合 App</text>
+<text x="450.0" y="167.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">單一介面</text>
+<path d="M 450 178 L 450 210" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 200 210 L 700 210" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 200 210 L 200 232" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 450 210 L 450 232" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 700 210 L 700 232" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="110" y="234" width="180" height="62" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="200.0" y="270.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GPT</text>
+<rect x="360" y="234" width="180" height="62" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="450.0" y="270.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Gemini</text>
+<rect x="610" y="234" width="180" height="62" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="700.0" y="270.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Claude</text>
+<text x="830" y="272" font-size="20" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">…</text>
+<text x="48" y="342" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一個介面、多個模型：使用者不必分別訂閱 ChatGPT／Gemini／Claude，而是透過第三方 App 依需求切換。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 34：聚合 App——單一介面往下接 GPT／Gemini／Claude 等多個模型，使用者依需求切換。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 ### 14.2 這種架構的技術意義
 
@@ -1277,17 +1294,26 @@ steps=20  guidance=15.0 ->  0.60 s
 
 課程用一張同心圓圖表示（AI ⊃ ML ⊃ DL ⊃ Generative AI）：
 
-```
-┌─────────────── Artificial Intelligence ───────────────┐
-│  ┌──────────── Machine Learning ────────────┐          │
-│  │  ┌────────── Deep Learning ──────────┐   │          │
-│  │  │  ┌────── Generative AI ───────┐   │   │          │
-│  │  │  │  創造新內容                 │   │   │          │
-│  │  │  └────────────────────────────┘   │   │          │
-│  │  └───────────────────────────────────┘   │          │
-│  └──────────────────────────────────────────┘          │
-└────────────────────────────────────────────────────────┘
-```
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-label="四層同心圓：AI ⊃ ML ⊃ DL ⊃ 生成式 AI" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="558.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">四層同心圓：AI ⊃ ML ⊃ DL ⊃ 生成式 AI</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一個都包含在下一個裡面</text>
+<rect x="60" y="110" width="780" height="384" rx="16" fill="none" stroke="#2dd4bf99" stroke-width="1.5"/>
+<text x="86" y="146" font-size="15.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Artificial Intelligence</text>
+<rect x="120" y="170" width="660" height="300" rx="16" fill="none" stroke="#58a6ff99" stroke-width="1.5"/>
+<text x="146" y="206" font-size="15.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Machine Learning</text>
+<rect x="180" y="230" width="540" height="216" rx="16" fill="none" stroke="#c084fc99" stroke-width="1.5"/>
+<text x="206" y="266" font-size="15.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Deep Learning</text>
+<rect x="240" y="290" width="420" height="132" rx="16" fill="none" stroke="#f472b699" stroke-width="1.5"/>
+<text x="266" y="326" font-size="15.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Generative AI</text>
+<text x="450" y="372" font-size="17" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">創造新內容</text>
+<text x="48" y="524" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一個都包含在下一個裡面：生成式 AI 是 AI 的一種，但「AI 就是生成式 AI」是錯的。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 35：四層同心圓——Artificial Intelligence ⊃ Machine Learning ⊃ Deep Learning ⊃ Generative AI，最內圈才是「創造新內容」。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 **每一個都包含在下一個裡面**——所以「生成式 AI 是 AI 的一種」這句話是對的，
 反過來「AI 就是生成式 AI」是錯的。
@@ -1438,21 +1464,38 @@ steps=20  guidance=15.0 ->  0.60 s
 > discriminator's classification provides a signal that the generator uses to **update its
 > weights**.
 
-```
-   隨機雜訊 z
-        │
-   ┌────▼────┐
-   │Generator│  ← 神經網路 1
-   └────┬────┘
-        │  假資料
-        ▼
-   ┌──────────┐      ┌──────────┐
-   │Discrimina│◄─────│ 真資料 x  │
-   │   tor    │      └──────────┘
-   └────┬─────┘  ← 神經網路 2
-        │
-     真 / 假  ──(梯度)──► 回頭更新 Generator 的權重
-```
+<!-- FIG3 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="GAN：兩個網路怎麼接起來" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="538.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GAN：兩個網路怎麼接起來</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">生成器造假、判別器抓假，梯度回頭更新生成器</text>
+<rect x="200" y="116" width="220" height="56" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="310.0" y="149.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">隨機雜訊 z</text>
+<path d="M 310 172 L 310 212" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="200" y="214" width="220" height="64" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="310.0" y="244.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Generator</text>
+<text x="310.0" y="266.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">神經網路 1</text>
+<path d="M 310 278 L 310 316" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="322" y="302" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">假資料</text>
+<rect x="200" y="318" width="220" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="310.0" y="348.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Discriminator</text>
+<text x="310.0" y="370.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">神經網路 2</text>
+<rect x="620" y="318" width="220" height="64" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="730.0" y="355.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真資料 x</text>
+<path d="M 616 350 L 424 350" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 310 382 L 310 428" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 310 428 L 100 428" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 100 428 L 100 246" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 100 246 L 196 246" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="322" y="400" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真 / 假</text>
+<text x="110" y="452" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">梯度：回頭更新 Generator 的權重</text>
+<text x="48" y="508" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">生成器的輸出直接接判別器的輸入，所以梯度可以一路回傳到生成器——這就是 GAN 的對抗訓練。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 36：GAN 的資料流——隨機雜訊 z 進 Generator 產生假資料，與真資料 x 一起進 Discriminator；判別結果的梯度回頭更新 Generator 的權重。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG3 -->
 
 **關鍵**：生成器的輸出**直接接**判別器的輸入，所以梯度可以一路回傳到生成器。
 
@@ -1584,13 +1627,42 @@ steps=20  guidance=15.0 ->  0.60 s
 | **Forward Process** | **Forward Process (Noise Addition)** | **Gaussian noise** is **incrementally added** to the data over **multiple steps**, transforming it into **pure noise** | 一步一步加高斯雜訊，最後變成純雜訊 |
 | **Reverse Process** | **Reverse Process (Denoising)** | The model learns to **reverse this process**, gradually **removing noise** to **reconstruct the original data distribution** | 學會倒著走，逐步去噪還原 |
 
-```
-【Forward：加噪】  清晰圖片 ──加噪──► 半雜訊 ──加噪──► 純雜訊
-                   （訓練時，這一步是「已知」的數學過程）
-
-【Reverse：去噪】  純雜訊 ──去噪──► 半雜訊 ──去噪──► 生成的圖片
-                   （這一步是「模型要學」的部分）
-```
+<!-- FIG4 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" role="img" aria-label="Diffusion：Forward 加噪、Reverse 去噪" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="398.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Diffusion：Forward 加噪、Reverse 去噪</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只有 Reverse 需要訓練</text>
+<text x="48" y="173" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Forward：加噪</text>
+<rect x="230" y="140" width="180" height="56" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="320.0" y="172.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">清晰圖片</text>
+<path d="M 416 168 L 464 168" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="440" y="158" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">加噪</text>
+<rect x="470" y="140" width="180" height="56" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="560.0" y="172.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">半雜訊</text>
+<path d="M 656 168 L 704 168" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="680" y="158" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">加噪</text>
+<rect x="710" y="140" width="180" height="56" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="800.0" y="172.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">純雜訊</text>
+<text x="230" y="218" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">（訓練時，這一步是「已知」的數學過程）</text>
+<text x="48" y="283" font-size="13.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Reverse：去噪</text>
+<rect x="230" y="250" width="180" height="56" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="320.0" y="282.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">純雜訊</text>
+<path d="M 416 278 L 464 278" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="440" y="268" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">去噪</text>
+<rect x="470" y="250" width="180" height="56" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="560.0" y="282.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">半雜訊</text>
+<path d="M 656 278 L 704 278" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="680" y="268" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">去噪</text>
+<rect x="710" y="250" width="180" height="56" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="800.0" y="282.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">生成的圖片</text>
+<text x="230" y="328" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">（這一步是「模型要學」的部分）</text>
+<text x="48" y="372" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">考點：Forward 是加噪、Reverse 是去噪，順序不能顛倒；而且只有 Reverse 需要訓練。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 37：Diffusion 的兩個過程——Forward 把清晰圖片逐步加噪成純雜訊（已知的數學過程），Reverse 再一步步去噪生成圖片（模型要學的部分）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG4 -->
 
 > **考點**：**Forward 是加噪、Reverse 是去噪**，順序不能顛倒。
 > 而且**只有 Reverse 需要訓練**——Forward 只是一個固定的加噪公式。
@@ -1740,23 +1812,33 @@ steps=20  guidance=15.0 ->  0.60 s
 | **Generative AI** | **Creates new content** (text, images, code, etc.) based on **learned patterns** |
 | **Hybrid** | Together, they form a synergistic system that can both **anticipate and create** |
 
-```
-        歷史資料
-           │
-     ┌─────▼──────┐
-     │ Predictive │  預測：會發生什麼？
-     │    AI      │
-     └─────┬──────┘
-           │ 預測結果
-     ┌─────▼──────┐
-     │ Generative │  創造：該說什麼、該產出什麼？
-     │    AI      │
-     └─────┬──────┘
-           │ 個人化內容 / 說明 / 建議
-     ┌─────▼──────┐
-     │  決策者     │
-     └────────────┘
-```
+<!-- FIG5 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img" aria-label="混合式：預測式 ＋ 生成式" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="538.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">混合式：預測式 ＋ 生成式</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先預測會發生什麼，再生成該說什麼</text>
+<rect x="350" y="116" width="200" height="54" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="450.0" y="148.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">歷史資料</text>
+<path d="M 450 170 L 450 204" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="300" y="206" width="300" height="64" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="450.0" y="236.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Predictive AI</text>
+<text x="450.0" y="258.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">預測：會發生什麼？</text>
+<path d="M 450 270 L 450 304" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="462" y="292" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">預測結果</text>
+<rect x="300" y="306" width="300" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="450.0" y="336.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Generative AI</text>
+<text x="450.0" y="358.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">創造：該說什麼、該產出什麼？</text>
+<path d="M 450 370 L 450 404" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="462" y="392" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">個人化內容 / 說明 / 建議</text>
+<rect x="350" y="406" width="200" height="54" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="450.0" y="438.04" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">決策者</text>
+<text x="48" y="508" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">預測式 AI 先回答「會發生什麼」，生成式 AI 再回答「該說什麼」——兩者接力，才構成混合式系統。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 38：混合式系統——歷史資料先過 Predictive AI（預測會發生什麼），預測結果再交給 Generative AI（生成該說什麼），最後交給決策者。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG5 -->
 
 ### 27.2 另一種「混合」——符號式 + 次符號式
 
@@ -2139,13 +2221,37 @@ Context: curious robots at a STEM workshop to help students brainstorm ideas.
 | **藍房間** | 白 | 直接漆白要等？不行——**藍漆成黃，一年後自動變白** |
 | 黃房間 | 白 | 放著**等一年**就會自己變白 |
 
-```
-時間軸：
-  現在          1 年後         2 年後
-  藍  ──漆成黃──►  黃  ──自動褪色──►  白 ✅
-  黃  ──────────►  白 ✅（不用動）
-  白  ──────────►  白 ✅
-```
+<!-- FIG6 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-label="黃漆褪色題的時間軸" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="428.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">黃漆褪色題的時間軸</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">藍→黃→白、黃→白、白→白</text>
+<rect x="48" y="130" width="812" height="46" rx="10" fill="#1c2230" stroke="#30363d" stroke-width="1.5"/>
+<text x="93" y="159" font-size="13" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">房間</text>
+<text x="260.0" y="159" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">現在</text>
+<text x="480.0" y="159" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1 年後</text>
+<text x="730.0" y="159" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2 年後</text>
+<rect x="48" y="184" width="812" height="52" rx="10" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<text x="93" y="216" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">藍</text>
+<text x="260.0" y="216" font-size="12.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">藍</text>
+<text x="480.0" y="216" font-size="12.5" fill="#fbbf24" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">黃（漆成黃）</text>
+<text x="730.0" y="216" font-size="12.5" fill="#3fb950" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">白 ✅（自動褪色）</text>
+<rect x="48" y="242" width="812" height="52" rx="10" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<text x="93" y="274" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">黃</text>
+<text x="260.0" y="274" font-size="12.5" fill="#fbbf24" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">黃</text>
+<text x="480.0" y="274" font-size="12.5" fill="#3fb950" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">白 ✅</text>
+<text x="730.0" y="274" font-size="12.5" fill="#3fb950" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">白 ✅（不用動）</text>
+<rect x="48" y="300" width="812" height="52" rx="10" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<text x="93" y="332" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">白</text>
+<text x="260.0" y="332" font-size="12.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">白</text>
+<text x="480.0" y="332" font-size="12.5" fill="#3fb950" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">白 ✅</text>
+<text x="730.0" y="332" font-size="12.5" fill="#3fb950" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">白 ✅</text>
+<text x="48" y="390" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">黃漆一年會自己褪成白——所以「藍先漆成黃」比「直接漆白」更快達成目標，這題要的正是這條推理鏈。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 39：時間軸——藍房間漆成黃一年後自動褪成白；黃房間放著就變白；白房間始終是白，所以「漆成黃色」是對的。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG6 -->
 
 GPT-4 必須同時掌握三件事才答得出來：
 
@@ -2412,14 +2518,33 @@ PyTorch has CUDA version 13.2 whereas TorchAudio has CUDA version 13.0.
 
 **根因鏈**（實測追出來的完整路徑）：
 
-```
-transformers 5.17.0
-  └─ modeling_layers.py
-       └─ processing_utils.py
-            └─ audio_utils.py:58   import torchaudio        ← 寫死在這裡
-                 └─ torchaudio/_extension/utils.py
-                      └─ _check_cuda_version()  →  RuntimeError
-```
+<!-- FIG7 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-label="torchaudio 問題的根因鏈" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="478.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">torchaudio 問題的根因鏈</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">由下往上看，才知道是誰把誰拖垮</text>
+<text x="48" y="150" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">transformers 5.17.0</text>
+<path d="M 72 162 L 72 188" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 72 188 L 92 188" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="96" y="196" font-size="12.5" fill="#58a6ff" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">modeling_layers.py</text>
+<path d="M 120 208 L 120 234" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 120 234 L 140 234" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="144" y="242" font-size="12.5" fill="#58a6ff" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">processing_utils.py</text>
+<path d="M 168 254 L 168 280" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 168 280 L 188 280" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="192" y="288" font-size="12.5" fill="#c084fc" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">audio_utils.py:58　import torchaudio　← 寫死在這裡</text>
+<path d="M 216 300 L 216 326" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 216 326 L 236 326" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="240" y="334" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">torchaudio/_extension/utils.py</text>
+<path d="M 264 346 L 264 372" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 264 372 L 284 372" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="288" y="380" font-size="12.5" fill="#f472b6" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">_check_cuda_version()　→　RuntimeError</text>
+<text x="48" y="452" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">越下層越接近真正的原因：audio_utils.py 的 import 先失敗，上面幾層只是被拖垮的受害者。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 40：根因鏈——transformers 經 modeling_layers／processing_utils 匯入 audio_utils，在第 58 行寫死 import torchaudio，最後在 _check_cuda_version() 爆 RuntimeError。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG7 -->
 
 **為什麼會影響「純文字模型」**：因為 `audio_utils.py` 是被 `processing_utils.py`
 **間接匯入**的，而幾乎所有模型都會經過它——所以**連 GPT-2 都載不進來**。

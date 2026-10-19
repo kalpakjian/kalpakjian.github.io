@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" role="img" aria-label="聚合 App：一個介面、多個模型" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="378.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">聚合 App：一個介面、多個模型</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">使用者不必分別訂閱每一家</text>
+<rect x="300" y="116" width="300" height="62" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="450.0" y="145.0" font-size="16" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">聚合 App</text>
+<text x="450.0" y="167.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">單一介面</text>
+<path d="M 450 178 L 450 210" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 200 210 L 700 210" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 200 210 L 200 232" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 450 210 L 450 232" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 700 210 L 700 232" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="110" y="234" width="180" height="62" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="200.0" y="270.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GPT</text>
+<rect x="360" y="234" width="180" height="62" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="450.0" y="270.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Gemini</text>
+<rect x="610" y="234" width="180" height="62" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="700.0" y="270.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Claude</text>
+<text x="830" y="272" font-size="20" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">…</text>
+<text x="48" y="342" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一個介面、多個模型：使用者不必分別訂閱 ChatGPT／Gemini／Claude，而是透過第三方 App 依需求切換。</text>
+</svg>

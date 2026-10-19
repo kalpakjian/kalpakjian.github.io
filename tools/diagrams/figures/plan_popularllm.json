@@ -1,0 +1,37 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/popularllm-aggregator.svg",
+    "caption": "圖 34：聚合 App——單一介面往下接 GPT／Gemini／Claude 等多個模型，使用者依需求切換。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 2,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/popularllm-nested.svg",
+    "caption": "圖 35：四層同心圓——Artificial Intelligence ⊃ Machine Learning ⊃ Deep Learning ⊃ Generative AI，最內圈才是「創造新內容」。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 3,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/popularllm-gan.svg",
+    "caption": "圖 36：GAN 的資料流——隨機雜訊 z 進 Generator 產生假資料，與真資料 x 一起進 Discriminator；判別結果的梯度回頭更新 Generator 的權重。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 4,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/popularllm-diffusion.svg",
+    "caption": "圖 37：Diffusion 的兩個過程——Forward 把清晰圖片逐步加噪成純雜訊（已知的數學過程），Reverse 再一步步去噪生成圖片（模型要學的部分）。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 5,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/popularllm-hybrid.svg",
+    "caption": "圖 38：混合式系統——歷史資料先過 Predictive AI（預測會發生什麼），預測結果再交給 Generative AI（生成該說什麼），最後交給決策者。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 6,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/popularllm-timeline.svg",
+    "caption": "圖 39：時間軸——藍房間漆成黃一年後自動褪成白；黃房間放著就變白；白房間始終是白，所以「漆成黃色」是對的。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 7,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/popularllm-cuda-chain.svg",
+    "caption": "圖 40：根因鏈——transformers 經 modeling_layers／processing_utils 匯入 audio_utils，在第 58 行寫死 import torchaudio，最後在 _check_cuda_version() 爆 RuntimeError。｜手繪 SVG 圖表"
+  }
+]

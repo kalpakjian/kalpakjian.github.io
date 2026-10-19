@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-label="四層同心圓：AI ⊃ ML ⊃ DL ⊃ 生成式 AI" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="558.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">四層同心圓：AI ⊃ ML ⊃ DL ⊃ 生成式 AI</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一個都包含在下一個裡面</text>
+<rect x="60" y="110" width="780" height="384" rx="16" fill="none" stroke="#2dd4bf99" stroke-width="1.5"/>
+<text x="86" y="146" font-size="15.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Artificial Intelligence</text>
+<rect x="120" y="170" width="660" height="300" rx="16" fill="none" stroke="#58a6ff99" stroke-width="1.5"/>
+<text x="146" y="206" font-size="15.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Machine Learning</text>
+<rect x="180" y="230" width="540" height="216" rx="16" fill="none" stroke="#c084fc99" stroke-width="1.5"/>
+<text x="206" y="266" font-size="15.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Deep Learning</text>
+<rect x="240" y="290" width="420" height="132" rx="16" fill="none" stroke="#f472b699" stroke-width="1.5"/>
+<text x="266" y="326" font-size="15.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Generative AI</text>
+<text x="450" y="372" font-size="17" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">創造新內容</text>
+<text x="48" y="524" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一個都包含在下一個裡面：生成式 AI 是 AI 的一種，但「AI 就是生成式 AI」是錯的。</text>
+</svg>

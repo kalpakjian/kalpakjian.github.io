@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-label="torchaudio 問題的根因鏈" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="478.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">torchaudio 問題的根因鏈</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">由下往上看，才知道是誰把誰拖垮</text>
+<text x="48" y="150" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">transformers 5.17.0</text>
+<path d="M 72 162 L 72 188" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 72 188 L 92 188" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="96" y="196" font-size="12.5" fill="#58a6ff" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">modeling_layers.py</text>
+<path d="M 120 208 L 120 234" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 120 234 L 140 234" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="144" y="242" font-size="12.5" fill="#58a6ff" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">processing_utils.py</text>
+<path d="M 168 254 L 168 280" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 168 280 L 188 280" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="192" y="288" font-size="12.5" fill="#c084fc" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">audio_utils.py:58　import torchaudio　← 寫死在這裡</text>
+<path d="M 216 300 L 216 326" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 216 326 L 236 326" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="240" y="334" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">torchaudio/_extension/utils.py</text>
+<path d="M 264 346 L 264 372" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 264 372 L 284 372" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="288" y="380" font-size="12.5" fill="#f472b6" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">_check_cuda_version()　→　RuntimeError</text>
+<text x="48" y="452" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">越下層越接近真正的原因：audio_utils.py 的 import 先失敗，上面幾層只是被拖垮的受害者。</text>
+</svg>
