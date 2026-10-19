@@ -1,10 +1,10 @@
 # 什麼是 TPOT？學習筆記（考試溫習版）
 
-> 課程：AutoML 應用證書（單元四：開源 AutoML 工具與綜合應用）
-> 機構：匯縱專業發展中心（IVDC）
-> 教材來源：`什麼是 TPOT (2).pdf`（18 頁／10 張投影片）
-> 本筆記按 PDF 原稿每一個標題逐一填充內容，並補上定義、參數說明、常見錯誤與考點。
-> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**
+> 課程：AutoML 應用證書（單元四：開源 AutoML 工具與綜合應用）<br>
+> 機構：匯縱專業發展中心（IVDC）<br>
+> 簡報來源：`什麼是 TPOT (2).pdf`（18 頁／10 張投影片）<br>
+> 本筆記按 PDF 每一個標題逐一填充內容，並補上定義、參數說明、常見錯誤與考點。<br>
+> 🖱️ **互動測驗（推薦）**：附錄 F 提供 **60 題線上測驗**（即時計分、進度自動儲存）→ **[開始作答](mc-quiz.html)**<br>
 
 ---
 
@@ -25,7 +25,7 @@
 | 10 | [恭喜你！總結與問答](#10-恭喜你總結與問答) | 17–18 |
 | A | [附錄 A：速查表](#附錄-a速查表) | — |
 | B | [附錄 B：常見錯誤與陷阱](#附錄-b常見錯誤與陷阱) | — |
-| C | [附錄 C：教材頁面索引對照](#附錄-c教材頁面索引對照) | — |
+| C | [附錄 C：簡報頁面索引對照](#附錄-c簡報頁面索引對照) | — |
 | D | [附錄 D：離線執行／安裝提示](#附錄-d離線執行安裝提示) | — |
 | E | [附錄 E：一頁精華（考前 10 分鐘）](#附錄-e一頁精華考前-10-分鐘) | — |
 | F | [附錄 F：互動式線上測驗（60 題）](#附錄-f互動式線上測驗60-題) | — |
@@ -69,7 +69,7 @@
 | `cv=5` | 內部交叉驗證幾折（1.1.0 預設 10） |
 | `processes=False` | 本機跑得動的關鍵：用執行緒，不要開子行程 |
 
-> **考前 3 秒版**：TPOT = 用**基因演算法**幫你在 sklearn 的零件箱裡**自動組管線**的 AutoML 工具；
+> **考前 3 秒版**：TPOT = 用**基因演算法**幫你在 sklearn 的零件箱裡**自動組管線**的 AutoML 工具；<br>
 > 你只要給它 `X_train, y_train`，它會還你一條最佳管線與準確率。
 
 ---
@@ -102,7 +102,7 @@
 
 ### 1.2 TPOT 到底幫你決定了哪三件事？
 
-| # | 要決定的事 | 講義原文的說法 | 具體例子 |
+| # | 要決定的事 | 簡報原文的說法 | 具體例子 |
 |---|---|---|---|
 | 1 | **該選哪種演算法？** | 隨機森林、神經網路、支持向量機？ | `RandomForestClassifier`、`SVC`、`KNeighborsClassifier` |
 | 2 | **資料特徵該如何處理與篩選？** | 前處理與特徵選擇 | `StandardScaler`、`MinMaxScaler`、`SelectPercentile`、`PCA` |
@@ -152,7 +152,7 @@ print("準確率：", tpot.score(X_test, y_test))
 ---
 ## 2. 複習一下：什麼是機器學習（Machine Learning）？
 
-> 講義原話：「讓數據說話的技術」——傳統程式設計是**人寫規則**，機器學習是**資料寫規則**。
+> 簡報原話：「讓數據說話的技術」——傳統程式設計是**人寫規則**，機器學習是**資料寫規則**。
 
 <!-- FIGURE:ch02-machine-learning-recap -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -180,7 +180,7 @@ print("準確率：", tpot.score(X_test, y_test))
 
 ### 2.2 實際應用：推薦系統
 
-講義舉的例子是 YouTube / IG 的推薦系統：
+簡報舉的例子是 YouTube / IG 的推薦系統：
 
 1. **資料**：你看過的影片、按過的讚、停留時間
 2. **答案**：你「喜歡／不喜歡」的結果
@@ -194,7 +194,7 @@ print("準確率：", tpot.score(X_test, y_test))
 | 標籤（答案） | label / target / y | 鳶尾花的品種（`iris.target`，0/1/2 三種） |
 | 模型 | model | TPOT 最後交給你的那條管線（Pipeline） |
 
-### 2.4 補上原稿沒寫、但一定會考的延伸
+### 2.4 補上簡報沒寫、但一定會考的延伸
 
 | 類型 | 有沒有答案（標籤） | 例子 | TPOT 對應類別 |
 |---|---|---|---|
@@ -253,12 +253,12 @@ print("測試集分數：", model.score(Xn_te, yn_te))   # 只有 0.84
 ```
 
 > **考點**：**「訓練集分數」永遠不能當成模型的實力**。要判斷一個模型好不好，
-> 只能看它在**沒看過的資料**上的表現——這就是為什麼講義第二步就要求 `train_test_split`。
+> 只能看它在**沒看過的資料**上的表現——這就是為什麼簡報第二步就要求 `train_test_split`。
 
 ---
 ## 3. 但資料科學家面臨了挑戰：模型調校的「排列組合」地獄
 
-> 講義原話：「這些選項的組合高達數萬種，光靠人工測試不僅極度耗時，更是不可能完成的任務。」
+> 簡報原話：「這些選項的組合高達數萬種，光靠人工測試不僅極度耗時，更是不可能完成的任務。」
 
 <!-- FIGURE:ch03-combinatorial-explosion -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -269,7 +269,7 @@ print("測試集分數：", model.score(Xn_te, yn_te))   # 只有 0.84
 
 ### 3.1 建立模型時，有太多變數需要決定
 
-| # | 講義列出的問題 | 白話 | 常見選項 |
+| # | 簡報列出的問題 | 白話 | 常見選項 |
 |---|---|---|---|
 | 1 | 該選擇哪種演算法？ | 用哪個模型 | 隨機森林、神經網路、支持向量機、KNN、決策樹 |
 | 2 | 資料特徵該如何處理與篩選？ | 要不要標準化？要不要挑特徵？ | `StandardScaler`、`MinMaxScaler`、`SelectPercentile`、`PCA` |
@@ -294,7 +294,7 @@ print("測試集分數：", model.score(Xn_te, yn_te))   # 只有 0.84
 - 還多了「**要不要做集成（Ensemble）**」「**管線要接幾個步驟**」這種結構性選擇
 
 > **考點**：組合數是**相乘**成長的。多一個要決定的維度，不是「多一點」，而是「乘上好幾倍」。
-> 這就是講義說的「排列組合地獄」。
+> 這就是簡報說的「排列組合地獄」。
 
 ### 3.3 人工調參要多久？本機實測
 
@@ -341,7 +341,7 @@ print("測試集分數：", model.score(Xn_te, yn_te))   # 只有 0.84
 ---
 ## 4. 解決方案：隆重介紹 TPOT
 
-> 講義原話：「TPOT 就像是你專屬的 AI 研發助理。」你只要把整理好的資料交給它，它就會自動測試成千上萬種演算法與參數組合，最後篩選出準確度最高的模型，並把程式碼交還給你。
+> 簡報原話：「TPOT 就像是你專屬的 AI 研發助理。」你只要把整理好的資料交給它，它就會自動測試成千上萬種演算法與參數組合，最後篩選出準確度最高的模型，並把程式碼交還給你。
 
 <!-- FIGURE:ch04-tpot-solution -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -400,7 +400,7 @@ print("測試集分數：", model.score(Xn_te, yn_te))   # 只有 0.84
 
 ### 4.5 「它把程式碼交還給你」——這件事在 1.1.0 變了
 
-講義上寫的是 0.11.x 的用法：
+簡報上寫的是 0.11.x 的用法：
 
 ```python
 # 舊版（TPOT 0.11.x）——在 1.1.0 會 AttributeError
@@ -435,7 +435,7 @@ for node in tpot.fitted_pipeline_.topo_sorted_nodes:
 ---
 ## 5. TPOT 的核心技術：基因演算法
 
-> 講義原話：「程式碼的物競天擇」——TPOT 借鑒生物演化的概念來尋找最佳模型。
+> 簡報原話：「程式碼的物競天擇」——TPOT 借鑒生物演化的概念來尋找最佳模型。
 
 <!-- FIGURE:ch05-genetic-algorithm -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -444,9 +444,9 @@ for node in tpot.fitted_pipeline_.topo_sorted_nodes:
 </figure>
 <!-- /FIGURE -->
 
-### 5.1 講義的四個步驟
+### 5.1 簡報的四個步驟
 
-| 步驟 | 講義標題 | 講義內容 | 對應的 TPOT 參數 |
+| 步驟 | 簡報標題 | 簡報內容 | 對應的 TPOT 參數 |
 |---|---|---|---|
 | 1 | **初始族群** | 系統先隨機生成一批不同的 AI 模型（例如 100 個） | `population_size`（每代幾個模型） |
 | 2 | **適者生存** | 對它們進行測試，準確率低的模型直接被淘汰 | `scorers`（用什麼分數判定優劣）、`cv`（怎麼測） |
@@ -494,11 +494,11 @@ Generation: 100%|██████████| 5/5 [01:04<00:00, 12.89s/it]
 |---|---|
 | 0 | 什麼都不印 |
 | 1 | 只印最後結果 |
-| 2 | 進度條（**講義畫面看到的那條**） |
+| 2 | 進度條（**簡報畫面看到的那條**） |
 | 3 | 進度條 + 每一代的最佳分數 |
 | 4 / 5 | 更詳細（含 dask 的日誌） |
 
-> **考點**：講義說「下方會出現進度條，顯示目前演化到第幾代」——那個進度條就是 `verbose=2` 的輸出；
+> **考點**：簡報說「下方會出現進度條，顯示目前演化到第幾代」——那個進度條就是 `verbose=2` 的輸出；
 > 進度條的 **5/5** 就是 `generations=5`。
 
 ### 5.5 為什麼叫「樹狀」（Tree-based）？
@@ -526,7 +526,7 @@ Generation: 100%|██████████| 5/5 [01:04<00:00, 12.89s/it]
 ---
 ## 6. 用一個比喻來理解 TPOT：自動化改裝賽車
 
-> 講義原話：假設你要打造一台性能最強的賽車——傳統做法是你自己一件一件換、一圈一圈測；有了 TPOT，你有一個全自動的虛擬測試實驗室。
+> 簡報原話：假設你要打造一台性能最強的賽車——傳統做法是你自己一件一件換、一圈一圈測；有了 TPOT，你有一個全自動的虛擬測試實驗室。
 
 <!-- FIGURE:ch06-race-car-metaphor -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -586,7 +586,7 @@ TPOT = 賽車改裝的自動化實驗室
 ---
 ## 7. 實際例子：預測鐵達尼號生存率
 
-> 講義原話：「TPOT 在現實中的應用」——任務是預測鐵達尼號事件中，誰比較容易存活。
+> 簡報原話：「TPOT 在現實中的應用」——任務是預測鐵達尼號事件中，誰比較容易存活。
 
 <!-- FIGURE:ch07-titanic-example -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -605,9 +605,9 @@ TPOT = 賽車改裝的自動化實驗室
 | TPOT 的工作 | 自動找出規律（例如：**女性和小孩存活率高、頭等艙存活率高**），並生成預測模型 |
 | 成果用途 | 未來輸入新乘客資料，就能預測他能不能搭上救生艇 |
 
-### 7.2 講義的過場提示：為什麼課堂改用鳶尾花？
+### 7.2 簡報的過場提示：為什麼課堂改用鳶尾花？
 
-> 講義原文：「鐵達尼號的資料比較複雜，為了讓大家今天能順利體驗，我們等一下的練習會使用另一個機器學習界最經典、最簡單的『鳶尾花 (Iris) 分類任務』來做練習！」
+> 簡報原文：「鐵達尼號的資料比較複雜，為了讓大家今天能順利體驗，我們等一下的練習會使用另一個機器學習界最經典、最簡單的『鳶尾花 (Iris) 分類任務』來做練習！」
 
 | | 鐵達尼號 | 鳶尾花（Iris） |
 |---|---|---|
@@ -702,7 +702,7 @@ TPOTClassifier().fit(X_train, y_train) → 最佳管線 + 準確率
 ---
 ## 8. 課堂電腦練習（一）：準備工作（步驟 1–2）
 
-> 講義原話：「打開你的雲端魔法書（Google Colab）」——這一步的目的只有一個：**弄出一個能跑 Python 的雲端環境，並裝好 TPOT**。
+> 簡報原話：「打開你的雲端魔法書（Google Colab）」——這一步的目的只有一個：**弄出一個能跑 Python 的雲端環境，並裝好 TPOT**。
 
 <!-- FIGURE:ch08-colab-setup -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -711,9 +711,9 @@ TPOTClassifier().fit(X_train, y_train) → 最佳管線 + 準確率
 </figure>
 <!-- /FIGURE -->
 
-### 8.1 步驟 1：登入與開啟（講義的四個小步驟）
+### 8.1 步驟 1：登入與開啟（簡報的四個小步驟）
 
-| # | 講義步驟 | 補充說明 |
+| # | 簡報步驟 | 補充說明 |
 |---|---|---|
 | 1 | 打開瀏覽器（Chrome / Edge），搜尋「Google Colab」 | 網址是 `colab.research.google.com` |
 | 2 | 點擊第一個結果（Welcome to Colaboratory） | 需要 Google 帳號才能存檔 |
@@ -731,7 +731,7 @@ TPOTClassifier().fit(X_train, y_train) → 最佳管線 + 準確率
 
 ### 8.2 步驟 2：安裝 TPOT 工具包
 
-講義的原文：
+簡報的原文：
 
 > 你會看到畫面上有一條長方形的格子（這叫做「程式碼區塊」）。在格子裡輸入這行字（**注意有驚嘆號，全部小寫**）：
 
@@ -742,14 +742,14 @@ TPOTClassifier().fit(X_train, y_train) → 最佳管線 + 準確率
 > 點擊格子左邊的「播放鍵 (▶)」。等待下方跑出一堆英文字，大約 **10~20 秒**後，
 > 左邊出現**綠色打勾**，代表安裝成功！
 
-| 講義的提醒 | 為什麼 |
+| 簡報的提醒 | 為什麼 |
 |---|---|
 | **有驚嘆號** | 在 Colab 裡，`!` 代表「這行是**作業系統指令**」，不是 Python 語法 |
 | **全部小寫** | 套件名稱是 `tpot`；`pip` 是 `PIP` 的指令名（Linux 大小寫敏感） |
 | 綠色打勾 | 代表這一格執行完成（**不代表沒有錯誤訊息**，要看輸出最後幾行） |
 | 10~20 秒 | 從 PyPI 下載 TPOT 與它的相依套件（scikit-learn、dask、deap…） |
 
-### 8.3 安裝完成後，先驗證版本（講義沒寫，但強烈建議）
+### 8.3 安裝完成後，先驗證版本（簡報沒寫，但強烈建議）
 
 ```python
 !pip show tpot | head -3
@@ -758,7 +758,7 @@ TPOTClassifier().fit(X_train, y_train) → 最佳管線 + 準確率
 
 | 為什麼要驗證 | 說明 |
 |---|---|
-| Colab 的預設版本可能與講義不同 | 講義用的是 **0.11.x** 的 API（`verbosity`、`export()`） |
+| Colab 的預設版本可能與簡報不同 | 簡報用的是 **0.11.x** 的 API（`verbosity`、`export()`） |
 | 本筆記實測的是 **1.1.0** | API 有差異（見第 9 章對照表） |
 | 版本不同 → 錯誤訊息不同 | 先知道版本，出錯時才不會抓錯方向 |
 
@@ -792,7 +792,7 @@ pip install "tpot==1.1.0"
 ---
 ## 9. 課堂電腦練習（二）：動手寫程式（步驟 3–5）
 
-> 講義原話：「讓 TPOT 幫我們分類鳶尾花 (Iris)」——任務目標是用機器學習界最經典的鳶尾花資料集，讓 TPOT 自己找出規則，精準辨識出哪朵花屬於哪個品種。
+> 簡報原話：「讓 TPOT 幫我們分類鳶尾花 (Iris)」——任務目標是用機器學習界最經典的鳶尾花資料集，讓 TPOT 自己找出規則，精準辨識出哪朵花屬於哪個品種。
 
 <!-- FIGURE:ch09-write-the-code -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -803,17 +803,17 @@ pip install "tpot==1.1.0"
 
 ### 9.1 步驟 3：建立程式碼區塊
 
-| 講義步驟 | 說明 |
+| 簡報步驟 | 說明 |
 |---|---|
 | 點「+ 程式碼 (+ Code)」 | 在 Colab（或 Jupyter Notebook）開一個新的空白儲存格 (Cell) |
 | 為什麼要一格一格 | Colab 的程式是**分格執行**的；同一格可以放多段程式，按一次跑完 |
 
-> 講義把步驟 4 的五段程式碼**全部貼在同一個格子裡**（見步驟 5 的說明），
+> 簡報把步驟 4 的五段程式碼**全部貼在同一個格子裡**（見步驟 5 的說明），
 > 所以其實只需要一個 Cell。
 
 ### 9.2 步驟 4 第一部分：匯入必備套件
 
-講義的程式碼：
+簡報的程式碼：
 
 ```python
 # 1. 呼叫工具和資料
@@ -822,7 +822,7 @@ from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 ```
 
-| 匯入的東西 | 講義的解釋 | 補充 |
+| 匯入的東西 | 簡報的解釋 | 補充 |
 |---|---|---|
 | `TPOTClassifier` | 負責執行自動化機器學習（分類任務）的**核心引擎** | 迴歸任務要換成 `TPOTRegressor` |
 | `load_iris` | 載入內建「鳶尾花資料集」的工具 | 回傳 150 筆、4 個特徵、3 個類別 |
@@ -830,7 +830,7 @@ from sklearn.model_selection import train_test_split
 
 ### 9.3 步驟 4 第二部分：準備與切割資料
 
-講義的程式碼：
+簡報的程式碼：
 
 ```python
 # 2. 準備鳶尾花資料（把資料分成「訓練用」和「考試用」）
@@ -839,7 +839,7 @@ X_train, X_test, y_train, y_test = train_test_split(iris.data,
                                                     iris.target, random_state=42)
 ```
 
-| 講義的解釋 | 補充 |
+| 簡報的解釋 | 補充 |
 |---|---|
 | `iris.data` 是花的特徵（花瓣長度等），`iris.target` 是正確答案（品種） | 形狀分別是 `(150, 4)` 與 `(150,)` |
 | **為什麼要切割？** 全部拿去練會「死背」答案，所以要留沒看過的資料當期末考 | 本機實測：有雜訊的資料上，決策樹訓練集 1.0000、測試集只有 **0.8400** |
@@ -850,7 +850,7 @@ X_train, X_test, y_train, y_test = train_test_split(iris.data,
 
 ### 9.4 步驟 4 第三部分：設定 TPOT 演化參數
 
-講義的程式碼：
+簡報的程式碼：
 
 ```python
 # 3. 初始化 TPOT 自動化引擎（設定繁衍 5 代，每代 20 個模型）
@@ -858,7 +858,7 @@ print("TPOT 開始尋找最佳模型，請耐心等候幾分鐘...")
 tpot = TPOTClassifier(generations=5, population_size=20, verbosity=2, random_state=42)
 ```
 
-| 講義的參數 | 意思 | 在 1.1.0 的狀況 |
+| 簡報的參數 | 意思 | 在 1.1.0 的狀況 |
 |---|---|---|
 | `generations=5` | 繁衍 5 代 | ✅ 仍支援（但**預設值是 `None`**，不是 5） |
 | `population_size=20` | 每代 20 個模型（共約 100 個） | ✅ 仍支援（但**預設值是 50**） |
@@ -885,14 +885,14 @@ tpot = TPOTClassifier(
 
 ### 9.5 步驟 4 第四部分：開始自動訓練
 
-講義的程式碼：
+簡報的程式碼：
 
 ```python
 # 4. 開始自動訓練！
 tpot.fit(X_train, y_train)
 ```
 
-| 講義的解釋 | 補充 |
+| 簡報的解釋 | 補充 |
 |---|---|
 | `.fit()` 是機器學習中最核心的動作，意思是「擬合」或「訓練」 | 對 TPOT 而言是**啟動基因演算法搜尋** |
 | TPOT 會啟動背景的基因演算法，不斷嘗試各種演算法（如隨機森林、決策樹等）與參數 | 搜尋過程會用 dask 平行評估候選管線 |
@@ -900,14 +900,14 @@ tpot.fit(X_train, y_train)
 
 ### 9.6 步驟 4 第五部分：評估模型準確度
 
-講義的程式碼：
+簡報的程式碼：
 
 ```python
 # 5. 看看 TPOT 考了幾分！
 print("太棒了！預測準確率是:", tpot.score(X_test, y_test))
 ```
 
-| 講義的解釋 | 補充 |
+| 簡報的解釋 | 補充 |
 |---|---|
 | `.score()` 是用來打分數的函式 | ❌ **TPOT 1.1.0 沒有 `.score()`**（實測：`AttributeError: 'TPOTClassifier' object has no attribute 'score'`） |
 | 用「AI 從沒看過的期末考卷」測試集來作答 | 這一步就是**泛化能力**的檢驗 |
@@ -922,12 +922,12 @@ print("太棒了！預測準確率是:", accuracy_score(y_test, tpot.predict(X_t
 
 ### 9.7 步驟 5：執行與檢視成果
 
-| 講義說明 | 補充 |
+| 簡報說明 | 補充 |
 |---|---|
 | 確認 5 段程式碼都在**同一個格子**後，按播放鍵（▶️）或 `Shift + Enter` | 同一格可以整段貼上 |
 | 下方會出現**進度條**，顯示目前演化到第幾代 | 進度條印在 **stderr**，由 `verbose=2` 控制 |
 | 需要等 **2 到 3 分鐘**（TPOT 正在測試 100 種模型組合） | 本機實測 5 代 × 20 族群只要 **約 51 秒**（見下表） |
-| 最後會印出準確率（例如 0.973…） | 講義範例是 0.973；本機實測是 0.9474 |
+| 最後會印出準確率（例如 0.973…） | 簡報範例是 0.973；本機實測是 0.9474 |
 
 ### 9.8 本機實測：完整可執行版與結果
 
@@ -978,12 +978,12 @@ logisticregression → LogisticRegression(C≈27020.69, penalty='elasticnet', so
 | # | 細節 | 說明 |
 |---|---|---|
 | 1 | **內部 CV 0.9822 vs 測試集 0.9474** | 「在 100 條裡挑最好的」分數天生樂觀（**贏家詛咒**）；真實實力看測試集 |
-| 2 | **管線不是「隨機森林」** | 講義舉例說會試隨機森林／決策樹，但這份資料上它最後選的是**邏輯迴歸 + 前處理**——TPOT 只在意分數 |
+| 2 | **管線不是「隨機森林」** | 簡報舉例說會試隨機森林／決策樹，但這份資料上它最後選的是**邏輯迴歸 + 前處理**——TPOT 只在意分數 |
 | 3 | **兩次跑會一樣嗎？** | 設了 `random_state=42` 才可重現；不設的話每次管線都不同 |
 
 ### 9.9 課堂版 vs 本機版對照表
 
-| 項目 | 課堂原稿（TPOT 0.x 寫法） | 本機實測（TPOT 1.1.0） |
+| 項目 | 課堂簡報（TPOT 0.x 寫法） | 本機實測（TPOT 1.1.0） |
 |---|---|---|
 | 引擎參數 | `generations=5, population_size=20` | 同左（1.1.0 仍支援） |
 | 輸出訊息 | `verbosity=2` | `verbose=2`（`verbosity` → `TypeError`） |
@@ -991,16 +991,16 @@ logisticregression → LogisticRegression(C≈27020.69, penalty='elasticnet', so
 | 搜尋空間 | `config_dict='Default'` | `search_space='linear'`（預設） |
 | 打分數 | `tpot.score(X_test, y_test)` | 沒有 `.score()`；用 `accuracy_score` + `predict` |
 | 取回模型 | `tpot.export('pipeline.py')` | 已移除；用 `fitted_pipeline_` + `joblib` |
-| 測試集準確率 | 講義範例 **0.973** | **0.9474** |
-| 搜尋耗時 | 講義說約 2～3 分鐘 | **約 51 秒** |
+| 測試集準確率 | 簡報範例 **0.973** | **0.9474** |
+| 搜尋耗時 | 簡報說約 2～3 分鐘 | **約 51 秒** |
 
-> **考點**：講義的「0.973」與本機的「0.9474」**只差一題**（38 筆測試資料中 1 筆 = 2.6%）。
+> **考點**：簡報的「0.973」與本機的「0.9474」**只差一題**（38 筆測試資料中 1 筆 = 2.6%）。
 > 版本差異、搜尋空間不同、測試集太小，都會讓這個數字上下跳動——**不要把單一分數當成絕對值**。
 
 ---
 ## 10. 恭喜你！總結與問答
 
-> 講義原話：「你已經成功訓練了你的第一個 AutoML 模型！」
+> 簡報原話：「你已經成功訓練了你的第一個 AutoML 模型！」
 
 <!-- FIGURE:ch10-summary -->
 <figure style="margin:26px 0 30px;padding:16px 16px 12px;border-radius:12px;background:#111820;border:1px solid #223040">
@@ -1009,9 +1009,9 @@ logisticregression → LogisticRegression(C≈27020.69, penalty='elasticnet', so
 </figure>
 <!-- /FIGURE -->
 
-### 10.1 重點回顧（講義的三個 ✅）
+### 10.1 重點回顧（簡報的三個 ✅）
 
-| # | 講義重點 | 補一句說明 |
+| # | 簡報重點 | 補一句說明 |
 |---|---|---|
 | ✅ 1 | TPOT 是一個**自動化機器學習工具（AutoML）** | 它自動決定「演算法 + 前處理 + 超參數」 |
 | ✅ 2 | 它使用**基因演算法**來尋找最佳模型 | 剛剛進度條在跑的過程，就是不斷繁衍與淘汰 |
@@ -1019,7 +1019,7 @@ logisticregression → LogisticRegression(C≈27020.69, penalty='elasticnet', so
 
 ### 10.2 Q&A 那頁的兩個問題
 
-| 講義的問題 | 講義的答案 | 更完整的回答 |
+| 簡報的問題 | 簡報的答案 | 更完整的回答 |
 |---|---|---|
 | 大家剛剛跑出來的準確率是多少呢？ | 通常會高達 **0.97 以上**，也就是 97% | 鳶尾花是**教學用的簡單資料**；換成真實資料（鐵達尼號、房價）通常不會這麼高 |
 | 開放同學提問時間！ | — | 見下方「三個常見追問」 |
@@ -1031,7 +1031,7 @@ logisticregression → LogisticRegression(C≈27020.69, penalty='elasticnet', so
 | 原因 | 說明 |
 |---|---|
 | 測試集只有 **38 筆** | 1 筆答錯 = 準確率掉 **2.6%**（0.9737 → 0.9474 就差 1 筆） |
-| 版本不同 | 講義是 0.11.x、本筆記實測是 1.1.0，搜尋空間與預設值都不同 |
+| 版本不同 | 簡報是 0.11.x、本筆記實測是 1.1.0，搜尋空間與預設值都不同 |
 | 預算不同 | `generations` / `population_size` 越小，搜到的模型越隨機 |
 
 **Q2：準確率高就代表模型好嗎？**
@@ -1089,8 +1089,8 @@ logisticregression → LogisticRegression(C≈27020.69, penalty='elasticnet', so
 | `.fitted_pipeline_` | sklearn `Pipeline` | 搜尋完的**最佳管線本體**（可 `joblib.dump`） |
 | `.evaluated_individuals` | pandas `DataFrame` | **所有評估過的管線**與它們的分數（考後檢討用） |
 | `.pareto_front` | pandas `DataFrame` | 非支配前緣（多目標時才有意義） |
-| `generations` | `None`（1.1.0） | 繁衍幾代；課堂講義用 `5` |
-| `population_size` | `50`（1.1.0） | 每代幾個模型；課堂講義用 `20` |
+| `generations` | `None`（1.1.0） | 繁衍幾代；課堂簡報用 `5` |
+| `population_size` | `50`（1.1.0） | 每代幾個模型；課堂簡報用 `20` |
 | `max_time_mins` | `60` | 搜尋時間上限（分鐘）——**沒設 `generations` 就會跑滿** |
 | `max_eval_time_mins` | `10` | 單一管線評估上限（分鐘） |
 | `scorers` | `['roc_auc_ovr']` | 適者生存的判定指標；課堂建議 `['accuracy']` |
@@ -1199,11 +1199,11 @@ TPOTClassifier()               →  TPOTClassifier(processes=False, generations=
 ```
 
 ---
-## 附錄 C：教材頁面索引對照
+## 附錄 C：簡報頁面索引對照
 
-本筆記的章節順序與 PDF 原稿的 10 張投影片一致（第 1 張是課程內容首頁，不是封面頁）。
+本筆記的章節順序與 PDF的 10 張投影片一致（第 1 張是課程內容首頁，不是封面頁）。
 
-| PDF 頁 | 原稿標題 | 本筆記對應章節 |
+| PDF 頁 | 簡報標題 | 本筆記對應章節 |
 |---|---|---|
 | 1 | 第 1 頁：什麼是 TPOT ？ | [§1 什麼是 TPOT？](#1-什麼是-tpot) |
 | 2 | 第 2 頁：複習一下：什麼是機器學習 (Machine Learning)? | [§2 複習一下：什麼是機器學習（Machine Learning）？](#2-複習一下什麼是機器學習machine-learning) |
@@ -1224,15 +1224,15 @@ TPOTClassifier()               →  TPOTClassifier(processes=False, generations=
 | 17 | 第 10 頁：恭喜你！總結與問答 | [§10 恭喜你！總結與問答](#10-恭喜你總結與問答) |
 | 18 | Q & A | [§10.2 Q&A 那頁的兩個問題](#102-qa-那頁的兩個問題) |
 
-> 說明：原稿的「第 N 頁」是**投影片編號**（共 10 張），PDF 頁碼是**檔案頁碼**（共 18 頁）。
-> 第 9 章（步驟 4）在原稿中拆成 5 個「部分」分散在 PDF 第 11–15 頁，本筆記把它收在 §9 底下。
+> 說明：簡報的「第 N 頁」是**投影片編號**（共 10 張），PDF 頁碼是**檔案頁碼**（共 18 頁）。
+> 第 9 章（步驟 4）在簡報中拆成 5 個「部分」分散在 PDF 第 11–15 頁，本筆記把它收在 §9 底下。
 
 ---
 ## 附錄 D：離線執行／安裝提示
 
 ### D.1 三種安裝方式（依你的環境選一種）
 
-**① Colab（講義的做法，零安裝）**
+**① Colab（簡報的做法，零安裝）**
 
 ```python
 !pip install tpot
@@ -1273,7 +1273,7 @@ pip install --no-index --find-links=.\wheels tpot==1.1.0 scikit-learn pandas job
 
 ### D.3 沒有網路時的替代方案
 
-| 講義用的東西 | 離線替代 |
+| 簡報用的東西 | 離線替代 |
 |---|---|
 | Google Colab | 本機 Jupyter / VS Code + Python |
 | 鐵達尼號資料集（要下載） | `sklearn.datasets.load_iris`（內建）或 `make_classification`（合成） |
@@ -1376,9 +1376,9 @@ def main() -> int:
           % (X.shape, y.shape, len(X_train), len(X_test)))
 
     # =========================================================== 1
-    hdr("1. 課堂原稿的寫法，在 TPOT 1.1.0 會發生什麼事？")
+    hdr("1. 課堂簡報的寫法，在 TPOT 1.1.0 會發生什麼事？")
 
-    hdr("1a. 原稿參數 verbosity=2（1.1.0 已改名為 verbose）")
+    hdr("1a. 簡報參數 verbosity=2（1.1.0 已改名為 verbose）")
     try:
         bad = TPOTClassifier(generations=5, population_size=20, verbosity=2,
                              random_state=42)
@@ -1406,7 +1406,7 @@ def main() -> int:
     hdr("2. 本機可行寫法：processes=False（TPOT 自己開 inproc 執行緒叢集）")
     t0 = time.perf_counter()
     tpot_model = TPOTClassifier(
-        generations=5,          # 繁衍 5 代（課堂原稿的設定）
+        generations=5,          # 繁衍 5 代（課堂簡報的設定）
         population_size=20,     # 每代 20 個模型 → 約 100 個模型
         scorers=["accuracy"],   # 1.1.0 用 scorers；預設是 ['roc_auc_ovr']
         cv=5,                   # 內部交叉驗證折數（1.1.0 預設 10）
@@ -1423,7 +1423,7 @@ def main() -> int:
     print("測試集準確率：%.4f（%.2f%%）" % (acc, 100 * acc))
     print("fitted_pipeline_ 型別：%s" % type(tpot_model.fitted_pipeline_).__name__)
 
-    hdr("2b. 課堂原稿的 tpot.score(...)：1.1.0 沒有這個方法")
+    hdr("2b. 課堂簡報的 tpot.score(...)：1.1.0 沒有這個方法")
     try:
         tpot_model.score(X_test, y_test)
     except Exception as exc:  # noqa: BLE001
@@ -1525,7 +1525,7 @@ def main() -> int:
 
     # =========================================================== 7
     hdr("7. 課堂版與本機版對照（同一個任務、同一份資料）")
-    print("| 項目 | 課堂原稿（TPOT 0.x 寫法） | 本機實測（TPOT 1.1.0） |")
+    print("| 項目 | 課堂簡報（TPOT 0.x 寫法） | 本機實測（TPOT 1.1.0） |")
     print("|---|---|---|")
     print("| 引擎參數 | generations=5, population_size=20 | 同左（1.1.0 仍支援） |")
     print("| 輸出訊息 | verbosity=2 | verbose=2（verbosity → TypeError） |")
@@ -1533,8 +1533,8 @@ def main() -> int:
     print("| 搜尋空間 | config_dict='Default' | search_space='linear'（預設） |")
     print("| 打分數 | tpot.score(X_test, y_test) | 沒有 .score()；用 accuracy_score |")
     print("| 取回模型 | tpot.export('pipeline.py') | 已移除；用 fitted_pipeline_ + joblib |")
-    print("| 測試集準確率 | 講義範例 0.973 | %.4f |" % acc)
-    print("| 搜尋耗時 | 講義說約 2～3 分鐘 | %.1f 秒 |" % elapsed)
+    print("| 測試集準確率 | 簡報範例 0.973 | %.4f |" % acc)
+    print("| 搜尋耗時 | 簡報說約 2～3 分鐘 | %.1f 秒 |" % elapsed)
 
     print()
     print(SEP)
@@ -1556,11 +1556,11 @@ if __name__ == "__main__":
 鳶尾花資料：X (150, 4)、y (150,)；訓練 112 筆 / 測試 38 筆
 
 --------------------------------------------------------------------------
-1. 課堂原稿的寫法，在 TPOT 1.1.0 會發生什麼事？
+1. 課堂簡報的寫法，在 TPOT 1.1.0 會發生什麼事？
 --------------------------------------------------------------------------
 
 --------------------------------------------------------------------------
-1a. 原稿參數 verbosity=2（1.1.0 已改名為 verbose）
+1a. 簡報參數 verbosity=2（1.1.0 已改名為 verbose）
 --------------------------------------------------------------------------
   -> TypeError: TPOTEstimator.__init__() got an unexpected keyword argument 'verbosity'
        File "C:\Users\princ\venvs\tpot111\Lib\site-packages\tpot\tpot_estimator\templates\tpottemplates.py", line 540, in fit
@@ -1576,12 +1576,12 @@ if __name__ == "__main__":
 --------------------------------------------------------------------------
 2. 本機可行寫法：processes=False（TPOT 自己開 inproc 執行緒叢集）
 --------------------------------------------------------------------------
-搜尋耗時：52.2 秒
+搜尋耗時：53.3 秒
 測試集準確率：0.9474（94.74%）
 fitted_pipeline_ 型別：Pipeline
 
 --------------------------------------------------------------------------
-2b. 課堂原稿的 tpot.score(...)：1.1.0 沒有這個方法
+2b. 課堂簡報的 tpot.score(...)：1.1.0 沒有這個方法
 --------------------------------------------------------------------------
   -> AttributeError: 'TPOTClassifier' object has no attribute 'score'
        File "C:\Users\princ\blog\_work\tpot\experiments.py", line 144, in main
@@ -1619,7 +1619,7 @@ hasattr(fitted_pipeline_) = True ; hasattr(_fitted_pipeline) = False
         norm                   np.str_('l1')
    selectpercentile SelectPercentile
         percentile             87.4306730968204
-        score_func             <function f_classif at 0x00000170DFED27A0>
+        score_func             <function f_classif at 0x000001E8178827A0>
    featureunion-1 FeatureUnion
         transformer_list       [('featureunion', FeatureUnion(transformer_list=[('zeroc
         verbose                False
@@ -1666,7 +1666,7 @@ hasattr(TPOTClassifier, 'export') = False
     ^^^^^^^^^^^
 自製列印（把每個步驟寫成 sklearn 建構子）：
     normalizer = Normalizer(copy=True, norm=np.str_('l1'))
-    selectpercentile = SelectPercentile(percentile=87.4306730968204, score_func=<function f_classif at 0x00000170DFED...)
+    selectpercentile = SelectPercentile(percentile=87.4306730968204, score_func=<function f_classif at 0x000001E81788...)
     featureunion-1 = FeatureUnion(transformer_list=[('featureunion', FeatureUnion(transf..., verbose=False, verbose_feature_names_out=True)
     featureunion-2 = FeatureUnion(transformer_list=[('skiptransformer', SkipTransformer(..., verbose=False, verbose_feature_names_out=True)
     logisticregression = LogisticRegression(C=27020.688345605467, dual=False, fit_intercept=True, intercept_scaling=1, l1_ratio=0.0468523318087, max_iter=1000, n_jobs=1, penalty=np.str_('elasticnet'), solver='saga', tol=0.0001, verbose=0, warm_start=False)
@@ -1688,7 +1688,7 @@ hasattr(TPOTClassifier, 'export') = False
 --------------------------------------------------------------------------
 7. 課堂版與本機版對照（同一個任務、同一份資料）
 --------------------------------------------------------------------------
-| 項目 | 課堂原稿（TPOT 0.x 寫法） | 本機實測（TPOT 1.1.0） |
+| 項目 | 課堂簡報（TPOT 0.x 寫法） | 本機實測（TPOT 1.1.0） |
 |---|---|---|
 | 引擎參數 | generations=5, population_size=20 | 同左（1.1.0 仍支援） |
 | 輸出訊息 | verbosity=2 | verbose=2（verbosity → TypeError） |
@@ -1696,8 +1696,8 @@ hasattr(TPOTClassifier, 'export') = False
 | 搜尋空間 | config_dict='Default' | search_space='linear'（預設） |
 | 打分數 | tpot.score(X_test, y_test) | 沒有 .score()；用 accuracy_score |
 | 取回模型 | tpot.export('pipeline.py') | 已移除；用 fitted_pipeline_ + joblib |
-| 測試集準確率 | 講義範例 0.973 | 0.9474 |
-| 搜尋耗時 | 講義說約 2～3 分鐘 | 52.2 秒 |
+| 測試集準確率 | 簡報範例 0.973 | 0.9474 |
+| 搜尋耗時 | 簡報說約 2～3 分鐘 | 53.3 秒 |
 
 ==========================================================================
 DONE
@@ -1762,7 +1762,7 @@ print(accuracy_score(y_test, tpot.predict(X_test)))    # 0.9474（本機實測�
 # ========== 10. 本機實測數字（背這幾個）==========
 # 搜尋耗時 約 51 秒 ／ 測試集準確率 0.9474 ／ 內部 CV 0.9822
 # 測試集只有 38 筆 → 錯 1 題 = 2.6%
-# 講義的 0.973 與本機 0.9474 只差一題
+# 簡報的 0.973 與本機 0.9474 只差一題
 
 # ========== 11. 三個必背的 1.1.0 差異 ==========
 # verbosity=2 → verbose=2
@@ -1845,4 +1845,4 @@ print(accuracy_score(y_test, tpot.predict(X_test)))    # 0.9474（本機實測�
 
 ---
 
-*本篇為個人學習筆記整理，教材內容版權屬匯縱專業發展中心（IVDC）所有。*
+*本篇為個人學習筆記整理，簡報內容版權屬原機構所有。*
