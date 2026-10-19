@@ -1,0 +1,17 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/h2o-walkthrough.svg",
+    "caption": "圖 7：全流程一覽——官網下載 → 終端機啟動 h2o.jar → 瀏覽器開 Flow → 匯入／訓練／匯出，再到編輯器寫預測程式、Excel 畫走勢圖、收工關伺服器。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 2,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/h2o-model-id.svg",
+    "caption": "圖 8：model_id 的解剖——演算法（StackedEnsemble_BestOfFamily）＋第 6 名＋AutoML 專案名＋訓練時間戳。｜手繪 SVG 圖表"
+  },
+  {
+    "art_index": 3,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/h2o-model-path.svg",
+    "caption": "圖 9：模型存放路徑的解剖——前面的目錄要自己先建好，最後一段是自己取的模型名稱（匯出後是一個資料夾）。｜手繪 SVG 圖表"
+  }
+]

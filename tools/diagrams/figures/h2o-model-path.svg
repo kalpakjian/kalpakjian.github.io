@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" role="img" aria-label="模型存放路徑怎麼讀" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="318.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型存放路徑怎麼讀</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">哪一段是目錄、哪一段是模型名稱</text>
+<text x="450" y="126" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">/Users/xxxx/xxxx/xxxx/best_model</text>
+<rect x="336.0" y="160" width="198.0" height="46" rx="10" fill="#0d1117" stroke="#c084fc99" stroke-width="1.5"/>
+<text x="435.0" y="187.5" font-size="13" fill="#c084fc" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">/Users/xxxx/xxxx/xxxx</text>
+<path d="M 435.0 206 L 435.0 226" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="435.0" y="248" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型存放路徑</text>
+<rect x="546.0" y="160" width="118.0" height="46" rx="10" fill="#0d1117" stroke="#3fb95099" stroke-width="1.5"/>
+<text x="605.0" y="187.5" font-size="13" fill="#3fb950" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">/best_model</text>
+<path d="M 605.0 206 L 605.0 226" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="605.0" y="248" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型名稱</text>
+<text x="48" y="296" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">前面的目錄必須先自己建好（否則匯出失敗）；最後一段是自己取的模型名稱，匯出後會變成一個資料夾。</text>
+</svg>

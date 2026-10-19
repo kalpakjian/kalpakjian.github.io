@@ -283,45 +283,79 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 </tbody>
 </table>
 <h3 id="全流程一覽">全流程一覽</h3>
-<div class="codehilite"><pre><span></span><code>[官網]   H2O.ai 官網 → 向下捲動點擊 Start Using H2O AutoML
-         → latest stable release page → Download H2O
-   │
-   ▼
-[終端機] cd ~/Downloads → unzip h2o-3.46.0.11.zip → cd h2o-3.46.0.11
-         → java -jar h2o.jar
-         ⚠️ 只支援 Java 8–17；Java 23 要加 -Dsys.ai.h2o.debug.allowJavaVersions=23
-         ⚠️ 這個終端機視窗不能關，只能最小化（它正在跑 WebUI 的後台伺服器）
-   │
-   ▼
-[瀏覽器] http://localhost:54321  →  H2O Flow Web UI                        (p.8)
-   │
-   ▼
-[Flow]   Data ▾ → Import Files → 貼上路徑 → 🔍 → ＋ → Import
-         → Parse these files → Ticker 改 Enum → Parse
-         → 得到 monthly_training_set.hex
-   │
-   ▼
-[Flow]   Model ▾ → Run AutoML → training_frame / response_column
-         → ignored_columns: Date → max_runtime_secs: 300
-         → 取消勾選兩個 cross-validation 選項 → Build Model → View
-   │
-   ▼
-[Flow]   Leaderboard（依 rmse 排序，第一個＝最佳）→ 點第一個模型
-         → Model ▾ → Export Model → 填路徑 → Export
-   │
-   ▼
-[Cursor / VSCode] 建 venv → pip install h2o pandas
-         → 貼上 prompt 生成 stock_prediction.py
-         → 把 model_path 填成剛剛匯出的路徑 → 執行程式
-   │
-   ▼
-[Excel]  開啟 trend_2024_2027.csv → Insert → Pivot Chart
-         → Legend: Ticker / Axis: Date / Values: predict_Close
-         → Design → Change Chart Type → Line
-   │
-   ▼
-[收工]   Flow 的 Admin ▾ → Shut Down，或在終端機按 Ctrl + C                (p.38)
-</code></pre></div>
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1160" role="img" aria-label="H2O AutoML：從下載到出圖的一條龍" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="1158.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">H2O AutoML：從下載到出圖的一條龍</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">九個站點，每一步都有明確產出</text>
+<rect x="48" y="106" width="904" height="96" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="80" cy="136" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="80" y="140.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="108" y="141" font-size="14.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">官網</text>
+<text x="108" y="168" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">H2O.ai 官網 → 向下捲動點擊「Start Using H2O AutoML」</text>
+<text x="108" y="188" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ latest stable release page → Download H2O</text>
+<path d="M 80 202 L 80 216" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="218" width="904" height="116" rx="12" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="80" cy="248" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="80" y="252.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="108" y="253" font-size="14.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">終端機</text>
+<text x="108" y="280" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cd ~/Downloads → unzip h2o-3.46.0.11.zip → cd h2o-3.46.0.11 → java -jar h2o.jar</text>
+<text x="108" y="300" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">※ 只支援 Java 8–17；Java 23 要加 -Dsys.ai.h2o.debug.allowJavaVersions=23</text>
+<text x="108" y="320" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">※ 這個終端機視窗不能關，只能最小化（它正在跑 WebUI 的後台伺服器）</text>
+<path d="M 80 334 L 80 348" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="350" width="904" height="76" rx="12" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="80" cy="380" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="80" y="384.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="108" y="385" font-size="14.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">瀏覽器</text>
+<text x="108" y="412" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">http://localhost:54321　→　H2O Flow Web UI（p.8）</text>
+<path d="M 80 426 L 80 440" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="442" width="904" height="96" rx="12" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="80" cy="472" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="80" y="476.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="108" y="477" font-size="14.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Flow</text>
+<text x="108" y="504" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Data ▼ → Import Files → 貼上路徑 → 搜尋 → ＋ → Import</text>
+<text x="108" y="524" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ Parse these files → Ticker 改 Enum → Parse → 得到 monthly_training_set.hex</text>
+<path d="M 80 538 L 80 552" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="554" width="904" height="96" rx="12" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="80" cy="584" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="80" y="588.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="108" y="589" font-size="14.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Flow</text>
+<text x="108" y="616" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Model ▼ → Run AutoML → training_frame / response_column</text>
+<text x="108" y="636" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ ignored_columns: Date → max_runtime_secs: 300 → 取消兩個 CV 勾選 → Build Model → View</text>
+<path d="M 80 650 L 80 664" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="666" width="904" height="96" rx="12" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="80" cy="696" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="80" y="700.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<text x="108" y="701" font-size="14.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Flow</text>
+<text x="108" y="728" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Leaderboard（依 rmse 排序，第一個＝最佳）→ 點第一個模型</text>
+<text x="108" y="748" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ Model ▼ → Export Model → 填路徑 → Export</text>
+<path d="M 80 762 L 80 776" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="778" width="904" height="96" rx="12" fill="#1c2230" stroke="#3fb95066" stroke-width="1.5"/>
+<circle cx="80" cy="808" r="15" fill="#3fb950" opacity="0.92"/>
+<text x="80" y="812.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7</text>
+<text x="108" y="813" font-size="14.5" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Cursor / VSCode</text>
+<text x="108" y="840" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">建 venv → pip install h2o pandas → 貼上 prompt 生成 stock_prediction.py</text>
+<text x="108" y="860" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 把 model_path 填成剛剛匯出的路徑 → 執行程式</text>
+<path d="M 80 874 L 80 888" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="890" width="904" height="96" rx="12" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="80" cy="920" r="15" fill="#f472b6" opacity="0.92"/>
+<text x="80" y="924.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text>
+<text x="108" y="925" font-size="14.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Excel</text>
+<text x="108" y="952" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">開啟 trend_2024_2027.csv → Insert → Pivot Chart</text>
+<text x="108" y="972" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ Legend: Ticker / Axis: Date / Values: predict_Close → Change Chart Type → Line</text>
+<path d="M 80 986 L 80 1000" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="1002" width="904" height="76" rx="12" fill="#1c2230" stroke="#7d859066" stroke-width="1.5"/>
+<circle cx="80" cy="1032" r="15" fill="#7d8590" opacity="0.92"/>
+<text x="80" y="1036.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">9</text>
+<text x="108" y="1037" font-size="14.5" fill="#7d8590" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">收工</text>
+<text x="108" y="1064" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Flow 的 Admin ▼ → Shut Down，或在終端機按 Ctrl + C（p.38）</text>
+<text x="48" y="1134" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從下載到出圖一條龍：官網 → 終端機 → 瀏覽器 → Flow（匯入／訓練／匯出）→ 編輯器 → Excel → 收工。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 7：全流程一覽——官網下載 → 終端機啟動 h2o.jar → 瀏覽器開 Flow → 匯入／訓練／匯出，再到編輯器寫預測程式、Excel 畫走勢圖、收工關伺服器。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 <h3 id="本堂課會用到的-4-個檔案">本堂課會用到的 4 個檔案</h3>
 <table>
@@ -1017,9 +1051,34 @@ response_column:  Close
 </tbody>
 </table>
 <p><strong>怎麼讀 <code>model_id</code>？</strong></p>
-<div class="codehilite"><pre><span></span><code>StackedEnsemble_BestOfFamily_6 _ AutoML_1 _ 20260707_121423
-└──── 演算法 ────┘ └─ 第6名 ─┘  └ 專案名 ┘  └─ 訓練時間戳 ─┘
-</code></pre></div>
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 350" role="img" aria-label="model_id 怎麼讀" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="348.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">model_id 怎麼讀</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Leaderboard 上的名字就是一份履歷</text>
+<text x="450" y="126" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">StackedEnsemble_BestOfFamily_6_AutoML_1_20260707_121423</text>
+<rect x="202.0" y="160" width="254.0" height="46" rx="10" fill="#0d1117" stroke="#2dd4bf99" stroke-width="1.5"/>
+<text x="329.0" y="187.5" font-size="13" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">StackedEnsemble_BestOfFamily</text>
+<path d="M 329.0 206 L 329.0 226" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="329.0" y="248" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">演算法</text>
+<rect x="468.0" y="160" width="46.0" height="46" rx="10" fill="#0d1117" stroke="#58a6ff99" stroke-width="1.5"/>
+<text x="491.0" y="187.5" font-size="13" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">_6</text>
+<path d="M 491.0 206 L 491.0 226" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="491.0" y="248" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 6 名</text>
+<rect x="526.0" y="160" width="102.0" height="46" rx="10" fill="#0d1117" stroke="#fbbf2499" stroke-width="1.5"/>
+<text x="577.0" y="187.5" font-size="13" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">_AutoML_1</text>
+<path d="M 577.0 206 L 577.0 226" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="577.0" y="248" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">專案名</text>
+<rect x="640.0" y="160" width="158.0" height="46" rx="10" fill="#0d1117" stroke="#c084fc99" stroke-width="1.5"/>
+<text x="719.0" y="187.5" font-size="13" fill="#c084fc" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">_20260707_121423</text>
+<path d="M 719.0 206 L 719.0 226" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="719.0" y="248" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">時間戳</text>
+<text x="48" y="302" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">名字＝演算法＿第幾名＿AutoML 專案＿訓練時間戳；從最後一段時間戳可以看出這個模型是何時訓練的。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 8：model_id 的解剖——演算法（StackedEnsemble_BestOfFamily）＋第 6 名＋AutoML 專案名＋訓練時間戳。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 <ul>
 <li><strong>Stacked Ensemble（堆疊集成）</strong>：把多個模型（GBM、GLM…）的預測結果再「餵」給上層模型做最終判斷，通常是 AutoML 的冠軍。</li>
@@ -1103,9 +1162,26 @@ response_column:  Close
 <p>操作：<strong>選擇模型 ID → 輸入模型存放路徑 → 點選 “Export”</strong>。</p>
 <h2 id="43-模型存放路徑解釋">4.3 模型存放路徑解釋</h2>
 <p>課程用 <code>/Users/xxxx/xxxx/xxxx/best_model</code> 這串路徑拆解給你看：</p>
-<div class="codehilite"><pre><span></span><code>/Users/xxxx / xxxx / xxxx / best_model
-└──────── 模型存放路徑 ────────┘ └─ 模型名稱 ─┘
-</code></pre></div>
+<!-- FIG3 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" role="img" aria-label="模型存放路徑怎麼讀" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="318.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型存放路徑怎麼讀</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">哪一段是目錄、哪一段是模型名稱</text>
+<text x="450" y="126" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">/Users/xxxx/xxxx/xxxx/best_model</text>
+<rect x="336.0" y="160" width="198.0" height="46" rx="10" fill="#0d1117" stroke="#c084fc99" stroke-width="1.5"/>
+<text x="435.0" y="187.5" font-size="13" fill="#c084fc" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">/Users/xxxx/xxxx/xxxx</text>
+<path d="M 435.0 206 L 435.0 226" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="435.0" y="248" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型存放路徑</text>
+<rect x="546.0" y="160" width="118.0" height="46" rx="10" fill="#0d1117" stroke="#3fb95099" stroke-width="1.5"/>
+<text x="605.0" y="187.5" font-size="13" fill="#3fb950" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">/best_model</text>
+<path d="M 605.0 206 L 605.0 226" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="605.0" y="248" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型名稱</text>
+<text x="48" y="296" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">前面的目錄必須先自己建好（否則匯出失敗）；最後一段是自己取的模型名稱，匯出後會變成一個資料夾。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 9：模型存放路徑的解剖——前面的目錄要自己先建好，最後一段是自己取的模型名稱（匯出後是一個資料夾）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG3 -->
 
 <table>
 <thead>

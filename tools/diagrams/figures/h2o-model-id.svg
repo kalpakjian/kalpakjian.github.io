@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 350" role="img" aria-label="model_id 怎麼讀" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="348.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">model_id 怎麼讀</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Leaderboard 上的名字就是一份履歷</text>
+<text x="450" y="126" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">StackedEnsemble_BestOfFamily_6_AutoML_1_20260707_121423</text>
+<rect x="202.0" y="160" width="254.0" height="46" rx="10" fill="#0d1117" stroke="#2dd4bf99" stroke-width="1.5"/>
+<text x="329.0" y="187.5" font-size="13" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">StackedEnsemble_BestOfFamily</text>
+<path d="M 329.0 206 L 329.0 226" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="329.0" y="248" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">演算法</text>
+<rect x="468.0" y="160" width="46.0" height="46" rx="10" fill="#0d1117" stroke="#58a6ff99" stroke-width="1.5"/>
+<text x="491.0" y="187.5" font-size="13" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">_6</text>
+<path d="M 491.0 206 L 491.0 226" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="491.0" y="248" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 6 名</text>
+<rect x="526.0" y="160" width="102.0" height="46" rx="10" fill="#0d1117" stroke="#fbbf2499" stroke-width="1.5"/>
+<text x="577.0" y="187.5" font-size="13" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">_AutoML_1</text>
+<path d="M 577.0 206 L 577.0 226" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="577.0" y="248" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">專案名</text>
+<rect x="640.0" y="160" width="158.0" height="46" rx="10" fill="#0d1117" stroke="#c084fc99" stroke-width="1.5"/>
+<text x="719.0" y="187.5" font-size="13" fill="#c084fc" font-weight="700" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">_20260707_121423</text>
+<path d="M 719.0 206 L 719.0 226" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="719.0" y="248" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">時間戳</text>
+<text x="48" y="302" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">名字＝演算法＿第幾名＿AutoML 專案＿訓練時間戳；從最後一段時間戳可以看出這個模型是何時訓練的。</text>
+</svg>
