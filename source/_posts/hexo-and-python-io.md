@@ -33,6 +33,12 @@ banner_img: /img/covers/hexo-and-python-io.png
 
 <strong>Hexo 不在圖上，因為它不是 Python 套件</strong>——它是用 Node.js 寫的<strong>靜態網站產生器</strong>：你寫 Markdown，Hexo 在幾秒內產生純靜態 HTML／CSS／JS，丟到 GitHub Pages、Netlify、Cloudflare Pages、Vercel 就能上線。<strong>本站（AI Tech Notes）就是 Hexo + Fluid 主題 + GitHub Actions 部署</strong>，所以它值得單獨一篇。
 
+先看這張圖：Hexo 做的事就是這件事。
+
+![Markdown 進去、靜態網頁出來：Hexo 就是這條產線](/img/hexo-and-python-io/ch01-hexo-static-site.jpg)
+
+> 圖：本機 ComfyUI 的 Qwen-Image 2.1 生成（本站 house style，無文字）。
+
 ### 官方現況（2026-10-16 查證）
 
 | 項目 | 內容 |
@@ -99,6 +105,12 @@ banner_img: /img/covers/hexo-and-python-io.png
 
 ## 二、「io」的兩種解讀
 
+「io」這個縮寫在圖上會出現兩種完全不同的意思，先看一張圖，再逐一拆解。
+
+![記憶體緩衝：資料從左邊流進去、從右邊流出來，全程不落地](/img/hexo-and-python-io/ch02-python-io-buffer.jpg)
+
+> 圖：本機 ComfyUI 的 Qwen-Image 2.1 生成（本站 house style，無文字）。
+
 ### 解讀 A：<code>hexo.io</code>——Hexo 的官方網域
 
 如果你指的是網址裡的 <code>io</code>，那就是 Hexo 官網。常用的幾個入口：
@@ -155,4 +167,4 @@ print(b.read(1))             # b'\x89'
 - 原始資訊圖：Pooja Pawar〈How to use Python for problem-solving〉
 - 主文：<a href="/2026/10/16/python-problem-solving-toolkit/">用 Python 解決問題：24 類工作 × 48 個套件總整理</a>
 
-> <strong>圖片來源</strong>：封面由本部落格的封面產生流程製作（暗色 cinematic 風格，與全站一致）；文中「原圖」為 Pooja Pawar 的資訊圖〈How to use Python for problem-solving〉，僅作引用與討論之用，版權歸原作者所有。Hexo 版本與連結為 <strong>2026-10-16</strong> 官方來源查證結果，<code>io</code> 範例為本機 Python 3.11.15 實測輸出。
+> <strong>圖片來源</strong>：封面與章節插圖由本機 ComfyUI 的 <strong>Qwen-Image 2.1</strong> 生成（本站 house style：暗色 cinematic、無文字）；文中「原圖」為 Pooja Pawar 的資訊圖〈How to use Python for problem-solving〉，僅作引用與討論之用，版權歸原作者所有。Hexo 版本與連結為 <strong>2026-10-16</strong> 官方來源查證結果，<code>io</code> 範例為本機 Python 3.11.15 實測輸出。
