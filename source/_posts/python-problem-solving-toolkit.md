@@ -27,7 +27,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 > - ③ <strong>24 列選型速查＋對原圖的 5 處修正</strong>
 > - ④ <strong>Hexo 與「io」的補充</strong>（已獨立成篇）
 >
-> 數字都標了出處與查證日期（<strong>2026-10-16</strong>）：本機套件版本是用 <code>importlib.metadata</code> 實掃 Python 3.11.15 環境得到，Hexo／pypdf 等外部版本則查官方來源。
+> 數字都標了出處與查證日期（本機套件 <strong>2026-10-20</strong> 實掃、Hexo 等外部版本 <strong>2026-10-16</strong> 查證）：本機版本是用 <code>importlib.metadata</code> 實掃 Python 3.11.16 環境得到。
 >
 > 全文盡量白話，沒寫過 Python 的人也能看懂選型邏輯。
 
@@ -42,7 +42,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
     <li><a href="#同類套件怎麼選（PK-表）"><strong>同類套件怎麼選</strong></a>：9 組 PK 表 ＋ 圖 3 的選型五問流程</li>
     <li><a href="#48-個套件一句話簡介"><strong>48 個套件一句話簡介</strong></a>：11 個領域，每個套件一句話 ＋ 本機安裝狀態</li>
     <li><a href="#11-個領域-×-24-列的對應"><strong>11 個領域地圖</strong></a>：原圖的目錄（圖 2）</li>
-    <li><a href="#附錄-A：本機環境盤點（2026-10-16-實掃）"><strong>附錄 A：本機環境盤點</strong></a>：42 個可安裝套件中已裝 17 個、缺口 25 個</li>
+    <li><a href="#附錄-A：本機環境盤點（2026-10-20-實掃）"><strong>附錄 A：本機環境盤點</strong></a>：42 個可安裝套件中已裝 19 個、缺口 23 個</li>
     <li><a href="/2026/10/20/hexo-and-python-io/"><strong>Hexo 與 Python 的 io</strong></a>：圖上兩個常被搞混的名字（已獨立成篇）</li>
   </ul>
 </div>
@@ -61,7 +61,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 - 「Use: A + B」有兩種語意：
   - <strong>互補</strong>（兩個都要）：pandas + openpyxl、Matplotlib + Seaborn、pytest + unittest
   - <strong>二選一</strong>（挑一個就好）：Flask／Django、TensorFlow／PyTorch、venv／conda、Airflow／Prefect、Tkinter／PyQt
-- 本機實掃（Python 3.11.15）：圖上 42 個可安裝套件中<strong>已裝 17 個</strong>。
+- 本機實掃（Python 3.11.16）：圖上 42 個可安裝套件中<strong>已裝 19 個</strong>。
 - 標準庫的 <code>io</code>、<code>sqlite3</code>、<code>tkinter</code>、<code>venv</code>、<code>unittest</code> 全部可用，不必安裝。
 - 對原圖有 <strong>5 處要修正</strong>：
   - PyPDF2 已停更 → 改用 <code>pypdf</code>
@@ -269,7 +269,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 
 ## 48 個套件一句話簡介
 
-以下每張表的「本機」欄，是本機（Python 3.11.15、hermes venv）以 <code>importlib.metadata</code> 實掃的結果。
+以下每張表的「本機」欄，是本機（Python 3.11.16、hermes venv）以 <code>importlib.metadata</code> 實掃的結果。
 
 ### 1）資料整理與分析
 
@@ -288,7 +288,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 | Matplotlib | 最底層的繪圖庫，幾乎所有 Python 繪圖都建在它之上；可控性最高、可出出版級圖 | ✅ 3.11.2 |
 | Seaborn | 建在 Matplotlib 上的統計視覺化（分布、回歸、分面、長格式資料），預設樣式好看 | ✅ 0.13.2 |
 | Plotly | 互動式圖表（hover／zoom／框選），輸出 HTML；Plotly Express 提供高階介面 | ❌ 未安裝 |
-| Streamlit | 把 Python 腳本直接變成資料 App／儀表板，不必寫 HTML／CSS／JS，支援熱重載 | ✅ 1.59.1 |
+| Streamlit | 把 Python 腳本直接變成資料 App／儀表板，不必寫 HTML／CSS／JS，支援熱重載 | ✅ 1.66.0 |
 
 ### 3）Web 與 API
 
@@ -296,7 +296,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 | --- | --- | --- |
 | Flask | 微框架：路由 + 模板 + 自行挑擴充；輕、適合原型與小型 API | ✅ 3.1.3 |
 | Django | 全套框架：ORM、admin 後台、auth、migration、forms；適合內容型與大型網站 | ❌ 未安裝 |
-| FastAPI | Starlette + Pydantic：async、型別驗證、自動產生 OpenAPI／Swagger 文件 | ✅ 0.133.1 |
+| FastAPI | Starlette + Pydantic：async、型別驗證、自動產生 OpenAPI／Swagger 文件 | ✅ 0.156.0 |
 | Django REST Framework | Django 的 REST API 擴充（Serializer／ViewSet／Router／權限） | ❌ 未安裝 |
 
 ### 4）自動化與爬蟲
@@ -313,7 +313,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 | 套件 | 一句話 | 本機 |
 | --- | --- | --- |
 | PyPDF2 | 舊的 PDF 合併／分割／擷取；<strong>已停止維護（PyPI 最後版本 3.0.1）</strong> | ❌ 未安裝 |
-| pypdf | PyPDF2 的後繼專案（PyPI 最新 6.20.1），API 相容但已修掉大量問題 | ✅ 6.19.0 |
+| pypdf | PyPDF2 的後繼專案（PyPI 最新 6.21.1），API 相容但已修掉大量問題 | ✅ 6.21.1 |
 | pdfplumber | 基於 pdfminer.six，表格與文字座標擷取最強，附視覺化除錯 | ❌ 未安裝 |
 | OpenCV | 電腦視覺工業標準：影像／視訊 I/O、濾波、特徵、DNN 推論 | ✅ 5.0.0.93 |
 | Pillow（PIL） | 影像檔案 I/O 與基本編輯（縮放、裁切、格式轉換、繪字） | ✅ 12.3.0 |
@@ -325,7 +325,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 | 套件 | 一句話 | 本機 |
 | --- | --- | --- |
 | scikit-learn | 傳統 ML 一站式：前處理、模型、交叉驗證、Pipeline、指標，API 一致 | ✅ 1.9.1 |
-| XGBoost | 梯度提升樹（GBDT），表格資料的競賽王者，也提供 sklearn 風格 API | ❌ 未安裝 |
+| XGBoost | 梯度提升樹（GBDT），表格資料的競賽王者，也提供 sklearn 風格 API | ✅ 3.2.0 |
 | TensorFlow | Google 的 DL 框架：Keras 高階 API，加上 TFLite／TFX／Serving 部署生態 | ❌ 未安裝 |
 | PyTorch | Meta 的 DL 框架：動態圖、除錯直覺，研究與 HuggingFace 生態主流 | ✅ 2.14.1+cu132 |
 | statsmodels | 統計推論：OLS／GLM／ARIMA、假設檢定、信賴區間，報表風格接近 R | ❌ 未安裝 |
@@ -335,7 +335,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 
 | 套件 | 一句話 | 本機 |
 | --- | --- | --- |
-| Dask | 平行／超記憶體運算，API 模仿 pandas 與 NumPy，從單機多核到分散式叢集 | ❌ 未安裝 |
+| Dask | 平行／超記憶體運算，API 模仿 pandas 與 NumPy，從單機多核到分散式叢集 | ✅ 2026.8.0 |
 | PySpark | Spark 的 Python API：分散式大資料處理 + Spark SQL／MLlib | ❌ 未安裝 |
 | Apache Airflow | 以 DAG 為單位的批次編排平台：Web UI、重試、backfill、告警；元件多、較重 | ❌ 未安裝 |
 | Prefect | Python 原生工作流編排：裝飾器即 flow／task，可雲端或自架，比 Airflow 輕 | ❌ 未安裝 |
@@ -344,7 +344,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 
 | 套件 | 一句話 | 本機 |
 | --- | --- | --- |
-| SQLAlchemy | ORM + Core：多種資料庫、連線池、Alembic 遷移工具 | ✅ 2.0.54 |
+| SQLAlchemy | ORM + Core：多種資料庫、連線池、Alembic 遷移工具 | ✅ 2.1.5 |
 | sqlite3 | 標準庫內建的嵌入式資料庫驅動：單一檔案、零設定 | ✅ 標準庫 |
 
 > ⚠️ 原圖把兩者並列，但它們<strong>不是同一層級</strong>：SQLAlchemy 可以跑在 sqlite3 之上（<code>create_engine("sqlite:///app.db")</code>）。
@@ -362,7 +362,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 
 | 工具 | 一句話 | 本機 |
 | --- | --- | --- |
-| pytest | 測試框架：純 assert、fixture、parametrize、外掛生態豐富 | ✅ 8.3.5 |
+| pytest | 測試框架：純 assert、fixture、parametrize、外掛生態豐富 | ✅ 9.1.1 |
 | unittest | 標準庫的 xUnit 風格測試框架，免安裝；樣板碼較多 | ✅ 標準庫 |
 | venv | 標準庫虛擬環境，輕量、跟著 Python 一起附帶 | ✅ 標準庫 |
 | conda | 跨語言套件與環境管理，能處理 CUDA／MKL 等非 Python 依賴 | ❌ 未安裝 |
@@ -605,36 +605,46 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 >
 > 內容：Hexo 8.1.2 現況、CLI 指令、目錄結構、與其他靜態網站產生器的比較，以及 <code>StringIO</code>／<code>BytesIO</code> 的實測與三個實務場景。
 
-## 附錄 A：本機環境盤點（2026-10-16 實掃）
+## 附錄 A：本機環境盤點（2026-10-20 實掃）
 
 掃描方式：對 42 個圖上可安裝套件逐一呼叫 <code>importlib.metadata.version()</code>，再用 <code>importlib</code> 檢查標準庫模組。
 
-<strong>已安裝 17 個</strong>（括號內為版本）：
+> 🔄 <strong>2026-10-20 複查</strong>（環境：Python 3.11.16、hermes venv）：比 10-16 那次多了 <strong>XGBoost</strong>、<strong>Dask</strong> 兩套件，並把 <strong>Streamlit、FastAPI、pypdf、SQLAlchemy、pytest</strong> 升到當時最新版。
 
-- pandas 3.0.6、NumPy 2.4.6、Matplotlib 3.11.2、Seaborn 0.13.2、Streamlit 1.59.1
-- Flask 3.1.3、FastAPI 0.133.1、BeautifulSoup 4.15.0、pypdf 6.19.0、OpenAI 2.24.0
-- scikit-learn 1.9.1、PyTorch 2.14.1+cu132、SQLAlchemy 2.0.54、pytest 8.3.5
+<strong>已安裝 19 個</strong>（括號內為版本）：
+
+- pandas 3.0.6、NumPy 2.4.6、Matplotlib 3.11.2、Seaborn 0.13.2、Streamlit 1.66.0
+- Flask 3.1.3、FastAPI 0.156.0、BeautifulSoup 4.15.0、pypdf 6.21.1、OpenAI 2.24.0
+- scikit-learn 1.9.1、XGBoost 3.2.0、PyTorch 2.14.1+cu132、Dask 2026.8.0
+- SQLAlchemy 2.1.5、pytest 9.1.1
+
+> ⚠️ 兩個套件的「最新版」需要 <strong>Python ≥ 3.12</strong>：<strong>NumPy 2.5.4</strong> 與
+> <strong>XGBoost 3.4.1</strong> 都標 <code>requires_python &gt;=3.12</code>，所以在 Python 3.11 上
+> <strong>2.4.6／3.2.0 就是最新可安裝版</strong>（不是忘了升）。
+>
+> ⚠️ 另外兩個「PyPI 最新」在本機<strong>刻意不升</strong>：<strong>Pillow 13.0.0</strong> 被
+> Streamlit／Gradio（<code>pillow&lt;13</code>）擋住、<strong>OpenAI 3.35.1</strong> 被 LiteLLM
+> （<code>openai&lt;3</code>）擋住——硬升會讓依賴條件不成立。這是「最新版 ≠ 該升的版本」的實例。
 - OpenCV 5.0.0.93、Pillow 12.3.0、NLTK 3.10.3
 
 <strong>標準庫可用</strong>（不用安裝）：<code>io</code>、<code>sqlite3</code>、<code>tkinter</code>、<code>venv</code>、<code>unittest</code>、<code>json</code>、<code>pathlib</code>。
 
-<strong>缺口 25 個</strong>（依工作領域分組）：
+<strong>缺口 23 個</strong>（依工作領域分組）：
 
 - 資料整理與視覺化：openpyxl、plotly
 - Web 與 API：Django、DRF
 - 自動化與爬蟲：schedule、Selenium、Scrapy
 - 文件與文字：PyPDF2、pdfplumber、spaCy
-- ML／DL／時序：XGBoost、TensorFlow、statsmodels、Prophet
-- 大數據與流程：Dask、PySpark、Airflow、Prefect
+- ML／DL／時序：TensorFlow、statsmodels、Prophet
+- 大數據與流程：PySpark、Airflow、Prefect
 - 環境與 GUI：virtualenv、conda、PyQt5／PyQt6
 - AI 與 Notebook：LangChain、JupyterLab、Notebook
 
-補齊指令（已排除不建議安裝的 PyPDF2，以及不是 pip 套件的 conda）：
+補齊指令（已排除不建議安裝的 PyPDF2、不是 pip 套件的 conda，以及已安裝的 xgboost／dask）：
 
 ```bash
 pip install openpyxl plotly django djangorestframework schedule selenium scrapy \
-    pdfplumber spacy xgboost statsmodels prophet dask pyspark apache-airflow \
-    prefect langchain jupyterlab
+    pdfplumber spacy statsmodels prophet pyspark apache-airflow \
 ```
 
 > ⚠️ 兩個提醒：
@@ -651,4 +661,4 @@ pip install openpyxl plotly django djangorestframework schedule selenium scrapy 
 >
 > 文中「原圖」為 Pooja Pawar 的資訊圖〈How to use Python for problem-solving〉，僅作引用與逐項討論之用，版權歸原作者所有。
 >
-> 套件版本為 <strong>2026-10-16</strong> 本機實掃與官方來源查證結果。
+> 套件版本為 <strong>2026-10-20</strong> 本機實掃與官方來源查證結果（Hexo 版本查證於 2026-10-16）。
