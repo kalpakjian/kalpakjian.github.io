@@ -135,7 +135,12 @@ python embed_figs.py <note> plan_x.json
 ```
 
 > `art_index` 必須與 `inventory.py` 印出的 `art#N` 一致。
-> `embed_figs.py` 內部會**由大到小**處理（否則換掉前一個會讓後面索引位移）。
+> `embed_figs.py` 內部會**由大到小**處理（否則換掉前一個會讓索引位移）。
+
+> **例外：`source/_posts/` 的一般文章**（不是 `source/<note>/` 筆記）
+> 沒有 `index.html` 孿生檔、`inventory.py` 也掃不到（它只找 `*_Study_Notes.md`）。
+> 這種情況用 `figures/embed_pytoolkit.py` 當範本：錨點用單行字串、以 `<!-- FIGn -->`
+> 標記做幂等（重跑就地更新）、保留原本的 CRLF，並套用下面的「陷阱 11」。
 
 ### ⑤ 重建 + 品質閘門
 
@@ -189,6 +194,8 @@ $h = (Invoke-WebRequest "https://kalpakjian.github.io/<note>/" -UseBasicParsing)
 | 8 | **文字超出畫布／卡片** | 說明文字被切掉 | Chrome `getBBox()` 會報 `[EDGE]`／`[CARD]`；加寬 canvas 或拆行 |
 | 9 | **圖片無法目視** | `media omitted: exceeds size limit` | 靠兩道自動關卡（碰撞自檢 + getBBox）；美觀問題靠設計避開 |
 | 10 | **在 `_work/` 放重要檔案** | 被 gitignore、新對話看不到 | 引擎與產生器放 **`tools/diagrams/`**（有版控） |
+| 11 | **`_posts` 文章的圖說整段不見** | HTML 裡有 `<figcaption>`，畫面上卻沒有 | Fluid 主題的 `main.css` 有 `.markdown-body figcaption:not(.image-caption){display:none}`。**只有 `_posts` 文章**（會載入主題 CSS）要寫 `<figcaption class="image-caption">`；筆記的單檔 HTML 沒有這個規則，所以以前沒踩到。另外主題的 `.image-caption` 會加 `opacity:.65` 與 `margin:-0.75rem auto 2rem`，要一併覆蓋（`embed_pytoolkit.py` 的 `theme_fix()`） |
+| 12 | **`_posts` 文章不能用 `embed_figs.py`** | 腳本找不到 `*_Study_Notes.md` 而中止 | 改用 `figures/embed_pytoolkit.py`：單行錨點 + `<!-- FIGn -->` 幂等 + 保留 CRLF（見 §1 ④ 例外） |
 
 ---
 
@@ -220,6 +227,7 @@ $h = (Invoke-WebRequest "https://kalpakjian.github.io/<note>/" -UseBasicParsing)
 | `embed_figs.py` | 讀 plan JSON，把第 N 個真圖區塊換成內嵌 SVG（md + html 同步） |
 | `figures/gen_*.py` | 各筆記的產生器（資料驅動，改資料即可重用） |
 | `figures/plan_*.json` | 各筆記的嵌入計畫（`art_index` + `svg` + `caption`） |
+| `figures/gen_pytoolkit.py`＋`figures/embed_pytoolkit.py` | **`_posts` 文章**（python-problem-solving-toolkit）的產生器與嵌入腳本；後者含 `theme_fix()`（見陷阱 11、12） |
 
 > 草稿與中間產物（`_m_*.html` 量測用、`*.png` 截圖）留在 `C:\Users\princ\blog\_work\diagrams\`（gitignored），
 > 不進版控。**產生器與計畫則放在本目錄**，因為它們是純文字、小、且可重現——

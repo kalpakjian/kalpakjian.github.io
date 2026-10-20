@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" role="img" aria-label="11 個工作領域地圖" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="798.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">11 個工作領域地圖</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">24 列痛點 → 11 個工作領域</text>
+<rect x="48" y="106" width="904" height="52" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+<text x="500" y="138" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">24 列痛點 → 11 個工作領域：這就是原圖的目錄</text>
+<rect x="48" y="186" width="280" height="116" rx="12" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="76" cy="214" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="76" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="102" y="219" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">資料整理與分析</text>
+<text x="64" y="244" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">清資料、分析資料</text>
+<text x="64" y="268" font-size="11.5" fill="#2dd4bf" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">pandas · NumPy · openpyxl</text>
+<rect x="360" y="186" width="280" height="116" rx="12" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="388" cy="214" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="388" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="414" y="219" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">視覺化與儀表板</text>
+<text x="376" y="244" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">視覺化、做儀表板</text>
+<text x="376" y="268" font-size="11.5" fill="#58a6ff" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Matplotlib · Seaborn · Plotly</text>
+<text x="376" y="290" font-size="11.5" fill="#58a6ff" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Streamlit</text>
+<rect x="672" y="186" width="280" height="116" rx="12" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="700" cy="214" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="700" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="726" y="219" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Web 與 API</text>
+<text x="688" y="244" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">做網站、做 API</text>
+<text x="688" y="268" font-size="11.5" fill="#c084fc" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Flask／Django · FastAPI</text>
+<text x="688" y="290" font-size="11.5" fill="#c084fc" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Django REST Framework</text>
+<rect x="48" y="326" width="280" height="116" rx="12" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="76" cy="354" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="76" y="358.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="102" y="359" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">自動化與爬蟲</text>
+<text x="64" y="384" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">自動化任務、爬網站</text>
+<text x="64" y="408" font-size="11.5" fill="#fbbf24" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">schedule · Selenium</text>
+<text x="64" y="430" font-size="11.5" fill="#fbbf24" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BeautifulSoup · Scrapy</text>
+<rect x="360" y="326" width="280" height="116" rx="12" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="388" cy="354" r="15" fill="#f472b6" opacity="0.92"/>
+<text x="388" y="358.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="414" y="359" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">文件、影像與文字</text>
+<text x="376" y="384" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">PDF、影像、文字</text>
+<text x="376" y="408" font-size="11.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">pypdf · pdfplumber · OpenCV</text>
+<text x="376" y="430" font-size="11.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Pillow · NLTK · spaCy</text>
+<rect x="672" y="326" width="280" height="116" rx="12" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<circle cx="700" cy="354" r="15" fill="#3fb950" opacity="0.92"/>
+<text x="700" y="358.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<text x="726" y="359" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">機器學習、深度學習與時序</text>
+<text x="688" y="384" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">建 ML／DL 模型、時序</text>
+<text x="688" y="408" font-size="11.5" fill="#3fb950" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">scikit-learn · XGBoost · PyTorch</text>
+<text x="688" y="430" font-size="11.5" fill="#3fb950" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TensorFlow／Keras · Prophet</text>
+<rect x="48" y="466" width="280" height="116" rx="12" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="76" cy="494" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="76" y="498.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7</text>
+<text x="102" y="499" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">大數據與工作流</text>
+<text x="64" y="524" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">處理大資料、跑資料管線</text>
+<text x="64" y="548" font-size="11.5" fill="#58a6ff" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Dask · PySpark · Airflow／Prefect</text>
+<rect x="360" y="466" width="280" height="116" rx="12" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="388" cy="494" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="388" y="498.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text>
+<text x="414" y="499" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">資料庫</text>
+<text x="376" y="524" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">接資料庫</text>
+<text x="376" y="548" font-size="11.5" fill="#2dd4bf" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">sqlite3（標準庫）· SQLAlchemy</text>
+<rect x="672" y="466" width="280" height="116" rx="12" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="700" cy="494" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="700" y="498.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">9</text>
+<text x="726" y="499" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GUI</text>
+<text x="688" y="524" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">做 GUI</text>
+<text x="688" y="548" font-size="11.5" fill="#c084fc" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Tkinter（標準庫）· PyQt</text>
+<rect x="48" y="606" width="280" height="116" rx="12" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="76" cy="634" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="76" y="638.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">10</text>
+<text x="102" y="639" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">工程化：測試、環境、部署、排程</text>
+<text x="64" y="664" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">測試、環境、排程、部署</text>
+<text x="64" y="688" font-size="11.5" fill="#fbbf24" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">pytest · venv／conda · Docker</text>
+<text x="64" y="710" font-size="11.5" fill="#fbbf24" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Render · cron／Task Scheduler</text>
+<rect x="360" y="606" width="280" height="116" rx="12" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="388" cy="634" r="15" fill="#f472b6" opacity="0.92"/>
+<text x="388" y="638.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">11</text>
+<text x="414" y="639" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AI 與 Notebook</text>
+<text x="376" y="664" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">建 AI 應用、做 Notebook</text>
+<text x="376" y="688" font-size="11.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LangChain · OpenAI · Jupyter／Colab</text>
+<rect x="672" y="606" width="280" height="116" rx="12" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="700" cy="634" r="15" fill="#f472b6" opacity="0.92"/>
+<text x="700" y="638.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">!</text>
+<text x="726" y="639" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5 處要修正</text>
+<text x="688" y="664" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">PyPDF2 停更、SQLAlchemy 層級、</text>
+<text x="688" y="688" font-size="11.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">schedule 誤用、Flask／Django、</text>
+<text x="688" y="710" font-size="11.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cron 不是 Python 套件</text>
+<text x="48" y="758" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從清資料（1）到部署與測試（10），這 11 個領域就是一條專案生命週期；</text>
+<text x="48" y="784" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">圖上「A + B」的組合，有的是互補、有的是二選一（見圖 1 的判準）。</text>
+</svg>

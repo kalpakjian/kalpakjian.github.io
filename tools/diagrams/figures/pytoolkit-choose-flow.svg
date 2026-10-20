@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1060" role="img" aria-label="選型五問決策流程" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="1058.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">選型五問決策流程</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先問規模與情境，再挑工具</text>
+<rect x="48" y="106" width="904" height="52" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+<text x="500" y="138" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先問情境（Q1–Q2），再問產出與團隊（Q3–Q5）</text>
+<rect x="48" y="190" width="384" height="84" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="80" cy="232.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="80" y="237.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Q1</text>
+<text x="108" y="229.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">資料放得進記憶體嗎？</text>
+<text x="108" y="250.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">規模決定工具，不是喜好</text>
+<path d="M 432 232.0 L 496 232.0" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 496 182.0 L 496 282.0" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="560" y="162.0" width="392" height="40" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="576" y="186.5" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">放得進（GB 級）：pandas ＋ NumPy</text>
+<path d="M 496 182.0 L 558 182.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="560" y="212.0" width="392" height="40" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="576" y="236.5" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">放不進、單機多核：Dask</text>
+<path d="M 496 232.0 L 558 232.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="560" y="262.0" width="392" height="40" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="576" y="286.5" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">已有 Spark 叢集（TB 級）：PySpark</text>
+<path d="M 496 282.0 L 558 282.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="354" width="384" height="84" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="80" cy="396.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="80" y="401.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Q2</text>
+<text x="108" y="393.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">幾個人同時寫入？</text>
+<text x="108" y="414.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">併發決定資料庫</text>
+<path d="M 432 396.0 L 496 396.0" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 496 371.0 L 496 421.0" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="560" y="351.0" width="392" height="40" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="576" y="375.5" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只有你、原型或測試：sqlite3（標準庫）</text>
+<path d="M 496 371.0 L 558 371.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="560" y="401.0" width="392" height="40" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="576" y="425.5" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">多人、正式環境：PostgreSQL ＋ SQLAlchemy</text>
+<path d="M 496 421.0 L 558 421.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="518" width="384" height="84" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="80" cy="560.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="80" y="565.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Q3</text>
+<text x="108" y="557.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">圖要給誰看？</text>
+<text x="108" y="578.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">產出形式決定繪圖層</text>
+<path d="M 432 560.0 L 496 560.0" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 496 510.0 L 496 610.0" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="560" y="490.0" width="392" height="40" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="576" y="514.5" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">出版級靜態圖：Matplotlib ＋ Seaborn</text>
+<path d="M 496 510.0 L 558 510.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="560" y="540.0" width="392" height="40" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="576" y="564.5" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要 hover／zoom：Plotly</text>
+<path d="M 496 560.0 L 558 560.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="560" y="590.0" width="392" height="40" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="576" y="614.5" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">整個互動儀表板：Streamlit</text>
+<path d="M 496 610.0 L 558 610.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="682" width="384" height="84" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="80" cy="724.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="80" y="729.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Q4</text>
+<text x="108" y="721.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">團隊已經有 Django 嗎？</text>
+<text x="108" y="742.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">⚠️ Flask／Django 二選一，不是相加</text>
+<path d="M 432 724.0 L 496 724.0" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 496 699.0 L 496 749.0" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="560" y="679.0" width="392" height="40" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="576" y="703.5" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">新專案、要 API：FastAPI</text>
+<path d="M 496 699.0 L 558 699.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="560" y="729.0" width="392" height="40" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="576" y="753.5" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">已有 Django 專案：Django ＋ DRF</text>
+<path d="M 496 749.0 L 558 749.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="846" width="384" height="84" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="80" cy="888.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="80" y="893.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Q5</text>
+<text x="108" y="885.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">程式跑在哪裡？</text>
+<text x="108" y="906.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">打包與託管是兩件事</text>
+<path d="M 432 888.0 L 496 888.0" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 496 863.0 L 496 913.0" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="560" y="843.0" width="392" height="40" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="576" y="867.5" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要環境一致、自己管：Docker</text>
+<path d="M 496 863.0 L 558 863.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="560" y="893.0" width="392" height="40" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="576" y="917.5" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要一鍵上線、不維運：Render</text>
+<path d="M 496 913.0 L 558 913.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="48" y="1006" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">右邊若是兩條路，先確認是「互補」還是「二選一」——⚠️ 那幾組只能挑一個。</text>
+<text x="48" y="1032" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一組問題換個情境就會換答案：先問清楚卡在哪裡，再打開套件清單。</text>
+</svg>
