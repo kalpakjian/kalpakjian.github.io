@@ -18,11 +18,27 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 
 ![用 Python 解決問題：24 類工作 × 48 個套件總整理](/img/covers/python-problem-solving-toolkit.png)
 
-> <strong>整理說明</strong>：這篇從一張流傳很廣的資訊圖「How to use Python for problem-solving」（作者 Pooja Pawar）出發，把圖上 24 組「問題 → 工具」展開成一份可以查的工具書。全文四塊：①<strong>48 個套件的一句話簡介</strong>（依 11 個工作領域分組）；②<strong>同類套件的取捨比較</strong>；③<strong>24 列選型速查＋對原圖的 5 處修正</strong>；④<strong>Hexo 與「io」的補充</strong>。
+> <strong>整理說明</strong>：這篇從一張流傳很廣的資訊圖「How to use Python for problem-solving」（作者 Pooja Pawar）出發，把圖上 24 組「問題 → 工具」展開成一份可以查的工具書。全文四塊：①<strong>48 個套件的一句話簡介</strong>（依 11 個工作領域分組）；②<strong>同類套件的取捨比較</strong>；③<strong>24 列選型速查＋對原圖的 5 處修正</strong>；④<strong>Hexo 與「io」的補充</strong>（已獨立成篇）。
 > 數字都標了出處與查證日期（<strong>2026-10-16</strong>）：本機套件版本是用 <code>importlib.metadata</code> 實掃 Python 3.11.15 環境得到，Hexo／pypdf 等外部版本則查官方來源。
 > 全文盡量白話，沒寫過 Python 的人也能看懂選型邏輯。
 
 <!-- more -->
+
+<!-- TOC-CARD -->
+<div class="callout">
+  <div class="callout-title">🧭 這篇很長（工具書型），先挑你要的段落</div>
+  <p>它是<strong>工具書</strong>而不是線性文章，可以直接跳到需要的段落（完整目錄在右側，手機在右上角）：</p>
+  <ul>
+    <li><a href="#24-列選型速查（含-5-處修正）"><strong>24 列選型速查</strong></a>：痛點 → 工具，含對原圖的 5 處修正（先看這個）</li>
+    <li><a href="#同類套件怎麼選（PK-表）"><strong>同類套件怎麼選</strong></a>：9 組 PK 表 ＋ 圖 3 的選型五問流程</li>
+    <li><a href="#48-個套件一句話簡介"><strong>48 個套件一句話簡介</strong></a>：11 個領域，每個套件一句話 ＋ 本機安裝狀態</li>
+    <li><a href="#11-個領域-×-24-列的對應"><strong>11 個領域地圖</strong></a>：原圖的目錄（圖 2）</li>
+    <li><a href="#附錄-A：本機環境盤點（2026-10-16-實掃）"><strong>附錄 A：本機環境盤點</strong></a>：42 個可安裝套件中已裝 17 個、缺口 25 個</li>
+    <li><a href="/2026/10/20/hexo-and-python-io/"><strong>Hexo 與 Python 的 io</strong></a>：圖上兩個常被搞混的名字（已獨立成篇）</li>
+  </ul>
+</div>
+<!-- /TOC-CARD -->
+
 
 ## 一句話總結
 
@@ -35,7 +51,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 - 本機實掃（Python 3.11.15）：圖上 42 個可安裝套件中<strong>已裝 17 個</strong>；標準庫的 <code>io</code>、<code>sqlite3</code>、<code>tkinter</code>、<code>venv</code>、<code>unittest</code> 全部可用。
 - 對原圖有 <strong>5 處要修正</strong>：PyPDF2 已停更（改用 pypdf）、SQLAlchemy 與 sqlite3 不同層級、schedule 不是桌面自動化、「Flask + Django」不是相加、cron／Task Scheduler 不是 Python 套件。
 - <strong>Hexo 不在圖上</strong>：它是 Node.js 的靜態網站產生器（hexo.io），最新 <strong>8.1.2</strong>，8.x 要求 Node.js ≥ 20.19.0。本站就是 Hexo，跟 Python 不衝突。
-- 「io」有兩種解讀：<strong>hexo.io</strong>（Hexo 官網／文件）或<strong>標準庫 <code>io</code></strong>（<code>StringIO</code>／<code>BytesIO</code>／<code>open()</code> 的底層）。文末各有一段。
+- 「io」有兩種解讀：<strong>hexo.io</strong>（Hexo 官網／文件）或<strong>標準庫 <code>io</code></strong>（<code>StringIO</code>／<code>BytesIO</code>／<code>open()</code> 的底層）。這兩題已獨立成篇：<a href="/2026/10/20/hexo-and-python-io/">Hexo 與 Python 的 io</a>。
 
 <!-- FIG1 -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -539,122 +555,11 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 4. <strong>版本時效要查</strong>：PyPDF2 這類「教學文還在用、但已停更」的套件是最大的地雷，<code>pypdf</code> 就是活例子。
 5. <strong>用標準庫打底</strong>：<code>io</code>、<code>sqlite3</code>、<code>tkinter</code>、<code>venv</code>、<code>unittest</code>、<code>json</code>、<code>pathlib</code> 都不用裝，很多場景根本不需要第三方套件。
 
-## 補充一：Hexo 與這張圖的關係
+## 補充：Hexo 與「io」
 
-<strong>Hexo 不在圖上，因為它不是 Python 套件</strong>——它是用 Node.js 寫的<strong>靜態網站產生器</strong>：你寫 Markdown，Hexo 在幾秒內產生純靜態 HTML／CSS／JS，丟到 GitHub Pages、Netlify、Cloudflare Pages、Vercel 就能上線。<strong>本站（AI Tech Notes）就是 Hexo + Fluid 主題 + GitHub Actions 部署</strong>，所以它值得單獨一段。
+原圖上還有兩個<strong>不是 Python 套件</strong>的名字：<strong>Hexo</strong>（Node.js 的靜態網站產生器）與<strong>「io」</strong>（Python 標準庫的記憶體 I/O 抽象，也常跟 Hexo 官網網域 <code>hexo.io</code> 搞混）。這兩題跟「Python 選型」不是同一條線，已獨立成篇：
 
-### 官方現況（2026-10-16 查證）
-
-| 項目 | 內容 |
-| --- | --- |
-| 官網 | <code>hexo.io</code>（<code>/docs</code> 文件、<code>/plugins</code> 外掛、<code>/themes</code> 主題、<code>/news</code> 公告；站上有正體中文語系） |
-| 最新版本 | <strong>hexo 8.1.2</strong>、<strong>hexo-cli 4.3.2</strong> |
-| 8.0.0 發布 | 2025-09-16 |
-| 8.x 破壞性變更 | 移除 Node.js 16／18 支援，<code>engines.node</code> 要求 <strong>≥ 20.19.0</strong>（7.x 只需 14+） |
-| 本機環境 | Node <strong>v24.14.1</strong> ✅ 可用 Hexo 8；本機部落格的 <code>package.json</code> 標示 <code>hexo 8.1.2</code> |
-| 渲染器 | Hexo 8 核心<strong>不內建</strong> Markdown 渲染器，靠外掛（<code>hexo init</code> 產生的 hexo-starter 預設用 <code>hexo-renderer-marked</code>） |
-
-### 基本指令
-
-| 指令 | 做什麼 |
-| --- | --- |
-| <code>hexo init [folder]</code> | 初始化網站（clone hexo-starter + landscape 主題，並自動安裝依賴） |
-| <code>hexo new [layout] &lt;title&gt;</code> | 產生新文章（<code>layout</code> 省略時用 <code>default_layout</code>；<code>draft</code> 產生草稿） |
-| <code>hexo server</code> | 本機預覽，預設 <code>http://localhost:4000</code> |
-| <code>hexo generate</code> | 產生靜態檔到 <code>public/</code>（<code>-d</code> 產生後直接部署、<code>-w</code> 監看） |
-| <code>hexo deploy</code> | 依 <code>_config.yml</code> 的 <code>deploy</code> 設定發布（本站用 <code>hexo-deployer-git</code>） |
-| <code>hexo clean</code> | 清掉 <code>db.json</code> 與 <code>public/</code> |
-| <code>hexo publish</code>／<code>hexo render</code>／<code>hexo migrate</code>／<code>hexo list</code>／<code>hexo config</code> | 草稿轉正式／單檔渲染／從其他部落格系統匯入／列出路由／讀寫設定 |
-| 全域選項 | <code>--safe</code>（停用外掛除錯）、<code>--debug</code>、<code>--config</code>、<code>--draft</code>、<code>--cwd</code> |
-
-### 目錄結構與預設相依
-
-| 路徑 | 用途 |
-| --- | --- |
-| <code>_config.yml</code> | 站台設定（標題、URL、permalink、theme…） |
-| <code>source/_posts/</code> | 文章（Markdown + front-matter） |
-| <code>source/_drafts/</code> | 草稿（預設不輸出） |
-| <code>scaffolds/</code> | 新文章模板 |
-| <code>themes/</code> 或 npm 主題套件 | 佈景主題（本站用 npm 安裝的 <code>hexo-theme-fluid</code>） |
-| <code>public/</code> | 產生出來的靜態檔 |
-
-<code>hexo init</code> 產生的 hexo-starter 預設相依（<code>package.json</code>）：<code>hexo ^8.0.0</code>、<code>hexo-renderer-marked ^7.0.0</code>、<code>hexo-renderer-ejs</code>、<code>hexo-renderer-stylus</code>、<code>hexo-server ^3.0.0</code>、<code>hexo-theme-landscape ^1.0.0</code>，以及 index／archive／category／tag 四個 generator。
-
-常用外掛與主題：<code>hexo-deployer-git</code>（推 GitHub Pages）、<code>hexo-generator-searchdb</code>（站內搜尋）、<code>hexo-generator-feed</code>、<code>hexo-generator-sitemap</code>；主題常見 NexT、Butterfly、Fluid、Stellar、Volantis。
-
-### Hexo 與其他靜態網站產生器
-
-| 工具 | 語言 | 產生速度 | 生態 | 適合 |
-| --- | --- | --- | --- | --- |
-| <strong>Hexo</strong> | Node.js | 快 | 主題與外掛極多，中文圈最流行 | 個人技術部落格 |
-| Hugo | Go（單一執行檔） | 極快 | 主題多、設定式 | 文章量很大、CI 要快 |
-| Jekyll | Ruby | 較慢 | GitHub Pages 原生支援 | 舊站、想直接推 GitHub Pages |
-| Astro | Node／JS | 快 | 現代元件 + Islands | 想要元件化又輸出靜態 |
-| VitePress | Node／Vue | 快 | 文件導向、內建搜尋 | 技術文件站 |
-| MkDocs（Material） | <strong>Python</strong> | 快 | 文件導向 | Python 專案文件 |
-| Pelican | <strong>Python</strong> | 中 | 部落格、Jinja2 模板 | 想用純 Python 寫部落格 |
-
-### 什麼時候用 Hexo，什麼時候不要
-
-| 需求 | 選它 | 為什麼 |
-| --- | --- | --- |
-| 純內容、SEO、不想維運伺服器 | <strong>Hexo</strong> + GitHub Pages／Cloudflare Pages | 靜態檔、免費、快、零後端 |
-| 要登入、資料庫、後台管理 | Django | 動態全端框架 |
-| 小型 API 或 ML 推論服務 | FastAPI | async + 自動文件 |
-| 內部資料儀表板 | Streamlit | 幾十行就能完成 |
-| 環境一致打包 | Docker | 映像檔 |
-| 一鍵雲端部署 | Render | PaaS（也能部署 Hexo 產生的靜態站） |
-
-> 反過來說：<strong>如果網站需要會員、購物車、即時留言，Hexo 就不適合</strong>——靜態網站沒有後端，那類需求要接第三方服務（如 Giscus、Algolia）或改用 Django／FastAPI。
-
-## 補充二：「io」的兩種解讀
-
-### 解讀 A：<code>hexo.io</code>——Hexo 的官方網域
-
-如果你指的是網址裡的 <code>io</code>，那就是 Hexo 官網。常用的幾個入口：
-
-| 網址 | 內容 |
-| --- | --- |
-| <code>hexo.io/docs</code> | 文件：安裝需求、設定、指令、寫作、主題開發 |
-| <code>hexo.io/docs/commands</code> | 全部 CLI 指令與參數 |
-| <code>hexo.io/plugins</code> | 外掛市集 |
-| <code>hexo.io/themes</code> | 主題市集 |
-| <code>hexo.io/news/2025/09/16/hexo-8-0-0-released/</code> | 8.0.0 發布說明（移除 Node 16／18 支援） |
-
-### 解讀 B：Python 標準庫 <code>io</code>——記憶體中的 I/O 抽象
-
-<code>io</code> 是 Python 標準庫，提供檔案與緩衝區的統一介面：<code>open()</code> 的底層就是它，而 <code>io.StringIO</code>（文字緩衝）與 <code>io.BytesIO</code>（位元組緩衝）可以用來<strong>產生「像檔案的物件」而不落地成檔案</strong>。
-
-本機實測（Python 3.11.15）：
-
-```python
-import io
-
-s = io.StringIO()
-s.write("hello")
-s.seek(0)
-print(repr(s.read()))        # 'hello'
-
-b = io.BytesIO(b"\x89PNG")
-print(b.read(1))             # b'\x89'
-```
-
-實際會用到的三個場景：
-
-1. <strong>把圖表直接變成 bytes 上傳／回傳</strong>：Matplotlib 先寫進 <code>BytesIO</code>，再交給 API 或 <code>st.image()</code>，不必產生暫存檔。
-2. <strong>把上傳的 Excel 餵給 pandas</strong>：<code>pd.read_excel(io.BytesIO(uploaded_bytes))</code>。
-3. <strong>測試檔案處理邏輯</strong>：用 <code>StringIO</code> 餵假內容，不必在測試裡真的開檔。
-
-如果你的「io」指的是<strong>各種格式的輸入輸出套件</strong>，對照關係是：
-
-| 格式 | 套件 |
-| --- | --- |
-| Excel <code>.xlsx</code> | openpyxl（pandas 的引擎） |
-| PDF | pypdf（結構操作）、pdfplumber（內容擷取） |
-| 影像 | Pillow（檔案 I/O）、OpenCV（影像與視訊管線） |
-| CSV／JSON／設定檔 | 標準庫 <code>csv</code>、<code>json</code>、<code>pathlib</code>、<code>io</code> |
-| 資料庫 | sqlite3（標準庫）、SQLAlchemy（ORM） |
-| HTTP | <code>requests</code>／<code>httpx</code>（抓取）、FastAPI（提供） |
+> 📄 <a href="/2026/10/20/hexo-and-python-io/"><strong>Hexo 與 Python 的 io：兩個常被搞混的名字</strong></a>——Hexo 8.1.2 現況、CLI 指令、目錄結構、與其他靜態網站產生器的比較，以及 <code>StringIO</code>／<code>BytesIO</code> 的實測與三個實務場景。
 
 ## 附錄 A：本機環境盤點（2026-10-16 實掃）
 
@@ -678,9 +583,6 @@ pip install openpyxl plotly django djangorestframework schedule selenium scrapy 
 
 ## 附錄 B：延伸連結
 
-- Hexo 官網與文件：<a href="https://hexo.io/docs/" target="_blank" rel="noopener">hexo.io/docs</a>、<a href="https://hexo.io/docs/commands" target="_blank" rel="noopener">指令表</a>
-- Hexo 8.0.0 發布說明：<a href="https://hexo.io/news/2025/09/16/hexo-8-0-0-released/" target="_blank" rel="noopener">hexo.io/news</a>
-- Hexo 起始專案（預設相依）：<a href="https://github.com/hexojs/hexo-starter" target="_blank" rel="noopener">hexojs/hexo-starter</a>
 - pypdf（PyPDF2 的後繼）：<a href="https://pypi.org/project/pypdf/" target="_blank" rel="noopener">PyPI pypdf</a>、<a href="https://pypi.org/project/PyPDF2/" target="_blank" rel="noopener">PyPI PyPDF2（最後 3.0.1）</a>
 - 原始資訊圖：Pooja Pawar〈How to use Python for problem-solving〉
 
