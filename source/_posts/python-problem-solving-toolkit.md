@@ -18,8 +18,17 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 
 ![用 Python 解決問題：24 類工作 × 48 個套件總整理](/img/covers/python-problem-solving-toolkit.png)
 
-> <strong>整理說明</strong>：這篇從一張流傳很廣的資訊圖「How to use Python for problem-solving」（作者 Pooja Pawar）出發，把圖上 24 組「問題 → 工具」展開成一份可以查的工具書。全文四塊：①<strong>48 個套件的一句話簡介</strong>（依 11 個工作領域分組）；②<strong>同類套件的取捨比較</strong>；③<strong>24 列選型速查＋對原圖的 5 處修正</strong>；④<strong>Hexo 與「io」的補充</strong>（已獨立成篇）。
+> <strong>整理說明</strong>：這篇從一張流傳很廣的資訊圖「How to use Python for problem-solving」（作者 Pooja Pawar）出發，把圖上 24 組「問題 → 工具」展開成一份可以查的工具書。
+>
+> 全文四塊：
+>
+> - ① <strong>48 個套件的一句話簡介</strong>（依 11 個工作領域分組）
+> - ② <strong>同類套件的取捨比較</strong>
+> - ③ <strong>24 列選型速查＋對原圖的 5 處修正</strong>
+> - ④ <strong>Hexo 與「io」的補充</strong>（已獨立成篇）
+>
 > 數字都標了出處與查證日期（<strong>2026-10-16</strong>）：本機套件版本是用 <code>importlib.metadata</code> 實掃 Python 3.11.15 環境得到，Hexo／pypdf 等外部版本則查官方來源。
+>
 > 全文盡量白話，沒寫過 Python 的人也能看懂選型邏輯。
 
 <!-- more -->
@@ -42,16 +51,30 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 
 ## 一句話總結
 
-> 那張圖真正的價值不是「背 48 個套件名字」，而是示範一種<strong>問題導向的選型方式</strong>：先講清楚卡在哪裡，再挑工具。圖上的「A + B」其實混了兩種關係——<strong>互補</strong>（pandas + openpyxl）與<strong>同類二選一</strong>（Flask／Django）；分清楚這件事，比記住清單更重要。
+> 那張圖真正的價值不是「背 48 個套件名字」，而是示範一種<strong>問題導向的選型方式</strong>：先講清楚卡在哪裡，再挑工具。
+>
+> 圖上的「A + B」其實混了兩種關係——<strong>互補</strong>（pandas + openpyxl）與<strong>同類二選一</strong>（Flask／Django）；分清楚這件事，比記住清單更重要。
 
 ## 30 秒版本
 
 - 24 列其實只涵蓋 <strong>11 個工作領域</strong>：資料處理、視覺化、Web／API、自動化與爬蟲、文件與媒體、機器學習、深度學習、大數據與流程、資料庫、GUI、AI／Notebook。
-- 「Use: A + B」有兩種語意：<strong>互補</strong>（pandas + openpyxl、Matplotlib + Seaborn、pytest + unittest）與<strong>二選一</strong>（Flask／Django、TensorFlow／PyTorch、venv／conda、Airflow／Prefect、Tkinter／PyQt）。後者不該兩個都學。
-- 本機實掃（Python 3.11.15）：圖上 42 個可安裝套件中<strong>已裝 17 個</strong>；標準庫的 <code>io</code>、<code>sqlite3</code>、<code>tkinter</code>、<code>venv</code>、<code>unittest</code> 全部可用。
-- 對原圖有 <strong>5 處要修正</strong>：PyPDF2 已停更（改用 pypdf）、SQLAlchemy 與 sqlite3 不同層級、schedule 不是桌面自動化、「Flask + Django」不是相加、cron／Task Scheduler 不是 Python 套件。
+- 「Use: A + B」有兩種語意：
+  - <strong>互補</strong>（兩個都要）：pandas + openpyxl、Matplotlib + Seaborn、pytest + unittest
+  - <strong>二選一</strong>（挑一個就好）：Flask／Django、TensorFlow／PyTorch、venv／conda、Airflow／Prefect、Tkinter／PyQt
+- 本機實掃（Python 3.11.15）：圖上 42 個可安裝套件中<strong>已裝 17 個</strong>。
+- 標準庫的 <code>io</code>、<code>sqlite3</code>、<code>tkinter</code>、<code>venv</code>、<code>unittest</code> 全部可用，不必安裝。
+- 對原圖有 <strong>5 處要修正</strong>：
+  - PyPDF2 已停更 → 改用 <code>pypdf</code>
+  - SQLAlchemy 與 sqlite3 不是同一層級
+  - schedule 不是桌面自動化工具
+  - 「Flask + Django」不是相加，是二選一
+  - cron／Task Scheduler 不是 Python 套件
 - <strong>Hexo 不在圖上</strong>：它是 Node.js 的靜態網站產生器（hexo.io），最新 <strong>8.1.2</strong>，8.x 要求 Node.js ≥ 20.19.0。本站就是 Hexo，跟 Python 不衝突。
-- 「io」有兩種解讀：<strong>hexo.io</strong>（Hexo 官網／文件）或<strong>標準庫 <code>io</code></strong>（<code>StringIO</code>／<code>BytesIO</code>／<code>open()</code> 的底層）。這兩題已獨立成篇：<a href="/2026/10/20/hexo-and-python-io/">Hexo 與 Python 的 io</a>。
+- 「io」有兩種解讀，而且完全不相干：
+  - <strong>hexo.io</strong>：Hexo 官網／文件
+  - <strong>標準庫 <code>io</code></strong>：<code>StringIO</code>／<code>BytesIO</code>／<code>open()</code> 的底層
+
+  這兩題已獨立成篇：<a href="/2026/10/20/hexo-and-python-io/">Hexo 與 Python 的 io</a>。
 
 <!-- FIG1 -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -111,11 +134,15 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 
 ## 原圖：這份整理的來源
 
-以下是本文逐項展開的原始資訊圖（作者 Pooja Pawar，〈How to use Python for problem-solving〉）。本文沒有照抄它的結論，而是逐列補上<strong>版本查證、同類比較與修正建議</strong>：
+以下是本文逐項展開的原始資訊圖（作者 Pooja Pawar，〈How to use Python for problem-solving〉）。
+
+本文沒有照抄它的結論，而是逐列補上<strong>版本查證、同類比較與修正建議</strong>：
 
 ![How to use Python for problem-solving（原始資訊圖）](/img/infographics/how-to-use-python-for-problem-solving.jpg)
 
-> 圖上 24 列對應的 48 個套件，本文都補了「本機安裝狀態」與「什麼時候該用哪個」；其中 <strong>5 處需要修正</strong>（PyPDF2 停更、SQLAlchemy 層級、schedule 誤用、Flask／Django 互斥、cron 不是 Python 套件），整理在「24 列選型速查」一節。
+> 圖上 24 列對應的 48 個套件，本文都補了「本機安裝狀態」與「什麼時候該用哪個」。
+>
+> 其中 <strong>5 處需要修正</strong>（PyPDF2 停更、SQLAlchemy 層級、schedule 誤用、Flask／Django 互斥、cron 不是 Python 套件），整理在「24 列選型速查」一節。
 
 ## 這張圖值得看的地方
 
@@ -320,7 +347,9 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 | SQLAlchemy | ORM + Core：多種資料庫、連線池、Alembic 遷移工具 | ✅ 2.0.54 |
 | sqlite3 | 標準庫內建的嵌入式資料庫驅動：單一檔案、零設定 | ✅ 標準庫 |
 
-> ⚠️ 原圖把兩者並列，但它們<strong>不是同一層級</strong>：SQLAlchemy 可以跑在 sqlite3 之上（<code>create_engine("sqlite:///app.db")</code>）。同層級的對照應該是「ORM（SQLAlchemy）vs 原生 driver（sqlite3／psycopg／asyncpg）」。
+> ⚠️ 原圖把兩者並列，但它們<strong>不是同一層級</strong>：SQLAlchemy 可以跑在 sqlite3 之上（<code>create_engine("sqlite:///app.db")</code>）。
+>
+> 同層級的對照應該是「ORM（SQLAlchemy）vs 原生 driver（sqlite3／psycopg／asyncpg）」。
 
 ### 9）GUI
 
@@ -474,7 +503,14 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 
 ### 爬蟲：一條由輕到重的鏈
 
-<code>requests</code>／<code>httpx</code>（抓取）→ BeautifulSoup（靜態頁解析）→ Selenium／Playwright（需要 JS、要點擊）→ Scrapy（大規模、去重、Pipeline、分散式）。圖上只列了中間與最後一環。
+由輕到重是四環：
+
+1. <code>requests</code>／<code>httpx</code>：抓取
+2. BeautifulSoup：靜態頁解析
+3. Selenium／Playwright：需要 JS、要點擊
+4. Scrapy：大規模、去重、Pipeline、分散式
+
+圖上只列了中間與最後一環。
 
 ### 深度學習
 
@@ -553,23 +589,45 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 2. <strong>同類工具挑一個學到會用就好</strong>：Flask／Django／FastAPI 都是「HTTP 框架」，先會一個，換框架只花幾天。
 3. <strong>把「互補」與「替代」分開記</strong>：pandas + NumPy 是加法；Flask vs Django 是減法。
 4. <strong>版本時效要查</strong>：PyPDF2 這類「教學文還在用、但已停更」的套件是最大的地雷，<code>pypdf</code> 就是活例子。
-5. <strong>用標準庫打底</strong>：<code>io</code>、<code>sqlite3</code>、<code>tkinter</code>、<code>venv</code>、<code>unittest</code>、<code>json</code>、<code>pathlib</code> 都不用裝，很多場景根本不需要第三方套件。
+5. <strong>用標準庫打底</strong>：很多場景根本不需要第三方套件。
+   - 不用安裝就有：<code>io</code>、<code>sqlite3</code>、<code>tkinter</code>、<code>venv</code>、<code>unittest</code>、<code>json</code>、<code>pathlib</code>
 
 ## 補充：Hexo 與「io」
 
-原圖上還有兩個<strong>不是 Python 套件</strong>的名字：<strong>Hexo</strong>（Node.js 的靜態網站產生器）與<strong>「io」</strong>（Python 標準庫的記憶體 I/O 抽象，也常跟 Hexo 官網網域 <code>hexo.io</code> 搞混）。這兩題跟「Python 選型」不是同一條線，已獨立成篇：
+原圖上還有兩個<strong>不是 Python 套件</strong>的名字：
 
-> 📄 <a href="/2026/10/20/hexo-and-python-io/"><strong>Hexo 與 Python 的 io：兩個常被搞混的名字</strong></a>——Hexo 8.1.2 現況、CLI 指令、目錄結構、與其他靜態網站產生器的比較，以及 <code>StringIO</code>／<code>BytesIO</code> 的實測與三個實務場景。
+- <strong>Hexo</strong>：Node.js 的靜態網站產生器（本站就是用它架的）
+- <strong>「io」</strong>：Python 標準庫的記憶體 I/O 抽象，也常跟 Hexo 官網網域 <code>hexo.io</code> 搞混
+
+這兩題跟「Python 選型」不是同一條線，已獨立成篇：
+
+> 📄 <a href="/2026/10/20/hexo-and-python-io/"><strong>Hexo 與 Python 的 io：兩個常被搞混的名字</strong></a>
+>
+> 內容：Hexo 8.1.2 現況、CLI 指令、目錄結構、與其他靜態網站產生器的比較，以及 <code>StringIO</code>／<code>BytesIO</code> 的實測與三個實務場景。
 
 ## 附錄 A：本機環境盤點（2026-10-16 實掃）
 
 掃描方式：對 42 個圖上可安裝套件逐一呼叫 <code>importlib.metadata.version()</code>，再用 <code>importlib</code> 檢查標準庫模組。
 
-<strong>已安裝 17 個</strong>：pandas 3.0.6、NumPy 2.4.6、Matplotlib 3.11.2、Seaborn 0.13.2、Streamlit 1.59.1、Flask 3.1.3、FastAPI 0.133.1、BeautifulSoup 4.15.0、pypdf 6.19.0、OpenCV 5.0.0.93、Pillow 12.3.0、NLTK 3.10.3、scikit-learn 1.9.1、PyTorch 2.14.1+cu132、SQLAlchemy 2.0.54、pytest 8.3.5、OpenAI 2.24.0。
+<strong>已安裝 17 個</strong>（括號內為版本）：
 
-<strong>標準庫可用</strong>：<code>io</code>、<code>sqlite3</code>、<code>tkinter</code>、<code>venv</code>、<code>unittest</code>、<code>json</code>、<code>pathlib</code>。
+- pandas 3.0.6、NumPy 2.4.6、Matplotlib 3.11.2、Seaborn 0.13.2、Streamlit 1.59.1
+- Flask 3.1.3、FastAPI 0.133.1、BeautifulSoup 4.15.0、pypdf 6.19.0、OpenAI 2.24.0
+- scikit-learn 1.9.1、PyTorch 2.14.1+cu132、SQLAlchemy 2.0.54、pytest 8.3.5
+- OpenCV 5.0.0.93、Pillow 12.3.0、NLTK 3.10.3
 
-<strong>缺口 25 個</strong>：openpyxl、plotly、Django、DRF、schedule、Selenium、Scrapy、PyPDF2、pdfplumber、spaCy、XGBoost、TensorFlow、statsmodels、Prophet、Dask、PySpark、Airflow、Prefect、PyQt5／PyQt6、virtualenv、conda、LangChain、JupyterLab、Notebook。
+<strong>標準庫可用</strong>（不用安裝）：<code>io</code>、<code>sqlite3</code>、<code>tkinter</code>、<code>venv</code>、<code>unittest</code>、<code>json</code>、<code>pathlib</code>。
+
+<strong>缺口 25 個</strong>（依工作領域分組）：
+
+- 資料整理與視覺化：openpyxl、plotly
+- Web 與 API：Django、DRF
+- 自動化與爬蟲：schedule、Selenium、Scrapy
+- 文件與文字：PyPDF2、pdfplumber、spaCy
+- ML／DL／時序：XGBoost、TensorFlow、statsmodels、Prophet
+- 大數據與流程：Dask、PySpark、Airflow、Prefect
+- 環境與 GUI：virtualenv、conda、PyQt5／PyQt6
+- AI 與 Notebook：LangChain、JupyterLab、Notebook
 
 補齊指令（已排除不建議安裝的 PyPDF2，以及不是 pip 套件的 conda）：
 
@@ -579,11 +637,18 @@ pip install openpyxl plotly django djangorestframework schedule selenium scrapy 
     prefect langchain jupyterlab
 ```
 
-> ⚠️ 兩個提醒：<strong>spaCy</strong> 要另外下載語言模型（<code>python -m spacy download zh_core_web_sm</code>）；<strong>Prophet</strong> 與 <strong>PySpark</strong> 需要編譯或 JDK 依賴，建議分開安裝、一次一個，裝失敗比較好定位。
+> ⚠️ 兩個提醒：
+>
+> - <strong>spaCy</strong> 要另外下載語言模型（<code>python -m spacy download zh_core_web_sm</code>）。
+> - <strong>Prophet</strong> 與 <strong>PySpark</strong> 需要編譯或 JDK 依賴，建議分開安裝、一次一個，裝失敗比較好定位。
 
 ## 附錄 B：延伸連結
 
 - pypdf（PyPDF2 的後繼）：<a href="https://pypi.org/project/pypdf/" target="_blank" rel="noopener">PyPI pypdf</a>、<a href="https://pypi.org/project/PyPDF2/" target="_blank" rel="noopener">PyPI PyPDF2（最後 3.0.1）</a>
 - 原始資訊圖：Pooja Pawar〈How to use Python for problem-solving〉
 
-> <strong>圖片來源</strong>：封面由本部落格的 <strong>Qwen-Image 2.1</strong> 封面產生流程製作（暗色 cinematic 風格，與全站一致）；文中「原圖」為 Pooja Pawar 的資訊圖〈How to use Python for problem-solving〉，僅作引用與逐項討論之用，版權歸原作者所有。套件版本為 <strong>2026-10-16</strong> 本機實掃與官方來源查證結果。
+> <strong>圖片來源</strong>：封面由本機 ComfyUI 的 <strong>Qwen-Image 2.1</strong> 生成（暗色 cinematic 風格、無文字，與全站一致）。
+>
+> 文中「原圖」為 Pooja Pawar 的資訊圖〈How to use Python for problem-solving〉，僅作引用與逐項討論之用，版權歸原作者所有。
+>
+> 套件版本為 <strong>2026-10-16</strong> 本機實掃與官方來源查證結果。

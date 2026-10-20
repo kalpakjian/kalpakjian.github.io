@@ -15,7 +15,12 @@ banner_img: /img/covers/hexo-and-python-io.png
 
 ![Hexo 與 Python 的 io：兩個常被搞混的名字](/img/covers/hexo-and-python-io.png)
 
-> <strong>這篇是〈用 Python 解決問題：24 類工作 × 48 個套件總整理〉的補充獨立篇。</strong>那張流傳很廣的資訊圖上除了 24 組「痛點 → 工具」，還混進了兩個<strong>不是 Python 套件</strong>的名字：<strong>Hexo</strong> 與 <strong>io</strong>。它們跟「Python 選型」不是同一條線，所以搬出來單獨講。
+> <strong>這篇是〈用 Python 解決問題：24 類工作 × 48 個套件總整理〉的補充獨立篇。</strong>
+>
+> 那張流傳很廣的資訊圖上除了 24 組「痛點 → 工具」，還混進了兩個<strong>不是 Python 套件</strong>的名字：<strong>Hexo</strong> 與 <strong>io</strong>。
+>
+> 它們跟「Python 選型」不是同一條線，所以搬出來單獨講。
+>
 > 兩段都不長：前段是 <strong>Hexo（Node.js 靜態網站產生器）</strong>的現況、指令與比較，後段是<strong>Python 標準庫 <code>io</code></strong> 的本機實測與三個實務場景。
 
 <!-- more -->
@@ -25,13 +30,19 @@ banner_img: /img/covers/hexo-and-python-io.png
 那張資訊圖（Pooja Pawar〈How to use Python for problem-solving〉）把 24 組「問題 → 工具」排成一張表，其中有兩個名字特別容易誤讀：
 
 - <strong>Hexo</strong>：它<strong>不是 Python 套件</strong>，是 Node.js 寫的靜態網站產生器——本站就是用它架的。
-- <strong>io</strong>：可能是 Hexo 官網的網域 <code>hexo.io</code>，也可能是 Python 標準庫的 <code>io</code>（<code>StringIO</code>／<code>BytesIO</code>）。兩個完全不同的東西共用同一個縮寫。
+- <strong>io</strong>：兩個完全不同的東西共用同一個縮寫。
+  - 一個是 Hexo 官網的網域 <code>hexo.io</code>
+  - 一個是 Python 標準庫的 <code>io</code>（<code>StringIO</code>／<code>BytesIO</code>）
 
 以下把兩件事各自講清楚。
 
 ## 一、Hexo：Node.js 的靜態網站產生器
 
-<strong>Hexo 不在圖上，因為它不是 Python 套件</strong>——它是用 Node.js 寫的<strong>靜態網站產生器</strong>：你寫 Markdown，Hexo 在幾秒內產生純靜態 HTML／CSS／JS，丟到 GitHub Pages、Netlify、Cloudflare Pages、Vercel 就能上線。<strong>本站（AI Tech Notes）就是 Hexo + Fluid 主題 + GitHub Actions 部署</strong>，所以它值得單獨一篇。
+<strong>Hexo 不在圖上，因為它不是 Python 套件</strong>——它是用 Node.js 寫的<strong>靜態網站產生器</strong>。
+
+你寫 Markdown，Hexo 在幾秒內產生純靜態 HTML／CSS／JS，丟到 GitHub Pages、Netlify、Cloudflare Pages、Vercel 就能上線。
+
+<strong>本站（AI Tech Notes）就是 Hexo + Fluid 主題 + GitHub Actions 部署</strong>，所以它值得單獨一篇。
 
 先看這張圖：Hexo 做的事就是這件事。
 
@@ -74,9 +85,23 @@ banner_img: /img/covers/hexo-and-python-io.png
 | <code>themes/</code> 或 npm 主題套件 | 佈景主題（本站用 npm 安裝的 <code>hexo-theme-fluid</code>） |
 | <code>public/</code> | 產生出來的靜態檔 |
 
-<code>hexo init</code> 產生的 hexo-starter 預設相依（<code>package.json</code>）：<code>hexo ^8.0.0</code>、<code>hexo-renderer-marked ^7.0.0</code>、<code>hexo-renderer-ejs</code>、<code>hexo-renderer-stylus</code>、<code>hexo-server ^3.0.0</code>、<code>hexo-theme-landscape ^1.0.0</code>，以及 index／archive／category／tag 四個 generator。
+<code>hexo init</code> 產生的 hexo-starter 預設相依（<code>package.json</code>）：
 
-常用外掛與主題：<code>hexo-deployer-git</code>（推 GitHub Pages）、<code>hexo-generator-searchdb</code>（站內搜尋）、<code>hexo-generator-feed</code>、<code>hexo-generator-sitemap</code>；主題常見 NexT、Butterfly、Fluid、Stellar、Volantis。
+- <code>hexo ^8.0.0</code>
+- <code>hexo-renderer-marked ^7.0.0</code>（Markdown 渲染）
+- <code>hexo-renderer-ejs</code>、<code>hexo-renderer-stylus</code>
+- <code>hexo-server ^3.0.0</code>
+- <code>hexo-theme-landscape ^1.0.0</code>
+- index／archive／category／tag 四個 generator
+
+常用外掛：
+
+- <code>hexo-deployer-git</code>：推 GitHub Pages
+- <code>hexo-generator-searchdb</code>：站內搜尋
+- <code>hexo-generator-feed</code>：RSS
+- <code>hexo-generator-sitemap</code>：sitemap
+
+常見主題：NexT、Butterfly、Fluid、Stellar、Volantis。
 
 ### Hexo 與其他靜態網站產生器
 
@@ -125,7 +150,9 @@ banner_img: /img/covers/hexo-and-python-io.png
 
 ### 解讀 B：Python 標準庫 <code>io</code>——記憶體中的 I/O 抽象
 
-<code>io</code> 是 Python 標準庫，提供檔案與緩衝區的統一介面：<code>open()</code> 的底層就是它，而 <code>io.StringIO</code>（文字緩衝）與 <code>io.BytesIO</code>（位元組緩衝）可以用來<strong>產生「像檔案的物件」而不落地成檔案</strong>。
+<code>io</code> 是 Python 標準庫，提供檔案與緩衝區的統一介面：<code>open()</code> 的底層就是它。
+
+其中 <code>io.StringIO</code>（文字緩衝）與 <code>io.BytesIO</code>（位元組緩衝）可以用來<strong>產生「像檔案的物件」而不落地成檔案</strong>。
 
 本機實測（Python 3.11.15）：
 
@@ -167,4 +194,8 @@ print(b.read(1))             # b'\x89'
 - 原始資訊圖：Pooja Pawar〈How to use Python for problem-solving〉
 - 主文：<a href="/2026/10/16/python-problem-solving-toolkit/">用 Python 解決問題：24 類工作 × 48 個套件總整理</a>
 
-> <strong>圖片來源</strong>：封面與章節插圖由本機 ComfyUI 的 <strong>Qwen-Image 2.1</strong> 生成（本站 house style：暗色 cinematic、無文字）；文中「原圖」為 Pooja Pawar 的資訊圖〈How to use Python for problem-solving〉，僅作引用與討論之用，版權歸原作者所有。Hexo 版本與連結為 <strong>2026-10-16</strong> 官方來源查證結果，<code>io</code> 範例為本機 Python 3.11.15 實測輸出。
+> <strong>圖片來源</strong>：封面與章節插圖由本機 ComfyUI 的 <strong>Qwen-Image 2.1</strong> 生成（本站 house style：暗色 cinematic、無文字）。
+>
+> 文中「原圖」為 Pooja Pawar 的資訊圖〈How to use Python for problem-solving〉，僅作引用與討論之用，版權歸原作者所有。
+>
+> Hexo 版本與連結為 <strong>2026-10-16</strong> 官方來源查證結果，<code>io</code> 範例為本機 Python 3.11.15 實測輸出。
