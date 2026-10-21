@@ -14,7 +14,11 @@ tags:
   - 自動化
   - Hexo
 toc: true
+index_img: /img/covers/ai-stack-auto-update-pipeline.jpg
+banner_img: /img/covers/ai-stack-auto-update-pipeline.jpg
 ---
+
+![讓本機 AI 堆疊自己照顧自己](/img/covers/ai-stack-auto-update-pipeline.jpg)
 
 > 這篇記錄一套「會自己檢查、自己升級、失敗會自己退回」的本機 AI 環境。
 >
@@ -64,6 +68,11 @@ torch-2.14.1-cp314-cp314-win_amd64.whl   ← 最高
 （沒有 cp315）
 ```
 
+<figure style="margin:1.8rem 0;text-align:center">
+  <img src="/img/diagrams/matrix.svg" alt="Python 版本支援矩陣：torch 2.14.1 支援 cp310 到 cp314，cp315 尚未提供" style="width:100%;max-width:960px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)">
+  <figcaption style="margin-top:.6rem;color:#64748b;font-size:.9rem">圖 1：Python 版本支援上限。3.14 是目前預設；3.15 因沒有 cp315 wheel 而標為受阻。</figcaption>
+</figure>
+
 用 pip 直接問「有沒有更新的」也會得到同樣結論：
 
 ```powershell
@@ -91,6 +100,11 @@ cu134: 同檔名 → HTTP 403
 cu129: 同檔名 → HTTP 403
 ```
 
+<figure style="margin:1.8rem 0;text-align:center">
+  <img src="/img/diagrams/cuda.svg" alt="CUDA 索引可用性：cu132 是 Windows 最新可用，cu129 與 cu134 沒有 Windows wheel" style="width:100%;max-width:960px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)">
+  <figcaption style="margin-top:.6rem;color:#64748b;font-size:.9rem">圖 2：CUDA 索引可用性。目錄存在不代表有 Windows wheel；cu132 才是實際可安裝的最新版本。</figcaption>
+</figure>
+
 `cu129` 與 `cu134` 只有 Linux wheel，**Windows 根本沒有檔案**。
 
 所以「最新可用 CUDA」的判定必須是：
@@ -103,25 +117,10 @@ cu129: 同檔名 → HTTP 403
 
 ## 四、三層自動化架構
 
-```
-┌──────────────────────────────────────────────┐
-│ 1. 檢查  check_stack.py                      │
-│    已安裝 vs 最新、torch 最高支援 Python、     │
-│    Windows 可用的最新 CUDA 索引               │
-└──────────────────┬───────────────────────────┘
-                   │ JSON
-┌──────────────────▼───────────────────────────┐
-│ 2. 排程 + 通知                                │
-│    run_daily.ps1（工作排程器 23:00）           │
-│    notify.ps1（WinRT toast）                  │
-└──────────────────┬───────────────────────────┘
-                   │ 有更新
-┌──────────────────▼───────────────────────────┐
-│ 3. 自動升級 + 回滾  auto_update.py            │
-│    快照 → 升級 → 煙霧測試 → pip check         │
-│    失敗 → 還原 → 再測 → 通知結果               │
-└──────────────────────────────────────────────┘
-```
+<figure style="margin:1.8rem 0;text-align:center">
+  <img src="/img/diagrams/arch.svg" alt="三層自動化架構：檢查、排程通知、自動升級回滾" style="width:100%;max-width:960px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)">
+  <figcaption style="margin-top:.6rem;color:#64748b;font-size:.9rem">圖 3：三層自動化架構。檢查層產出 JSON，排程層決定何時通知，升級層負責快照與回滾。</figcaption>
+</figure>
 
 ## 五、版本檢查怎麼做到「可信」
 
@@ -159,16 +158,10 @@ Windows 主控台在重導向時常用 GBK（cp936）解碼。Python 印中文�
 
 ### 流程
 
-```
-pip freeze 快照
-  → 依報告升級（一般套件 / torch / 音訊）
-  → 煙霧測試：import torch + GPU matmul + 所有關鍵套件
-  → pip check
-  → 全部通過：保留升級、發成功通知
-  → 任一失敗：把本次變動的套件還原到快照版本
-       → 再跑一次煙霧測試
-       → 成功：通知「已回滾」；失敗：通知「需人工處理」
-```
+<figure style="margin:1.8rem 0;text-align:center">
+  <img src="/img/diagrams/flow.svg" alt="自動更新流程：快照、升級、煙霧測試、pip check、失敗回滾" style="width:100%;max-width:960px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)">
+  <figcaption style="margin-top:.6rem;color:#64748b;font-size:.9rem">圖 4：自動更新與回滾流程。PASS 保留升級；FAIL 還原快照後再測一次。</figcaption>
+</figure>
 
 ### 自動升級政策
 
