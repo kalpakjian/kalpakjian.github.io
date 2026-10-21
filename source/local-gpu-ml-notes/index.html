@@ -808,19 +808,27 @@ PyTorch / TensorFlow 底層會用到它。</p>
 <h3 id="91-步驟">9.1 步驟</h3>
 <ol>
 <li>到 <strong>NVIDIA cuDNN</strong> 頁面（需登入 NVIDIA 開發者帳號）。</li>
-<li>選擇<strong>對應 CUDA 主版本</strong>的 cuDNN（例如 CUDA 13.x → cuDNN for CUDA 13）。</li>
-<li>下載 <strong>Windows zip</strong>（不是 installer）。</li>
-<li>解壓縮，會得到三個資料夾：</li>
+<li>選擇<strong>對應 CUDA 版本</strong>的 cuDNN（例如 CUDA 13.2 → cuDNN 9.22、CUDA 13.4 → cuDNN 9.26；主版本相同還不夠）。</li>
+<li>下載 <strong>Windows zip</strong> 或 <strong>installer（<code>.exe</code>）</strong>——官方兩種都有，差別只在檔案結構（見第 4 點）。</li>
+<li>取得三個資料夾。<strong>zip 解壓</strong>與 <strong>installer 安裝</strong>的結構差一層 CUDA 版本：</li>
 </ol>
-<div class="codehilite"><pre><span></span><code>cudnn-windows-x86_64-&lt;版本&gt;_cuda13-archive\
-  ├─ bin\      （cudnn64_9.dll 等）
-  ├─ include\  （cudnn*.h）
-  └─ lib\x64\  （cudnn.lib 等）
+<div class="codehilite"><pre><span></span><code># A. zip 解壓後（cudnn-windows-x86_64-&lt;版本&gt;_cuda13-archive\）
+  ├─ bin\        （cudnn64_9.dll 等）
+  ├─ include\    （cudnn*.h）
+  └─ lib\x64\    （cudnn.lib 等）
+
+# B. installer 安裝後（C:\Program Files\NVIDIA\CUDNN\v9.22\；版本依 CUDA 而定）
+  ├─ bin\13.2\x64\   （cudnn64_9.dll 等）
+  ├─ include\13.2\   （cudnn*.h）
+  └─ lib\13.2\x64\   （cudnn.lib 等）
 </code></pre></div>
 
 <blockquote>
-<p><strong>考點</strong>：cuDNN 下載的是 <strong>zip 壓縮檔</strong>，需要<strong>手動複製</strong>到 CUDA 目錄（見第 10、11 節）；
-版本必須對應 <strong>CUDA 主版本</strong>，否則會出現 <code>Could not locate cudnn_ops</code> 之類的錯誤。</p>
+<p><strong>考點</strong>：zip 與 installer <strong>都只是把檔案放到一個地方</strong>，都必須<strong>手動複製</strong>到 CUDA 目錄（見第 10、11 節）；
+installer 的路徑多一層 CUDA 版本（<code>13.2</code>），複製指令少寫這一層，就會「來源 0 個檔、靜默跳過」。
+版本必須對應 <strong>CUDA 版本</strong>，否則會出現 <code>Could not locate cudnn_ops</code> 之類的錯誤。</p>
+<p><strong>本機實測</strong>：CUDA <strong>13.2</strong> ↔ cuDNN <strong>9.22</strong>（<code>bin\13.2\x64</code>）、CUDA <strong>13.4</strong> ↔ cuDNN <strong>9.26</strong>（<code>bin\13.4\x64</code>）；
+兩個 installer 各自只含一個 CUDA 版本，不能互換。</p>
 </blockquote>
 <hr>
 <h2 id="10-copy-cudnn-bin-files-to-cuda">10. Copy cuDNN bin files to CUDA</h2>
@@ -842,8 +850,12 @@ PyTorch / TensorFlow 底層會用到它。</p>
 </thead>
 <tbody>
 <tr>
-<td><code>...\cudnn...\bin\*</code></td>
+<td><code>...\cudnn...\bin\*</code>（zip）</td>
 <td><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin\</code></td>
+</tr>
+<tr>
+<td><code>C:\Program Files\NVIDIA\CUDNN\v9.26\bin\13.4\x64\*</code>（installer）</td>
+<td><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin\x64\</code></td>
 </tr>
 </tbody>
 </table>
@@ -852,14 +864,20 @@ PyTorch / TensorFlow 底層會用到它。</p>
 <span class="nv">$cuda</span>  <span class="p">=</span> <span class="s2">&quot;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4&quot;</span>
 
 <span class="nb">Copy-Item</span> <span class="s2">&quot;$cudnn\bin\*&quot;</span>  <span class="s2">&quot;$cuda\bin\&quot;</span>  <span class="n">-Force</span>
+
+<span class="c1"># B. installer 安裝後（CUDA 13.4 ↔ cuDNN 9.26）：來源多一層 CUDA 版本</span>
+<span class="nv">$cudnn</span> <span class="p">=</span> <span class="s2">&quot;C:\Program Files\NVIDIA\CUDNN\v9.26&quot;</span>
+<span class="nb">Copy-Item</span> <span class="s2">&quot;$cudnn\bin\13.4\x64\*&quot;</span>  <span class="s2">&quot;$cuda\bin\x64\&quot;</span>  <span class="n">-Force</span>
 </code></pre></div>
 
 <h3 id="103-驗證">10.3 驗證</h3>
-<div class="codehilite"><pre><span></span><code><span class="nb">Test-Path</span> <span class="s2">&quot;$cuda\bin\cudnn64_9.dll&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">Test-Path</span> <span class="s2">&quot;$cuda\bin\cudnn64_9.dll&quot;</span>        <span class="c1"># A. zip 解壓後</span>
+<span class="nb">Test-Path</span> <span class="s2">&quot;$cuda\bin\x64\cudnn64_9.dll&quot;</span>    <span class="c1"># B. installer 安裝後（CUDA 13.x）</span>
 </code></pre></div>
 
 <blockquote>
 <p><strong>考點</strong>：<strong>bin 一定要複製</strong>，否則執行時會找不到 <code>cudnn64_*.dll</code>；
+installer 的來源路徑要帶 CUDA 版本（<code>bin\13.4\x64</code>），少寫一層就會「來源 0 個檔、靜默跳過」。
 複製時要<strong>系統管理員權限</strong>（因為目的在 <code>Program Files</code>）。</p>
 </blockquote>
 <hr>
@@ -882,8 +900,12 @@ PyTorch / TensorFlow 底層會用到它。</p>
 </thead>
 <tbody>
 <tr>
-<td><code>...\cudnn...\lib\x64\*</code></td>
+<td><code>...\cudnn...\lib\x64\*</code>（zip）</td>
 <td><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\lib\x64\</code></td>
+</tr>
+<tr>
+<td><code>C:\Program Files\NVIDIA\CUDNN\v9.26\lib\13.4\x64\*</code>（installer）</td>
+<td>同上（<code>...\CUDA\v13.4\lib\x64\</code>）</td>
 </tr>
 </tbody>
 </table>
@@ -891,22 +913,33 @@ PyTorch / TensorFlow 底層會用到它。</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">$cudnn</span> <span class="p">=</span> <span class="s2">&quot;C:\path\to\cudnn-windows-x86_64-..._cuda13-archive&quot;</span>
 <span class="nv">$cuda</span>  <span class="p">=</span> <span class="s2">&quot;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4&quot;</span>
 
+<span class="c1"># A. zip 解壓後</span>
 <span class="nb">Copy-Item</span> <span class="s2">&quot;$cudnn\lib\x64\*&quot;</span> <span class="s2">&quot;$cuda\lib\x64\&quot;</span> <span class="n">-Force</span>
+
+<span class="c1"># B. installer 安裝後（來源多一層 CUDA 版本）</span>
+<span class="nv">$cudnn</span> <span class="p">=</span> <span class="s2">&quot;C:\Program Files\NVIDIA\CUDNN\v9.26&quot;</span>
+<span class="nb">Copy-Item</span> <span class="s2">&quot;$cudnn\lib\13.4\x64\*&quot;</span> <span class="s2">&quot;$cuda\lib\x64\&quot;</span> <span class="n">-Force</span>
 </code></pre></div>
 
 <h3 id="113-別忘了-include">11.3 別忘了 include</h3>
-<div class="codehilite"><pre><span></span><code><span class="nb">Copy-Item</span> <span class="s2">&quot;$cudnn\include\*&quot;</span> <span class="s2">&quot;$cuda\include\&quot;</span> <span class="n">-Force</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># A. zip 解壓後</span>
+<span class="nb">Copy-Item</span> <span class="s2">&quot;$cudnn\include\*&quot;</span> <span class="s2">&quot;$cuda\include\&quot;</span> <span class="n">-Force</span>
+
+<span class="c1"># B. installer 安裝後（來源多一層 CUDA 版本；漏寫就複製 0 個檔）</span>
+<span class="nv">$cudnn</span> <span class="p">=</span> <span class="s2">&quot;C:\Program Files\NVIDIA\CUDNN\v9.26&quot;</span>
+<span class="nb">Copy-Item</span> <span class="s2">&quot;$cudnn\include\13.4\*&quot;</span> <span class="s2">&quot;$cuda\include\&quot;</span> <span class="n">-Force</span>
 </code></pre></div>
 
 <h3 id="114-驗證三個資料夾都到位">11.4 驗證三個資料夾都到位</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">foreach</span> <span class="p">(</span><span class="nv">$f</span> <span class="k">in</span> <span class="s2">&quot;bin\cudnn64_9.dll&quot;</span><span class="p">,</span><span class="s2">&quot;include\cudnn.h&quot;</span><span class="p">,</span><span class="s2">&quot;lib\x64\cudnn.lib&quot;</span><span class="p">)</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="k">foreach</span> <span class="p">(</span><span class="nv">$f</span> <span class="k">in</span> <span class="s2">&quot;bin\cudnn64_9.dll&quot;</span><span class="p">,</span><span class="s2">&quot;bin\x64\cudnn64_9.dll&quot;</span><span class="p">,</span><span class="s2">&quot;include\cudnn.h&quot;</span><span class="p">,</span><span class="s2">&quot;lib\x64\cudnn.lib&quot;</span><span class="p">)</span> <span class="p">{</span>
   <span class="s2">&quot;$f : &quot;</span> <span class="p">+</span> <span class="p">(</span><span class="nb">Test-Path</span> <span class="s2">&quot;$cuda\$f&quot;</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <blockquote>
 <p><strong>考點</strong>：cuDNN 要複製的是<strong>三份</strong> —— <code>bin</code>（執行期 DLL）、<code>include</code>（標頭）、<code>lib\x64</code>（連結庫）。
-只複製 bin 而漏了 lib，會出現 <strong>連結錯誤（LNK2019）</strong>。</p>
+只複製 bin 而漏了 lib，會出現 <strong>連結錯誤（LNK2019）</strong>；漏了 include，編譯時就找不到 <code>cudnn.h</code>。</p>
+<p><strong>本機實測</strong>：CUDA <strong>13.2</strong> 的 <code>include</code> 曾整批漏掉（0/8），其餘 <code>bin</code> 與 <code>lib\x64</code> 齊全——用上面 §11.4 的指令就會看到 <code>include\cudnn.h : False</code>。</p>
 </blockquote>
 <hr>
 <h2 id="12-check-environment-variables">12. Check Environment Variables</h2>
@@ -1382,16 +1415,28 @@ device name    : NVIDIA GeForce RTX 4090
 </thead>
 <tbody>
 <tr>
-<td><code>cudnn\bin\*</code></td>
+<td><code>cudnn\bin\*</code>（zip）</td>
 <td><code>CUDA\vXX.X\bin\</code></td>
 </tr>
 <tr>
-<td><code>cudnn\include\*</code></td>
+<td><code>cudnn\include\*</code>（zip）</td>
 <td><code>CUDA\vXX.X\include\</code></td>
 </tr>
 <tr>
-<td><code>cudnn\lib\x64\*</code></td>
+<td><code>cudnn\lib\x64\*</code>（zip）</td>
 <td><code>CUDA\vXX.X\lib\x64\</code></td>
+</tr>
+<tr>
+<td><code>CUDNN\v9.26\bin\13.4\x64\*</code>（installer）</td>
+<td><code>CUDA\v13.4\bin\x64\</code></td>
+</tr>
+<tr>
+<td><code>CUDNN\v9.26\include\13.4\*</code>（installer）</td>
+<td><code>CUDA\v13.4\include\</code></td>
+</tr>
+<tr>
+<td><code>CUDNN\v9.26\lib\13.4\x64\*</code>（installer）</td>
+<td><code>CUDA\v13.4\lib\x64\</code></td>
 </tr>
 </tbody>
 </table>
@@ -1424,7 +1469,7 @@ device name    : NVIDIA GeForce RTX 4090
 <td>3</td>
 <td>cuDNN 複製</td>
 <td>只複製 <code>bin</code></td>
-<td><strong><code>bin</code> + <code>include</code> + <code>lib\x64</code> 三份都要</strong></td>
+<td><strong><code>bin</code> + <code>include</code> + <code>lib\x64</code> 三份都要</strong>；installer 的路徑要帶 CUDA 版本（如 <code>bin\13.2\x64</code>），少寫一層會靜默複製 0 個檔</td>
 </tr>
 <tr>
 <td>4</td>

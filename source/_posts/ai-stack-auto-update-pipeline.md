@@ -109,7 +109,7 @@ cu129: 同檔名 → HTTP 403
 
 所以「最新可用 CUDA」的判定必須是：
 
-1. 解析索引目錄，取得所有 `cuNNN`
+1. 解析索引目錄，列出所有 CUDA 索引（`cu126`、`cu128`、`cu132`、`cu134`…）
 2. 對每個索引實際 `HEAD` 一個符合「目前 Python + win_amd64」的 wheel
 3. 取第一個回 200 的
 
@@ -172,7 +172,7 @@ Windows 主控台在重導向時常用 GBK（cp936）解碼。Python 印中文�
 | PyTorch | torch、torchvision | ✅ 自動，但必須有對應 Python 的 Windows wheel |
 | Python | CPython | ❌ 永不（需重裝） |
 | Ollama | ollama | ❌ 永不（需重啟服務） |
-| CUDA-only | 同版本換 cuNNN | ❌ 不自動（1.9 GB） |
+| CUDA-only | 同版本換 CUDA 索引（如 cu132 → cu134） | ❌ 不自動（1.9 GB） |
 
 ### 回滾細節
 

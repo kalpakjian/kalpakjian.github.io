@@ -341,19 +341,28 @@ PyTorch / TensorFlow 底層會用到它。
 ### 9.1 步驟
 
 1. 到 **NVIDIA cuDNN** 頁面（需登入 NVIDIA 開發者帳號）。
-2. 選擇**對應 CUDA 主版本**的 cuDNN（例如 CUDA 13.x → cuDNN for CUDA 13）。
-3. 下載 **Windows zip**（不是 installer）。
-4. 解壓縮，會得到三個資料夾：
+2. 選擇**對應 CUDA 版本**的 cuDNN（例如 CUDA 13.2 → cuDNN 9.22、CUDA 13.4 → cuDNN 9.26；主版本相同還不夠）。
+3. 下載 **Windows zip** 或 **installer（`.exe`）**——官方兩種都有，差別只在檔案結構（見第 4 點）。
+4. 取得三個資料夾。**zip 解壓**與 **installer 安裝**的結構差一層 CUDA 版本：
 
 ```text
-cudnn-windows-x86_64-<版本>_cuda13-archive\
+# A. zip 解壓後（cudnn-windows-x86_64-<版本>_cuda13-archive\）
   ├─ bin\      （cudnn64_9.dll 等）
   ├─ include\  （cudnn*.h）
   └─ lib\x64\  （cudnn.lib 等）
+
+# B. installer 安裝後（C:\Program Files\NVIDIA\CUDNN\v9.22\；版本依 CUDA 而定）
+  ├─ bin\13.2\x64\   （cudnn64_9.dll 等）
+  ├─ include\13.2\   （cudnn*.h）
+  └─ lib\13.2\x64\   （cudnn.lib 等）
 ```
 
-> **考點**：cuDNN 下載的是 **zip 壓縮檔**，需要**手動複製**到 CUDA 目錄（見第 10、11 節）；
-> 版本必須對應 **CUDA 主版本**，否則會出現 `Could not locate cudnn_ops` 之類的錯誤。
+> **考點**：zip 與 installer **都只是把檔案放到一個地方**，都必須**手動複製**到 CUDA 目錄（見第 10、11 節）；
+> installer 的路徑多一層 CUDA 版本（`13.2`），複製指令少寫這一層，就會「來源 0 個檔、靜默跳過」。
+> 版本必須對應 **CUDA 版本**，否則會出現 `Could not locate cudnn_ops` 之類的錯誤。
+>
+> **本機實測**：CUDA **13.2** ↔ cuDNN **9.22**（`bin\13.2\x64`）、CUDA **13.4** ↔ cuDNN **9.26**（`bin\13.4\x64`）；
+> 兩個 installer 各自只含一個 CUDA 版本，不能互換。
 
 ---
 
@@ -372,24 +381,31 @@ cudnn-windows-x86_64-<版本>_cuda13-archive\
 
 | 來源（cuDNN 解壓後） | 目的（CUDA 安裝目錄） |
 |---------------------|----------------------|
-| `...\cudnn...\bin\*` | `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin\` |
+| zip：`...\cudnn...\bin\*` | `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin\` |
+| installer：`C:\Program Files\NVIDIA\CUDNN\v9.26\bin\13.4\x64\*` | `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin\x64\` |
 
 ### 10.2 指令（PowerShell，系統管理員）
 
 ```powershell
-$cudnn = "C:\path\to\cudnn-windows-x86_64-..._cuda13-archive"
+$cudnn = "C:\path\to\cudnn-windows-x86_64-..._cuda13-archive"   # A. zip 解壓後的根目錄
 $cuda  = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4"
 
 Copy-Item "$cudnn\bin\*"  "$cuda\bin\"  -Force
+
+# B. installer 安裝後（CUDA 13.4 ↔ cuDNN 9.26）：來源多一層 CUDA 版本
+$cudnn = "C:\Program Files\NVIDIA\CUDNN\v9.26"
+Copy-Item "$cudnn\bin\13.4\x64\*"  "$cuda\bin\x64\"  -Force
 ```
 
 ### 10.3 驗證
 
 ```powershell
-Test-Path "$cuda\bin\cudnn64_9.dll"
+Test-Path "$cuda\bin\cudnn64_9.dll"        # A. zip 解壓後
+Test-Path "$cuda\bin\x64\cudnn64_9.dll"    # B. installer 安裝後（CUDA 13.x）
 ```
 
 > **考點**：**bin 一定要複製**，否則執行時會找不到 `cudnn64_*.dll`；
+> installer 的來源路徑要帶 CUDA 版本（`bin\13.4\x64`），少寫一層就會「來源 0 個檔、靜默跳過」。
 > 複製時要**系統管理員權限**（因為目的在 `Program Files`）。
 
 ---
@@ -409,7 +425,8 @@ Test-Path "$cuda\bin\cudnn64_9.dll"
 
 | 來源（cuDNN 解壓後） | 目的（CUDA 安裝目錄） |
 |---------------------|----------------------|
-| `...\cudnn...\lib\x64\*` | `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\lib\x64\` |
+| zip：`...\cudnn...\lib\x64\*` | `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\lib\x64\` |
+| installer：`C:\Program Files\NVIDIA\CUDNN\v9.26\lib\13.4\x64\*` | 同上（`...\CUDA\v13.4\lib\x64\`） |
 
 ### 11.2 指令（PowerShell，系統管理員）
 
@@ -417,25 +434,37 @@ Test-Path "$cuda\bin\cudnn64_9.dll"
 $cudnn = "C:\path\to\cudnn-windows-x86_64-..._cuda13-archive"
 $cuda  = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4"
 
+# A. zip 解壓後
 Copy-Item "$cudnn\lib\x64\*" "$cuda\lib\x64\" -Force
+
+# B. installer 安裝後（來源多一層 CUDA 版本）
+$cudnn = "C:\Program Files\NVIDIA\CUDNN\v9.26"
+Copy-Item "$cudnn\lib\13.4\x64\*" "$cuda\lib\x64\" -Force
 ```
 
 ### 11.3 別忘了 include
 
 ```powershell
+# A. zip 解壓後
 Copy-Item "$cudnn\include\*" "$cuda\include\" -Force
+
+# B. installer 安裝後（來源多一層 CUDA 版本；漏寫就複製 0 個檔）
+$cudnn = "C:\Program Files\NVIDIA\CUDNN\v9.26"
+Copy-Item "$cudnn\include\13.4\*" "$cuda\include\" -Force
 ```
 
 ### 11.4 驗證三個資料夾都到位
 
 ```powershell
-foreach ($f in "bin\cudnn64_9.dll","include\cudnn.h","lib\x64\cudnn.lib") {
+foreach ($f in "bin\cudnn64_9.dll","bin\x64\cudnn64_9.dll","include\cudnn.h","lib\x64\cudnn.lib") {
   "$f : " + (Test-Path "$cuda\$f")
 }
 ```
 
 > **考點**：cuDNN 要複製的是**三份** —— `bin`（執行期 DLL）、`include`（標頭）、`lib\x64`（連結庫）。
-> 只複製 bin 而漏了 lib，會出現 **連結錯誤（LNK2019）**。
+> 只複製 bin 而漏了 lib，會出現 **連結錯誤（LNK2019）**；漏了 include，編譯時就找不到 `cudnn.h`。
+>
+> **本機實測**：CUDA **13.2** 的 `include` 曾整批漏掉（0/8），其餘 `bin` 與 `lib\x64` 齊全——用上面 §11.4 的指令就會看到 `include\cudnn.h : False`。
 
 ---
 
@@ -840,9 +869,12 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
 
 | 來源 | 目的 |
 |------|------|
-| `cudnn\bin\*` | `CUDA\vXX.X\bin\` |
-| `cudnn\include\*` | `CUDA\vXX.X\include\` |
-| `cudnn\lib\x64\*` | `CUDA\vXX.X\lib\x64\` |
+| `cudnn\bin\*`（zip） | `CUDA\vXX.X\bin\` |
+| `cudnn\include\*`（zip） | `CUDA\vXX.X\include\` |
+| `cudnn\lib\x64\*`（zip） | `CUDA\vXX.X\lib\x64\` |
+| `CUDNN\v9.26\bin\13.4\x64\*`（installer） | `CUDA\v13.4\bin\x64\` |
+| `CUDNN\v9.26\include\13.4\*`（installer） | `CUDA\v13.4\include\` |
+| `CUDNN\v9.26\lib\13.4\x64\*`（installer） | `CUDA\v13.4\lib\x64\` |
 
 ---
 
@@ -854,7 +886,7 @@ $env:Path += ";C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.4\bin"
 |---|------|---------|---------|
 | 1 | 安裝順序 | 先裝 PyTorch 再看 CUDA | **先確認 PyTorch 支援的 CUDA → 再裝 Toolkit/cuDNN → 最後裝 PyTorch** |
 | 2 | 驅動 vs Toolkit | 把 `nvidia-smi` 的版本當成已裝 CUDA | `nvidia-smi`＝驅動上限；`nvcc --version`＝實際 Toolkit |
-| 3 | cuDNN 複製 | 只複製 `bin` | **`bin` + `include` + `lib\x64` 三份都要** |
+| 3 | cuDNN 複製 | 只複製 `bin` | **`bin` + `include` + `lib\x64` 三份都要**；installer 的路徑要帶 CUDA 版本（如 `bin\13.2\x64`），少寫一層會靜默複製 0 個檔 |
 | 4 | cuDNN 版本 | 隨便抓最新 | 要對應 **CUDA 主版本**（如 cuda13） |
 | 5 | conda 找不到 | 在一般 CMD 直接打 `conda` | 用 **Anaconda Prompt**，或先把 conda 加入 PATH |
 | 6 | PATH 漏項 | 只加 `anaconda3\` | 還要加 `\Scripts\` 與 `\Library\bin\` |
