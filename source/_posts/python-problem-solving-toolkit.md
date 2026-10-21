@@ -43,7 +43,7 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
     <li><a href="#48-個套件一句話簡介"><strong>48 個套件一句話簡介</strong></a>：11 個領域，每個套件一句話 ＋ 本機安裝狀態</li>
     <li><a href="#11-個領域-×-24-列的對應"><strong>11 個領域地圖</strong></a>：原圖的目錄（圖 2）</li>
     <li><a href="#附錄-A：本機環境盤點（2026-10-20-實掃）"><strong>附錄 A：本機環境盤點</strong></a>：42 個可安裝套件中已裝 19 個、缺口 23 個</li>
-    <li><a href="/2026/10/20/hexo-and-python-io/"><strong>Hexo 與 Python 的 io</strong></a>：圖上兩個常被搞混的名字（已獨立成篇）</li>
+    <li><a href="/2026/10/20/hexo-and-python-io/"><strong>Hexo 與 Python 的 io</strong></a>：圖上兩個常被搞混的名字＋<code>github.io</code>（已獨立成篇）</li>
   </ul>
 </div>
 <!-- /TOC-CARD -->
@@ -70,11 +70,12 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
   - 「Flask + Django」不是相加，是二選一
   - cron／Task Scheduler 不是 Python 套件
 - <strong>Hexo 不在圖上</strong>：它是 Node.js 的靜態網站產生器（hexo.io），最新 <strong>8.1.2</strong>，8.x 要求 Node.js ≥ 20.19.0。本站就是 Hexo，跟 Python 不衝突。
-- 「io」有兩種解讀，而且完全不相干：
+- 「io」有三種解讀，而且彼此不相干（圖上只涉及前兩個）：
   - <strong>hexo.io</strong>：Hexo 官網／文件
   - <strong>標準庫 <code>io</code></strong>：<code>StringIO</code>／<code>BytesIO</code>／<code>open()</code> 的底層
+  - <strong>github.io</strong>：GitHub Pages 的預設網域，本站網址就是這個（最常用，但不是直接使用）
 
-  這兩題已獨立成篇：<a href="/2026/10/20/hexo-and-python-io/">Hexo 與 Python 的 io</a>。
+  這三題已獨立成篇：<a href="/2026/10/20/hexo-and-python-io/">Hexo 與 Python 的 io</a>。
 
 <!-- FIG1 -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -597,13 +598,16 @@ banner_img: /img/covers/python-problem-solving-toolkit.png
 原圖上還有兩個<strong>不是 Python 套件</strong>的名字：
 
 - <strong>Hexo</strong>：Node.js 的靜態網站產生器（本站就是用它架的）
-- <strong>「io」</strong>：Python 標準庫的記憶體 I/O 抽象，也常跟 Hexo 官網網域 <code>hexo.io</code> 搞混
+- <strong>「io」</strong>：三種不同東西共用這個縮寫——
+  - Python 標準庫的記憶體 I/O 抽象（<code>StringIO</code>／<code>BytesIO</code>）
+  - Hexo 官網網域 <code>hexo.io</code>
+  - GitHub Pages 的預設網域 <code>github.io</code>，也就是本站網址（最常用，但不是直接使用）
 
 這兩題跟「Python 選型」不是同一條線，已獨立成篇：
 
 > 📄 <a href="/2026/10/20/hexo-and-python-io/"><strong>Hexo 與 Python 的 io：兩個常被搞混的名字</strong></a>
 >
-> 內容：Hexo 8.1.2 現況、CLI 指令、目錄結構、與其他靜態網站產生器的比較，以及 <code>StringIO</code>／<code>BytesIO</code> 的實測與三個實務場景。
+> 內容：Hexo 8.1.2 現況、CLI 指令、目錄結構、與其他靜態網站產生器的比較，<code>StringIO</code>／<code>BytesIO</code> 的實測與三個實務場景，以及 <code>github.io</code>／GitHub Pages 的網域與部署流程。
 
 ## 附錄 A：本機環境盤點（2026-10-20 實掃）
 
