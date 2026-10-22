@@ -308,26 +308,69 @@ wrote f-jeep.bmp
 
 > 圖：本機 ComfyUI 的 Qwen-Image 2.1 生成（本站 house style，無文字）。
 
-## 八、限制與下一步
+## 八、把 D3D11 離屏也打通（GPU 版路線 3）
 
-自寫 renderer 的**已知限制**（誠實列出，這也是它目前只適合當工具、還不適合當產品的原因）：
+自寫 renderer 只是權宜之計。真正的答案是：**用官方自己的 GPU renderer，但渲染到離屏 texture**。
 
-- **不支援圖片與 mesh**：`decodeImage` 回 `nullptr`，`drawImage` / `drawImageMesh` 只計數。有貼圖的素材只會顯示向量部分。
-- **沒有反鋸齒**：硬邊，邊緣會有鋸齒。
+**卡點**：`rive_pls_renderer` 需要一組在**產生階段**烘焙出來的 shader 標頭，官方用 `make` 做這件事，
+而 Windows 上沒有 make（也沒有 POSIX shell）。我照 `renderer/src/shaders/Makefile` 的兩條 recipe
+（`minify.py` 產 `.hpp`、`fxc` 產 D3D 標頭）用 Python 重寫成一個 `make` shim。
+
+> 順帶發現：官方那條 make 在 Windows 上其實也編不過。`render_atlas.glsl` 的 `main()`
+> **只在 `ATLAS_FEATHERED_FILL` / `ATLAS_FEATHERED_STROKE` 之下存在**，所以 Makefile 的通用
+> `%.frag.h` 規則會讓 `fxc` 靜默失敗（exit 1、沒有訊息、也不產檔）。renderer 實際 include 的是
+> 兩個 ATLAS 變體，所以我略過那一個輸出。
+
+**接線全部照 repo 自己的參考實作**，不是猜的：
+
+| 步驟 | 參考來源 |
+|---|---|
+| D3D11 裝置 + `MakeContext` + `flush` | `renderer/path_fiddle/fiddle_context_d3d.cpp` |
+| 離屏 render target | `tests/common/offscreen_rendertarget_d3d.cpp` |
+| texture readback | `FiddleContextD3DPLS::end()` |
+| PNG 輸出 | `tests/common/write_png_file.cpp` |
+
+<div style="max-width:860px;margin:1.6rem 0">
+<img src="/img/rive-headless-three-routes/gpu-offscreen.png" alt="左：自寫 CPU renderer（硬邊）；中：官方 GPU renderer 離屏（反鋸齒）；右：同一路徑渲染含貼圖的 vehicles.riv" style="width:100%;border-radius:14px">
+</div>
+
+> 圖：左為自寫 CPU renderer（3 種顏色、硬邊）、中為官方 GPU renderer 的離屏輸出（540 種顏色，反鋸齒）、
+> 右為同一條 GPU 路徑渲染 `vehicles.riv`（2116 種顏色，**含貼圖**）。
+
+**驗證**：把離屏輸出與**官方 CLI 自己截的同一張圖**做像素比對 ——
+
+```
+identical pixels  : 250000 / 250000  (100.00%)
+mean abs diff     : 0.00 / 255
+worst channel diff: 0 / 255
+```
+
+**位元完全相同**：不用 CLI、不開視窗、自己在程式裡算，得到的結果與官方工具鏈一致。
+
+> 中間我還犯了一個低級錯誤：readback 時多翻了一次列，圖是上下顛倒的。對照 CLI 時那 5.85% 的差異就是它造成的。
+> `write_png_file.cpp` 的 `flipY=true` 意思是「**輸入是 bottom-up，幫我翻正**」，
+> 而 D3D staging texture 本來就是 top-down。
+
+## 九、限制與下一步
+
+**自寫 CPU renderer 的限制**（GPU 版沒有這些問題，所以它現在的定位是「理解原理」與「沒有 GPU 時的後備」）：
+
+- **不支援圖片與 mesh**：`decodeImage` 回 `nullptr`，`drawImage` / `drawImageMesh` 只計數。
+- **沒有反鋸齒**：硬邊。
 - **Clip 用 bbox 近似**，不是真正的路徑交集。
 - **筆畫是逐段四邊形**：沒有 join、沒有 cap。
-- **沒有腳本 VM、沒有文字圖集**：`hello_rive` 的 Luau 腳本是惰性的，文字以字形外框呈現而非 shaping 後的文字排版。
+- **沒有腳本 VM、沒有文字圖集**：文字以字形外框呈現而非 shaping 後的文字排版。
 
-**下一步（下次做）**：把 **D3D11 離屏**那條打通——也就是讓 `rive_pls_renderer` 通過 shader 產生步驟
-（需要 `make` + `python` + `ply` + `fxc`，而 `fxc` 在 Windows SDK 裡已經有了），改用官方的
-`rive::gpu::RenderContext` 渲染到離屏 texture。好處是**畫質與 GPU 一致（含反鋸齒與圖片支援）**，
-而且**完全不需要視窗**。那才是「伺服器端渲染」的完整版本。
+**剩下的功課**：`rive_pls_renderer` 這條路目前只建了 D3D11（D3D12 的原始碼也在，但沒編）。
+其他平台後端（Vulkan / WebGPU / Metal）各自需要不同的 shader 目標（`spirv` / `wgsl` / `metallib`），
+而 `spirv` 還需要 glslang 之類的離線編譯器 —— 那是另一條獨立的建置鏈。
 
 ### 回到最開始的兩個問題
 
 1. **免費版與付費版差在哪**：差在 **splash 畫面、檔案數、以及團隊／企業功能**。開發與測試完全免費。
-2. **有沒有無頭用法**：有，而且有三條。**先用官方 CLI**，它能解決 90% 的 CI 截圖需求；
-   要處理任意素材就用 **Playwright + 官方 WASM**；要嵌進自己的 C++ 產品才走 **C++ runtime**。
+2. **有沒有無頭用法**：有，而且**現在有四條**。先用官方 CLI；要處理任意素材用 **Playwright + 官方 WASM**；
+   要嵌進自己的 C++ 產品、或需要在伺服器上算圖，用 **C++ runtime + 官方 GPU renderer 離屏**（畫質與線上一致）；
+   自寫 CPU renderer 則適合完全沒有 GPU 的環境。
 
 <div style="max-width:640px;margin:1.6rem auto">
 <img src="/img/rive-headless-three-routes/ch04-browser-automation.jpg" alt="懸浮於暗處的空窗格內有發光節點網絡，一隻機械臂從側面伸入畫出一條光線" style="width:100%;border-radius:14px">
