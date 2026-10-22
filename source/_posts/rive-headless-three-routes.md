@@ -364,7 +364,109 @@ worst channel diff: 0 / 255
 > `write_png_file.cpp` 的 `flipY=true` 意思是「**輸入是 bottom-up，幫我翻正**」，
 > 而 D3D staging texture 本來就是 top-down。
 
-## 九、限制與下一步
+## 九、所以能做出什麼：動畫產線
+
+四條路徑是手段，不是目的。這節講**實際產出**。
+
+### 9.1 一個指令把動畫變成影片／GIF／精靈圖
+
+我給離屏渲染器加了**序列模式**：輸出路徑含 `%` 就代表「一個行程、一個 D3D 裝置、一次 shader 編譯、N 張 PNG」，
+所以 60 帧只要約兩秒，而不是開 60 次行程。
+
+```powershell
+# 只要影格序列
+rive_gpu_offscreen thing.riv frames/frame_%04d.png 800 450 2 30
+
+# 全套：影格 + MP4 + GIF + WebM + 精靈圖 + 影片條
+.\export_anim.ps1 -Riv thing.riv -Name jeep -Width 800 -Height 450 -Seconds 2 -Fps 30
+```
+
+`vehicles.riv`（artboard `Jeep`、2 秒 @30fps、800×450）的實測產出：
+
+| 產物 | 大小 | 用途 |
+|---|---|---|
+| `frame_0001..0060.png` | 60 檔 | 原始素材 |
+| `jeep.mp4` | **65 KB** | H.264 / yuv420p → 簡報、社群、剪輯 |
+| `jeep.gif` | 836 KB | 調色盤最佳化 → 文件、聊天 |
+| `jeep.webm` | **26 KB** | VP9 → 網頁疊加 |
+| `jeep-sheet.png` | 435 KB | **8×8 精靈圖** → 沒有 Rive runtime 的遊戲引擎 |
+| `jeep-strip.png` | 120 KB | 抽 8 帧的影片條 |
+
+`ffprobe` 驗證：`800,450 / 30-1 fps / nb_frames=60 / duration=2.000000`。
+
+<div style="max-width:620px;margin:1.6rem auto">
+<img src="/img/rive-headless-three-routes/anim-jeep.gif" alt="vehicles.riv 的 Jeep 動畫（60 帧，由離屏渲染器輸出後編成 GIF）" style="width:100%;border-radius:14px">
+</div>
+
+> 圖：`vehicles.riv` 的 Jeep，2 秒 60 帧 —— **這是在頁面上真的會動的 GIF**，來源就是我們自己的離屏渲染器。
+
+<div style="max-width:520px;margin:1.6rem auto">
+<img src="/img/rive-headless-three-routes/anim-triangle.gif" alt="rml_triangle 的旋轉動畫" style="width:100%;border-radius:14px">
+</div>
+
+> 圖：`rml_triangle` 的 2 秒旋轉，與第七節量到的 0°→360° 是同一份輸出。
+
+<div style="max-width:860px;margin:1.6rem 0">
+<img src="/img/rive-headless-three-routes/anim-sheet.png" alt="60 帧的 8×8 精靈圖" style="width:100%;border-radius:14px">
+</div>
+
+> 圖：同一段動畫的 **8×8 精靈圖**（60 帧）。遊戲引擎可以整張貼上、用 UV 位移取帧，不需要 Rive runtime。
+
+> 踩到的坑：**PowerShell 5.1 讀沒有 BOM 的 `.ps1` 會當成 ANSI**，中文變亂碼後整個檔案解析失敗、
+> 還不給有用的錯誤訊息。腳本已存成 UTF-8 with BOM。
+
+### 9.2 先看檔案裡有什麼：`--info`
+
+要驅動一個狀態機，第一件事是知道裡面有什麼。這個模式不需要開編輯器：
+
+```powershell
+rive_gpu_offscreen vehicles.riv --info
+```
+
+```
+artboard bounds: 1920 x 1080
+state machines: 1
+  [0] bumpy
+animations: 3
+  [0] idle
+  [1] curves
+  [2] bounce
+inputs: 1
+  trigger bump
+```
+
+### 9.3 狀態機全圖：`--sheet`
+
+把每個 input 都操作一遍、各拍一張，加上初始狀態，就成了一頁自動產生的說明書：
+
+```powershell
+rive_gpu_offscreen vehicles.riv --sheet=out/jeep 800 450 30 30
+```
+
+<div style="max-width:860px;margin:1.6rem 0">
+<img src="/img/rive-headless-three-routes/sm-sheet.png" alt="初始狀態 vs 觸發 bump trigger 之後" style="width:100%;border-radius:14px">
+</div>
+
+> 圖：左是初始狀態，右是觸發 `bump` trigger 之後。狀態是累積的（像使用者依序操作），
+> `manifest.txt` 會記錄每一張是用什麼值拍的。
+
+**誠實的限制**：這個模式驅動的是**傳統的 SMIInput**（bool／number／trigger）。而 Rive 現在主推的是
+**view model + data binding** —— CLI 的 `--data` 改的也是 view model 屬性，不是 SMIInput。
+所以新式 RML 專案會看到 `inputs: 0`（`text_input`、`scroll_demo`、`pointer_reactive` 都是）。
+要驅動 view model 得接 `ViewModelInstance` 那組 API，那是下一步。
+
+### 9.4 這些路徑還能做什麼
+
+| 想法 | 用哪條路徑 | 現況 |
+|---|---|---|
+| **CI 視覺回歸**：渲染 N 個狀態、跟 goldens 比對、有差異就讓 build 失敗 | 1 或 3b | 像素比對工具已有 |
+| **精靈圖／影片素材產線** | 3b | ✅ 本節 |
+| **伺服器端出圖**：`.riv` + 參數 + 尺寸 → PNG（分享卡、OG image、徽章） | Windows 用 3b；任何平台用 2 | 渲染器已是函式呼叫，缺 HTTP 外層 |
+| **嵌進自己的 C++ 產品**：畫進自己的 texture | 3b | ✅ 已被證明 |
+| **效能基準**：advance/render ms、WASM 記憶體 | 1 或 3b | CLI 已在報 |
+| **無 GPU 環境**（容器、嵌入式） | 3a | 可跑，但沒有圖片與反鋸齒 |
+
+## 十、限制與下一步
 
 **自寫 CPU renderer 的限制**（GPU 版沒有這些問題，所以它現在的定位是「理解原理」與「沒有 GPU 時的後備」）：
 
