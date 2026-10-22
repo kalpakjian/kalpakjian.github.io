@@ -1,6 +1,7 @@
 ---
 title: Rive 無頭渲染三條路線實測：官方 CLI、Playwright + WASM、自寫 C++ CPU renderer
 date: 2026-10-22 20:00:00
+updated: 2026-10-22 20:15:00
 categories:
   - 軟體工程
 tags:
@@ -34,6 +35,9 @@ banner_img: /img/covers/rive-headless-three-routes.png
 
 <!-- more -->
 
+> **2026-10-22 更新**：本文發布後同一天，我把 view model 驅動（`--data`）、`--serve` 本機出圖服務、
+> `--warp` 與 GitHub Actions 視覺回歸補上了。第 9 節已改寫——原文的「下一步」現在是「已完成」。
+
 ## 一、結論先講：三條路線、四條路徑
 
 | | 路線 1：官方 CLI | 路線 2：官方 WASM + Playwright | 路線 3：C++ runtime（兩種實作，見下） |
@@ -42,9 +46,9 @@ banner_img: /img/covers/rive-headless-three-routes.png
 | 能渲染什麼 | **RML 專案**（或 `.rev` 轉出的專案） | **任意 `.riv`** | **任意 `.riv`** |
 | 畫質 | 官方 GPU renderer，**與線上一致** | 官方 runtime，**與線上一致** | 自寫 CPU：**無反鋸齒、無圖片**；官方 GPU 離屏：**與線上一致** |
 | 需要帳號 | **不用**（`--screenshot` 免登入） | 不用 | 不用 |
-| 需要 GPU | 不用（但仍走官方 renderer） | 不用（瀏覽器可軟體算） | 完全不用 |
+| 需要 GPU | 不用（但仍走官方 renderer） | 不用（瀏覽器可軟體算） | 3a 完全不用；3b 可用 `--warp` 在沒有 GPU 的機器上跑 |
 | 建置成本 | 一行安裝 | `npm i playwright-core @rive-app/canvas-advanced` | **MSVC + 1.25 GB `rive.lib` + 自己寫 800 行** |
-| 適用 | CI 截圖、回歸、效能 | 任意素材、與線上一致 | 伺服器端／嵌入自有引擎 |
+| 適用 | CI 截圖、回歸、效能 | 任意素材、與線上一致 | 伺服器端出圖、CI 視覺回歸、嵌入自有引擎 |
 
 **我的建議**：預設走路線 1；要處理「別人給的 `.riv`」走路線 2；只有當你要**把 Rive 塞進自己的 C++ 產品**、
 或需要在沒有瀏覽器的伺服器上算圖，才值得付出路線 3 的代價——**而且要選 3b（官方 GPU renderer 離屏），不是 3a**。
@@ -54,7 +58,7 @@ banner_img: /img/covers/rive-headless-three-routes.png
 | | 路線 3a：自寫 CPU renderer | 路線 3b：官方 GPU renderer + 離屏 texture |
 |---|---|---|
 | 畫質 | 自寫掃描線光柵器，**無反鋸齒** | 與線上完全一致（**反鋸齒、圖片、mesh、漸層都支援**） |
-| 需要 GPU | **完全不用** | 需要（沒有可用 GPU 時自動退回 WARP 軟體算） |
+| 需要 GPU | **完全不用** | 需要，但可用 `--warp` 強制 WARP 軟體光柵化（畫質相同、速度較慢） |
 | 建置成本 | 只要 `rive.lib` + 約 800 行自寫程式 | 還要 `rive_pls_renderer`（含 shader 產生步驟） |
 | 驗證方式 | 顏色與幾何精確命中作者定義值 | 與官方 CLI 的截圖 **100% 像素相同** |
 | 適合 | 理解原理、完全沒有 GPU 的環境 | **生產環境** |
@@ -433,7 +437,32 @@ animations: 3
   [2] bounce
 inputs: 1
   trigger bump
+view models: 0
+view model properties: 0
 ```
+
+新式檔案的差別在最後兩段。以 Rive 測試素材 `stateful_multi_property.riv` 為例：
+
+```powershell
+rive_gpu_offscreen stateful_multi_property.riv --info
+```
+
+```
+view models: 2
+  [0] ButtonVM
+  [1] ViewModel1
+view model properties: 10
+  string  btn2Label      = "Initial value"
+  color   btn2Tint       = 0xFF000000
+  bool    btn2Clip       = false
+  number  btn1Count      = 0
+  enum    btn1Display    = 0 (Show)
+  number  btn2Count      = 0
+  string  btn1Label      = "Initial value"
+```
+
+巢狀 view model 會用兩格縮排展開；enum 直接顯示「索引（DataEnum 名稱）」。
+這樣不用開編輯器，就知道 `--data` 可以寫哪些路徑。
 
 ### 9.3 狀態機全圖：`--sheet`
 
@@ -450,23 +479,138 @@ rive_gpu_offscreen vehicles.riv --sheet=out/jeep 800 450 30 30
 > 圖：左是初始狀態，右是觸發 `bump` trigger 之後。狀態是累積的（像使用者依序操作），
 > `manifest.txt` 會記錄每一張是用什麼值拍的。
 
-**誠實的限制**：這個模式驅動的是**傳統的 SMIInput**（bool／number／trigger）。而 Rive 現在主推的是
-**view model + data binding** —— CLI 的 `--data` 改的也是 view model 屬性，不是 SMIInput。
-所以新式 RML 專案會看到 `inputs: 0`（`text_input`、`scroll_demo`、`pointer_reactive` 都是）。
-要驅動 view model 得接 `ViewModelInstance` 那組 API，那是下一步。
+`--sheet` 現在會先綁定檔案的**預設 view model 實例**（`File::createDefaultViewModelInstance` +
+`StateMachineInstance::bindViewModelInstance`），所以新式檔案不再只看到 `inputs: 0`：
 
-### 9.4 這些路徑還能做什麼
+```powershell
+rive_gpu_offscreen stateful_multi_property.riv --sheet=out/vm 800 450 60 30
+```
+
+它會：
+
+- 翻轉每個 bool
+- 把 number 在 0/1 之間切換
+- 擊發 trigger
+- **把 enum 逐值走過**（最多 16 個），並用 DataEnum 名稱標註
+- string / color / image / list 沒有「顯而易見的正確值」，列在 `manifest.txt` 的 `not driven`，用 `--data` 指定
+
+`stateful_multi_property.riv`（10 個屬性）的實測：
+
+```text
+  00    (initial state)
+  vm03  btn2Clip       vm bool -> true
+  vm04  btn1Count      vm number -> 1
+  vm06_0 btn1Display   vm enum -> Show
+  vm06_1 btn1Display   vm enum -> Hide
+  vm07  btn1Clip       vm bool -> true
+  vm08_0 btn2Display   vm enum -> Show
+  vm08_1 btn2Display   vm enum -> Hide
+  vm09  btn2Count      vm number -> 1
+```
+
+> 這也修掉了原文的限制：以前說「要驅動 view model 得接 `ViewModelInstance`，那是下一步」——現在已經接了。
+> 完整狀態空間還是會隨屬性數量爆炸（10 個屬性就有 2¹⁰ 種組合），所以 `--sheet` 是「每個值單獨試一次」，
+> 不是笛卡兒積；要特定組合請用下一節的 `--data`。
+
+### 9.4 用 `--data` 精準指定 view model
+
+`--sheet` 只能「每個值都試一次」；要指定特定的組合，用 `--data=<path=value>`。它與官方 CLI 同名同義，
+可重複，而且單張、序列、sheet、serve 都能用：
+
+```powershell
+rive_gpu_offscreen thing.riv shot.png 800 450 1.5 `
+  --data=speed=4 --data=theme/dark=true --data=btn1Display=Hide
+```
+
+| 型別 | 寫法 |
+|---|---|
+| bool | `true` / `false`（也接受 1/0、yes/no、on/off） |
+| number | `1.5`、`-3` |
+| string | `hello` 或 `"hello world"` |
+| color | `#RRGGBB`（不透明）或 `#AARRGGBB` |
+| enum | 索引 `2` 或名稱 `Show` |
+| trigger | `fire` |
+| 巢狀 | `settings/speed` 或 `settings.speed` |
+
+路徑不存在或型別不對會直接 **exit 1**，CI 不需要解析訊息。
+
+實測（`viewmodel_based_condition.riv`，400×400、0.5 秒，只差一個 `--data`）：
+
+```text
+a.png vs c.png   (string_condition=blue)
+  identical pixels : 155989 / 160000  (97.49%)
+  worst channel diff: 167 / 255
+```
+
+畫面有 2.5% 的像素真的變了——不是「參數有傳進去」而已，是真的影響了狀態機與繪製。
+
+### 9.5 本機出圖服務：`--serve`
+
+以前說「渲染器已是函式呼叫，缺 HTTP 外層」。現在外層有了：
+
+```powershell
+rive_gpu_offscreen .\assets\vehicles.riv --serve=8799 800 450 --warp
+```
+
+```text
+GET /render?riv=card.riv&t=1.5&w=1200&h=630&data=title=Hello&data=theme/dark=true
+GET /info?riv=card.riv
+GET /healthz
+GET /
+```
+
+- `riv=` 相對於 `--serve-root`（預設是啟動檔案的資料夾）；canonical path 逃出 root → **403**
+- 不存在 → **404**、非 `.riv` → **400**、非 GET/HEAD → **405**
+- `HEAD` 回傳相同 header 與 `Content-Length`，不送 body
+- `w`/`h` 預設用該 artboard 的 bounds，clamp 1..4096；`t` 0..60 秒；`fps` 1..240
+- 每個 request 重新匯入、重新綁 VM、重新套 `--data`，所以任何 `riv`/`t` 可以亂序問
+- 只綁 `127.0.0.1`；這是本機工具，不要直接公開到網路
+
+實測：`/render` 與同參數的單張渲染 **160000/160000 像素完全相同**。
+（順帶修掉一個 bug：`EncodePNGToBuffer` 內部固定上下翻轉，之前 serve 出來的圖其實是顛倒的。）
+
+### 9.6 沒有 GPU 也能跑，而且能進 CI：`--warp` + 視覺回歸
+
+3b 以前被歸類成「需要 GPU」。現在 `--warp` 會強制 D3D11 WARP 軟體光柵化：
+同一個 `rive_pls_renderer`、同樣的反鋸齒與貼圖，只是慢一點。這讓 CI 不需要 GPU runner：
+
+```powershell
+rive_gpu_offscreen vehicles.riv out.png 500 500 1.0 --warp
+```
+
+有了「可重現」這個前提，才能做視覺回歸。`tests/visual_regression/` 是一支獨立 runner：
+
+```powershell
+# 比對 5 個案例（legacy SMI、RML、現代 view model 三種狀態）
+python tests\visual_regression\visual_regression.py --jobs 4
+
+# 接受目前輸出成為新 goldens（先看過 diff 再按）
+python tests\visual_regression\visual_regression.py --update
+```
+
+- 案例是 `{name, riv, w, h, t, fps, warp, data[]}`
+- 逐像素比對，門檻是 `channel_tolerance` / `max_diff_ratio` / `max_mean_abs`
+- 失敗時產生 `diff/<name>.diff.png`（紅色標出超標像素）
+- 退出碼 **0/1/2**，CI 不用解析 stdout
+- `.github/workflows/visual-regression.yml` 在 `windows-latest` 上自動建置、跑測試、
+  把 `report.md` 放進 job summary、上傳 artifact
+
+實測：WARP 同參數跑兩次 **100% 相同**；用 Community 與 BuildTools 兩套 MSVC 建置，goldens 仍是 **0.000% 差異**。
+故意把一張 golden 塗壞 96×96，runner 回報 **3.764% / mean 8.09 / worst 215**、exit 1，並產出 diff 圖。
+
+### 9.7 這些路徑還能做什麼
 
 | 想法 | 用哪條路徑 | 現況 |
 |---|---|---|
-| **CI 視覺回歸**：渲染 N 個狀態、跟 goldens 比對、有差異就讓 build 失敗 | 1 或 3b | 像素比對工具已有 |
-| **精靈圖／影片素材產線** | 3b | ✅ 本節 |
-| **伺服器端出圖**：`.riv` + 參數 + 尺寸 → PNG（分享卡、OG image、徽章） | Windows 用 3b；任何平台用 2 | 渲染器已是函式呼叫，缺 HTTP 外層 |
+| **View model 驅動／狀態機全圖** | 3b | ✅ 9.3、9.4（bool／number／trigger／enum，`--data` 指定任意組合） |
+| **CI 視覺回歸**：渲染 N 個狀態、跟 goldens 比對、有差異就讓 build 失敗 | 1 或 3b | ✅ 9.6（runner + GitHub Actions workflow） |
+| **精靈圖／影片素材產線** | 3b | ✅ 9.1 |
+| **伺服器端出圖**：`.riv` + 參數 + 尺寸 → PNG（分享卡、OG image、徽章） | 3b（Windows） | ✅ 9.5（`/render?riv=&data=`、`/info`、`/healthz`） |
 | **嵌進自己的 C++ 產品**：畫進自己的 texture | 3b | ✅ 已被證明 |
 | **效能基準**：advance/render ms、WASM 記憶體 | 1 或 3b | CLI 已在報 |
-| **無 GPU 環境**（容器、嵌入式） | 3a | 可跑，但沒有圖片與反鋸齒 |
+| **無 GPU 環境**（容器、嵌入式） | 3b + `--warp` | ✅ 完整畫質（同一個 PLS renderer），速度較慢 |
 
-## 十、限制與下一步
+## 十、限制與剩下的功課
 
 **自寫 CPU renderer 的限制**（GPU 版沒有這些問題，所以它現在的定位是「理解原理」與「沒有 GPU 時的後備」）：
 
@@ -476,9 +620,13 @@ rive_gpu_offscreen vehicles.riv --sheet=out/jeep 800 450 30 30
 - **筆畫是逐段四邊形**：沒有 join、沒有 cap。
 - **沒有腳本 VM、沒有文字圖集**：文字以字形外框呈現而非 shaping 後的文字排版。
 
+**3b 的新選項**：`--warp` 讓 3b 在沒有 GPU 的機器上也能跑，而且是**同一個 `rive_pls_renderer`**——
+反鋸齒、圖片、mesh、漸層都在，只是速度較慢。這正是 CI 能不用 GPU runner 的原因。
+
 **剩下的功課**：`rive_pls_renderer` 這條路目前只建了 D3D11（D3D12 的原始碼也在，但沒編）。
 其他平台後端（Vulkan / WebGPU / Metal）各自需要不同的 shader 目標（`spirv` / `wgsl` / `metallib`），
 而 `spirv` 還需要 glslang 之類的離線編譯器 —— 那是另一條獨立的建置鏈。
+CI 目前也只包 Windows / D3D11；其他平台要各自補建置與 goldens。
 
 ### 回到最開始的兩個問題
 
@@ -486,6 +634,11 @@ rive_gpu_offscreen vehicles.riv --sheet=out/jeep 800 450 30 30
 2. **有沒有無頭用法**：有，而且**現在有四條**。先用官方 CLI；要處理任意素材用 **Playwright + 官方 WASM**；
    要嵌進自己的 C++ 產品、或需要在伺服器上算圖，用 **C++ runtime + 官方 GPU renderer 離屏**（畫質與線上一致）；
    自寫 CPU renderer 則適合完全沒有 GPU 的環境。
+
+而這次補上的兩個介面，讓這四條路徑從「能算圖」變成「能接進產線」：
+
+- **`--serve`**：本機 HTTP 出圖（`/render?riv=&data=&t=&w=&h=`），分享卡／OG image 的雛形
+- **視覺回歸**：`--warp` + goldens + `diff/*.png` + GitHub Actions，畫面跑掉就紅燈
 
 <div style="max-width:640px;margin:1.6rem auto">
 <img src="/img/rive-headless-three-routes/ch04-browser-automation.jpg" alt="懸浮於暗處的空窗格內有發光節點網絡，一隻機械臂從側面伸入畫出一條光線" style="width:100%;border-radius:14px">
