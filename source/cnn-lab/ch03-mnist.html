@@ -43,8 +43,14 @@
   </figure>
 
   <span class="sec-num">STEP 01</span>
-  <h2>我們做了什麼</h2>
-  <p>用 MNIST（手寫數字）訓練 3 個 epoch，然後把第 1、2、3 層的 32 / 64 / 128 張特徵圖畫出來，看它們各自「對什麼有反應」。</p>
+  <h2>這個實驗在做什麼</h2>
+  <p>訓練 MNIST 3 個 epoch，然後<b>把三層的特徵圖印出來</b>（每層挑平均活化最強的 8 個通道），看同一張圖在三層裡「長什麼樣」。</p>
+  <ul class="steps">
+    <li><b>輸入</b>MNIST 60k 訓練 / 10k 測試，28×28 灰階</li>
+    <li><b>操作</b>AdamW + OneCycle，batch 128、3 epochs；用 forward hook 攔截 conv1/2/3 的輸出</li>
+    <li><b>輸出</b>三張 4×8 的特徵圖網格（28×28 / 14×14 / 7×7）＋測試準確率 98.9%</li>
+    <li><b>判讀</b>響應區域的「尺度」隨層變大、位置隨層變粗——這就是用空間換語意</li>
+  </ul>
 
   <span class="sec-num">STEP 02</span>
   <h2>數字</h2>
@@ -75,6 +81,33 @@
   <span class="sec-num">STEP 04</span>
   <h2>學到什麼</h2>
   <p>這件事後面會變成一個大麻煩：當我們用第 3 層做 Grad-CAM（第 5 章），熱點圖會<strong>糊掉</strong>——因為那一層本來就沒有精確位置。看到「熱點落在天空」，可能只是解析度不夠，不是模型真的在看天空。</p>
+
+  <span class="sec-num">STEP 05</span>
+  <h2>程式碼</h2>
+  <div class="codebox">
+    <p class="file">train_cnn.py</p>
+    <p class="desc">訓練；<code>--dump-maps</code> 會存每張圖的 32 張灰色特徵圖</p>
+    <p class="btns">
+      <a class="btn" href="code/train_cnn.py" download>下載 .py</a>
+      <a class="btn ghost" href="code/train_cnn.py" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/train_cnn.py" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="file">inspect_model.py</p>
+    <p class="desc">載入 <code>best.pt</code>，輸出三層特徵圖網格（不重訓）</p>
+    <p class="btns">
+      <a class="btn" href="code/inspect_model.py" download>下載 .py</a>
+      <a class="btn ghost" href="code/inspect_model.py" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/inspect_model.py" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <pre><code>python train_cnn.py --dataset mnist --epochs 3 --dump-maps --plot
+python inspect_model.py --dataset mnist --n 4</code></pre>
+  </div>
+
+  <p style="font-size:14px;color:var(--muted);margin-top:14px">
+    完整程式碼與安裝說明：<a href="code/README.md" target="_blank" rel="noopener">code/README.md</a>｜
+    <a href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/README.md" target="_blank" rel="noopener">GitHub 上的 code 目錄</a>
+  </p>
 
   <div class="pager">
     <a href="ch02-shapes.html">← 02 尺寸</a>

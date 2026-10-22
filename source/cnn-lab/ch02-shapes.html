@@ -43,8 +43,14 @@
   </figure>
 
   <span class="sec-num">STEP 01</span>
-  <h2>我們做了什麼</h2>
-  <p>照課本抄了一段 <code>nn.Sequential</code>，裡面有一行 <code>nn.Linear(64 * 8 * 8, 128)</code>。然後故意做兩件事：把 <code>padding=1</code> 拿掉、把輸入改成 224×224。</p>
+  <h2>這個實驗在做什麼</h2>
+  <p>拿同一份模型定義，故意做三種破壞：<b>拿掉 padding</b>、<b>改成 224×224 輸入</b>、<b>換成 GAP</b>，看哪一種會炸、為什麼炸、換 GAP 之後為什麼就不炸。</p>
+  <ul class="steps">
+    <li><b>輸入</b>同一個 Sequential 定義，餵 32×32、無 padding、224×224 三種情況</li>
+    <li><b>操作</b>各跑一次 forward；比對「Flatten 後長度」與「Linear 期待長度」</li>
+    <li><b>輸出</b>成功的形狀（1×4096）或 <code>RuntimeError: 1x2304 乘不上 4096x128</code> 這類訊息</li>
+    <li><b>判讀</b>攤平長度 = 通道 × 高 × 寬；GAP 把長度固定成「通道數」，所以與解析度無關</li>
+  </ul>
 
   <span class="sec-num">STEP 02</span>
   <h2>數字</h2>
@@ -71,6 +77,25 @@
   <span class="sec-num">STEP 04</span>
   <h2>學到什麼</h2>
   <p>與其背「64×8×8」，不如理解「攤平層的數字 = 通道數 × 高 × 寬」。而現代 CNN 幾乎都用 GAP，就是為了避免這個問題——順便讓模型能接受任何解析度的輸入。</p>
+
+  <span class="sec-num">STEP 05</span>
+  <h2>程式碼</h2>
+  <div class="codebox">
+    <p class="file">cnn_check.py</p>
+    <p class="desc">三種情況的實測腳本；同時印出 baseline 與 GAP 版的參數量（545,098 vs 94,986）</p>
+    <p class="btns">
+      <a class="btn" href="code/cnn_check.py" download>下載 .py</a>
+      <a class="btn ghost" href="code/cnn_check.py" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/cnn_check.py" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <pre><code>python cnn_check.py</code></pre>
+  </div>
+
+  <p style="font-size:14px;color:var(--muted);margin-top:14px">
+    完整程式碼與安裝說明：<a href="code/README.md" target="_blank" rel="noopener">code/README.md</a>｜
+    <a href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/README.md" target="_blank" rel="noopener">GitHub 上的 code 目錄</a>
+  </p>
 
   <div class="pager">
     <a href="ch01-basics.html">← 01 CNN</a>

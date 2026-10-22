@@ -43,8 +43,14 @@
   </figure>
 
   <span class="sec-num">STEP 01</span>
-  <h2>我們做了什麼</h2>
-  <p>不重訓。直接拿 300 張「真值是鳥」的測試圖，把<strong>最外圈 6 像素的邊框</strong>換成不同顏色、或把中心的物件整個蓋掉，再看預測怎麼變。</p>
+  <h2>這個實驗在做什麼</h2>
+  <p>不動模型、不重訓，<b>只改圖片</b>：把最外圈 6 像素的邊框換成不同顏色、或把中心的物件整個蓋掉，再看預測怎麼變。</p>
+  <ul class="steps">
+    <li><b>輸入</b>300 張「真值是鳥」的測試圖；另外單獨取出 42 張「被判成飛機」的子集</li>
+    <li><b>操作</b>生成 5 種變體（原圖 / 灰框 / 綠框 / 天空藍框 / 蓋掉中心 20×20），每種各跑一次 forward</li>
+    <li><b>輸出</b>每種條件的預測分布、bird 準確率、標籤翻轉率</li>
+    <li><b>判讀</b>翻轉率越高 → 越依賴被改動的那塊區域；若蓋掉物件仍能答對，代表它在看背景</li>
+  </ul>
 
   <span class="sec-num">STEP 02</span>
   <h2>數字（300 張 bird）</h2>
@@ -85,6 +91,26 @@
   <span class="sec-num">STEP 04</span>
   <h2>學到什麼</h2>
   <p>想證明「模型靠背景」，最直接的方法不是看熱點圖，而是<strong>把背景換掉看答案會不會變</strong>。這也否定了我們中途的另一個猜想（「這是 32×32 的資訊上限」）——如果只看物件，換顏色不可能讓 79% 的答案翻轉。</p>
+
+  <span class="sec-num">STEP 05</span>
+  <h2>程式碼</h2>
+  <div class="codebox">
+    <p class="file">background_swap.py</p>
+    <p class="desc"><code>--subset all|errors|errors:plane</code> 可切換樣本集，<code>--border</code> 控制邊框厚度</p>
+    <p class="btns">
+      <a class="btn" href="code/background_swap.py" download>下載 .py</a>
+      <a class="btn ghost" href="code/background_swap.py" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/background_swap.py" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <pre><code>python background_swap.py --class bird --n 300 --tag bird
+python background_swap.py --class bird --subset errors:plane --tag bird2plane</code></pre>
+  </div>
+
+  <p style="font-size:14px;color:var(--muted);margin-top:14px">
+    完整程式碼與安裝說明：<a href="code/README.md" target="_blank" rel="noopener">code/README.md</a>｜
+    <a href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/README.md" target="_blank" rel="noopener">GitHub 上的 code 目錄</a>
+  </p>
 
   <div class="pager">
     <a href="ch09-cifar.html">← 09 CIFAR</a>

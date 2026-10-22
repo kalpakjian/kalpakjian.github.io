@@ -43,8 +43,14 @@
   </figure>
 
   <span class="sec-num">STEP 01</span>
-  <h2>我們做了什麼</h2>
-  <p>沒有訓練。只是把課本上的架構用 PyTorch 拼出來，然後確認每一層的「輸入尺寸 → 輸出尺寸」，順便數一下總共有多少參數。</p>
+  <h2>這個實驗在做什麼</h2>
+  <p>這章沒有訓練。只是把課本上的 <code>nn.Sequential</code> 拼出來，然後逐層追一次 shape，確認每個環節的輸入與輸出對得上，並數清楚參數長在哪裡。</p>
+  <ul class="steps">
+    <li><b>輸入</b>一張 32×32×3 的彩色圖（MNIST 則是 28×28×1 灰階）</li>
+    <li><b>操作</b>Conv(3×3, padding=1) → BatchNorm → ReLU → MaxPool(2)，重複 3 次，最後接 GAP → Linear(10)</li>
+    <li><b>輸出</b>每層的張量形狀 (B, C, H, W)、Flatten 後的長度、總參數量</li>
+    <li><b>判讀</b>哪一層把尺寸砍半、哪一層吃掉最多參數（答案：第一個 Linear 吃掉 96%）</li>
+  </ul>
 
   <span class="sec-num">STEP 02</span>
   <h2>數字</h2>
@@ -75,6 +81,32 @@
   <span class="sec-num">STEP 04</span>
   <h2>學到什麼</h2>
   <p>CNN 最聰明的兩件事：<strong>同一個放大鏡用遍整張圖</strong>（權重共享）和<strong>只看附近、不管遠處</strong>（局部連接）。所以它的參數比「每個像素都接一條線」的全連接網路少非常多，也更容易學會「不管東西出現在哪裡都認得出來」。</p>
+
+  <span class="sec-num">STEP 05</span>
+  <h2>程式碼</h2>
+  <div class="codebox">
+    <p class="file">train_cnn.py</p>
+    <p class="desc">定義模型（<code>build_model</code>）；<code>--arch small|wide</code> 切換 95k / 964k 兩種容量</p>
+    <p class="btns">
+      <a class="btn" href="code/train_cnn.py" download>下載 .py</a>
+      <a class="btn ghost" href="code/train_cnn.py" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/train_cnn.py" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="file">cnn_check.py</p>
+    <p class="desc">用 forward hook 把每一層的輸出形狀與參數量印出來</p>
+    <p class="btns">
+      <a class="btn" href="code/cnn_check.py" download>下載 .py</a>
+      <a class="btn ghost" href="code/cnn_check.py" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/cnn_check.py" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <pre><code>python cnn_check.py</code></pre>
+  </div>
+
+  <p style="font-size:14px;color:var(--muted);margin-top:14px">
+    完整程式碼與安裝說明：<a href="code/README.md" target="_blank" rel="noopener">code/README.md</a>｜
+    <a href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/README.md" target="_blank" rel="noopener">GitHub 上的 code 目錄</a>
+  </p>
 
   <div class="pager">
     <a href="index.html">← 回目錄</a>

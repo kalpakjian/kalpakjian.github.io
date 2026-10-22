@@ -43,8 +43,14 @@
   </figure>
 
   <span class="sec-num">STEP 01</span>
-  <h2>我們做了什麼</h2>
-  <p>同一份程式換成 CIFAR-10（32×32 彩色照片），把模型從 3 個 block（95k 參數）加大到 4 個 block（964k 參數），訓練 15 個 epoch，然後畫出完整的 10×10 混淆矩陣。</p>
+  <h2>這個實驗在做什麼</h2>
+  <p>換成 CIFAR-10（32×32 彩色照片），把模型從 3 個 block 加大到 4 個 block，訓練後<b>把整個 10×10 混淆矩陣畫出來</b>。</p>
+  <ul class="steps">
+    <li><b>輸入</b>CIFAR-10，50k 訓練 / 10k 測試（透過 HuggingFace 取得並快取）</li>
+    <li><b>操作</b>wide 架構（964k 參數）、15 epochs、batch 512、OneCycle；對 10k 測試圖做預測，統計 10×10 的計數矩陣並按列正規化</li>
+    <li><b>輸出</b>混淆矩陣熱圖（格子裡同時標百分比與張數）、每類前 5 名混淆、總準確率 85.7%</li>
+    <li><b>判讀</b>看錯誤是否集中在語意相近的類別（cat↔dog、truck↔car），而不是隨機亂猜</li>
+  </ul>
 
   <span class="sec-num">STEP 02</span>
   <h2>數字</h2>
@@ -80,6 +86,33 @@
   <span class="sec-num">STEP 04</span>
   <h2>學到什麼</h2>
   <p>看準確率之前，先看混淆矩陣。<strong>錯在哪裡，比錯多少更重要。</strong>而這一章也埋下下一章的伏筆：<code>bird → plane</code> 只有 4%，但它是最可疑的那一種錯。</p>
+
+  <span class="sec-num">STEP 05</span>
+  <h2>程式碼</h2>
+  <div class="codebox">
+    <p class="file">train_cnn.py</p>
+    <p class="desc"><code>--arch wide</code> 訓練；資料來源 <code>--source auto|hf|torchvision</code></p>
+    <p class="btns">
+      <a class="btn" href="code/train_cnn.py" download>下載 .py</a>
+      <a class="btn ghost" href="code/train_cnn.py" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/train_cnn.py" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="file">confusion_probe.py</p>
+    <p class="desc">載入權重、建混淆矩陣、印出指定類別的混淆排行</p>
+    <p class="btns">
+      <a class="btn" href="code/confusion_probe.py" download>下載 .py</a>
+      <a class="btn ghost" href="code/confusion_probe.py" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/confusion_probe.py" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <pre><code>python train_cnn.py --dataset cifar10 --arch wide --epochs 15 --batch-size 512 --lr 4e-3 --out run_wide
+python confusion_probe.py --ckpt run_wide\cifar10\best.pt --class bird --tag wide</code></pre>
+  </div>
+
+  <p style="font-size:14px;color:var(--muted);margin-top:14px">
+    完整程式碼與安裝說明：<a href="code/README.md" target="_blank" rel="noopener">code/README.md</a>｜
+    <a href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/README.md" target="_blank" rel="noopener">GitHub 上的 code 目錄</a>
+  </p>
 
   <div class="pager">
     <a href="ch08-taxonomy.html">← 08 分型</a>

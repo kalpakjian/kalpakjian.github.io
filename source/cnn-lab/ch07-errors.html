@@ -38,8 +38,14 @@
   <p class="onesent"><strong>一句話：</strong>三個信心 96.9%–98.9% 的誤判，比「信心 27% 但答對」的樣本危險得多。</p>
 
   <span class="sec-num">STEP 01</span>
-  <h2>我們做了什麼</h2>
-  <p>把整個測試集跑一遍，挑出「<strong>信心最高的錯誤</strong>」和「<strong>信心最低的正確</strong>」各 3 張，然後畫它們的 Grad-CAM，看模型是依據什麼在出錯。</p>
+  <h2>這個實驗在做什麼</h2>
+  <p>掃過整個測試集，<b>挑出「信心最高的錯誤」與「信心最低的正確」各 3 張</b>，再逐一畫 Grad-CAM，看它出錯時依據什麼。</p>
+  <ul class="steps">
+    <li><b>輸入</b>MNIST 10k 測試圖</li>
+    <li><b>操作</b>一次 forward 取得每張的預測與信心；把 <code>(預測≠真值)</code> 依信心由高到低排、<code>(預測=真值)</code> 依信心由低到高排，各取 3 張</li>
+    <li><b>輸出</b>6 張圖的 Grad-CAM 對照 + <code>errors.txt</code> 逐筆列出真實/預測/信心</li>
+    <li><b>判讀</b>若錯誤的信心（96.9–98.9%）遠高於正確的低信心樣本（27–36%），代表信心不能用來篩錯</li>
+  </ul>
 
   <span class="sec-num">STEP 02</span>
   <h2>數字（MNIST，總準確率 98.87%）</h2>
@@ -69,6 +75,25 @@
   <span class="sec-num">STEP 04</span>
   <h2>學到什麼</h2>
   <p>模型出錯時，要問的是「<strong>它依據什麼出錯</strong>」（Grad-CAM 顯示它鎖定了那條誤導性的筆畫），而不是只看「它錯了幾張」。這也直接導向下一章：把錯誤分型。</p>
+
+  <span class="sec-num">STEP 05</span>
+  <h2>程式碼</h2>
+  <div class="codebox">
+    <p class="file">inspect_model.py</p>
+    <p class="desc"><code>--errors N</code>：自動挑最糟的 N 個樣本並畫 Grad-CAM</p>
+    <p class="btns">
+      <a class="btn" href="code/inspect_model.py" download>下載 .py</a>
+      <a class="btn ghost" href="code/inspect_model.py" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/inspect_model.py" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <pre><code>python inspect_model.py --dataset mnist --errors 3</code></pre>
+  </div>
+
+  <p style="font-size:14px;color:var(--muted);margin-top:14px">
+    完整程式碼與安裝說明：<a href="code/README.md" target="_blank" rel="noopener">code/README.md</a>｜
+    <a href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/README.md" target="_blank" rel="noopener">GitHub 上的 code 目錄</a>
+  </p>
 
   <div class="pager">
     <a href="ch06-occlusion.html">← 06 遮擋</a>

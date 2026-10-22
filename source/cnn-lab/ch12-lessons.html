@@ -38,17 +38,14 @@
   <p class="onesent"><strong>一句話：</strong>用「單一錯誤對比率 + 同 seed 的 A/B」把假設逼到死角，比看一百張熱點圖有用。</p>
 
   <span class="sec-num">STEP 01</span>
-  <h2>五條教訓</h2>
-  <table class="kv">
-    <thead><tr><th class="n">#</th><th>教訓</th><th>具體證據</th></tr></thead>
-    <tbody>
-      <tr><td class="n">1</td><td><strong>診斷對 ≠ 處方對</strong></td><td>同一診斷、三種處方，全部無效還各賠 ~2pp</td></tr>
-      <tr><td class="n">2</td><td><strong>干預要對準機制</strong></td><td>RandomErasing 是「加雜訊」，不是「斷相關」</td></tr>
-      <tr><td class="n">3</td><td><strong>覆蓋率要算清楚</strong></td><td>6px / 32px 只碰到 1/5 的背景，其餘仍在中心</td></tr>
-      <tr><td class="n">4</td><td><strong>小樣本會騙人</strong></td><td>n=12 的效應量（1.6×）是 n=70（1.2×）的 1.6 倍</td></tr>
-      <tr><td class="n">5</td><td><strong>低解析度歸因不可靠</strong></td><td>7×7 熱點圖放大到 32×32，位置誤差 ±4px</td></tr>
-    </tbody>
-  </table>
+  <h2>這個實驗在做什麼</h2>
+  <p>這章沒有新實驗，而是把前面 11 章的結果整理成<b>可執行的檢查流程</b>：以後遇到「模型是不是在作弊」這種問題，照這四步走就不會憑感覺下結論。</p>
+  <ul class="steps">
+    <li><b>步驟 1</b>先用混淆矩陣定出要處理的「錯誤對」（例：bird→plane 4.2%），不要用總準確率當目標</li>
+    <li><b>步驟 2</b>用 Grad-CAM 提出假設、用遮擋 ratio 量化「有沒有決定性證據」，兩者都只算證據、不算結論</li>
+    <li><b>步驟 3</b>用反事實（改背景／遮物件）確認因果方向；改動若碰到物件，結論要打折</li>
+    <li><b>步驟 4</b>才做干預，並用<b>同一個指標</b>驗證；同時記錄準確率的代價</li>
+  </ul>
 
   <span class="sec-num">STEP 02</span>
   <h2>哪些話可以說、哪些不能說</h2>
@@ -75,6 +72,33 @@
   <span class="sec-num">STEP 04</span>
   <h2>帶走一句話</h2>
   <p class="onesent">這次的收穫不是修好了模型，而是知道：<strong>背景捷徑是真的、但沒有分割就修不掉</strong>，而且三個看起來很合理的處方全都無效。</p>
+
+  <span class="sec-num">STEP 05</span>
+  <h2>程式碼</h2>
+  <div class="codebox">
+    <p class="file">全部七支腳本</p>
+    <p class="desc">見 <code>code/README.md</code> 的檔案對照表與最短重現路徑</p>
+    <p class="btns">
+      <a class="btn" href="code/全部七支腳本" download>下載 .py</a>
+      <a class="btn ghost" href="code/全部七支腳本" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/全部七支腳本" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="file">README.md</p>
+    <p class="desc">安裝指令、每支腳本的用途、四段式重現流程</p>
+    <p class="btns">
+      <a class="btn" href="code/README.md" download>下載 .py</a>
+      <a class="btn ghost" href="code/README.md" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/README.md" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <pre><code>pip install torch torchvision matplotlib datasets pillow tqdm
+python cnn_check.py        # 先確認環境與模型定義沒問題</code></pre>
+  </div>
+
+  <p style="font-size:14px;color:var(--muted);margin-top:14px">
+    完整程式碼與安裝說明：<a href="code/README.md" target="_blank" rel="noopener">code/README.md</a>｜
+    <a href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/README.md" target="_blank" rel="noopener">GitHub 上的 code 目錄</a>
+  </p>
 
   <div class="pager">
     <a href="ch11-ab.html">← 11 三次處方</a>

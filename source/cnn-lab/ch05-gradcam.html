@@ -43,8 +43,14 @@
   </figure>
 
   <span class="sec-num">STEP 01</span>
-  <h2>我們做了什麼</h2>
-  <p>對 CIFAR-10 的測試圖，把最後一層卷積的<strong>梯度</strong>當成「每個通道的重要程度」，乘上特徵圖後加總，得到一張熱點圖。整個過程不需要重訓，一次 forward + backward 就好。</p>
+  <h2>這個實驗在做什麼</h2>
+  <p>對每張測試圖算一次 Grad-CAM：<b>用梯度當「每個通道多重要」</b>，乘上特徵圖後加總，再放大回原圖大小，得到一張熱點圖。</p>
+  <ul class="steps">
+    <li><b>輸入</b>測試圖 + 訓練好的模型</li>
+    <li><b>操作</b>forward 取 conv3 特徵 A、backward 取梯度；w = 梯度的空間平均；CAM = ReLU(Σ w·A)；用雙線性插值放大到 32×32</li>
+    <li><b>輸出</b>原圖 / 熱點 / 疊圖 三連拍，並標上預測類別與信心</li>
+    <li><b>判讀</b>紅=支持這個答案、藍=反對；但 7×7 放大到 32×32，一格代表 4×4 像素，位置誤差 ±4px</li>
+  </ul>
 
   <span class="sec-num">STEP 02</span>
   <h2>數字</h2>
@@ -69,6 +75,25 @@
   <span class="sec-num">STEP 04</span>
   <h2>學到什麼</h2>
   <p>Grad-CAM 的正確用途是<strong>產生假設</strong>（「它好像在靠天空」），然後用別的方法<strong>驗證</strong>（第 6 章的遮擋、第 10 章的反事實）。把它當成鐵證，就會像我們一樣在後面被打臉。</p>
+
+  <span class="sec-num">STEP 05</span>
+  <h2>程式碼</h2>
+  <div class="codebox">
+    <p class="file">inspect_model.py</p>
+    <p class="desc">預設輸出 <code>gradcam_conv2.png</code> 與 <code>gradcam_conv3.png</code> 兩版對照</p>
+    <p class="btns">
+      <a class="btn" href="code/inspect_model.py" download>下載 .py</a>
+      <a class="btn ghost" href="code/inspect_model.py" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/inspect_model.py" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <pre><code>python inspect_model.py --dataset cifar10 --n 4</code></pre>
+  </div>
+
+  <p style="font-size:14px;color:var(--muted);margin-top:14px">
+    完整程式碼與安裝說明：<a href="code/README.md" target="_blank" rel="noopener">code/README.md</a>｜
+    <a href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/README.md" target="_blank" rel="noopener">GitHub 上的 code 目錄</a>
+  </p>
 
   <div class="pager">
     <a href="ch04-kernels.html">← 04 濾波器</a>

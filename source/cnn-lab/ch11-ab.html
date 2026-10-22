@@ -43,8 +43,14 @@
   </figure>
 
   <span class="sec-num">STEP 01</span>
-  <h2>我們做了什麼</h2>
-  <p>知道模型靠背景之後，我們試了三種資料增強。<strong>同 seed、同時長、同超參</strong>，只改被測的那一項，避免「改了三個變數卻不知道哪個有效」。</p>
+  <h2>這個實驗在做什麼</h2>
+  <p>知道模型靠背景之後，<b>設計三個處方做 A/B</b>：同 seed、同時長、同超參，唯一差別是被測的資料增強，最後用同一個指標（bird→plane）判斷有沒有效。</p>
+  <ul class="steps">
+    <li><b>輸入</b>CIFAR-10，wide 架構，12 epochs、batch 512、seed 0</li>
+    <li><b>操作</b>① 加 RandomErasing p=0.5 ② 邊框換成另一張圖 p=0.5 ③ 邊框換純色 p=0.9（20 epochs）；每次訓練完都跑一次 confusion_probe</li>
+    <li><b>輸出</b>4 組（總準確率、bird 準確率、bird→plane 比率）與柱狀圖</li>
+    <li><b>判讀</b>目標指標是否顯著下降；若只掉準確率而指標不動，代表處方無效</li>
+  </ul>
 
   <span class="sec-num">STEP 02</span>
   <h2>數字</h2>
@@ -74,6 +80,33 @@
   <span class="sec-num">STEP 04</span>
   <h2>學到什麼</h2>
   <p><strong>診斷對 ≠ 處方對。</strong>干預的「覆蓋率」與「是否打到物件」決定成敗，跟想法多聰明無關。真正該做的是「把窗外完全換掉」，但那需要<strong>物件分割</strong>——我們沒有這個工具，所以到此為止。</p>
+
+  <span class="sec-num">STEP 05</span>
+  <h2>程式碼</h2>
+  <div class="codebox">
+    <p class="file">train_cnn.py</p>
+    <p class="desc"><code>--erase</code>、<code>--bg-mix</code>、<code>--bg-fill image|color</code>、<code>--seed</code> 就是這次 A/B 的開關</p>
+    <p class="btns">
+      <a class="btn" href="code/train_cnn.py" download>下載 .py</a>
+      <a class="btn ghost" href="code/train_cnn.py" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/train_cnn.py" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="file">confusion_probe.py</p>
+    <p class="desc">每次訓練後量同一個指標，避免用總準確率自我安慰</p>
+    <p class="btns">
+      <a class="btn" href="code/confusion_probe.py" download>下載 .py</a>
+      <a class="btn ghost" href="code/confusion_probe.py" target="_blank" rel="noopener">瀏覽器檢視</a>
+      <a class="btn ghost" href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/confusion_probe.py" target="_blank" rel="noopener">在 GitHub 看</a>
+    </p>
+    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <pre><code>python train_cnn.py --dataset cifar10 --arch wide --epochs 12 --batch-size 512 --seed 0 --erase 0.5 --out run_B
+python train_cnn.py --dataset cifar10 --arch wide --epochs 20 --batch-size 512 --seed 0 --bg-mix 0.9 --bg-fill color --out run_D</code></pre>
+  </div>
+
+  <p style="font-size:14px;color:var(--muted);margin-top:14px">
+    完整程式碼與安裝說明：<a href="code/README.md" target="_blank" rel="noopener">code/README.md</a>｜
+    <a href="https://github.com/kalpakjian/kalpakjian.github.io/blob/main/source/cnn-lab/code/README.md" target="_blank" rel="noopener">GitHub 上的 code 目錄</a>
+  </p>
 
   <div class="pager">
     <a href="ch10-counterfactual.html">← 10 反事實</a>
