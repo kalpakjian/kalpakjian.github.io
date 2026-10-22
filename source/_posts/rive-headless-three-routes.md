@@ -26,25 +26,38 @@ banner_img: /img/covers/rive-headless-three-routes.png
 > 起因是一篇 2023 年的舊文〈新一代跨平台、高效能動畫庫 - Rive〉。那篇把 Rive 的效能與狀態機講得很清楚，
 > 但沒有回答兩個實務問題：**免費版與付費版到底差在哪**、**有沒有無頭（headless）的用法**。
 >
-> 我把兩個問題都實測完，還把 Rive 官方的 **C++ runtime 在本機編起來**，自己寫了一個 CPU 光柵化 renderer。
-> 三條路線都跑通、都有數據；包含兩次我自己的誤判，以及官方文件那條路為什麼在 Windows 上根本跑不起來。
+> 我把兩個問題都實測完，還把 Rive 官方的 **C++ runtime 在本機編起來**：先自己寫了一個 CPU 光柵化 renderer，
+> 再把官方的 GPU renderer 接到**離屏 texture** 上。三條路線都跑通、都有數據——最後那條的輸出與
+> 官方 CLI 自己截的圖**位元完全相同**。
+>
+> 過程中包含我自己的**三次誤判**，以及官方文件那條路（Skia thumbnail generator）為什麼在 Windows 上根本跑不起來。
 
 <!-- more -->
 
-## 一、結論先講：三條路線怎麼選
+## 一、結論先講：三條路線、四條路徑
 
-| | 路線 1：官方 CLI | 路線 2：官方 WASM + Playwright | 路線 3：C++ runtime + 自寫 renderer |
+| | 路線 1：官方 CLI | 路線 2：官方 WASM + Playwright | 路線 3：C++ runtime（兩種實作，見下） |
 |---|---|---|---|
 | 一句話 | `rive --screenshot` | 在 headless Chrome 裡跑官方 runtime | 編 `rive.lib`，自己實作 `rive::Renderer` |
 | 能渲染什麼 | **RML 專案**（或 `.rev` 轉出的專案） | **任意 `.riv`** | **任意 `.riv`** |
-| 畫質 | 官方 GPU renderer，**與線上一致** | 官方 runtime，**與線上一致** | 自寫掃描線光柵器，**無反鋸齒、無圖片** |
+| 畫質 | 官方 GPU renderer，**與線上一致** | 官方 runtime，**與線上一致** | 自寫 CPU：**無反鋸齒、無圖片**；官方 GPU 離屏：**與線上一致** |
 | 需要帳號 | **不用**（`--screenshot` 免登入） | 不用 | 不用 |
 | 需要 GPU | 不用（但仍走官方 renderer） | 不用（瀏覽器可軟體算） | 完全不用 |
 | 建置成本 | 一行安裝 | `npm i playwright-core @rive-app/canvas-advanced` | **MSVC + 1.25 GB `rive.lib` + 自己寫 800 行** |
 | 適用 | CI 截圖、回歸、效能 | 任意素材、與線上一致 | 伺服器端／嵌入自有引擎 |
 
 **我的建議**：預設走路線 1；要處理「別人給的 `.riv`」走路線 2；只有當你要**把 Rive 塞進自己的 C++ 產品**、
-或需要在沒有瀏覽器的伺服器上算圖，才值得付出路線 3 的代價。
+或需要在沒有瀏覽器的伺服器上算圖，才值得付出路線 3 的代價——**而且要選 3b（官方 GPU renderer 離屏），不是 3a**。
+
+路線 3 的兩種實作差別很大，先講清楚：
+
+| | 路線 3a：自寫 CPU renderer | 路線 3b：官方 GPU renderer + 離屏 texture |
+|---|---|---|
+| 畫質 | 自寫掃描線光柵器，**無反鋸齒** | 與線上完全一致（**反鋸齒、圖片、mesh、漸層都支援**） |
+| 需要 GPU | **完全不用** | 需要（沒有可用 GPU 時自動退回 WARP 軟體算） |
+| 建置成本 | 只要 `rive.lib` + 約 800 行自寫程式 | 還要 `rive_pls_renderer`（含 shader 產生步驟） |
+| 驗證方式 | 顏色與幾何精確命中作者定義值 | 與官方 CLI 的截圖 **100% 像素相同** |
+| 適合 | 理解原理、完全沒有 GPU 的環境 | **生產環境** |
 
 <div style="max-width:640px;margin:1.6rem auto">
 <img src="/img/rive-headless-three-routes/ch01-three-routes.jpg" alt="三條不同質地的光路從一點分岔，各自通往遠方" style="width:100%;border-radius:14px">
