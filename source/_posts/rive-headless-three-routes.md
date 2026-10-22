@@ -30,7 +30,7 @@ banner_img: /img/covers/rive-headless-three-routes.png
 > 再把官方的 GPU renderer 接到**離屏 texture** 上。三條路線都跑通、都有數據——最後那條的輸出與
 > 官方 CLI 自己截的圖**位元完全相同**。
 >
-> 過程中包含我自己的**三次誤判**，以及官方文件那條路（Skia thumbnail generator）為什麼在 Windows 上根本跑不起來。
+> 過程中包含我自己的**三次誤判**（第七、八節），以及官方文件那條路（Skia thumbnail generator）為什麼在 Windows 上根本跑不起來。
 
 <!-- more -->
 
@@ -187,7 +187,7 @@ wrote vehicles-jeep.png (6892 bytes, png signature=true)
 > 圖：同一份 `vehicles.riv`（artboard `Jeep`）。左邊是官方 WASM runtime（Playwright 驅動，含貼圖），
 > 右邊是我自己寫的 CPU renderer —— 看得出來它只畫得出向量部分。
 
-## 五、路線 3：C++ runtime + 自寫 renderer
+## 五、路線 3a：C++ runtime + 自寫 CPU renderer
 
 ### 5.1 先說壞消息：官方文件寫的那條路，在 Windows 上跑不起來
 
@@ -266,7 +266,7 @@ wrote f-jeep.bmp
 
 > 圖：本機 ComfyUI 的 Qwen-Image 2.1 生成（本站 house style，無文字）。
 
-## 七、驗證：量出來的數字，以及我自己的兩次誤判
+## 七、驗證：量出來的數字，以及兩次誤判
 
 「跑完沒報錯」不等於「畫對」。所以我用**顏色與幾何**去對：場景 `rml_triangle` 在 RML 裡就寫明了
 背景 `#1D1D1D`、三角形 `#57A5E0`、標籤 `#E0E0E0`，而且三角形有一段「2 秒轉一圈」的 Spin 動畫。
@@ -321,7 +321,7 @@ wrote f-jeep.bmp
 
 > 圖：本機 ComfyUI 的 Qwen-Image 2.1 生成（本站 house style，無文字）。
 
-## 八、把 D3D11 離屏也打通（GPU 版路線 3）
+## 八、路線 3b：把 D3D11 離屏也打通
 
 自寫 renderer 只是權宜之計。真正的答案是：**用官方自己的 GPU renderer，但渲染到離屏 texture**。
 
