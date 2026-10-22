@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>第 12 章 總結：五條方法論教訓 ｜ CNN 專題</title>
+<meta name="description" content="五條教訓與一張「哪些話可以說、哪些不能說」的表：背景捷徑是真的，但沒有分割就修不掉。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-basics.html">01 CNN</a>
+      <a href="ch02-shapes.html">02 尺寸</a>
+      <a href="ch03-mnist.html">03 特徵圖</a>
+      <a href="ch04-kernels.html">04 濾波器</a>
+      <a href="ch05-gradcam.html">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html">06 遮擋</a>
+      <a href="ch07-errors.html">07 錯誤</a>
+      <a href="ch08-taxonomy.html">08 分型</a>
+      <a href="ch09-cifar.html">09 CIFAR</a>
+      <a href="ch10-counterfactual.html">10 反事實</a>
+      <a href="ch11-ab.html">11 處方</a>
+      <a href="ch12-lessons.html" class="active">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<article class="article">
+  <span class="kicker">CHAPTER 12 · 總結</span>
+  <h1>總結：五條方法論教訓</h1>
+
+  <p class="onesent"><strong>一句話：</strong>用「單一錯誤對比率 + 同 seed 的 A/B」把假設逼到死角，比看一百張熱點圖有用。</p>
+
+  <span class="sec-num">STEP 01</span>
+  <h2>五條教訓</h2>
+  <table class="kv">
+    <thead><tr><th class="n">#</th><th>教訓</th><th>具體證據</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td><strong>診斷對 ≠ 處方對</strong></td><td>同一診斷、三種處方，全部無效還各賠 ~2pp</td></tr>
+      <tr><td class="n">2</td><td><strong>干預要對準機制</strong></td><td>RandomErasing 是「加雜訊」，不是「斷相關」</td></tr>
+      <tr><td class="n">3</td><td><strong>覆蓋率要算清楚</strong></td><td>6px / 32px 只碰到 1/5 的背景，其餘仍在中心</td></tr>
+      <tr><td class="n">4</td><td><strong>小樣本會騙人</strong></td><td>n=12 的效應量（1.6×）是 n=70（1.2×）的 1.6 倍</td></tr>
+      <tr><td class="n">5</td><td><strong>低解析度歸因不可靠</strong></td><td>7×7 熱點圖放大到 32×32，位置誤差 ±4px</td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-num">STEP 02</span>
+  <h2>哪些話可以說、哪些不能說</h2>
+  <table class="kv">
+    <thead><tr><th>命題</th><th class="n">能不能說</th></tr></thead>
+    <tbody>
+      <tr><td>模型會利用背景線索</td><td><span class="ok">✅ 可以</span>（換背景顏色就改變預測；物件蓋掉仍 56.7% 答對）</td></tr>
+      <tr><td>那 42 個誤判是背景造成的</td><td><span class="bad">⚠️ 只能說「部分」</span>（換植被修好 79%，但同操作也切掉翅膀）</td></tr>
+      <tr><td><code>ratio</code> 可以當錯誤偵測器</td><td><span class="bad">❌ 不行</span>（猜對的樣本 ratio 一樣低）</td></tr>
+      <tr><td>模型越大 ratio 越高</td><td><span class="bad">⚠️ 很微弱</span>（0.163 → 0.192，遠低於 MNIST 的 0.38）</td></tr>
+      <tr><td>低成本增強能修掉背景捷徑</td><td><span class="bad">❌ 不行</span>（三種處方實測無效）</td></tr>
+      <tr><td>這是 32×32 的資訊上限</td><td><span class="bad">❌ 不行</span>（只改邊框顏色就翻轉 79% 的誤判）</td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-num">STEP 03</span>
+  <h2>還缺的那一塊</h2>
+  <div class="plain">
+    <p>唯一還沒回答的問題是：<strong>用真正的物件分割、只替換背景像素，能不能修掉？</strong></p>
+    <p>這需要 mask（本專題的資料集沒有），所以到此為止是誠實的邊界——而不是「我們放棄了」。</p>
+    <p>如果你要往下做，下一步很明確：找一個有分割標註的資料集（例如 COCO 子集），只把「非物件」像素隨機換成其他圖片的背景，再量同一個指標。</p>
+  </div>
+
+  <span class="sec-num">STEP 04</span>
+  <h2>帶走一句話</h2>
+  <p class="onesent">這次的收穫不是修好了模型，而是知道：<strong>背景捷徑是真的、但沒有分割就修不掉</strong>，而且三個看起來很合理的處方全都無效。</p>
+
+  <div class="pager">
+    <a href="ch11-ab.html">← 11 三次處方</a>
+    <a href="index.html">回目錄 →</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>CNN 專題：十個實驗，和三次被推翻的假設</title>
+<meta name="description" content="從濾波器在看什麼、到 Grad-CAM 與遮擋實驗，一路追問「模型到底靠什麼判斷」。十個可重跑的實驗、三次失敗的處方，每個結論都附數字。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html" class="active">首頁</a>
+      <a href="ch01-basics.html">01 CNN</a>
+      <a href="ch02-shapes.html">02 尺寸</a>
+      <a href="ch03-mnist.html">03 特徵圖</a>
+      <a href="ch04-kernels.html">04 濾波器</a>
+      <a href="ch05-gradcam.html">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html">06 遮擋</a>
+      <a href="ch07-errors.html">07 錯誤</a>
+      <a href="ch08-taxonomy.html">08 分型</a>
+      <a href="ch09-cifar.html">09 CIFAR</a>
+      <a href="ch10-counterfactual.html">10 反事實</a>
+      <a href="ch11-ab.html">11 處方</a>
+      <a href="ch12-lessons.html">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <span class="kicker">CONVOLUTIONAL NETWORK · 十二個實驗</span>
+    <h1>CNN 專題：十個實驗，和三次被推翻的假設</h1>
+    <p class="lead">從「濾波器到底在看什麼」，一路追問到「模型是不是靠背景作弊」。</p>
+    <p class="lead">這份專題不教你把準確率推到 99%。它記錄的是一連串<strong>追問、驗證、然後發現自己想錯</strong>的過程：我們懷疑模型靠天空認飛機，最後證實是真的——但三次試圖治好它的處方，全部失敗。</p>
+    <p class="meta">MNIST 98.9%｜CIFAR-10 85.7%｜RTX 4090｜PyTorch 2.14｜每章都有可重跑的指令與實測數字</p>
+  </section>
+
+  <figure class="fig cover">
+    <img src="img/00_cover.svg" alt="CNN 專題封面：3×3 濾波器在像素網格上滑動的示意圖" loading="eager">
+    <figcaption>整個 CNN 就是「很多小濾鏡在圖上滑動」；複雜度都藏在「濾鏡看到什麼、怎麼組合、最後憑什麼下判斷」這三件事裡。</figcaption>
+  </figure>
+
+  <div class="callout">
+    <div class="label">TL;DR — 六句話看完</div>
+    <ul class="plain">
+      <li>CNN 的第一層會自動學成<strong>邊緣偵測器</strong>；越深的層看得越抽象，但位置越不精確。</li>
+      <li>把尺寸寫死（<code>64*8*8</code>）是最常見的爆炸點；<strong>GAP</strong> 讓同一份模型能吃 32、64、224 各種尺寸，參數還少 83%。</li>
+      <li>Grad-CAM 只能<strong>提出假設</strong>：7×7 熱點圖放大到 32×32，位置誤差 ±4px，熱點落在天空不代表模型在看天空。</li>
+      <li><strong>高信心錯誤最危險</strong>：MNIST 三個信心 96.9–98.9% 的誤判，比信心 27% 但答對的樣本更該處理。</li>
+      <li>反事實實驗給出鐵證：只把背景從天空換成綠色，<strong>79% 的「鳥→飛機」誤判被修好</strong>；把物件整個蓋掉，仍有 56.7% 答對。</li>
+      <li>但三種資料增強處方<strong>全部失敗</strong>——各賠約 2 個百分點準確率，目標指標動也不動。診斷對，不代表處方對。</li>
+    </ul>
+  </div>
+
+  <h2 style="font-size:22px;margin:44px 0 0;">十二章導覽</h2>
+  <p style="color:var(--muted);font-size:15px;margin:8px 0 0;">建議照順序讀：前三章建立直覺，中間四章是「看模型」的各種工具與陷阱，後五章是一場失敗的除錯實錄。</p>
+
+  <div class="card-grid">
+    <a class="card" href="ch01-basics.html">
+      <span class="thumb"><img src="img/01_arch.svg" alt="CNN 流水線示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">CHAPTER 01</span>
+        <h2>CNN 到底是什麼</h2>
+        <p>用「放大鏡 + 便當盒 + 大腦」三個比喻，講完卷積、池化、全連接。</p>
+        <span class="arrow">開始閱讀 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="ch02-shapes.html">
+      <span class="thumb"><img src="img/02_shapes.svg" alt="尺寸追蹤示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">CHAPTER 02</span>
+        <h2>把課本程式跑起來，然後它炸了</h2>
+        <p>為什麼 <code>64*8*8</code> 會爆？追一次 32→16→8 的尺寸，順便認識 GAP。</p>
+        <span class="arrow">開始閱讀 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="ch03-mnist.html">
+      <span class="thumb"><img src="img/03_hierarchy.svg" alt="階層式特徵示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">CHAPTER 03</span>
+        <h2>MNIST：越深的層看得越抽象</h2>
+        <p>28×28 → 14×14 → 7×7，用「空間」換「意義」的實際樣子。</p>
+        <span class="arrow">開始閱讀 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="ch04-kernels.html">
+      <span class="thumb"><img src="img/04_kernels.svg" alt="濾波器權重示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">CHAPTER 04</span>
+        <h2>把濾波器本人挖出來看</h2>
+        <p>32 個 3×3 權重，居然自動長成各種方向的邊緣偵測器。</p>
+        <span class="arrow">開始閱讀 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="ch05-gradcam.html">
+      <span class="thumb"><img src="img/05_gradcam.svg" alt="Grad-CAM 熱點圖示意" loading="lazy"></span>
+      <span class="body">
+        <span class="num">CHAPTER 05</span>
+        <h2>Grad-CAM：模型看哪裡？</h2>
+        <p>熱點圖怎麼讀，以及它為什麼只能當「假設」不能當「結論」。</p>
+        <span class="arrow">開始閱讀 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="ch06-occlusion.html">
+      <span class="thumb"><img src="img/06_occlusion.svg" alt="遮擋實驗示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">CHAPTER 06</span>
+        <h2>遮擋實驗：用橡皮擦一塊一塊擦</h2>
+        <p>擦掉哪裡信心掉最多？這個數字能分類錯誤，卻不能偵測錯誤。</p>
+        <span class="arrow">開始閱讀 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="ch07-errors.html">
+      <span class="thumb" style="display:flex;align-items:center;justify-content:center;height:148px;background:linear-gradient(135deg,#1e3a8a,#7c3aed);color:#fff;font-size:34px;font-weight:800">98.9%</span>
+      <span class="body">
+        <span class="num">CHAPTER 07</span>
+        <h2>錯得最慘的，都是最有自信的</h2>
+        <p>三個 96.9–98.9% 的誤判，告訴你「信心不能用來篩錯」。</p>
+        <span class="arrow">開始閱讀 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="ch08-taxonomy.html">
+      <span class="thumb" style="display:flex;align-items:center;justify-content:center;height:148px;background:linear-gradient(135deg,#0f766e,#0891b2);color:#fff;font-size:34px;font-weight:800">19%</span>
+      <span class="body">
+        <span class="num">CHAPTER 08</span>
+        <h2>把「誤判」拆成三種</h2>
+        <p>被線索騙、被顏色騙、根本沒想法——三種錯要用三種方法救。</p>
+        <span class="arrow">開始閱讀 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="ch09-cifar.html">
+      <span class="thumb"><img src="img/07_confusion.svg" alt="混淆矩陣示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">CHAPTER 09</span>
+        <h2>換成彩色照片（CIFAR-10）</h2>
+        <p>85.7% 看起來不高，但混淆矩陣告訴你「它錯得很合理」。</p>
+        <span class="arrow">開始閱讀 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="ch10-counterfactual.html">
+      <span class="thumb"><img src="img/08_swap.svg" alt="反事實實驗示意圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">CHAPTER 10</span>
+        <h2>反事實：只改背景，答案就變了</h2>
+        <p>不動那隻鳥一根羽毛，79% 的誤判就消失了。</p>
+        <span class="arrow">開始閱讀 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="ch11-ab.html">
+      <span class="thumb"><img src="img/09_ab_results.svg" alt="三次處方 A/B 結果圖" loading="lazy"></span>
+      <span class="body">
+        <span class="num">CHAPTER 11</span>
+        <h2>三次「治療」，全部失敗</h2>
+        <p>診斷對、處方錯：三種增強各賠 2pp，目標錯誤卻沒少。</p>
+        <span class="arrow">開始閱讀 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="ch12-lessons.html">
+      <span class="thumb" style="display:flex;align-items:center;justify-content:center;height:148px;background:linear-gradient(135deg,#7f1d1d,#b45309);color:#fff;font-size:34px;font-weight:800">5</span>
+      <span class="body">
+        <span class="num">CHAPTER 12</span>
+        <h2>總結：五條方法論教訓</h2>
+        <p>哪些話可以說、哪些不能說，一張表收乾淨。</p>
+        <span class="arrow">開始閱讀 →</span>
+      </span>
+    </a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>
+

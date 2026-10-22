@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>第 4 章 把濾波器本人挖出來看 ｜ CNN 專題</title>
+<meta name="description" content="32 個 3×3 權重長什麼樣：垂直邊緣、水平邊緣、小斑塊——沒有人教它，訓練後自動變成邊緣偵測器。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-basics.html">01 CNN</a>
+      <a href="ch02-shapes.html">02 尺寸</a>
+      <a href="ch03-mnist.html">03 特徵圖</a>
+      <a href="ch04-kernels.html" class="active">04 濾波器</a>
+      <a href="ch05-gradcam.html">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html">06 遮擋</a>
+      <a href="ch07-errors.html">07 錯誤</a>
+      <a href="ch08-taxonomy.html">08 分型</a>
+      <a href="ch09-cifar.html">09 CIFAR</a>
+      <a href="ch10-counterfactual.html">10 反事實</a>
+      <a href="ch11-ab.html">11 處方</a>
+      <a href="ch12-lessons.html">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<article class="article">
+  <span class="kicker">CHAPTER 04 · 實驗三</span>
+  <h1>把濾波器本人挖出來看</h1>
+
+  <p class="onesent"><strong>一句話：</strong>訓練完的 3×3 濾波器，會自動變成「各種方向的邊緣偵測器」——沒有人教它要這樣做。</p>
+
+  <figure class="fig">
+    <img src="img/04_kernels.svg" alt="三個 3×3 濾波器：垂直邊緣、水平邊緣、小斑塊，紅為正權重、藍為負權重">
+    <figcaption>紅 = 正權重（這裡亮 → 輸出亮）；藍 = 負權重（這裡亮 → 輸出暗）。數字就是訓練學到的權重。</figcaption>
+  </figure>
+
+  <span class="sec-num">STEP 01</span>
+  <h2>我們做了什麼</h2>
+  <p>把第 1 層卷積的 32 個 3×3 權重印出來，紅藍上色、數值直接標在格子裡。這跟第 3 章看「特徵圖」不同——<strong>這裡看的是濾鏡本身，不是它產生的反應</strong>。</p>
+
+  <span class="sec-num">STEP 02</span>
+  <h2>數字</h2>
+  <table class="kv">
+    <thead><tr><th>觀察</th><th>數值</th></tr></thead>
+    <tbody>
+      <tr><td>權重範圍</td><td class="n">約 −0.39 ~ +0.43</td></tr>
+      <tr><td>每個濾波器的強度（L2）</td><td class="n">0.46 ~ 0.71，相當平均</td></tr>
+      <tr><td>典型樣式</td><td>左負右正 → 垂直邊緣；上負下正 → 水平邊緣；中間正四周負 → 小斑塊</td></tr>
+      <tr><td>幾乎沒反應的</td><td class="n">2–3 個（訓練 epoch 少）</td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-num">STEP 03</span>
+  <h2>白話解釋</h2>
+  <div class="plain">
+    <p>一個 3×3 濾波器就是 9 個數字。以「垂直邊緣偵測器」為例：左邊是負的、右邊是正的。</p>
+    <p>當它滑到「左邊暗、右邊亮」的地方 → 負×暗 + 正×亮 = <strong>很大的正數</strong>，圖上就亮起來。</p>
+    <p>滑到「一整片都一樣亮」的地方 → 正負互相抵消 = <strong>接近 0</strong>，圖上就暗。</p>
+    <p>所以它不是「記住數字長怎樣」，而是<strong>記住「哪裡有變化」</strong>。</p>
+  </div>
+
+  <span class="sec-num">STEP 04</span>
+  <h2>學到什麼</h2>
+  <p>CNN 的第一層幾乎一定會學成邊緣偵測器。這是它效率高的原因——先抓最低階、最通用的特徵（邊緣），再往上組（轉角 → 形狀 → 物件）。這也解釋了為什麼同樣的架構可以同時用在數字、貓狗、甚至醫學影像上。</p>
+
+  <div class="pager">
+    <a href="ch03-mnist.html">← 03 特徵圖</a>
+    <a href="ch05-gradcam.html">05 Grad-CAM →</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>

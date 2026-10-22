@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>第 11 章 三次「治療」，全部失敗 ｜ CNN 專題</title>
+<meta name="description" content="RandomErasing、邊框換自然圖、邊框換純色：三種同 seed A/B 全部無效，各賠約 2pp 準確率。診斷對，不代表處方對。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-basics.html">01 CNN</a>
+      <a href="ch02-shapes.html">02 尺寸</a>
+      <a href="ch03-mnist.html">03 特徵圖</a>
+      <a href="ch04-kernels.html">04 濾波器</a>
+      <a href="ch05-gradcam.html">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html">06 遮擋</a>
+      <a href="ch07-errors.html">07 錯誤</a>
+      <a href="ch08-taxonomy.html">08 分型</a>
+      <a href="ch09-cifar.html">09 CIFAR</a>
+      <a href="ch10-counterfactual.html">10 反事實</a>
+      <a href="ch11-ab.html" class="active">11 處方</a>
+      <a href="ch12-lessons.html">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<article class="article">
+  <span class="kicker">CHAPTER 11 · 實驗十</span>
+  <h1>三次「治療」，全部失敗</h1>
+
+  <p class="onesent"><strong>一句話：</strong>就算診斷對了，處方也可能完全無效——而且還要付「準確率下降」的掛號費。</p>
+
+  <figure class="fig">
+    <img src="img/09_ab_results.svg" alt="四次 A/B 的準確率柱狀圖與 bird→plane 折線：準確率下降，目標指標不動">
+    <figcaption>藍柱 = 無增強 baseline（84.97%）；橘柱 = 三種處方（82.9% 上下）。紅色虛線是目標指標 bird→plane，幾乎水平。</figcaption>
+  </figure>
+
+  <span class="sec-num">STEP 01</span>
+  <h2>我們做了什麼</h2>
+  <p>知道模型靠背景之後，我們試了三種資料增強。<strong>同 seed、同時長、同超參</strong>，只改被測的那一項，避免「改了三個變數卻不知道哪個有效」。</p>
+
+  <span class="sec-num">STEP 02</span>
+  <h2>數字</h2>
+  <table class="kv">
+    <thead><tr><th>處方</th><th>想法</th><th class="n">總 acc</th><th class="n">bird acc</th><th class="n">bird→plane</th></tr></thead>
+    <tbody>
+      <tr><td>baseline</td><td>—</td><td class="n">84.97%</td><td class="n">77.6%</td><td class="n">4.2%（42）</td></tr>
+      <tr><td>① RandomErasing p=0.5</td><td>隨機遮一塊</td><td class="n">82.87%</td><td class="n">75.1%</td><td class="n">4.0%（40）</td></tr>
+      <tr><td>② 邊框換另一張圖 p=0.5</td><td>打散「天空↔鳥」</td><td class="n">82.88%</td><td class="n">72.5%</td><td class="n">5.0%（50）</td></tr>
+      <tr><td>③ 邊框換純色 p=0.9, 20ep</td><td>最強干預硬碰硬</td><td class="n">83.26%</td><td class="n">72.7%</td><td class="n">4.2%（42）</td></tr>
+    </tbody>
+  </table>
+  <p>三次平均賠 <strong>1.9 個百分點</strong>的準確率，目標指標（4.2%）<strong>動也不動</strong>。</p>
+
+  <span class="sec-num">STEP 03</span>
+  <h2>為什麼會失敗</h2>
+  <div class="plain">
+    <p>看了實際樣本才發現三件事同時成立：</p>
+    <ul>
+      <li><strong>6 像素的邊框只佔 20–25% 的背景</strong>，剩下的背景還在圖片中心，模型照樣看得到。</li>
+      <li><strong>邊框裡常含物件本身</strong>：翅膀、電線、樹枝都穿過邊界。換邊框 = 順便切掉翅膀 → 準確率當然掉。</li>
+      <li><strong>「遮一塊」不等於「斷開關聯」</strong>：RandomErasing 只是加雜訊，天空還是天空。</li>
+    </ul>
+    <p>打個比方：你想讓一個靠「看天氣」決定帶傘的同學，改成看雲的形狀。遮住他一角窗外（RandomErasing）→ 他看其他角；換成別人家的窗外（邊框換圖）→ 別人家的也是天空；把窗框塗彩色（換純色）→ 他改看天氣預報。<strong>三次都沒打中要害。</strong></p>
+  </div>
+
+  <span class="sec-num">STEP 04</span>
+  <h2>學到什麼</h2>
+  <p><strong>診斷對 ≠ 處方對。</strong>干預的「覆蓋率」與「是否打到物件」決定成敗，跟想法多聰明無關。真正該做的是「把窗外完全換掉」，但那需要<strong>物件分割</strong>——我們沒有這個工具，所以到此為止。</p>
+
+  <div class="pager">
+    <a href="ch10-counterfactual.html">← 10 反事實</a>
+    <a href="ch12-lessons.html">12 總結 →</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>

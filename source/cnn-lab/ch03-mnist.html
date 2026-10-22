@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>第 3 章 MNIST：越深的層看得越抽象 ｜ CNN 專題</title>
+<meta name="description" content="28×28→14×14→7×7，用空間換意義的實際樣子：第一層看線條、第二層看轉角、第三層看整個形狀。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-basics.html">01 CNN</a>
+      <a href="ch02-shapes.html">02 尺寸</a>
+      <a href="ch03-mnist.html" class="active">03 特徵圖</a>
+      <a href="ch04-kernels.html">04 濾波器</a>
+      <a href="ch05-gradcam.html">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html">06 遮擋</a>
+      <a href="ch07-errors.html">07 錯誤</a>
+      <a href="ch08-taxonomy.html">08 分型</a>
+      <a href="ch09-cifar.html">09 CIFAR</a>
+      <a href="ch10-counterfactual.html">10 反事實</a>
+      <a href="ch11-ab.html">11 處方</a>
+      <a href="ch12-lessons.html">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<article class="article">
+  <span class="kicker">CHAPTER 03 · 實驗二</span>
+  <h1>MNIST：越深的層看得越抽象（但越不準）</h1>
+
+  <p class="onesent"><strong>一句話：</strong>越深的層看得越「大」、越「抽象」，但位置也越不精確。</p>
+
+  <figure class="fig">
+    <img src="img/03_hierarchy.svg" alt="三層特徵圖：28×28 看線條、14×14 看轉角、7×7 看整個形狀">
+    <figcaption>空間變小、通道變多——CNN 用「位置」換「意義」。到第 3 層，一格已經代表 4×4 個原始像素。</figcaption>
+  </figure>
+
+  <span class="sec-num">STEP 01</span>
+  <h2>我們做了什麼</h2>
+  <p>用 MNIST（手寫數字）訓練 3 個 epoch，然後把第 1、2、3 層的 32 / 64 / 128 張特徵圖畫出來，看它們各自「對什麼有反應」。</p>
+
+  <span class="sec-num">STEP 02</span>
+  <h2>數字</h2>
+  <table class="kv">
+    <thead><tr><th>項目</th><th>數值</th></tr></thead>
+    <tbody>
+      <tr><td>訓練時間</td><td class="n">15 秒 / epoch（RTX 4090）</td></tr>
+      <tr><td>準確率演進</td><td class="n">91.5% → 98.4% → <strong>98.9%</strong></td></tr>
+      <tr><td>第 1 層</td><td class="n">28×28，32 通道</td></tr>
+      <tr><td>第 2 層</td><td class="n">14×14，64 通道</td></tr>
+      <tr><td>第 3 層</td><td class="n">7×7，128 通道（一格 = 4×4 原圖像素）</td></tr>
+      <tr><td>總參數</td><td class="n">94,986</td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-num">STEP 03</span>
+  <h2>白話解釋</h2>
+  <div class="plain">
+    <p>你可以把三層想成三個近視程度不同的人在看同一張紙：</p>
+    <ul>
+      <li><strong>第 1 層</strong>像貼很近看：只看得到一小段線條，但<strong>位置很準</strong>。</li>
+      <li><strong>第 2 層</strong>像站遠一步：看得出「這是個轉角」，但已經說不出「在左邊第 3 公分」。</li>
+      <li><strong>第 3 層</strong>像瞇著眼看：只知道「這裡好像有個圈」，位置只剩下大概。</li>
+    </ul>
+    <p>所以「越深越聰明」是對的，「越深越精確」是錯的。</p>
+  </div>
+
+  <span class="sec-num">STEP 04</span>
+  <h2>學到什麼</h2>
+  <p>這件事後面會變成一個大麻煩：當我們用第 3 層做 Grad-CAM（第 5 章），熱點圖會<strong>糊掉</strong>——因為那一層本來就沒有精確位置。看到「熱點落在天空」，可能只是解析度不夠，不是模型真的在看天空。</p>
+
+  <div class="pager">
+    <a href="ch02-shapes.html">← 02 尺寸</a>
+    <a href="ch04-kernels.html">04 濾波器 →</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>

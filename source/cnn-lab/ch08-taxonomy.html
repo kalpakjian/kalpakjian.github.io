@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>第 8 章 把「誤判」拆成三種 ｜ CNN 專題</title>
+<meta name="description" content="decisive / mixed / blind 三種錯誤類型：19% 的誤判是被某個決定性線索騙的，而且依類別而異（ship 是 0%）。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-basics.html">01 CNN</a>
+      <a href="ch02-shapes.html">02 尺寸</a>
+      <a href="ch03-mnist.html">03 特徵圖</a>
+      <a href="ch04-kernels.html">04 濾波器</a>
+      <a href="ch05-gradcam.html">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html">06 遮擋</a>
+      <a href="ch07-errors.html">07 錯誤</a>
+      <a href="ch08-taxonomy.html" class="active">08 分型</a>
+      <a href="ch09-cifar.html">09 CIFAR</a>
+      <a href="ch10-counterfactual.html">10 反事實</a>
+      <a href="ch11-ab.html">11 處方</a>
+      <a href="ch12-lessons.html">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<article class="article">
+  <span class="kicker">CHAPTER 08 · 實驗七</span>
+  <h1>把「誤判」拆成三種</h1>
+
+  <p class="onesent"><strong>一句話：</strong>錯誤不是只有「錯」一種——有的是「被某個線索騙了」，有的是「根本沒想法」。</p>
+
+  <span class="sec-num">STEP 01</span>
+  <h2>我們做了什麼</h2>
+  <p>用第 6 章的 <code>ratio</code> 把每個誤判歸類：<strong>decisive</strong>（≥0.6，有決定性但可能誤導的線索）、<strong>mixed</strong>（0.2–0.6）、<strong>blind</strong>（&lt;0.2，幾乎沒有線索）。然後把 decisive 的樣本再畫 Grad-CAM，看它們各自在看什麼。</p>
+
+  <span class="sec-num">STEP 02</span>
+  <h2>數字（CIFAR-10，信心 ≥ 0.9，共 70 個誤判）</h2>
+  <table class="kv">
+    <thead><tr><th>類別</th><th class="n">decisive</th><th class="n">mixed</th><th class="n">blind</th></tr></thead>
+    <tbody>
+      <tr><td>bird</td><td class="n">28%</td><td class="n">38%</td><td class="n">34%</td></tr>
+      <tr><td>dog</td><td class="n">20%</td><td class="n">52%</td><td class="n">28%</td></tr>
+      <tr><td>ship</td><td class="n">0%</td><td class="n">75%</td><td class="n">25%</td></tr>
+      <tr><td><strong>合計</strong></td><td class="n"><strong>19%</strong></td><td class="n">51%</td><td class="n">30%</td></tr>
+    </tbody>
+  </table>
+
+  <p>再看 decisive 誤判（ratio 最高的 6 張）的 Grad-CAM，可以歸納成三種機制：</p>
+  <table class="kv">
+    <thead><tr><th>機制</th><th>例子</th><th>熱點在哪</th></tr></thead>
+    <tbody>
+      <tr><td>🏞 背景／棲地</td><td>狗 → 鹿、鳥 → 青蛙、鳥 → 飛機</td><td>圍欄、綠色植被、天空</td></tr>
+      <tr><td>🎨 顏色／紋理</td><td>鳥 → 鹿</td><td>鳥自己的棕色身體</td></tr>
+      <tr><td>🐾 姿態／形狀</td><td>狗 → 貓</td><td>趴著的軀幹輪廓</td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-num">STEP 03</span>
+  <h2>白話解釋</h2>
+  <div class="plain">
+    <p>想像你矇著眼摸東西猜是什麼：</p>
+    <ul>
+      <li>摸到毛茸茸又暖暖的 → 你說「貓」<em>（被質感騙了）</em></li>
+      <li>摸到硬的、有稜角 → 你說「箱子」<em>（被形狀騙了）</em></li>
+      <li>什麼都摸不出來 → 你亂猜<em>（沒有線索）</em></li>
+    </ul>
+    <p>三種錯誤要用<strong>不同方法</strong>救：背景型可以改背景（第 10 章）、顏色型可以加灰階訓練、姿態型只能加更多資料。</p>
+  </div>
+
+  <span class="sec-num">STEP 04</span>
+  <h2>學到什麼</h2>
+  <p>先分型，再對症下藥。而且 decisive 誤判只佔 19%，比例還依類別差很多（bird 28%、ship <strong>0%</strong>）——所以「所有錯誤都能被解釋」是錯的，有 30% 的錯誤根本毫無線索。</p>
+
+  <div class="pager">
+    <a href="ch07-errors.html">← 07 錯誤</a>
+    <a href="ch09-cifar.html">09 CIFAR-10 →</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>

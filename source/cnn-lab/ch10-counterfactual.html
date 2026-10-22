@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>第 10 章 反事實：只改背景，答案就變了 ｜ CNN 專題</title>
+<meta name="description" content="不動物件、只換背景：天空換成植被，79% 的「鳥→飛機」誤判被修好；把物件蓋掉仍有 56.7% 答對。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-basics.html">01 CNN</a>
+      <a href="ch02-shapes.html">02 尺寸</a>
+      <a href="ch03-mnist.html">03 特徵圖</a>
+      <a href="ch04-kernels.html">04 濾波器</a>
+      <a href="ch05-gradcam.html">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html">06 遮擋</a>
+      <a href="ch07-errors.html">07 錯誤</a>
+      <a href="ch08-taxonomy.html">08 分型</a>
+      <a href="ch09-cifar.html">09 CIFAR</a>
+      <a href="ch10-counterfactual.html" class="active">10 反事實</a>
+      <a href="ch11-ab.html">11 處方</a>
+      <a href="ch12-lessons.html">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<article class="article">
+  <span class="kicker">CHAPTER 10 · 實驗九</span>
+  <h1>反事實：只改背景，答案就變了</h1>
+
+  <p class="onesent"><strong>一句話：</strong>同一隻鳥，只把背景換顏色，模型就從「飛機」變成「鳥」。</p>
+
+  <figure class="fig">
+    <img src="img/08_swap.svg" alt="五種反事實：原圖、邊框變灰、變綠、變天空藍、把鳥蓋掉，各自對應的預測">
+    <figcaption>對象是 42 張「明明是鳥卻被判成飛機」的圖。換成綠色植被後，bird 從 0% 跳到 59.5%。</figcaption>
+  </figure>
+
+  <span class="sec-num">STEP 01</span>
+  <h2>我們做了什麼</h2>
+  <p>不重訓。直接拿 300 張「真值是鳥」的測試圖，把<strong>最外圈 6 像素的邊框</strong>換成不同顏色、或把中心的物件整個蓋掉，再看預測怎麼變。</p>
+
+  <span class="sec-num">STEP 02</span>
+  <h2>數字（300 張 bird）</h2>
+  <table class="kv">
+    <thead><tr><th>條件</th><th class="n">bird 準確率</th><th class="n">標籤改變率</th></tr></thead>
+    <tbody>
+      <tr><td>原圖</td><td class="n">74.0%</td><td class="n">—</td></tr>
+      <tr><td>邊框 → 灰色</td><td class="n">39.3%</td><td class="n">54%</td></tr>
+      <tr><td>邊框 → 綠色</td><td class="n">60.0%</td><td class="n">39%</td></tr>
+      <tr><td>邊框 → 天空藍</td><td class="n">46.0%</td><td class="n">47%（plane 3.6% → 17.7%）</td></tr>
+      <tr><td><strong>把物件整個蓋掉</strong></td><td class="n">56.7%</td><td class="n">48%</td></tr>
+    </tbody>
+  </table>
+  <p>只針對那 42 張「鳥被判成飛機」的圖：</p>
+  <table class="kv">
+    <thead><tr><th>條件</th><th class="n">判成 bird</th><th class="n">判成 plane</th></tr></thead>
+    <tbody>
+      <tr><td>原圖</td><td class="n">0%</td><td class="n">100%</td></tr>
+      <tr><td>邊框 → 灰色</td><td class="n">35.7%</td><td class="n">47.6%</td></tr>
+      <tr><td>邊框 → 綠色</td><td class="n"><span class="ok">59.5%</span></td><td class="n">21.4%</td></tr>
+      <tr><td>邊框 → 天空藍</td><td class="n">7.1%</td><td class="n">88.1%</td></tr>
+      <tr><td>把物件整個蓋掉</td><td class="n">35.7%</td><td class="n">28.6%</td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-num">STEP 03</span>
+  <h2>白話解釋</h2>
+  <div class="plain">
+    <p>這是整份專題最有力的一個實驗：<strong>我們沒有動那隻鳥一根羽毛</strong>，只改了背景。</p>
+    <ul>
+      <li>把背景從「天空」換成「綠色草地」→ <strong>79% 的誤判被修好</strong></li>
+      <li>把背景染得更像天空 → 88% 繼續判成飛機</li>
+      <li>把鳥完全蓋掉，居然還有 <strong>56.7%</strong> 答對（300 張裡）</li>
+    </ul>
+    <p>最後那一條最恐怖：它證明模型有一部分是<strong>看著背景在作答</strong>，不是看著鳥。</p>
+  </div>
+
+  <span class="sec-num">STEP 04</span>
+  <h2>學到什麼</h2>
+  <p>想證明「模型靠背景」，最直接的方法不是看熱點圖，而是<strong>把背景換掉看答案會不會變</strong>。這也否定了我們中途的另一個猜想（「這是 32×32 的資訊上限」）——如果只看物件，換顏色不可能讓 79% 的答案翻轉。</p>
+
+  <div class="pager">
+    <a href="ch09-cifar.html">← 09 CIFAR</a>
+    <a href="ch11-ab.html">11 三次處方 →</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>

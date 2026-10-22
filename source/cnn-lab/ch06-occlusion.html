@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>第 6 章 遮擋實驗：用橡皮擦一塊一塊擦 ｜ CNN 專題</title>
+<meta name="description" content="8×8 灰塊滑過整張圖，記錄信心下降多少。這個 ratio 能分類錯誤，卻無法偵測錯誤——以及為什麼。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-basics.html">01 CNN</a>
+      <a href="ch02-shapes.html">02 尺寸</a>
+      <a href="ch03-mnist.html">03 特徵圖</a>
+      <a href="ch04-kernels.html">04 濾波器</a>
+      <a href="ch05-gradcam.html">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html" class="active">06 遮擋</a>
+      <a href="ch07-errors.html">07 錯誤</a>
+      <a href="ch08-taxonomy.html">08 分型</a>
+      <a href="ch09-cifar.html">09 CIFAR</a>
+      <a href="ch10-counterfactual.html">10 反事實</a>
+      <a href="ch11-ab.html">11 處方</a>
+      <a href="ch12-lessons.html">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<article class="article">
+  <span class="kicker">CHAPTER 06 · 實驗五</span>
+  <h1>遮擋實驗：用橡皮擦一塊一塊擦</h1>
+
+  <p class="onesent"><strong>一句話：</strong>把圖的一小塊蓋住，看信心掉多少；掉很多就代表「那一塊是關鍵」。</p>
+
+  <figure class="fig">
+    <img src="img/06_occlusion.svg" alt="遮擋實驗：8×8 灰塊在 32×32 圖上滑動，產生信心下降的熱圖">
+    <figcaption>8×8 灰塊、每次移動 4 格 → 一張 32×32 要跑 49 次推論。紅色代表遮住那裡信心掉最多。</figcaption>
+  </figure>
+
+  <span class="sec-num">STEP 01</span>
+  <h2>我們做了什麼</h2>
+  <p>把每個位置都遮一次，記錄「預測類別的機率掉了多少」，再換算成 <code>ratio = 最大下降 ÷ 領先幅度</code>（領先幅度 = top1 − top2）。除以領先幅度是為了讓不同信心的樣本可以互相比較。</p>
+
+  <span class="sec-num">STEP 02</span>
+  <h2>數字</h2>
+  <table class="kv">
+    <thead><tr><th>模型 / 資料</th><th class="n">猜對的 ratio</th><th class="n">猜錯的 ratio</th><th>能分辨嗎</th></tr></thead>
+    <tbody>
+      <tr><td>MNIST 小模型</td><td class="n">0.380</td><td class="n">0.733</td><td>能，但只有 3 個樣本</td></tr>
+      <tr><td>CIFAR 小模型（95k）</td><td class="n">0.163</td><td class="n">0.156</td><td><span class="bad">完全沒差</span></td></tr>
+      <tr><td>CIFAR 大模型（964k）</td><td class="n">0.192</td><td class="n">0.311</td><td>有差，但擴大到 70 個樣本後只剩 1.2 倍</td></tr>
+      <tr><td>CIFAR 誤判分型</td><td colspan="2" class="n">decisive 19% / mixed 51% / blind 30%</td><td>可用来分類錯誤（第 8 章）</td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-num">STEP 03</span>
+  <h2>白話解釋</h2>
+  <div class="plain">
+    <p>這就像考試時，老師用橡皮擦把你的答案一塊一塊擦掉，看分數掉多少：</p>
+    <ul>
+      <li>擦掉某一塊分數大跌 → 那一塊是你的重點</li>
+      <li>擦哪裡都沒差 → 你的答案不是靠某個重點，而是靠「整體感覺」</li>
+    </ul>
+    <p>但「靠整體感覺」<strong>不代表你錯</strong>。所以我們原本以為「猜錯的樣本會比較沒重點」，統計上根本不成立（0.163 vs 0.156）。</p>
+  </div>
+
+  <span class="sec-num">STEP 04</span>
+  <h2>學到什麼</h2>
+  <p><code>ratio</code> 是個好用的<strong>錯誤分類器</strong>（分出「被某個線索騙」與「根本沒想法」），但不是<strong>錯誤偵測器</strong>。想用它抓錯，會抓到一堆答對的樣本。</p>
+
+  <div class="pager">
+    <a href="ch05-gradcam.html">← 05 Grad-CAM</a>
+    <a href="ch07-errors.html">07 錯誤分析 →</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>

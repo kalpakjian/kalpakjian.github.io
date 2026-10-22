@@ -27,6 +27,7 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+  - 'cnn-lab/**'
   - 'dhh-rails-world-2026/**'
   - 'coding-agent/**'
   - 'opencv-notes/**'

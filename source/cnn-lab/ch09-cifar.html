@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>第 9 章 換成彩色照片（CIFAR-10） ｜ CNN 專題</title>
+<meta name="description" content="85.7% 看起來不高，但混淆矩陣顯示錯誤全落在「長得很像」的類別上：cat↔dog、truck↔car。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-basics.html">01 CNN</a>
+      <a href="ch02-shapes.html">02 尺寸</a>
+      <a href="ch03-mnist.html">03 特徵圖</a>
+      <a href="ch04-kernels.html">04 濾波器</a>
+      <a href="ch05-gradcam.html">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html">06 遮擋</a>
+      <a href="ch07-errors.html">07 錯誤</a>
+      <a href="ch08-taxonomy.html">08 分型</a>
+      <a href="ch09-cifar.html" class="active">09 CIFAR</a>
+      <a href="ch10-counterfactual.html">10 反事實</a>
+      <a href="ch11-ab.html">11 處方</a>
+      <a href="ch12-lessons.html">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<article class="article">
+  <span class="kicker">CHAPTER 09 · 實驗八</span>
+  <h1>換成彩色照片（CIFAR-10）</h1>
+
+  <p class="onesent"><strong>一句話：</strong>模型升級後，錯的地方變得很「合理」——全是長得像的類別，不是隨機亂猜。</p>
+
+  <figure class="fig">
+    <img src="img/07_confusion.svg" alt="CIFAR-10 混淆矩陣：cat 與 dog 互混 11% / 10%，truck 與 car 約 4%">
+    <figcaption>每一列加起來 100%；對角線是答對。三個明顯的互混：cat↔dog、truck↔car、bird→deer/plane。</figcaption>
+  </figure>
+
+  <span class="sec-num">STEP 01</span>
+  <h2>我們做了什麼</h2>
+  <p>同一份程式換成 CIFAR-10（32×32 彩色照片），把模型從 3 個 block（95k 參數）加大到 4 個 block（964k 參數），訓練 15 個 epoch，然後畫出完整的 10×10 混淆矩陣。</p>
+
+  <span class="sec-num">STEP 02</span>
+  <h2>數字</h2>
+  <table class="kv">
+    <thead><tr><th>模型</th><th class="n">參數</th><th class="n">總準確率</th><th class="n">每 epoch</th></tr></thead>
+    <tbody>
+      <tr><td>小模型</td><td class="n">95k</td><td class="n">72.1%</td><td class="n">27 秒</td></tr>
+      <tr><td>大模型</td><td class="n">964k</td><td class="n"><strong>85.7%</strong></td><td class="n">25 秒（batch 512）</td></tr>
+    </tbody>
+  </table>
+  <table class="kv">
+    <thead><tr><th>最常發生的混淆</th><th class="n">比例</th></tr></thead>
+    <tbody>
+      <tr><td>cat → dog</td><td class="n">10.9%</td></tr>
+      <tr><td>dog → cat</td><td class="n">10.3%</td></tr>
+      <tr><td>bird → deer</td><td class="n">5.4%</td></tr>
+      <tr><td>ship → plane</td><td class="n">4.1%</td></tr>
+      <tr><td>truck → car</td><td class="n">4.0%</td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-num">STEP 03</span>
+  <h2>白話解釋</h2>
+  <div class="plain">
+    <p>CIFAR-10 的錯誤跟 MNIST 完全不同：</p>
+    <ul>
+      <li>MNIST 的錯是「<strong>筆畫長得太像</strong>」（7 和 2 共用一條底線）</li>
+      <li>CIFAR 的錯是「<strong>類別本身就很像</strong>」（貓和狗、卡車和汽車）</li>
+    </ul>
+    <p>就像考試把「貓」寫成「狗」、「卡車」寫成「汽車」——你幾乎不會把貓寫成「飛機」。所以 85.7% 看起來不高，但錯誤的分布是<strong>合理</strong>的：它在該猶豫的地方猶豫。</p>
+  </div>
+
+  <span class="sec-num">STEP 04</span>
+  <h2>學到什麼</h2>
+  <p>看準確率之前，先看混淆矩陣。<strong>錯在哪裡，比錯多少更重要。</strong>而這一章也埋下下一章的伏筆：<code>bird → plane</code> 只有 4%，但它是最可疑的那一種錯。</p>
+
+  <div class="pager">
+    <a href="ch08-taxonomy.html">← 08 分型</a>
+    <a href="ch10-counterfactual.html">10 反事實 →</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>

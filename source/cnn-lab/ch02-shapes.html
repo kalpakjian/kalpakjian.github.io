@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>第 2 章 把課本程式跑起來，然後它炸了 ｜ CNN 專題</title>
+<meta name="description" content="64*8*8 為什麼會爆？追一次 32→16→8 的尺寸，並說明 GAP 如何讓同一份模型吃各種解析度、參數還少 83%。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-basics.html">01 CNN</a>
+      <a href="ch02-shapes.html" class="active">02 尺寸</a>
+      <a href="ch03-mnist.html">03 特徵圖</a>
+      <a href="ch04-kernels.html">04 濾波器</a>
+      <a href="ch05-gradcam.html">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html">06 遮擋</a>
+      <a href="ch07-errors.html">07 錯誤</a>
+      <a href="ch08-taxonomy.html">08 分型</a>
+      <a href="ch09-cifar.html">09 CIFAR</a>
+      <a href="ch10-counterfactual.html">10 反事實</a>
+      <a href="ch11-ab.html">11 處方</a>
+      <a href="ch12-lessons.html">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<article class="article">
+  <span class="kicker">CHAPTER 02 · 實驗一</span>
+  <h1>把課本程式跑起來，然後它炸了</h1>
+
+  <p class="onesent"><strong>一句話：</strong>只要輸入尺寸和程式裡寫死的數字對不上，模型就直接報錯——這是新手最常撞的牆。</p>
+
+  <figure class="fig">
+    <img src="img/02_shapes.svg" alt="尺寸追蹤：32×32 經過兩次池化變成 8×8，攤平為 4096；拿掉 padding 會變成 2304 而報錯">
+    <figcaption>池化每次把長寬砍半；最後要接全連接層時，必須知道「總共剩幾個數字」。這個 4096 是算出來的，不是猜的。</figcaption>
+  </figure>
+
+  <span class="sec-num">STEP 01</span>
+  <h2>我們做了什麼</h2>
+  <p>照課本抄了一段 <code>nn.Sequential</code>，裡面有一行 <code>nn.Linear(64 * 8 * 8, 128)</code>。然後故意做兩件事：把 <code>padding=1</code> 拿掉、把輸入改成 224×224。</p>
+
+  <span class="sec-num">STEP 02</span>
+  <h2>數字</h2>
+  <table class="kv">
+    <thead><tr><th>情況</th><th>尺寸變化</th><th>結果</th></tr></thead>
+    <tbody>
+      <tr><td>正常 32×32 + padding=1</td><td class="n">32→32→16→16→8</td><td><span class="ok">攤平 64×8×8 = 4096 ✓</span></td></tr>
+      <tr><td>拿掉 padding</td><td class="n">32→30→15→13→6</td><td><span class="bad">2304，RuntimeError</span></td></tr>
+      <tr><td>輸入改 224×224</td><td class="n">224→…→56</td><td><span class="bad">200704，RuntimeError</span></td></tr>
+      <tr><td>改成 GAP</td><td class="n">任意尺寸 → 1×1</td><td><span class="ok">32 / 64 / 224 都能跑</span></td></tr>
+      <tr><td>參數量（原版）</td><td class="n">545,098</td><td>其中 96% 卡在第一個 Linear</td></tr>
+      <tr><td>參數量（GAP）</td><td class="n">94,986</td><td><span class="ok">少 83%</span></td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-num">STEP 03</span>
+  <h2>白話解釋</h2>
+  <div class="plain">
+    <p><code>64 * 8 * 8</code> 就像「便當盒只能裝 8 顆飯糰，所以你買 64 盒」——<strong>盒數是固定的</strong>。</p>
+    <p>如果圖變大（8 變成 14），你卻還堅持「8 顆」，便當盒就裝不下了。這就是 224×224 輸入會爆炸的原因。</p>
+    <p><strong>GAP（全域平均池化）</strong>的做法是：不管每個便當盒有幾顆，<strong>全部平均成一顆</strong>。這樣盒數不變，就不用管圖多大。</p>
+  </div>
+
+  <span class="sec-num">STEP 04</span>
+  <h2>學到什麼</h2>
+  <p>與其背「64×8×8」，不如理解「攤平層的數字 = 通道數 × 高 × 寬」。而現代 CNN 幾乎都用 GAP，就是為了避免這個問題——順便讓模型能接受任何解析度的輸入。</p>
+
+  <div class="pager">
+    <a href="ch01-basics.html">← 01 CNN</a>
+    <a href="ch03-mnist.html">03 特徵圖 →</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>

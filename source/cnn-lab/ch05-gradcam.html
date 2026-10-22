@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>第 5 章 Grad-CAM：模型看哪裡？ ｜ CNN 專題</title>
+<meta name="description" content="Grad-CAM 怎麼算、怎麼讀，以及它最大的陷阱：7×7 熱點圖放大到 32×32，位置誤差 ±4px。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-basics.html">01 CNN</a>
+      <a href="ch02-shapes.html">02 尺寸</a>
+      <a href="ch03-mnist.html">03 特徵圖</a>
+      <a href="ch04-kernels.html">04 濾波器</a>
+      <a href="ch05-gradcam.html" class="active">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html">06 遮擋</a>
+      <a href="ch07-errors.html">07 錯誤</a>
+      <a href="ch08-taxonomy.html">08 分型</a>
+      <a href="ch09-cifar.html">09 CIFAR</a>
+      <a href="ch10-counterfactual.html">10 反事實</a>
+      <a href="ch11-ab.html">11 處方</a>
+      <a href="ch12-lessons.html">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<article class="article">
+  <span class="kicker">CHAPTER 05 · 實驗四</span>
+  <h1>Grad-CAM：模型看哪裡？</h1>
+
+  <p class="onesent"><strong>一句話：</strong>Grad-CAM 會畫出「這張圖的哪些區域，對這次判斷最有貢獻」——但它只能提出假設，不能當結論。</p>
+
+  <figure class="fig">
+    <img src="img/05_gradcam.svg" alt="Grad-CAM 三連拍：原圖、熱點圖、疊在一起的樣子">
+    <figcaption>紅 = 對答案幫助最大，藍 = 反而讓你猶豫。重點在第 3 格：熱點落在「天空」，不在鳥身上。</figcaption>
+  </figure>
+
+  <span class="sec-num">STEP 01</span>
+  <h2>我們做了什麼</h2>
+  <p>對 CIFAR-10 的測試圖，把最後一層卷積的<strong>梯度</strong>當成「每個通道的重要程度」，乘上特徵圖後加總，得到一張熱點圖。整個過程不需要重訓，一次 forward + backward 就好。</p>
+
+  <span class="sec-num">STEP 02</span>
+  <h2>數字</h2>
+  <table class="kv">
+    <thead><tr><th>樣本</th><th>熱點位置</th><th>當時的預測</th></tr></thead>
+    <tbody>
+      <tr><td>貓（答對）</td><td>臉、耳朵</td><td class="n">cat 80.6%</td></tr>
+      <tr><td>船（答對）</td><td>上層艙頂</td><td class="n">ship 97.4%</td></tr>
+      <tr><td>船（答錯）</td><td>紅色船身、水線</td><td class="n">car 81.4%</td></tr>
+      <tr><td>鳥（答錯）</td><td><span class="bad">整張幾乎空白，只剩天空</span></td><td class="n">plane 98.3%</td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-num">STEP 03</span>
+  <h2>白話解釋</h2>
+  <div class="plain">
+    <p>Grad-CAM 像「事後問模型：你剛剛是看著哪裡回答的？」</p>
+    <p>但有一個大陷阱：我們把<strong>最後一層（只有 7×7）放大到 32×32</strong>。等於「一格代表 4×4 個原始像素」，位置誤差可以到 <strong>±4 像素</strong>。</p>
+    <p>就像用馬賽克照片去猜「他剛剛看哪裡」——馬賽克格子太大，紅點壓在天空，可能只是因為天空離鳥只有一格。</p>
+  </div>
+
+  <span class="sec-num">STEP 04</span>
+  <h2>學到什麼</h2>
+  <p>Grad-CAM 的正確用途是<strong>產生假設</strong>（「它好像在靠天空」），然後用別的方法<strong>驗證</strong>（第 6 章的遮擋、第 10 章的反事實）。把它當成鐵證，就會像我們一樣在後面被打臉。</p>
+
+  <div class="pager">
+    <a href="ch04-kernels.html">← 04 濾波器</a>
+    <a href="ch06-occlusion.html">06 遮擋 →</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>

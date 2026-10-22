@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>第 7 章 錯得最慘的，都是最有自信的 ｜ CNN 專題</title>
+<meta name="description" content="MNIST 三個信心 96.9–98.9% 的誤判，反而是最危險的錯誤；信心不能用來篩錯。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-basics.html">01 CNN</a>
+      <a href="ch02-shapes.html">02 尺寸</a>
+      <a href="ch03-mnist.html">03 特徵圖</a>
+      <a href="ch04-kernels.html">04 濾波器</a>
+      <a href="ch05-gradcam.html">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html">06 遮擋</a>
+      <a href="ch07-errors.html" class="active">07 錯誤</a>
+      <a href="ch08-taxonomy.html">08 分型</a>
+      <a href="ch09-cifar.html">09 CIFAR</a>
+      <a href="ch10-counterfactual.html">10 反事實</a>
+      <a href="ch11-ab.html">11 處方</a>
+      <a href="ch12-lessons.html">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<article class="article">
+  <span class="kicker">CHAPTER 07 · 實驗六</span>
+  <h1>錯得最慘的，都是最有自信的</h1>
+
+  <p class="onesent"><strong>一句話：</strong>三個信心 96.9%–98.9% 的誤判，比「信心 27% 但答對」的樣本危險得多。</p>
+
+  <span class="sec-num">STEP 01</span>
+  <h2>我們做了什麼</h2>
+  <p>把整個測試集跑一遍，挑出「<strong>信心最高的錯誤</strong>」和「<strong>信心最低的正確</strong>」各 3 張，然後畫它們的 Grad-CAM，看模型是依據什麼在出錯。</p>
+
+  <span class="sec-num">STEP 02</span>
+  <h2>數字（MNIST，總準確率 98.87%）</h2>
+  <table class="kv">
+    <thead><tr><th>類型</th><th class="n">真實 → 預測</th><th class="n">信心</th><th>Grad-CAM 看哪裡</th></tr></thead>
+    <tbody>
+      <tr><td>誤判</td><td class="n">7 → 2</td><td class="n bad">98.9%</td><td>右上轉角 + 底部橫畫</td></tr>
+      <tr><td>誤判</td><td class="n">5 → 3</td><td class="n bad">97.5%</td><td>左側豎畫 + 頂部橫畫</td></tr>
+      <tr><td>誤判</td><td class="n">1 → 2</td><td class="n bad">96.9%</td><td>底部襯線 + 頂端小旗</td></tr>
+      <tr><td>低信心（答對）</td><td class="n">9</td><td class="n">27.4%</td><td>熱點分散</td></tr>
+      <tr><td>低信心（答對）</td><td class="n">7</td><td class="n">35.0%</td><td>集中在兩端</td></tr>
+      <tr><td>低信心（答對）</td><td class="n">5</td><td class="n">35.6%</td><td>頂端一點</td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-num">STEP 03</span>
+  <h2>白話解釋</h2>
+  <div class="plain">
+    <p>一個學生考試時：</p>
+    <ul>
+      <li>「我很確定答案是 2！」（信心 99%）→ 結果錯，而且錯得有理由：那三個數字真的都有一條像 2 的底線。</li>
+      <li>「呃…應該是 9 吧？」（信心 27%）→ 結果對。</li>
+    </ul>
+    <p>所以<strong>自信 ≠ 正確</strong>。最麻煩的是：你沒辦法用「信心低」去把錯誤挑出來，因為錯誤的自信反而更高。</p>
+  </div>
+
+  <span class="sec-num">STEP 04</span>
+  <h2>學到什麼</h2>
+  <p>模型出錯時，要問的是「<strong>它依據什麼出錯</strong>」（Grad-CAM 顯示它鎖定了那條誤導性的筆畫），而不是只看「它錯了幾張」。這也直接導向下一章：把錯誤分型。</p>
+
+  <div class="pager">
+    <a href="ch06-occlusion.html">← 06 遮擋</a>
+    <a href="ch08-taxonomy.html">08 錯誤分型 →</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>

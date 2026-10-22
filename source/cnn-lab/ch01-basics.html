@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
+<title>第 1 章 CNN 到底是什麼 ｜ CNN 專題</title>
+<meta name="description" content="用放大鏡、便當盒、大腦三個比喻講完卷積、池化、全連接，並解釋為什麼 CNN 的參數可以這麼少。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">CNN 專題 <span class="tag">十二個實驗</span></a>
+    <nav class="nav">
+      <a href="index.html">首頁</a>
+      <a href="ch01-basics.html" class="active">01 CNN</a>
+      <a href="ch02-shapes.html">02 尺寸</a>
+      <a href="ch03-mnist.html">03 特徵圖</a>
+      <a href="ch04-kernels.html">04 濾波器</a>
+      <a href="ch05-gradcam.html">05 Grad-CAM</a>
+      <a href="ch06-occlusion.html">06 遮擋</a>
+      <a href="ch07-errors.html">07 錯誤</a>
+      <a href="ch08-taxonomy.html">08 分型</a>
+      <a href="ch09-cifar.html">09 CIFAR</a>
+      <a href="ch10-counterfactual.html">10 反事實</a>
+      <a href="ch11-ab.html">11 處方</a>
+      <a href="ch12-lessons.html">12 總結</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<article class="article">
+  <span class="kicker">CHAPTER 01 · 基礎</span>
+  <h1>CNN 到底是什麼</h1>
+
+  <p class="onesent"><strong>一句話：</strong>CNN 就是「拿很多小濾鏡在圖上滑來滑去，把找到的特徵一層一層組起來」的機器。</p>
+
+  <figure class="fig">
+    <img src="img/01_arch.svg" alt="CNN 流水線：輸入、卷積、池化、卷積、池化、卷積、GAP、全連接、Softmax">
+    <figcaption>同一組濾波器在整張圖上滑動 → 產生特徵圖 → 縮小 → 重複 → 最後回答「這是哪一類」。</figcaption>
+  </figure>
+
+  <span class="sec-num">STEP 01</span>
+  <h2>我們做了什麼</h2>
+  <p>沒有訓練。只是把課本上的架構用 PyTorch 拼出來，然後確認每一層的「輸入尺寸 → 輸出尺寸」，順便數一下總共有多少參數。</p>
+
+  <span class="sec-num">STEP 02</span>
+  <h2>數字</h2>
+  <table class="kv">
+    <thead><tr><th>層</th><th>作用</th><th class="n">輸出</th></tr></thead>
+    <tbody>
+      <tr><td>卷積 3×3</td><td>找邊緣、線條</td><td class="n">32 張特徵圖</td></tr>
+      <tr><td>池化 2×2</td><td>把圖縮小一半（計算量降到 1/4）</td><td class="n">32 張，尺寸砍半</td></tr>
+      <tr><td>卷積（再一次）</td><td>把線條組成轉角</td><td class="n">64 張特徵圖</td></tr>
+      <tr><td>GAP</td><td>每張特徵圖平均成一個數字</td><td class="n">128 個數字</td></tr>
+      <tr><td>全連接</td><td>綜合所有特徵做判斷</td><td class="n">10 個分數</td></tr>
+      <tr><td>Softmax</td><td>把分數轉成機率</td><td class="n">加起來 100%</td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-num">STEP 03</span>
+  <h2>白話解釋</h2>
+  <div class="plain">
+    <p>想像你要認出一個字。你不會一次看完整張紙，而是：</p>
+    <ul>
+      <li>先用小放大鏡找「這裡有沒有橫線、那裡有沒有斜線」→ 這就是<strong>卷積</strong></li>
+      <li>把找到的線條組成「一個口字旁」→ 這就是<strong>更深的卷積層</strong></li>
+      <li>再把「口 + 那」組成「這是『哪』這個字」→ 這就是<strong>全連接層</strong></li>
+    </ul>
+    <p>中間那個「把紙縮小再繼續看」的動作就是<strong>池化</strong>——省力氣用，反正細節已經記在腦中了。</p>
+  </div>
+
+  <span class="sec-num">STEP 04</span>
+  <h2>學到什麼</h2>
+  <p>CNN 最聰明的兩件事：<strong>同一個放大鏡用遍整張圖</strong>（權重共享）和<strong>只看附近、不管遠處</strong>（局部連接）。所以它的參數比「每個像素都接一條線」的全連接網路少非常多，也更容易學會「不管東西出現在哪裡都認得出來」。</p>
+
+  <div class="pager">
+    <a href="index.html">← 回目錄</a>
+    <a href="ch02-shapes.html">02 尺寸 →</a>
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>CNN 專題 · 十個實驗 · 每個數字都來自本機可重跑的程式</p>
+    <p class="to-home"><a href="/">← 回到 AI Tech Notes</a></p>
+  </div>
+</footer>
+</body>
+</html>

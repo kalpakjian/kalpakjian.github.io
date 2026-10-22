@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 320" font-family="Microsoft JhengHei, Noto Sans TC, sans-serif">
+  <text x="440" y="26" font-size="15" font-weight="700" text-anchor="middle" fill="#0f172a">
+    訓練完之後，濾波器（濾鏡）長什麼樣子？
+  </text>
+  <text x="440" y="46" font-size="10.5" text-anchor="middle" fill="#64748b">
+    紅 = 正權重（這裡亮 → 輸出亮）　藍 = 負權重（這裡亮 → 輸出暗）
+  </text>
+
+  <g font-size="9" text-anchor="middle">
+    <g transform="translate(50,80)">
+      <text x="45" y="-8" font-size="10.5" font-weight="700" fill="#1e293b">垂直邊緣偵測</text>
+      <rect x="0" y="0" width="90" height="90" fill="#f8fafc" stroke="#cbd5e1"/>
+      <rect x="0" y="0" width="30" height="30" fill="#2563eb" opacity="0.75"/><text x="15" y="20" fill="#fff">−0.3</text>
+      <rect x="30" y="0" width="30" height="30" fill="#f8fafc"/><text x="45" y="20" fill="#0f172a">0.0</text>
+      <rect x="60" y="0" width="30" height="30" fill="#dc2626" opacity="0.75"/><text x="75" y="20" fill="#fff">+0.4</text>
+      <rect x="0" y="30" width="30" height="30" fill="#2563eb" opacity="0.75"/><text x="15" y="50" fill="#fff">−0.3</text>
+      <rect x="30" y="30" width="30" height="30" fill="#f8fafc"/><text x="45" y="50" fill="#0f172a">0.0</text>
+      <rect x="60" y="30" width="30" height="30" fill="#dc2626" opacity="0.75"/><text x="75" y="50" fill="#fff">+0.4</text>
+      <rect x="0" y="60" width="30" height="30" fill="#2563eb" opacity="0.75"/><text x="15" y="80" fill="#fff">−0.3</text>
+      <rect x="30" y="60" width="30" height="30" fill="#f8fafc"/><text x="45" y="80" fill="#0f172a">0.0</text>
+      <rect x="60" y="60" width="30" height="30" fill="#dc2626" opacity="0.75"/><text x="75" y="80" fill="#fff">+0.4</text>
+      <text x="45" y="106" font-size="9" fill="#475569">左暗右亮 → 會亮</text>
+    </g>
+
+    <g transform="translate(210,80)">
+      <text x="45" y="-8" font-size="10.5" font-weight="700" fill="#1e293b">水平邊緣偵測</text>
+      <rect x="0" y="0" width="90" height="90" fill="#f8fafc" stroke="#cbd5e1"/>
+      <rect x="0" y="0" width="30" height="30" fill="#2563eb" opacity="0.75"/><text x="15" y="20" fill="#fff">−0.3</text>
+      <rect x="30" y="0" width="30" height="30" fill="#2563eb" opacity="0.75"/><text x="45" y="20" fill="#fff">−0.3</text>
+      <rect x="60" y="0" width="30" height="30" fill="#2563eb" opacity="0.75"/><text x="75" y="20" fill="#fff">−0.3</text>
+      <rect x="0" y="30" width="30" height="30" fill="#f8fafc"/><text x="15" y="50" fill="#0f172a">0.1</text>
+      <rect x="30" y="30" width="30" height="30" fill="#f8fafc"/><text x="45" y="50" fill="#0f172a">0.1</text>
+      <rect x="60" y="30" width="30" height="30" fill="#f8fafc"/><text x="75" y="50" fill="#0f172a">0.1</text>
+      <rect x="0" y="60" width="30" height="30" fill="#dc2626" opacity="0.75"/><text x="15" y="80" fill="#fff">+0.4</text>
+      <rect x="30" y="60" width="30" height="30" fill="#dc2626" opacity="0.75"/><text x="45" y="80" fill="#fff">+0.4</text>
+      <rect x="60" y="60" width="30" height="30" fill="#dc2626" opacity="0.75"/><text x="75" y="80" fill="#fff">+0.4</text>
+      <text x="45" y="106" font-size="9" fill="#475569">上暗下亮 → 會亮</text>
+    </g>
+
+    <g transform="translate(370,80)">
+      <text x="45" y="-8" font-size="10.5" font-weight="700" fill="#1e293b">小圓點／斑塊</text>
+      <rect x="0" y="0" width="90" height="90" fill="#f8fafc" stroke="#cbd5e1"/>
+      <rect x="0" y="0" width="30" height="30" fill="#2563eb" opacity="0.6"/><text x="15" y="20" fill="#fff">−0.2</text>
+      <rect x="30" y="0" width="30" height="30" fill="#2563eb" opacity="0.6"/><text x="45" y="20" fill="#fff">−0.2</text>
+      <rect x="60" y="0" width="30" height="30" fill="#2563eb" opacity="0.6"/><text x="75" y="20" fill="#fff">−0.2</text>
+      <rect x="0" y="30" width="30" height="30" fill="#2563eb" opacity="0.6"/><text x="15" y="50" fill="#fff">−0.2</text>
+      <rect x="30" y="30" width="30" height="30" fill="#dc2626" opacity="0.85"/><text x="45" y="50" fill="#fff">+0.6</text>
+      <rect x="60" y="30" width="30" height="30" fill="#2563eb" opacity="0.6"/><text x="75" y="50" fill="#fff">−0.2</text>
+      <rect x="0" y="60" width="30" height="30" fill="#2563eb" opacity="0.6"/><text x="15" y="80" fill="#fff">−0.2</text>
+      <rect x="30" y="60" width="30" height="30" fill="#2563eb" opacity="0.6"/><text x="45" y="80" fill="#fff">−0.2</text>
+      <rect x="60" y="60" width="30" height="30" fill="#2563eb" opacity="0.6"/><text x="75" y="80" fill="#fff">−0.2</text>
+      <text x="45" y="106" font-size="9" fill="#475569">中間有東西 → 會亮</text>
+    </g>
+  </g>
+</svg>
