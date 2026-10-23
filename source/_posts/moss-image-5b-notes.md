@@ -239,19 +239,74 @@ Qwen 偏「乾淨商業視覺」（元素少、接近商品攝影）。
 | **JSON Layout 精準控制** | ✅ **獨有** | ❌ |
 | **圖像編輯 / 局部編輯** | ❌ | ✅ **原生**（同一份權重） |
 | **多圖參考** | ❌ | ✅ 最多 16 張 |
-| **Alpha 透明背景** | ❌ | ✅ **獨有**（4 通道 VAE） |
+| **Alpha 透明背景** | ❌ | ⚠️ 有 4 通道但實測去背效果有限 |
 | KV cache 加速 | ❌ | ✅ `QwenImage21Cache` |
 | **LoRA 訓練** | ✅ **官方第一方支援**（6 GB 起步） | ✅ 社群支援 |
 | 省 VRAM | ✅ | ❌（實測吃滿 23.2 GiB） |
+
+### 三項獨有能力我也實測了
+
+原本只有官方文件記載的能力，我把它們都跑了一遍，結果有兩點跟文件說的不完全一樣。
+
+**MOSS 的 JSON Layout 精準控制 ✅** — 指定 bbox 後，文字與物件**精確落在指定位置**：
+
+![MOSS-Image JSON Layout 實測：標題 EXPLORE 在上方、山峰插畫在下方中央](/img/moss-image-5b-notes/09_moss_layout.jpg)
+
+用的是官方 README 的 Python API 寫法（layout JSON 直接當 prompt 傳）：
+
+```json
+{"summary":{"caption":"A minimalist travel poster with a cream background, a blue mountain illustration, and the title EXPLORE at the top."},
+ "items":[{"label":"text","caption":"Large dark-blue uppercase title centered at the top.","text":"EXPLORE","bbox":[-472,-308,-348,308]},
+          {"label":"object","caption":"A flat blue mountain illustration in the lower center.","bbox":[-256,-205,410,205]}],
+ "bbox_coord_space":"abs_centralized","bbox_format":"yxyx"}
+```
+
+> ⚠️ 順帶踩到一個坑：**`MOSSImageLayoutPrompt` 節點在 API 模式下不能用**。
+> 它的 `element` 是 ARRAY 型、驗證時要對元素取 hash（dict 不可 hash），
+> 而正確來源 `CreateBoundingBoxes` 的 `editor_state` 是 `BOUNDING_BOXES` socketless widget、
+> 必須由畫布節點連線進來，但沒有任何節點輸出這個型別。
+> **解法就是上面那段 JSON**（官方 README 也是這樣建議的）。
+
+**Qwen 的圖像編輯 ✅** — 保留原圖的房間、窗戶、陽光、植物、床，只換掉桌子：
+
+![Qwen-Image 2.1 圖像編輯實測](/img/moss-image-5b-notes/10_qwen_edit.jpg)
+
+> ⚠️ **指令必須用 `<image1>` 明確指涉參考圖。**
+> 第一次測試沒寫 `<image1>`，模型直接把它當一般 t2i 重新生成了一張新圖（連房間都換了）。
+> 加上 `<image1>` 之後才真的做到「只改指定部位、其餘保留」。
+
+**Qwen 的多圖參考 ✅** — 同時餵兩張圖，融合它們的配色與紋理：
+
+![Qwen-Image 2.1 多圖參考實測](/img/moss-image-5b-notes/11_qwen_multiref.jpg)
+
+`TextEncodeQwenImage21` 的 `images` 用 dict 格式（最多 16 張）：
+
+```json
+"images": {"image_1": ["4", 0], "image_2": ["5", 0]}
+```
+
+**Qwen 的 Alpha 通道 ⚠️ 有，但別被「支援 alpha」四個字誤導**：
+
+| 測試 | 輸出模式 | 完全透明 | 半透明 | 完全不透明 |
+| --- | --- | --- | --- | --- |
+| 一般 t2i（prompt 寫 transparent background） | **RGBA** | 0.0% | 1.3% | 98.7% |
+| 官方去背做法（編輯 +「output a PNG image」） | **RGBA** | 0.0% | 6.7% | 93.3% |
+
+VAE 確實解出 4 通道（輸出檔是 RGBA），但**一般 t2i 不會給你透明背景**，
+只是多了一個幾乎全滿的 alpha 通道。官方 `background_removal` 範本的做法是
+「編輯 + 指示輸出 PNG」，透明背景是**模型生成進 alpha 通道**、不是事後抠图；
+實測背景乾淨時有改善，但**沒有到完全透明**、主體邊緣也不是乾淨 alpha。
+**真的要乾淨去背，rembg 這類傳統工具仍然更可靠。**
 
 > **一句話：**
 > **Qwen-Image 2.1 是「什麼都能做、而且快」的成熟產品；**
 > **MOSS-Image 5B 是「小、便宜、而且能精準控制版面」的基底模型。**
 >
 > 文字渲染實測幾乎打平，真正的分野在功能邊界：
-> Qwen 有編輯與 alpha，MOSS 有 layout 與官方 LoRA 生態。
+> Qwen 有編輯與多圖參考，MOSS 有 layout 與官方 LoRA 生態。
 
-完整數據與重現方式見 repo 的 [COMPARISON.md](https://github.com/kalpakjian/moss-image-comfyui/blob/main/COMPARISON.md)。
+完整數據與重現方式見 repo 的 [COMPARISON.md](https://github.com/kalpakjian/moss-image-comfyui/blob/main/COMPARISON.md)，
+一頁速查版在 [DECISION.md](https://github.com/kalpakjian/moss-image-comfyui/blob/main/DECISION.md)。
 
 ## 八、把權重吃進 VRAM 的實際數字
 
