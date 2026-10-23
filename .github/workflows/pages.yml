@@ -52,7 +52,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'   # Node 20 is EOL (20.20.2): its bundled roots permanently trust the eMudhra CAs; 24.x rejects that chain
           cache: 'npm'
 
       - name: Install Dependencies
