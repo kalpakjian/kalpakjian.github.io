@@ -6,7 +6,7 @@
   --line: rgba(214, 178, 106, 0.2);
   --line-soft: rgba(255, 255, 255, 0.075);
   --ink: #ece6d9;
-  --muted: #97a1ac;
+  --muted: #a3adb8;
   --gold: #d9b871;
   --gold-soft: #f2ddaa;
   --jade: #6fbf9b;
@@ -66,19 +66,29 @@ body::before {
   z-index: 0;
 }
 
-/* Qwen-Image 生成的星盤背景（僅深色主題；固定定位做出視差感） */
+/* Qwen-Image 生成的雙主題背景：
+   深色＝二十八宿星盤，淺色＝古書／八卦／太極。
+   同色漸層壓在圖片左側，確保標題與內文對比。 */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: url("./bg-ziwei.jpg") center top / cover no-repeat;
-  opacity: 0.55;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 58%, rgba(0, 0, 0, 0.22) 100%);
-  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 58%, rgba(0, 0, 0, 0.22) 100%);
+  background:
+    linear-gradient(90deg, rgba(8, 11, 16, 0.94) 0%, rgba(8, 11, 16, 0.78) 30%, rgba(8, 11, 16, 0.22) 62%, rgba(8, 11, 16, 0) 100%),
+    url("./bg-ziwei.jpg") right center / cover no-repeat;
+  opacity: 0.78;
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.8) 62%, rgba(0, 0, 0, 0.35) 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.8) 62%, rgba(0, 0, 0, 0.35) 100%);
 }
-body.light::after { display: none; }
+body.light::after {
+  display: block;
+  background:
+    linear-gradient(90deg, rgba(245, 240, 230, 0.94) 0%, rgba(245, 240, 230, 0.8) 34%, rgba(245, 240, 230, 0.22) 66%, rgba(245, 240, 230, 0.05) 100%),
+    url("./bg-ziwei-light.jpg") right center / cover no-repeat;
+  opacity: 0.95;
+}
 
 h1, h2, h3, .brand-text { font-family: var(--serif); font-weight: 600; letter-spacing: 0.02em; }
 a { color: var(--gold); text-decoration: none; }
@@ -154,8 +164,9 @@ a:hover { text-decoration: underline; }
 .hero-points { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .hero-points li {
   padding: 5px 12px;
-  border: 1px solid var(--line-soft);
+  border: 1px solid var(--line);
   border-radius: 999px;
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
   color: var(--muted);
   font-size: 12px;
   letter-spacing: 0.06em;
@@ -203,7 +214,11 @@ input[type="text"], input[type="number"], select {
   outline: none;
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
-body.light input[type="text"], body.light input[type="number"], body.light select { background: #fff; }
+body.light input[type="text"], body.light input[type="number"], body.light select { background-color: #fff; }
+body.light input[type="text"], body.light input[type="number"], body.light select,
+body.light .segmented { border-color: rgba(60, 45, 25, 0.24); }
+body.light .panel { border-color: rgba(60, 45, 25, 0.14); box-shadow: 0 18px 44px rgba(90, 70, 40, 0.1); }
+body.light .palace-cell { border-color: rgba(60, 45, 25, 0.16); }
 input:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(217, 184, 113, 0.14); }
 
 select {
@@ -465,8 +480,30 @@ body.light .tabs { background: rgba(255, 255, 255, 0.78); }
   .score-block { align-self: stretch; justify-content: space-between; }
   .tabs { top: 68px; }
   body::after {
-    background-image: url("./bg-ziwei-mobile.jpg");
-    background-position: 62% top;
-    opacity: 0.48;
+    background:
+      linear-gradient(180deg, rgba(8, 11, 16, 0.93) 0%, rgba(8, 11, 16, 0.78) 38%, rgba(8, 11, 16, 0.42) 100%),
+      url("./bg-ziwei-mobile.jpg") 68% top / cover no-repeat;
+    opacity: 0.72;
   }
+  body.light::after {
+    background:
+      linear-gradient(180deg, rgba(245, 240, 230, 0.96) 0%, rgba(245, 240, 230, 0.87) 42%, rgba(245, 240, 230, 0.55) 100%),
+      url("./bg-ziwei-light-mobile.jpg") 62% top / cover no-repeat;
+    opacity: 0.88;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: clamp(1.65rem, 7.2vw, 2rem); line-height: 1.3; }
+  .hero-copy { font-size: 14px; }
+  .hero-points { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+  .hero-points li { white-space: nowrap; }
+  .date-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto;
+    gap: 6px;
+    align-items: center;
+  }
+  .date-row input[type="number"], .date-row select { width: 100%; min-width: 0; }
+  .leap-toggle { grid-column: 1 / -1; margin-left: 0; }
 }
