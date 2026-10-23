@@ -1,5 +1,10 @@
 :root {
   --bg: #080b10;
+  /* 退出 Chrome「自動深色模式」：只宣告淺色，瀏覽器就不會把整頁反相。
+     網站自己的深／淺主題是純 CSS，不受影響。 */
+  color-scheme: only light;
+  /* only light 會讓捲軸變淺色，用 scrollbar-color 補回深色主題的外觀 */
+  scrollbar-color: rgba(214, 178, 106, 0.45) rgba(8, 11, 16, 0.75);
   --bg-2: #0c1118;
   --panel: #101722;
   --panel-2: #0d131c;
@@ -19,6 +24,8 @@
 }
 
 body.light {
+  color-scheme: only light;
+  scrollbar-color: rgba(148, 111, 44, 0.45) rgba(245, 240, 230, 0.85);
   --bg: #f5f0e6;
   --bg-2: #efe8da;
   --panel: #fffdf8;
@@ -87,6 +94,8 @@ body.light::after {
   background:
     linear-gradient(90deg, rgba(245, 240, 230, 0.72) 0%, rgba(245, 240, 230, 0.44) 20%, rgba(245, 240, 230, 0.12) 38%, rgba(245, 240, 230, 0) 56%),
     url("./bg-ziwei-light.jpg") right top / 100% auto no-repeat;
+  /* 提高底圖對比：太極線條本來就偏淡，強化後即使頁面被其他濾鏡重繪也還看得見 */
+  filter: contrast(1.22) saturate(0.92);
   opacity: 1;
   mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.92) 58%, rgba(0, 0, 0, 0.62) 100%);
   -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.92) 58%, rgba(0, 0, 0, 0.62) 100%);
