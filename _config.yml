@@ -28,6 +28,7 @@ code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
   - 'cnn-lab/**'
+  - 'ziwei-fortune/**'
   - 'dhh-rails-world-2026/**'
   - 'coding-agent/**'
   - 'opencv-notes/**'

@@ -14,6 +14,7 @@ navbar:
         - { name: 'CNN 專題：十個實驗，和三次被推翻的假設', link: '/cnn-lab/', icon: 'iconfont icon-bookmark' }
         - { name: '手寫程式碼的時代正式結束（DHH 退休）', link: '/dhh-rails-world-2026/index.html', icon: 'iconfont icon-bookmark' }
         - { name: '從零打造一個 coding agent', link: '/coding-agent/', icon: 'iconfont icon-bookmark' }
+        - { name: '紫微斗數 · 命盤解讀', link: '/ziwei-fortune/', icon: 'iconfont icon-bookmark' }
         - { name: 'Agent 時代，你可能累錯地方了', link: '/2026/10/16/matt-pocock-18-agent-mistakes/', icon: 'iconfont icon-bookmark' }
         - { name: '用 Python 解決問題：24 類工作 × 48 個套件', link: '/2026/10/16/python-problem-solving-toolkit/', icon: 'iconfont icon-bookmark' }
     - key: 'notes'
