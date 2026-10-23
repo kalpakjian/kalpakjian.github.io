@@ -8,6 +8,23 @@
 <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
 <link rel="stylesheet" href="./styles.css" />
 <link rel="stylesheet" href="./chart.css" />
+<script>
+  /* 淺色主題的背景圖先預載，開頁時才不會出現背景圖閃現一下 */
+  try {
+    if (localStorage.getItem('ziwei-theme') === 'light') {
+      var bgHref = window.matchMedia('(max-width: 760px)').matches
+        ? './bg-ziwei-light-mobile.jpg'
+        : './bg-ziwei-light.jpg';
+      var bgLink = document.createElement('link');
+      bgLink.rel = 'preload';
+      bgLink.as = 'image';
+      bgLink.href = bgHref;
+      document.head.appendChild(bgLink);
+    }
+  } catch (err) {
+    /* 忽略預載失敗 */
+  }
+</script>
 </head>
 <body>
 <header class="site-header">
