@@ -298,12 +298,57 @@ VAE 確實解出 4 通道（輸出檔是 RGBA），但**一般 t2i 不會給你�
 實測背景乾淨時有改善，但**沒有到完全透明**、主體邊緣也不是乾淨 alpha。
 **真的要乾淨去背，rembg 這類傳統工具仍然更可靠。**
 
+### 再補三項加速／增強功能，都實測了
+
+官方文件還提了三個「加速／增強」功能，我一併實測，**結論跟直覺差異不小**。
+
+**① Prompt 自動改寫（Prompt Enhancer）✅ — 對文字渲染幫助最大**
+
+輸入只有六個字 `a cafe poster`，PE 模型會改寫成一份完整的結構化海報概念書
+（配色、邊框、主標題字樣、插畫描述都寫好），再餵給影像模型：
+
+![Prompt 自動改寫對比](/img/moss-image-5b-notes/12_pe_compare.jpg)
+
+| | 標題 | 畫面 |
+| --- | --- | --- |
+| 原始 prompt 直接生成 | `BIRON H TREE`（亂碼） | 構圖雜亂 |
+| **PE 改寫後** | `GOOD COFFEE, Good Day`（正確） | 專業海報，含插畫與菜單板 |
+| PE thinking 模式 | `BREWED Goodness` + `COZY CUPS COFFEE · PASTRIES · GOOD VIBES` | 更精緻 |
+
+**為什麼值得特別提**：PE 把「想渲染的文案」明確寫進 prompt，模型就不會自己亂猜要寫什麼字。
+**要出帶字的海報，PE 是最快的改善手段** — 比換模型有效得多。
+實測 18.8～22.0 秒（含 PE 模型載入與改寫），PE text encoder 本身要 **8.82 GiB**。
+
+**② 4 步快速出圖（Lightning LoRA）✅ — 3.3 倍加速，品質還不輸**
+
+![Lightning 4 步 LoRA 對比](/img/moss-image-5b-notes/13_lightning_compare.jpg)
+
+| 設定 | 耗時 | 品質 |
+| --- | --- | --- |
+| 官方 25 步 | 4.9 秒 | 正常 |
+| **Lightning LoRA + 4 步** | **1.5 秒** | ✅ 細節豐富，不輸 25 步 |
+| 只有 4 步（無 LoRA） | 1.2 秒 | ❌ **明顯糊掉** |
+
+**LoRA 才是讓 4 步可行的關鍵** — 單純把 steps 砍到 4 不會有效果，
+base 模型需要的是對應的蒸餾排程。LoRA 只有 **64 MB**。
+
+**③ KV cache ⚠️ 可用，但 24GB 卡上沒有速度差異**
+
+`QwenImage21Cache` 有 `device`（auto/gpu/cpu/off）與 `dtype`（default/int8/int4），
+官方說 `off` 會「每步重算 prefix，是排除 cache 影響的方法」。
+實測五種設定：**4.5～4.9 秒**，差異在雜訊範圍內。
+
+節點 tooltip 寫的是「quantization **potentially speeds up edit workflows when memory starved**」
+—— 這是**記憶體吃緊時的解法**，不是速度優化。
+24GB 卡跑 1024² 單張參考圖本來就不缺記憶體，所以看不出來。
+**在 24GB 卡上這個節點可以先不用管。**
+
 > **一句話：**
 > **Qwen-Image 2.1 是「什麼都能做、而且快」的成熟產品；**
 > **MOSS-Image 5B 是「小、便宜、而且能精準控制版面」的基底模型。**
 >
 > 文字渲染實測幾乎打平，真正的分野在功能邊界：
-> Qwen 有編輯與多圖參考，MOSS 有 layout 與官方 LoRA 生態。
+> Qwen 有編輯、多圖參考與 PE 改寫，MOSS 有 layout 與官方 LoRA 生態。
 
 完整數據與重現方式見 repo 的 [COMPARISON.md](https://github.com/kalpakjian/moss-image-comfyui/blob/main/COMPARISON.md)，
 一頁速查版在 [DECISION.md](https://github.com/kalpakjian/moss-image-comfyui/blob/main/DECISION.md)。
