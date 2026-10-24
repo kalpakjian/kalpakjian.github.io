@@ -6,6 +6,10 @@
 <!-- 宣告「只支援淺色」：Chrome「自動深色模式／深色網站」會直接跳過本頁，
      不再整頁反相（也就沒有 F5 後的閃爍），見 developer.chrome.com/blog/auto-dark-theme -->
 <meta name="color-scheme" content="only light" />
+<!-- 告訴 Dark Reader 不要改寫本頁：本站已有自己的深／淺主題，
+     若 Dark Reader 再疊一層暗色樣式，命盤配色與底圖會失真。
+     （content 屬性一併寫上，相容較舊的判斷實作） -->
+<meta name="darkreader-lock" content="true" />
 <title>紫微斗數 · 命盤解讀</title>
 <meta name="description" content="輸入出生資料，即時排出紫微斗數十二宮命盤，並取得性格、事業、財運、感情、健康與大限流年的規則式解讀。" />
 <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
