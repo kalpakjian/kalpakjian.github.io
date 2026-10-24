@@ -343,12 +343,59 @@ base 模型需要的是對應的蒸餾排程。LoRA 只有 **64 MB**。
 24GB 卡跑 1024² 單張參考圖本來就不缺記憶體，所以看不出來。
 **在 24GB 卡上這個節點可以先不用管。**
 
+### 第二輪補測：官方 Turbo、MOSS 控制 adapter、KV cache 實情
+
+前一輪我說 KV cache「24GB 卡上沒差異」，那其實是**沒測到記憶體吃緊的情境**。
+這輪補了條件，結論要修正。
+
+**① 官方 Turbo LoRA — 4.5 倍加速，品質穩**
+
+![加速 LoRA 對比](/img/moss-image-5b-notes/14_turbo_compare.jpg)
+
+| 設定 | 步數 | 耗時 | 加速比 | LoRA 大小 | 性質 |
+| --- | --- | --- | --- | --- | --- |
+| 無 LoRA（官方推薦） | 25 | 12.2 秒 | 1× | — | — |
+| **官方 Turbo LoRA** | 8 | **2.7 秒** | **4.5×** | 871 MB | ✅ 官方（`Comfy-Org`） |
+| **社群 Lightning LoRA** | 4 | **1.5 秒** | **8.1×** | 64 MB | ⚠️ 社群（`lightx2v`） |
+
+想要官方出品就選 Turbo LoRA（8 步）；要极致速度就選社群 Lightning（4 步，只 64 MB）。
+**兩者都要用 `LoraLoaderModelOnly` + `cfg 1` + `euler`/`simple`。**
+
+**② MOSS-Image 的色／深控制 adapter — 真的能鎖位置**
+
+![MOSS 色／深控制對比](/img/moss-image-5b-notes/15_moss_control_compare.jpg)
+
+`MOSSImageControl` 節點 + `moss-control.safetensors`（299 MB，**社群版** `darask0`）。
+給定**色域圖**（每個區域一個純色，顏色只是 ID）+ **深度圖**（灰階，近＝白）之後：
+
+| 設定 | 耗時 | 結果 |
+| --- | --- | --- |
+| 無控制（`strength=0`） | 13.6 秒 | 正常真人 |
+| **控制到 50%** | 20.5 秒 | **3D 人偶精確出現在指定位置** |
+| **控制到 100%** | 13.4 秒 | 人偶佔據更大版面 |
+
+> ⚠️ 實測重現了 adapter README 明載的「mannequin look」限制 ——
+> 餵 3D 人偶的深度圖，輸出會帶出人偶的表面質感。
+> README 建議 `end_percent=0.5` 並**搭配 region prompts**（每個顏色一句描述），
+> 才會變成「地圖上那個位置的真實人物」。這點我還沒測。
+
+**③ KV cache 的真正條件 — 記憶體吃緊時快 25%**
+
+| 情境 | `device=off` | `device=auto` | 差異 |
+| --- | --- | --- | --- |
+| 1024² + 1 張參考圖 | 4.5 秒 | 4.6 秒 | 無 |
+| **2048² + 8 張參考圖** | **31.2 秒** | **23.3 秒** | **快 25%** |
+
+節點 tooltip 說的「speeds up edit workflows **when memory starved**」完全準確。
+批次做多參考圖編輯時記得開 `device=auto`；出一兩張小圖可以先不管。
+
 > **一句話：**
 > **Qwen-Image 2.1 是「什麼都能做、而且快」的成熟產品；**
 > **MOSS-Image 5B 是「小、便宜、而且能精準控制版面」的基底模型。**
 >
 > 文字渲染實測幾乎打平，真正的分野在功能邊界：
-> Qwen 有編輯、多圖參考與 PE 改寫，MOSS 有 layout 與官方 LoRA 生態。
+> Qwen 有編輯、多圖參考、PE 改寫與官方加速 LoRA，
+> MOSS 有 layout、色／深控制與官方 LoRA 訓練生。
 
 完整數據與重現方式見 repo 的 [COMPARISON.md](https://github.com/kalpakjian/moss-image-comfyui/blob/main/COMPARISON.md)，
 一頁速查版在 [DECISION.md](https://github.com/kalpakjian/moss-image-comfyui/blob/main/DECISION.md)。
