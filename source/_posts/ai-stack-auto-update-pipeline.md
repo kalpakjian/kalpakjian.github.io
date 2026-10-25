@@ -385,7 +385,7 @@ GPU 由核心模組管、Python 環境用 `uv` 管成 venv。
 |---|---|---|
 | 驅動來源 | NVIDIA 安裝程式（`.exe`） | `pacman`：`nvidia-open-dkms` 615.78.08-1 |
 | 核心 | Windows 內建 | `linux-omarchy` 7.2.8-9-omarchy |
-| Python 環境 | 便攜版 `python_embeded\` | venv：`~/Projects/ComfyUI/.venv`（stable）、`.venv-nightly`（nightly） |
+| Python 環境 | 便攜版 `python_embeded\` | venv：`~/Projects/ComfyUI/.venv`（stable）、`~/Projects/ComfyUI/.venv-nightly`（nightly） |
 | 安裝工具 | `pip` | `uv pip`（索引策略不同，見〈坑 3〉） |
 | cuDNN 檔案 | `torch\lib\cudnn*.dll` | `nvidia/cudnn/lib/libcudnn.so.9` |
 | 回滾 | `pip install --force-reinstall` | `uv pip install -r rollback/*.freeze.txt` |
