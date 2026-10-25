@@ -115,6 +115,94 @@ def fig_two_branches(s):
     s.text(72, 574, "「沒有幻覺」與「不衝突」是門檻：預測得漂亮但物理錯，或場景對但因果打架，都還沒到位。", 12.5, MUT)
 
 
+def fig_capability_matrix(s):
+    """圖 4：三種做 3D 的方式，各自能驗證什麼、不能驗證什麼。
+
+    This is the sharpest version of the argument: the table in the article
+    says what each approach *is*; this says what each approach can be
+    *held to*.
+    """
+    cols = [
+        ("物理引擎建模", "amber",
+         ["物理正確性", "與真實的差距"],
+         "沒有「未來」可驗證：\n場景是從零算的，\n不是你推算出來的"),
+        ("360 縫合 ＋ 視覺錯位", "rose",
+         ["看見的部分是否真實"],
+         "相機沒走過的路線\n沒有答案——這是它的\n能力邊界，不是缺陷"),
+        ("4DGS 與世界模型", "teal",
+         ["相機沒拍過的路線\n能不能被想像出來"],
+         "推一下杯子會怎樣？\n這要靠因果理解，\n不是靠場景表徵"),
+    ]
+
+    x0, y0 = 48, 156
+    colw = 264
+    for i, (name, col, can, cannot) in enumerate(cols):
+        x = x0 + i * (colw + 18)
+        hot = (col == "teal")
+        s.rect(x, y0 - 52, colw, 44, fill=CARD2,
+               stroke=C[col] + ("99" if hot else "66"), rx=10)
+        s.text(x + colw / 2, y0 - 24, name, 14, C[col], "700", "middle")
+
+        s.text(x + 18, y0 + 20, "能驗證", 12, MUT)
+        for k, ln in enumerate(can):
+            s.text(x + 18, y0 + 44 + k * 20, ln, 12.5,
+                   C[col] if hot else TXT, "700" if hot else "normal")
+
+        s.text(x + 18, y0 + 108, "不能驗證", 12, MUT)
+        for k, ln in enumerate(cannot.split("\n")):
+            s.text(x + 18, y0 + 132 + k * 20, ln, 12, MUT)
+
+    ybot = y0 + 226
+    s.rect(x0, ybot, 848, 104, fill=CARD, stroke=C["teal"] + "66", rx=12)
+    s.text(x0 + 24, ybot + 32, "三種方式各自能證明的東西不同，缺的那一塊誰也補不上", 14.5,
+           C["teal"], "700")
+    s.text(x0 + 24, ybot + 58,
+           "物理引擎證明物理對，360 縫合證明拍到的部分真，4DGS 證明沒拍到的地方能想像。",
+           13, TXT)
+    s.text(x0 + 24, ybot + 82,
+           "但「推一下杯子會怎樣」只有因果理解能回答——這就是第三欄和第三節分支一的差別。",
+           12.5, MUT)
+
+
+def fig_2026_timeline(s):
+    """圖 5：2026 年三件事的時序與它們各自證實了什麼。"""
+    items = [
+        ("7/21", "併購 SceniX", "把機器人與模擬\n拉進同一條線", "violet"),
+        ("7/28", "R2S2R 成果", "模擬能預測真實\npolicy 排名", "amber"),
+        ("9/01", "新一代 Atlas", "從重建走向\n想像未看見的場景", "teal"),
+        ("9/28", "併入 AMD", "世界模型與硬體\n垂直整合", "green"),
+    ]
+
+    y = 210
+    # Draw the rail in segments that stop short of the badges, so the line
+    # never runs through a circle.
+    xs = [120 + i * 246 for i in range(4)]
+    for i in range(3):
+        s.line(xs[i] + 22, y, xs[i + 1] - 22, y, "#30363d", 3)
+
+    for i, (date, title, body, col) in enumerate(items):
+        x = xs[i]
+        s.badge(x, y, str(i + 1), C[col], 17, 14)
+        s.text(x, y - 46, date, 15, C[col], "700", "middle")
+        s.text(x, y - 22, title, 14, TXT, "700", "middle")
+        for k, ln in enumerate(body.split("\n")):
+            s.text(x, y + 34 + k * 20, ln, 12, MUT, "normal", "middle")
+
+    s.rect(48, 330, 848, 196, fill=CARD2, stroke=C["teal"] + "66", rx=12)
+    s.text(72, 364, "四件事合起來指向同一件事", 15.5, C["teal"], "700")
+    s.text(72, 394,
+           "1. 模擬器是樞紐：從真實任務重建模擬，再用它預測真實世界的 policy 表現。", 13, TXT)
+    s.text(72, 420,
+           "2. 驗證的是「未來」而不是「場景」——2,000 次模擬預測 100 次真實試驗的排名。", 13, TXT)
+    s.text(72, 446,
+           "3. 產出的是想像：Atlas 能生成參考圖中不可見的場景，不是重建看見的部分。", 13, TXT)
+    s.text(72, 472,
+           "4. 瓶頸轉移到硬體：模型與算力的關係，決定了世界模型能走多遠。", 13, TXT)
+    s.text(72, 504,
+           "四件事都不是在證明「重建得更像」，而是在證明「預測得更準」。",
+           13, C["teal"], "700")
+
+
 FIGS = [
     ("wm-three-3d", "xr-vs-world-model", 1, 940, 700,
      "三種「做出 3D」的方式：物理引擎、360 縫合、4DGS",
@@ -131,6 +219,16 @@ FIGS = [
      "各自的驗證方式，以及融合的門檻",
      fig_two_branches,
      "圖 3：因果理解與場景理解兩分支的驗證方式，以及兩者融合的成熟條件｜手繪 SVG 圖表"),
+    ("wm-capability-matrix", "xr-vs-world-model", 4, 940, 500,
+     "三種做 3D 的方式，各自能驗證什麼",
+     "缺的那一塊誰也補不上",
+     fig_capability_matrix,
+     "圖 4：物理引擎、360 縫合與 4DGS 各自能驗證與不能驗證的部分｜手繪 SVG 圖表"),
+    ("wm-2026-timeline", "xr-vs-world-model", 5, 940, 560,
+     "2026 年：四件事把框架推到了實證階段",
+     "沒有一件是在證明重建得更像",
+     fig_2026_timeline,
+     "圖 5：2026 年 SceniX 併購、R2S2R、新一代 Atlas 與併入 AMD 的時序｜手繪 SVG 圖表"),
 ]
 
 

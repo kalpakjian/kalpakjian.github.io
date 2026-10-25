@@ -228,10 +228,62 @@ $h = (Invoke-WebRequest "https://kalpakjian.github.io/<note>/" -UseBasicParsing)
 | `figures/gen_*.py` | 各筆記的產生器（資料驅動，改資料即可重用） |
 | `figures/plan_*.json` | 各筆記的嵌入計畫（`art_index` + `svg` + `caption`） |
 | `figures/gen_pytoolkit.py`＋`figures/embed_pytoolkit.py` | **`_posts` 文章**（python-problem-solving-toolkit）的產生器與嵌入腳本；後者含 `theme_fix()`（見陷阱 11、12） |
+| | `figures/gen_wm.py`＋`figures/embed_wm.py` | **`_posts` 文章**（xr-vs-world-model）的 5 張圖產生器與嵌入腳本 |
+| | `figures/katex_pre.py`＋`figures/katex_render.js` | **數學公式**：建置期把 LaTeX 轉成靜態 KaTeX HTML（見 §4.1） |
+| | `figures/katex_probe_faces.py` | 在真實瀏覽器量測哪幾個 KaTeX 字型被用到，寫入 `katex_faces.json` |
+| | `figures/build_wm_post.py` | xr-vs-world-model 的完整重建流程（基底 → 嵌圖 → KaTeX） |
 
 > 草稿與中間產物（`_m_*.html` 量測用、`*.png` 截圖）留在 `C:\Users\princ\blog\_work\diagrams\`（gitignored），
 > 不進版控。**產生器與計畫則放在本目錄**，因為它們是純文字、小、且可重現——
 > 這是刻意偏離 `NOTE_STYLE_CONTRACT` §12「腳本放 `_work/`」的地方，理由是要讓交接與重現可行。
+---
+
+## 4.1 數學公式：建置期 KaTeX 預渲染（不要用 MathJax）
+
+本站的數學公式**在建置前就被轉成靜態 KaTeX HTML**，不是靠瀏覽器端渲染。
+
+```powershell
+cd C:\Users\princ\blog\tools\diagrams\figures
+python katex_pre.py <post.md>            # 轉換（就地寫回）
+python katex_pre.py <post.md> --check    # 只檢查不寫入
+```
+
+**為什麼不用主題內建的 MathJax：**
+
+| | 主題 MathJax | 建置期 KaTeX（本專案） |
+|---|---|---|
+| 渲染時機 | 瀏覽器開啟頁面時 | 建置時 |
+| 頁面資源 | 需載入 MathJax JS（CDN） | **零** |
+| 字型 | MathJax CHTML 用網頁字體 | KaTeX 數學字體，**內嵌為 data URI** |
+| 閃爍 | 會（公式先顯示原文再跳動） | 不會 |
+| 離線 | 需網路 | 完整 |
+
+**四個關鍵細節：**
+
+1. **不要自訂 `\hat` 之類的 macro。** KaTeX 內建 `\hat` 已帶單一參數；自己再定義一次會造成
+   `Too many expansions: infinite loop`，而 KaTeX **不會丟例外**——它回傳紅色的
+   `<span class="katex-error">`。所以 `katex_pre.py` 會主動檢查 `katex-error` 並中止寫檔。
+2. **支援的定界符**：`$...$`、`$$...$$`、`\(...\)`、`\[...\]`。四種都會被替換。
+3. **字型只嵌用得到的。** 全部 20 個 KaTeX 字型約 600 KB；實際只有 2 個（~41 KB）。
+   用哪幾個由 `katex_probe_faces.py` 在真實瀏覽器量測後寫入 `katex_faces.json`，
+   再由 `katex_pre.py` 依此挑選。
+4. **md 必須維持 CRLF。** KaTeX 輸出自帶 LF，會觸發 `.gitattributes` 的 `eol=crlf` 與 QA 檢查；
+   `katex_pre.py` 會統一正規化行尾。
+
+**流程順序很重要**：`katex_pre.py` 會重寫整個檔案，所以必須**最後**跑，否則先前嵌入的 SVG 會被清掉。
+`build_wm_post.py` 把正確順序封裝起來：
+
+```powershell
+cd C:\Users\princ\blog
+python tools\diagrams\figures\build_wm_post.py
+```
+
+它會：還原乾淨基底 → 嵌入 SVG 圖 → 預渲染 KaTeX。
+
+> 部署端**不需要** KaTeX：md 裡已經是靜態 HTML。`katex` 只列在 `devDependencies`，
+> CI 只跑 `hexo generate`，不會碰這支腳本。
+
+---
 
 ---
 

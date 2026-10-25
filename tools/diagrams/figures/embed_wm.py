@@ -32,6 +32,8 @@ PLAN = [
     ("wm-three-3d", "FIG1", "## 一、「做出 3D」其實有三種方式", "after"),
     ("wm-human-vs-ai", "FIG2", "## 二、核心不是「重建」，是「理解」", "after"),
     ("wm-two-branches", "FIG3", "## 三、兩個分支，兩種驗證方式", "after"),
+    ("wm-capability-matrix", "FIG4", "這條取捨還有一層更深的含意。", "after"),
+    ("wm-2026-timeline", "FIG5", "## 四、2026 年的現況：四件事把這個框架推到了實證階段", "after"),
 ]
 CAPTIONS = {f[0]: f[8] for f in FIGS}
 
@@ -50,22 +52,34 @@ def theme_fix(fig):
                        'style="opacity:1;margin-bottom:0;', 1)
 
 
+def strip_figure(text, marker):
+    """Remove an existing <!-- FIGn --> ... <!-- /FIGn --> block."""
+    start = text.find("<!-- %s -->" % marker)
+    if start < 0:
+        return text, False
+    end = text.find("<!-- /%s -->" % marker, start)
+    if end < 0:
+        raise SystemExit("unterminated marker: %s" % marker)
+    end += len("<!-- /%s -->" % marker)
+    # also swallow the blank lines that separated it
+    while text[end:end + 2] == "\r\n":
+        end += 2
+    return text[:start] + text[end:], True
+
+
 def main():
     text = io.open(POST, encoding="utf-8", newline="").read()
     nl = "\r\n" if "\r\n" in text else "\n"
     changed = 0
     for slug, marker, anchor, where in PLAN:
         fig = theme_fix(build(slug).figure(CAPTIONS[slug], marker)).replace("\n", nl)
-        start = text.find("<!-- %s -->" % marker)
-        if start >= 0:                      # 已存在 → 就地更新（可重跑）
-            end = text.find("<!-- /%s -->" % marker, start)
-            if end < 0:
-                raise SystemExit("unterminated marker: %s" % marker)
-            end += len("<!-- /%s -->" % marker)
-            text = text[:start] + fig + text[end:]
-            changed += 1
-            print("UPDATED         %-5s %s" % (marker, slug))
-            continue
+
+        # If the figure already exists somewhere, drop it first: the anchor may
+        # have moved, and we want the figure to land in the new place.
+        text, existed = strip_figure(text, marker)
+        if existed:
+            print("REMOVED         %-5s (re-anchoring)" % marker)
+
         i = text.find(anchor)
         if i < 0:
             raise SystemExit("anchor not found: %r" % anchor)

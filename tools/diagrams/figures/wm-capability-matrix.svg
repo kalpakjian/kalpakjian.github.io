@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 500" role="img" aria-label="三種做 3D 的方式，各自能驗證什麼｜缺的那一塊誰也補不上" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="938.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三種做 3D 的方式，各自能驗證什麼</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">缺的那一塊誰也補不上</text>
+<rect x="48" y="104" width="264" height="44" rx="10" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="180.0" y="132" font-size="14" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">物理引擎建模</text>
+<text x="66" y="176" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">能驗證</text>
+<text x="66" y="200" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">物理正確性</text>
+<text x="66" y="220" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">與真實的差距</text>
+<text x="66" y="264" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不能驗證</text>
+<text x="66" y="288" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">沒有「未來」可驗證：</text>
+<text x="66" y="308" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">場景是從零算的，</text>
+<text x="66" y="328" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不是你推算出來的</text>
+<rect x="330" y="104" width="264" height="44" rx="10" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<text x="462.0" y="132" font-size="14" fill="#f472b6" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">360 縫合 ＋ 視覺錯位</text>
+<text x="348" y="176" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">能驗證</text>
+<text x="348" y="200" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">看見的部分是否真實</text>
+<text x="348" y="264" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不能驗證</text>
+<text x="348" y="288" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">相機沒走過的路線</text>
+<text x="348" y="308" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">沒有答案——這是它的</text>
+<text x="348" y="328" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">能力邊界，不是缺陷</text>
+<rect x="612" y="104" width="264" height="44" rx="10" fill="#1c2230" stroke="#2dd4bf99" stroke-width="1.5"/>
+<text x="744.0" y="132" font-size="14" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4DGS 與世界模型</text>
+<text x="630" y="176" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">能驗證</text>
+<text x="630" y="200" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">相機沒拍過的路線
+能不能被想像出來</text>
+<text x="630" y="264" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不能驗證</text>
+<text x="630" y="288" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">推一下杯子會怎樣？</text>
+<text x="630" y="308" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">這要靠因果理解，</text>
+<text x="630" y="328" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不是靠場景表徵</text>
+<rect x="48" y="382" width="848" height="104" rx="12" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="72" y="414" font-size="14.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三種方式各自能證明的東西不同，缺的那一塊誰也補不上</text>
+<text x="72" y="440" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">物理引擎證明物理對，360 縫合證明拍到的部分真，4DGS 證明沒拍到的地方能想像。</text>
+<text x="72" y="464" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">但「推一下杯子會怎樣」只有因果理解能回答——這就是第三欄和第三節分支一的差別。</text>
+</svg>
