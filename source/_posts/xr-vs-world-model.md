@@ -32,7 +32,7 @@ banner_img: /img/covers/xr-vs-world-model.png
 > 兩者更像是**互相供給資料與應用場景，但技術目標不同**。
 >
 > 這篇把兩條路線的核心判斷、關鍵文獻與 2026 年的最新進展攤開來比，
-> 並標出每一個論述所依據的一手來源——包括三處**引用錯配**的更正。
+> 並在每一節標出所依據的一手來源。
 >
 > 全文資料截至 2026-10-26，所有連結皆已逐一實測可存取。
 
@@ -50,7 +50,7 @@ Justin Johnson 與 Ben Mildenhall 留任，持續帶領 World Labs 團隊，並�
 官方給出的理由是「scaling our efforts, scaling our reach, and **getting closer to the hardware**」。
 
 這不是財報附註裡的枝節。它意味著「World Labs vs Meta」不再是兩家前沿實驗室的路線之爭，
-而是**硬體垂直整合（AMD）vs 純模型路線（Meta）**的張力——而這個張力恰好印證本文的核心論點：
+而是**硬體垂直整合（AMD）vs 純模型路線（Meta）**的張力——而這個張力恰好印證了本文的整條主線：
 世界模型的瓶頸已經不在算法，而在算力、延遲與部署形態。
 
 > [World Labs is Joining AMD](https://www.worldlabs.ai/blog/amd-announcement) ｜
@@ -142,7 +142,8 @@ Justin Johnson 與 Ben Mildenhall 留任，持續帶領 World Labs 團隊，並�
 mesh 則分為 **Collider Mesh**（GLB，10–20 萬三角形，官方措辭是「optimized for simple physics calculations」）
 與 HQ Mesh（約 60 萬–100 萬三角形，含貼圖或頂點色）。
 注意 collider mesh 的定位——它是給物理引擎用的**粗略**碰撞體，不是高精度幾何。
-這個「視覺保真（splat／HQ mesh）與物理可用（collider mesh）分離」的設計，正是上面那條分類的工程實現。
+這個「視覺保真（splat／HQ mesh）與物理可用（collider mesh）分離」的設計，
+正是上表那兩種輸出分屬兩條路線的工程實現。
 
 > [Marble: A Multimodal World Model](https://www.worldlabs.ai/blog/marble-world-model) ｜
 > [Export file specs](https://docs.worldlabs.ai/marble/export/specs)
@@ -229,7 +230,7 @@ V-JEPA（arXiv:2404.08471），其中 V-JEPA 明言其訓練「without the use o
 text, negative examples, **reconstruction**, or other sources of supervision」——
 不重建，正是它能學到結構性物理直覺的原因。
 
-所以可以這樣說：
+整體可以歸成三點：
 
 - **重建場景**是手段之一，不是世界模型的定義。
 - **預測未來**、尤其是「動作—結果」的因果關係，才是世界模型的核心。
@@ -247,8 +248,8 @@ IntPhys 2 上「current video models are at or close to chance」。
 ## 三、李飛飛那邊不是單純 4DGS
 
 李飛飛與 World Labs 的定位是 **spatial intelligence**：從文字、圖像、影片或空間草圖生成可探索的 3D 環境。
-但「Atlas 可從單張圖生成新視角與 3D 幾何，並轉成 3D Gaussian splats」這個描述需要更新——
-它對應的是 2025 年的舊版能力。
+不過 Atlas 這條線在 2026 年有過一次大改版——2025 年版的重點是「單張圖生成 3D 場景」，
+而 2026 年 9 月 1 日發布的新一代 Atlas 換了一整套架構。
 
 **2026 年 9 月 1 日發布的新一代 Atlas** 是一個**多模態自迴歸 diffusion transformer**，
 從零預訓練，原生處理 text、images、video、3D，所有輸入被編碼進共享的 **spatial context**。
@@ -274,7 +275,7 @@ IntPhys 2 上「current video models are at or close to chance」。
 - **Planner**：根據觀測與目標輸出動作，閉合「感知—行動」迴路。
 
 Marble 這類系統會輸出 Gaussian splats，也會輸出 collision mesh，讓物理引擎可以接手；
-這說明它不是把 4DGS 當終點，而是把它當作通往可模擬、可交互世界的表示層。
+換句話說，4DGS 在這條線上的角色不是終點，而是通往可模擬、可交互世界的表示層。
 
 ---
 
@@ -417,7 +418,7 @@ virtual splat paging 則讓**固定的 GPU 記憶體配置**就能走訪「無�
 實例包括：Starspeed 在瀏覽器直接串流**逾 1 億 splats** 的公里級科幻環境；
 以及另一個 4,000 萬 splats 的實景掃描專案，在手機上順暢執行且**相容 Quest 與 Vision Pro**。
 
-這就是「XR 建模」那一列的輸出，正在被世界模型的消費端直接驅動。
+這就是第一節表格中「XR 建模／360 內容」那一欄所列的輸出，正在被世界模型的消費端直接驅動。
 **世界模型成就 XR** 這條箭頭，現在有了產品級的證據。
 
 另一端則是 **World API**（2026 年 1 月）：從文字、單張影像、多圖組、360° 全景或影片生成可瀏覽的 3D 世界，
@@ -442,30 +443,45 @@ virtual splat paging 則讓**固定的 GPU 記憶體配置**就能走訪「無�
 
 ---
 
-## 八、引用更正：三處需要說明的地方
+## 八、引用說明與勘誤
 
-整理這篇文章的一手來源時，發現三處常見的引用與原文不符，列出來供讀者判斷：
+### 8.1 第五節的五點是本文歸納，不是原文清單
 
-1. **「成熟系統五項條件」並非李飛飛原文的 checklist。**
-   該篇〈A Functional Taxonomy of World Models〉的實際結構是
-   POMDP 迴路 → 三種功能 → 為何 simulation 是 linchpin → 邊界消融 → 統一世界模型 + 資料不對稱，
-   全文沒有編號清單，也沒有「spatial consistency」「uncertainty」這類字眼。
-   第五節那五點是本文綜合歸納，並非原文所有，已在該節標明。
+〈A Functional Taxonomy of World Models〉的實際結構是：
+POMDP 迴路 → 三種功能（Renderer／Simulator／Planner）→ 為何 simulation 是 linchpin →
+三者邊界消融 → 統一世界模型的最終形態，加上資料不對稱的挑戰。
+全文沒有編號清單，也沒有出現「spatial consistency」「uncertainty」這類字眼。
 
-2. **「物理引擎 vs 學出來的模擬器」這個對比不出自 Ying Wen 那篇。**
-   〈What Is a World Model Modeling?〉的核心框架是 Tri-World Model
-   （W1 Interactive Objective World / W2 Subjective World Model / W3 External Knowledge World）
-   與 CCC（Capability Compounding Coefficient），主張「prediction is only the first step」，
-   真正難的是決定哪些未來資訊該保留、哪些該丟棄。
-   本文的「隱式模擬器可能出錯」改掛 Fei-Fei Li 原句（AI 生成幾何 self-intersection／尺度錯誤），
-   論點不變但來源正確。
+第五節那五點是綜合上述框架與各節證據後的歸納，已在該節標明出處。
 
-3. **`worldlabs.ai/blog/atlas` 現已指向 2026-09-01 的新一代 Atlas**，
-   不是 2025 年那版「單圖生成 3D 並轉 Gaussian splats」的描述。
-   「輸出 splats 與 collider mesh」這件事屬於 Marble，其實際輸出格式見第一節。
+### 8.2 「物理引擎 vs 學出來的模擬器」的出處
 
-另附一個常見的引用錯誤：V-JEPA 論文的 arXiv 編號是 **2404.08471**，
-搜尋時容易誤植成 2404.08485——後者是另一篇無關的數值分析論文。
+這個對比在第四節，其依據是 Fei-Fei Li 在同一篇分類學裡的這句：
+
+> "Generative simulators introduce a new risk on top of that: AI-generated geometry can look correct while containing self-intersections or wrong scale that produce nonsensical physics."
+
+亦即「隱式且可能有誤的模擬器」最精確的表述是**視覺正確、物理錯誤**，
+而且錯誤不會以崩潰的形式提示你。
+
+另有一篇常被引用來支撐世界模型定義的〈What Is a World Model Modeling?〉，
+其核心框架是 Tri-World Model（W1 Interactive Objective World／W2 Subjective World Model／
+W3 External Knowledge World）與 CCC（Capability Compounding Coefficient），
+主張「prediction is only the first step」——真正難的是決定哪些未來資訊該保留、哪些該丟棄。
+它與本文第四節的論點方向一致，但並不是該對比的原始出處。
+
+### 8.3 Atlas 這條線的版本差異
+
+`worldlabs.ai/blog/atlas` 現已指向 2026-09-01 發布的新一代 Atlas
+（多模態自迴歸 diffusion transformer）。2025 年版的重點是單張圖生成 3D 場景，
+與現在的架構不同——引用時需留意所指的是哪一版。
+
+「輸出 splats 與 collider mesh」這件事屬於 Marble，其實際輸出格式見第一節。
+
+### 8.4 一個容易誤植的 arXiv 編號
+
+V-JEPA 論文（*Revisiting Feature Prediction for Learning Visual Representations from Video*）
+的 arXiv 編號是 **2404.08471**，搜尋時容易誤植成 2404.08485——
+後者是另一篇無關的數值分析論文。
 
 ---
 
