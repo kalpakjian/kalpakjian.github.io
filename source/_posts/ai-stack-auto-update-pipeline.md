@@ -1,5 +1,5 @@
 ---
-title: 讓本機 AI 堆疊自己照顧自己：Python 3.14 + PyTorch cu132 的自動更新與回滾
+title: 讓本機 AI 堆疊自己照顧自己：Python 3.14 + PyTorch cu132 的自動更新與回滾｜Linux／Omarchy 實戰篇
 date: 2026-10-21 12:00:00
 categories:
   - AI
@@ -11,6 +11,9 @@ tags:
   - transformers
   - Ollama
   - Windows
+  - Linux
+  - Omarchy
+  - Arch
   - 自動化
   - Hexo
 toc: true
@@ -29,10 +32,17 @@ banner_img: /img/covers/ai-stack-auto-update-pipeline.jpg
 >
 > **2026-10-22 更新**：補上 cuDNN 檢查（可用性／版本／有沒有完整複製進 CUDA 目錄）、
 > 缺檔時用「最高權限按需排程工作」自動補齊，以及升級前後的 GPU 效能基準（`bench_gpu.py`）。
+>
+> **2026-10-26 更新**：同一套堆疊搬到 Linux（Omarchy／Arch）上重做一次——驅動 610.57.04 → 615.78.08、
+> torch 升到 cu132／cu134、兩個 venv（stable ＋ nightly）各自驗證 cuDNN，並新增 `audit_venv.py`（22 項完整性審計）。
+> **新章節 §十** 記錄 Linux 版的安裝、三個 Windows 沒有的坑，以及一個反直覺的結論：
+> **真正讓效能變快的是驅動更新，不是 wheel 升級。**
 
 <!-- more -->
 
 ## 一、最終環境
+
+### Windows 11（自動更新管線本體）
 
 | 元件 | 版本 |
 |---|---|
@@ -57,6 +67,20 @@ py --version            # Python 3.14.8（PY_PYTHON=3.14）
 python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
 # 2.14.1+cu132 True
 ```
+
+### Linux／Omarchy（2026-10-26 新增，同一張 RTX 4090）
+
+| 元件 | 版本 |
+|---|---|
+| OS | **Omarchy**（Arch-based），核心 `7.2.8-9-omarchy` |
+| 驅動 | `nvidia-open-dkms` **615.78.08-1**（CUDA UMD **13.4**） |
+| Python | **3.12.14**（兩個 venv 都是 3.12） |
+| torch（stable） | **2.14.1+cu132** |
+| torch（nightly） | **2.16.0.dev20261025+cu134** |
+| cuDNN | stable **9.24.0.43**／nightly **9.26.0.51** |
+| 環境 | `~/Projects/ComfyUI/.venv`（6.8 G）、`~/Projects/ComfyUI/.venv-nightly`（12 G） |
+
+Linux 版的安裝過程、踩坑、審計與實測見 **§十**。
 
 ## 二、為什麼是 3.14.8，不是最新的 3.15.0
 
@@ -344,7 +368,253 @@ AppUserModelID 註冊在 HKCU，名稱顯示為 **AI Stack Check**。
 | `.ps1` 存成 UTF-8 無 BOM | PS 5.1 用 ANSI 解讀，中文字元吃掉引號 → 語法錯誤 | `.ps1` 一律存 UTF-8 **with BOM** |
 | 對 GB 級檔案做 SHA256 | 補檔腳本跑到超時 | 大檔只比大小，≤64 MB 才雜湊 |
 
-## 十、開源
+> 上面 11 個坑是 Windows 版的。Linux 版有**三個形態完全不同的坑**（wheel 路徑互相覆蓋、
+> torchaudio 缺 cp312 wheel、`uv pip` 的索引策略），見 **§十**。
+
+## 十、在 Linux（Omarchy）上：同一套堆疊的另一個戰場
+
+### 為什麼要再做一次
+
+Windows 那套是**便攜版**：整個 Python 環境跟 ComfyUI 一起放進 `D:\AI\ComfyUI`，
+用工作排程器每天檢查。Linux／Omarchy 這台是**系統級**環境：套件由 `pacman` 管、
+GPU 由核心模組管、Python 環境用 `uv` 管成 venv。
+
+兩邊的失敗模式完全不同，所以整套流程必須**重做一次**，而不是把 Windows 的腳本搬過去。
+
+| 面向 | Windows 11 | Linux／Omarchy |
+|---|---|---|
+| 驅動來源 | NVIDIA 安裝程式（`.exe`） | `pacman`：`nvidia-open-dkms` 615.78.08-1 |
+| 核心 | Windows 內建 | `linux-omarchy` 7.2.8-9-omarchy |
+| Python 環境 | 便攜版 `python_embeded\` | venv：`~/Projects/ComfyUI/.venv`（stable）、`.venv-nightly`（nightly） |
+| 安裝工具 | `pip` | `uv pip`（索引策略不同，見〈坑 3〉） |
+| cuDNN 檔案 | `torch\lib\cudnn*.dll` | `nvidia/cudnn/lib/libcudnn.so.9` |
+| 回滾 | `pip install --force-reinstall` | `uv pip install -r rollback/*.freeze.txt` |
+| 排程 | 工作排程器 + WinRT toast | systemd timer（本次未接） |
+
+### 驅動升級：Linux 走的是套件管理
+
+這是整個升級裡**最關鍵、也最反直覺**的一段。
+
+```bash
+# 升級前
+kernel            7.2.5-3-omarchy
+nvidia-open-dkms  610.57.04
+CUDA UMD          13.3
+
+# 升級後（omarchy update / pacman -Syu，然後重開機）
+kernel            7.2.8-9-omarchy
+nvidia-open-dkms  615.78.08-1
+CUDA UMD          13.4
+```
+
+Linux 上不需要「下載驅動安裝程式」：`nvidia-open-dkms` 會跟著核心一起重建模組。
+**但開 DKMS 一定會重編核心模組**，所以升完核心必須重開機，才會真正換到新驅動；
+中途 `nvidia-smi` 還顯示舊版，就是模組還沒換。
+
+> 教訓：**Linux 上「更新套件」與「更新驅動」是同一件事**，
+> 沒有安裝精靈可以慢慢按，也沒有「記得重開機」提示——忘記重開就會以為沒升成。
+
+### 兩個 venv：stable ＋ nightly
+
+| | stable | nightly |
+|---|---|---|
+| 路徑 | `~/Projects/ComfyUI/.venv` | `~/Projects/ComfyUI/.venv-nightly` |
+| torch | **2.14.1+cu132** | **2.16.0.dev20261025+cu134** |
+| torchvision | 0.29.1+cu132 | 0.30.0.dev20261025+cu134 |
+| torchaudio | 2.11.0.dev20260902+cu132 | 2.11.0.dev20261025+cu134 |
+| triton | 3.8.0 | 3.9.0 |
+| NCCL | 2.30.7 | 2.32.3 |
+| cuDNN | **9.24.0.43** | **9.26.0.51** |
+| 套件數 | 130 | 140 |
+| 磁碟 | 6.8 G | 12 G |
+
+**為什麼要兩個？** nightly 是 dev 版，本來就會壞。把它跟 stable 放同一個 venv，
+一壞就是整天不能用；分成兩個之後，stable 永遠是已知可用的版本，
+nightly 壞掉只影響「試新功能」這件事。
+
+> nightly 多出來的 4.4 G 是 `tensorrt_libs` 11.3.0.99（cu13 版，升級前就存在），
+> 屬於**選用**加速路徑：`comfy_kitchen` 與 torch 都不宣告依賴它，沒有也不影響一般推理。
+> 不需要 TensorRT 的話可以整包移除。
+
+### 三個 Linux 特有的坑
+
+#### 坑 1：cu12 與 cu13 的 wheel 裝到**同一個路徑**
+
+這是最兇狠的一個坑，也是卡最久的一個。
+
+`nvidia-*-cu12-*` 與 `nvidia-*-cu13-*` 這兩套 wheel，安裝路徑**完全重疊**：
+
+```
+nvidia/nccl/lib/libnccl.so.2
+nvidia/cudnn/lib/libcudnn.so.9
+nvidia/nvshmem/lib/libnvshmem_host.so.3
+```
+
+pip／uv 不會知道兩邊是不同套件——**後裝者直接覆蓋先裝者**。症狀有兩種：
+
+| 症狀 | 原因 |
+|---|---|
+| `libtorch_cuda.so: undefined symbol: ncclCommResume` | cu12 版 `libnccl.so.2` 覆蓋了 cu13 版 → **torch 連 import 都失敗** |
+| `importlib.metadata` 回報 cuDNN **9.19.0.56** | 殘留 15 個孤兒 `nvidia_*_cu12-*` dist-info 被 metadata 掃到 → **版本是假的** |
+
+第二種最陰險：**它不會報錯**，只會安靜地給你一個錯的版本號，
+讓你以為 cuDNN 沒裝對、到處找問題。
+
+清理方式（`cleanup_cu12_orphans.py`）：
+
+- 刪掉 **15 個**孤兒 `nvidia_*_cu12-*` dist-info
+- 刪掉 **352 個**只屬於 cu12 的檔案
+- 對 4 個路徑重疊的套件（cudnn／cusparselt／nccl／nvshmem）從 cu132 index **強制重裝**，確保 cu13 版本在位
+
+結果：套件數 **145 → 130**，NCCL 符號齊全，`uv pip check` 通過。
+
+> 教訓：**Linux 上 pip 的「已安裝」是一個檔案系統狀態，不是一個資料庫**。
+> 兩個索引的同名套件共存過一次，就永遠要懷疑它。
+
+#### 坑 2：stable 索引沒有 torchaudio 的 cp312 wheel
+
+`https://download.pytorch.org/whl/cu132/torchaudio/` 底下 248 個 wheel，
+**cp312 只有 `2.2.0-linux_aarch64`**——沒有 x86_64。
+
+連鎖反應：
+
+```bash
+uv pip install --upgrade torchaudio
+# 什麼都沒發生：uv 認為 2.11.0+cu130 > 2.11.0（+cu130 是本機版本號）
+```
+
+torchaudio 留在 cu130，而 torch 已經升到 cu132 → ComfyUI **一啟動就崩**：
+
+```
+RuntimeError: PyTorch has CUDA version 13.2 whereas TorchAudio has CUDA version 13.0
+```
+
+觸發點是 `comfy/ldm/lightricks/vae/audio_vae.py` 的**硬 import torchaudio**
+（本機 checkout 共 5 處硬 import）。
+
+解法是改從 nightly 索引撈：
+
+```bash
+uv pip install --python .venv/bin/python \
+  torch==2.14.1+cu132 torchvision==0.29.1+cu132 torchaudio==2.11.0.dev20260902+cu132 \
+  --index-url https://download.pytorch.org/whl/nightly/cu132 \
+  --extra-index-url https://download.pytorch.org/whl/cu132 \
+  --index-strategy unsafe-best-match
+```
+
+> ⚠️ `--index-strategy unsafe-best-match` 會打破「單一索引一致性」保護，
+> **必須同時釘住 torch／torchvision 的版本**，否則會被 nightly 一起帶走。
+
+**上游正解**：ComfyUI 的 `origin/master` 已改用自帶的 `comfy/audio.py`
+（MelSpectrogram／resample），`requirements.txt` 裡**只剩 torch／torchsde／torchvision，torchaudio 整條被移除**。
+本機 checkout 落後 263 個 commit，`git pull` 就能根治這個坑。
+
+#### 坑 3：`uv pip` 的「first index wins」
+
+pip 與 uv 的索引策略不同：uv 預設**第一個有該套件的索引就贏**，
+不像 pip 會把多個索引的版本集合起來比較。所以：
+
+- 想從 cu132 stable 拿 torch、又要從 cu132 nightly 拿 torchaudio → 必須 `--index-strategy unsafe-best-match`
+- 用了 unsafe 之後 → **必須自己釘版本號**，因為保護已經沒了
+
+> 一句話：**uv 比較嚴格，pip 比較寬鬆；嚴格的那個要你手動補釘版本。**
+
+### cuDNN 版本要三路交叉驗證
+
+Windows 那邊踩過的坑是「單獨載入 cudnn DLL 問版本，回報 9.26.0 但 torch 實際用 9.24.0」。
+Linux 這邊更直接：**cuDNN 9 的 `.so` 檔裡沒有任何明文版本字串**，`strings` 只會挖到雜訊。
+
+所以我改用三個互相獨立的來源交叉比對：
+
+| 來源 | 做法 | stable | nightly |
+|---|---|---|---|
+| 套件 metadata | `importlib.metadata.version("nvidia-cudnn-cu13")` | 9.24.0.43 | 9.26.0.51 |
+| **磁碟上的 `.so`** | `ctypes` 直接對 `libcudnn.so.9` 呼叫 `cudnnGetVersion()`（**完全不經 torch**） | 9.24.0 | 9.26.0 |
+| torch 執行期 | `torch.backends.cudnn.version()` | 92400 → 9.24.0 | 92600 → 9.26.0 |
+
+三者一致才算通過。再加上 `/proc/self/maps` 確認實際載入的是
+**venv 內部**的 `nvidia/cudnn/lib/libcudnn_graph.so.9`，不是系統那份。
+
+> 為什麼要這樣麻煩？因為「版本號」在 Linux 上可能是 metadata 的謊言（坑 1），
+> 也可能是 runtime 的謊言（Windows 那邊的 DLL 坑）。
+> 唯一能證明「我用的是哪一份」的方式，是**對實際載入的那個檔案問**。
+
+### `audit_venv.py`：22 項完整性審計
+
+Windows 版的 `check_stack.py` 檢查的是「有沒有新版本」；
+Linux 版的 `audit_venv.py` 檢查的是「**現在這個環境到底完不完整**」——
+因為坑 1、坑 2 都屬於「沒報錯但其實壞掉」的類型。
+
+7 組共 22 項，兩個 venv 都是 **0 failed / 0 warnings → PASS**：
+
+| 檢查組 | 內容 | stable | nightly |
+|---|---|---|---|
+| ① 核心套件 | torch／torchvision／torchaudio／triton 版本與 CUDA 一致性 | 2.14.1 / 0.29.1 / 2.11.0.dev20260902 / 3.8.0 | 2.16.0.dev20261025 / 0.30.0.dev20261025 / 2.11.0.dev20261025 / 3.9.0 |
+| ② cu12／cu13 一致性 | 4 個 cu13 套件，無 cu12 殘留 | OK | OK |
+| ③ 安裝完整性 | RECORD 齊全／無孤兒 dist-info／無 cu12-cu13 檔案歸屬衝突 | OK | OK |
+| ④ **cuDNN 正確性** | metadata ↔ 磁碟 `.so` ↔ torch runtime 三方一致 ＋ 載入來源 | 9.24.0 | 9.26.0 |
+| ⑤ NCCL | 符號完整 ＋ 載入來源 ＋ 版本 | 2.30.7 | 2.32.3 |
+| ⑥ 功能測試 | fp16 matmul／cuDNN conv 數值正確性／SDPA／torch.compile／tv.ops.nms／torchaudio | conv max abs err 0.00191 | 0.00192 |
+| ⑦ 相容性 | `uv pip check` | 130 packages OK | 140 packages OK |
+
+ComfyUI 煙霧測試（`main.py --quick-test-for-ci`）兩個環境都是 **exit=0、0 個自訂節點匯入失敗**。
+
+> 這個審計器的價值在於：**它是「沒有壞掉」的證明**。
+> 升級之後不跑它，你永遠不知道坑 1 有沒有在你下次 `pip install` 時復發。
+
+### 效能實測：真正變快的是**驅動**，不是 wheel
+
+這是整個 Linux 版最值得記錄的結論，而且**跟直覺相反**。
+
+同一支腳本 `bench_stack.py`（形狀由原始基準檔逆向擬合還原），
+在**同一張卡、同一個核心版本**下做了 A/B/C 三組：
+
+| 組態 | fp16 matmul (TFLOPS) | tf32 on | bf16 | conv fp32 (ms) | conv fp16 (ms) | conv fp16 + CL (ms) | SDPA (ms) |
+|---|---|---|---|---|---|---|---|
+| 升級前（cu130 + drv610） | 156.4 | 80.7 | 161.1 | 1.603 | 1.044 | 0.809 | 0.058 |
+| A：cu130 ＋ **drv615** | 156.6 | 80.9 | 161.7 | **1.421** | **0.979** | **0.731** | 0.057 |
+| B：cu132 ＋ drv615 | 156.2 | 80.6 | 161.5 | 1.416 | 0.980 | 0.731 | 0.057 |
+| C：cu134 ＋ drv615 | 147.5 | 80.8 | 161.5 | **1.382** | **0.961** | 0.733 | 0.057 |
+
+結論拆成兩句：
+
+1. **driver 更新（升級前→A）**：cuDNN conv fp16 **+6.2%**、channels_last **+9.6%**、fp32 conv **+11.4%**
+2. **wheel 升級（A→B）**：各項持平（±0.5% 內）——**cu132 相對 cu130 幾乎沒有差別**
+
+端到端也一致（SD1.5、512×768、20 步、seed 42、中位數 ×3）：
+
+| 組態 | 生成時間 | vs cu130 |
+|---|---|---|
+| cu130 | 3.05 s | — |
+| cu132 | 3.04 s | −0.3% |
+| cu134 | 3.01 s | −1.3% |
+
+三對組合的輸出逐像素比對，mean abs diff 皆 ≈ 0.32/255、差異 > 2 的像素 ≈ 1.7~1.8%，
+幅度完全一致 → **差異純屬 cuDNN kernel 選擇的正常非確定性，演算法輸出沒變**。
+
+> **為什麼會這樣？** CUDA runtime 與 cuDNN 真正吃效能的那段是跑在 **driver 提供的核心碼**裡。
+> wheel 換版本只換了前端 API 與部分 kernel，而 conv kernel 的選擇與排程是 driver 層的東西。
+> 所以升 driver 的收益遠大於升 wheel。
+
+> ⚠️ **跨平台的數字不要直接相減**：Windows 版的 `bench_gpu.py` 與 Linux 版的 `bench_stack.py`
+> 用的形狀不同（Linux 版的形狀是從原始基準檔逆向擬合出來的），
+> 兩邊的絕對值不能互比，只能各自跟自己的「升級前」比。
+
+### 兩條必須記住的量測紀律
+
+1. **基準腳本不可並行**：三個 bench 同時跑會搶同一張 GPU，數字失真（SDPA 0.058 → 0.212 ms）。
+   必須**逐一循序**執行。
+2. **換 seed**：ComfyUI 會重用上游節點的執行快取，同 seed 重跑會秒回，測到的是快取值。
+
+### 還沒做的部分
+
+- Linux 版的檢查／升級腳本目前只在本機 `~/Projects/ai-stack-check/`
+  （`audit_venv.py`、`verify_stack.sh`、`bench_stack.py`、`cleanup_cu12_orphans.py`），
+  尚未開源；`ai-stack-update-check` repo 目前仍是 Windows 版。
+- 排程與桌面通知還沒接（Windows 那套用工作排程器 ＋ WinRT toast；Linux 端預計用 systemd timer）。
+- Python 3.15 遷移：cu132／cu134 已有 cp315 wheel，建議排在 wheel 升級之後。
+
+## 十一、開源
 
 程式碼已放到公開 repo：
 
@@ -380,7 +650,11 @@ python scripts\check_stack.py
 Copy-Item -Recurse . "$env:USERPROFILE\.agents\skills\ai-stack-update-check"
 ```
 
-## 十一、結論
+> 這個 repo 目前是 **Windows 版**（`.ps1` 排程 ＋ WinRT toast）。Linux／Omarchy 版的
+> 審計與驗證腳本（`audit_venv.py`、`verify_stack.sh`）目前還在本機，尚未收進 repo——
+> 見 **§十〈還沒做的部分〉**。
+
+## 十二、結論
 
 1. **版本號不等於相容性。** 3.15.0 是最新，但 torch 只到 cp314；真正該看的是 wheel 的 Python 標籤（`cp314`）。
 2. **目錄存在不等於能安裝。** `cu134` 有目錄、沒有 Windows 檔；必須對實際 wheel 發請求。
@@ -389,6 +663,13 @@ Copy-Item -Recurse . "$env:USERPROFILE\.agents\skills\ai-stack-update-check"
 5. **排程要離線可跑。** `--no-network` 模式讓你在沒網路時仍能看到目前版本。
 6. **權限也要能自動化。** 非提權的排程寫不進 `Program Files`；用「一次性註冊的最高權限按需工作」補上，才不會退回人手。
 7. **「指令沒報錯」不等於「有做事」。** 漏抄 include 不會報錯，只會少檔——所以要把「幾個在、幾個缺」變成數字。
+8. **Linux 上的套件狀態是檔案系統事實，不是一個資料庫。** 兩個 CUDA 索引的同名 wheel 會覆蓋彼此，
+   而孤兒 dist-info 會讓 `importlib.metadata` 報一個**假的** cuDNN 版本——不報錯，只會騙你。
+9. **版本要三路交叉驗證。** 套件 metadata、對磁碟上的 `.so` 直接問、torch 執行期回報，
+   三者一致才算數。Windows 的 DLL 坑與 Linux 的 dist-info 坑，是「單一來源會騙你」的兩個變體。
+10. **效能瓶頸可能在 driver，不在 wheel。** 同一張卡、同一核心版本下，
+    driver 610→615 帶來 cuDNN conv +6~11%，而 cu130→cu132 的 wheel 升級落在 ±0.5% 內。
+    所以升級前先量「driver 變了會怎樣」，再決定要不要換 wheel。
 
 下一步想做的（部分已完成）：
 
@@ -396,4 +677,8 @@ Copy-Item -Recurse . "$env:USERPROFILE\.agents\skills\ai-stack-update-check"
   把 `bench_delta` 寫進日誌（上面的實測表就是它的輸出）。
 - 還沒做：把 **Whisper 轉錄**也納入基準（需要固定的音檔與 WER 參考稿），
   以及把「升級後效能退步 > 5%」做成自動告警。
+- ✅ **Linux／Omarchy 版已建立**：驅動 615.78.08 ＋ 兩個 venv（cu132 stable／cu134 nightly），
+  `audit_venv.py` 的 22 項審計兩邊皆 PASS（見 §十）。
+- 還沒做：把 Linux 版的 `audit_venv.py`／`verify_stack.sh` 收進 `ai-stack-update-check` repo，
+  並接上 systemd timer ＋ 桌面通知。
 
