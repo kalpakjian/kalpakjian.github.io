@@ -37,6 +37,12 @@ banner_img: /img/covers/ai-stack-auto-update-pipeline.jpg
 > torch 升到 cu132／cu134、兩個 venv（stable ＋ nightly）各自驗證 cuDNN，並新增 `audit_venv.py`（22 項完整性審計）。
 > **新章節 §十** 記錄 Linux 版的安裝、三個 Windows 沒有的坑，以及一個反直覺的結論：
 > **真正讓效能變快的是驅動更新，不是 wheel 升級。**
+>
+> **2026-10-26 補完**：Linux 版的腳本已**開源**到 `ai-stack-update-check` 的 `scripts/linux/`，
+> 並接上 **systemd user timer ＋ 桌面通知**（每日 23:00）；
+> ComfyUI 落後的 263 個 commit 也補齊了（上游移除 torchaudio 的坑根治）；
+> 至於「移除 nightly 的 `tensorrt_libs` 回收 4.4 G」——**實測後改成只裁掉用不到的資源檔**，
+> 因為 nightly 其實在跑 H3 TRT-VAE，整包移除會弄壞工作流。細節見 §十。
 
 <!-- more -->
 
@@ -389,7 +395,7 @@ GPU 由核心模組管、Python 環境用 `uv` 管成 venv。
 | 安裝工具 | `pip` | `uv pip`（索引策略不同，見〈坑 3〉） |
 | cuDNN 檔案 | `torch\lib\cudnn*.dll` | `nvidia/cudnn/lib/libcudnn.so.9` |
 | 回滾 | `pip install --force-reinstall` | `uv pip install -r rollback/*.freeze.txt` |
-| 排程 | 工作排程器 + WinRT toast | systemd timer（本次未接） |
+| 排程 | 工作排程器 + WinRT toast | systemd user timer + `notify-send`（已接） |
 
 ### 驅動升級：Linux 走的是套件管理
 
@@ -435,6 +441,25 @@ nightly 壞掉只影響「試新功能」這件事。
 > nightly 多出來的 4.4 G 是 `tensorrt_libs` 11.3.0.99（cu13 版，升級前就存在），
 > 屬於**選用**加速路徑：`comfy_kitchen` 與 torch 都不宣告依賴它，沒有也不影響一般推理。
 > 不需要 TensorRT 的話可以整包移除。
+
+**但「整包移除」在這台機器上是錯的**——nightly 正是跑 MiniMax H3 TRT-VAE 的環境
+（`run_nightly.sh` 明確用 `.venv-nightly/bin/python` 啟動，兩個 `.engine` 也在 `models/vae/`）。
+真正該做的是**只裁掉永遠不會被載入的資源檔**：NVIDIA 的 wheel 把**所有** GPU 架構的
+builder resource，連同 **Windows 專用**的那 8 個 blob，一起塞進 `tensorrt_libs/`：
+
+| 檔案群 | 大小 | RTX 4090（sm_89）需不需要 |
+|---|---|---|
+| `libnvinfer_builder_resource_sm89.so` | 180 MiB | 要 |
+| `libnvinfer_builder_resource_ptx.so` | 230 MiB | 要（PTX JIT fallback） |
+| `..._sm75/80/86/90/100/120.so` | 1.41 GiB | 不要 |
+| `..._win_*.so`（8 個） | 1.81 GiB | 不要（Windows 專用） |
+| `libnvinfer.so` / `_plugin.so` / `_onnxparser.so` | 0.71 GiB | 要 |
+
+搬走 14 個檔案＝回收 **3.29 GiB**（nightly 12 G → 8.4 G），`sm89` 與 `ptx` 留著。
+驗證不是「感覺沒事」而是三關都過：ONNX → engine 編譯 OK、
+`minimax_h3_vae_encoder.engine` 與 `minimax_h3_vae_decoder.engine` 反序列化 OK、
+ComfyUI 實機煙霧測試 `exit=0` 且 `ComfyUI-H3VAE_TRT` 自訂節點正常載入。
+`RECORD` 不動，所以 `uv pip check` 依然全綠。
 
 ### 三個 Linux 特有的坑
 
@@ -508,6 +533,22 @@ uv pip install --python .venv/bin/python \
 **上游正解**：ComfyUI 的 `origin/master` 已改用自帶的 `comfy/audio.py`
 （MelSpectrogram／resample），`requirements.txt` 裡**只剩 torch／torchsde／torchvision，torchaudio 整條被移除**。
 本機 checkout 落後 263 個 commit，`git pull` 就能根治這個坑。
+
+> ✅ **2026-10-26 實作完成**：落後的 263 個 commit 已補齊（`a78a22e` → `fe298e4`），
+> 上游移除 torchaudio 的 commit 是 `b16023b "Remove torchaudio dependency. (#16457)"`，
+> 拉下來之後 `requirements.txt` 確實沒有 torchaudio、`comfy/audio.py` 確實存在。
+> 順帶發現上游把 `comfy-aimdo` 從 0.5.3 提到 0.6.0、`comfy-kitchen` 0.2.34 → 0.2.40，
+> 舊版 `comfy_aimdo` 沒有 `storage` 子模組，ComfyUI 會直接起不來——
+> 所以 `git pull` 之後**還要**把這幾個套件升級，但**不能**讓 pip 順手動到 torch。
+> 用 `uv pip install --dry-run` 先看清楚會動到什麼，再只升該升的：
+
+```bash
+uv pip install --dry-run --python .venv/bin/python \
+  comfyui-frontend-package==1.57.1 comfyui-workflow-templates==0.11.96 \
+  comfyui-embedded-docs==0.5.14 comfy-kitchen==0.2.40 comfy-aimdo==0.6.0
+# → Would uninstall 8 packages / Would install 9 packages
+#   （torch、torchvision、numpy 全都不在名單裡）
+```
 
 #### 坑 3：`uv pip` 的「first index wins」
 
@@ -606,12 +647,58 @@ ComfyUI 煙霧測試（`main.py --quick-test-for-ci`）兩個環境都是 **exit
    必須**逐一循序**執行。
 2. **換 seed**：ComfyUI 會重用上游節點的執行快取，同 seed 重跑會秒回，測到的是快取值。
 
-### 還沒做的部分
+### 每日排程：systemd user timer ＋ 桌面通知
 
-- Linux 版的檢查／升級腳本目前只在本機 `~/Projects/ai-stack-check/`
-  （`audit_venv.py`、`verify_stack.sh`、`bench_stack.py`、`cleanup_cu12_orphans.py`），
-  尚未開源；`ai-stack-update-check` repo 目前仍是 Windows 版。
-- 排程與桌面通知還沒接（Windows 那套用工作排程器 ＋ WinRT toast；Linux 端預計用 systemd timer）。
+Windows 那套是「工作排程器 ＋ WinRT toast」；Linux 端用 **systemd user timer**
+（**user** scope：不用 root 權限，桌面通知一定送得到，日誌留在自己的家目錄）：
+
+```bash
+cd scripts/linux
+./install_systemd_user.sh                            # 安裝 unit + enable --now
+systemctl --user start ai-stack-check.service         # 立刻跑一次
+systemctl --user list-timers ai-stack-check.timer --no-pager
+journalctl --user -u ai-stack-check.service -n 50 --no-pager
+```
+
+| 項目 | 值 |
+|---|---|
+| Unit | `ai-stack-check.service` ＋ `ai-stack-check.timer`（user scope） |
+| 觸發時間 | 每天 23:00（`RandomizedDelaySec=300`） |
+| 補跑 | `Persistent=true`：當時電腦關著，開機後會補跑一次 |
+| 日誌 | `~/.local/state/ai-stack-update-check/stack-check-YYYY-MM-DD.log`（保留 90 天） |
+| 狀態檔 | 同目錄 `stack-check-status.txt`（`OK`／`UPDATES: …`／`PROBLEM: …`） |
+| 桌面通知 | `notify-send`（沒有 session bus 時退回寫 journal，不會讓排程整個失敗） |
+| 登出也要跑 | `sudo loginctl enable-linger "$USER"` |
+
+每日流程是：堆疊檢查（`check_stack.py --runtime --json`）→ 兩個 venv 各跑一次
+22 項稽核 → 寫日誌與狀態檔 → 送通知。實測 `systemctl --user start` 回
+`status=0/SUCCESS`，通知訊號也真的送到 D-Bus（`member=Notify`）。
+
+**Linux 這邊刻意不做自動升級。** Windows 的 `run_daily.ps1 -AutoUpdate` 沒有對應功能，
+而且不該有：
+
+| Linux 的風險 | 後果 |
+|---|---|
+| `pacman` 是 rolling release | partial upgrade 會直接把系統弄壞 |
+| NVIDIA 驅動是 DKMS 套件 | 升級後**一定要重開機**才會換到新模組 |
+| cu12／cu13 wheel 共用安裝路徑 | `pip` 會覆寫掉另一個 venv 需要的 `.so` |
+| torch nightly 本身就是 dev 版 | 一個 nightly 壞掉就少一個可用環境 |
+
+所以 Linux 只做「檢查 ＋ 通知」，升級留給人決定。
+
+### 已補完的部分（2026-10-26 更新）
+
+上次列的「還沒做」清單，現在都補上了——但其中一件的**做法跟當初預期不同**：
+
+| 原待辦 | 現在的結果 |
+|---|---|
+| Linux 腳本開源 | ✅ 已收進 `ai-stack-update-check` 的 `scripts/linux/`：`audit_venv.py`、`verify_stack.sh`、`bench_stack.py`、`compare.py`、`cleanup_cu12_orphans.py`，外加新寫的 `trim_tensorrt_resources.py` |
+| 接 systemd timer ＋ 桌面通知 | ✅ `ai-stack-check.service` ＋ `.timer`（user scope），實測跑通 |
+| `git pull` ComfyUI | ✅ 落後的 263 個 commit 補齊，`comfy-aimdo` 等 5 個套件也升到上游指定版本（torch 未被動到） |
+| 移除 nightly 的 `tensorrt_libs`（回收 4.4 G） | ⚠️ **沒有整包移除**——nightly 其實在跑 H3 TRT-VAE。改成**只裁掉永遠不會被載入的架構資源檔**，回收 **3.29 GiB** |
+
+還沒做的只剩一件：
+
 - Python 3.15 遷移：cu132／cu134 已有 cp315 wheel，建議排在 wheel 升級之後。
 
 ## 十一、開源
@@ -627,13 +714,23 @@ ai-stack-update-check/
 ├─ LICENSE                         # MIT
 ├─ docs/                           # README 用的架構／流程圖（SVG）
 └─ scripts/
-   ├─ check_stack.py               # 版本檢查 + cuDNN 檢查（stdlib only）
+   ├─ check_stack.py               # 版本檢查 + cuDNN 檢查（stdlib only；Windows／Linux 共用）
    ├─ auto_update.py               # 升級 + 回滾（--bench 可加效能對比）
    ├─ bench_gpu.py                 # GPU 效能基準（cuBLAS／cuDNN／HF 基線）
    ├─ run_daily.ps1                # 排程包裝（-Bench、-FixCudnn）
    ├─ notify.ps1                   # WinRT toast
    ├─ sync_cudnn.ps1               # 提權補檔工作本體
-   └─ register_cudnn_sync_task.ps1 # 一次性註冊提權工作
+   ├─ register_cudnn_sync_task.ps1 # 一次性註冊提權工作
+   └─ linux/                       # ★ Linux／Omarchy 版（2026-10-26 新增）
+      ├─ run_daily.sh              # 每日檢查 + 各 venv 稽核 + 日誌 + 通知
+      ├─ notify.sh                 # notify-send 桌面通知
+      ├─ install_systemd_user.sh   # 安裝 systemd user timer
+      ├─ verify_stack.sh           # 驅動／CUDA／雙 venv／功能測試（--full 加煙霧測試）
+      ├─ audit_venv.py             # 單一 venv 的 22 項完整性稽核
+      ├─ bench_stack.py            # 可重現的 GPU 基準（輸出 JSON）
+      ├─ compare.py                # 多份基準 JSON 對照表
+      ├─ cleanup_cu12_orphans.py   # 清孤兒 nvidia_*_cu12-* dist-info
+      └─ trim_tensorrt_resources.py # 裁掉用不到的 TensorRT 架構資源檔
 ```
 
 最簡單的用法：
@@ -650,9 +747,11 @@ python scripts\check_stack.py
 Copy-Item -Recurse . "$env:USERPROFILE\.agents\skills\ai-stack-update-check"
 ```
 
-> 這個 repo 目前是 **Windows 版**（`.ps1` 排程 ＋ WinRT toast）。Linux／Omarchy 版的
-> 審計與驗證腳本（`audit_venv.py`、`verify_stack.sh`）目前還在本機，尚未收進 repo——
-> 見 **§十〈還沒做的部分〉**。
+> `check_stack.py` 是 **Windows／Linux 共用**的：它自己判斷平台，
+> Windows 探 `win_amd64` wheel、Linux 探 `manylinux_2_28_x86_64`；
+> Linux 還多報三列系統層資訊——NVIDIA 驅動**套件版本**對照**目前實際載入的驅動版本**
+> （兩者不同就是還沒重開機）、正在跑的 kernel、以及 `pacman` 上可升級的套件。
+> Linux 的每日排程用 systemd user timer，見 **§十〈每日排程〉**。
 
 ## 十二、結論
 
@@ -679,6 +778,8 @@ Copy-Item -Recurse . "$env:USERPROFILE\.agents\skills\ai-stack-update-check"
   以及把「升級後效能退步 > 5%」做成自動告警。
 - ✅ **Linux／Omarchy 版已建立**：驅動 615.78.08 ＋ 兩個 venv（cu132 stable／cu134 nightly），
   `audit_venv.py` 的 22 項審計兩邊皆 PASS（見 §十）。
-- 還沒做：把 Linux 版的 `audit_venv.py`／`verify_stack.sh` 收進 `ai-stack-update-check` repo，
-  並接上 systemd timer ＋ 桌面通知。
+- ✅ **Linux 版已開源並接上排程**：`scripts/linux/` 收進 `ai-stack-update-check`，
+  systemd user timer（每日 23:00、`Persistent=true`）＋ `notify-send` 桌面通知已實測跑通。
+- ✅ **上游坑已根治**：ComfyUI 落後的 263 個 commit 補齊，上游移除 torchaudio 的改動落地。
+- 還沒做：**Python 3.15 遷移**（cu132／cu134 已有 cp315 wheel，建議排在 wheel 升級之後）。
 

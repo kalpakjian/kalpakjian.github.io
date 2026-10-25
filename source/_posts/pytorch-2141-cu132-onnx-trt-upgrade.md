@@ -29,7 +29,7 @@ banner_img: /img/covers/pytorch-2141-cu132-onnx-trt-upgrade.png
 
 <!-- more -->
 
-> <strong>更新紀錄</strong>：2026-10-15 初版（升級路徑推演）；2026-10-16 補實測——舊 engine 相容性、cu132 重編（76.8 s）、864×480 與生產量級（1344×768／243 格／6 步）跑分，並修正初版「必須重編」與「−51.6%」兩處說法；2026-10-26 補 **Linux／Omarchy 對應安裝**——同一張卡的兩個 venv（cu132 stable／cu134 nightly）、cuDNN 三路驗證，以及「變快的是驅動、不是 wheel」的實測結論。
+> <strong>更新紀錄</strong>：2026-10-15 初版（升級路徑推演）；2026-10-16 補實測——舊 engine 相容性、cu132 重編（76.8 s）、864×480 與生產量級（1344×768／243 格／6 步）跑分，並修正初版「必須重編」與「−51.6%」兩處說法；2026-10-26 補 **Linux／Omarchy 對應安裝**——同一張卡的兩個 venv（cu132 stable／cu134 nightly）、cuDNN 三路驗證，以及「變快的是驅動、不是 wheel」的實測結論；同日再補——上游移除 torchaudio 的 263 個 commit 補齊、`comfy-aimdo` 等套件升版（不動 torch），以及 **TensorRT 資源檔裁切**（nightly 12 G → 8.4 G，回收 3.29 GiB，H3 TRT-VAE 仍可用）。
 
 ## 背景：這個 repo 在做什麼
 
@@ -193,8 +193,8 @@ D:\AI\ComfyUI\python_embeded_nightly\python.exe D:\AI\ComfyUI\main.py --listen 1
 | 驅動 | `nvidia-open-dkms` **615.78.08-1**（CUDA UMD **13.4**） |
 | Python | 3.12.14（兩個 venv） |
 | **stable** | `~/Projects/ComfyUI/.venv`：torch **2.14.1+cu132**、cuDNN **9.24.0.43**、NCCL 2.30.7、triton 3.8.0（6.8 G） |
-| **nightly** | `~/Projects/ComfyUI/.venv-nightly`：torch **2.16.0.dev20261025+cu134**、cuDNN **9.26.0.51**、NCCL 2.32.3、triton 3.9.0（12 G） |
-| TensorRT | nightly 另含 `tensorrt`／`tensorrt_libs` **11.3.0.99**（cu13 版，選用） |
+| **nightly** | `~/Projects/ComfyUI/.venv-nightly`：torch **2.16.0.dev20261025+cu134**、cuDNN **9.26.0.51**、NCCL 2.32.3、triton 3.9.0（12 G → 裁切後 8.4 G，見下） |
+| TensorRT | nightly 另含 `tensorrt`／`tensorrt_libs` **11.3.0.99**（cu13 版）——**本機實際有在用**（H3 TRT-VAE） |
 
 **為什麼分兩個 venv？** nightly 是 dev 版，本來就會壞。跟 stable 混在同一個環境，
 一壞就是整天不能用；分開之後 stable 永遠是已知可用的版本，
@@ -202,6 +202,24 @@ nightly 壞掉只影響「試新功能」這件事。
 
 > nightly 多出來的 4.4 G 就是 `tensorrt_libs`——它是**選用**加速路徑，
 > `comfy_kitchen` 與 torch 都不宣告依賴它，沒有也不影響一般推理。
+>
+> ⚠️ 但「選用」不等於「沒在用」：這台機器的 nightly 正是跑 MiniMax H3 TRT-VAE 的環境
+> （`run_nightly.sh` 用 `.venv-nightly/bin/python` 啟動，`models/vae/` 裡兩個 `.engine` 都在）。
+> 整包移除會直接弄壞那條工作流。正確做法是**只裁掉永遠不會被載入的資源檔**。
+
+NVIDIA 把**所有** GPU 架構的 builder resource 連同 **Windows 專用**的 8 個 blob
+一起塞進 `tensorrt_libs/`（光是 `win_*` 那 8 個就有 1.81 GiB，跟 Linux 完全無關）：
+
+| 檔案群 | 大小 | RTX 4090（sm_89）需不需要 |
+|---|---|---|
+| `libnvinfer_builder_resource_sm89.so` | 180 MiB | 要 |
+| `libnvinfer_builder_resource_ptx.so` | 230 MiB | 要（PTX JIT fallback） |
+| `..._sm75/80/86/90/100/120.so` | 1.41 GiB | 不要 |
+| `..._win_*.so`（8 個） | 1.81 GiB | 不要（Windows 專用） |
+
+搬走 14 個檔案＝回收 **3.29 GiB**（nightly 12 G → 8.4 G）。驗證三關全過：
+ONNX → engine 編譯 OK、兩個既有 `.engine` 反序列化 OK、ComfyUI 煙霧測試 `exit=0`
+且 `ComfyUI-H3VAE_TRT` 節點正常載入。
 
 ### 兩個 Linux 特有的坑
 
@@ -223,6 +241,12 @@ nightly 壞掉只影響「試新功能」這件事。
 > **上游正解**：ComfyUI 的 `origin/master` 已改用自帶的 `comfy/audio.py`，
 > `requirements.txt` 裡**完全移除 torchaudio**；本機 checkout 落後 263 個 commit，
 > `git pull` 就能根治這個坑。
+>
+> ✅ **2026-10-26 實作完成**：263 個 commit 已補齊（`a78a22e` → `fe298e4`），
+> 上游的 commit 就是 `b16023b "Remove torchaudio dependency. (#16457)"`。
+> 但 `git pull` 只是第一步——上游同時把 `comfy-aimdo` 提到 0.6.0、`comfy-kitchen` 提到 0.2.40，
+> 舊的 `comfy_aimdo` 沒有 `storage` 子模組，ComfyUI 會直接起不來。
+> 升級這幾個套件時**不能**讓 pip 順手動到 torch，用 `uv pip install --dry-run` 先看過名單再下手。
 
 ### cuDNN 要三路交叉驗證
 
@@ -272,7 +296,7 @@ Linux 這邊更直接：**cuDNN 9 的 `.so` 裡沒有明文版本字串**，`str
 | cuDNN 位置 | `torch\lib\cudnn*.dll` | `nvidia/cudnn/lib/libcudnn.so.9` |
 | 版本驗證 | `--runtime` 官方 API | metadata ＋ ctypes `cudnnGetVersion()` ＋ torch runtime |
 | 環境數 | 1 個（＋ nightly 副本） | 2 個 venv（stable／nightly），各自 22 項審計 |
-| 驗證工具 | `check_stack.py` ＋ `bench_gpu.py` | `audit_venv.py` ＋ `verify_stack.sh` ＋ `bench_stack.py` |
+| 驗證工具 | `check_stack.py` ＋ `bench_gpu.py` | `audit_venv.py` ＋ `verify_stack.sh` ＋ `bench_stack.py`（已開源，見下） |
 
 > 一句話總結：**同一個「PyTorch 2.14.1＋cu132」的目標，在兩邊的安裝路徑、陷阱與驗證方法完全不同**；
 > 能共用的是「先量基線、再升、升完一定要有可重複的完整性審計」這個流程。
@@ -284,8 +308,12 @@ Linux 這邊更直接：**cuDNN 9 的 `.so` 裡沒有明文版本字串**，`str
 - 腳本：`scripts/_dl_onnx.ps1`、`_copy_env.ps1`、`_pip_torch_nightly.ps1`、`_pip_trt_nightly.ps1`、`_trt_compile.py`、`bench_h3_trt.py`、`bench_h3_fine.py`、`bench_h3_prod.py`（生產量級 1344×768／243 格／6 步）
 - 文檔：`TRT_VAE_安裝報告.md`（第八節＝本次 cu132 重編＋跑分全紀錄）、`H3_TURBO_SETUP.md`
 - 同系列文章：<a href="/2026/10/21/ai-stack-auto-update-pipeline/">讓本機 AI 堆疊自己照顧自己（Windows ＋ Linux／Omarchy 雙環境）</a>
-- Linux／Omarchy 版驗證腳本（本機 `~/Projects/ai-stack-check/`，尚未開源）：`audit_venv.py`（22 項完整性審計）、`verify_stack.sh`（含 `--full` 煙霧測試與 A/B/C 對照）、`bench_stack.py`、`cleanup_cu12_orphans.py`
+- Linux／Omarchy 版驗證腳本（**已開源**）：<a href="https://github.com/kalpakjian/ai-stack-update-check">kalpakjian/ai-stack-update-check</a> 的 `scripts/linux/`——
+  `audit_venv.py`（22 項完整性審計）、`verify_stack.sh`（含 `--full` 煙霧測試與 A/B/C 對照）、
+  `bench_stack.py`、`compare.py`、`cleanup_cu12_orphans.py`、
+  `trim_tensorrt_resources.py`（裁掉用不到的 TensorRT 架構資源檔），
+  另有 systemd user timer（每日 23:00）＋ `notify-send` 桌面通知。
 
 ---
 
-*本篇為實測紀錄整理，環境：RTX 4090 24GB｜ComfyUI 0.37.0（初版 0.34.0）｜torch 2.14.1+cu132／2.16.0.dev20261007+cu132 升級路徑；2026-10-16 補 cu132 重編與跑分實測；2026-10-26 補 Linux／Omarchy 對應安裝（Omarchy、核心 7.2.8-9-omarchy、驅動 615.78.08、兩個 venv）。*
+*本篇為實測紀錄整理，環境：RTX 4090 24GB｜ComfyUI 0.37.0（初版 0.34.0）｜torch 2.14.1+cu132／2.16.0.dev20261007+cu132 升級路徑；2026-10-16 補 cu132 重編與跑分實測；2026-10-26 補 Linux／Omarchy 對應安裝（Omarchy、核心 7.2.8-9-omarchy、驅動 615.78.08、兩個 venv）、上游 torchaudio 移除的落地，以及 TensorRT 資源檔裁切（回收 3.29 GiB）。*
