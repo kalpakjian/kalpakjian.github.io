@@ -17,6 +17,7 @@ tags:
   - Linux
   - Windows
   - 深度學習
+hide_from_home: true
 toc: true
 index_img: /img/covers/rtx30-gpu-unlock-ampere-fact-check.png
 banner_img: /img/covers/rtx30-gpu-unlock-ampere-fact-check.png

@@ -14,6 +14,7 @@ tags:
   - 效能實測
   - 基準測試
   - 工具設計
+hide_from_home: true
 toc: true
 index_img: /img/covers/rtx3080-12gb-gpu-unlock-guide.png
 banner_img: /img/covers/rtx3080-12gb-gpu-unlock-guide.png
