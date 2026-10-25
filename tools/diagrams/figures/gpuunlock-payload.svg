@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-label="解鎖後哪些工作負載會變快：FP16／BF16 乘 FP32 累加的矩陣乘法會快 69% 到 73%，純 FP32、INT8、4-bit 量化與逐 token 生成幾乎不變" style="width:100%;height:auto;display:block">
+<defs><marker id="m2dd4bf" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">我的負載會變快嗎</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">判準只有一句話</text>
+<rect x="48" y="122" width="904" height="58" rx="12" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="500" y="146" font-size="12" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">判斷只有一句</text>
+<text x="500" y="168" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你的負載有沒有在跑「FP16／BF16 乘、FP32 累加」的矩陣乘法？</text>
+<rect x="48" y="212" width="440" height="190" rx="12" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="68" y="240" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">有 → 會變快（+69～73%）</text>
+<text x="68" y="274" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・LLM prefill</text>
+<text x="68" y="291" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　逐 token 生成之外的預填充</text>
+<text x="68" y="320" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・擴散模型／圖片生成</text>
+<text x="68" y="337" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　UNet 與 VAE 的矩陣乘法</text>
+<text x="68" y="366" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・FlashAttention</text>
+<text x="68" y="383" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　Issue #60 實測 +47～68%</text>
+<rect x="512" y="212" width="440" height="190" rx="12" fill="#161b22" stroke="#7d859055" stroke-width="1.5"/>
+<text x="532" y="240" font-size="15" fill="#7d8590" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">沒有 → 幾乎沒差</text>
+<text x="532" y="274" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・純 FP32 運算</text>
+<text x="532" y="289" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　這條路徑本來就沒被鎖</text>
+<text x="532" y="310" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・INT8 量化</text>
+<text x="532" y="325" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　維持原狀</text>
+<text x="532" y="346" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・4-bit 量化（Ollama 預設）</text>
+<text x="532" y="361" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　實測無增益</text>
+<text x="532" y="382" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・LLM 逐 token 生成</text>
+<text x="532" y="397" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　瓶頸在記憶體頻寬，不在算力</text>
+<path d="M 340 180 L 268 208" fill="none" stroke="#2dd4bf" stroke-width="1.8" marker-end="url(#m2dd4bf)"/>
+<path d="M 660 180 L 732 208" fill="none" stroke="#7d8590" stroke-width="1.8" marker-end="url(#m7d8590)"/>
+<rect x="48" y="424" width="904" height="84" rx="10" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="68" y="452" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3080 12GB 的實測（Issue #62，8192³ dense GEMM、FP32 累加、350 W 上限）：</text>
+<text x="68" y="474" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16 65.52 → 110.62 TFLOPS（+69%）　·　BF16 65.63 → 113.24 TFLOPS（+73%）　·　TF32 32.42 → 54.51 TFLOPS（+68%）</text>
+<text x="68" y="496" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">但 3080 的 760 GB/s 記憶體頻寬不會變——decode 瓶頸還在原處。</text>
+</svg>
