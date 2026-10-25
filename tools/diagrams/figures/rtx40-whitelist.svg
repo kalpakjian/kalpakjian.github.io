@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 530" role="img" aria-label="gpu_unlock 模組的裝置白名單：只有 RTX 4090、4090 D、4070 Ti SUPER、4060 Ti 16GB 四個 ID" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="528.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">裝置白名單只有四個 ID</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">直接來自 kernel/gpu_unlock/arch_610.h，不是行銷文案</text>
+<rect x="48" y="126" width="904" height="50" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="500.0" y="149.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">白名單只有這四個 Ada 裝置 ID</text>
+<text x="500.0" y="171.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">直接來自 kernel/gpu_unlock/arch_610.h，不是行銷文案</text>
+<path d="M 500 176 L 500 190" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 156.0 190 L 864.0 190" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 156.0 190 L 156.0 204" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 392.0 190 L 392.0 204" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 628.0 190 L 628.0 204" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 864.0 190 L 864.0 204" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="206" width="216" height="158" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="62" y="234" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">10de:2684</text>
+<text x="62" y="262" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 4090</text>
+<text x="62" y="282" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AD102</text>
+<rect x="60" y="296" width="104" height="26" rx="6" fill="#2dd4bf22" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="112" y="314" font-size="12" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">正式路徑</text>
+<text x="62" y="344" font-size="10.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">只需 gpu_unlock.targets=</text>
+<rect x="284" y="206" width="216" height="158" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="298" y="234" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">10de:2685</text>
+<text x="298" y="262" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 4090 D</text>
+<text x="298" y="282" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AD102</text>
+<rect x="296" y="296" width="104" height="26" rx="6" fill="#fbbf2422" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="348" y="314" font-size="12" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">實驗性</text>
+<text x="298" y="344" font-size="10.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">+ rtx4090d_experimental=1</text>
+<rect x="520" y="206" width="216" height="158" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="534" y="234" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">10de:2705</text>
+<text x="534" y="262" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 4070 Ti SUPER</text>
+<text x="534" y="282" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AD103</text>
+<rect x="532" y="296" width="104" height="26" rx="6" fill="#fbbf2422" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="584" y="314" font-size="12" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">實驗性・單卡</text>
+<text x="534" y="344" font-size="10.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">+ ad103_experimental=1</text>
+<text x="534" y="358" font-size="10.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">+ 單一完整 PCI 位址</text>
+<rect x="756" y="206" width="216" height="158" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="770" y="234" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">10de:2805</text>
+<text x="770" y="262" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 4060 Ti 16GB</text>
+<text x="770" y="282" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AD106</text>
+<rect x="768" y="296" width="104" height="26" rx="6" fill="#fbbf2422" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="820" y="314" font-size="12" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">實驗性・單卡</text>
+<text x="770" y="344" font-size="10.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">+ ad106_experimental=1</text>
+<text x="770" y="358" font-size="10.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">+ 單一完整 PCI 位址</text>
+<rect x="48" y="392" width="904" height="60" rx="10" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<text x="68" y="418" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">targets=all 永遠不會選中 2705 與 2805 —— 實驗型號必須指定單一 PCI 位址。</text>
+<text x="68" y="440" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你的卡不在白名單裡 → 模組會直接略過它，不會跳任何警告。</text>
+<text x="48" y="486" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4070 Ti SUPER 有兩種晶片：0x2705 是 AD103（本專案支援）、0x2689 是 AD104（不支援）。</text>
+<text x="48" y="508" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4060 Ti 16GB 實機常回報 0x2803 而非 0x2805，一樣會被略過。</text>
+</svg>

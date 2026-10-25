@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-label="解鎖後的增幅落差：指令發射率 +100%，但真實 cuBLAS GEMM 只有 +12% 到 +34%" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="598.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">翻倍到實際的落差</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一張 RTX 4090 解鎖後，相對原本（stock）的增幅</text>
+<path d="M 330 146 L 330 448" fill="none" stroke="#7d8590" stroke-width="1.5"/>
+<text x="890" y="138" font-size="11.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「翻倍」+100%</text>
+<text x="300" y="165" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16／BF16 → FP32 指令發射率</text>
+<text x="300" y="182" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">最底層的指令率，也就是媒體說的「翻倍」</text>
+<rect x="330" y="150" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="330" y="150" width="560.0" height="28" rx="8" fill="#2dd4bf55" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="900.0" y="169" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+100.0%</text>
+<text x="300" y="217" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cuBLAS GEMM 4096³ FP16</text>
+<text x="300" y="234" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真實矩陣乘法最好的一格</text>
+<rect x="330" y="202" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="330" y="202" width="192.64" height="28" rx="8" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="532.64" y="221" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+34.4%</text>
+<text x="300" y="269" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cuBLAS GEMM 1024³ BF16</text>
+<text x="300" y="286" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">小矩陣、換一種精度</text>
+<rect x="330" y="254" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="330" y="254" width="109.76" height="28" rx="8" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="449.76" y="273" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+19.6%</text>
+<text x="300" y="321" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cuBLAS GEMM 8192³ BF16</text>
+<text x="300" y="338" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">換個矩陣形狀又是另一個數字</text>
+<rect x="330" y="306" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="330" y="306" width="89.6" height="28" rx="8" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="429.6" y="325" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+16.0%</text>
+<text x="300" y="373" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cuBLAS GEMM 4096³ BF16</text>
+<text x="300" y="390" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">這一組完全沒有變化，暖開機重測還倒退</text>
+<rect x="330" y="358" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="327.0" y="358" width="3.0" height="28" rx="8" fill="#f472b655" stroke="#f472b6" stroke-width="1.5"/>
+<text x="342" y="377" font-size="13.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">▼ -0.5%</text>
+<text x="300" y="425" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">E4M3 FP8 CUTLASS GEMM</text>
+<text x="300" y="442" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">專案自己公布的數字：+0.3%</text>
+<rect x="330" y="410" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="330" y="410" width="3.0" height="28" rx="8" fill="#7d859055" stroke="#7d8590" stroke-width="1.5"/>
+<text x="343.0" y="429" font-size="13.5" fill="#7d8590" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+0.3%</text>
+<text x="330.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0%</text>
+<text x="470.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+25%</text>
+<text x="610.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+50%</text>
+<text x="750.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+75%</text>
+<text x="890.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+100%</text>
+<rect x="48" y="488" width="904" height="88" rx="10" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="68" y="516" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">媒體說的「翻倍」＝ 最上面那根（指令發射率）。真實 cuBLAS 增益只有 +12% ～ +34%。</text>
+<text x="68" y="538" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">INT8、INT4、dp4a、純 FP32 完全沒有變化；FP8 幾乎等於 0。</text>
+<text x="68" y="560" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">限速器確實拆掉了，但變速箱齒比、輪胎抓地力、限速牌都沒變。</text>
+</svg>

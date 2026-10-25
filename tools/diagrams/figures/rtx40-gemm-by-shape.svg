@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-label="RTX 4090 六組 cuBLAS GEMM 配對實測的增幅：從 +34.4% 到 -0.5%，依矩陣形狀而變" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="598.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">六種形狀的實際增幅</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個解鎖，六種矩陣形狀的實際增幅（數字為 cuBLAS GEMM 中位吞吐 TF/s）</text>
+<path d="M 240 148 L 240 490" fill="none" stroke="#7d8590" stroke-width="1.5"/>
+<text x="48" y="203.0" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1024³</text>
+<text x="48" y="221.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">小矩陣</text>
+<text x="120" y="188" font-size="12.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16</text>
+<rect x="240" y="170" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="240" y="170" width="117.61701969389837" height="26" rx="8" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="367.6170196938984" y="188" font-size="13" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+19.0%</text>
+<text x="120" y="204" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">107.5→127.9</text>
+<text x="120" y="232" font-size="12.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BF16</text>
+<rect x="240" y="214" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="240" y="214" width="121.30731707317067" height="26" rx="8" fill="#c084fc55" stroke="#c084fc" stroke-width="1.5"/>
+<text x="371.3073170731707" y="232" font-size="13" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+19.6%</text>
+<text x="120" y="248" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">127.1→152.0</text>
+<path d="M 48 268 L 952 268" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="48" y="323.0" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4096³</text>
+<text x="48" y="341.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">中矩陣</text>
+<text x="120" y="308" font-size="12.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16</text>
+<rect x="240" y="290" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="240" y="290" width="213.3184541289791" height="26" rx="8" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="463.3184541289791" y="308" font-size="13" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+34.4%</text>
+<text x="120" y="324" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">153.2→206.0</text>
+<text x="120" y="352" font-size="12.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BF16</text>
+<rect x="240" y="334" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="237.0" y="334" width="3.0" height="26" rx="8" fill="#f472b655" stroke="#f472b6" stroke-width="1.5"/>
+<text x="252" y="352" font-size="13" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">▼ -0.5%</text>
+<text x="120" y="368" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">153.4→152.7</text>
+<path d="M 48 388 L 952 388" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="48" y="443.0" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8192³</text>
+<text x="48" y="461.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">大矩陣</text>
+<text x="120" y="428" font-size="12.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16</text>
+<rect x="240" y="410" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="240" y="410" width="74.30810730695111" height="26" rx="8" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="324.3081073069511" y="428" font-size="13" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+12.0%</text>
+<text x="120" y="444" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">168.7→188.9</text>
+<text x="120" y="472" font-size="12.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BF16</text>
+<rect x="240" y="454" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="240" y="454" width="99.03391757973965" height="26" rx="8" fill="#c084fc55" stroke="#c084fc" stroke-width="1.5"/>
+<text x="349.03391757973964" y="472" font-size="13" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+16.0%</text>
+<text x="120" y="488" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">166.2→192.7</text>
+<text x="240.0" y="514" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0%</text>
+<text x="395.0" y="514" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+10%</text>
+<text x="550.0" y="514" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+20%</text>
+<text x="705.0" y="514" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+30%</text>
+<text x="860.0" y="514" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+40%</text>
+<rect x="48" y="532" width="904" height="52" rx="10" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<text x="68" y="554" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個解鎖，增益卻從 +34.4% 掉到 -0.5%：矩陣形狀決定一切。</text>
+<text x="68" y="572" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">所以別拿 README 裡的單一數字當結論——請用自己的工作負載量一次。</text>
+</svg>

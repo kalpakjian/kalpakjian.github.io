@@ -116,6 +116,62 @@ MODULE_PARM_DESC(ad106_experimental,
   "permit only the exact 10de:2805 AD106 target with a single explicit PCI address; untested on silicon");
 ```
 
+<!-- FIG3 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 530" role="img" aria-label="gpu_unlock 模組的裝置白名單：只有 RTX 4090、4090 D、4070 Ti SUPER、4060 Ti 16GB 四個 ID" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="528.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">裝置白名單只有四個 ID</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">直接來自 kernel/gpu_unlock/arch_610.h，不是行銷文案</text>
+<rect x="48" y="126" width="904" height="50" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="500.0" y="149.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">白名單只有這四個 Ada 裝置 ID</text>
+<text x="500.0" y="171.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">直接來自 kernel/gpu_unlock/arch_610.h，不是行銷文案</text>
+<path d="M 500 176 L 500 190" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 156.0 190 L 864.0 190" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 156.0 190 L 156.0 204" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 392.0 190 L 392.0 204" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 628.0 190 L 628.0 204" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 864.0 190 L 864.0 204" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="206" width="216" height="158" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="62" y="234" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">10de:2684</text>
+<text x="62" y="262" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 4090</text>
+<text x="62" y="282" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AD102</text>
+<rect x="60" y="296" width="104" height="26" rx="6" fill="#2dd4bf22" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="112" y="314" font-size="12" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">正式路徑</text>
+<text x="62" y="344" font-size="10.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">只需 gpu_unlock.targets=</text>
+<rect x="284" y="206" width="216" height="158" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="298" y="234" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">10de:2685</text>
+<text x="298" y="262" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 4090 D</text>
+<text x="298" y="282" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AD102</text>
+<rect x="296" y="296" width="104" height="26" rx="6" fill="#fbbf2422" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="348" y="314" font-size="12" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">實驗性</text>
+<text x="298" y="344" font-size="10.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">+ rtx4090d_experimental=1</text>
+<rect x="520" y="206" width="216" height="158" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="534" y="234" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">10de:2705</text>
+<text x="534" y="262" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 4070 Ti SUPER</text>
+<text x="534" y="282" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AD103</text>
+<rect x="532" y="296" width="104" height="26" rx="6" fill="#fbbf2422" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="584" y="314" font-size="12" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">實驗性・單卡</text>
+<text x="534" y="344" font-size="10.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">+ ad103_experimental=1</text>
+<text x="534" y="358" font-size="10.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">+ 單一完整 PCI 位址</text>
+<rect x="756" y="206" width="216" height="158" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="770" y="234" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">10de:2805</text>
+<text x="770" y="262" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 4060 Ti 16GB</text>
+<text x="770" y="282" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AD106</text>
+<rect x="768" y="296" width="104" height="26" rx="6" fill="#fbbf2422" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="820" y="314" font-size="12" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">實驗性・單卡</text>
+<text x="770" y="344" font-size="10.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">+ ad106_experimental=1</text>
+<text x="770" y="358" font-size="10.5" fill="#8b949e" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">+ 單一完整 PCI 位址</text>
+<rect x="48" y="392" width="904" height="60" rx="10" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<text x="68" y="418" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">targets=all 永遠不會選中 2705 與 2805 —— 實驗型號必須指定單一 PCI 位址。</text>
+<text x="68" y="440" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你的卡不在白名單裡 → 模組會直接略過它，不會跳任何警告。</text>
+<text x="48" y="486" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4070 Ti SUPER 有兩種晶片：0x2705 是 AD103（本專案支援）、0x2689 是 AD104（不支援）。</text>
+<text x="48" y="508" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4060 Ti 16GB 實機常回報 0x2803 而非 0x2805，一樣會被略過。</text>
+</svg>
+<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 3：模組只認這四個裝置 ID——後兩者還要實驗旗標與單一 PCI 位址；不在名單裡的卡會被直接略過，不會跳警告。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG3 -->
+
 也就是說：**「全系列」這句話連原始碼都不用翻譯就自我否定**。實驗型號還額外要求單一 PCI 位址，`targets=all` 永不選中它們——這是刻意的設計，目的是避免使用者不知情就對多張卡下指令。
 
 補充一個容易誤會的點：這個專案**並非純 Ada 專案**。`targets=all` 會連同上游 `Zagitta/gpu-unlock` 的 GA102／GA104／GA103／GA106 一起選（上游曾回報 RTX 3090 成功），只是本次查核焦點在 40 系。
@@ -123,6 +179,58 @@ MODULE_PARM_DESC(ad106_experimental,
 ## 誇大關鍵字二：「所有 AI 工作負載都翻倍」
 
 這是最需要拆開的一個說法，因為它把三種不同的數字混在一起了。
+
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-label="解鎖後的增幅落差：指令發射率 +100%，但真實 cuBLAS GEMM 只有 +12% 到 +34%" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="598.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">翻倍到實際的落差</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一張 RTX 4090 解鎖後，相對原本（stock）的增幅</text>
+<path d="M 330 146 L 330 448" fill="none" stroke="#7d8590" stroke-width="1.5"/>
+<text x="890" y="138" font-size="11.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「翻倍」+100%</text>
+<text x="300" y="165" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16／BF16 → FP32 指令發射率</text>
+<text x="300" y="182" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">最底層的指令率，也就是媒體說的「翻倍」</text>
+<rect x="330" y="150" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="330" y="150" width="560.0" height="28" rx="8" fill="#2dd4bf55" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="900.0" y="169" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+100.0%</text>
+<text x="300" y="217" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cuBLAS GEMM 4096³ FP16</text>
+<text x="300" y="234" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真實矩陣乘法最好的一格</text>
+<rect x="330" y="202" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="330" y="202" width="192.64" height="28" rx="8" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="532.64" y="221" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+34.4%</text>
+<text x="300" y="269" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cuBLAS GEMM 1024³ BF16</text>
+<text x="300" y="286" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">小矩陣、換一種精度</text>
+<rect x="330" y="254" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="330" y="254" width="109.76" height="28" rx="8" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="449.76" y="273" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+19.6%</text>
+<text x="300" y="321" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cuBLAS GEMM 8192³ BF16</text>
+<text x="300" y="338" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">換個矩陣形狀又是另一個數字</text>
+<rect x="330" y="306" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="330" y="306" width="89.6" height="28" rx="8" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="429.6" y="325" font-size="13.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+16.0%</text>
+<text x="300" y="373" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cuBLAS GEMM 4096³ BF16</text>
+<text x="300" y="390" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">這一組完全沒有變化，暖開機重測還倒退</text>
+<rect x="330" y="358" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="327.0" y="358" width="3.0" height="28" rx="8" fill="#f472b655" stroke="#f472b6" stroke-width="1.5"/>
+<text x="342" y="377" font-size="13.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">▼ -0.5%</text>
+<text x="300" y="425" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">E4M3 FP8 CUTLASS GEMM</text>
+<text x="300" y="442" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">專案自己公布的數字：+0.3%</text>
+<rect x="330" y="410" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="330" y="410" width="3.0" height="28" rx="8" fill="#7d859055" stroke="#7d8590" stroke-width="1.5"/>
+<text x="343.0" y="429" font-size="13.5" fill="#7d8590" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+0.3%</text>
+<text x="330.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0%</text>
+<text x="470.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+25%</text>
+<text x="610.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+50%</text>
+<text x="750.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+75%</text>
+<text x="890.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+100%</text>
+<rect x="48" y="488" width="904" height="88" rx="10" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="68" y="516" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">媒體說的「翻倍」＝ 最上面那根（指令發射率）。真實 cuBLAS 增益只有 +12% ～ +34%。</text>
+<text x="68" y="538" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">INT8、INT4、dp4a、純 FP32 完全沒有變化；FP8 幾乎等於 0。</text>
+<text x="68" y="560" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">限速器確實拆掉了，但變速箱齒比、輪胎抓地力、限速牌都沒變。</text>
+</svg>
+<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：媒體說的「翻倍」對上真實的 cuBLAS 增益——最上面那根是指令發射率（+100%），底下的真實矩陣乘法只有 +12% ～ +34%，FP8 幾乎等於 0。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 ### 第一層：指令發射率（確實接近 2 倍）
 
@@ -161,6 +269,64 @@ RTX 4090 的配對實測（`docs/evidence/rtx4090-pr1-matched/README.md`），�
 README 原文：「Real cuBLAS GEMM median throughput varied by shape: FP16 gained 12–34%, BF16 gained 16–20% at two shapes and was essentially unchanged at 4096³. These are one matched run pair with the desktop active, not whole-application speedups or an extended stability test.」
 
 **而且在同一份報告的暖開機重複測試中，4096³ BF16 還比原始 stock 慢 8.2%。**
+
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-label="RTX 4090 六組 cuBLAS GEMM 配對實測的增幅：從 +34.4% 到 -0.5%，依矩陣形狀而變" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="598.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">六種形狀的實際增幅</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個解鎖，六種矩陣形狀的實際增幅（數字為 cuBLAS GEMM 中位吞吐 TF/s）</text>
+<path d="M 240 148 L 240 490" fill="none" stroke="#7d8590" stroke-width="1.5"/>
+<text x="48" y="203.0" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1024³</text>
+<text x="48" y="221.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">小矩陣</text>
+<text x="120" y="188" font-size="12.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16</text>
+<rect x="240" y="170" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="240" y="170" width="117.61701969389837" height="26" rx="8" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="367.6170196938984" y="188" font-size="13" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+19.0%</text>
+<text x="120" y="204" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">107.5→127.9</text>
+<text x="120" y="232" font-size="12.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BF16</text>
+<rect x="240" y="214" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="240" y="214" width="121.30731707317067" height="26" rx="8" fill="#c084fc55" stroke="#c084fc" stroke-width="1.5"/>
+<text x="371.3073170731707" y="232" font-size="13" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+19.6%</text>
+<text x="120" y="248" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">127.1→152.0</text>
+<path d="M 48 268 L 952 268" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="48" y="323.0" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4096³</text>
+<text x="48" y="341.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">中矩陣</text>
+<text x="120" y="308" font-size="12.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16</text>
+<rect x="240" y="290" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="240" y="290" width="213.3184541289791" height="26" rx="8" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="463.3184541289791" y="308" font-size="13" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+34.4%</text>
+<text x="120" y="324" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">153.2→206.0</text>
+<text x="120" y="352" font-size="12.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BF16</text>
+<rect x="240" y="334" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="237.0" y="334" width="3.0" height="26" rx="8" fill="#f472b655" stroke="#f472b6" stroke-width="1.5"/>
+<text x="252" y="352" font-size="13" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">▼ -0.5%</text>
+<text x="120" y="368" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">153.4→152.7</text>
+<path d="M 48 388 L 952 388" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="48" y="443.0" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8192³</text>
+<text x="48" y="461.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">大矩陣</text>
+<text x="120" y="428" font-size="12.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16</text>
+<rect x="240" y="410" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="240" y="410" width="74.30810730695111" height="26" rx="8" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="324.3081073069511" y="428" font-size="13" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+12.0%</text>
+<text x="120" y="444" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">168.7→188.9</text>
+<text x="120" y="472" font-size="12.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BF16</text>
+<rect x="240" y="454" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="240" y="454" width="99.03391757973965" height="26" rx="8" fill="#c084fc55" stroke="#c084fc" stroke-width="1.5"/>
+<text x="349.03391757973964" y="472" font-size="13" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+16.0%</text>
+<text x="120" y="488" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">166.2→192.7</text>
+<text x="240.0" y="514" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0%</text>
+<text x="395.0" y="514" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+10%</text>
+<text x="550.0" y="514" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+20%</text>
+<text x="705.0" y="514" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+30%</text>
+<text x="860.0" y="514" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+40%</text>
+<rect x="48" y="532" width="904" height="52" rx="10" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<text x="68" y="554" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個解鎖，增益卻從 +34.4% 掉到 -0.5%：矩陣形狀決定一切。</text>
+<text x="68" y="572" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">所以別拿 README 裡的單一數字當結論——請用自己的工作負載量一次。</text>
+</svg>
+<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：六組 cuBLAS GEMM 的實際增幅——同一個解鎖，增益卻從 +34.4% 掉到 -0.5%；矩陣形狀決定一切，別拿單一數字當結論。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 > <strong>白話說</strong>：把限速器拆掉，引擎的出力上限從半速變全速了。但你的變速箱齒比、輪胎抓地力、路面都沒變，所以實際跑起來只快一成到三成多，某些齒比甚至幾乎沒反應，還可能倒退。這一點直接打掉了「所有 AI 工作負載都翻倍」的說法。
 
