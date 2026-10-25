@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 570" role="img" aria-label="哪些工作負載受惠（prefill、FlashAttention、擴散模型）與哪些不動（decode、INT8、4-bit、遊戲）" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="568.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">受惠與不受惠</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">判準：有沒有在跑 FP16／BF16 乘、FP32 累加的矩陣乘法</text>
+<rect x="48" y="126" width="440" height="374" rx="12" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<rect x="512" y="126" width="440" height="374" rx="12" fill="#1c2230" stroke="#7d859044" stroke-width="1.5"/>
+<text x="68" y="156" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">會變快</text>
+<text x="532" y="156" font-size="15" fill="#7d8590" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不會變快</text>
+<rect x="64" y="176" width="408" height="62" rx="10" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="80" y="202" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LLM prefill</text>
+<text x="80" y="224" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+14% ～ +66%（依卡與功耗上限）</text>
+<rect x="64" y="254" width="408" height="62" rx="10" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="80" y="280" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FlashAttention</text>
+<text x="80" y="302" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+47% ～ +68%</text>
+<rect x="64" y="332" width="408" height="62" rx="10" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="80" y="358" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">擴散模型（圖片生成）</text>
+<text x="80" y="380" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">明顯受惠</text>
+<rect x="64" y="410" width="408" height="62" rx="10" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="80" y="436" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真實 GEMM 吞吐</text>
+<text x="80" y="458" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">依型號 +25% ～ +81%</text>
+<rect x="528" y="176" width="408" height="62" rx="10" fill="#161b22" stroke="#7d859055" stroke-width="1.5"/>
+<text x="544" y="202" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LLM decode（逐 token 生成）</text>
+<text x="544" y="224" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">幾乎不變——瓶頸在記憶體頻寬</text>
+<rect x="528" y="254" width="408" height="62" rx="10" fill="#161b22" stroke="#7d859055" stroke-width="1.5"/>
+<text x="544" y="280" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">INT8 量化運算</text>
+<text x="544" y="302" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">維持原狀</text>
+<rect x="528" y="332" width="408" height="62" rx="10" fill="#161b22" stroke="#7d859055" stroke-width="1.5"/>
+<text x="544" y="358" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4-bit 量化推論</text>
+<text x="544" y="380" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">無增益</text>
+<rect x="528" y="410" width="408" height="62" rx="10" fill="#161b22" stroke="#7d859055" stroke-width="1.5"/>
+<text x="544" y="436" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">遊戲</text>
+<text x="544" y="458" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不會變快</text>
+<text x="48" y="524" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">判準只有一句：你的負載有沒有在跑「FP16／BF16 乘、FP32 累加」的矩陣乘法。</text>
+<text x="48" y="548" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">有 → 受惠；瓶頸在記憶體頻寬或走 INT8／4-bit → 幾乎沒差。</text>
+</svg>

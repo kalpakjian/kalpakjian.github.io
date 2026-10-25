@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-label="RTX 3090 Ti 三種精度解鎖前後對比：BF16 +80%、TF32 +94%，但 FP16 只有 +35%" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不是一律兩倍</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一張 3090 Ti，8192³ dense GEMM、450 W</text>
+<rect x="250" y="126" width="22" height="12" rx="3" fill="#7d85902e" stroke="#7d859088" stroke-width="1"/>
+<text x="282" y="136" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">解鎖前（stock）</text>
+<rect x="400" y="126" width="22" height="12" rx="3" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="432" y="136" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">解鎖後</text>
+<text x="870" y="136" font-size="11" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">（TF/s）</text>
+<text x="228" y="187" font-size="14" fill="#58a6ff" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16</text>
+<rect x="250" y="170" width="318.9717647058823" height="24" rx="8" fill="#7d85902e" stroke="#7d859088" stroke-width="1"/>
+<text x="578.9717647058824" y="187" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">87.5</text>
+<rect x="250" y="198" width="431.7752941176471" height="22" rx="7" fill="#58a6ff66" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="691.775294117647" y="214" font-size="13" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">118.4</text>
+<text x="743.775294117647" y="214" font-size="13" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+35%</text>
+<text x="228" y="253" font-size="14" fill="#2dd4bf" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BF16</text>
+<rect x="250" y="236" width="319.11764705882354" height="24" rx="8" fill="#7d85902e" stroke="#7d859088" stroke-width="1"/>
+<text x="579.1176470588235" y="253" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">87.5</text>
+<rect x="250" y="264" width="574.0835294117647" height="22" rx="7" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="834.0835294117647" y="280" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">157.4</text>
+<text x="886.0835294117647" y="280" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+80%</text>
+<text x="228" y="319" font-size="14" fill="#c084fc" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TF32</text>
+<rect x="250" y="302" width="155.29176470588234" height="24" rx="8" fill="#7d85902e" stroke="#7d859088" stroke-width="1"/>
+<text x="415.2917647058823" y="319" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">42.6</text>
+<rect x="250" y="330" width="301.2835294117647" height="22" rx="7" fill="#c084fc66" stroke="#c084fc" stroke-width="1.5"/>
+<text x="561.2835294117647" y="346" font-size="13" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">82.6</text>
+<text x="613.2835294117647" y="346" font-size="13" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+94%</text>
+<path d="M 250 158 L 250 342" fill="none" stroke="#7d8590" stroke-width="1.5"/>
+<text x="250.0" y="368" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text>
+<text x="432.3529411764706" y="368" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">50</text>
+<text x="614.7058823529412" y="368" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">100</text>
+<text x="797.0588235294117" y="368" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">150</text>
+<rect x="48" y="388" width="904" height="84" rx="10" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="68" y="416" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BF16 +80%、TF32 +94%，但 FP16 只有 +35%。解鎖不是把每種精度都拉滿，</text>
+<text x="68" y="438" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">而是把每一種精度各自拉到「等效專業卡」的位置——所以別說「一律翻倍」。</text>
+<text x="68" y="460" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">資料來源：README「3090 Ti dense 8192³ GEMM at 450 W, five-sample medians with FP32 accumulation」。</text>
+</svg>
