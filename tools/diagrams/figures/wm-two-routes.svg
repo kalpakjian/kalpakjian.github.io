@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 700" role="img" aria-label="XR 建模／重建 vs 世界模型：兩條路線的完整對照｜同一個世界，兩種不同的契約與評準" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="938.5" height="698.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">XR 建模／重建 vs 世界模型：兩條路線的完整對照</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個世界，兩種不同的契約與評準</text>
+<rect x="48" y="106" width="416" height="470" rx="14" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="76" y="146" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">XR 建模／3D 重建</text>
+<text x="76" y="172" font-size="12.5" fill="#2dd4bf" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">把世界呈現給人</text>
+<text x="76" y="200" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">核心目標</text>
+<text x="76" y="222" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">讓人類在裝置中看到、走進、</text>
+<text x="76" y="242" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">操作一個可信的 3D 空間</text>
+<text x="76" y="274" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">資料來源</text>
+<text x="76" y="296" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">360 相機、LiDAR、深度相機、</text>
+<text x="76" y="316" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">CAD、遊戲引擎資產</text>
+<text x="76" y="348" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸出</text>
+<text x="76" y="370" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">全景影像、mesh、點雲、</text>
+<text x="76" y="390" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Gaussian Splat、碰撞體、材質</text>
+<text x="76" y="422" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">評估標準</text>
+<text x="76" y="444" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">視覺一致性、幾何準確度、延遲、</text>
+<text x="76" y="464" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">舒適度、互動穩定性</text>
+<text x="76" y="494" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">典型用途</text>
+<text x="76" y="516" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">VR／AR、數位孿生、遊戲、培訓</text>
+<text x="76" y="548" font-size="12.5" fill="#2dd4bf" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">重建是手段，不是世界模型的定義</text>
+<rect x="496" y="106" width="416" height="470" rx="14" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="524" y="146" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">世界模型／物理 AI</text>
+<text x="524" y="172" font-size="12.5" fill="#c084fc" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">把世界變成 AI 可預測的狀態</text>
+<text x="524" y="200" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">核心目標</text>
+<text x="524" y="222" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">讓 AI 在內部預測：若採取某動作，</text>
+<text x="524" y="242" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">世界會怎樣變化</text>
+<text x="524" y="274" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">資料來源</text>
+<text x="524" y="296" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">影片、機器人操作軌跡、</text>
+<text x="524" y="316" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">感測器狀態、模擬環境</text>
+<text x="524" y="348" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸出</text>
+<text x="524" y="370" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">潛在狀態、未來觀測、動作後結果、</text>
+<text x="524" y="390" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">可規劃的策略</text>
+<text x="524" y="422" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">評估標準</text>
+<text x="524" y="444" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">因果正確性、長時程預測、少幻覺、</text>
+<text x="524" y="464" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">任務成功率、sim2real 遷移</text>
+<text x="524" y="494" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">典型用途</text>
+<text x="524" y="516" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">機器人、自動駕駛、具身智能、規劃</text>
+<text x="524" y="548" font-size="12.5" fill="#c084fc" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">預測未來（動作→結果）才是核心</text>
+<path d="M 480 130 L 480 552" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="480" y="596" font-size="13.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">技術目標不同，卻互供資料與場景</text>
+<text x="48" y="640" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4D Gaussian Splatting 是世界模型可用的空間表徵之一，</text>
+<text x="48" y="662" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">但 4DGS 本身不是世界模型——重建場景是手段，預測未來才是定義。</text>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 720" role="img" aria-label="XR 與世界模型：雙向饋送與短期交會點｜互供資料與場景，技術目標不同" style="width:100%;height:auto;display:block">
+<defs><marker id="m2dd4bf" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker><marker id="mc084fc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="938.5" height="718.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">XR 與世界模型：雙向饋送與短期交會點</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">互供資料與場景，技術目標不同</text>
+<rect x="48" y="116" width="380" height="250" rx="14" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="74" y="152" font-size="17" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">XR 成就世界模型</text>
+<text x="74" y="176" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">資料與場景的來源</text>
+<rect x="74" y="194" width="328" height="46" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="90" y="214.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">VR／AR 與遙操作</text>
+<text x="90" y="235.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">帶位姿、深度、互動標記的資料</text>
+<rect x="74" y="248" width="328" height="46" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="90" y="268.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">掃描重建與數位孿生</text>
+<text x="90" y="289.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">大量真實空間的對應關係</text>
+<rect x="74" y="302" width="328" height="46" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="90" y="322.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">人類在其中的操作</text>
+<text x="90" y="343.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">動作—結果對的天然來源</text>
+<rect x="488" y="116" width="380" height="250" rx="14" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="514" y="152" font-size="17" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">世界模型成就 XR</text>
+<text x="514" y="176" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">即時想像與互動結果</text>
+<rect x="514" y="194" width="328" height="46" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="530" y="214.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">即時想像物件反應</text>
+<text x="530" y="235.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不只渲染預先建好的場景</text>
+<rect x="514" y="248" width="328" height="46" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="530" y="268.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">填補未拍攝區域</text>
+<text x="530" y="289.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">生成一致的新視角</text>
+<rect x="514" y="302" width="328" height="46" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="530" y="322.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">互動結果可驗證</text>
+<text x="530" y="343.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">動作條件化的未來</text>
+<path d="M 432 200 L 484 200" fill="none" stroke="#2dd4bf" stroke-width="3" marker-end="url(#m2dd4bf)"/>
+<path d="M 484 282 L 432 282" fill="none" stroke="#c084fc" stroke-width="3" marker-end="url(#mc084fc)"/>
+<text x="458" y="180" font-size="11.5" fill="#2dd4bf" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">資料</text>
+<text x="458" y="306" font-size="11.5" fill="#c084fc" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型</text>
+<text x="48" y="412" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">短期最實際的交會點：三層分工</text>
+<text x="48" y="436" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不是誰取代誰，而是各自負責一層</text>
+<rect x="48" y="452" width="268" height="92" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="64" y="495.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">視覺與幾何底座</text>
+<text x="64" y="516.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4DGS／NeRF 類重建</text>
+<rect x="330" y="452" width="268" height="92" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="346" y="495.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">可控接觸與碰撞</text>
+<text x="346" y="516.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">物理引擎（碰撞體、材質）</text>
+<rect x="612" y="452" width="268" height="92" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="628" y="495.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真實動態與長時程</text>
+<text x="628" y="516.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">世界模型補足預測</text>
+<path d="M 320 498 L 326 498" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 602 498 L 608 498" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="566" width="836" height="132" rx="12" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="72" y="596" font-size="14.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2026 年已落地：Spark 2.0（世界模型 → XR 的箭頭）</text>
+<text x="72" y="622" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3DGS renderer，跑在 THREE.js / WebGL2，任何瀏覽器裝置（含 iOS、Android、VR）</text>
+<text x="72" y="644" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Level-of-Detail 系統隨移動調整細節並串流；.RAD 格式支援漸進式精緻化</text>
+<text x="72" y="666" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">固定 GPU 記憶體即可走訪「無限」splat 世界；實例逾 1 億 splats，</text>
+<text x="72" y="688" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">實景掃描 4,000 萬 splats 在手機順暢，且相容 Quest 與 Vision Pro</text>
+</svg>
