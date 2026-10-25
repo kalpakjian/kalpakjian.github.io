@@ -29,9 +29,9 @@ POST = os.path.join(REPO, "source", "_posts", "xr-vs-world-model.md")
 
 # (slug, 標記, 錨點（單行、唯一）, before／after)
 PLAN = [
-    ("wm-two-routes", "FIG1", "## 一、兩條技術路線", "after"),
-    ("wm-three-functions", "FIG2", "## 二、你說的「因果理解」是關鍵", "before"),
-    ("wm-bidirectional", "FIG3", "## 六、XR 與世界模型的關係", "after"),
+    ("wm-three-3d", "FIG1", "## 一、「做出 3D」其實有三種方式", "after"),
+    ("wm-human-vs-ai", "FIG2", "## 二、核心不是「重建」，是「理解」", "after"),
+    ("wm-two-branches", "FIG3", "## 三、兩個分支，兩種驗證方式", "after"),
 ]
 CAPTIONS = {f[0]: f[8] for f in FIGS}
 

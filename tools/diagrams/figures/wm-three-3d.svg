@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 700" role="img" aria-label="三種「做出 3D」的方式：物理引擎、360 縫合、4DGS｜世界模型走的是第三條" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="938.5" height="698.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三種「做出 3D」的方式：物理引擎、360 縫合、4DGS</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">世界模型走的是第三條</text>
+<rect x="48" y="118" width="264" height="330" rx="12" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="68" y="152" font-size="15.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">物理引擎建模</text>
+<text x="68" y="180" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">優點</text>
+<text x="68" y="204" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・自帶力學方程、材質參數</text>
+<text x="68" y="226" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・可自由走動、物件可互動</text>
+<text x="68" y="264" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">代價</text>
+<text x="68" y="288" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・仿真環境 ≠ 真實場景</text>
+<text x="68" y="310" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・機器人因此才有 sim2real 問題</text>
+<rect x="340" y="118" width="264" height="330" rx="12" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<text x="360" y="152" font-size="15.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">360 圖像縫合 ＋ 視覺錯位</text>
+<text x="360" y="180" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">優點</text>
+<text x="360" y="204" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・就是拍到什麼就是什麼</text>
+<text x="360" y="226" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・視覺上最接近真實</text>
+<text x="360" y="264" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">代價</text>
+<text x="360" y="288" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・只能看到全景相機走過的路徑</text>
+<text x="360" y="310" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・離開拍攝路徑就沒東西看</text>
+<rect x="632" y="118" width="264" height="330" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="652" y="152" font-size="15.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4D Gaussian Splatting</text>
+<text x="652" y="180" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">優點</text>
+<text x="652" y="204" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・把真實拍攝還原得像建模</text>
+<text x="652" y="226" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・可自由走動，不受相機路徑侷限</text>
+<text x="652" y="264" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">代價</text>
+<text x="652" y="288" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・靠的是「場景理解」而非真建模</text>
+<text x="652" y="310" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・仍需物理引擎接手碰撞與互動</text>
+<text x="48" y="482" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">世界模型走的是第三條：</text>
+<text x="48" y="508" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">比仿真環境真實（直接來自真實拍攝），又不被相機路線侷限（AI 能想像沒走過的路）。</text>
+<text x="48" y="534" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">但它產出的仍是「理解」——不是手算的力學結果，也不是像素級重建。</text>
+<rect x="48" y="566" width="848" height="108" rx="12" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="72" y="598" font-size="14.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">為什麼 4DGS 和 360 縫合不是同一個東西</text>
+<text x="72" y="624" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">360 縫合把多張照片拼成一張全景圖，畫面裡沒有深度，也沒有「這裡本來可能是什麼」。</text>
+<text x="72" y="648" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4DGS 從多視角觀測學出一個可從新視角渲染的 3D 表徵，</text>
+<text x="72" y="670" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">因此相機沒走過的路也可以渲染——那是從「場景理解」生出來的，不是拼圖補的。</text>
+</svg>

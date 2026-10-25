@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 620" role="img" aria-label="世界模型的兩個分支：因果理解與場景理解｜各自的驗證方式，以及融合的門檻" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker><marker id="mc084fc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker><marker id="m2dd4bf" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker></defs>
+<rect x="0.75" y="0.75" width="938.5" height="618.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">世界模型的兩個分支：因果理解與場景理解</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">各自的驗證方式，以及融合的門檻</text>
+<rect x="48" y="116" width="404" height="268" rx="14" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="74" y="152" font-size="17" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">分支一：因果理解</text>
+<text x="74" y="178" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AI 知道手去碰杯子，杯子會往前動</text>
+<rect x="74" y="196" width="352" height="52" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="250.0" y="220.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">動作 a</text>
+<text x="250.0" y="242.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">推一下、抓起來、放開</text>
+<path d="M 250 252 L 250 274" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="74" y="278" width="352" height="52" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="250.0" y="302.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">預測的未來狀態</text>
+<text x="250.0" y="324.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">還沒發生的事</text>
+<text x="74" y="362" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">驗證：能不能正確預測未來，而沒有幻覺。</text>
+<rect x="468" y="116" width="428" height="268" rx="14" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="494" y="152" font-size="17" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">分支二：場景理解</text>
+<text x="494" y="178" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AI 知道相機沒走過的那條路長什麼樣</text>
+<rect x="494" y="196" width="376" height="52" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="682.0" y="220.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">目前位置與已見場景</text>
+<text x="682.0" y="242.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從多視角觀測學到的表徵</text>
+<path d="M 682 252 L 682 274" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="494" y="278" width="376" height="52" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="682.0" y="302.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">沒拍過的路線</text>
+<text x="682.0" y="324.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">新視角、新區域</text>
+<text x="494" y="362" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">驗證：相機沒拍到的路線，能不能正確想像出來。</text>
+<path d="M 252 392 L 252 424" fill="none" stroke="#c084fc" stroke-width="3" marker-end="url(#mc084fc)"/>
+<path d="M 682 392 L 682 424" fill="none" stroke="#2dd4bf" stroke-width="3" marker-end="url(#m2dd4bf)"/>
+<text x="266" y="414" font-size="12" fill="#c084fc" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">因果</text>
+<text x="696" y="414" font-size="12" fill="#2dd4bf" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">場景</text>
+<rect x="48" y="428" width="848" height="168" rx="12" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="72" y="460" font-size="16" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">成熟條件：兩者融合，而且沒有幻覺、兩者不衝突</text>
+<text x="72" y="490" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只懂因果 → 會推得動杯子，但不知道杯子長什麼樣、擺在哪裡。</text>
+<text x="72" y="514" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只懂場景 → 知道場景長什麼樣，但不知道推一下會怎樣。</text>
+<text x="72" y="544" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩者融合後，AI 依當前位置同時想像出場景與因果，才算真正成熟的理解。</text>
+<text x="72" y="574" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「沒有幻覺」與「不衝突」是門檻：預測得漂亮但物理錯，或場景對但因果打架，都還沒到位。</text>
+</svg>
