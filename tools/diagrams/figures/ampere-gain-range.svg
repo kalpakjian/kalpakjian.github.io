@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" role="img" aria-label="各型號 BF16 GEMM 增益範圍 +25% 到 +81%，以及 3070 Ti 未測、3080 Ti 維持半速兩個例外" style="width:100%;height:auto;display:block">
-<rect x="0.75" y="0.75" width="998.5" height="618.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" role="img" aria-label="各型號 BF16 GEMM 增益範圍 +25% 到 +81%，以及 3070 Ti 未測、3080 Ti 維持半速兩個例外" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="678.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
 <text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">各型號的增益區間</text>
 <text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">區間來自各使用者自己的量測，功耗上限差異很大</text>
-<path d="M 300 148 L 300 502" fill="none" stroke="#7d8590" stroke-width="1.5"/>
+<path d="M 300 148 L 300 546" fill="none" stroke="#7d8590" stroke-width="1.5"/>
 <text x="780" y="126" font-size="12" fill="#2dd4bf" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BF16 GEMM 增益</text>
 <text x="276" y="173" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3070</text>
 <text x="276" y="188" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GA104・已解鎖</text>
@@ -24,30 +24,35 @@
 <rect x="300" y="290" width="480" height="22" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
 <rect x="636.0" y="290" width="14.399999999999977" height="22" rx="8" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="1.5"/>
 <text x="662.4" y="306" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+70–73%</text>
-<text x="276" y="349" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3080 20GB</text>
-<text x="276" y="364" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GA102・改裝 20GB</text>
+<text x="276" y="349" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3080 12GB</text>
+<text x="276" y="364" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GA102・已解鎖</text>
 <rect x="300" y="334" width="480" height="22" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
-<rect x="568.8" y="334" width="14.399999999999977" height="22" rx="8" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="1.5"/>
-<text x="595.2" y="350" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+56–59%</text>
-<text x="276" y="393" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3090</text>
-<text x="276" y="408" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GA102・已解鎖</text>
+<rect x="631.2" y="334" width="19.19999999999999" height="22" rx="8" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="662.4" y="350" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+69–73%</text>
+<text x="276" y="393" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3080 20GB</text>
+<text x="276" y="408" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GA102・改裝 20GB</text>
 <rect x="300" y="378" width="480" height="22" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
-<rect x="420.0" y="378" width="201.60000000000002" height="22" rx="8" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="1.5"/>
-<text x="633.6" y="394" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+25–67%</text>
-<text x="276" y="437" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3070 Ti</text>
-<text x="276" y="452" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GA104・模組未測</text>
-<rect x="300" y="428" width="46" height="3" rx="1" fill="#fbbf24" stroke="#30363d" stroke-width="1.5"/>
-<text x="362" y="437" font-size="13" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—</text>
-<text x="276" y="481" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3080 Ti 20GB</text>
-<text x="276" y="496" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GA102・維持半速</text>
-<rect x="300" y="472" width="46" height="3" rx="1" fill="#f472b6" stroke="#30363d" stroke-width="1.5"/>
-<text x="362" y="481" font-size="13" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—</text>
-<text x="300.0" y="528" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0%</text>
-<text x="420.0" y="528" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+25%</text>
-<text x="540.0" y="528" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+50%</text>
-<text x="660.0" y="528" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+75%</text>
-<text x="780.0" y="528" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+100%</text>
-<rect x="48" y="548" width="904" height="62" rx="10" fill="#1c2230" stroke="#fbbf2455" stroke-width="1.5"/>
-<text x="68" y="574" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩個例外：RTX 3070 Ti 從未用這個模組測過（同樣的解鎖改用 Windows UEFI 埠成功）；</text>
-<text x="68" y="596" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3080 Ti 20GB OEM 的交易會跑完，但 BF16 仍維持半速——「成功」不等於「有效」。</text>
+<rect x="568.8" y="378" width="14.399999999999977" height="22" rx="8" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="595.2" y="394" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+56–59%</text>
+<text x="276" y="437" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3090</text>
+<text x="276" y="452" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GA102・已解鎖</text>
+<rect x="300" y="422" width="480" height="22" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<rect x="420.0" y="422" width="201.60000000000002" height="22" rx="8" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="633.6" y="438" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+25–67%</text>
+<text x="276" y="481" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3070 Ti</text>
+<text x="276" y="496" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GA104・模組未測</text>
+<rect x="300" y="472" width="46" height="3" rx="1" fill="#fbbf24" stroke="#30363d" stroke-width="1.5"/>
+<text x="362" y="481" font-size="13" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—</text>
+<text x="276" y="525" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3080 Ti 20GB</text>
+<text x="276" y="540" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GA102・維持半速</text>
+<rect x="300" y="516" width="46" height="3" rx="1" fill="#f472b6" stroke="#30363d" stroke-width="1.5"/>
+<text x="362" y="525" font-size="13" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—</text>
+<text x="300.0" y="572" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0%</text>
+<text x="420.0" y="572" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+25%</text>
+<text x="540.0" y="572" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+50%</text>
+<text x="660.0" y="572" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+75%</text>
+<text x="780.0" y="572" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+100%</text>
+<rect x="48" y="592" width="904" height="62" rx="10" fill="#1c2230" stroke="#fbbf2455" stroke-width="1.5"/>
+<text x="68" y="618" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩個例外：RTX 3070 Ti 從未用這個模組測過（同樣的解鎖改用 Windows UEFI 埠成功）；</text>
+<text x="68" y="640" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3080 Ti 20GB OEM 的交易會跑完，但 BF16 仍維持半速——「成功」不等於「有效」。</text>
 </svg>
