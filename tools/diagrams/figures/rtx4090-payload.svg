@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-label="RTX 4090 解鎖後哪些負載會變快：FP16／BF16 權重搭配 FP32 累加會，而 INT8、4-bit、3-bit 量化權重不會——Issue #17 實測 3-bit MoE 為 0.983×" style="width:100%;height:auto;display:block">
+<defs><marker id="m2dd4bf" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">我的負載會變快嗎</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">分水嶺在權重精度</text>
+<rect x="48" y="122" width="904" height="58" rx="12" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="500" y="146" font-size="12" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">關鍵分水嶺</text>
+<text x="500" y="168" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">權重是 FP16／BF16（而且累加走 FP32）嗎？</text>
+<rect x="48" y="212" width="440" height="176" rx="12" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="68" y="240" font-size="14" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">是 → 會變快（真實 GEMM +12～34%）</text>
+<text x="68" y="273" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・LLM prefill</text>
+<text x="68" y="289" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　prompt 一次算完的那段</text>
+<text x="68" y="317" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・擴散模型／圖片生成</text>
+<text x="68" y="333" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　UNet 與 VAE 的矩陣乘法</text>
+<text x="68" y="361" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・FP16／BF16 的訓練</text>
+<text x="68" y="377" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　反向傳播也是矩陣乘法</text>
+<rect x="512" y="212" width="440" height="176" rx="12" fill="#161b22" stroke="#7d859055" stroke-width="1.5"/>
+<text x="532" y="240" font-size="14" fill="#7d8590" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不是 → 幾乎沒差</text>
+<text x="532" y="273" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・INT8／4-bit／3-bit 量化權重</text>
+<text x="532" y="289" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　Issue #17：3-bit MoE IQ3_S 實測 0.983×</text>
+<text x="532" y="317" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・純 FP32 運算</text>
+<text x="532" y="333" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　這條路徑本來就沒被鎖</text>
+<text x="532" y="361" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">・逐 token 生成（decode）</text>
+<text x="532" y="377" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">　　瓶頸在記憶體頻寬</text>
+<path d="M 340 180 L 268 208" fill="none" stroke="#2dd4bf" stroke-width="1.8" marker-end="url(#m2dd4bf)"/>
+<path d="M 660 180 L 732 208" fill="none" stroke="#7d8590" stroke-width="1.8" marker-end="url(#m7d8590)"/>
+<rect x="48" y="404" width="904" height="84" rx="10" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<text x="68" y="430" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">最容易被忽略的一句：Issue #17 的實測者用 3-bit MoE（IQ3_S）跑 8K prefill，</text>
+<text x="68" y="452" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">得到的比值是 0.983×——完全沒有加速。原文寫得很直接：</text>
+<text x="68" y="476" font-size="13" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「The 2x lands only on FP16/BF16 weights with FP32 accumulation.」</text>
+</svg>

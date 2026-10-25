@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" role="img" aria-label="RTX 4090 解除 gpu-unlock 的六步操作流程：確認白名單、安裝、設定核心命令列、冷開機、驗證 gpu_unlock: unlocked、讀回速率並量自己的負載" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker><marker id="m2dd4bf" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker><marker id="mf472b6" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f472b6"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="638.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">六步操作流程</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4090 是唯一不需要實驗旗標的</text>
+<rect x="48" y="126" width="556" height="64" rx="10" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<circle cx="76" cy="158.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="76" y="162.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="102" y="150" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">確認白名單並取得位址</text>
+<text x="102" y="170" font-size="10" fill="#58a6ff" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">python3 tools/print_boot_option.py</text>
+<text x="102" y="184" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">唯讀工具，會直接印出要用的那行</text>
+<rect x="48" y="210" width="556" height="64" rx="10" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<circle cx="76" cy="242.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="76" y="246.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="102" y="234" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">安裝套件</text>
+<text x="102" y="254" font-size="10" fill="#58a6ff" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">git clone … &amp;&amp; cd gpu-unlock-ada &amp;&amp; make install</text>
+<text x="102" y="268" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Arch／Debian／RPM 自動偵測</text>
+<path d="M 76 206 L 76 190" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="294" width="556" height="64" rx="10" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<circle cx="76" cy="326.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="76" y="330.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="102" y="318" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">設定核心命令列</text>
+<text x="102" y="338" font-size="10" fill="#58a6ff" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">gpu_unlock.targets=0000:03:00.0</text>
+<text x="102" y="352" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4090 只要這一項，不需要實驗旗標</text>
+<path d="M 76 290 L 76 274" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="378" width="556" height="64" rx="10" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<circle cx="76" cy="410.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="76" y="414.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="102" y="402" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">完整斷電後冷開機</text>
+<text x="102" y="422" font-size="10" fill="#58a6ff" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">切掉 AC 電源、等約 30 秒再上電</text>
+<text x="102" y="436" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">暖開機不保證提供乾淨韌體狀態</text>
+<path d="M 76 374 L 76 358" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="462" width="556" height="64" rx="10" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<circle cx="76" cy="494.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="76" y="498.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="102" y="486" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">驗證是否真的解鎖</text>
+<text x="102" y="506" font-size="10" fill="#58a6ff" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">journalctl -k -b | grep gpu_unlock</text>
+<text x="102" y="520" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">要找 gpu_unlock: unlocked</text>
+<path d="M 76 458 L 76 442" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="546" width="556" height="64" rx="10" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<circle cx="76" cy="578.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="76" y="582.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<text x="102" y="570" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">讀回速率並量自己的負載</text>
+<text x="102" y="590" font-size="10" fill="#58a6ff" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">python3 tools/read_sm_rates.py --expect-uuid …</text>
+<text x="102" y="604" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">唯讀，不寫暫存器、不重置</text>
+<path d="M 76 542 L 76 526" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="636" y="126" width="316" height="78" rx="10" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="652" y="152" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4090 是唯一不用實驗旗標的</text>
+<text x="652" y="174" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4070 Ti SUPER 與 4060 Ti 16GB 還要加</text>
+<text x="652" y="190" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">ad103／ad106_experimental=1 這類旗標。</text>
+<path d="M 608 158.0 L 632 158.0" fill="none" stroke="#2dd4bf" stroke-width="1.5" marker-end="url(#m2dd4bf)"/>
+<rect x="636" y="462" width="316" height="78" rx="10" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<text x="652" y="488" font-size="12.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模組載入成功 ≠ 解鎖成功</text>
+<text x="652" y="510" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">必須看到目標卡的 gpu_unlock: unlocked，且 nvidia-smi 健康、</text>
+<text x="652" y="526" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">journal 裡沒有 NVRM: Xid。</text>
+<path d="M 608 494.0 L 632 494.0" fill="none" stroke="#f472b6" stroke-width="1.5" marker-end="url(#mf472b6)"/>
+</svg>
