@@ -55,10 +55,10 @@ def hbar_track(s, x0, y, track_len, h, pct, colour):
     """
     s.rect(x0, y, track_len, h, fill=CARD, stroke=C["gray"] + "44", rx=8, sw=1)
     if pct >= 0:
-        length = max(3.0, track_len * pct / 100.0)
+        length = max(4.0, track_len * pct / 100.0)
         s.rect(x0, y, length, h, fill=colour + "55", stroke=colour, rx=8)
         return x0 + length, x0
-    length = max(3.0, track_len * (-pct) / 100.0)
+    length = max(4.0, track_len * (-pct) / 100.0)
     s.rect(x0 - length, y, length, h, fill=colour + "55", stroke=colour, rx=8)
     return x0 - length, x0 - length
 
@@ -69,7 +69,8 @@ def fig_gap(s):
     plot_bottom = GAP_ROW0 + len(GAP_ROWS) * GAP_PITCH - (GAP_PITCH - GAP_BARH) + 10
 
     s.line(GAP_X0, plot_top - 4, GAP_X0, plot_bottom, RAIL, 1.5)
-    s.text(GAP_X0 + GAP_TRACK, plot_top - 12, "「翻倍」+100%", 11.5, C["teal"], "700", "middle")
+    # 標記靠左對齊到槽尾，避免和第一列的數值標籤疊在同一段 x
+    s.text(GAP_X0 + GAP_TRACK - 4, plot_top - 14, "「翻倍」+100%", 11.5, C["teal"], "700", "end")
 
     for i, (name, sub, pct, stage) in enumerate(GAP_ROWS):
         y = GAP_ROW0 + i * GAP_PITCH

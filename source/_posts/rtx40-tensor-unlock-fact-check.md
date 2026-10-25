@@ -187,7 +187,7 @@ MODULE_PARM_DESC(ad106_experimental,
 <text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">翻倍到實際的落差</text>
 <text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一張 RTX 4090 解鎖後，相對原本（stock）的增幅</text>
 <path d="M 330 146 L 330 448" fill="none" stroke="#7d8590" stroke-width="1.5"/>
-<text x="890" y="138" font-size="11.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「翻倍」+100%</text>
+<text x="886" y="136" font-size="11.5" fill="#2dd4bf" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「翻倍」+100%</text>
 <text x="300" y="165" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16／BF16 → FP32 指令發射率</text>
 <text x="300" y="182" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">最底層的指令率，也就是媒體說的「翻倍」</text>
 <rect x="330" y="150" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
@@ -211,13 +211,13 @@ MODULE_PARM_DESC(ad106_experimental,
 <text x="300" y="373" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cuBLAS GEMM 4096³ BF16</text>
 <text x="300" y="390" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">這一組完全沒有變化，暖開機重測還倒退</text>
 <rect x="330" y="358" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
-<rect x="327.0" y="358" width="3.0" height="28" rx="8" fill="#f472b655" stroke="#f472b6" stroke-width="1.5"/>
+<rect x="326.0" y="358" width="4.0" height="28" rx="8" fill="#f472b655" stroke="#f472b6" stroke-width="1.5"/>
 <text x="342" y="377" font-size="13.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">▼ -0.5%</text>
 <text x="300" y="425" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">E4M3 FP8 CUTLASS GEMM</text>
 <text x="300" y="442" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">專案自己公布的數字：+0.3%</text>
 <rect x="330" y="410" width="560" height="28" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
-<rect x="330" y="410" width="3.0" height="28" rx="8" fill="#7d859055" stroke="#7d8590" stroke-width="1.5"/>
-<text x="343.0" y="429" font-size="13.5" fill="#7d8590" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+0.3%</text>
+<rect x="330" y="410" width="4.0" height="28" rx="8" fill="#7d859055" stroke="#7d8590" stroke-width="1.5"/>
+<text x="344.0" y="429" font-size="13.5" fill="#7d8590" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+0.3%</text>
 <text x="330.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0%</text>
 <text x="470.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+25%</text>
 <text x="610.0" y="472" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+50%</text>
@@ -299,7 +299,7 @@ README 原文：「Real cuBLAS GEMM median throughput varied by shape: FP16 gain
 <text x="120" y="324" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">153.2→206.0</text>
 <text x="120" y="352" font-size="12.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BF16</text>
 <rect x="240" y="334" width="620" height="26" rx="8" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
-<rect x="237.0" y="334" width="3.0" height="26" rx="8" fill="#f472b655" stroke="#f472b6" stroke-width="1.5"/>
+<rect x="236.0" y="334" width="4.0" height="26" rx="8" fill="#f472b655" stroke="#f472b6" stroke-width="1.5"/>
 <text x="252" y="352" font-size="13" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">▼ -0.5%</text>
 <text x="120" y="368" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">153.4→152.7</text>
 <path d="M 48 388 L 952 388" fill="none" stroke="#30363d" stroke-width="1.2"/>
