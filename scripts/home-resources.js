@@ -32,13 +32,23 @@ const MARKER = 'data-home-resources';
 
 // 專題：長篇系列（source 底下 skip_render 的獨立靜態站），或單篇長文＋一手來源的入口
 // 只輸出標題（連到系列總覽頁）；章節等子頁面入口由導覽列與各總覽頁提供
+// 專題（首頁左欄）：每筆帶 date 欄位，輸出時由新到舊排序。
+// date 用 ISO 日期字串（YYYY-MM-DD）；新增專題只要補上日期，順序自動對。
 const TOPICS = [
-  { title: '手寫程式碼的時代正式結束｜DHH 宣布退休', href: '/dhh-rails-world-2026/index.html' },
-  { title: '從零打造一個 coding agent', href: '/coding-agent/' },
-  { title: 'Agent 時代，你可能累錯地方了', href: '/2026/10/16/matt-pocock-18-agent-mistakes/' },
-  { title: '用 Python 解決問題：24 類工作 × 48 個套件', href: '/2026/10/16/python-problem-solving-toolkit/' },
-  { title: 'gpu-unlock 專題：NVIDIA 消費級卡那道「半速鎖」怎麼被打開的', href: '/gpu-unlock/' }
+  { title: 'gpu-unlock 專題：NVIDIA 消費級卡那道「半速鎖」怎麼被打開的', href: '/gpu-unlock/', date: '2026-10-25' },
+  { title: 'Agent 時代，你可能累錯地方了', href: '/2026/10/16/matt-pocock-18-agent-mistakes/', date: '2026-10-16' },
+  { title: '用 Python 解決問題：24 類工作 × 48 個套件', href: '/2026/10/16/python-problem-solving-toolkit/', date: '2026-10-16' },
+  { title: '從零打造一個 coding agent', href: '/coding-agent/', date: '2026-10-11' },
+  { title: '手寫程式碼的時代正式結束｜DHH 宣布退休', href: '/dhh-rails-world-2026/index.html', date: '2026-09-27' }
 ];
+
+// 由新到舊（同一天依原順序穩定排序）。
+const TOPICS_SORTED = TOPICS.map(function (item, i) { return { item: item, i: i }; })
+  .sort(function (a, b) {
+    if (a.item.date === b.item.date) return a.i - b.i;
+    return a.item.date < b.item.date ? 1 : -1;
+  })
+  .map(function (x) { return x.item; });
 
 // 學習筆記：課程／教材整理成的離線筆記，每份都有互動測驗
 const NOTES = [
@@ -49,7 +59,7 @@ const NOTES = [
 
 // 左欄＝專題、右欄＝學習筆記；「文章」標題之後接主題產生的最新文章清單
 const COLUMNS = [
-  { id: 'topics', icon: 'icon-books', title: '專題', items: TOPICS },
+  { id: 'topics', icon: 'icon-books', title: '專題', items: TOPICS_SORTED },
   { id: 'notes', icon: 'icon-notebook', title: '學習筆記', items: NOTES }
 ];
 
