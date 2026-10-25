@@ -1,0 +1,7 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:/Users/princ/blog/tools/diagrams/figures/cudnn-dir-compare.svg",
+    "caption": "圖 21：cuDNN 的 zip 解壓（左）與 installer 安裝（右）目錄結構對照——右邊每層底下多了一層版本資料夾（13.2），所以找檔案的路徑完全不同。｜手繪 SVG 圖表"
+  }
+]

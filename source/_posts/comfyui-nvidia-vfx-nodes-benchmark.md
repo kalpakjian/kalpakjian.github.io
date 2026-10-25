@@ -188,6 +188,49 @@ AI 運算裡的圖片不是普通的圖檔，而是一塊**張量（tensor）**�
 | 真正運算 | **1.1 ms** | **0.07%** |
 | ComfyUI 框架與資料搬移 | 其餘 | 約 10% |
 
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 450" role="img" aria-label="端到端單幀流程 1.576 秒的時間分解：load() 佔 76%、PNG 寫入 13%、框架搬移 11%，真正運算只有 0.07%" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="448.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">時間花在哪</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">總計 1.576 秒／張</text>
+<rect x="48" y="150" width="688.3248730964467" height="46" rx="0" fill="#f472b666" stroke="#f472b6" stroke-width="1"/>
+<rect x="736.3248730964467" y="150" width="114.72081218274111" height="46" rx="0" fill="#fbbf2466" stroke="#fbbf24" stroke-width="1"/>
+<rect x="851.0456852791879" y="150" width="97.51269035532995" height="46" rx="0" fill="#c084fc66" stroke="#c084fc" stroke-width="1"/>
+<rect x="948.5583756345178" y="150" width="3.0" height="46" rx="0" fill="#58a6ff66" stroke="#58a6ff" stroke-width="1"/>
+<rect x="951.5583756345178" y="150" width="3.0" height="46" rx="0" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="1"/>
+<rect x="48" y="150" width="904" height="46" rx="8" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="48" y="136" font-size="12" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">端到端單幀流程的時間分解（總計 1.576 秒）</text>
+<rect x="56" y="224" width="16" height="16" rx="3" fill="#f472b666" stroke="#f472b6" stroke-width="1.5"/>
+<text x="84" y="237" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">load() 載入 SDK 模型</text>
+<text x="600" y="237" font-size="12.5" fill="#f472b6" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1200 ms</text>
+<text x="700" y="237" font-size="12.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">76.14%</text>
+<rect x="56" y="254" width="16" height="16" rx="3" fill="#fbbf2466" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="84" y="267" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">寫入 PNG 檔（1536×1536）</text>
+<text x="600" y="267" font-size="12.5" fill="#fbbf24" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">200 ms</text>
+<text x="700" y="267" font-size="12.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">12.69%</text>
+<rect x="56" y="284" width="16" height="16" rx="3" fill="#c084fc66" stroke="#c084fc" stroke-width="1.5"/>
+<text x="84" y="297" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">ComfyUI 框架與資料搬移</text>
+<text x="600" y="297" font-size="12.5" fill="#c084fc" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">170 ms</text>
+<text x="700" y="297" font-size="12.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">10.79%</text>
+<rect x="56" y="314" width="16" height="16" rx="3" fill="#58a6ff66" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="84" y="327" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">讀取 PNG 檔（768×768）</text>
+<text x="600" y="327" font-size="12.5" fill="#58a6ff" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5.0 ms</text>
+<text x="700" y="327" font-size="12.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.32%</text>
+<rect x="56" y="344" width="16" height="16" rx="3" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="84" y="357" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真正運算</text>
+<text x="600" y="357" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.1 ms</text>
+<text x="700" y="357" font-size="12.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.07%</text>
+<text x="600" y="212" font-size="11" fill="#8b949e" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">時間</text>
+<text x="700" y="212" font-size="11" fill="#8b949e" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">佔比</text>
+<rect x="48" y="400" width="904" height="62" rx="10" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="68" y="426" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你付了 1.576 秒，只有 0.0011 秒在算圖——真正運算在比例尺上幾乎看不到。</text>
+<text x="68" y="448" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">用廚房比喻：專業廚房炒一盤菜只要 0.001 秒，但每次都要先預熱烤箱 1.2 秒、每盤都要裝盤封膜 0.2 秒。</text>
+</svg>
+<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：1.576 秒裡真正在算圖的只有 0.07%——load() 佔 76%，所以單幀流程怎麼批次化才是重點。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
+
 換句話說：**你付了 1.5 秒，只有 0.001 秒在算圖。**
 
 用廚房比喻：新的專業廚房炒一盤菜只要 0.001 秒，但每次都要先預熱烤箱 1.2 秒、每盤菜都要裝盤封膜 0.2 秒。**一盤一盤叫，速度完全被預熱與裝盤吃掉。**
@@ -218,6 +261,40 @@ AI 運算裡的圖片不是普通的圖檔，而是一塊**張量（tensor）**�
 | 舊流程的歷史紀錄 | 30 分鐘（但其中約 18 分鐘是空等，見下一節） |
 
 ---
+
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" role="img" aria-label="nvidia-vfx 基準測試的三層落差：純 GPU 快 755 倍、端到端批次 5.56 倍、端到端單幀只有 1.24 倍" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="468.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三層量測的落差</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一件事量三層，結論差 600 倍</text>
+<rect x="486.66666666666663" y="162" width="1" height="182" rx="10" fill="#30363d" stroke="#30363d" stroke-width="1.5"/>
+<rect x="673.3333333333333" y="162" width="1" height="182" rx="10" fill="#30363d" stroke="#30363d" stroke-width="1.5"/>
+<rect x="860.0" y="162" width="1" height="182" rx="10" fill="#30363d" stroke="#30363d" stroke-width="1.5"/>
+<text x="300" y="142" font-size="12" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">快幾倍（對數刻度）</text>
+<text x="280" y="191" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">純 GPU（只算推論本身）</text>
+<text x="280" y="208" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">830.05 ms  →  1.10 ms</text>
+<rect x="300" y="176" width="537.2167643041151" height="26" rx="7" fill="#2dd4bf55" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="952" y="195" font-size="14" fill="#2dd4bf" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">755×</text>
+<text x="280" y="253" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">端到端批次 16 張</text>
+<text x="280" y="270" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.441 秒/張  →  0.259 秒/張</text>
+<rect x="300" y="238" width="139.08062776198403" height="26" rx="7" fill="#58a6ff55" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="952" y="257" font-size="14" fill="#58a6ff" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5.56×</text>
+<text x="280" y="315" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">端到端單幀（一張一 prompt）</text>
+<text x="280" y="332" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.962 秒/張  →  1.576 秒/張</text>
+<rect x="300" y="300" width="17.438714563617225" height="26" rx="7" fill="#f472b655" stroke="#f472b6" stroke-width="1.5"/>
+<text x="952" y="319" font-size="14" fill="#f472b6" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.24×</text>
+<text x="300.0" y="370" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1×</text>
+<text x="486.66666666666663" y="370" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">10×</text>
+<text x="673.3333333333333" y="370" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">100×</text>
+<text x="860.0" y="370" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1000×</text>
+<rect x="48" y="390" width="904" height="62" rx="10" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<text x="68" y="416" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一件事、三種量法，結論差 600 倍：只量「純 GPU」會以為快 755 倍，</text>
+<text x="68" y="438" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">量到端到端只剩 1.24 倍。這就是為什麼基準測試一定要看端到端。</text>
+</svg>
+<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：同一件事量三層的落差——純 GPU 快 755 倍、端到端批次 5.56 倍，但端到端單幀只有 1.24 倍。基準測試一定要看端到端。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 ## 修正歷史數據：那個「30 分鐘」其實有一半以上在空等
 

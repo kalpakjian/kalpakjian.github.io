@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" role="img" aria-label="11 個 coding agent 系統的規模階梯：從 Tiny 約 5K 行到 Very large 約 600K 行以上，橫跨三個數量級，但自報任務完成率都落在同一區間" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="638.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">規模階梯</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三個數量級，卻是同一區間的完成率</text>
+<path d="M 78 138 L 78 508" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 78 508 L 78 150" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="78" y="122" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">規模</text>
+<rect x="110" y="138" width="842" height="66" rx="10" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<rect x="110" y="138" width="5" height="66" rx="2" fill="#2dd4bf" stroke="#30363d" stroke-width="1.5"/>
+<text x="134" y="165" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Tiny</text>
+<text x="134" y="185" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">≈ 5K 行</text>
+<rect x="380" y="154" width="162.62" height="34" rx="8" fill="#2dd4bf22" stroke="#2dd4bf88" stroke-width="1.5"/>
+<text x="393" y="175.0" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Mini-SWE-Agent · 1 工具</text>
+<rect x="110" y="214" width="842" height="66" rx="10" fill="#161b22" stroke="#3fb95055" stroke-width="1.5"/>
+<rect x="110" y="214" width="5" height="66" rx="2" fill="#3fb950" stroke="#30363d" stroke-width="1.5"/>
+<text x="134" y="241" font-size="15" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Small</text>
+<text x="134" y="261" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">≈ 20–40K 行</text>
+<rect x="380" y="230" width="162.62" height="34" rx="8" fill="#3fb95022" stroke="#3fb95088" stroke-width="1.5"/>
+<text x="393" y="251.0" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Mistral Vibe · 12+ 工具</text>
+<rect x="554.62" y="230" width="126.28" height="34" rx="8" fill="#3fb95022" stroke="#3fb95088" stroke-width="1.5"/>
+<text x="567.62" y="251.0" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Aider · 13 種格式</text>
+<rect x="110" y="290" width="842" height="66" rx="10" fill="#161b22" stroke="#58a6ff55" stroke-width="1.5"/>
+<rect x="110" y="290" width="5" height="66" rx="2" fill="#58a6ff" stroke="#30363d" stroke-width="1.5"/>
+<text x="134" y="317" font-size="15" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Medium</text>
+<text x="134" y="337" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">≈ 80–110K 行</text>
+<rect x="380" y="306" width="144.68" height="34" rx="8" fill="#58a6ff22" stroke="#58a6ff88" stroke-width="1.5"/>
+<text x="393" y="327.0" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">OpenHands · 25+ 工具</text>
+<rect x="536.6800000000001" y="306" width="90.86" height="34" rx="8" fill="#58a6ff22" stroke="#58a6ff88" stroke-width="1.5"/>
+<text x="549.6800000000001" y="327.0" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Pi · 7 工具</text>
+<rect x="110" y="366" width="842" height="66" rx="10" fill="#161b22" stroke="#fbbf2455" stroke-width="1.5"/>
+<rect x="110" y="366" width="5" height="66" rx="2" fill="#fbbf24" stroke="#30363d" stroke-width="1.5"/>
+<text x="134" y="393" font-size="15" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Large</text>
+<text x="134" y="413" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">≈ 500K+ 行</text>
+<rect x="380" y="382" width="150.66000000000003" height="34" rx="8" fill="#fbbf2422" stroke="#fbbf2488" stroke-width="1.5"/>
+<text x="393" y="403.0" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Claude Code · 43 工具</text>
+<rect x="542.6600000000001" y="382" width="132.72" height="34" rx="8" fill="#fbbf2422" stroke="#fbbf2488" stroke-width="1.5"/>
+<text x="555.6600000000001" y="403.0" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">OpenCode · 17 工具</text>
+<rect x="687.3800000000001" y="382" width="144.68" height="34" rx="8" fill="#fbbf2422" stroke="#fbbf2488" stroke-width="1.5"/>
+<text x="700.3800000000001" y="403.0" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">OpenClaw · 109+ 工具</text>
+<rect x="110" y="442" width="842" height="66" rx="10" fill="#161b22" stroke="#f472b655" stroke-width="1.5"/>
+<rect x="110" y="442" width="5" height="66" rx="2" fill="#f472b6" stroke="#30363d" stroke-width="1.5"/>
+<text x="134" y="469" font-size="15" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Very large</text>
+<text x="134" y="489" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">≈ 600K+ 行（Codex 快照約 1.1M 行 Rust）</text>
+<rect x="380" y="458" width="156.64000000000001" height="34" rx="8" fill="#f472b622" stroke="#f472b688" stroke-width="1.5"/>
+<text x="393" y="479.0" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Codex CLI · 25–30 工具</text>
+<rect x="548.64" y="458" width="150.66000000000003" height="34" rx="8" fill="#f472b622" stroke="#f472b688" stroke-width="1.5"/>
+<text x="561.64" y="479.0" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Gemini CLI · 35+ 工具</text>
+<rect x="711.3" y="458" width="120.76" height="34" rx="8" fill="#f472b622" stroke="#f472b688" stroke-width="1.5"/>
+<text x="724.3" y="479.0" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Hermes · 69 工具</text>
+<rect x="48" y="532" width="904" height="84" rx="10" fill="#1c2230" stroke="#fbbf2455" stroke-width="1.5"/>
+<text x="68" y="560" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">大系統多寫的那些程式碼，大半不在 harness 上：OpenCode 去掉測試後約五分之三是 TUI、網頁、桌面與 SDK 客戶端；</text>
+<text x="68" y="582" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Codex 7 月版有上十萬行花在 app-server 傳輸、插件與即時語音層——這些永遠不會體現在任何 benchmark 上。</text>
+<text x="68" y="604" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">換句話說：生產系統的品質，大多花在與「任務完成」正交的事情上。</text>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 516" role="img" aria-label="cuDNN 兩種取得方式的目錄結構：zip 直接解壓是 bin／include／lib 三層，installer 安裝則在每層底下多一層版本資料夾 13.2" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="514.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cuDNN 的兩種目錄結構</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">zip 解壓 vs installer 安裝</text>
+<rect x="48" y="118" width="440" height="300" rx="14" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="68" y="148" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">A. zip 直接解壓</text>
+<text x="68" y="172" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">沒有版本資料夾</text>
+<rect x="68" y="194" width="26" height="16" rx="4" fill="#2dd4bf33" stroke="#2dd4bf" stroke-width="2"/>
+<rect x="68" y="188" width="10.92" height="9" rx="3" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="2"/>
+<text x="104" y="205" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">cudnn-windows-x86_64-&lt;版本&gt;_cuda13-archive\</text>
+<path d="M 81 210 L 81 239" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 81 239 L 94 239" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<rect x="94" y="234" width="24" height="14" rx="4" fill="#2dd4bf33" stroke="#2dd4bf" stroke-width="2"/>
+<rect x="94" y="228" width="10.08" height="9" rx="3" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="2"/>
+<text x="128" y="243" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">bin\</text>
+<text x="128" y="261" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cudnn64_9.dll 等</text>
+<path d="M 81 210 L 81 295" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 81 295 L 94 295" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<rect x="94" y="290" width="24" height="14" rx="4" fill="#2dd4bf33" stroke="#2dd4bf" stroke-width="2"/>
+<rect x="94" y="284" width="10.08" height="9" rx="3" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="2"/>
+<text x="128" y="299" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">include\</text>
+<text x="128" y="317" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cudnn*.h</text>
+<path d="M 81 210 L 81 351" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 81 351 L 94 351" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<rect x="94" y="346" width="24" height="14" rx="4" fill="#2dd4bf33" stroke="#2dd4bf" stroke-width="2"/>
+<rect x="94" y="340" width="10.08" height="9" rx="3" fill="#2dd4bf66" stroke="#2dd4bf" stroke-width="2"/>
+<text x="128" y="355" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">lib\x64\</text>
+<text x="128" y="373" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cudnn.lib 等</text>
+<rect x="512" y="118" width="440" height="300" rx="14" fill="#1c2230" stroke="#fbbf2455" stroke-width="1.5"/>
+<text x="532" y="148" font-size="15" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">B. installer 安裝</text>
+<text x="532" y="172" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">多一層版本資料夾 13.2</text>
+<rect x="532" y="194" width="26" height="16" rx="4" fill="#fbbf2433" stroke="#fbbf24" stroke-width="2"/>
+<rect x="532" y="188" width="10.92" height="9" rx="3" fill="#fbbf2466" stroke="#fbbf24" stroke-width="2"/>
+<text x="568" y="205" font-size="11.5" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">C:\Program Files\NVIDIA\CUDNN\v9.22\</text>
+<path d="M 545 210 L 545 239" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 545 239 L 558 239" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<rect x="558" y="234" width="24" height="14" rx="4" fill="#fbbf2433" stroke="#fbbf24" stroke-width="2"/>
+<rect x="558" y="228" width="10.08" height="9" rx="3" fill="#fbbf2466" stroke="#fbbf24" stroke-width="2"/>
+<text x="592" y="243" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">bin\13.2\x64\</text>
+<text x="592" y="261" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cudnn64_9.dll 等</text>
+<path d="M 545 210 L 545 295" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 545 295 L 558 295" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<rect x="558" y="290" width="24" height="14" rx="4" fill="#fbbf2433" stroke="#fbbf24" stroke-width="2"/>
+<rect x="558" y="284" width="10.08" height="9" rx="3" fill="#fbbf2466" stroke="#fbbf24" stroke-width="2"/>
+<text x="592" y="299" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">include\13.2\</text>
+<text x="592" y="317" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cudnn*.h</text>
+<path d="M 545 210 L 545 351" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 545 351 L 558 351" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<rect x="558" y="346" width="24" height="14" rx="4" fill="#fbbf2433" stroke="#fbbf24" stroke-width="2"/>
+<rect x="558" y="340" width="10.08" height="9" rx="3" fill="#fbbf2466" stroke="#fbbf24" stroke-width="2"/>
+<text x="592" y="355" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">lib\13.2\</text>
+<text x="592" y="373" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">cudnn.lib 等</text>
+<rect x="48" y="434" width="904" height="62" rx="10" fill="#1c2230" stroke="#fbbf2455" stroke-width="1.5"/>
+<text x="68" y="460" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">重點不是「有沒有檔案」，是「版本資料夾長什麼樣」：zip 解壓是扁平的三層，</text>
+<text x="68" y="482" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">installer 會在每個資料夾底下多塞一層版本號（13.2），所以「找檔案」的路徑完全不同。</text>
+</svg>
