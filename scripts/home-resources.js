@@ -36,7 +36,8 @@ const TOPICS = [
   { title: '手寫程式碼的時代正式結束｜DHH 宣布退休', href: '/dhh-rails-world-2026/index.html' },
   { title: '從零打造一個 coding agent', href: '/coding-agent/' },
   { title: 'Agent 時代，你可能累錯地方了', href: '/2026/10/16/matt-pocock-18-agent-mistakes/' },
-  { title: '用 Python 解決問題：24 類工作 × 48 個套件', href: '/2026/10/16/python-problem-solving-toolkit/' }
+  { title: '用 Python 解決問題：24 類工作 × 48 個套件', href: '/2026/10/16/python-problem-solving-toolkit/' },
+  { title: 'gpu-unlock 專題：NVIDIA 消費級卡那道「半速鎖」怎麼被打開的', href: '/gpu-unlock/' }
 ];
 
 // 學習筆記：課程／教材整理成的離線筆記，每份都有互動測驗

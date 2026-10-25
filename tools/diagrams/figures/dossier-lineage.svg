@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 568" role="img" aria-label="gpu-unlock 專案血緣：從 cmpunlocker 到 cmp90hx-unlock、gpu-unlock、gpu-unlock-ada，以及 Windows 那條旁支，兩個 Linux 模組在涵蓋範圍與證據策略上的關鍵差異" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="566.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">專案血緣</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個 exploit，兩種做法</text>
+<rect x="48" y="132" width="330" height="70" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="64" y="158" font-size="13.5" fill="#7d8590" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">cmpunlocker</text>
+<text x="362" y="158" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">amoghmunikote</text>
+<text x="64" y="178" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">把 8／10 GB 的 CMP 170HX 解鎖成 64／40 GB</text>
+<text x="64" y="192" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">曾被 LTT 報導過的那一支</text>
+<rect x="48" y="220" width="330" height="70" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="64" y="246" font-size="13.5" fill="#7d8590" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">cmp90hx-unlock</text>
+<text x="362" y="246" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">WildFlash1st</text>
+<text x="64" y="266" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">貢獻 GA102 的 V67 鏈</text>
+<text x="64" y="280" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ada 版沿用同一條鏈</text>
+<path d="M 213.0 202 L 213.0 216" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="308" width="330" height="70" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="64" y="334" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">gpu-unlock</text>
+<text x="362" y="334" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Zagitta</text>
+<text x="64" y="354" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第一個 Linux 核心模組版本</text>
+<text x="64" y="368" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GA10x 數十個裝置 ID，靠社群眾包</text>
+<path d="M 213.0 290 L 213.0 304" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="396" width="330" height="70" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="64" y="422" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">gpu-unlock-ada</text>
+<text x="362" y="422" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">JustAResearcher</text>
+<text x="64" y="442" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">本專題主軸；白名單 4 個 Ada ID</text>
+<text x="64" y="456" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">後兩者需實驗旗標，證據做成配對實測</text>
+<path d="M 213.0 378 L 213.0 392" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="420" y="132" width="532" height="338" rx="14" fill="#1c2230" stroke="#58a6ff55" stroke-width="1.5"/>
+<text x="440" y="160" font-size="14" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩個 Linux 模組的關鍵差異</text>
+<text x="440" y="182" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個 exploit，不同的涵蓋範圍與證據策略</text>
+<rect x="436" y="202" width="250" height="44" rx="8" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<rect x="694" y="202" width="242" height="44" rx="8" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="448" y="220" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">gpu-unlock</text>
+<text x="448" y="237" font-size="11" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GA102／103／104／106 數十個 ID</text>
+<text x="706" y="220" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">gpu-unlock-ada</text>
+<text x="706" y="237" font-size="11" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">僅 4 個 Ada ID</text>
+<rect x="436" y="256" width="250" height="44" rx="8" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<rect x="694" y="256" width="242" height="44" rx="8" fill="#161b22" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="448" y="274" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">gpu-unlock</text>
+<text x="448" y="291" font-size="11" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4070 Ti SUPER 需實驗旗標</text>
+<text x="706" y="274" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">gpu-unlock-ada</text>
+<text x="706" y="291" font-size="11" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4090 只要 targets 一項</text>
+<rect x="436" y="310" width="250" height="44" rx="8" fill="#161b22" stroke="#fbbf2455" stroke-width="1.5"/>
+<rect x="694" y="310" width="242" height="44" rx="8" fill="#161b22" stroke="#fbbf2455" stroke-width="1.5"/>
+<text x="448" y="328" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">gpu-unlock</text>
+<text x="448" y="345" font-size="11" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">沒有診斷工具</text>
+<text x="706" y="328" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">gpu-unlock-ada</text>
+<text x="706" y="345" font-size="11" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">有唯讀讀回與指令率探針</text>
+<rect x="436" y="364" width="250" height="44" rx="8" fill="#161b22" stroke="#fbbf2455" stroke-width="1.5"/>
+<rect x="694" y="364" width="242" height="44" rx="8" fill="#161b22" stroke="#fbbf2455" stroke-width="1.5"/>
+<text x="448" y="382" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">gpu-unlock</text>
+<text x="448" y="399" font-size="11" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">靠社群眾包相容性報告</text>
+<text x="706" y="382" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">gpu-unlock-ada</text>
+<text x="706" y="399" font-size="11" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">配對實測＋數值驗證＋遙測</text>
+<text x="440" y="432" font-size="12" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">共同的根：已簽章 NVIDIA booter 的緩衝區溢位 + ROP</text>
+<text x="440" y="452" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">解開 FEAT_OVR_PLM 的寫入保護後，寫 SS0／SS1 即可改成全速</text>
+<rect x="48" y="486" width="904" height="62" rx="10" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="68" y="512" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Windows 那條線是旁支：TOTORONG/AD103_win_unlocker 的 UEFI 實驗提供 AD102 payload，</text>
+<text x="68" y="534" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ada 版把它整進 Linux 模組；impacifist/Windows-GPU-UNLOCK 則把它做成獨立的 Windows 工具。</text>
+</svg>

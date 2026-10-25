@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" role="img" aria-label="gpu-unlock 專題四篇文章速查：兩篇事實查核與兩篇分卡型操作筆記，各自對象、關鍵數字與一句話結論" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="618.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">四篇速查</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先看哪一篇？</text>
+<rect x="48" y="132" width="440" height="178" rx="12" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<rect x="48" y="132" width="6" height="178" rx="3" fill="#58a6ff" stroke="#30363d" stroke-width="1.5"/>
+<text x="70" y="160" font-size="10.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">事實查核</text>
+<text x="70" y="184" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 30 系 gpu-unlock</text>
+<text x="70" y="206" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">對象：GA10x 數十個 ID</text>
+<text x="70" y="228" font-size="11.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">關鍵數字：BF16 +25～81%</text>
+<path d="M 70 242 L 466 242" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="70" y="266" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「一律翻倍」不成立；各型號差三倍</text>
+<text x="70" y="288" font-size="11" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 讀這篇</text>
+<rect x="512" y="132" width="440" height="178" rx="12" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<rect x="512" y="132" width="6" height="178" rx="3" fill="#58a6ff" stroke="#30363d" stroke-width="1.5"/>
+<text x="534" y="160" font-size="10.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">事實查核</text>
+<text x="534" y="184" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 40 系 Tensor 解鎖</text>
+<text x="534" y="206" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">對象：4 個 Ada ID</text>
+<text x="534" y="228" font-size="11.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">關鍵數字：指令率 2×、GEMM +12～34%</text>
+<path d="M 534 242 L 930 242" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="534" y="266" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「全系列」不成立；FP8 幾乎沒變</text>
+<text x="534" y="288" font-size="11" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 讀這篇</text>
+<rect x="48" y="330" width="440" height="178" rx="12" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<rect x="48" y="330" width="6" height="178" rx="3" fill="#2dd4bf" stroke="#30363d" stroke-width="1.5"/>
+<text x="70" y="358" font-size="10.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">操作筆記</text>
+<text x="70" y="382" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 3080 12GB</text>
+<text x="70" y="404" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">對象：10de:220a</text>
+<text x="70" y="426" font-size="11.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">關鍵數字：FP16 +69%、BF16 +73%</text>
+<path d="M 70 440 L 466 440" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="70" y="464" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只吃 FP16／BF16 矩陣乘法</text>
+<text x="70" y="486" font-size="11" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 讀這篇</text>
+<rect x="512" y="330" width="440" height="178" rx="12" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<rect x="512" y="330" width="6" height="178" rx="3" fill="#2dd4bf" stroke="#30363d" stroke-width="1.5"/>
+<text x="534" y="358" font-size="10.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">操作筆記</text>
+<text x="534" y="382" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RTX 4090</text>
+<text x="534" y="404" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">對象：10de:2684</text>
+<text x="534" y="426" font-size="11.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">關鍵數字：指令率 1.998×</text>
+<path d="M 534 440 L 930 440" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="534" y="464" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不用實驗旗標；量化權重吃不到</text>
+<text x="534" y="486" font-size="11" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 讀這篇</text>
+<rect x="48" y="524" width="904" height="92" rx="10" fill="#1c2230" stroke="#fbbf2455" stroke-width="1.5"/>
+<text x="68" y="546" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">四篇的共同結論：解鎖是真的，媒體的關鍵字是假的。</text>
+<text x="68" y="568" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① 「全系列」不成立——白名單只有少數型號</text>
+<text x="68" y="586" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② 「翻倍」是指令發射率；真實 GEMM 只有 +12～81%</text>
+<text x="68" y="604" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">③ 「所有 AI 負載都變快」不成立——INT8／4-bit／3-bit 量化完全沒變</text>
+</svg>

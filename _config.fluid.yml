@@ -17,6 +17,7 @@ navbar:
         - { name: '紫微斗數 · 命盤解讀', link: '/ziwei-fortune/', icon: 'iconfont icon-bookmark' }
         - { name: 'Agent 時代，你可能累錯地方了', link: '/2026/10/16/matt-pocock-18-agent-mistakes/', icon: 'iconfont icon-bookmark' }
         - { name: '用 Python 解決問題：24 類工作 × 48 個套件', link: '/2026/10/16/python-problem-solving-toolkit/', icon: 'iconfont icon-bookmark' }
+        - { name: 'gpu-unlock 專題：NVIDIA 消費級卡那道「半速鎖」怎麼被打開的', link: '/gpu-unlock/', icon: 'iconfont icon-bookmark' }
     - key: 'notes'
       name: '學習筆記'
       icon: 'iconfont icon-notebook'
