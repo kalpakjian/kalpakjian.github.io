@@ -13,6 +13,7 @@ tags:
   - 考試
 index_img: /img/covers/linear-regression-notes.png
 banner_img: /img/covers/linear-regression-notes.png
+math: true
 ---
 
 AutoML 應用證書系列的**統計入門**課節，用「一條直線」把整個線性迴歸講完：從生活例子出發，拆解一行公式的四個角色，最後補上實作與使用時的三個提醒。

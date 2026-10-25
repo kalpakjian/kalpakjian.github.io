@@ -13,6 +13,7 @@ tags:
   - 考試
 index_img: /img/covers/ml-textbook-notes.png
 banner_img: /img/covers/ml-textbook-notes.png
+math: true
 ---
 
 一份 12 頁的《最新機器學習的教科書》（Deepwisdom **DM2155**，作者：博士 伊藤真）導讀簡報，講的不是某個演算法，而是一個更根本的問題：**為什麼我們總是學不會機器學習？**
