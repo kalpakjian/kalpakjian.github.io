@@ -84,7 +84,7 @@ python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
 | torch（stable） | **2.14.1+cu132** |
 | torch（nightly） | **2.16.0.dev20261025+cu134** |
 | cuDNN | stable **9.24.0.43**／nightly **9.26.0.51** |
-| 環境 | `~/Projects/ComfyUI/.venv`（6.8 G）、`~/Projects/ComfyUI/.venv-nightly`（12 G） |
+| 環境 | `~/Projects/ComfyUI/.venv`（6.9 G）、`~/Projects/ComfyUI/.venv-nightly`（12 G → 裁切後 8.4 G，見 §十） |
 
 Linux 版的安裝過程、踩坑、審計與實測見 **§十**。
 
@@ -432,7 +432,7 @@ Linux 上不需要「下載驅動安裝程式」：`nvidia-open-dkms` 會跟著�
 | NCCL | 2.30.7 | 2.32.3 |
 | cuDNN | **9.24.0.43** | **9.26.0.51** |
 | 套件數 | 130 | 140 |
-| 磁碟 | 6.8 G | 12 G |
+| 磁碟 | 6.9 G | 12 G（裁切後 8.4 G） |
 
 **為什麼要兩個？** nightly 是 dev 版，本來就會壞。把它跟 stable 放同一個 venv，
 一壞就是整天不能用；分成兩個之後，stable 永遠是已知可用的版本，
