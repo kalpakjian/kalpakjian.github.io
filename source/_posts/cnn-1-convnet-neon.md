@@ -20,7 +20,7 @@ index_img: /img/covers/cnn-1-convnet-neon.png
 banner_img: /img/covers/cnn-1-convnet-neon-banner.png
 ---
 
-> <strong>整理說明</strong>：這是我上 IVDC「卷積神經網絡（CNN）I」的課後筆記。36 頁課程簡報講的是很標準的一條線：影像為什麼是數字、視覺皮層的四層抽象、卷積的三條規則、LeNet-5、以及卷積的反向傳播。簡報本身有幾個數字我算不回去（1080×1080×3 的向量長度、86 億神經元的連線總數、LeNet-5 的參數總數），我把它們全部重算一次，列在 <a href="#errata">第 8 節</a>。文中每一個參數量與乘加次數都是我逐層手算、再寫程式覆核的；插圖是自己畫的 SVG（霓虹風），封面是本地 ComfyUI 跑 Qwen-Image 2.1 生成的。
+> <strong>整理說明</strong>：這是我上 IVDC「卷積神經網絡（CNN）I」的課後筆記。36 頁課程簡報講的是很標準的一條線：影像為什麼是數字、視覺皮層的四層抽象、卷積的三條規則、LeNet-5、以及卷積的反向傳播。簡報本身有幾個數字我算不回去（1080×1080×3 的向量長度、86 億神經元的連線總數、LeNet-5 的參數總數），我把它們全部重算一次，列在 <a href="#errata">第 9 節</a>。文中每一個參數量與乘加次數都是我逐層手算、再寫程式覆核的；插圖是自己畫的 SVG（霓虹風），封面是本地 ComfyUI 跑 Qwen-Image 2.1 生成的。
 
 <!-- more -->
 
@@ -1238,9 +1238,111 @@ C5 的感受野正好是 **32×32 = 整張輸入**。這不是巧合：如果最
 池化的梯度只做路由：max 把梯度整包給 argmax 的位置，avg 平均分給窗口內每個像素（`G/k²`）。
 
 
+## 8. 簡報只點名、沒有展開的那一塊：九個應用
+
+第 4 個模組列了九個應用（語義分割、人臉、自駕、上色、場景優化、超解析、醫學、生物、基因組），但整份簡報在反傳那頁就結束了 —— 這九個其實只出現在目錄上。我把它們整理成一張圖，並標上各自用到 CNN 的哪個部位：
+
+<figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-label="九宮格列出簡報點名的九個 CNN 應用：語義分割、人臉、自駕、上色、場景優化、超解析、醫學、生物、基因組" style="width:100%;height:auto;display:block">
+<defs>
+<filter id="f9-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="f9-soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="11" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<pattern id="f9-grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#1a2331" stroke-width="1"/></pattern>
+<marker id="f9-arw-22d3ee" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#22d3ee"/></marker><marker id="f9-arw-a78bfa" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a78bfa"/></marker><marker id="f9-arw-f472b6" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f472b6"/></marker><marker id="f9-arw-fbbf24" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker><marker id="f9-arw-a3e635" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a3e635"/></marker><marker id="f9-arw-2dd4bf" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker></defs>
+<rect x="0.75" y="0.75" width="958.5" height="638.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<rect x="0.75" y="0.75" width="958.5" height="638.5" rx="16" fill="url(#f9-grid)" opacity="0.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 4 個模組：同一個積木，九種用途</text>
+<text x="48" y="80" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">(Conv+ReLU+Pool)×N + FC —— 換的是資料與損失函數，不是架構</text>
+<rect x="48.0" y="112.0" width="272.0" height="150.0" rx="12" fill="#0d1621" opacity="1.0" stroke="#22d3ee55" stroke-width="1.3"/>
+<rect x="73" y="141" width="42" height="42" rx="4" fill="none" stroke="#22d3ee" stroke-width="1.8" opacity="0.55"/><path d="M73 164 L88 153 L98 165 L115 154 L115 183 L73 183 Z" fill="#22d3ee" opacity="0.32"/><path d="M73 164 L88 153 L98 165 L115 154" fill="none" stroke="#22d3ee" stroke-width="2"/><text x="132.0" y="156.0" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">語義分割</text>
+<text x="132.0" y="176.0" font-size="10.5" fill="#8b949e" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">逐像素分類：</text>
+<text x="68.0" y="216.0" font-size="10.5" fill="#9aa7b6" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">H×W×C → H×W×classes</text>
+<path d="M 68.0 232.0 L 300.0 232.0" fill="none" stroke="#222b36" stroke-width="1" opacity="1.0"/>
+<text x="68.0" y="250.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">第 4 模組</text>
+<text x="300.0" y="250.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0" text-anchor="end">#1</text>
+<rect x="344.0" y="112.0" width="272.0" height="150.0" rx="12" fill="#0d1621" opacity="1.0" stroke="#a78bfa55" stroke-width="1.3"/>
+<circle cx="390" cy="162" r="13" fill="none" stroke="#a78bfa" stroke-width="1.8"/><circle cx="385.5" cy="158" r="1.9" fill="#a78bfa"/><circle cx="394.5" cy="158" r="1.9" fill="#a78bfa"/><path d="M385 167 Q390 172 395 167" fill="none" stroke="#a78bfa" stroke-width="1.7"/><path d="M364 136 l7 0 M364 136 l0 7" fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.8"/><path d="M416 136 l-7 0 M416 136 l0 7" fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.8"/><path d="M364 188 l7 0 M364 188 l0 -7" fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.8"/><path d="M416 188 l-7 0 M416 188 l0 7" fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.8"/><text x="428.0" y="156.0" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">人臉偵測 / 識別</text>
+<text x="428.0" y="176.0" font-size="10.5" fill="#8b949e" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">偵測＝錨框；識別＝嵌入＋度量學習</text>
+<text x="364.0" y="216.0" font-size="10.5" fill="#9aa7b6" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">偵測＝錨框；識別＝嵌入＋度量學習</text>
+<path d="M 364.0 232.0 L 596.0 232.0" fill="none" stroke="#222b36" stroke-width="1" opacity="1.0"/>
+<text x="364.0" y="250.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">第 4 模組</text>
+<text x="596.0" y="250.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0" text-anchor="end">#2</text>
+<rect x="640.0" y="112.0" width="272.0" height="150.0" rx="12" fill="#0d1621" opacity="1.0" stroke="#f472b655" stroke-width="1.3"/>
+<path d="M665 183 L680 141 L692 141 L707 183" fill="none" stroke="#f472b6" stroke-width="1.6" opacity="0.6"/><path d="M686 146 L686 159 M686 167 L686 179" stroke="#f472b6" stroke-width="2" stroke-dasharray="4 4"/><rect x="678" y="161" width="16" height="10" rx="2" fill="none" stroke="#f472b6" stroke-width="1.8"/><text x="724.0" y="156.0" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">自動駕駛</text>
+<text x="724.0" y="176.0" font-size="10.5" fill="#8b949e" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">即時偵測＋分割＋深度</text>
+<text x="660.0" y="216.0" font-size="10.5" fill="#9aa7b6" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">即時偵測＋分割＋深度</text>
+<path d="M 660.0 232.0 L 892.0 232.0" fill="none" stroke="#222b36" stroke-width="1" opacity="1.0"/>
+<text x="660.0" y="250.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">第 4 模組</text>
+<text x="892.0" y="250.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0" text-anchor="end">#3</text>
+<rect x="48.0" y="286.0" width="272.0" height="150.0" rx="12" fill="#0d1621" opacity="1.0" stroke="#fbbf2455" stroke-width="1.3"/>
+<circle cx="94" cy="336" r="21" fill="#fbbf24" opacity="0.18"/><path d="M94 315 A 21 21 0 0 0 94 357 Z" fill="#3a4550"/><path d="M94 315 A 21 21 0 0 1 94 357 Z" fill="#fbbf24" opacity="0.85"/><circle cx="94" cy="336" r="21" fill="none" stroke="#fbbf24" stroke-width="1.6"/><path d="M94 315 L94 357" stroke="#fbbf24" stroke-width="1.4" opacity="0.7"/><text x="132.0" y="330.0" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">影像上色</text>
+<text x="132.0" y="350.0" font-size="10.5" fill="#8b949e" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">L → a, b 通道迴歸</text>
+<text x="68.0" y="390.0" font-size="10.5" fill="#9aa7b6" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">L → a, b 通道迴歸</text>
+<path d="M 68.0 406.0 L 300.0 406.0" fill="none" stroke="#222b36" stroke-width="1" opacity="1.0"/>
+<text x="68.0" y="424.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">第 4 模組</text>
+<text x="300.0" y="424.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0" text-anchor="end">#4</text>
+<rect x="344.0" y="286.0" width="272.0" height="150.0" rx="12" fill="#0d1621" opacity="1.0" stroke="#a3e63555" stroke-width="1.3"/>
+<path d="M369 325 L411 325" stroke="#a3e635" stroke-width="1.6" opacity="0.55"/><circle cx="383" cy="325" r="4" fill="#a3e635"/><path d="M369 336 L411 336" stroke="#a3e635" stroke-width="1.6" opacity="0.55"/><circle cx="395" cy="336" r="4" fill="#a3e635"/><path d="M369 347 L411 347" stroke="#a3e635" stroke-width="1.6" opacity="0.55"/><circle cx="388" cy="347" r="4" fill="#a3e635"/><text x="428.0" y="330.0" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">場景／照片優化</text>
+<text x="428.0" y="350.0" font-size="10.5" fill="#8b949e" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">反傳進「影像」，不只調權重</text>
+<text x="364.0" y="390.0" font-size="10.5" fill="#9aa7b6" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">反傳進「影像」，不只調權重</text>
+<path d="M 364.0 406.0 L 596.0 406.0" fill="none" stroke="#222b36" stroke-width="1" opacity="1.0"/>
+<text x="364.0" y="424.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">第 4 模組</text>
+<text x="596.0" y="424.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0" text-anchor="end">#5</text>
+<rect x="640.0" y="286.0" width="272.0" height="150.0" rx="12" fill="#0d1621" opacity="1.0" stroke="#2dd4bf55" stroke-width="1.3"/>
+<rect x="665" y="338" width="11" height="11" rx="2" fill="none" stroke="#2dd4bf" stroke-width="1.6" opacity="0.6"/><rect x="687" y="330" width="20" height="20" rx="3" fill="none" stroke="#2dd4bf" stroke-width="2"/><path d="M678 342 L684 335" stroke="#2dd4bf" stroke-width="1.6" marker-end="url(#f9-arw-2dd4bf)"/><text x="724.0" y="330.0" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">超解析（放大）</text>
+<text x="724.0" y="350.0" font-size="10.5" fill="#8b949e" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">轉置卷積／sub-pixel 上採樣</text>
+<text x="660.0" y="390.0" font-size="10.5" fill="#9aa7b6" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">轉置卷積／sub-pixel 上採樣</text>
+<path d="M 660.0 406.0 L 892.0 406.0" fill="none" stroke="#222b36" stroke-width="1" opacity="1.0"/>
+<text x="660.0" y="424.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">第 4 模組</text>
+<text x="892.0" y="424.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0" text-anchor="end">#6</text>
+<rect x="48.0" y="460.0" width="272.0" height="150.0" rx="12" fill="#0d1621" opacity="1.0" stroke="#f472b655" stroke-width="1.3"/>
+<rect x="71" y="489" width="46" height="42" rx="5" fill="none" stroke="#f472b6" stroke-width="1.4" opacity="0.5"/><path d="M73 510 L87 510 L91 499 L96 521 L100 506 L103 510 L115 510" fill="none" stroke="#f472b6" stroke-width="2"/><text x="132.0" y="504.0" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">醫學影像</text>
+<text x="132.0" y="524.0" font-size="10.5" fill="#8b949e" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">X 光、CT、MRI（常為 3D）</text>
+<text x="68.0" y="564.0" font-size="10.5" fill="#9aa7b6" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">X 光、CT、MRI（常為 3D）</text>
+<path d="M 68.0 580.0 L 300.0 580.0" fill="none" stroke="#222b36" stroke-width="1" opacity="1.0"/>
+<text x="68.0" y="598.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">第 4 模組</text>
+<text x="300.0" y="598.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0" text-anchor="end">#7</text>
+<rect x="344.0" y="460.0" width="272.0" height="150.0" rx="12" fill="#0d1621" opacity="1.0" stroke="#a78bfa55" stroke-width="1.3"/>
+<circle cx="390" cy="510" r="21" fill="#a78bfa" opacity="0.10"/><circle cx="390" cy="510" r="21" fill="none" stroke="#a78bfa" stroke-width="1.8"/><circle cx="386" cy="507" r="5" fill="none" stroke="#a78bfa" stroke-width="1.5"/><circle cx="396" cy="506" r="1.9" fill="#a78bfa"/><circle cx="397" cy="516" r="1.9" fill="#a78bfa"/><circle cx="388" cy="518" r="1.9" fill="#a78bfa"/><circle cx="382" cy="512" r="1.9" fill="#a78bfa"/><text x="428.0" y="504.0" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">生物影像</text>
+<text x="428.0" y="524.0" font-size="10.5" fill="#8b949e" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">顯微鏡、細胞分割、連接體</text>
+<text x="364.0" y="564.0" font-size="10.5" fill="#9aa7b6" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">顯微鏡、細胞分割、連接體</text>
+<path d="M 364.0 580.0 L 596.0 580.0" fill="none" stroke="#222b36" stroke-width="1" opacity="1.0"/>
+<text x="364.0" y="598.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">第 4 模組</text>
+<text x="596.0" y="598.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0" text-anchor="end">#8</text>
+<rect x="640.0" y="460.0" width="272.0" height="150.0" rx="12" fill="#0d1621" opacity="1.0" stroke="#22d3ee55" stroke-width="1.3"/>
+<path d="M677 489 C699 502 673 518 695 531" fill="none" stroke="#22d3ee" stroke-width="2"/><path d="M695 489 C673 502 699 518 677 531" fill="none" stroke="#22d3ee" stroke-width="2" opacity="0.75"/><path d="M682.64 497 L689.36 497" stroke="#22d3ee" stroke-width="1.3" opacity="0.6"/><path d="M680.68 504 L691.32 504" stroke="#22d3ee" stroke-width="1.3" opacity="0.6"/><path d="M679.0 510 L693.0 510" stroke="#22d3ee" stroke-width="1.3" opacity="0.6"/><path d="M680.68 516 L691.32 516" stroke="#22d3ee" stroke-width="1.3" opacity="0.6"/><path d="M682.64 523 L689.36 523" stroke="#22d3ee" stroke-width="1.3" opacity="0.6"/><text x="724.0" y="504.0" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">基因組</text>
+<text x="724.0" y="524.0" font-size="10.5" fill="#8b949e" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">一維卷積掃 DNA／染色質軌跡</text>
+<text x="660.0" y="564.0" font-size="10.5" fill="#9aa7b6" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">一維卷積掃 DNA／染色質軌跡</text>
+<path d="M 660.0 580.0 L 892.0 580.0" fill="none" stroke="#222b36" stroke-width="1" opacity="1.0"/>
+<text x="660.0" y="598.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">第 4 模組</text>
+<text x="892.0" y="598.0" font-size="9.5" fill="#4d5a6b" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0" text-anchor="end">#9</text>
+<text x="48.0" y="616.0" font-size="12" fill="#fbbf24" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" opacity="1.0">九個任務共用同一個前處理器 —— 這就是「一個架構重複使用」的意思；代價是每個任務都要自己的標註資料。</text>
+</svg>
+</figure>
+
+
+三個值得補上的觀察：
+
+**一、能共用是因為歸納偏置一樣。** 局部性（每個濾波器只看一個 patch）＋平移等變（同一個濾波器掃全圖），這兩個假設在自然影像、醫學影像、顯微鏡影像、甚至 DNA 序列的「局部模體」上都成立，所以同一組積木可以直接搬。真正不能搬的是 **1D/3D 的維度約定**：基因組要一維卷積、CT 要三維卷積，但卷積的定義本身沒變。
+
+**二、差異幾乎都在「輸出頭」與損失函數，不在骨幹。**
+
+| 任務 | 輸出頭 | 損失 |
+| --- | --- | --- |
+| 分類 / 識別 | softmax over classes（或嵌入向量） | 交叉熵 / triplet、center loss |
+| 語義分割 | 每個像素一組類別 | 逐像素交叉熵 + Dice |
+| 偵測 | 框迴歸 + 物件性分數 | smooth L1 + 物件性 BCE |
+| 上色 | 兩個通道 `a, b` | L1 / L2（或對抗損失） |
+| 超解析 | 高解析像素 | L1 + 感知 / 對抗損失 |
+| 場景 / 照片優化 | **輸入本身**（要優化的是像素，不是權重） | 任務定義的目標函數 |
+
+最後那一列是很容易被忽略的用法：把網路固定住，反傳到**影像**而不是權重 —— 這就是「用 CNN 調整照片／場景」的意思，也是對抗樣本與特徵視覺化（Grad-CAM、deep dream）的共同機制。
+
+**三、代價是標註，不是算力。** 九個任務裡，分類只要一個標籤；分割要逐像素遮罩；醫學影像還要放射科醫師。這也是為什麼預訓練骨幹 + 少量微調會變成常態 —— 骨幹學到的邊緣、紋理、部件，在九個任務之間是可以轉移的。
+
 <a id="errata"></a>
 
-## 8. 我在簡報上抓到的七個錯
+## 9. 我在簡報上抓到的七個錯
 
 這一段是我重算時的副產品。不是要挑剔，而是這些數字如果照抄，考試或報告會出事：
 
@@ -1259,7 +1361,7 @@ C5 的感受野正好是 **32×32 = 整張輸入**。這不是巧合：如果最
 - **「卷積」**在深度學習其實是互相關（不翻轉核）。翻不翻轉對學出來的權重沒影響，但對訊號處理的性質、以及手推梯度有影響。
 - **池化不是可學習的**（現代意義上）。LeNet-5 的平均池化帶可訓練的縮放與偏置係數，所以它的參數量有時會被算得比「純池化」多一些。
 
-## 9. 一頁公式表
+## 10. 一頁公式表
 
 ```
 影像
@@ -1290,20 +1392,20 @@ C5 的感受野正好是 **32×32 = 整張輸入**。這不是巧合：如果最
   (Conv → ReLU → Pool) × N → Flatten → FC × M → softmax
 ```
 
-## 10. 如果只記三件事
+## 11. 如果只記三件事
 
 1. **卷積 = 局部連接 + 參數共享。** 前者讓你只看鄰居，後者讓你不用為每個位置重新學一次。兩個加起來，才會有「參數量與影像大小無關」這個性質。
 2. **深度不是為了更深，是為了更大的感受野。** LeNet-5 把 5→6→14→16→32 疊到剛好等於輸入尺寸，這是一個可以被反推的設計目標，不是玄學。
 3. **梯度也是卷積。** 因為權重共享，`∂L/∂W` 要把所有位置的貢獻加起來；因為一個像素貢獻多個輸出，`∂L/∂X` 要把重疊疊起來。
 
-## 11. 參考與素材
+## 12. 參考與素材
 
 - LeCun, Bottou, Bengio & Haffner, *Gradient-Based Learning Applied to Document Recognition*, 1998 —— LeNet-5 原始論文。
 - Goodfellow, Bengio & Courville, *Deep Learning*, 2016 —— 簡報第 26 頁的邊緣核示意出自此。
 - Lee et al., ICML 2009 —— 「從資料學出特徵階層」的視覺化。
 - IVDC 匯縱專業發展中心「卷積神經網絡 I」課程簡報（36 頁）。
-- 本文的 8 張插圖是用 Python 產生、全部純 SVG（無點陣圖），霓虹配色沿用站上的 `#22d3ee` / `#f472b6`；封面由本地 ComfyUI 的 Qwen-Image 2.1 生成，無外部 API。
+- 本文的 9 張插圖是用 Python 產生、全部純 SVG（無點陣圖），霓虹配色沿用站上的 `#22d3ee` / `#f472b6`；封面由本地 ComfyUI 的 Qwen-Image 2.1 生成，無外部 API。
 
-> 這一講只到「卷積的反向傳播」為止，第 4 個模組（語義分割、人臉、自駕、上色、超解析、醫學、基因組）只點名沒有展開 —— 應該是下一講 CNN II 的內容。
+> 這一講只到「卷積的反向傳播」為止，第 4 個模組（語義分割、人臉、自駕、上色、超解析、醫學、基因組）只點名沒有展開 —— 我在第 8 節補了一張總覽，真正展開應該是下一講 CNN II 的事。
 
 
