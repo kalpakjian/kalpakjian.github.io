@@ -272,11 +272,18 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 
 
 ### 12.3 這一項**不進**品質閘門（刻意的）
 
-2026-10-19 實查：22 份筆記裡有 **17 份**仍含框線字元拼的圖
-（Orange 1,550 個、Streamlit／Flask 761、OpenCV 677、Popular LLM 617…）。
+2026-10-26 重查（`tools/diagrams/inventory.py` 實跑）：**ASCII 圖幾乎清空了** ——
+24 份筆記裡只剩 **5 份 / 5 張**真圖待轉
+（`ai-intro-notes`、`llm-intro-notes`、`local-llm-notes`、`neural-network-notes`、`tpot-notes`）。
+另有一張在 `_posts/ai-model-factory-pipeline-oop-git.md`。
+剩下的框線字元都是**程式碼區塊裡的裝飾分隔線**（`# ── 啟動 H2O 伺服器 ──`），
+轉成圖會破壞可複製的指令，所以**刻意不轉**。
+
+> ⚠️ `inventory.py` 的 `MIN_BOX` 從 8 降到 6：真正的樹狀圖最少只用 6 個框線字元，
+> 門檻 8 會**漏報**上面那 5 張（都是小而關鍵的樹狀／對照圖）。
 
 - 所以這條是**寫作慣例**，靠人與 AI 在產線階段遵守，**不寫成 `qa_notes.ps1` 的硬性檢查**——
-  硬性禁止會讓閘門在 17 份筆記上一次全紅，把真正的缺陷訊號淹掉。
+  硬性禁止會讓閘門在多份筆記上一次全紅，把真正的缺陷訊號淹掉。
 - **既有 ASCII 圖不強制回溯**：已上線且驗證過的頁面維持原樣，不為了換圖去動已驗證的內容。
 - **但**：① 新筆記的圖表、② 任何被改到的舊圖，**一律升級成 SVG**。
 - 要批次升級時**一張一張做**（每張都要走完 12.2 的 ②③），不要一次改很多張——

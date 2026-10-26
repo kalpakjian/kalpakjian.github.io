@@ -20,7 +20,10 @@ sys.stdout.reconfigure(encoding="utf-8")
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SRC = os.path.join(REPO, "source")
 BOX = "┌─┐│└┘├┤┬┴┼╔╗╚╝║═"
-MIN_BOX = 8
+# 門檻 6：真正的樹狀/流程圖最少只用到 6 個框線字元（例如「├─」三個 × 兩列）。
+# 先前用 8 會漏掉 6 張真圖（ai-intro / llm-intro / local-llm / tpot / neural-network /
+# ai-model-factory），全部是小而關鍵的樹狀圖。
+MIN_BOX = 6
 
 
 def art_blocks(text):
