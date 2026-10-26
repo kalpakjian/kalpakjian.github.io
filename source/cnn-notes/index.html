@@ -316,6 +316,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 </ul>
 </li>
+<li><a href="#附錄-h簡報勘誤表7-處">附錄 H：簡報勘誤表（7 處）</a>
+</li>
 <li><a href="#附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</a>
 </li>
 </ul>
@@ -337,6 +339,12 @@ CNN 的三個關鍵字：
   局部性（locality）  每個神經元只看影像的一小塊
   重用（sharing）     同一組權重用於影像的所有位置
   階層（hierarchy）  越深的層代表的概念越抽象
+
+卷積層的四個必備數字：
+  輸出尺寸  O = (N + 2P − F) / stride + 1
+  參數數    (F × F × C_in × C_out) + C_out
+  乘加次數  H_out × W_out × C_out × F × F × C_in
+  感受野    r_out = r_in + (k − 1) · j_in
 </code></pre></div>
 
 <table>
@@ -370,6 +378,10 @@ CNN 的三個關鍵字：
 <tr>
 <td>輸出尺寸</td>
 <td><code>O = (N + 2P − F) / stride + 1</code></td>
+</tr>
+<tr>
+<td>感受野</td>
+<td><code>r_out = r_in + (k − 1) · j_in</code>（配 <code>j_out = j_in · S</code>）</td>
 </tr>
 <tr>
 <td>參數共享</td>
@@ -563,24 +575,29 @@ CNN 的深層做的事與之同構。</p>
 <tr>
 <th>腦區</th>
 <th>負責處理</th>
+<th>對應到網路的哪一層</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>LGN</strong></td>
 <td>小點（small dots）</td>
+<td>輸入 / 第一層</td>
 </tr>
 <tr>
 <td><strong>V1</strong></td>
 <td>方向（orientation）、視差（disparity）、部分顏色</td>
+<td>Conv 1（邊緣）</td>
 </tr>
 <tr>
 <td><strong>V4</strong></td>
 <td>顏色、基本形狀、2D/3D、曲率（curvature）</td>
+<td>Conv 2–3（紋理、部件）</td>
 </tr>
 <tr>
 <td><strong>VTC</strong></td>
 <td>複雜特徵（臉部、物件）</td>
+<td>FC（整體判別）</td>
 </tr>
 </tbody>
 </table>
@@ -768,8 +785,68 @@ CNN 的深層做的事與之同構。</p>
 <li>卷積（5×5、1 個通道）：<code>5 × 5 × 1 = 25</code> 個權重</li>
 <li><strong>相差 4,920 倍</strong></li>
 </ul>
-<p>而且卷積只拿 25 個權重就保留了「哪個位置有什麼反應」的資訊；
-全連接花 123,000 個權重買到的卻是一張失去空間結構的向量。</p>
+<p>但這個數字還不夠狠。<strong>直接拿 LeNet-5 的第一層來比</strong>，同一個輸出、同一個容量：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>全連接</th>
+<th>卷積</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>輸出單元數</td>
+<td><code>28×28×6 = 4,704</code></td>
+<td><code>4,704</code>（相同）</td>
+</tr>
+<tr>
+<td>每個單元的輸入</td>
+<td><strong>1,024</strong>（整張圖）</td>
+<td><strong>25</strong>（一個 5×5 patch）</td>
+</tr>
+<tr>
+<td>權重數</td>
+<td><code>1024 × 4,704 = 4,816,896</code></td>
+<td><code>(25 + 1) × 6 = 156</code></td>
+</tr>
+<tr>
+<td><strong>差距</strong></td>
+<td></td>
+<td><strong>30,878 倍</strong></td>
+</tr>
+</tbody>
+</table>
+<p>換成現代的輸入，差距會更誇張（<code>224×224×3 → 222×222×64</code> 那一層）：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>全連接</th>
+<th>卷積</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>權重數</td>
+<td><code>150,529 × 3,153,216 = 4.75×10¹¹</code></td>
+<td><code>(27 + 1) × 64 = 1,792</code></td>
+</tr>
+<tr>
+<td><strong>差距</strong></td>
+<td></td>
+<td><strong>2.65×10⁸（2.6 億倍）</strong></td>
+</tr>
+</tbody>
+</table>
+<p>原因是兩條公式的根本差異：</p>
+<div class="codehilite"><pre><span></span><code>卷積參數   = (F·F·C_in + 1) · C_out      ← 只跟核心大小與通道數有關
+全連接參數 = (n_in + 1) · n_out          ← 隨像素數線性爆炸
+</code></pre></div>
+
+<p><strong>影像變大，卷積的參數不變</strong> —— 這是 CNN 能處理高解析度影像的根本原因。</p>
+<p>而且卷積只拿 156 個權重就保留了「哪個位置有什麼反應」的資訊；
+全連接花 481 萬個權重買到的卻是一張失去空間結構的向量。</p>
 <!-- CNN-FIGURE:cnn-fc-vs-conv -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" role="img" aria-label="全連接 vs 卷積" style="width:100%;height:auto;display:block">
@@ -1366,7 +1443,34 @@ CNN 的深層做的事，就是<strong>讓機器自己學會這種組合關係</
 </table>
 <p>重點不在省了多少參數，而在於<strong>語意</strong>：共享意味著
 「邊緣是邊緣，不管它出現在影像的哪個角落」——
-這正是平移不變性的來源，也是 CNN 能學到「物體在哪都長一樣」的原因。</p>
+這正是<strong>平移等變（translation equivariance）</strong>的來源，也是 CNN 能學到「物體在哪都長一樣」的原因。</p>
+<blockquote>
+<p><strong>一個術語陷阱（考試很愛問）</strong>：卷積給的是<strong>平移等變</strong>，不是<strong>平移不變</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>詞</th>
+<th>意思</th>
+<th>誰提供</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>平移等變</strong>（equivariance）</td>
+<td>輸入右移 1 格 → <strong>特徵圖也右移 1 格</strong></td>
+<td>參數共享（卷積本身）</td>
+</tr>
+<tr>
+<td><strong>平移不變</strong>（invariance）</td>
+<td>輸入右移 1 格 → <strong>特徵不變</strong></td>
+<td>再加上<strong>池化</strong>（尤其全域池化）</td>
+</tr>
+</tbody>
+</table>
+<p>簡報只提「參數共享讓特徵跟物件位置無關」，是日常說法；
+嚴格講，卷積只是把位移「一起帶著走」，<strong>不變</strong>要靠池化把位置資訊壓掉。
+全連接層 + Softmax 之所以能做到分類，正是因為它前面有池化。</p>
+</blockquote>
 <h3 id="33-用卷積擷取特徵">3.3 用卷積擷取特徵</h3>
 <p>課程把這一段的結論收斂成三行（和 2.1 呼應，但這裡強調的是<strong>學</strong>出來的）：</p>
 <ol>
@@ -1500,6 +1604,7 @@ pool2  N=10 F=2 P=0 s=2 -&gt; O= 5  (期望  5) OK
 <th>運算</th>
 <th>參數</th>
 <th>輸出尺寸</th>
+<th>乘加次數</th>
 </tr>
 </thead>
 <tbody>
@@ -1508,52 +1613,65 @@ pool2  N=10 F=2 P=0 s=2 -&gt; O= 5  (期望  5) OK
 <td>—</td>
 <td>—</td>
 <td><code>32 × 32 × 1</code></td>
+<td>—</td>
 </tr>
 <tr>
 <td>conv1</td>
 <td><code>5×5, s=1</code></td>
 <td><code>5×5×1×6 + 6 = 156</code></td>
 <td><code>28 × 28 × 6</code></td>
+<td>117,600</td>
 </tr>
 <tr>
 <td>avg pool1</td>
 <td><code>f=2, s=2</code></td>
 <td><code>6 × 2 = 12</code>（可訓練）</td>
 <td><code>14 × 14 × 6</code></td>
+<td>4,704</td>
 </tr>
 <tr>
 <td>conv2</td>
 <td><code>5×5, s=1</code></td>
 <td><code>5×5×6×16 + 16 = 2,416</code></td>
 <td><code>10 × 10 × 16</code></td>
+<td>240,000</td>
 </tr>
 <tr>
 <td>avg pool2</td>
 <td><code>f=2, s=2</code></td>
 <td><code>16 × 2 = 32</code>（可訓練）</td>
 <td><code>5 × 5 × 16</code></td>
+<td>1,600</td>
 </tr>
 <tr>
 <td>FC1</td>
 <td>—</td>
 <td><code>400×120 + 120 = 48,120</code></td>
 <td><code>120</code></td>
+<td>48,000</td>
 </tr>
 <tr>
 <td>FC2</td>
 <td>—</td>
 <td><code>120×84 + 84 = 10,164</code></td>
 <td><code>84</code></td>
+<td>10,080</td>
 </tr>
 <tr>
 <td>Output</td>
 <td>—</td>
 <td><code>84×10 + 10 = 850</code></td>
 <td><code>10</code> 類</td>
+<td>840</td>
 </tr>
 </tbody>
 </table>
-<p><strong>參數量合計 = 61,750（約 6 萬，課堂上說的「60K」）</strong>，其中 97% 以上集中在兩個全連接層。</p>
+<p><strong>參數量合計 = 61,750（約 6 萬，課堂上說的「60K」）</strong>，
+<strong>乘加次數合計 = 422,824</strong>，其中 97% 以上的參數集中在兩個全連接層。</p>
+<p>乘加次數的算法：<strong>卷積層 <code>H_out × W_out × C_out × F × F × C_in</code></strong>，
+<strong>全連接層 <code>n_in × n_out</code></strong>。把參數與乘加分開看很重要 ——
+參數量決定「要存多少權重」，乘加次數決定「要算多久」，
+兩者對深度的代價是不同方向。</p>
 <p>這裡有一個容易算錯的地方，值得單獨講：</p>
 <table>
 <thead>
@@ -1585,7 +1703,79 @@ pool2  N=10 F=2 P=0 s=2 -&gt; O= 5  (期望  5) OK
 池化用的是 <strong>avg pool（平均池化）</strong>；越深層 H↓、W↓、<strong>C↑</strong>；
 參數量 61,750（含可訓練池化）／61,706（不含）。</p>
 </blockquote>
-<h4 id="343-整體性質">3.4.3 整體性質</h4>
+<h4 id="343-感受野為什麼最後一層剛好看到整張圖">3.4.3 感受野：為什麼最後一層剛好看到整張圖</h4>
+<p>「感受野（receptive field）」＝ 一個神經元實際看得到的<strong>輸入範圍</strong>大小。
+這是卷積網路最常被問、也最容易被答錯的進階題目。遞推只有兩行：</p>
+<div class="codehilite"><pre><span></span><code>r_out = r_in + (k − 1) · j_in      ← 感受野大小
+j_out = j_in · S                  ← 跳距（相鄰神經元間隔幾格）
+</code></pre></div>
+
+<p>其中 <code>r_in</code> 是輸入端的感受野、<code>j_in</code> 是輸入端的跳距，起始值 <code>r₀ = j₀ = 1</code>。</p>
+<p><strong>本機實測</strong>（逐層套用上面兩行，Python 3.15）：</p>
+<table>
+<thead>
+<tr>
+<th>層</th>
+<th>k</th>
+<th>s</th>
+<th>感受野 r</th>
+<th>跳距 j</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>輸入</td>
+<td>—</td>
+<td>—</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>5</td>
+<td>1</td>
+<td><code>1 + 4×1 =</code> <strong>5</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>2</td>
+<td>2</td>
+<td><code>5 + 1×1 =</code> <strong>6</strong></td>
+<td>2</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>5</td>
+<td>1</td>
+<td><code>6 + 4×2 =</code> <strong>14</strong></td>
+<td>2</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>2</td>
+<td>2</td>
+<td><code>14 + 1×2 =</code> <strong>16</strong></td>
+<td>4</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>5</td>
+<td>1</td>
+<td><code>16 + 4×4 =</code> <strong>32</strong></td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p><strong>C5 的感受野正好是 32×32 —— 整張輸入。</strong></p>
+<p>這不是巧合，而是<strong>反推出來的設計</strong>：如果最後那層的 <code>1×1×120</code> 要能代表「整張圖」，
+前面所有層的感受野就必須剛好撐滿 32。LeNet-5 的層數與核心大小，
+是被「讓最後一層看見整張圖」這個目標逼出來的 —— 深度不是玄學，是有理由的。</p>
+<blockquote>
+<p><strong>考點</strong>：感受野遞推 <code>r_out = r_in + (k−1)·j_in</code>、<code>j_out = j_in·S</code>；
+LeNet-5 的 C5 感受野 = 32 = 整張輸入。</p>
+</blockquote>
+<h4 id="344-整體性質">3.4.4 整體性質</h4>
 <p>課程給的三個重點：</p>
 <ol>
 <li><strong>Only 60K parameters</strong> —— 只有約 6 萬個參數，
@@ -1747,6 +1937,34 @@ pool2  N=10 F=2 P=0 s=2 -&gt; O= 5  (期望  5) OK
 和 <code>∂O/∂X</code> 幾乎一樣 —— 都是「把另一個陣列<strong>翻轉</strong>後做卷積」。
 所以「反向的卷積」其實是<strong>互相關（cross-correlation）</strong>，
 實作上直接用同一個卷積函式、把陣列翻轉即可。</p>
+<p>除了權重梯度，還有一條<strong>輸入梯度</strong>，考試也常問：</p>
+<div class="codehilite"><pre><span></span><code>前向：  O          = Convolution(X, F)
+反向：  ∂E/∂F      = Convolution(X, ∂E/∂O)      ← 權重梯度
+        ∂E/∂X      = Convolution(∂E/∂O, rot180(F))  ← 輸入梯度，要 full padding
+</code></pre></div>
+
+<p><code>∂E/∂X</code> 需要 <strong>full padding</strong>（把核翻轉後補到「全」卷積），
+因為<strong>一個輸入像素會同時貢獻到多個輸出位置</strong>，回傳時必須把重疊的部分疊起來。
+連帶地，<strong>影像邊界補的 0 不貢獻梯度</strong> → 邊界的梯度比中間弱。</p>
+<p><strong>池化的梯度只做路由</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>池化</th>
+<th>梯度怎麼走</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>max pool</td>
+<td>整包梯度給窗口內 <strong>argmax</strong> 的那個位置，其餘為 0</td>
+</tr>
+<tr>
+<td>avg pool</td>
+<td>平均分給窗口內每個像素（每格 <code>G/k²</code>）</td>
+</tr>
+</tbody>
+</table>
 <p>用 NumPy 實作並做<strong>數值梯度檢查</strong>（finite-difference gradient check）：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">conv2d_bwd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">dout</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""回傳 (dx, dw)。x:(H,W,Cin) k:(Cout,F,F,Cin) dout:(Ho,Wo,Cout)。"""</span>
@@ -1889,6 +2107,78 @@ classifier      = Fully-connected
 「<strong>用一個小核心掃過一串資料，學出局部模式</strong>」。
 DNA 序列正好符合這個形狀 —— A/T/G/C 四個字母就是 4 個通道，
 「一個核心滑過序列」和「一個核心滑過影像」是同一個運算。</p>
+<h4 id="411-九個應用的差異幾乎都在輸出頭">4.1.1 九個應用的差異幾乎都在「輸出頭」</h4>
+<p>上表九個應用，用的骨幹其實是同一套。<strong>真正不一樣的是最後那個輸出頭，
+以及配合的損失函數</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>任務</th>
+<th>輸出頭</th>
+<th>損失</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分類 / 識別</td>
+<td>對類別做 softmax（或輸出嵌入向量）</td>
+<td>交叉熵、triplet、center loss</td>
+</tr>
+<tr>
+<td>語意分割</td>
+<td>每個像素一組類別</td>
+<td>逐像素交叉熵 + Dice</td>
+</tr>
+<tr>
+<td>偵測</td>
+<td>框回歸 + 物件性分數</td>
+<td>smooth L1 + 物件性 BCE</td>
+</tr>
+<tr>
+<td>上色</td>
+<td>兩個通道 <code>a, b</code></td>
+<td>L1 / L2（或對抗損失）</td>
+</tr>
+<tr>
+<td>超解析</td>
+<td>高解析像素</td>
+<td>L1 + 感知／對抗損失</td>
+</tr>
+<tr>
+<td>場景 / 照片優化</td>
+<td><strong>輸入本身</strong>（要優化的是像素，不是權重）</td>
+<td>任務定義的目標函數</td>
+</tr>
+</tbody>
+</table>
+<p>最後那一列最容易被忽略：<strong>把網路固定住，反傳到「影像」而不是權重</strong> ——
+這就是「用 CNN 調整照片／場景」的意思，
+也是<strong>對抗樣本</strong>與<strong>特徵視覺化（Grad-CAM、deep dream）</strong>的共同機制。</p>
+<h4 id="412-為什麼能共用因為歸納偏置一樣">4.1.2 為什麼能共用？因為歸納偏置一樣</h4>
+<table>
+<thead>
+<tr>
+<th>共同前提</th>
+<th>在哪些領域成立</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>局部性</strong>：每個濾波器只看一個 patch</td>
+<td>自然影像、醫學影像、顯微鏡影像、DNA 序列的「局部模體」</td>
+</tr>
+<tr>
+<td><strong>平移等變</strong>：同一個濾波器掃全圖</td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+<p>所以同一組積木可以直接搬。真正不能搬的是<strong>維度約定</strong>：
+基因體要一維卷積、CT 要三維卷積，但卷積的定義本身沒變。</p>
+<h4 id="413-真正的代價是標註不是算力">4.1.3 真正的代價是標註，不是算力</h4>
+<p>九個任務裡，分類只要一個標籤；分割要逐像素遮罩；醫學影像還要放射科醫師。
+這也是為什麼「預訓練骨幹 + 少量微調」會變成常態 ——
+骨幹學到的邊緣、紋理、部件，在九個任務之間是<strong>可以轉移</strong>的。</p>
 <h3 id="42-龐大威力的來源">4.2 「龐大威力」的來源</h3>
 <p>把整堂課的主線收束成一句話：</p>
 <blockquote>
@@ -1978,8 +2268,12 @@ DNA 序列正好符合這個形狀 —— A/T/G/C 四個字母就是 4 個通道
 <td>一個神經元實際看得到的輸入範圍</td>
 </tr>
 <tr>
-<td><strong>Translation invariance（平移不變性）</strong></td>
-<td>物件移位，特徵不變 —— 參數共享的直接後果</td>
+<td><strong>Translation equivariance（平移等變）</strong></td>
+<td>輸入平移 → 特徵圖跟著平移 —— 參數共享的直接後果</td>
+</tr>
+<tr>
+<td><strong>Translation invariance（平移不變）</strong></td>
+<td>輸入平移 → 特徵不變 —— 靠<strong>池化</strong>把位置壓掉，不是卷積本身</td>
 </tr>
 <tr>
 <td><strong>Backpropagation（反向傳播）</strong></td>
@@ -1992,7 +2286,13 @@ DNA 序列正好符合這個形狀 —— A/T/G/C 四個字母就是 4 個通道
 
 卷積層參數數：(F × F × C_in × C_out) + C_out        （含 bias）
 全連接層參數數：(N_in × N_out) + N_out              （含 bias）
-池化層參數數：0
+池化層參數數：0（原版 LeNet-5 的平均池化例外：每張特徵圖 2 個）
+
+卷積層乘加次數：H_out × W_out × C_out × F × F × C_in
+全連接層乘加次數：N_in × N_out
+
+感受野：r_out = r_in + (k − 1) · j_in
+        j_out = j_in · S
 </code></pre></div>
 
 <table>
@@ -2020,6 +2320,21 @@ DNA 序列正好符合這個形狀 —— A/T/G/C 四個字母就是 4 個通道
 <td><strong>4,920 倍</strong></td>
 </tr>
 <tr>
+<td>LeNet-5 conv1 層：全連接</td>
+<td><code>1024 × 4704</code></td>
+<td><strong>4,816,896</strong></td>
+</tr>
+<tr>
+<td>LeNet-5 conv1 層：卷積</td>
+<td><code>(25+1) × 6</code></td>
+<td><strong>156</strong>（差 <strong>30,878 倍</strong>）</td>
+</tr>
+<tr>
+<td>224×224×3 → 222×222×64 那一層</td>
+<td>全連接 vs 卷積</td>
+<td>差 <strong>2.65×10⁸</strong></td>
+</tr>
+<tr>
 <td>LeNet-5 全網（卷積＋全連接）</td>
 <td>156 + 2,416 + 48,120 + 10,164 + 850</td>
 <td><strong>61,706</strong></td>
@@ -2028,6 +2343,11 @@ DNA 序列正好符合這個形狀 —— A/T/G/C 四個字母就是 4 個通道
 <td>LeNet-5 全網（含可訓練平均池化 <code>6×2 + 16×2</code>）</td>
 <td>61,706 + 44</td>
 <td><strong>61,750</strong></td>
+</tr>
+<tr>
+<td>LeNet-5 全網乘加次數</td>
+<td>各層加總</td>
+<td><strong>422,824</strong></td>
 </tr>
 </tbody>
 </table>
@@ -2244,6 +2564,24 @@ DNA 序列正好符合這個形狀 —— A/T/G/C 四個字母就是 4 個通道
 <td>寫「LeNet-5 = ReLU + max pooling」</td>
 <td>LeNet-5 用的是 <strong>Sigmoid/Tanh + 平均池化</strong></td>
 </tr>
+<tr>
+<td>11</td>
+<td><strong>把平移等變說成平移不變</strong></td>
+<td>「參數共享 → 平移不變性」</td>
+<td>卷積是<strong>平移等變</strong>；不變要靠<strong>池化</strong>（見 §3.2）</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>以為卷積就是翻轉核的相關</strong></td>
+<td>反向傳播要 <code>rot180(F)</code></td>
+<td>深度學習的卷積＝<strong>互相關</strong>（不翻轉）；只有 <code>∂E/∂X</code> 才要翻</td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>忘了感受野怎麼算</strong></td>
+<td>「感受野 = 核心大小」</td>
+<td><code>r_out = r_in + (k−1)·j_in</code>，要<strong>連跳距 j</strong> 一起遞推</td>
+</tr>
 </tbody>
 </table>
 <h3 id="b2-症狀--原因速查">B.2 「症狀 → 原因」速查</h3>
@@ -2294,8 +2632,9 @@ DNA 序列正好符合這個形狀 —— A/T/G/C 四個字母就是 4 個通道
 </tbody>
 </table>
 <blockquote>
-<p><strong>考點</strong>：本表十條幾乎每年都考其中一條；尤其第 4、5、6 條（銳化核心、
-邊緣核心、輸出尺寸公式）是純記憶題。</p>
+<p><strong>考點</strong>：本表十三條幾乎每年都考其中一條；尤其第 4、5、6 條（銳化核心、
+邊緣核心、輸出尺寸公式）是純記憶題，第 11、12、13 條（等變／不變、互相關、
+感受野）是觀念題，答錯最可惜。</p>
 </blockquote>
 <hr>
 <h2 id="附錄-c課程標題--本筆記章節對照">附錄 C：課程標題 → 本筆記章節對照</h2>
@@ -2508,9 +2847,17 @@ P=0 → valid；P=(F−1)/2 → same
 LeNet-5: 32→28(conv5)→14(pool2)→10(conv5)→5(pool2)→120→84→10
 
 【參數量對比】
-全連接 1024→120 = 123,000
-卷積 5×5×1     = 25            → 相差 4,920 倍
-LeNet-5 全網   = 61,750（含可訓練池化）／61,706（不含）≈ 60K
+全連接 1024→120 = 123,000 ；卷積 5×5×1 = 25            → 相差 4,920 倍
+LeNet-5 conv1 層：全連接 4,816,896 vs 卷積 156        → 相差 30,878 倍
+LeNet-5 全網 = 61,750（含可訓練池化）／61,706（不含）≈ 60K
+LeNet-5 全網乘加 = 422,824
+
+【感受野】 r_out = r_in + (k−1)·j_in ；j_out = j_in·S
+LeNet-5：5 → 6 → 14 → 16 → 32   （C5 正好看見整張 32×32）
+
+【平移等變 ≠ 平移不變】
+等變（卷積本身）：輸入移 → 特徵圖跟著移
+不變（要靠池化）：輸入移 → 特徵不變
 
 【核心的通用判斷】
 權重總和 = 1 → 不改亮度（銳化 0 −1 0 / −1 5 −1 / 0 −1 0）
@@ -2528,7 +2875,9 @@ LeCun 等人 1998；確立今天使用 CNN 的方式
 
 【反向傳播】
 O      = Convolution(X, F)
-∂E/∂F  = Convolution(X, ∂E/∂O)     ← 反向用的還是卷積
+∂E/∂F  = Convolution(X, ∂E/∂O)      ← 權重梯度
+∂E/∂X  = Convolution(∂E/∂O, rot180(F))  ← 輸入梯度，要 full padding
+池化梯度：max 整包給 argmax；avg 每格 G/k²
 
 【形式化】
 CNN = (Conv + ReLU + Pool) × N + Fully-connected
@@ -2618,6 +2967,76 @@ LGN 小點 → V1 方向/視差 → V4 顏色/形狀/曲率 → VTC 複雜特徵
 <p>答錯的題目請對照下方〈附錄 G：互動測驗答錯題目 → 複習章節對照〉回到對應章節複習。</p>
 </blockquote>
 <hr>
+<h2 id="附錄-h簡報勘誤表7-處">附錄 H：簡報勘誤表（7 處）</h2>
+<p>這一份講的 36 頁簡報裡，有幾個數字照抄會出事。
+下面每一條我都<strong>重新回原始簡報逐字核對過</strong>（本機用 PyMuPDF 抽出文字比對），
+也把「正確值怎麼來」一併寫上，考試被追問時可以直接答。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>簡報寫的</th>
+<th>問題</th>
+<th>正確值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>同一頁既寫「1080×1080×3 for an RGB image」，又寫「the <strong>1,166,400</strong>-long image vector」</td>
+<td><code>1080² = 1,166,400</code> 是<strong>灰階</strong>；RGB 要再乘 3</td>
+<td>灰階 1,166,400；RGB <strong>3,499,200</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>「86 billion neurons, each connects to 10k neurons, <strong>1 quadrillion (10¹²)</strong> connections」</td>
+<td>乘積對，但<strong>級數標錯</strong>：<code>10¹²</code> 是「一兆」，不是一 quadrillion</td>
+<td><code>86×10⁹ × 10⁴ = 8.6×10¹⁴</code>（約 <strong>0.86 quadrillion</strong>）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>「Only <strong>60K</strong> parameters」</td>
+<td>四捨五入可以說 60K，但<strong>不是 60,000</strong></td>
+<td>逐層加總 <strong>61,750</strong>（含可訓練平均池化）／<strong>61,706</strong>（不含）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>架構圖把第 5 層標成 <code>FC</code></td>
+<td>原論文（LeCun 等 1998）裡 C5 其實是 <code>5×5</code> <strong>卷積</strong>，把 <code>5×5×16</code> 壓成 <code>1×1×120</code></td>
+<td>數值等價（<code>400→120</code>），<strong>概念上是卷積</strong>、有參數共享</td>
+</tr>
+<tr>
+<td>5</td>
+<td>用「Shift by 2 pixels for next patch」描述，卻沒有說這叫 stride</td>
+<td>「stride」一詞雖最早出現在目錄，但<strong>正式定義與公式直到架構圖那頁才出現</strong></td>
+<td>那就是 <strong>stride = 2</strong>；<code>O = (N + 2P − F)/S + 1</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>版權頁寫「©版權所有(<strong>2015年X</strong>月)」</td>
+<td>母版<strong>佔位字串沒填</strong>（<code>X</code> 不是年份）</td>
+<td>其餘每一頁都是 <strong>2026 年 2 月</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td>有兩頁標題都叫「Fully Connected Neural Network」</td>
+<td>中間夾了一頁別的標題，<strong>順序錯位</strong></td>
+<td>兩頁不是同一件事：一頁講全連接的缺點，一頁是它的插圖</td>
+</tr>
+</tbody>
+</table>
+<p>另外兩個「說得比較鬆」的地方，答題時講精確一點會比較安全：</p>
+<ul>
+<li><strong>「卷積」在深度學習其實是互相關</strong>（不把核翻轉 180°）。
+  對「學出來的」核沒有差別，但手推梯度時要記得這件事。</li>
+<li><strong>池化在現代意義下不可學習</strong>；但原版 LeNet-5 的平均池化帶可訓練的
+  縮放與偏置係數，所以它的參數量會比「純池化」多出 44 個（見 §3.4.2）。</li>
+</ul>
+<blockquote>
+<p><strong>這張表的用法</strong>：考前如果有時間，把第 1、2、3 條再看一遍就夠了 ——
+這三個數字最常被引用，也最常被引用錯。</p>
+</blockquote>
+<hr>
 <h2 id="附錄-g互動測驗答錯題目--複習章節對照">附錄 G：互動測驗答錯題目 → 複習章節對照</h2>
 <table>
 <thead>
@@ -2649,7 +3068,7 @@ LGN 小點 → V1 方向/視差 → V4 顏色/形狀/曲率 → VTC 複雜特徵
 </tr>
 <tr>
 <td>35–40</td>
-<td>§3.1 de novo 特徵學習、§3.2 參數共享</td>
+<td>§3.1 de novo 特徵學習、§3.2 參數共享（<strong>平移等變 vs 不變</strong>）</td>
 </tr>
 <tr>
 <td>41–46</td>
@@ -2657,18 +3076,23 @@ LGN 小點 → V1 方向/視差 → V4 顏色/形狀/曲率 → VTC 複雜特徵
 </tr>
 <tr>
 <td>47–53</td>
-<td>§3.4 LeNet-5、附錄 A.2 參數速算</td>
+<td>§3.4 LeNet-5、§3.4.3 感受野、附錄 A.2 參數速算</td>
 </tr>
 <tr>
 <td>54–57</td>
-<td>§3.5 卷積的反向傳播</td>
+<td>§3.5 卷積的反向傳播（∂E/∂F 與 ∂E/∂X）</td>
 </tr>
 <tr>
 <td>58–60</td>
-<td>§3.6 形式化架構、§4 應用、附錄 B 陷阱總表</td>
+<td>§3.6 形式化架構、§4 應用、附錄 B 陷阱總表、<strong>附錄 H 勘誤表</strong></td>
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p>答錯第 35–40 題 → 多半是把「平移等變」與「平移不變」搞混了，
+回 §3.2 看一下那張對照表。
+答錯第 47–53 題 → 多半是感受野沒背，見 §3.4.3。</p>
+</blockquote>
 <hr>
 <p><em>本篇為個人學習筆記整理，課程內容版權屬匯縱專業發展中心（IVDC）所有。</em></p>
 </main>
