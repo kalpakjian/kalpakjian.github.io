@@ -473,6 +473,9 @@ SpecDecoding metrics: Mean acceptance length: 6.26, Accepted throughput: 176.97 
 | 聊天 | 55.3 | 131.4 | **2.37×** |
 | **整體** | 55.2 | 235.8 | **4.27×** |
 
+drafter 只有 **500M** 參數（4B 版 475M），相對 8B target 只多約 6% 的權重 —— 這是為什麼 γ 只有 4.95 也能換到 4 倍以上。上游 README 宣稱在 Qwen3-8B 上「up to **6×** faster」（H200 NVL）；本機 4090 拿到
+**4.27×**，方向與量級一致，「up to」的落差主要來自硬體（H200 NVL 對 4090）與推論框架（SGLang 對 vLLM）。
+
 γ = 4.954、草稿接受率 24.71%。同引擎、同 kernel 下比對 baseline 與 FlashMap 的輸出：完整字串相同 4/12、前 120 字相同 9/12，其餘差異來自驗證 pass 衝過 `max_tokens`（上游文件明載）以及同樣的並列現象。
 
 ## 七、必須誠實標記的限制
@@ -504,6 +507,8 @@ python bench.py        # Phase 2 端到端 + report.md
 ```
 
 完整的量測表、每一列的原始數字、以及「白話版」都在 repo 的 `lab/FINDINGS.md` 與 `lab/FINDINGS-easy.md`。
+
+授權要分開看：**程式是 MIT**、**模型權重是 Apache-2.0**（跟隨 Qwen3）—— 要商用之前兩者都要確認過。
 
 ## 九、這件事的通用教訓
 
