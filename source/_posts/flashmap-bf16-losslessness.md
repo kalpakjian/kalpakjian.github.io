@@ -462,6 +462,27 @@ SpecDecoding metrics: Mean acceptance length: 6.26, Accepted throughput: 176.97 
 
 我一開始拿「最後區間的 6.26」去對「累計的 γ」，才會覺得怎麼算都不對。
 
+### 順帶：五個只有 Linux 才會踩到的腳本問題
+
+把「準備模型 → 建環境 → 跑實驗」整條路徑在 Linux 上重跑一輪，又修掉五個：
+
+| 位置 | 症狀 | 原因 |
+| --- | --- | --- |
+| `setup.sh` 建立 venv | **第二次執行就死**，但文件寫「冪等」 | `uv >= 0.8` 對已存在的 venv 直接報錯，要 `--allow-existing` 才真的冪等 |
+| `setup.sh` 結尾說明 | 叫人跑 `$WORKDIR/bench.py`，但檔案在 `$HERE`（`lab/`） | 路徑寫錯（我上次修 `--workdir` 時留下的） |
+| `prepare_models.sh` 呼叫 Python | `ModuleNotFoundError: huggingface_hub` | 這支排在 `setup.sh` **之前**，venv 還不存在 → 落到系統 Python |
+| `prepare_models.sh` 複製模型 | 目標目錄只有 **60 KB**，載入模型才炸 | Linux 的 HF 快取是 symlink 農場（`snapshots/<sha>/f -> ../../blobs/<hash>`），`cp -r` 把連結原樣搬走 → 全是斷鏈 |
+| `prepare_models.sh` 目錄命名 | 產出 `models/FlashMap-FlashMap-Qwen3-8B` | 對已經有 `FlashMap-` 前綴的 repo 再加一次 |
+
+<strong>這五個在 Windows 上全都測不出來</strong>：`setup.ps1` 走不同路徑、Windows 沒有 symlink 權限
+（HF 快取是實體檔案，所以 `cp -r` 剛好可用）、也沒有那個 `uv venv` 行為差異。
+修法分別是 `--allow-existing`、`$HERE`、`pick_python()`（自動找 `$WORKDIR/.venv/bin/python`）、
+`cp -rL` 加斷鏈檢查、`${name#FlashMap-}`。
+
+修完後的驗證：全新 `WORKDIR` 跑完 6 步（`torch 2.13.0+cu130` / `vllm 0.31.0` /
+`transformers 5.17.0` / `flashmap 0.1.0`），**再跑第二次也成功**；`prepare_models.sh --download`
+在「沒有啟用 venv」的 shell 裡也能跑，產出 16 G + 957 M、**0 個斷鏈**。
+
 ## 六、修正後的端到端數字
 
 重跑 Phase 2（vLLM 0.31.0、Qwen3-8B + FlashMap-Qwen3-8B、concurrency=1、temperature=0）：
@@ -477,6 +498,9 @@ drafter 只有 **500M** 參數（4B 版 475M），相對 8B target 只多約 6% 
 **4.27×**，方向與量級一致，「up to」的落差主要來自硬體（H200 NVL 對 4090）與推論框架（SGLang 對 vLLM）。
 
 γ = 4.954、草稿接受率 24.71%。同引擎、同 kernel 下比對 baseline 與 FlashMap 的輸出：完整字串相同 4/12、前 120 字相同 9/12，其餘差異來自驗證 pass 衝過 `max_tokens`（上游文件明載）以及同樣的並列現象。
+**可重現性**：用 `run_all.sh` 把 Phase 1 + Phase 2 一次重跑（含重啟兩次 vLLM server），
+γ 同樣是 **4.954**、ALL **4.09×**（上表是 4.27×，差約 4%，屬正常的 run-to-run 變異），
+Phase 1 也同樣是 bf16 的 8/12 mismatch。也就是說：**γ 與加速比可重現，連 mismatch 的題號都固定**。
 
 ## 七、必須誠實標記的限制
 
@@ -484,6 +508,8 @@ drafter 只有 **500M** 參數（4B 版 475M），相對 8B target 只多約 6% 
 2. **不能宣稱「FlashMap 在 bf16 下比較準」。** 8B 是 4:4、4B 是 7:2，並不系統性偏向哪一邊。
 3. **只有 12 題。** 「並列」是隨機事件，換一組題目會得到不同的 mismatch 題號，但機制不變。判準必須是「gap 是否落在 bf16 解析度內」，而不是「哪幾題不同」。
 4. **只測 temperature=0、concurrency=1。** 批次服務與 T>0 的分布一致性都未驗證（論文作者也把批次列為未評估）。
+5. **平台覆蓋不對稱。** 完整流程只在 Linux（Arch／Omarchy）驗過；Windows 原生只跑得到 Phase 1
+   （vLLM／SGLang 在 PyPI 只有 manylinux wheel），WSL2 那條路徑未驗。
 
 ## 八、想自己重跑
 
@@ -508,6 +534,8 @@ python bench.py        # Phase 2 端到端 + report.md
 
 完整的量測表、每一列的原始數字、以及「白話版」都在 repo 的 `lab/FINDINGS.md` 與 `lab/FINDINGS-easy.md`。
 
+> 想省下載：把 `prepare_models.sh --from-windows`（或 `--download`）放在 `setup.sh` 之前跑，
+> 再 `source ~/flashmap-lab/models/env.sh`；沒有 Windows 分割區就直接讓 `setup.sh` 下載。
 授權要分開看：**程式是 MIT**、**模型權重是 Apache-2.0**（跟隨 Qwen3）—— 要商用之前兩者都要確認過。
 
 ## 九、這件事的通用教訓
