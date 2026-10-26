@@ -60,6 +60,16 @@ date: 2026-10-10 23:40:00
 
 ---
 
+## 6 · Lesson 6 — Convolutional Neural Network (CNN) 1
+
+![CNN 學習筆記](/img/covers/cnn-notes.png)
+
+- **涵蓋**：場景理解與物件辨識、**視覺皮層的分層抽象**（LGN→V1→V4→VTC）、神經元與動作電位、**空間結構與滑動視窗**、卷積＝**逐元素相乘再相加**、特徵圖、**銳化／邊緣偵測／模糊**等經典核心、**de novo 特徵階層**、**參數共享**、**LeNet-5**（架構、張量尺寸、參數數）、**卷積的反向傳播**、CNN 的形式化架構與應用版圖
+- **特別之處**：6 張圖表全部做成**內嵌 SVG**（卷積滑動、視覺皮層、全連接 vs 卷積、特徵階層、LeNet-5 架構、反向傳播），**所有數字都在本機實測**（卷積輸出、輸出尺寸公式、LeNet-5 參數數、梯度檢查）
+- **👉 [看筆記](/cnn-notes/)** ｜ [互動測驗 60 題](/cnn-notes/mc-quiz.html)
+
+---
+
 ## 筆記的共同規格
 
 | 項目 | 說明 |
@@ -88,7 +98,7 @@ date: 2026-10-10 23:40:00
 | **Lesson 4** | Responsible AI | ✅ [Responsible AI 學習筆記](/responsible-ai-notes/) |
 | **Lesson 4** | Test | — |
 | **Lesson 5** | Neural Network, Activation Function and Machine Learning | ✅ [Neural Network &amp; ML 學習筆記](/neural-network-notes/) |
-| **Lesson 6** | Convolutional Neural Network (CNN) 1 | ⏳ 待補 |
+| **Lesson 6** | Convolutional Neural Network (CNN) 1 | ✅ [CNN 學習筆記](/cnn-notes/) |
 | **Lesson 7** | CNN 2 | ⏳ 待補 |
 | **Lesson 8** | Tensorflow and Pytorch for Object Detection and CNN | ⏳ 待補 |
 | **Lesson 9** | Practical Application for Implementation and Demo | ⏳ 待補 |

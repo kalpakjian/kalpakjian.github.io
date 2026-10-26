@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 456" role="img" aria-label="從零學特徵：特徵階層" style="width:100%;height:auto;display:block">
+<defs><marker id="mfbbf24" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="454.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從零學特徵：特徵階層</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">低階 → 中階 → 高階，全部由卷積權重自動學得</text>
+<rect x="48" y="132" width="260" height="250" rx="12" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="66" y="162" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">低階特徵</text>
+<text x="66" y="184" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Low level</text>
+<rect x="118" y="198" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="148" y="198" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="178" y="198" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="208" y="198" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="118" y="228" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="148" y="228" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="178" y="228" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="208" y="228" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="118" y="258" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="148" y="258" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="178" y="258" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="208" y="258" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="118" y="288" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="148" y="288" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="178" y="288" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="208" y="288" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<text x="66" y="344" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">邊緣、暗點</text>
+<text x="66" y="368" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">edges, dark spots</text>
+<rect x="340" y="132" width="260" height="250" rx="12" fill="#1c2230" stroke="#58a6ff55" stroke-width="1.5"/>
+<text x="358" y="162" font-size="15" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">中階特徵</text>
+<text x="358" y="184" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Mid level</text>
+<rect x="410" y="198" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="440" y="198" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="470" y="198" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="500" y="198" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="410" y="228" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="440" y="228" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="470" y="228" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="500" y="228" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="410" y="258" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="440" y="258" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="470" y="258" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="500" y="258" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="410" y="288" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="440" y="288" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="470" y="288" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="500" y="288" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<text x="358" y="344" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">眼睛、耳朵、鼻子</text>
+<text x="358" y="368" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">eyes, ears, nose</text>
+<rect x="632" y="132" width="260" height="250" rx="12" fill="#1c2230" stroke="#c084fc55" stroke-width="1.5"/>
+<text x="650" y="162" font-size="15" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">高階特徵</text>
+<text x="650" y="184" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">High level</text>
+<rect x="702" y="198" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="732" y="198" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="762" y="198" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="792" y="198" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="702" y="228" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="732" y="228" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="762" y="228" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="792" y="228" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="702" y="258" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="732" y="258" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="762" y="258" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="792" y="258" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="702" y="288" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="732" y="288" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="762" y="288" width="30" height="30" rx="2" fill="#0d1117" stroke="#7d8590" stroke-width="0.6"/>
+<rect x="792" y="288" width="30" height="30" rx="2" fill="#8b949e" stroke="#7d8590" stroke-width="0.6"/>
+<text x="650" y="344" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">面部結構</text>
+<text x="650" y="368" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">facial structure</text>
+<path d="M 48 414 L 852 414" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mfbbf24)"/>
+<text x="48" y="406" font-size="13" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">抽象程度 ↑　特徵由影像自己學出來，不是人手工設計的</text>
+<text x="48" y="438" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">以上三層特徵皆由同一組卷積權重自動學得 —— 這就是「de novo（從零學起）」的關鍵。</text>
+</svg>

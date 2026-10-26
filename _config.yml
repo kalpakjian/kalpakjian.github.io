@@ -32,6 +32,7 @@ skip_render:
   - 'dhh-rails-world-2026/**'
   - 'coding-agent/**'
   - 'opencv-notes/**'
+  - 'cnn-notes/**'
   - 'ai-intro-notes/**'
   - 'cv-intro-notes/**'
   - 'local-gpu-ml-notes/**'

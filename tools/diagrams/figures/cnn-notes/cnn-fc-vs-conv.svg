@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" role="img" aria-label="全連接 vs 卷積" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="458.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">全連接 vs 卷積</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">參數量與空間資訊的差距</text>
+<rect x="48" y="118" width="390" height="244" rx="12" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<text x="68" y="148" font-size="15.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">全連接神經網路</text>
+<text x="68" y="172" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每個隱藏單元都連到全部輸入</text>
+<text x="100" y="190" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸入</text>
+<text x="195" y="190" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">隱藏</text>
+<text x="290" y="190" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸出</text>
+<path d="M 108 212 L 187 212" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 212 L 187 238" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 212 L 187 264" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 212 L 187 290" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 238 L 187 212" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 238 L 187 238" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 238 L 187 264" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 238 L 187 290" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 264 L 187 212" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 264 L 187 238" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 264 L 187 264" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 264 L 187 290" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 290 L 187 212" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 290 L 187 238" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 290 L 187 264" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 108 290 L 187 290" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 203 212 L 282 225" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 203 212 L 282 251" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 203 212 L 282 277" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 203 238 L 282 225" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 203 238 L 282 251" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 203 238 L 282 277" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 203 264 L 282 225" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 203 264 L 282 251" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 203 264 L 282 277" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 203 290 L 282 225" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 203 290 L 282 251" fill="none" stroke="#3a4450" stroke-width="1"/>
+<path d="M 203 290 L 282 277" fill="none" stroke="#3a4450" stroke-width="1"/>
+<circle cx="100" cy="212" r="8" fill="#f472b6" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="100" cy="238" r="8" fill="#f472b6" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="100" cy="264" r="8" fill="#f472b6" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="100" cy="290" r="8" fill="#f472b6" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="195" cy="212" r="8" fill="#f472b6" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="195" cy="238" r="8" fill="#f472b6" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="195" cy="264" r="8" fill="#f472b6" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="195" cy="290" r="8" fill="#f472b6" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="290" cy="225" r="8" fill="#f472b6" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="290" cy="251" r="8" fill="#f472b6" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="290" cy="277" r="8" fill="#f472b6" stroke="#f472b666" stroke-width="1.5"/>
+<text x="68" y="318" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">權重數 = 1024 × 120 + 120</text>
+<text x="68" y="340" font-size="13" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">= 123,000 個</text>
+<rect x="462" y="118" width="390" height="244" rx="12" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="482" y="148" font-size="15.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">卷積層</text>
+<text x="482" y="172" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一組權重滑過整張圖</text>
+<text x="564" y="190" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4×4 影像</text>
+<rect x="520" y="206" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="542" y="206" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="564" y="206" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="586" y="206" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="520" y="228" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="542" y="228" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="564" y="228" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="586" y="228" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="520" y="250" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="542" y="250" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="564" y="250" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="586" y="250" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="520" y="272" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="542" y="272" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="564" y="272" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="586" y="272" width="22" height="22" rx="3" fill="#12181f" stroke="#7d8590" stroke-width="1"/>
+<rect x="520" y="206" width="66" height="66" rx="4" fill="#2dd4bf22" stroke="#2dd4bfcc" stroke-width="2"/>
+<path d="M 618 250 L 676 250" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="686" y="206" width="88" height="88" rx="8" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="730" y="255" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">特徵圖</text>
+<text x="482" y="318" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">權重數 = 5 × 5 × 1</text>
+<text x="482" y="340" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">= 25 個</text>
+<rect x="48" y="382" width="804" height="58" rx="10" fill="#1c2230" stroke="#fbbf2455" stroke-width="1.5"/>
+<text x="68" y="408" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同樣的輸入、同一層的容量：123,000 個權重 vs 25 個權重 → 相差 4,920 倍</text>
+<text x="68" y="430" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">而且全連接沒有「哪裡」的概念 —— 捲平後的像素向量丟掉了空間資訊。</text>
+</svg>

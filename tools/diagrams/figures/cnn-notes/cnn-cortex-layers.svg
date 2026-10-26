@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" role="img" aria-label="視覺皮層的分層抽象" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="458.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">視覺皮層的分層抽象</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LGN → V1 → V4 → VTC：越深越抽象</text>
+<text x="48" y="122" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">越往深處 → 代表的概念越抽象</text>
+<rect x="48" y="142" width="188" height="196" rx="12" fill="#1c2230" stroke="#7d859055" stroke-width="1.5"/>
+<circle cx="78" cy="176" r="22" fill="#7d8590" opacity="0.92"/>
+<text x="78" y="181.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LGN</text>
+<text x="110" y="172" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">外側膝狀體</text>
+<text x="110" y="192" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">層級 1 / 4</text>
+<text x="66" y="238" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 小點（small dots）</text>
+<text x="66" y="264" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 亮度與對比的初步編碼</text>
+<path d="M 238 240.0 L 252 240.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="256" y="142" width="188" height="196" rx="12" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<circle cx="286" cy="176" r="22" fill="#2dd4bf" opacity="0.92"/>
+<text x="286" y="181.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">V1</text>
+<text x="318" y="172" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">初級視覺皮層</text>
+<text x="318" y="192" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">層級 2 / 4</text>
+<text x="274" y="238" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 方向（orientation）</text>
+<text x="274" y="264" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 視差（disparity）</text>
+<text x="274" y="290" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 部分顏色資訊</text>
+<path d="M 446 240.0 L 460 240.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="464" y="142" width="188" height="196" rx="12" fill="#1c2230" stroke="#58a6ff55" stroke-width="1.5"/>
+<circle cx="494" cy="176" r="22" fill="#58a6ff" opacity="0.92"/>
+<text x="494" y="181.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">V4</text>
+<text x="526" y="172" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">中級視覺皮層</text>
+<text x="526" y="192" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">層級 3 / 4</text>
+<text x="482" y="238" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 顏色、基本形狀</text>
+<text x="482" y="264" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 2D / 3D、深淺</text>
+<text x="482" y="290" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 曲率（curvature）</text>
+<path d="M 654 240.0 L 668 240.0" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="672" y="142" width="188" height="196" rx="12" fill="#1c2230" stroke="#c084fc55" stroke-width="1.5"/>
+<circle cx="702" cy="176" r="22" fill="#c084fc" opacity="0.92"/>
+<text x="702" y="181.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">VTC</text>
+<text x="734" y="172" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">高階視覺皮層</text>
+<text x="734" y="192" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">層級 4 / 4</text>
+<text x="690" y="238" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 複雜特徵</text>
+<text x="690" y="264" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 臉部、物件、整體形狀</text>
+<rect x="48" y="366" width="804" height="52" rx="10" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="68" y="398" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">複雜概念由簡單部分組成 —— 階層式抽象讓「邊緣」一步步長成「場景」</text>
+<text x="48" y="442" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">早期皮層的神經連線本身就編碼了視覺概念的基本元素；同一套迴路被聽覺、嗅覺、味覺、觸覺重用。</text>
+</svg>

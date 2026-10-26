@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 552" role="img" aria-label="卷積的前向與反向傳播" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="550.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">卷積的前向與反向傳播</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">反向用的仍然是卷積，只是換了角色</text>
+<rect x="48" y="104" width="804" height="190" rx="12" fill="#1c2230" stroke="#58a6ff55" stroke-width="1.5"/>
+<text x="68" y="132" font-size="14" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">前向傳播：O = Convolution(X, F)</text>
+<rect x="80" y="158" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="96.0" y="179.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<rect x="112" y="158" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="128.0" y="179.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<rect x="144" y="158" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="160.0" y="179.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<rect x="80" y="190" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="96.0" y="211.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<rect x="112" y="190" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="128.0" y="211.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<rect x="144" y="190" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="160.0" y="211.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<rect x="80" y="222" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="96.0" y="243.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7</text>
+<rect x="112" y="222" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="128.0" y="243.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text>
+<rect x="144" y="222" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="160.0" y="243.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">9</text>
+<text x="80" y="272" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">X（輸入 3×3）</text>
+<rect x="284" y="174" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="300.0" y="195.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<rect x="316" y="174" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="332.0" y="195.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text>
+<rect x="284" y="206" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="300.0" y="227.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text>
+<rect x="316" y="206" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="332.0" y="227.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="284" y="256" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">F（核心 2×2）</text>
+<rect x="644" y="174" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="660.0" y="195.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<rect x="676" y="174" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="692.0" y="195.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text>
+<rect x="644" y="206" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="660.0" y="227.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">12</text>
+<rect x="676" y="206" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="692.0" y="227.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">14</text>
+<text x="644" y="256" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">O（輸出 2×2）</text>
+<path d="M 184 206 L 276 206" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 356 206 L 636 206" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="496" y="194" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">把 X 與 F 逐元素相乘後相加</text>
+<rect x="48" y="316" width="804" height="190" rx="12" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<text x="68" y="344" font-size="14" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">反向傳播：∂E/∂F = Convolution(X, ∂E/∂O)</text>
+<rect x="80" y="370" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="96.0" y="391.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<rect x="112" y="370" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="128.0" y="391.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<rect x="144" y="370" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="160.0" y="391.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<rect x="80" y="402" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="96.0" y="423.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<rect x="112" y="402" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="128.0" y="423.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<rect x="144" y="402" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="160.0" y="423.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<rect x="80" y="434" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="96.0" y="455.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7</text>
+<rect x="112" y="434" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="128.0" y="455.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text>
+<rect x="144" y="434" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="160.0" y="455.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">9</text>
+<text x="80" y="484" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">X（輸入 3×3）</text>
+<rect x="284" y="386" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="300.0" y="407.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<rect x="316" y="386" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="332.0" y="407.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text>
+<rect x="284" y="418" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="300.0" y="439.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text>
+<rect x="316" y="418" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="332.0" y="439.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="284" y="468" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">∂E/∂O（梯度 2×2）</text>
+<rect x="644" y="386" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="660.0" y="407.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">12</text>
+<rect x="676" y="386" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="692.0" y="407.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">16</text>
+<rect x="644" y="418" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="660.0" y="439.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">24</text>
+<rect x="676" y="418" width="32" height="32" rx="4" fill="#12181f" stroke="#30363d66" stroke-width="1"/>
+<text x="692.0" y="439.12" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">28</text>
+<text x="644" y="468" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">∂E/∂F（權重梯度 2×2）</text>
+<path d="M 184 418 L 276 418" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 356 418 L 636 418" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="496" y="406" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個卷積運算，換成「梯度」當角色</text>
+<text x="48" y="532" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">重點：卷積層的反向傳播用的還是卷積 —— 把「對輸入的梯度」當成輸入、把「對權重的梯度」當成輸出。</text>
+</svg>
