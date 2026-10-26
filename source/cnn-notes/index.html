@@ -325,6 +325,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <main>
 <h1 id="cnn卷積神經網路學習筆記考試溫習版">CNN（卷積神經網路）學習筆記（考試溫習版）</h1>
 <hr>
+<p><strong>同場加映</strong>：這是「學習筆記＋測驗」體系；同一堂課另有一篇<strong>課後深度筆記</strong>
+（9 張霓虹 SVG 插圖＋簡報勘誤表）→ <a href="/2026/10/27/cnn-1-convnet-neon/">CNN I：機器怎麼「看」？從視覺皮層到 LeNet-5</a></p>
 <h2 id="0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</h2>
 <div class="codehilite"><pre><span></span><code>機器看圖的完整路線：
 
@@ -1516,7 +1518,7 @@ pool2  N=10 F=2 P=0 s=2 -&gt; O= 5  (期望  5) OK
 <tr>
 <td>avg pool1</td>
 <td><code>f=2, s=2</code></td>
-<td>0</td>
+<td><code>6 × 2 = 12</code>（可訓練）</td>
 <td><code>14 × 14 × 6</code></td>
 </tr>
 <tr>
@@ -1528,7 +1530,7 @@ pool2  N=10 F=2 P=0 s=2 -&gt; O= 5  (期望  5) OK
 <tr>
 <td>avg pool2</td>
 <td><code>f=2, s=2</code></td>
-<td>0</td>
+<td><code>16 × 2 = 32</code>（可訓練）</td>
 <td><code>5 × 5 × 16</code></td>
 </tr>
 <tr>
@@ -1551,11 +1553,37 @@ pool2  N=10 F=2 P=0 s=2 -&gt; O= 5  (期望  5) OK
 </tr>
 </tbody>
 </table>
-<p><strong>參數量合計 = 61,706（約 6 萬，課堂上說的「60K」）</strong>，
-其中 97% 以上集中在兩個全連接層。</p>
+<p><strong>參數量合計 = 61,750（約 6 萬，課堂上說的「60K」）</strong>，其中 97% 以上集中在兩個全連接層。</p>
+<p>這裡有一個容易算錯的地方，值得單獨講：</p>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>結果</th>
+<th>差別在哪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只算卷積 + 全連接</td>
+<td><strong>61,706</strong></td>
+<td>把兩個池化層當成「沒有參數」</td>
+</tr>
+<tr>
+<td>加上<strong>可訓練</strong>的平均池化</td>
+<td><strong>61,750</strong></td>
+<td>原版 LeNet-5 的平均池化<strong>每張特徵圖有 2 個</strong>可學參數（縮放 α 與偏置 β）</td>
+</tr>
+</tbody>
+</table>
+<p><code>6 × 2 + 16 × 2 = 44</code>，<code>61,706 + 44 = 61,750</code>。
+<strong>原版 LeNet-5（LeCun 等人 1998）的平均池化是可訓練的</strong>，
+所以嚴格算原論文架構時是 61,750；今天的框架裡池化一律沒有權重，
+所以照今天的慣例算就是 61,706。兩個數字都對，答題時講清楚用哪個慣例即可。</p>
 <blockquote>
 <p><strong>考點</strong>：LeNet-5 的結構是 <code>conv→pool→conv→pool→FC→FC→output</code>；
-池化用的是 <strong>avg pool（平均池化）</strong>；越深層 H↓、W↓、<strong>C↑</strong>。</p>
+池化用的是 <strong>avg pool（平均池化）</strong>；越深層 H↓、W↓、<strong>C↑</strong>；
+參數量 61,750（含可訓練池化）／61,706（不含）。</p>
 </blockquote>
 <h4 id="343-整體性質">3.4.3 整體性質</h4>
 <p>課程給的三個重點：</p>
@@ -1573,6 +1601,13 @@ pool2  N=10 F=2 P=0 s=2 -&gt; O= 5  (期望  5) OK
 <li><strong>池化用的是平均池化（average pooling）</strong>，不是現在常見的最大池化。
   平均池化可導、沒有「只挑最大值」的資訊損失，比較適合當年的反向傳播。</li>
 </ul>
+<p>再補一個「圖上寫 FC、原論文其實是卷積」的細節：
+上表把第 5 層標成 FC，是<strong>照課堂投影片的畫法</strong>。
+但在 LeCun 等人 1998 年的原論文裡，第 5 層 C5 是一個 <code>5×5</code> 的<strong>卷積</strong>，
+它把 <code>5×5×16</code> 壓成 <code>1×1×120</code>；後面第 6、7 層才是真正的全連接。
+<strong>數值上兩者等價</strong>（<code>5×5×16 = 400</code> 個輸入接 120 個單元），
+但「概念上是卷積」這個說法更能點出卷積層的好處：
+<strong>參數共享</strong>。答題時照課堂說 FC 即可，被追問再補上這一層。</p>
 <blockquote>
 <p><strong>考點</strong>：LeNet-5 = 6 萬參數、avg pool、Sigmoid/Tanh（非 ReLU）、
 <code>H↓ W↓ C↑</code> 的深層結構。</p>
@@ -1985,9 +2020,14 @@ DNA 序列正好符合這個形狀 —— A/T/G/C 四個字母就是 4 個通道
 <td><strong>4,920 倍</strong></td>
 </tr>
 <tr>
-<td>LeNet-5 全網</td>
+<td>LeNet-5 全網（卷積＋全連接）</td>
 <td>156 + 2,416 + 48,120 + 10,164 + 850</td>
-<td><strong>61,706</strong>（約 6 萬）</td>
+<td><strong>61,706</strong></td>
+</tr>
+<tr>
+<td>LeNet-5 全網（含可訓練平均池化 <code>6×2 + 16×2</code>）</td>
+<td>61,706 + 44</td>
+<td><strong>61,750</strong></td>
 </tr>
 </tbody>
 </table>
@@ -2470,7 +2510,7 @@ LeNet-5: 32→28(conv5)→14(pool2)→10(conv5)→5(pool2)→120→84→10
 【參數量對比】
 全連接 1024→120 = 123,000
 卷積 5×5×1     = 25            → 相差 4,920 倍
-LeNet-5 全網   = 61,706 ≈ 60K
+LeNet-5 全網   = 61,750（含可訓練池化）／61,706（不含）≈ 60K
 
 【核心的通用判斷】
 權重總和 = 1 → 不改亮度（銳化 0 −1 0 / −1 5 −1 / 0 −1 0）
