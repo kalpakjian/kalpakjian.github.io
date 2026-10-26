@@ -20,7 +20,7 @@ tags:
   - 基準測試
 toc: true
 index_img: /img/covers/flashmap-bf16-losslessness.png
-banner_img: /img/covers/flashmap-bf16-losslessness.png
+banner_img: /img/covers/flashmap-bf16-losslessness-banner.png
 ---
 
 > <strong>整理說明</strong>：這是我在 RTX 4090 上重現 <a href="https://github.com/j-shen/FlashMap">FlashMap</a> 推測解碼時遇到的一個「看起來像 bug、其實不是 bug」的案例。第一輪實驗回報無損性檢查 <strong>8/12 不一致</strong>，差點讓我把它當成演算法缺陷記錄下來；追下去之後發現，問題全部出在 <code>bf16</code> 的浮點解析度，以及我自己量測腳本裡的三個錯誤。所有數字都來自本機實測，腳本與原始輸出放在 <a href="https://github.com/kalpakjian/flashmap-local-bench">kalpakjian/flashmap-local-bench</a> 的 <code>lab/</code>。
@@ -86,6 +86,55 @@ precision. Run with --dtype float32 for an exact check.
 
 > **注意**：這裡說的「好幾個位置」不是隨機分布。它是一個<strong>必然會遇到</strong>的現象：模型在 512 個 token 的生成過程中，本來就會經過一些高熵、兩個候選字勢均力敵的位置；`bf16` 的任務就是把「勢均力敵」變成「完全平手」。
 
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="bf16 的量化格點：真實差距 0.060、0.242、0.320 被壓成 0.000 與 0.250" style="width:100%;height:auto;display:block">
+<defs><marker id="mf472b6" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f472b6"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker></defs>
+<rect x="0.75" y="0.75" width="958.5" height="538.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">bf16 的量化格點</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真值 vs bf16 的讀數</text>
+<text x="48" y="112" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一列都是 8B 上真實量到的分歧點：圓點是真的差距，方塊是 bf16 的讀數。</text>
+<path d="M 372.0 430 L 884.0 430" fill="none" stroke="#7d8590" stroke-width="1.5"/>
+<path d="M 372.0 136 L 372.0 430" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="372.0" y="452" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text>
+<path d="M 500.0 136 L 500.0 430" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="500.0" y="452" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.125</text>
+<path d="M 628.0 136 L 628.0 430" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="628.0" y="452" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.25</text>
+<path d="M 756.0 136 L 756.0 430" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="756.0" y="452" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.375</text>
+<path d="M 884.0 136 L 884.0 430" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="884.0" y="452" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.5</text>
+<rect x="48" y="143" width="270" height="66" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="64" y="173.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真值 0.06002</text>
+<text x="64" y="194.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 1 題驗證誤差 0.123</text>
+<path d="M 433.46048 176 L 372.0 176" fill="none" stroke="#f472b6" stroke-width="2" marker-end="url(#mf472b6)"/>
+<circle cx="433.46048" cy="176" r="7.5" fill="#2dd4bf"/>
+<rect x="364.0" y="168" width="16" height="16" rx="3" fill="none" stroke="#f472b6" stroke-width="2.2"/>
+<text x="388.0" y="164" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">量到 0.00000</text>
+<text x="388.0" y="198" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">完全平手</text>
+<rect x="48" y="253" width="270" height="66" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="64" y="283.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真值 0.24197</text>
+<text x="64" y="304.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 2 題驗證誤差 0.184</text>
+<circle cx="619.77728" cy="286" r="7.5" fill="#2dd4bf"/>
+<rect x="620.0" y="278" width="16" height="16" rx="3" fill="none" stroke="#fbbf24" stroke-width="2.2"/>
+<text x="644.0" y="274" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">量到 0.25000</text>
+<text x="644.0" y="308" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">吸附到格點</text>
+<rect x="48" y="363" width="270" height="66" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="64" y="393.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真值 0.32040</text>
+<text x="64" y="414.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 7 題驗證誤差 0.476</text>
+<path d="M 700.0896 396 L 628.0 396" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mfbbf24)"/>
+<circle cx="700.0896" cy="396" r="7.5" fill="#2dd4bf"/>
+<rect x="620.0" y="388" width="16" height="16" rx="3" fill="none" stroke="#fbbf24" stroke-width="2.2"/>
+<text x="644.0" y="384" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">量到 0.25000</text>
+<text x="644.0" y="418" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">吸附到格點</text>
+<text x="48" y="492" font-size="13.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">bf16 在這個 logit 量級只分辨得出 0.125 的差距；真值 0.060 於是被壓成 0。</text>
+<text x="48" y="514" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8 個分歧點裡有 7 個的真實 gap 小於一個 bf16 ULP（最大也只有 0.32）。</text>
+</svg>
+<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：真實 gap（圓點）與 bf16 量到的格點（方環）——三列都是 8B 上實際量到的分歧點，0.060 被壓成完全平手。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
+
 ## 三、四個實驗，把責任釘死在精度上
 
 懷疑「有 bug」的時候，最有效的做法不是讀程式碼，而是<strong>一次只改一個變因</strong>，看哪一個變因能讓現象消失。以下四個實驗的程式都在 `lab/` 目錄，可以直接重跑。
@@ -140,6 +189,71 @@ FlashMap 的驗證是「一次前向處理 17 個位置」（anchor + 16 個 dra
 `bf16` 下正負號會隨形狀改變（id 10、11），argmax 就翻轉；`fp32` 下三種形狀的差異只有 7.6e−06～5.7e−05，<strong>零次翻轉</strong>。
 
 **「形狀會改變答案」這件事只在 bf16 發生，fp32 下完全消失。** 這也正好解釋了上游那句警語。
+
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 630" role="img" aria-label="逐字解碼與區塊驗證：同一前綴、兩種捨入，bf16 下 argmax 會翻轉，fp32 下不會" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="978.5" height="628.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一前綴、兩種捨入</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1 個位置 vs 17 個位置</text>
+<rect x="48" y="120" width="430" height="210" rx="14" fill="#1c2230" stroke="#58a6ff55" stroke-width="1.5"/>
+<text x="68" y="150" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">逐字解碼 generate()</text>
+<text x="68" y="172" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一步只算 1 個位置</text>
+<rect x="84" y="210" width="54" height="46" rx="8" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="111" y="237" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<path d="M 145 233 L 169 233" fill="none" stroke="#7d8590" stroke-width="1.6" marker-end="url(#m7d8590)"/>
+<rect x="176" y="210" width="54" height="46" rx="8" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="203" y="237" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<path d="M 237 233 L 261 233" fill="none" stroke="#7d8590" stroke-width="1.6" marker-end="url(#m7d8590)"/>
+<rect x="268" y="210" width="54" height="46" rx="8" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="295" y="237" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<path d="M 329 233 L 353 233" fill="none" stroke="#7d8590" stroke-width="1.6" marker-end="url(#m7d8590)"/>
+<rect x="360" y="210" width="54" height="46" rx="8" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="387" y="237" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="68" y="300" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">512 個 token 就是 512 次前向</text>
+<rect x="510" y="120" width="422" height="210" rx="14" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="530" y="150" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">區塊驗證 spec_generate()</text>
+<text x="530" y="172" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一次算 17 個位置（anchor + 16 個 draft）</text>
+<rect x="530" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#f472b688" stroke-width="1.2"/>
+<rect x="550" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="570" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="590" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="610" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="630" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="650" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="670" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="690" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="710" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="730" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="750" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="770" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="790" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="810" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="830" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<rect x="850" y="210" width="18" height="46" rx="4" fill="#161b22" stroke="#2dd4bf88" stroke-width="1.2"/>
+<text x="530" y="300" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 1 格是 anchor，其餘 16 格是 draft</text>
+<path d="M 263 332 L 263 352" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 721 332 L 721 352" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="356" width="884" height="62" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="490.0" y="385.0" font-size="16" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個前綴、同一份權重</text>
+<text x="490.0" y="407.0" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩個形狀算的是同一個函數，只是 GEMM 的形狀不同 → 捨入順序不同</text>
+<path d="M 263 420 L 263 444" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 721 420 L 721 444" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="448" width="430" height="108" rx="12" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="68" y="478" font-size="16" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">bfloat16</text>
+<text x="68" y="504" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">gap = +0.125 / −0.125 / +0.250</text>
+<text x="68" y="528" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 同一題，三種形狀給出兩種答案</text>
+<rect x="510" y="448" width="422" height="108" rx="12" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="530" y="478" font-size="16" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">float32</text>
+<text x="530" y="504" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">形狀間差異 ≤ 5.7e−05</text>
+<text x="530" y="528" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 同一題，三種形狀給出同一個答案</text>
+<text x="48" y="588" font-size="13.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">上表 id 10 的實測：bf16 的 gap 隨形狀變號，argmax 就跟著翻轉。</text>
+<text x="48" y="610" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">fp32 下同一個前綴的差距固定在 −0.11644 附近，三種形狀都選同一個字。</text>
+</svg>
+<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：<code>generate()</code> 一步算 1 個位置，FlashMap 的驗證一次算 17 個位置。數學等價、捨入不同：bf16 下 argmax 翻轉，fp32 下三種形狀一致。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 ### 3.4 那 8B 的真值呢？搬到 CPU 去算
 

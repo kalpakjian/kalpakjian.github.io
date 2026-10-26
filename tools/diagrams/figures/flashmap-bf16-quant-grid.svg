@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="bf16 的量化格點：真實差距 0.060、0.242、0.320 被壓成 0.000 與 0.250" style="width:100%;height:auto;display:block">
+<defs><marker id="mf472b6" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f472b6"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker></defs>
+<rect x="0.75" y="0.75" width="958.5" height="538.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">bf16 的量化格點</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真值 vs bf16 的讀數</text>
+<text x="48" y="112" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一列都是 8B 上真實量到的分歧點：圓點是真的差距，方塊是 bf16 的讀數。</text>
+<path d="M 372.0 430 L 884.0 430" fill="none" stroke="#7d8590" stroke-width="1.5"/>
+<path d="M 372.0 136 L 372.0 430" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="372.0" y="452" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text>
+<path d="M 500.0 136 L 500.0 430" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="500.0" y="452" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.125</text>
+<path d="M 628.0 136 L 628.0 430" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="628.0" y="452" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.25</text>
+<path d="M 756.0 136 L 756.0 430" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="756.0" y="452" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.375</text>
+<path d="M 884.0 136 L 884.0 430" fill="none" stroke="#30363d" stroke-width="1.2"/>
+<text x="884.0" y="452" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.5</text>
+<rect x="48" y="143" width="270" height="66" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="64" y="173.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真值 0.06002</text>
+<text x="64" y="194.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 1 題驗證誤差 0.123</text>
+<path d="M 433.46048 176 L 372.0 176" fill="none" stroke="#f472b6" stroke-width="2" marker-end="url(#mf472b6)"/>
+<circle cx="433.46048" cy="176" r="7.5" fill="#2dd4bf"/>
+<rect x="364.0" y="168" width="16" height="16" rx="3" fill="none" stroke="#f472b6" stroke-width="2.2"/>
+<text x="388.0" y="164" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">量到 0.00000</text>
+<text x="388.0" y="198" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">完全平手</text>
+<rect x="48" y="253" width="270" height="66" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="64" y="283.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真值 0.24197</text>
+<text x="64" y="304.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 2 題驗證誤差 0.184</text>
+<circle cx="619.77728" cy="286" r="7.5" fill="#2dd4bf"/>
+<rect x="620.0" y="278" width="16" height="16" rx="3" fill="none" stroke="#fbbf24" stroke-width="2.2"/>
+<text x="644.0" y="274" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">量到 0.25000</text>
+<text x="644.0" y="308" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">吸附到格點</text>
+<rect x="48" y="363" width="270" height="66" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="64" y="393.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">真值 0.32040</text>
+<text x="64" y="414.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 7 題驗證誤差 0.476</text>
+<path d="M 700.0896 396 L 628.0 396" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mfbbf24)"/>
+<circle cx="700.0896" cy="396" r="7.5" fill="#2dd4bf"/>
+<rect x="620.0" y="388" width="16" height="16" rx="3" fill="none" stroke="#fbbf24" stroke-width="2.2"/>
+<text x="644.0" y="384" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">量到 0.25000</text>
+<text x="644.0" y="418" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">吸附到格點</text>
+<text x="48" y="492" font-size="13.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">bf16 在這個 logit 量級只分辨得出 0.125 的差距；真值 0.060 於是被壓成 0。</text>
+<text x="48" y="514" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8 個分歧點裡有 7 個的真實 gap 小於一個 bf16 ULP（最大也只有 0.32）。</text>
+</svg>

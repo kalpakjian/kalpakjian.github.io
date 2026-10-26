@@ -229,6 +229,7 @@ $h = (Invoke-WebRequest "https://kalpakjian.github.io/<note>/" -UseBasicParsing)
 | `figures/plan_*.json` | 各筆記的嵌入計畫（`art_index` + `svg` + `caption`） |
 | `figures/gen_pytoolkit.py`＋`figures/embed_pytoolkit.py` | **`_posts` 文章**（python-problem-solving-toolkit）的產生器與嵌入腳本；後者含 `theme_fix()`（見陷阱 11、12） |
 | | `figures/gen_wm.py`＋`figures/embed_wm.py` | **`_posts` 文章**（xr-vs-world-model）的 5 張圖產生器與嵌入腳本 |
+| | `figures/gen_flashmap_bf16.py`＋`figures/embed_flashmap_bf16.py` | **`_posts` 文章**（flashmap-bf16-losslessness）的 2 張圖；同樣是「單行錨點 + `<!-- FIGn -->` 幂等 + 保留 CRLF」，並另建無文字的 `-banner.png` 給主題 banner（banner 會被 `cover` 裁切並疊日期，不能有文字） |
 | | `figures/katex_pre.py`＋`figures/katex_render.js` | **數學公式**：建置期把 LaTeX 轉成靜態 KaTeX HTML（見 §4.1） |
 | | `figures/katex_probe_faces.py` | 在真實瀏覽器量測哪幾個 KaTeX 字型被用到，寫入 `katex_faces.json` |
 | | `figures/build_wm_post.py` | xr-vs-world-model 的完整重建流程（基底 → 嵌圖 → KaTeX） |
