@@ -4,17 +4,43 @@
 
 ## 0. 30 秒總複習（考前最後掃描）
 
-```
-AI = 具人類式智慧的「機器智慧」
-  ├─ 取徑：Human approach（think/act like humans）
-  │        Ideal approach（think/act rationally）
-  ├─ 子目標：NLP、Navigate、Represent Knowledge、Reasoning、Perception
-  └─ 典型應用：
-       影像 → Image/Video Recognition → Facial Recognition（Detection→Analysis→Recognition）
-       語言 → NLP → Speech Recognition（HMM、cepstral coefficients）
-       決策 → Reinforcement Learning（agent、reward、policy）
-       生成 → Generative AI（deep learning 生成新內容）
-```
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-label="AI 是什麼：一棵樹看完" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="618.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AI 是什麼：一棵樹看完</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">取徑、子目標與典型應用</text>
+<rect x="48" y="100" width="804" height="470" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="142" font-size="17" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AI = 具人類式智慧的「機器智慧」</text>
+<path d="M 100 184 L 100 494" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 158 228 L 158 248" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 158 336 L 158 326" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 158 414 L 158 494" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 100 184 L 114 184" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="190" font-size="14" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">取徑</text>
+<path d="M 158 218 L 172 218" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="178" y="224" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Human approach（think/act like humans）</text>
+<path d="M 158 248 L 172 248" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="178" y="254" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ideal approach（think/act rationally）</text>
+<path d="M 100 292 L 114 292" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="298" font-size="14" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">子目標</text>
+<path d="M 158 326 L 172 326" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="178" y="332" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">NLP、Navigate、Represent Knowledge、Reasoning、Perception</text>
+<path d="M 100 370 L 114 370" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="120" y="376" font-size="14" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">典型應用</text>
+<path d="M 158 404 L 172 404" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="178" y="410" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">影像 → Image/Video Recognition → Facial Recognition（Detection→Analysis→Recognition）</text>
+<path d="M 158 434 L 172 434" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="178" y="440" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">語言 → NLP → Speech Recognition（HMM、cepstral coefficients）</text>
+<path d="M 158 464 L 172 464" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="178" y="470" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">決策 → Reinforcement Learning（agent、reward、policy）</text>
+<path d="M 158 494 L 172 494" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="178" y="500" font-size="11.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">生成 → Generative AI（deep learning 生成新內容）</text>
+<text x="48" y="600" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三個層次：為什麼做（取徑）、要做成什麼（子目標）、以及實際拿來幹嘛（典型應用）。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 11：AI 的三個層次——取徑（Human／Ideal）、子目標（NLP、Navigate、Represent Knowledge、Reasoning、Perception），以及四個典型應用（影像辨識、語言、決策、生成）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 | 你會用到的關鍵詞 | 一句話記法 |
 |---|---|

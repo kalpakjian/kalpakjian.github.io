@@ -1,0 +1,7 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:\\Users\\princ\\blog\\tools\\diagrams\\figures\\tpot-racetrack-roles.svg",
+    "caption": "圖 19：TPOT 的三個角色——你負責給它零件箱（sklearn 可用的元件）與賽道（訓練資料），TPOT 負責不斷試組合、測秒數、淘汰慢的並繁衍快的，最後交付一台調到最好的車（管線）與改裝清單（節點與參數）。｜手繪 SVG 圖表"
+  }
+]

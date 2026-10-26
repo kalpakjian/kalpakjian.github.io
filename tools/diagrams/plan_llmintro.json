@@ -1,0 +1,7 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:\\Users\\princ\\blog\\tools\\diagrams\\figures\\llm-scale-ladder.svg",
+    "caption": "圖 44：參數量一路長上去——傳統機器學習模型數千到數百萬、早期 NLP 神經網路數百萬到數億、LLM（GPT-3 級）數千億（175 B）＋兆級 token 的訓練資料，跨越四個數量級。｜手繪 SVG 圖表"
+  }
+]

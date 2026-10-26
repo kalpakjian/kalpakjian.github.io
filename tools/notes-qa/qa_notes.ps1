@@ -17,6 +17,8 @@
     6. list tags        : <li> / </li> balanced
     7. literal \r\n     : table corruption marker inside md
     8. heading parity   : h2/h3 set identical between md and html
+    8b. figure parity   : md and html carry the same number of <figure> blocks
+                          (catches a rebuild that drops the base64 images)
     9. header blockquote: rendered line by line (<br /> present)
                           -- only checked when a header block is actually there,
                              i.e. the first <blockquote> after </h1> once the
@@ -178,6 +180,18 @@ foreach ($d in $dirs) {
     foreach ($x in $hb) { if ($ha -notcontains $x) { $diff++ } }
     foreach ($x in $ha) { if ($hb -notcontains $x) { $diff++ } }
     if ($diff -gt 0) { $problems += ("heading mismatch md<->html = {0}" -f $diff) }
+
+    # 8b) figure parity: the md and the html must carry the SAME number of
+    #     <figure> blocks.  This catches the worst failure mode of the note
+    #     pipeline -- rebuilding the md from a parts/ directory that does not
+    #     contain the base64 illustrations.  Those illustrations exist only
+    #     inside the published md, so a rebuild silently deletes them
+    #     (tpot-notes lost 10 JPEG figures this way on 2026-10-26).
+    $mdFig = ([regex]::Matches($md, '<figure\b')).Count
+    $htmlFig = ([regex]::Matches($html, '<figure\b')).Count
+    if ($mdFig -ne $htmlFig) {
+      $problems += ("figure count mismatch md={0} html={1}" -f $mdFig, $htmlFig)
+    }
   }
 
   # 9) header blockquote rendered line by line (only when a header block is present)

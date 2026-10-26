@@ -1824,11 +1824,47 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tbody>
 </table>
 <h3 id="64-用比喻記住-tpot-的定位">6.4 用比喻記住 TPOT 的定位</h3>
-<div class="codehilite"><pre><span></span><code>TPOT = 賽車改裝的自動化實驗室
-        ├─ 你負責：給它零件箱（sklearn 可用的元件）、給它賽道（訓練資料）
-        ├─ 它負責：不斷試組合、測秒數、淘汰慢的、繁衍快的
-        └─ 它交付：一台調到最好的車（管線）＋ 改裝清單（節點與參數）
-</code></pre></div>
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" role="img" aria-label="TPOT 的三個角色分工" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="438.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT 的三個角色分工</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你給零件箱與賽道，它負責試車與篩選</text>
+<rect x="190" y="106" width="520" height="56" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="450.0" y="140.12" font-size="17" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT = 賽車改裝的自動化實驗室</text>
+<rect x="48" y="232" width="244" height="132" rx="12" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="78" cy="262" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="78" y="266.56" font-size="12" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">人類</text>
+<text x="102" y="267" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你負責</text>
+<path d="M 66 286 L 274 286" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="66" y="312" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">零件箱：sklearn 可用的元件</text>
+<text x="66" y="336" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">賽道：訓練資料</text>
+<rect x="328" y="232" width="244" height="132" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="358" cy="262" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="358" y="266.56" font-size="12" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TPOT</text>
+<text x="382" y="267" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">它負責</text>
+<path d="M 346 286 L 554 286" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="346" y="312" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不斷試組合、測秒數</text>
+<text x="346" y="336" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">淘汰慢的、繁衍快的</text>
+<rect x="608" y="232" width="244" height="132" rx="12" fill="#1c2230" stroke="#3fb95066" stroke-width="1.5"/>
+<circle cx="638" cy="262" r="15" fill="#3fb950" opacity="0.92"/>
+<text x="638" y="266.56" font-size="12" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">成果</text>
+<text x="662" y="267" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">它交付</text>
+<path d="M 626 286 L 834 286" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="626" y="312" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一台調到最好的車（管線）</text>
+<text x="626" y="336" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">改裝清單（節點與參數）</text>
+<path d="M 450 162 L 450 198" fill="none" stroke="#7d8590" stroke-width="1.5"/>
+<path d="M 170.0 198 L 730.0 198" fill="none" stroke="#7d8590" stroke-width="1.5"/>
+<path d="M 170.0 198 L 170.0 228" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 450.0 198 L 450.0 228" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 730.0 198 L 730.0 228" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="48" y="396" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">比喻的關鍵字是「自動試組合」與「附上改裝清單」。</text>
+<text x="48" y="418" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">考試若問「TPOT 幫你省下什麼」：省下人工嘗試組合的時間，而不是省下「理解問題」的功夫。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 19：TPOT 的三個角色——你負責給它零件箱（sklearn 可用的元件）與賽道（訓練資料），TPOT 負責不斷試組合、測秒數、淘汰慢的並繁衍快的，最後交付一台調到最好的車（管線）與改裝清單（節點與參數）。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 <blockquote>
 <p><strong>考點</strong>：比喻的關鍵字是「<strong>自動試組合</strong>」與「<strong>附上改裝清單</strong>」。

@@ -867,12 +867,36 @@ internet）。</p>
 被最佳化，用來<strong>預測序列中的下一個字（predict the next word in a sequence）</strong>。</p>
 <h3 id="23-這張圖在說什麼本筆記補充">2.3 這張圖在說什麼（本筆記補充）</h3>
 <p>課程只有圖。它要表達的是<strong>規模的量級差異</strong>：</p>
-<div class="codehilite"><pre><span></span><code>傳統機器學習模型   ──  數千 ~ 數百萬個參數
-         ↓
-早期 NLP 神經網路  ──  數百萬 ~ 數億個參數
-         ↓
-LLM（GPT-3 級）    ──  數千億個參數（175 B）＋ 兆級 token 的訓練資料
-</code></pre></div>
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" role="img" aria-label="參數量的三級階梯" style="width:100%;height:auto;display:block">
+<defs><marker id="m30363d" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#30363d"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="438.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">參數量的三級階梯</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每往下一級，規模再翻幾個數量級</text>
+<rect x="150" y="122" width="250" height="56" rx="10" fill="#1c2230" stroke="#7d859066" stroke-width="1.5"/>
+<text x="168" y="156" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">傳統機器學習模型</text>
+<path d="M 400 150 L 424 150" fill="none" stroke="#30363d" stroke-width="1.6"/>
+<text x="436" y="156" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">數千 ~ 數百萬個參數</text>
+<rect x="150" y="214" width="250" height="56" rx="10" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="168" y="248" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">早期 NLP 神經網路</text>
+<path d="M 400 242 L 424 242" fill="none" stroke="#30363d" stroke-width="1.6"/>
+<text x="436" y="248" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">數百萬 ~ 數億個參數</text>
+<rect x="150" y="306" width="250" height="56" rx="10" fill="#1c2230" stroke="#c084fc77" stroke-width="1.5"/>
+<text x="168" y="340" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LLM（GPT-3 級）</text>
+<path d="M 400 334 L 424 334" fill="none" stroke="#30363d" stroke-width="1.6"/>
+<text x="436" y="340" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">數千億個參數（175 B）＋ 兆級 token 的訓練資料</text>
+<path d="M 275 178 L 275 210" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<path d="M 275 270 L 275 302" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#m30363d)"/>
+<path d="M 104 150 L 104 336" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<path d="M 104 336 L 104 362" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mfbbf24)"/>
+<text x="48" y="134" font-size="12.5" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">參數量</text>
+<text x="48" y="386" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每往下一級，規模再翻幾個數量級</text>
+<text x="48" y="418" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從數百萬到數千億，跨越四個數量級 —— 這就是「Large」兩個字的來源；但參數量只是結果，真正拉開差距的是 transformer 架構與海量訓練資料。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 44：參數量一路長上去——傳統機器學習模型數千到數百萬、早期 NLP 神經網路數百萬到數億、LLM（GPT-3 級）數千億（175 B）＋兆級 token 的訓練資料，跨越四個數量級。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 <p>規模本身就是能力來源：參數越多、資料越多，模型能記住的語言模式與上下文關係就越細緻。</p>
 <blockquote>

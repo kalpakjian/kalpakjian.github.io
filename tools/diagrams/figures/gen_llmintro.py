@@ -54,17 +54,53 @@ def fig_llm(s):
         x += w + 36
 
 
+def fig_scale(s):
+    """參數量的三級階梯（原本是 5 行 ASCII 圖）。"""
+    s.rect(150, 122, 250, 56, fill=CARD2, stroke=C["gray"] + "66", rx=10)
+    s.text(168, 156, "傳統機器學習模型", 14.5, TXT, "700")
+    s.line(400, 150, 424, 150, RAIL, 1.6)
+    s.text(436, 156, "數千 ~ 數百萬個參數", 13.5, MUT)
+
+    s.rect(150, 214, 250, 56, fill=CARD2, stroke=C["blue"] + "66", rx=10)
+    s.text(168, 248, "早期 NLP 神經網路", 14.5, TXT, "700")
+    s.line(400, 242, 424, 242, RAIL, 1.6)
+    s.text(436, 248, "數百萬 ~ 數億個參數", 13.5, MUT)
+
+    s.rect(150, 306, 250, 56, fill=CARD2, stroke=C["violet"] + "77", rx=10)
+    s.text(168, 340, "LLM（GPT-3 級）", 14.5, TXT, "700")
+    s.line(400, 334, 424, 334, RAIL, 1.6)
+    s.text(436, 340, "數千億個參數（175 B）＋ 兆級 token 的訓練資料", 13.5, TXT)
+
+    # 層間的下降箭頭
+    s.arrow(275, 178, 275, 210, RAIL)
+    s.arrow(275, 270, 275, 302, RAIL)
+
+    # 左側：規模成長的量尺
+    s.line(104, 150, 104, 336, C["amber"], 2)
+    s.arrow(104, 336, 104, 362, C["amber"], 2)
+    s.text(48, 134, "參數量", 12.5, C["amber"], "700")
+    s.text(48, 386, "每往下一級，規模再翻幾個數量級", 12, MUT)
+
+    s.text(48, 418, "從數百萬到數千億，跨越四個數量級 —— 這就是「Large」兩個字的來源；"
+                    "但參數量只是結果，真正拉開差距的是 transformer 架構與海量訓練資料。",
+           12.5, MUT)
+
+
 FIGS = [
     ("llm-concept-tree", "llm-intro-notes", 1, 1000, 600,
-     "LLM 是什麼：一頁看懂", "定義、來由、訓練、架構、流派與輸入管線",
+     "LLM 是什麼：一頁看懂", "定義、來由、訓練、架構、流派與輸入管線", fig_llm,
      "圖 43：LLM 的概念全貌——七個主分支與兩則補充，最後是從文字到模型主層的輸入管線。"
      "｜手繪 SVG 圖表"),
+    ("llm-scale-ladder", "llm-intro-notes", 2, 900, 440,
+     "參數量的三級階梯", "每往下一級，規模再翻幾個數量級", fig_scale,
+     "圖 44：參數量一路長上去——傳統機器學習模型數千到數百萬、早期 NLP 神經網路數百萬到數億、"
+     "LLM（GPT-3 級）數千億（175 B）＋兆級 token 的訓練資料，跨越四個數量級。｜手繪 SVG 圖表"),
 ]
 
 if __name__ == "__main__":
-    for slug, note, art, w, h, title, sub, cap in FIGS:
+    for slug, note, art, w, h, title, sub, fn, cap in FIGS:
         s = Svg(w, h, title, title, sub)
-        fig_llm(s)
+        fn(s)
         bad = s.check()
         s.save(os.path.join(HERE, slug + ".svg"),
                os.path.join(HERE, "_m_" + slug + ".html"))

@@ -155,6 +155,13 @@ Get-ChildItem C:\Users\princ\blog\_covergen -Filter 'build_*_html.py' | Select-O
 | **有**（例：`build_automl_html.py`） | md 改完後**必須重跑建置腳本**，否則 index.html 下次重建就被覆蓋：<br>`cd C:\Users\princ\blog\_covergen; python build_automl_html.py` |
 | **沒有** | md 與 index.html 由 `embed_figs.py` 同步改；QA 閘門會檢查兩者標題一致 |
 
+> ⚠️ **第三種情況：`source/<note>/` 有專屬的 build 腳本，但它重建不出原圖。**
+> `tpot-notes` 就是：`_work/tpot/build_notes.py` 會從 `parts/` 重新組出 md，
+> 但**那 10 張 Qwen-Image 插圖（base64 JPEG）只存在於已發布的 md 裡** ——
+> `parts/` 沒有、`_covergen/tpot_chapters/` 已被清掉、注入腳本也不存在。
+> 所以對 tpot-notes **不要重跑 `build_notes.py`**，一律用 `embed_figs.py` 就地替換。
+> （該腳本已加上守門：新產出的圖數比已發布版少就會 REFUSE，不讓你踩到。）
+
 ```powershell
 cd C:\Users\princ\blog
 powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 -Quiet

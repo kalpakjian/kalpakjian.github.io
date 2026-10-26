@@ -1635,11 +1635,26 @@ Ollama REST API（http://127.0.0.1:11434）
 
 主介面裡的 **`+ New Thread`** 是「**開一條新的對話串**」：
 
-```
-我的工作區
-   ├── default          ← 主對話
-   └── *New Thread      ← 另一條獨立對話（同一個工作區、同樣的文件）
-```
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" role="img" aria-label="工作區底下的多條對話" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="338.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">工作區底下的多條對話</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">對話彼此獨立，但共用同一批文件</text>
+<rect x="48" y="100" width="804" height="176" rx="14" fill="#1c2230" stroke="#2a6f68" stroke-width="1.5"/>
+<text x="76" y="140" font-size="18" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">我的工作區（Workspace）</text>
+<path d="M 104 190 L 104 234" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 104 190 L 118 190" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="130" y="196" font-size="14" fill="#2dd4bf" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">default</text>
+<text x="250" y="196" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">主對話</text>
+<path d="M 104 234 L 118 234" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="130" y="240" font-size="14" fill="#58a6ff" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">*New Thread</text>
+<text x="250" y="240" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">另一條獨立對話（同一個工作區、同樣的文件）</text>
+<text x="48" y="312" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">工作區底下可以有多條對話：每一條都是獨立的一串對話紀錄，但共用同一個工作區裡的同一批文件。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 46：工作區（Workspace）底下可以有多條對話——default 是主對話，另一條是獨立的對話紀錄；兩條對話彼此獨立，但共用同一個工作區裡的同一批文件。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 **為什麼要這個？** 因為 LLM 的上下文會被前面的對話污染。
 想「換個角度重問同一件事」時，**開新 thread** 比 `/clear` 更乾淨。

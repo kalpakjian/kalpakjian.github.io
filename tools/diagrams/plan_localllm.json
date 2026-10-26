@@ -1,0 +1,7 @@
+[
+  {
+    "art_index": 1,
+    "svg": "C:\\Users\\princ\\blog\\tools\\diagrams\\figures\\localllm-workspace.svg",
+    "caption": "圖 46：工作區（Workspace）底下可以有多條對話——default 是主對話，另一條是獨立的對話紀錄；兩條對話彼此獨立，但共用同一個工作區裡的同一批文件。｜手繪 SVG 圖表"
+  }
+]

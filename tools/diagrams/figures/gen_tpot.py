@@ -226,6 +226,42 @@ def fig_api_diff(s):
     note(s, 48, 600, "每一列都是本機實際跑出來的結果；完整 traceback 收在附錄 B.2。", 13)
 
 
+# --------------------------------------------------------------------- 9
+def fig_racetrack_roles(s):
+    """§6.4：用比喻記住 TPOT 的定位（取代 4 行 ASCII 樹狀圖）。
+
+    這一張補的是「三個角色分工」——圖 6 畫的是賽車場景、6.1／6.2 是對照表，
+    都沒有把「你負責什麼／它負責什麼／它交付什麼」講成結構。
+    """
+    s.box(190, 106, 520, 56, "TPOT = 賽車改裝的自動化實驗室", None, "amber", tsize=17)
+
+    roles = [
+        ("你負責", "人類", ["零件箱：sklearn 可用的元件", "賽道：訓練資料"], "blue"),
+        ("它負責", "TPOT", ["不斷試組合、測秒數", "淘汰慢的、繁衍快的"], "teal"),
+        ("它交付", "成果", ["一台調到最好的車（管線）", "改裝清單（節點與參數）"], "green"),
+    ]
+    w, gap, y, h = 244, 36, 232, 132
+    xs = [48 + i * (w + gap) for i in range(3)]
+    for i, (title, who, lines, st) in enumerate(roles):
+        x = xs[i]
+        s.rect(x, y, w, h, fill=CARD2, stroke=C[st] + "66", rx=12)
+        s.badge(x + 30, y + 30, who, C[st], r=15, size=12)
+        s.text(x + 54, y + 35, title, 15.5, TXT, "700")
+        s.line(x + 18, y + 54, x + w - 18, y + 54, RAIL, 1.2)
+        for j, ln in enumerate(lines):
+            s.text(x + 18, y + 80 + j * 24, ln, 12.5, MUT)
+
+    # 根 → 三個角色
+    s.line(450, 162, 450, 198, RAIL, 1.5)
+    s.line(xs[0] + w / 2, 198, xs[2] + w / 2, 198, RAIL, 1.5)
+    for x in xs:
+        s.arrow(x + w / 2, 198, x + w / 2, y - 4, RAIL)
+
+    note(s, 48, 396, "比喻的關鍵字是「自動試組合」與「附上改裝清單」。", 13)
+    note(s, 48, 418, "考試若問「TPOT 幫你省下什麼」：省下人工嘗試組合的時間，"
+                     "而不是省下「理解問題」的功夫。", 12.5)
+
+
 FIGS = [
     ("tpot-flow", 1, 900, 600, "TPOT 完整流程：30 秒總複習",
      "從資料到準確率，中間那格就是基因演算法", fig_flow,
@@ -259,6 +295,11 @@ FIGS = [
      "每一列都是本機實際跑出來的結果", fig_api_diff,
      "圖 18：API 對照——verbosity→verbose、score()→accuracy_score、export()→joblib "
      "等六處改寫；左欄寫法在 1.1.0 會直接報錯。｜手繪 SVG 圖表"),
+    ("tpot-racetrack-roles", 9, 900, 440, "TPOT 的三個角色分工",
+     "你給零件箱與賽道，它負責試車與篩選", fig_racetrack_roles,
+     "圖 19：TPOT 的三個角色——你負責給它零件箱（sklearn 可用的元件）與賽道（訓練資料），"
+     "TPOT 負責不斷試組合、測秒數、淘汰慢的並繁衍快的，最後交付一台調到最好的車（管線）"
+     "與改裝清單（節點與參數）。｜手繪 SVG 圖表"),
 ]
 
 if __name__ == "__main__":

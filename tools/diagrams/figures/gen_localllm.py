@@ -161,6 +161,28 @@ def fig_rag(s):
                     "生成只要跑一次 → 用雲端拿更好的品質。", 13, MUT)
 
 
+def fig_workspace(s):
+    """§?: 工作區底下的多條對話（原本是 3 行 ASCII 樹狀圖）。"""
+    s.rect(48, 100, 804, 176, fill=CARD2, stroke="#2a6f68", rx=14)
+    s.text(76, 140, "我的工作區（Workspace）", 18, TXT, "700")
+
+    rows = [
+        ("default", "主對話", "teal"),
+        ("*New Thread", "另一條獨立對話（同一個工作區、同樣的文件）", "blue"),
+    ]
+    ys = [196, 240]
+    rail = 104
+    s.line(rail, ys[0] - 6, rail, ys[1] - 6, RAIL, 1.5)
+    for i, (name, desc, stage) in enumerate(rows):
+        sy = ys[i] - 6
+        s.line(rail, sy, rail + 14, sy, RAIL, 1.5)
+        s.text(rail + 26, ys[i], name, 14, C[stage], "700", "start", MONO)
+        s.text(250, ys[i], desc, 13, TXT)
+
+    s.text(48, 312, "工作區底下可以有多條對話：每一條都是獨立的一串對話紀錄，"
+                    "但共用同一個工作區裡的同一批文件。", 13, MUT)
+
+
 FIGS = [
     ("localllm-qkm", "local-llm-notes", 1, 900, 400,
      "量化命名怎麼讀：Q4_K_M", "一個字元一個意思", fig_qkm,
@@ -187,6 +209,11 @@ FIGS = [
      "混合架構：雲端生成 ＋ 本機嵌入", "嵌入放本機、生成放雲端", fig_rag,
      "圖 45：混合架構——本機跑 all-MiniLM-L6-v2 做嵌入、VectorStoreIndex 做索引，"
      "把檢索到的段落送上雲端（Groq llama-3.1-8b-instant）生成答案。｜手繪 SVG 圖表"),
+    ("localllm-workspace", "local-llm-notes", 7, 900, 340,
+     "工作區底下的多條對話", "對話彼此獨立，但共用同一批文件", fig_workspace,
+     "圖 46：工作區（Workspace）底下可以有多條對話——default 是主對話，"
+     "另一條是獨立的對話紀錄；兩條對話彼此獨立，但共用同一個工作區裡的同一批文件。"
+     "｜手繪 SVG 圖表"),
 ]
 
 if __name__ == "__main__":

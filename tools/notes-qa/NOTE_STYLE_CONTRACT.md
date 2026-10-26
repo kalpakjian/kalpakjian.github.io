@@ -272,15 +272,20 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 
 
 ### 12.3 這一項**不進**品質閘門（刻意的）
 
-2026-10-26 重查（`tools/diagrams/inventory.py` 實跑）：**ASCII 圖幾乎清空了** ——
-24 份筆記裡只剩 **5 份 / 5 張**真圖待轉
-（`ai-intro-notes`、`llm-intro-notes`、`local-llm-notes`、`neural-network-notes`、`tpot-notes`）。
-另有一張在 `_posts/ai-model-factory-pipeline-oop-git.md`。
-剩下的框線字元都是**程式碼區塊裡的裝飾分隔線**（`# ── 啟動 H2O 伺服器 ──`），
-轉成圖會破壞可複製的指令，所以**刻意不轉**。
+2026-10-26 重查（`tools/diagrams/inventory.py` 實跑）：**ASCII 圖已全部清空** ——
+24 份筆記裡 **0 張**待轉（`ai-intro-notes` 圖 11、`llm-intro-notes` 圖 44、
+`local-llm-notes` 圖 46、`tpot-notes` 圖 19 已升級成內嵌 SVG；
+`neural-network-notes` 判定為「一頁精華」文字區塊，**刻意不轉**，理由見下）。
+
+剩下會被框線字元「誤報」但**不該轉**的兩類，工具已能自動排除：
+
+| 類別 | 樣子 | 為什麼不轉 |
+|---|---|---|
+| 程式碼區塊的裝飾分隔線 | `# ── 啟動 H2O 伺服器 ──` | 轉成圖會破壞可複製的指令 |
+| 「一頁精華／30 秒速查」文字區塊 | `========== 4. 問題 → 激勵函數 ==========` 這種分段 | 它是**散文速查表**不是圖；而且裡面那棵小樹在正文已有完整 SVG（`neural-network-notes` 圖 39），整塊轉成 SVG 是降級 |
 
 > ⚠️ `inventory.py` 的 `MIN_BOX` 從 8 降到 6：真正的樹狀圖最少只用 6 個框線字元，
-> 門檻 8 會**漏報**上面那 5 張（都是小而關鍵的樹狀／對照圖）。
+> 門檻 8 會**漏報**那 4 張小圖（都是關鍵的樹狀／對照圖）。
 
 - 所以這條是**寫作慣例**，靠人與 AI 在產線階段遵守，**不寫成 `qa_notes.ps1` 的硬性檢查**——
   硬性禁止會讓閘門在多份筆記上一次全紅，把真正的缺陷訊號淹掉。

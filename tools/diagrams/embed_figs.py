@@ -32,7 +32,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 REPO = r"C:\Users\princ\blog"
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from inventory import is_code_block  # noqa: E402  (same directory)
+from inventory import is_code_block, is_cheatsheet_block, MIN_BOX  # noqa: E402
 
 
 def responsive(svg):
@@ -58,7 +58,9 @@ BOX = "┌─┐│└┘├┤┬┴┼╔╗╚╝║═"
 
 
 def _has_art(body):
-    return sum(1 for ch in body if ch in BOX) >= 8
+    # 門檻必須與 inventory.py 相同，否則 art#N 的編號會對不上
+    # （inventory.py 的 MIN_BOX 已從 8 降到 6，會多認出 5 張小圖）。
+    return sum(1 for ch in body if ch in BOX) >= MIN_BOX
 
 
 def _md_spans(text):
@@ -82,7 +84,7 @@ def replace_md(text, n, fig):
     k = 0
     for a, b in spans:
         body = "\n".join(lines[a + 1:b])
-        if _has_art(body) and not is_code_block(body):
+        if _has_art(body) and not is_code_block(body) and not is_cheatsheet_block(body):
             k += 1
             if k == n:
                 return "\n".join(lines[:a] + [fig] + lines[b + 1:])
@@ -113,7 +115,8 @@ def replace_html(text, n, fig):
     k = 0
     for s, e in _html_spans(text):
         seg = text[s:e]
-        if _has_art(seg) and not is_code_block(_plain(seg)):
+        if _has_art(seg) and not is_code_block(_plain(seg)) \
+                and not is_cheatsheet_block(_plain(seg)):
             k += 1
             if k == n:
                 return text[:s] + fig + text[e:]

@@ -60,6 +60,26 @@ def is_code_block(body):
     return hits >= 2 and hits / float(len(lines)) >= 0.5
 
 
+CHEATSHEET = re.compile(r"^\s*=+ .* =+\s*$")
+
+
+def is_cheatsheet_block(body):
+    """True for the "一頁精華 / 30 秒速查" text blocks -- NOT diagrams.
+
+    Those blocks are a single ```text fence holding nine or ten
+    "========== N. 標題 ==========" sections.  They are prose cheat-sheets by
+    design, and the one small tree inside them (neural-network-notes 的
+    「問題 → 激勵函數」) already has a full SVG in the body (圖 39).
+    Turning the whole block into one SVG would be a downgrade, so the tools
+    must skip it.
+    """
+    lines = [l for l in body.split("\n") if l.strip()]
+    if not lines:
+        return False
+    hits = sum(1 for l in lines if CHEATSHEET.match(l))
+    return hits >= 3
+
+
 def notes():
     for p in sorted(glob.glob(os.path.join(SRC, "*", "*Study_Notes.md"))):
         yield os.path.basename(os.path.dirname(p)), p
@@ -70,7 +90,8 @@ def main():
         done, todo = [], []
         for note, p in notes():
             blocks = art_blocks(io.open(p, encoding="utf-8").read())
-            real = [b for b in blocks if not is_code_block(b[0])]
+            real = [b for b in blocks if not is_code_block(b[0])
+                    and not is_cheatsheet_block(b[0])]
             skipped = len(blocks) - len(real)
             (todo if real else done).append((note, len(real), skipped))
         print("無待轉圖區塊: %d 份（含本來就沒有圖的筆記）" % len(done))
@@ -88,7 +109,8 @@ def main():
     p = os.path.join(SRC, note, [f for f in os.listdir(os.path.join(SRC, note))
                                  if f.endswith("Study_Notes.md")][0])
     blocks = art_blocks(io.open(p, encoding="utf-8").read())
-    real = [b for b in blocks if not is_code_block(b[0])]
+    real = [b for b in blocks if not is_code_block(b[0])
+            and not is_cheatsheet_block(b[0])]
     if len(sys.argv) > 2:
         i = int(sys.argv[2]) - 1
         print(real[i][0])
