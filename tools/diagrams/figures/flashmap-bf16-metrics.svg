@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" role="img" aria-label="同一份 metrics 回應的兩種解析：精確比對家族名得到 γ 4.954，substring 比對得到接受率 17.0" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="958.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">指標是怎麼算錯的</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">精確比對 vs substring</text>
+<text x="48" y="112" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個 /metrics 回應、兩種認家族名的方式；差別只在「怎麼比對名稱」。</text>
+<rect x="48" y="150" width="330" height="120" rx="12" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="68" y="182" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">正確：精確比對完整家族名</text>
+<text x="68" y="210" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只取以 _total 結尾的家族</text>
+<text x="68" y="236" font-size="12" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">accepted 2475 / drafts 626 / draft 10016</text>
+<rect x="400" y="162" width="164" height="96" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="416" y="196" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">γ</text>
+<text x="416" y="232" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4.954</text>
+<rect x="572" y="162" width="164" height="96" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="588" y="196" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">草稿接受率</text>
+<text x="588" y="232" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">24.71%</text>
+<rect x="744" y="162" width="164" height="96" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="760" y="196" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每步 draft</text>
+<text x="760" y="232" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">16.0 個</text>
+<rect x="48" y="300" width="330" height="120" rx="12" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<text x="68" y="332" font-size="15" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">錯誤：substring 比對</text>
+<text x="68" y="360" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">命中 _created（Unix 時間戳 1.79e9）</text>
+<text x="68" y="384" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">與 16 個 _per_pos_ 家族一起加總</text>
+<rect x="400" y="312" width="164" height="96" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="416" y="346" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">被加進去的</text>
+<text x="416" y="382" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.79e9</text>
+<rect x="572" y="312" width="164" height="96" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="588" y="346" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">家族數</text>
+<text x="588" y="382" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">18 個</text>
+<rect x="744" y="312" width="164" height="96" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="760" y="346" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">算出來的</text>
+<text x="760" y="382" font-size="20" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">17.0</text>
+<text x="48" y="450" font-size="13.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「接受率 17.0」大於 1 就是最直接的警訊：分母被不相關的家族污染了。</text>
+<text x="48" y="472" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">修正後 γ = 4.954、接受率 24.71%、每步 16.0 個 draft token，與 vLLM 的 log 對帳一致。</text>
+</svg>

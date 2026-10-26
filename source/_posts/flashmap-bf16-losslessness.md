@@ -169,6 +169,61 @@ TARGET_MODEL=Qwen/Qwen3-4B DRAFT_MODEL=j-shen/FlashMap-Qwen3-4B \
 | fp32 的 argmax 等於 <strong>FlashMap</strong> 的 token | 7 / 9 |
 | fp32 的 argmax 等於<strong>基準</strong>的 token | 2 / 9 |
 
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="一輪推測解碼的形狀：前綴、draft 猜 16 個、target 一次驗證 17 個位置、接受 k 個加 1 個 bonus" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="958.5" height="538.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一輪的形狀</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">draft → 驗證 → commit</text>
+<text x="48" y="112" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一輪都是一樣的形狀；差別只在這一輪接受了幾個 draft。</text>
+<rect x="60" y="140" width="180" height="96" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="76" y="185.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">前綴</text>
+<text x="76" y="206.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">prompt + 已接受的 token</text>
+<path d="M 244 188 L 276 188" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="282" y="140" width="180" height="96" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="298" y="185.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">draft 猜 16 個</text>
+<text x="298" y="206.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">由 drafter 產生，可能全錯</text>
+<path d="M 466 188 L 498 188" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="504" y="140" width="180" height="96" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="520" y="185.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">target 驗證</text>
+<text x="520" y="206.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一次前向 17 個位置</text>
+<path d="M 688 188 L 720 188" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="726" y="140" width="180" height="96" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="742" y="185.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">commit</text>
+<text x="742" y="206.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">接受前 k 個 + 1 個 bonus</text>
+<path d="M 816 236 L 816 302" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 816 302 L 150 302" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 150 302 L 150 240" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="480" y="292" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">下一輪</text>
+<text x="48" y="336" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">某一輪的驗證結果（示意：接受 6 個）</text>
+<rect x="120" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#3fb95099" stroke-width="1.4"/>
+<rect x="162" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#3fb95099" stroke-width="1.4"/>
+<rect x="204" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#3fb95099" stroke-width="1.4"/>
+<rect x="246" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#3fb95099" stroke-width="1.4"/>
+<rect x="288" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#3fb95099" stroke-width="1.4"/>
+<rect x="330" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#3fb95099" stroke-width="1.4"/>
+<rect x="372" y="350" width="38" height="52" rx="6" fill="#1c2230" stroke="#f472b699" stroke-width="1.4"/>
+<rect x="414" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#7d859099" stroke-width="1.4"/>
+<rect x="456" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#7d859099" stroke-width="1.4"/>
+<rect x="498" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#7d859099" stroke-width="1.4"/>
+<rect x="540" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#7d859099" stroke-width="1.4"/>
+<rect x="582" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#7d859099" stroke-width="1.4"/>
+<rect x="624" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#7d859099" stroke-width="1.4"/>
+<rect x="666" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#7d859099" stroke-width="1.4"/>
+<rect x="708" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#7d859099" stroke-width="1.4"/>
+<rect x="750" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#7d859099" stroke-width="1.4"/>
+<rect x="792" y="350" width="38" height="52" rx="6" fill="#161b22" stroke="#7d859099" stroke-width="1.4"/>
+<text x="120" y="428" font-size="12.5" fill="#3fb950" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">綠：接受</text>
+<text x="240" y="428" font-size="12.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">紅：第一個不符 → 改寫成 target 的 argmax</text>
+<text x="660" y="428" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">灰：本輪作廢</text>
+<text x="48" y="470" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">自我檢查：9/9 題通過（單題最多 479 個 token）—— 每個 commit 都等於它自己那一輪的 argmax。</text>
+<text x="48" y="492" font-size="13" fill="#2dd4bf" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">所以送出的每一個 token 都是 target 自己的選擇；不一致只可能來自數值。</text>
+</svg>
+<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：一輪的形狀——draft 先猜 16 個，target 一次驗證 17 個位置（anchor + 16 drafts），接受前 k 個再補一個 bonus；紅格是第一個不符、改寫成 target 的 argmax，之後全部作廢。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG2 -->
+
 既然每個 token 都是 target 的 argmax，那不一致就只可能來自「兩邊算出來的 argmax 不一樣」—— 也就是數值本身，而不是演算法。
 
 > **踩坑紀錄**：這支檢查一開始怎麼跑都是 `False`，原因是索引映射差了 1。`spec[0]` 來自 prefill 那一次前向，驗證區塊的第 0 個位置對應的是 `spec[1]` 而不是 `spec[0]`。我實測了三種位移：`shift=0` 是 0/128，**`shift=+1` 是 128/128**。修正後才是上面那個 9/9。
@@ -190,7 +245,7 @@ FlashMap 的驗證是「一次前向處理 17 個位置」（anchor + 16 個 dra
 
 **「形狀會改變答案」這件事只在 bf16 發生，fp32 下完全消失。** 這也正好解釋了上游那句警語。
 
-<!-- FIG2 -->
+<!-- FIG3 -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 630" role="img" aria-label="逐字解碼與區塊驗證：同一前綴、兩種捨入，bf16 下 argmax 會翻轉，fp32 下不會" style="width:100%;height:auto;display:block">
 <defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
@@ -251,9 +306,9 @@ FlashMap 的驗證是「一次前向處理 17 個位置」（anchor + 16 個 dra
 <text x="48" y="588" font-size="13.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">上表 id 10 的實測：bf16 的 gap 隨形狀變號，argmax 就跟著翻轉。</text>
 <text x="48" y="610" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">fp32 下同一個前綴的差距固定在 −0.11644 附近，三種形狀都選同一個字。</text>
 </svg>
-<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：<code>generate()</code> 一步算 1 個位置，FlashMap 的驗證一次算 17 個位置。數學等價、捨入不同：bf16 下 argmax 翻轉，fp32 下三種形狀一致。｜手繪 SVG 圖表</figcaption>
+<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 3：<code>generate()</code> 一步算 1 個位置，FlashMap 的驗證一次算 17 個位置。數學等價、捨入不同：bf16 下 argmax 翻轉，fp32 下三種形狀一致。｜手繪 SVG 圖表</figcaption>
 </figure>
-<!-- /FIG2 -->
+<!-- /FIG3 -->
 
 ### 3.4 那 8B 的真值呢？搬到 CPU 去算
 
@@ -301,6 +356,43 @@ FlashMap 的驗證是「一次前向處理 17 個位置」（anchor + 16 個 dra
 
 > 一個字翻盤，後面幾十個字就全變了。這也是為什麼「長度差很多」看起來像嚴重錯誤，實際上只是<strong>一次硬幣的正反面</strong>。
 
+<!-- FIG4 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" role="img" aria-label="同一個前綴、一個 bf16 平手，三條執行給出 217 與 155 兩種長度" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="958.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一個平手，三條路</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個前綴，三種結局</text>
+<text x="48" y="112" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 2 題：分歧點之前的 token 完全相同，只有索引 2 這一個位置不同。</text>
+<rect x="300" y="140" width="360" height="60" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="480.0" y="168.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個前綴</text>
+<text x="480.0" y="190.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">分歧點之前的 token 逐一相同</text>
+<path d="M 480 200 L 480 240" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 176 240 L 784 240" fill="none" stroke="#7d8590" stroke-width="2"/>
+<text x="500" y="228" font-size="12.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">bf16 的 gap = 0.00000（完全平手）</text>
+<path d="M 176 240 L 176 268" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="36" y="270" width="280" height="110" rx="12" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="56" y="300" font-size="15" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HF generate()</text>
+<text x="56" y="334" font-size="19" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">217 tokens</text>
+<text x="56" y="362" font-size="12" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">Let's solve this step…</text>
+<path d="M 480 240 L 480 268" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="340" y="270" width="280" height="110" rx="12" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="360" y="300" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HF spec_generate()</text>
+<text x="360" y="334" font-size="19" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">155 tokens</text>
+<text x="360" y="362" font-size="12" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">Let's break this down…</text>
+<path d="M 784 240 L 784 268" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="644" y="270" width="280" height="110" rx="12" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="664" y="300" font-size="15" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">vLLM baseline</text>
+<text x="664" y="334" font-size="19" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">155 tokens</text>
+<text x="664" y="362" font-size="12" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">Let's break this down…</text>
+<text x="48" y="420" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三個執行在分歧點之前一模一樣；vLLM 與 FlashMap 各自 tie-break 到「break」，</text>
+<text x="48" y="442" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HF 的 generate() 落到「solve」—— 之後整段 155 / 217 個 token 就分岔了。</text>
+<text x="48" y="474" font-size="13.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「長度差很多」看起來像嚴重錯誤，其實只是一次硬幣的正反面。</text>
+</svg>
+<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 4：第 2 題的分歧——三者在前綴上完全相同，索引 2 的 bf16 gap 恰好是 0.00000，vLLM 與 FlashMap 各自 tie-break 到「break」，HF 的 <code>generate()</code> 落到「solve」。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG4 -->
+
 ## 五、真正壞掉的是我的量測工具
 
 追查過程中修掉四個會直接誤導結論的 bug：
@@ -311,6 +403,46 @@ FlashMap 的驗證是「一次前向處理 17 個位置」（anchor + 16 個 dra
 | `bench.py` spec-decode 統計 | 根本沒有 γ | 從未讀 `spec_decode_num_drafts` / `num_accepted_tokens` | 補上 `spec_decode_stats()`，並與 vLLM 自己的 log 對帳 |
 | `acceptance.py` 無損性判準 | 拿字串相等當成無損 | `skip_special_tokens=True` + `.strip()` 會吃掉 EOS 與空白差異 | 改成比 token id（上游 `torch.equal` 的作法），另存 `lossless_prefix_ok` / `spec_overshoot` |
 | `setup.sh` | 安裝步驟直接失敗 | 傳了不存在的 `--workdir` 參數 | 移除該參數 |
+
+<!-- FIG5 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" role="img" aria-label="同一份 metrics 回應的兩種解析：精確比對家族名得到 γ 4.954，substring 比對得到接受率 17.0" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="958.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">指標是怎麼算錯的</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">精確比對 vs substring</text>
+<text x="48" y="112" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個 /metrics 回應、兩種認家族名的方式；差別只在「怎麼比對名稱」。</text>
+<rect x="48" y="150" width="330" height="120" rx="12" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="68" y="182" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">正確：精確比對完整家族名</text>
+<text x="68" y="210" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只取以 _total 結尾的家族</text>
+<text x="68" y="236" font-size="12" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">accepted 2475 / drafts 626 / draft 10016</text>
+<rect x="400" y="162" width="164" height="96" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="416" y="196" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">γ</text>
+<text x="416" y="232" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4.954</text>
+<rect x="572" y="162" width="164" height="96" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="588" y="196" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">草稿接受率</text>
+<text x="588" y="232" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">24.71%</text>
+<rect x="744" y="162" width="164" height="96" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="760" y="196" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每步 draft</text>
+<text x="760" y="232" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">16.0 個</text>
+<rect x="48" y="300" width="330" height="120" rx="12" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<text x="68" y="332" font-size="15" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">錯誤：substring 比對</text>
+<text x="68" y="360" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">命中 _created（Unix 時間戳 1.79e9）</text>
+<text x="68" y="384" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">與 16 個 _per_pos_ 家族一起加總</text>
+<rect x="400" y="312" width="164" height="96" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="416" y="346" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">被加進去的</text>
+<text x="416" y="382" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.79e9</text>
+<rect x="572" y="312" width="164" height="96" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="588" y="346" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">家族數</text>
+<text x="588" y="382" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">18 個</text>
+<rect x="744" y="312" width="164" height="96" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="760" y="346" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">算出來的</text>
+<text x="760" y="382" font-size="20" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">17.0</text>
+<text x="48" y="450" font-size="13.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「接受率 17.0」大於 1 就是最直接的警訊：分母被不相關的家族污染了。</text>
+<text x="48" y="472" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">修正後 γ = 4.954、接受率 24.71%、每步 16.0 個 draft token，與 vLLM 的 log 對帳一致。</text>
+</svg>
+<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 5：上排是修正後的正確解析（γ 4.954、接受率 24.71%、每步 16.0 個 draft token）；下排是 substring 比對的後果——把 <code>_created</code> 的 Unix 時間戳與 16 個 <code>_per_pos_</code> 家族一起加進來，算出大於 1 的「接受率 17.0」。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG5 -->
 
 修正後，γ 與接受率終於對得上 vLLM 自己印出的統計：
 

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" role="img" aria-label="同一個前綴、一個 bf16 平手，三條執行給出 217 與 155 兩種長度" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="958.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一個平手，三條路</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個前綴，三種結局</text>
+<text x="48" y="112" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 2 題：分歧點之前的 token 完全相同，只有索引 2 這一個位置不同。</text>
+<rect x="300" y="140" width="360" height="60" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="480.0" y="168.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個前綴</text>
+<text x="480.0" y="190.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">分歧點之前的 token 逐一相同</text>
+<path d="M 480 200 L 480 240" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 176 240 L 784 240" fill="none" stroke="#7d8590" stroke-width="2"/>
+<text x="500" y="228" font-size="12.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">bf16 的 gap = 0.00000（完全平手）</text>
+<path d="M 176 240 L 176 268" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="36" y="270" width="280" height="110" rx="12" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="56" y="300" font-size="15" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HF generate()</text>
+<text x="56" y="334" font-size="19" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">217 tokens</text>
+<text x="56" y="362" font-size="12" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">Let's solve this step…</text>
+<path d="M 480 240 L 480 268" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="340" y="270" width="280" height="110" rx="12" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="360" y="300" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HF spec_generate()</text>
+<text x="360" y="334" font-size="19" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">155 tokens</text>
+<text x="360" y="362" font-size="12" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">Let's break this down…</text>
+<path d="M 784 240 L 784 268" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="644" y="270" width="280" height="110" rx="12" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="664" y="300" font-size="15" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">vLLM baseline</text>
+<text x="664" y="334" font-size="19" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">155 tokens</text>
+<text x="664" y="362" font-size="12" fill="#8b949e" font-family="'Cascadia Mono',Consolas,monospace">Let's break this down…</text>
+<text x="48" y="420" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三個執行在分歧點之前一模一樣；vLLM 與 FlashMap 各自 tie-break 到「break」，</text>
+<text x="48" y="442" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HF 的 generate() 落到「solve」—— 之後整段 155 / 217 個 token 就分岔了。</text>
+<text x="48" y="474" font-size="13.5" fill="#f472b6" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「長度差很多」看起來像嚴重錯誤，其實只是一次硬幣的正反面。</text>
+</svg>

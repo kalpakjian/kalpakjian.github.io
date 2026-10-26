@@ -31,9 +31,17 @@ POST = os.path.join(REPO, "source", "_posts", "flashmap-bf16-losslessness.md")
 PLAN = [
     ("flashmap-bf16-quant-grid", "FIG1",
      "## 三、四個實驗，把責任釘死在精度上", "before"),
-    ("flashmap-bf16-two-shapes", "FIG2",
+    ("flashmap-bf16-verify-loop", "FIG2",
+     "既然每個 token 都是 target 的 argmax，那不一致就只可能來自「兩邊算出來的 argmax 不一樣」"
+     "—— 也就是數值本身，而不是演算法。", "before"),
+    ("flashmap-bf16-two-shapes", "FIG3",
      "**「形狀會改變答案」這件事只在 bf16 發生，fp32 下完全消失。** 這也正好解釋了上游那句警語。",
      "after"),
+    ("flashmap-bf16-tie-fork", "FIG4",
+     "> 一個字翻盤，後面幾十個字就全變了。這也是為什麼「長度差很多」看起來像嚴重錯誤，"
+     "實際上只是<strong>一次硬幣的正反面</strong>。", "after"),
+    ("flashmap-bf16-metrics", "FIG5",
+     "修正後，γ 與接受率終於對得上 vLLM 自己印出的統計：", "before"),
 ]
 CAPTIONS = {slug: cap for slug, _w, _h, _aria, _sub, _fn, cap in FIGS}
 
