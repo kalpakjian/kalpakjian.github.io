@@ -1,5 +1,5 @@
 ---
-title: 從 3Blue1Brown 到 CS231n 再到 PyTorch：把 MNIST CNN 親手跑一遍（附 feature map 視覺化）
+title: 手寫數字辨識入門：用 MNIST 看懂 CNN 到底在學什麼（PyTorch 實作 ＋ feature map 視覺化）
 date: 2026-10-27 13:20:00
 categories:
   - 學習資源
@@ -20,17 +20,83 @@ banner_img: /img/covers/cnn-mnist-lab.png
 > <strong>一句話結論</strong>：把 CS231n 筆記裡的公式寫成 <code>if</code> 會比背下來有用得多——我讓訓練迴圈在每個 epoch 開頭把「公式推導」與「實際張量形狀」逐層比對，任何一層對不上就印 <code>✗</code>。
 > 這個小改動讓「輸出尺寸公式」從需要記憶的規則，變成每次跑都會自我驗證的斷言。
 
+先說清楚：這篇預設讀者跟我一樣，是**沒受過正規訓練、只是想把東西弄懂**的人，不是要交作業的研究生。所以如果你看到「3Blue1Brown」「CS231n」「MNIST」這三個名字只覺得是一串英文加數字——**下一節就是為你寫的三分鐘白話版**，看完再往下走完全來得及。
+
 這篇是 **3Blue1Brown 建立直覺 → CS231n 學嚴謹原理 → PyTorch 動手做** 這條路線的第一個完整實作紀錄。
 
 不是再寫一份「CNN 入門教學」，而是把整條鏈路**跑到底並留下可重現的產物**：模型、7 項自我測試、訓練曲線，以及三張用來證明「CNN 真的在學特徵」的視覺化圖。
 
 <!-- more -->
 
-![MNIST CNN 親手跑一遍：filter、feature map 與感受野](/img/covers/cnn-mnist-lab.png)
+![用手寫數字看懂 CNN：filter、feature map 與感受野](/img/covers/cnn-mnist-lab.png)
+
+---
+
+## 先補課：三個名字、一個縮寫，各三分鐘
+
+三個都是**免費資源**，都不用註冊帳號，也不是要安裝的套件。先補一個縮寫：
+
+> **CNN = Convolutional Neural Network，卷積神經網路。** 先粗暴地想成「拿一個小窗口（例如 3×3 的格子）從左到右、從上到下掃過整張圖，每個位置算一個分數」的網路。那個小窗口叫 **kernel（卷積核，也叫 filter／濾波器）**，掃出來的結果叫 **feature map（特徵圖）**。本文後面出現的 filter、kernel、卷積核，指的都是同一件事。
+
+| 名字 | 一句話 | 形態 | 在本文負責 |
+|---|---|---|---|
+| **3Blue1Brown** | 把數學畫成動畫的 YouTube 頻道 | 影片，兩份加起來約 1.5 小時 | 讓你「看見」卷積在做什麼 |
+| **CS231n** | 史丹佛大學的電腦視覺課 | 課程影片 ＋ 免費線上筆記 | 給你公式與嚴謹定義 |
+| **MNIST** | 7 萬張手寫數字圖片 | 資料集，壓縮後約 11 MB | 給你一個能算對錯的靶 |
+
+### 3Blue1Brown：先讓你看見，再談公式
+
+**3Blue1Brown** 是 Grant Sanderson 一個人的數學科普頻道（名字來自他一眼藍、一眼棕）。他用自製的動畫引擎把抽象數學「演」出來：向量、微積分、傅立葉轉換，以及神經網路。官方有中文頻道與字幕，英文不好也能看。
+
+本文用到兩份：
+
+- **[《But what is a convolution?》](https://www.youtube.com/watch?v=KuXjwB4LzSA)**（約 15 分鐘）：卷積核滑過影像時，每個位置到底在算什麼。答案其實很樸素——把 kernel 蓋住的那 3×3 個像素，跟 kernel 的 9 個數字**逐格相乘、全部加起來**，得到一個數字，然後往右移一格。看完這段，`nn.Conv2d(1, 16, 3, padding=1)` 就不再是黑盒。
+- **[Neural Networks 系列](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi)**（4 集，約 1 小時）：神經元與權重 → 梯度下降 → 反向傳播。它把「為什麼調權重會讓答案變好」畫成動畫，而不是丟一串偏導數給你。
+
+**它給你直覺，不給你形狀。** 影片不會告訴你 28×28 經過 `padding=1`、`kernel=3` 之後仍然是 28×28，也不會告訴你這一層有幾個參數。所以它排第 1 站：先有畫面，再去碰程式。
+
+### CS231n：把直覺寫成可以計算的規則
+
+**CS231n**（全名 *Deep Learning for Computer Vision*，舊名 *Convolutional Neural Networks for Visual Recognition*）是史丹佛大學的電腦視覺課程，授課者包括李飛飛、Andrej Karpathy、Justin Johnson。課程影片公開（2017 版由 Karpathy 主講），但更多人讀的是它的**線上筆記**——免費、可搜尋、有公式，是這個領域最常被回頭查的「字典」。
+
+本文從它拿走三樣東西：
+
+1. **輸出尺寸公式** `W2 = floor((W1 - F + 2P) / S) + 1`：決定每一層的輸出是幾乘幾。
+2. **感受野（receptive field）**：某個神經元「看得到」原圖多大的範圍。
+3. **權重共享與參數量**：為什麼卷積的參數量跟影像大小無關。
+
+還有一個隱藏好處：CS231n 的作業要求用純 numpy 從零寫 kNN → SVM → 兩層網路 → CNN。那是檢查「我是不是真的懂了」最狠的方式，比任何選擇題都準。
+
+**它給你嚴謹，不給你 PyTorch。** 筆記裡幾乎不出現 `nn.Conv2d`，所以讀完你會算公式，卻可能寫不出來——這正是還需要第 4 站的原因。
+
+### MNIST：那 7 萬張手寫數字
+
+**MNIST** 全名 *Modified National Institute of Standards and Technology database*，是 Yann LeCun、Corinna Cortes、Christopher Burges 在 1998 年整理的資料集（經典的 LeNet-5 論文用的就是它）：
+
+- **70,000 張** 28×28 灰階手寫數字（0–9），其中 **60,000 張訓練、10,000 張測試**
+- **10 類**，每張都有標準答案，所以可以直接算準確率
+- 原始檔是 **4 個 `.gz`**（IDX 自訂格式，開頭藏著 magic number 與維度），壓縮後約 11 MB
+- 每張圖是先把數字縮進 20×20 的框、再依筆畫重心置中貼到 28×28 的畫布上——所以數字總是落在畫面正中央
+
+它是電腦視覺的 “Hello World”：小到 CPU 幾秒就跑完一輪，又真實到能證明你的訓練迴圈沒寫錯。本文那個 **20,490 個參數**的小模型，3 個 epoch、11 秒就到 **98.47%**。
+
+但要說清楚：**MNIST 現在是 sanity check，不是排行榜。** 它太簡單了，隨便一個 CNN 都能 99% 以上，所以它的價值是「先確認資料管線、梯度、形狀都對」，不是證明模型多強。真正的難題在 CIFAR-10、ImageNet。
+
+> 回頭看「坑二」就說得通了：MNIST 的官方網站是 `yann.lecun.com`，連不上時 torchvision 會自動改走 S3 鏡像；而本文的「IDX 手動解析備援」處理的，就是那四個 `.gz` 裡的 magic number 與 shape。
+
+### 第四個名字：fast.ai
+
+嚴格說是第 4 站。**fast.ai** 是 Jeremy Howard 創辦的免費實務導向深度學習課程，Lesson 8 專門從程式碼角度拆解 convolution、pooling、dropout。它適合排在「已經有公式與直覺」之後，因為它解決的是最後一哩路：**讀得懂，但寫不出來**。
+
+<hr>
+
+**三分鐘版本總結**：3Blue1Brown 讓你知道「為什麼要這樣算」，CS231n 讓你算得出「這層輸出幾乘幾、有幾個參數」，MNIST 讓你有一個能立刻驗證對錯的靶。三個都免費，加起來不到一天的學習量，但少了任何一個，後面就會卡在很具體的地方。
 
 ---
 
 ## 這條路線的四站，缺一站就會卡住
+
+把上面三個名字排進順序，就是這四站。每一站解決的問題不同，**跳過任何一站，卡住的點都很具體**：
 
 | 站 | 資源 | 解決什麼問題 | 不看會卡在哪 |
 |---|---|---|---|
@@ -39,7 +105,7 @@ banner_img: /img/covers/cnn-mnist-lab.png
 | 3 | [Stanford CS231n Convolutional Networks](https://cs231n.github.io/convolutional-networks/) | convolution、receptive field、輸出尺寸公式 | 會寫 `nn.Conv2d` 但不知道參數怎麼算 |
 | 4 | [fast.ai Lesson 8 (CNNs)](https://course.fast.ai/Lessons/lesson8.html) | 從程式碼角度拆解 convolution、pooling、dropout | 讀得懂課本但寫不出來 |
 
-第 3 站最值得精讀，第 4 站最能加速「從看懂到寫出來」。
+第 3 站最值得精讀，第 4 站最能加速「從看懂到寫出來」。**如果你是第一次碰，順序不要顛倒**：先看第 1 站建立畫面，再回頭讀第 3 站的公式，否則很容易變成「公式都會算，但不知道它在算什麼」。
 
 ---
 
@@ -273,12 +339,25 @@ cnn-mnist-lab/
 
 ## 資源連結
 
-- 3Blue1Brown《But what is a convolution?》：https://www.youtube.com/watch?v=KuXjwB4LzSA
-- 3Blue1Brown Neural Networks 系列：https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
-- Stanford CS231n Convolutional Networks：https://cs231n.github.io/convolutional-networks/
-- Stanford CS231n 課程：https://cs231n.stanford.edu/
-- fast.ai Lesson 8 (CNNs)：https://course.fast.ai/Lessons/lesson8.html
-- Brandon Rohrer《卷積神經網路的運作原理》：https://brohrer.mcknote.com/zh-Hant/how_machine_learning_works/how_convolutional_neural_networks_work.html
+**直覺（第 1、2 站）**
+
+- 3Blue1Brown《But what is a convolution?》（約 15 分鐘）：<https://www.youtube.com/watch?v=KuXjwB4LzSA>
+- 3Blue1Brown Neural Networks 系列（4 集，約 1 小時）：<https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi>
+- Brandon Rohrer《卷積神經網路的運作原理》（中文翻譯，圖解派）：<https://brohrer.mcknote.com/zh-Hant/how_machine_learning_works/how_convolutional_neural_networks_work.html>
+
+**原理（第 3 站）**
+
+- Stanford CS231n 卷積網路筆記（本文公式出處）：<https://cs231n.github.io/convolutional-networks/>
+- Stanford CS231n 課程官網：<https://cs231n.stanford.edu/>
+
+**實作（第 4 站）**
+
+- fast.ai Lesson 8 (CNNs)：<https://course.fast.ai/Lessons/lesson8.html>
+
+**資料集**
+
+- MNIST 官方頁面：<http://yann.lecun.com/exdb/mnist/>（本文實測時連不上，可改用鏡像）
+- torchvision 預設鏡像：<https://ossci-datasets.s3.amazonaws.com/mnist/>
 
 
 
