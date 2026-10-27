@@ -7,8 +7,9 @@
                 每個 url(#id) 是否找得到、filter 有沒有留 220% 邊界、有沒有外部資源。
   2. 套版重生   --regen：只做「外科手術」——補 role="img"、補 aria-label、
                 補 filter 邊界；改前先備份到 img/_backup_時間戳/，內容不動。
-  3. 文字量測   把所有圖內嵌成一份暫存 HTML，呼叫 svg-figure-qa 的
-                measure_text.py（Chrome getBBox），退出碼直接沿用。
+  3. 文字量測   把所有圖內嵌成一份暫存 HTML，用 Chrome `getBBox()` + `getCTM()`
+                換算成畫布座標後比對（見 measure_svg.py；會解析 <g transform>），
+                退出碼直接沿用。
   4. 預覽       --preview：產生一張 12 圖聯絡表 PNG（一次目視全部）。
 
 用法：
@@ -39,7 +40,6 @@ import xml.etree.ElementTree as ET
 HERE = Path(__file__).resolve().parent
 IMG = HERE.parent / "img"
 NEON = HERE / "neon_svg.py"
-MEASURE = Path.home() / ".agents" / "skills" / "svg-figure-qa" / "scripts" / "measure_text.py"
 
 FILTER_BOX = 'x="-60%" y="-60%" width="220%" height="220%"'
 MAX_BYTES = 64 * 1024
@@ -167,22 +167,13 @@ def regen(paths: list[Path]) -> tuple[list[str], Path | None]:
     return changed, backup
 
 
-# ── 3. 量測（借用 svg-figure-qa 的 Chrome getBBox）────────────
+# ── 3. 量測（transform-aware，見 measure_svg.py）──────────────
 def measure(paths: list[Path], chrome: str) -> int:
-    body = "\n".join(p.read_text(encoding="utf-8") for p in paths)
-    page = ('<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8">'
-            "<style>body{margin:0;background:#0b1220}svg{display:block;margin:8px}</style>"
-            "</head><body>" + body + "</body></html>")
-    tmp = Path(tempfile.gettempdir()) / "_cnn_lab_figs.html"
-    tmp.write_text(page, encoding="utf-8")
-    r = subprocess.run([sys.executable, str(MEASURE), str(tmp), "--chrome", chrome],
-                       capture_output=True, text=True, encoding="utf-8", errors="replace")
-    out = (r.stdout or "").strip()
-    if out:
-        print(out)
-    if r.stderr.strip():
-        print(r.stderr.strip()[:800])
-    return r.returncode
+    """呼叫同資料夾的 measure_svg 模組；回傳 0 = 通過、1 = 有問題。"""
+    sys.path.insert(0, str(HERE))
+    from measure_svg import report
+    bad, _stats = report(paths, chrome)
+    return 1 if bad else 0
 
 
 # ── 4. 聯絡表（一次目視 12 張）───────────────────────────────
@@ -279,11 +270,9 @@ def main() -> int:
     if not args.no_measure:
         if not chrome:
             print("[measure] 找不到 Chrome／Edge，跳過（--chrome 可指定）")
-        elif not MEASURE.exists():
-            print(f"[measure] 找不到 {MEASURE}，跳過")
         else:
             code = measure(paths, chrome)
-            report["measure"] = {"tool": str(MEASURE), "returncode": code}
+            report["measure"] = {"tool": "measure_svg.py", "returncode": code}
             rc = rc or (1 if code else 0)
 
     if args.preview:
