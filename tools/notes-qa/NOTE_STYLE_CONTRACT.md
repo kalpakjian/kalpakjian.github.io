@@ -303,3 +303,39 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 
 5. ☐ 頁面重新產生後**再量一次**（修圖是迭代，不是一次到位）
 6. ☐ 頁面仍是**單檔、零外部資源**（SVG 內嵌、無 `<img src="http…">`）
 
+---
+
+## 13. 粗體標記：`**` 不能直接接中文字
+
+`markdown` 的粗體靠 CommonMark 的 **flanking** 規則配對：`**粗體**` 的結尾 `**` 必須是
+right-flanking、開頭的 `**` 必須是 left-flanking。**中文字旁邊這兩條很容易同時不成立**：
+
+| 寫法 | 為什麼壞 | 畫面 |
+| --- | --- | --- |
+| `速率改由**（fuse）**決定` | 結尾 `**` 前面是標點、後面緊接中文字 → 不是 right-flanking → **收不了尾** | 讀者看到字面的 `**（fuse）**` |
+| `但**「2 倍」是…**，` | 開頭 `**` 後面是標點、前面是中文字 → 不是 left-flanking → **開不了頭** | 整段配對錯位，粗體跑到別的地方 |
+
+**這不是罕見個案**：2026-10-27 全站掃描（`tools/notes-qa/check_cjk_bold.js`）量到 **23 個檔案 / 88 行**
+受影響，而且多數已經上線多年——粗體在那裡**從來就沒有生效過**，只是中文讀者不容易一眼看出來。
+
+**修法**：那一段改用 HTML 標籤，不要靠 `**` 硬配對。
+
+```markdown
+速率改由<strong>熔絲（fuse）</strong>決定
+但<strong>「2 倍」是指令發射率，真實 GEMM 只有 12～34%</strong>，而且…
+```
+
+站上本來就在 blockquote 用 `<strong>整理說明</strong>`、`<strong>白話說</strong>`，
+所以這是既有寫法，不是新花樣。
+
+**檢查方式**（唯讀、不改檔）：
+
+```powershell
+node tools/notes-qa/check_cjk_bold.js              # 掃全站
+node tools/notes-qa/check_cjk_bold.js <某個.md>    # 只掃某幾個
+```
+
+**這一項同樣不進品質閘門**（理由同 §12.3）：硬性檢查會讓 23 個檔案一起紅燈，
+把真正的缺陷訊號淹掉。寫稿時靠人與 AI 遵守，交付前跑一次這支工具確認。
+
+

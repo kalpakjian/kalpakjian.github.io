@@ -30,7 +30,7 @@ banner_img: /img/covers/rtx50-blackwell-unlock-fact-check.png
 
 ## 一句話總結
 
-> 「RTX 5090 的解鎖方案應該很快出來」是**推測**，不是消息。負責 Ada 版專案的維護者已在 2026-10-26 公開回答「不行」：Blackwell 上暫存器還在，但**主機寫進去的值會被丟棄**，速率改由**熔絲（fuse）**決定，而且沒有公開的 SEC2 booter 可供 payload 執行。那個「420 TFLOPS」不是任何人測出來的數字，而是把 NVIDIA 白皮書裡「FP16 累加」的規格直接套到「FP32 累加」的路徑上。
+> 「RTX 5090 的解鎖方案應該很快出來」是**推測**，不是消息。負責 Ada 版專案的維護者已在 2026-10-26 公開回答「不行」：Blackwell 上暫存器還在，但**主機寫進去的值會被丟棄**，速率改由<strong>熔絲（fuse）</strong>決定，而且沒有公開的 SEC2 booter 可供 payload 執行。那個「420 TFLOPS」不是任何人測出來的數字，而是把 NVIDIA 白皮書裡「FP16 累加」的規格直接套到「FP32 累加」的路徑上。
 
 ## 用一個比喻講清楚
 

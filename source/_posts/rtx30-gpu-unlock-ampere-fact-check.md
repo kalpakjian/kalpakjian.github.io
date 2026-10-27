@@ -63,7 +63,7 @@ banner_img: /img/covers/rtx30-gpu-unlock-ampere-fact-check.png
 
 GPU 開機時有個流程：驅動把加密的韌體交給 GPU 裡的一顆安全處理器（SEC2），SEC2 驗簽、解密、然後在 GSP 上執行。這一整套設計本來是安全的。
 
-但**那顆安全處理器上跑的開機程式（booter）有一個典型的緩衝區溢位**——溢位直接寫進堆疊（stack），攻擊者就能用**ROP（Return-Oriented Programming，把現成指令片段串成任意程式碼）**取得控制流。
+但**那顆安全處理器上跑的開機程式（booter）有一個典型的緩衝區溢位**——溢位直接寫進堆疊（stack），攻擊者就能用 <strong>ROP（Return-Oriented Programming，把現成指令片段串成任意程式碼）</strong>取得控制流。
 
 拿到控制流之後只做一件事：**把寫入保護的遮罩打開**。原廠預設 `FEAT_OVR_PLM = 0xffffff8f`，其中 `[7:4] = 1000` 表示「只有最高權限層可以寫」，其餘三層全被擋。既然我們已經在最高權限層裡了，把這個值寫成 `0xFFFFFFFF`，速率選擇器就變成驅動程式可以寫了。
 
@@ -285,8 +285,6 @@ README 的「Tested cards」表把每張卡的使用者回報整理成區間。*
 <figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：各型號的 BF16 GEMM 增益區間——RTX 3070 約 +73～81%，RTX 3090 只有 +25～67%（225 W 上限的卡）；另有兩個例外。｜手繪 SVG 圖表</figcaption>
 </figure>
 <!-- /FIG2 -->
-
-<!-- FIG2 |
 
 Issue #62 的原始數據（技嘉 RTX 3080 12 GB、原廠未改、Arch、kernel 7.1.9、驅動 610.57.04 open、350 W 上限、8192³ dense GEMM、FP32 累加、五次取樣中位數）：
 
