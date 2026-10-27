@@ -31,6 +31,7 @@ import html as htmllib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -95,7 +96,15 @@ document.getElementById('out').textContent = JSON.stringify(out);
 
 
 def find_chrome(explicit: str | None = None) -> str | None:
-    for p in [explicit or ""] + CHROME_CANDIDATES:
+    if explicit and os.path.exists(explicit):
+        return explicit
+    # PATH 上的名稱（CI 常見：google-chrome / chromium）
+    for name in ("google-chrome", "google-chrome-stable", "chromium",
+                 "chromium-browser", "chrome"):
+        found = shutil.which(name)
+        if found:
+            return found
+    for p in CHROME_CANDIDATES:
         if p and os.path.exists(p):
             return p
     return None

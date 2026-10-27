@@ -30,6 +30,7 @@ import json
 import os
 import re
 import shutil
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -61,7 +62,14 @@ CHROME_CANDIDATES = [
 
 
 def find_chrome(explicit: str | None = None) -> str | None:
-    for p in [explicit or ""] + CHROME_CANDIDATES:
+    if explicit and os.path.exists(explicit):
+        return explicit
+    for name in ("google-chrome", "google-chrome-stable", "chromium",
+                 "chromium-browser", "chrome"):
+        found = shutil.which(name)
+        if found:
+            return found
+    for p in CHROME_CANDIDATES:
         if p and os.path.exists(p):
             return p
     return None
