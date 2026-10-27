@@ -1,65 +1,77 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 340" font-family="Microsoft JhengHei, Noto Sans TC, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 340" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" role="img" aria-label="尺寸追蹤：32×32 經兩次池化變 8×8，攤平 4096；改用 GAP 可接受任意尺寸">
   <defs>
-    <marker id="a2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L6,3 L0,6 z" fill="#94a3b8"/>
-    </marker>
-    <pattern id="grid" width="8" height="8" patternUnits="userSpaceOnUse">
-      <path d="M8,0 L0,0 0,8" fill="none" stroke="#bae6fd" stroke-width="0.4"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1424"/><stop offset="52%" stop-color="#0b1220"/><stop offset="100%" stop-color="#130d24"/>
+    </linearGradient>
+    <pattern id="gr" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#16233a" stroke-width="1"/>
     </pattern>
+    <pattern id="grid" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M8,0 L0,0 0,8" fill="none" stroke="#1e3a5c" stroke-width="0.6"/>
+    </pattern>
+    <filter id="gl" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="gl2" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="#22d3ee"/>
+    </marker>
   </defs>
 
-  <text x="440" y="26" font-size="15" font-weight="700" text-anchor="middle" fill="#0f172a">
-    為什麼「32×32 輸入」會被寫死？追一次尺寸
-  </text>
-  <text x="440" y="46" font-size="10.5" text-anchor="middle" fill="#64748b">
-    池化每次把長寬砍半；最後要接全連接層時，必須知道「總共剩幾個數字」
-  </text>
+  <rect width="880" height="340" fill="url(#bg)"/>
+  <rect width="880" height="340" fill="url(#gr)" opacity=".55"/>
+  <rect x="0.75" y="0.75" width="878.5" height="338.5" rx="14" fill="none" stroke="#22d3ee" stroke-opacity=".22" stroke-width="1.5"/>
+
+  <text x="440" y="26" font-size="15" font-weight="700" text-anchor="middle" fill="#e6edf3" filter="url(#gl)">為什麼「32×32 輸入」會被寫死？追一次尺寸</text>
+  <text x="440" y="46" font-size="10.5" text-anchor="middle" fill="#8b949e">池化每次把長寬砍半；最後要接全連接層時，必須知道「總共剩幾個數字」</text>
 
   <g font-size="11">
-    <rect x="30" y="80" width="120" height="120" fill="#e0f2fe" stroke="#0284c7"/>
-    <rect x="30" y="80" width="120" height="120" fill="url(#grid)" />
-    <text x="90" y="70" text-anchor="middle" font-size="10" fill="#0c4a6e">輸入 32×32×3</text>
-    <text x="90" y="146" text-anchor="middle" font-size="20" font-weight="700" fill="#0284c7">32</text>
+    <rect x="30" y="80" width="120" height="120" fill="#0a1420" stroke="#22d3ee" stroke-width="1.5" filter="url(#gl)"/>
+    <rect x="30" y="80" width="120" height="120" fill="url(#grid)"/>
+    <text x="90" y="70" text-anchor="middle" font-size="10" fill="#22d3ee" filter="url(#gl)">輸入 32×32×3</text>
+    <text x="90" y="146" text-anchor="middle" font-size="20" font-weight="700" fill="#22d3ee" filter="url(#gl)">32</text>
 
-    <rect x="200" y="110" width="60" height="60" fill="#ede9fe" stroke="#7c3aed"/>
-    <text x="230" y="100" text-anchor="middle" font-size="10" fill="#4c1d95">池化後 16×16</text>
-    <text x="230" y="146" text-anchor="middle" font-size="18" font-weight="700" fill="#7c3aed">16</text>
+    <rect x="200" y="110" width="60" height="60" fill="#0a1420" stroke="#a78bfa" stroke-width="1.5" filter="url(#gl)"/>
+    <text x="230" y="100" text-anchor="middle" font-size="10" fill="#a78bfa" filter="url(#gl)">池化後 16×16</text>
+    <text x="230" y="146" text-anchor="middle" font-size="18" font-weight="700" fill="#a78bfa" filter="url(#gl)">16</text>
 
-    <rect x="310" y="125" width="30" height="30" fill="#ede9fe" stroke="#7c3aed"/>
-    <text x="325" y="115" text-anchor="middle" font-size="10" fill="#4c1d95">8×8</text>
-    <text x="325" y="146" text-anchor="middle" font-size="16" font-weight="700" fill="#7c3aed">8</text>
+    <rect x="310" y="125" width="30" height="30" fill="#0a1420" stroke="#f472b6" stroke-width="1.5" filter="url(#gl)"/>
+    <text x="325" y="115" text-anchor="middle" font-size="10" fill="#f472b6" filter="url(#gl)">8×8</text>
+    <text x="325" y="146" text-anchor="middle" font-size="16" font-weight="700" fill="#f472b6" filter="url(#gl)">8</text>
 
-    <line x1="155" y1="140" x2="195" y2="140" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a2)"/>
-    <line x1="265" y1="140" x2="305" y2="140" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a2)"/>
+    <line x1="155" y1="140" x2="195" y2="140" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#ar)" filter="url(#gl)"/>
+    <line x1="265" y1="140" x2="305" y2="140" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#ar)" filter="url(#gl)"/>
 
-    <rect x="380" y="118" width="150" height="44" rx="6" fill="#fef3c7" stroke="#d97706"/>
-    <text x="455" y="137" text-anchor="middle" font-size="11" font-weight="700" fill="#78350f">攤平 64×8×8 = 4096</text>
-    <text x="455" y="153" text-anchor="middle" font-size="9" fill="#92400e">一個都不能多、不能少</text>
-    <line x1="345" y1="140" x2="375" y2="140" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a2)"/>
+    <rect x="380" y="118" width="150" height="44" rx="8" fill="#0f1720" stroke="#fbbf24" stroke-width="1.5" filter="url(#gl)"/>
+    <text x="455" y="137" text-anchor="middle" font-size="11" font-weight="700" fill="#fbbf24" filter="url(#gl)">攤平 64×8×8 = 4096</text>
+    <text x="455" y="153" text-anchor="middle" font-size="9" fill="#9aa7b6">一個都不能多、不能少</text>
+    <line x1="345" y1="140" x2="375" y2="140" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#ar)" filter="url(#gl)"/>
 
-    <rect x="565" y="118" width="110" height="44" rx="6" fill="#f1f5f9" stroke="#64748b"/>
-    <text x="620" y="137" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">Linear 4096→128</text>
-    <text x="620" y="153" text-anchor="middle" font-size="9" fill="#475569">524,416 個參數</text>
-    <line x1="535" y1="140" x2="560" y2="140" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a2)"/>
+    <rect x="565" y="118" width="110" height="44" rx="8" fill="#0f1720" stroke="#2dd4bf" stroke-width="1.5" filter="url(#gl)"/>
+    <text x="620" y="137" text-anchor="middle" font-size="11" font-weight="700" fill="#2dd4bf" filter="url(#gl)">Linear 4096→128</text>
+    <text x="620" y="153" text-anchor="middle" font-size="9" fill="#9aa7b6">524,416 個參數</text>
+    <line x1="535" y1="140" x2="560" y2="140" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#ar)" filter="url(#gl)"/>
 
-    <rect x="705" y="118" width="90" height="44" rx="6" fill="#fee2e2" stroke="#dc2626"/>
-    <text x="750" y="145" text-anchor="middle" font-size="11" font-weight="700" fill="#7f1d1d">10 類輸出</text>
-    <line x1="680" y1="140" x2="700" y2="140" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a2)"/>
+    <rect x="705" y="118" width="90" height="44" rx="8" fill="#0f1720" stroke="#3fb950" stroke-width="1.5" filter="url(#gl)"/>
+    <text x="750" y="145" text-anchor="middle" font-size="11" font-weight="700" fill="#3fb950" filter="url(#gl)">10 類輸出</text>
+    <line x1="680" y1="140" x2="700" y2="140" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#ar)" filter="url(#gl)"/>
   </g>
 
   <g>
-    <rect x="30" y="230" width="400" height="90" rx="8" fill="#fef2f2" stroke="#dc2626"/>
-    <text x="46" y="252" font-size="11.5" font-weight="700" fill="#7f1d1d">✗ 拿掉 padding=1</text>
-    <text x="46" y="272" font-size="10" fill="#7f1d1d">32 → 30 → 15 → 13 → 6，攤平是 64×6×6 = 2304</text>
-    <text x="46" y="290" font-size="10" fill="#7f1d1d">但程式仍寫 4096 → RuntimeError（1×2304 乘不上 4096×128）</text>
-    <text x="46" y="308" font-size="10" fill="#7f1d1d">這是「尺寸寫死」最常見的爆炸方式</text>
+    <rect x="30" y="230" width="400" height="90" rx="10" fill="#1a1018" stroke="#f85149" stroke-width="1.5" filter="url(#gl)"/>
+    <text x="46" y="252" font-size="11.5" font-weight="700" fill="#f85149" filter="url(#gl)">✗ 拿掉 padding=1</text>
+    <text x="46" y="272" font-size="10" fill="#9aa7b6">32 → 30 → 15 → 13 → 6，攤平是 64×6×6 = 2304</text>
+    <text x="46" y="290" font-size="10" fill="#9aa7b6">但程式仍寫 4096 → RuntimeError（1×2304 乘不上 4096×128）</text>
+    <text x="46" y="308" font-size="10" fill="#f85149" filter="url(#gl)">這是「尺寸寫死」最常見的爆炸方式</text>
   </g>
 
   <g>
-    <rect x="450" y="230" width="400" height="90" rx="8" fill="#f0fdf4" stroke="#16a34a"/>
-    <text x="466" y="252" font-size="11.5" font-weight="700" fill="#14532d">✓ 改用 GAP（全域平均池化）</text>
-    <text x="466" y="272" font-size="10" fill="#14532d">不管前面剩 8×8 還是 7×7，都平均成「每張圖 1 個數」</text>
-    <text x="466" y="290" font-size="10" fill="#14532d">→ 128 個數直接接 Linear，32、64、224 尺寸都能跑</text>
-    <text x="466" y="308" font-size="10" fill="#14532d">參數也從 545,098 降到 94,986（少 83%）</text>
+    <rect x="450" y="230" width="400" height="90" rx="10" fill="#0c1c18" stroke="#3fb950" stroke-width="1.5" filter="url(#gl)"/>
+    <text x="466" y="252" font-size="11.5" font-weight="700" fill="#3fb950" filter="url(#gl)">✓ 改用 GAP（全域平均池化）</text>
+    <text x="466" y="272" font-size="10" fill="#9aa7b6">不管前面剩 8×8 還是 7×7，都平均成「每張圖 1 個數」</text>
+    <text x="466" y="290" font-size="10" fill="#9aa7b6">→ 128 個數直接接 Linear，32、64、224 尺寸都能跑</text>
+    <text x="466" y="308" font-size="10" fill="#3fb950" filter="url(#gl)">參數也從 545,098 降到 94,986（少 83%）</text>
   </g>
 </svg>

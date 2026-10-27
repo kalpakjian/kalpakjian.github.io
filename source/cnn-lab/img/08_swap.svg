@@ -1,86 +1,90 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Microsoft JhengHei, Noto Sans TC, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" role="img" aria-label="五種反事實：原圖、邊框變灰、變綠、變天空藍、把鳥蓋掉，各自對應的預測">
   <defs>
-    <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#7dd3fc"/><stop offset="100%" stop-color="#38bdf8"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1424"/><stop offset="52%" stop-color="#0b1220"/><stop offset="100%" stop-color="#130d24"/>
     </linearGradient>
+    <pattern id="gr" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#16233a" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b3a55"/><stop offset="100%" stop-color="#123a5e"/>
+    </linearGradient>
+    <filter id="gl" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="gl2" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
 
-  <text x="450" y="26" font-size="15" font-weight="700" text-anchor="middle" fill="#0f172a">
-    反事實測試：只改背景、不動那隻鳥，答案會不會變？
-  </text>
-  <text x="450" y="46" font-size="10.5" text-anchor="middle" fill="#64748b">
-    對象 = 42 張「明明是鳥卻被判成飛機」的圖；括號內是模型此刻的答案
-  </text>
+  <rect width="900" height="400" fill="url(#bg)"/>
+  <rect width="900" height="400" fill="url(#gr)" opacity=".55"/>
+  <rect x="0.75" y="0.75" width="898.5" height="398.5" rx="14" fill="none" stroke="#22d3ee" stroke-opacity=".22" stroke-width="1.5"/>
+
+  <text x="450" y="26" font-size="15" font-weight="700" text-anchor="middle" fill="#e6edf3" filter="url(#gl)">反事實測試：只改背景、不動那隻鳥，答案會不會變？</text>
+  <text x="450" y="46" font-size="10.5" text-anchor="middle" fill="#8b949e">對象 = 42 張「明明是鳥卻被判成飛機」的圖；括號內是模型此刻的答案</text>
 
   <g>
-    <!-- panel 1 -->
     <g transform="translate(40,74)">
-      <rect x="0" y="0" width="150" height="150" fill="url(#sky2)"/>
-      <path d="M40,86 L84,62 L96,84 L58,96 Z" fill="#1f2937"/>
-      <path d="M84,62 L112,54 L88,72 Z" fill="#111827"/>
-      <text x="75" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">原圖</text>
-      <text x="75" y="190" text-anchor="middle" font-size="10" fill="#dc2626">plane 100%</text>
+      <rect x="0" y="0" width="150" height="150" fill="url(#sky)" stroke="#f85149" stroke-width="1.5" filter="url(#gl)"/>
+      <path d="M40,86 L84,62 L96,84 L58,96 Z" fill="#0b1220"/>
+      <path d="M84,62 L112,54 L88,72 Z" fill="#080d16"/>
+      <path d="M40,86 L84,62 L96,84" fill="none" stroke="#67e8f9" stroke-width="1.3" opacity=".65"/>
+      <text x="75" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#e6edf3">原圖</text>
+      <text x="75" y="190" text-anchor="middle" font-size="10" fill="#f85149" filter="url(#gl)">plane 100%</text>
     </g>
 
-    <!-- panel 2 -->
     <g transform="translate(212,74)">
-      <rect x="0" y="0" width="150" height="150" fill="url(#sky2)"/>
-      <path d="M40,86 L84,62 L96,84 L58,96 Z" fill="#1f2937"/>
-      <path d="M84,62 L112,54 L88,72 Z" fill="#111827"/>
-      <path d="M0,0 H150 V26 H0 Z" fill="#9ca3af"/>
-      <path d="M0,124 H150 V150 H0 Z" fill="#9ca3af"/>
-      <path d="M0,0 H26 V150 H0 Z" fill="#9ca3af"/>
-      <path d="M124,0 H150 V150 H124 Z" fill="#9ca3af"/>
-      <text x="75" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">邊框 → 灰色</text>
-      <text x="75" y="190" text-anchor="middle" font-size="10" fill="#b45309">plane 48% / bird 36%</text>
+      <rect x="0" y="0" width="150" height="150" fill="url(#sky)" stroke="#fbbf24" stroke-width="1.5" filter="url(#gl)"/>
+      <path d="M40,86 L84,62 L96,84 L58,96 Z" fill="#0b1220"/>
+      <path d="M84,62 L112,54 L88,72 Z" fill="#080d16"/>
+      <path d="M0,0 H150 V26 H0 Z" fill="#94a3b8" fill-opacity=".85"/>
+      <path d="M0,124 H150 V150 H0 Z" fill="#94a3b8" fill-opacity=".85"/>
+      <path d="M0,0 H26 V150 H0 Z" fill="#94a3b8" fill-opacity=".85"/>
+      <path d="M124,0 H150 V150 H124 Z" fill="#94a3b8" fill-opacity=".85"/>
+      <text x="75" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#e6edf3">邊框 → 灰色</text>
+      <text x="75" y="190" text-anchor="middle" font-size="10" fill="#fbbf24" filter="url(#gl)">plane 48% / bird 36%</text>
     </g>
 
-    <!-- panel 3 -->
     <g transform="translate(384,74)">
-      <rect x="0" y="0" width="150" height="150" fill="url(#sky2)"/>
-      <path d="M40,86 L84,62 L96,84 L58,96 Z" fill="#1f2937"/>
-      <path d="M84,62 L112,54 L88,72 Z" fill="#111827"/>
-      <path d="M0,0 H150 V26 H0 Z" fill="#4d7c0f"/>
-      <path d="M0,124 H150 V150 H0 Z" fill="#4d7c0f"/>
-      <path d="M0,0 H26 V150 H0 Z" fill="#4d7c0f"/>
-      <path d="M124,0 H150 V150 H124 Z" fill="#4d7c0f"/>
-      <text x="75" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">邊框 → 綠色</text>
-      <text x="75" y="190" text-anchor="middle" font-size="10" font-weight="700" fill="#16a34a">bird 60% / plane 21%</text>
+      <rect x="0" y="0" width="150" height="150" fill="url(#sky)" stroke="#3fb950" stroke-width="1.5" filter="url(#gl)"/>
+      <path d="M40,86 L84,62 L96,84 L58,96 Z" fill="#0b1220"/>
+      <path d="M84,62 L112,54 L88,72 Z" fill="#080d16"/>
+      <path d="M0,0 H150 V26 H0 Z" fill="#22c55e" fill-opacity=".80"/>
+      <path d="M0,124 H150 V150 H0 Z" fill="#22c55e" fill-opacity=".80"/>
+      <path d="M0,0 H26 V150 H0 Z" fill="#22c55e" fill-opacity=".80"/>
+      <path d="M124,0 H150 V150 H124 Z" fill="#22c55e" fill-opacity=".80"/>
+      <text x="75" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#e6edf3">邊框 → 綠色</text>
+      <text x="75" y="190" text-anchor="middle" font-size="10" font-weight="700" fill="#3fb950" filter="url(#gl)">bird 60% / plane 21%</text>
     </g>
 
-    <!-- panel 4 -->
     <g transform="translate(556,74)">
-      <rect x="0" y="0" width="150" height="150" fill="url(#sky2)"/>
-      <path d="M40,86 L84,62 L96,84 L58,96 Z" fill="#1f2937"/>
-      <path d="M84,62 L112,54 L88,72 Z" fill="#111827"/>
-      <path d="M0,0 H150 V26 H0 Z" fill="#3b82f6"/>
-      <path d="M0,124 H150 V150 H0 Z" fill="#3b82f6"/>
-      <path d="M0,0 H26 V150 H0 Z" fill="#3b82f6"/>
-      <path d="M124,0 H150 V150 H124 Z" fill="#3b82f6"/>
-      <text x="75" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">邊框 → 更藍的天空</text>
-      <text x="75" y="190" text-anchor="middle" font-size="10" fill="#dc2626">plane 88%</text>
+      <rect x="0" y="0" width="150" height="150" fill="url(#sky)" stroke="#f85149" stroke-width="1.5" filter="url(#gl)"/>
+      <path d="M40,86 L84,62 L96,84 L58,96 Z" fill="#0b1220"/>
+      <path d="M84,62 L112,54 L88,72 Z" fill="#080d16"/>
+      <path d="M0,0 H150 V26 H0 Z" fill="#3b82f6" fill-opacity=".85"/>
+      <path d="M0,124 H150 V150 H0 Z" fill="#3b82f6" fill-opacity=".85"/>
+      <path d="M0,0 H26 V150 H0 Z" fill="#3b82f6" fill-opacity=".85"/>
+      <path d="M124,0 H150 V150 H124 Z" fill="#3b82f6" fill-opacity=".85"/>
+      <text x="75" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#e6edf3">邊框 → 更藍的天空</text>
+      <text x="75" y="190" text-anchor="middle" font-size="10" fill="#f85149" filter="url(#gl)">plane 88%</text>
     </g>
 
-    <!-- panel 5 -->
     <g transform="translate(728,74)">
-      <rect x="0" y="0" width="150" height="150" fill="url(#sky2)"/>
-      <path d="M40,86 L84,62 L96,84 L58,96 Z" fill="#1f2937"/>
-      <path d="M84,62 L112,54 L88,72 Z" fill="#111827"/>
-      <rect x="26" y="26" width="98" height="98" fill="#9ca3af"/>
-      <text x="75" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">把「鳥」整個蓋掉</text>
-      <text x="75" y="190" text-anchor="middle" font-size="10" fill="#b45309">bird 36% / plane 29%</text>
+      <rect x="0" y="0" width="150" height="150" fill="url(#sky)" stroke="#a78bfa" stroke-width="1.5" filter="url(#gl)"/>
+      <path d="M40,86 L84,62 L96,84 L58,96 Z" fill="#0b1220"/>
+      <path d="M84,62 L112,54 L88,72 Z" fill="#080d16"/>
+      <rect x="26" y="26" width="98" height="98" fill="#94a3b8" fill-opacity=".90"/>
+      <text x="75" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#e6edf3">把「鳥」整個蓋掉</text>
+      <text x="75" y="190" text-anchor="middle" font-size="10" fill="#a78bfa" filter="url(#gl)">bird 36% / plane 29%</text>
     </g>
   </g>
 
   <g>
-    <rect x="40" y="296" width="830" height="84" rx="8" fill="#f0fdf4" stroke="#16a34a"/>
-    <text x="56" y="318" font-size="11" font-weight="700" fill="#14532d">結論：背景確實是線索</text>
-    <text x="56" y="338" font-size="10" fill="#14532d">
-      把天空換成綠色植被 → 79% 的誤判被修好（bird 從 0% 跳到 59.5%）；把邊框染得更像天空 → 88% 繼續判 plane。
-    </text>
-    <text x="56" y="356" font-size="10" fill="#14532d">
-      而且「把鳥蓋掉」仍有 56.7%（全部 300 張）答對 → 模型有一部分是在靠背景作答。
-    </text>
-    <text x="56" y="372" font-size="9.4" fill="#16a34a">※ 邊框 = 最外圈 6 像素；物件 = 中心 20×20。</text>
+    <rect x="40" y="296" width="830" height="84" rx="9" fill="#0c1c18" stroke="#3fb950" stroke-width="1.5" filter="url(#gl)"/>
+    <text x="56" y="318" font-size="11" font-weight="700" fill="#3fb950" filter="url(#gl)">結論：背景確實是線索</text>
+    <text x="56" y="338" font-size="10" fill="#9aa7b6">把天空換成綠色植被 → 79% 的誤判被修好（bird 從 0% 跳到 59.5%）；把邊框染得更像天空 → 88% 繼續判 plane。</text>
+    <text x="56" y="356" font-size="10" fill="#9aa7b6">而且「把鳥蓋掉」仍有 56.7%（全部 300 張）答對 → 模型有一部分是在靠背景作答。</text>
+    <text x="56" y="372" font-size="9.4" fill="#3fb950">※ 邊框 = 最外圈 6 像素；物件 = 中心 20×20。</text>
   </g>
 </svg>

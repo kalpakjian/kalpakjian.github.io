@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="only light">
+<meta name="color-scheme" content="dark">
 <title>第 7 章 錯得最慘的，都是最有自信的 ｜ CNN 專題</title>
 <meta name="description" content="MNIST 三個信心 96.9–98.9% 的誤判，反而是最危險的錯誤；信心不能用來篩錯。">
 <link rel="stylesheet" href="style.css">
@@ -36,6 +36,11 @@
   <h1>錯得最慘的，都是最有自信的</h1>
 
   <p class="onesent"><strong>一句話：</strong>三個信心 96.9%–98.9% 的誤判，比「信心 27% 但答對」的樣本危險得多。</p>
+
+  <figure class="fig">
+    <img src="img/10_confidence.svg" alt="信心分布長條圖：三個答錯的樣本信心 96.9–98.9%，三個答對的樣本只有 27.4–35.6%">
+    <figcaption>錯誤的自信（96.9–98.9%）比答對時的自信（27–36%）還高——所以「用信心篩錯」這條路直接走不通。</figcaption>
+  </figure>
 
   <span class="sec-num">STEP 01</span>
   <h2>這個實驗在做什麼</h2>

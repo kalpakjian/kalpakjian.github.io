@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 330" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" role="img" aria-label="錯誤分型：decisive / mixed / blind 三種，bird 28%、dog 20%、ship 0%">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1424"/><stop offset="52%" stop-color="#0b1220"/><stop offset="100%" stop-color="#130d24"/>
+    </linearGradient>
+    <pattern id="gr" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#16233a" stroke-width="1"/>
+    </pattern>
+    <filter id="gl" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="gl2" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="880" height="330" fill="url(#bg)"/>
+  <rect width="880" height="330" fill="url(#gr)" opacity=".55"/>
+  <rect x="0.75" y="0.75" width="878.5" height="328.5" rx="14" fill="none" stroke="#22d3ee" stroke-opacity=".24" stroke-width="1.5"/>
+
+  <text x="440" y="26" font-size="15" font-weight="700" text-anchor="middle" fill="#e6edf3" filter="url(#gl)">把「誤判」拆成三種：decisive / mixed / blind</text>
+  <text x="440" y="46" font-size="10.5" text-anchor="middle" fill="#8b949e">用遮擋實驗的 ratio 分型（CIFAR-10，信心 ≥ 0.9，共 70 個誤判）</text>
+
+  <g>
+    <g transform="translate(60,80)">
+      <g font-size="10" font-weight="700">
+        <text x="110" y="-14" text-anchor="middle" fill="#f472b6" filter="url(#gl)">decisive（被單一线索帶走）</text>
+        <text x="230" y="-14" text-anchor="middle" fill="#a78bfa" filter="url(#gl)">mixed（證據分散）</text>
+        <text x="350" y="-14" text-anchor="middle" fill="#94a3b8" filter="url(#gl)">blind（毫無線索）</text>
+      </g>
+
+      <g font-size="10" fill="#9aa7b6" text-anchor="end">
+        <text x="46" y="26">bird</text><text x="46" y="70">dog</text><text x="46" y="114">ship</text>
+      </g>
+
+      <g filter="url(#gl)">
+        <rect x="56" y="12" width="108" height="18" rx="4" fill="#f472b6" fill-opacity=".26" stroke="#f472b6" stroke-width="1.2"/>
+        <rect x="164" y="12" width="146" height="18" rx="4" fill="#a78bfa" fill-opacity=".26" stroke="#a78bfa" stroke-width="1.2"/>
+        <rect x="310" y="12" width="131" height="18" rx="4" fill="#94a3b8" fill-opacity=".22" stroke="#94a3b8" stroke-width="1.2"/>
+
+        <rect x="56" y="56" width="77" height="18" rx="4" fill="#f472b6" fill-opacity=".26" stroke="#f472b6" stroke-width="1.2"/>
+        <rect x="133" y="56" width="200" height="18" rx="4" fill="#a78bfa" fill-opacity=".26" stroke="#a78bfa" stroke-width="1.2"/>
+        <rect x="333" y="56" width="108" height="18" rx="4" fill="#94a3b8" fill-opacity=".22" stroke="#94a3b8" stroke-width="1.2"/>
+
+        <rect x="56" y="100" width="2" height="18" fill="#f472b6" fill-opacity=".26" stroke="#f472b6" stroke-width="1.2"/>
+        <rect x="58" y="100" width="289" height="18" rx="4" fill="#a78bfa" fill-opacity=".26" stroke="#a78bfa" stroke-width="1.2"/>
+        <rect x="347" y="100" width="96" height="18" rx="4" fill="#94a3b8" fill-opacity=".22" stroke="#94a3b8" stroke-width="1.2"/>
+      </g>
+
+      <g font-size="9.5" font-weight="700" text-anchor="middle" fill="#f2f8fb">
+        <text x="110" y="25">28%</text><text x="237" y="25">38%</text><text x="375" y="25">34%</text>
+        <text x="94" y="69">20%</text><text x="233" y="69">52%</text><text x="387" y="69">28%</text>
+        <text x="202" y="113">75%</text><text x="395" y="113">25%</text>
+      </g>
+      <text x="58" y="113" font-size="9.5" font-weight="700" fill="#fb7185" filter="url(#gl)">0%</text>
+    </g>
+
+    <g transform="translate(510,80)">
+      <rect x="0" y="0" width="310" height="112" rx="9" fill="#0f1720" stroke="#22d3ee" stroke-width="1.4" filter="url(#gl)"/>
+      <text x="14" y="24" font-size="10.5" font-weight="700" fill="#e6edf3">三種錯誤機制</text>
+      <text x="14" y="46" font-size="9.6" fill="#22d3ee" filter="url(#gl)">背景／棲地 → 狗→鹿、鳥→青蛙</text>
+      <text x="14" y="66" font-size="9.6" fill="#a78bfa" filter="url(#gl)">顏色／紋理 → 鳥→鹿（自己的棕色身體）</text>
+      <text x="14" y="86" font-size="9.6" fill="#fbbf24" filter="url(#gl)">姿態／形狀 → 狗→貓（趴著的軀幹）</text>
+      <text x="14" y="104" font-size="9" fill="#8b949e">三種要用不同的方法救。</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="60" y="222" width="760" height="88" rx="9" fill="#0f1720" stroke="#f472b6" stroke-width="1.5" filter="url(#gl)"/>
+    <text x="76" y="246" font-size="11" font-weight="700" fill="#f472b6" filter="url(#gl)">關鍵：decisive 只佔 19%，而且各類差很多</text>
+    <text x="76" y="268" font-size="10" fill="#9aa7b6">bird 28%、dog 20%、ship 0% → 「所有錯誤都能被解釋」是錯的，有 30% 的錯誤根本毫無證據。</text>
+    <text x="76" y="288" font-size="10" fill="#9aa7b6">ship 的 decisive 是 0%：這種錯誤不是被線索騙的，而是模型在它身上找不到任何明確依據。</text>
+    <text x="76" y="306" font-size="9.4" fill="#f472b6">※ ratio ≥ 0.6 記為 decisive、&lt; 0.2 記為 blind、其餘為 mixed。</text>
+  </g>
+</svg>

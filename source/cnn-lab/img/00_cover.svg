@@ -1,56 +1,67 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="Microsoft JhengHei, Noto Sans TC, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" role="img" aria-label="CNN 專題封面：霓虹 3×3 濾波器在特徵圖上滑動">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e3a8a"/>
+      <stop offset="0%" stop-color="#0d1424"/><stop offset="52%" stop-color="#0b1220"/><stop offset="100%" stop-color="#130d24"/>
     </linearGradient>
-    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#38bdf8"/>
-      <stop offset="100%" stop-color="#a78bfa"/>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="halo2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f472b6" stop-opacity=".40"/><stop offset="100%" stop-color="#f472b6" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="gr" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#16233a" stroke-width="1"/>
+    </pattern>
+    <filter id="gl" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="gl2" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22d3ee"/><stop offset="50%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#f472b6"/>
     </linearGradient>
   </defs>
 
   <rect width="880" height="480" fill="url(#bg)"/>
+  <rect width="880" height="480" fill="url(#gr)" opacity=".55"/>
+  <rect x="0.75" y="0.75" width="878.5" height="478.5" rx="16" fill="none" stroke="#22d3ee" stroke-opacity=".22" stroke-width="1.5"/>
 
-  <!-- decorative grid -->
-  <g stroke="#1e40af" stroke-width="0.5" opacity="0.5">
-    <line x1="0" y1="360" x2="880" y2="360"/><line x1="0" y1="380" x2="880" y2="380"/>
-    <line x1="0" y1="400" x2="880" y2="400"/><line x1="0" y1="420" x2="880" y2="420"/>
-    <line x1="0" y1="440" x2="880" y2="440"/>
-  </g>
+  <ellipse cx="162" cy="186" rx="190" ry="150" fill="url(#halo)"/>
+  <ellipse cx="740" cy="360" rx="240" ry="170" fill="url(#halo2)"/>
 
-  <!-- conv icon: 3x3 kernel sliding -->
-  <g transform="translate(96,120)">
-    <rect x="0" y="0" width="132" height="132" rx="4" fill="#0b1220" stroke="#38bdf8" stroke-width="1.2"/>
-    <g stroke="#1e40af" stroke-width="0.8">
-      <line x1="33" y1="0" x2="33" y2="132"/><line x1="66" y1="0" x2="66" y2="132"/>
-      <line x1="99" y1="0" x2="99" y2="132"/>
-      <line x1="0" y1="33" x2="132" y2="33"/><line x1="0" y1="66" x2="132" y2="66"/>
-      <line x1="0" y1="99" x2="132" y2="99"/>
+  <g>
+    <rect x="96" y="120" width="132" height="132" rx="8" fill="#0a1420" stroke="#22d3ee" stroke-width="1.6" filter="url(#gl)"/>
+    <g stroke="#1e3a5c" stroke-width="0.8">
+      <line x1="129" y1="120" x2="129" y2="252"/><line x1="162" y1="120" x2="162" y2="252"/><line x1="195" y1="120" x2="195" y2="252"/>
+      <line x1="96" y1="153" x2="228" y2="153"/><line x1="96" y1="186" x2="228" y2="186"/><line x1="96" y1="219" x2="228" y2="219"/>
     </g>
-    <rect x="33" y="33" width="33" height="33" fill="#a78bfa" opacity="0.85"/>
-    <rect x="33" y="33" width="33" height="33" fill="none" stroke="#f0abfc" stroke-width="1.6"/>
-    <text x="66" y="156" text-anchor="middle" font-size="10" fill="#7dd3fc">3×3 濾波器在滑動</text>
+    <rect x="129" y="153" width="33" height="33" rx="3" fill="#f472b6" fill-opacity=".30" stroke="#f472b6" stroke-width="1.8" filter="url(#gl)"/>
+    <rect x="96" y="120" width="132" height="132" rx="8" fill="none" stroke="#22d3ee" stroke-width="1.2" filter="url(#gl2)" opacity=".55"/>
+    <text x="162" y="276" text-anchor="middle" font-size="10.5" fill="#22d3ee" filter="url(#gl)">3×3 濾波器在滑動</text>
   </g>
 
-  <text x="290" y="150" font-size="38" font-weight="700" fill="#f8fafc">卷積神經網絡</text>
-  <text x="290" y="192" font-size="20" fill="#93c5fd">CNN 專題：十個實驗，和三次被推翻的假設</text>
-  <line x1="290" y1="212" x2="770" y2="212" stroke="url(#line)" stroke-width="3"/>
+  <text x="290" y="150" font-size="38" font-weight="700" fill="#e6edf3" filter="url(#gl2)">卷積神經網絡</text>
+  <text x="290" y="192" font-size="20" fill="#a78bfa" filter="url(#gl)">CNN 專題：十個實驗，和三次被推翻的假設</text>
+  <line x1="290" y1="212" x2="770" y2="212" stroke="url(#rule)" stroke-width="3" filter="url(#gl)"/>
 
-  <g font-size="12.5" fill="#cbd5e1">
-    <text x="290" y="244">● 從「濾波器在找什麼」到「模型到底看哪裡」</text>
-    <text x="290" y="268">● 每一個結論都附上可重跑的實驗與數字</text>
-    <text x="290" y="292">● 三次看似合理的處方，實測全部失敗</text>
+  <g font-size="12.5" fill="#9aa7b6">
+    <circle cx="296" cy="240" r="3.5" fill="#22d3ee" filter="url(#gl)"/>
+    <text x="310" y="244">從「濾波器在找什麼」到「模型到底看哪裡」</text>
+    <circle cx="296" cy="264" r="3.5" fill="#f472b6" filter="url(#gl)"/>
+    <text x="310" y="268">每一個結論都附上可重跑的實驗與數字</text>
+    <circle cx="296" cy="288" r="3.5" fill="#fbbf24" filter="url(#gl)"/>
+    <text x="310" y="292">三次看似合理的處方，實測全部失敗</text>
   </g>
 
-  <g transform="translate(290,326)">
-    <rect x="0" y="0" width="150" height="34" rx="17" fill="#1d4ed8" opacity="0.35" stroke="#60a5fa"/>
-    <text x="75" y="22" text-anchor="middle" font-size="11" fill="#dbeafe">MNIST 98.9%</text>
-    <rect x="164" y="0" width="150" height="34" rx="17" fill="#1d4ed8" opacity="0.35" stroke="#60a5fa"/>
-    <text x="239" y="22" text-anchor="middle" font-size="11" fill="#dbeafe">CIFAR-10 85.7%</text>
-    <rect x="328" y="0" width="150" height="34" rx="17" fill="#1d4ed8" opacity="0.35" stroke="#60a5fa"/>
-    <text x="403" y="22" text-anchor="middle" font-size="11" fill="#dbeafe">RTX 4090</text>
+  <g transform="translate(290,326)" font-size="11" text-anchor="middle">
+    <rect x="0" y="0" width="150" height="34" rx="17" fill="#0f1720" stroke="#22d3ee" stroke-width="1.3" filter="url(#gl)"/>
+    <text x="75" y="22" fill="#22d3ee" filter="url(#gl)">MNIST 98.9%</text>
+    <rect x="164" y="0" width="150" height="34" rx="17" fill="#0f1720" stroke="#a78bfa" stroke-width="1.3" filter="url(#gl)"/>
+    <text x="239" y="22" fill="#a78bfa" filter="url(#gl)">CIFAR-10 85.7%</text>
+    <rect x="328" y="0" width="150" height="34" rx="17" fill="#0f1720" stroke="#f472b6" stroke-width="1.3" filter="url(#gl)"/>
+    <text x="403" y="22" fill="#f472b6" filter="url(#gl)">RTX 4090</text>
   </g>
 
-  <text x="96" y="440" font-size="11" fill="#60a5fa">PyTorch 2.14 · Python 3.14 · 964k 參數的小模型</text>
+  <text x="96" y="440" font-size="11" fill="#8b949e">PyTorch 2.14 · Python 3.14 · 964k 參數的小模型</text>
 </svg>

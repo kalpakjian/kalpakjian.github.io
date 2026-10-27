@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 360" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" role="img" aria-label="哪些話可以說、哪些不能說：六條命題的可說性判斷">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1424"/><stop offset="52%" stop-color="#0b1220"/><stop offset="100%" stop-color="#130d24"/>
+    </linearGradient>
+    <pattern id="gr" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#16233a" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22d3ee"/><stop offset="50%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#f472b6"/>
+    </linearGradient>
+    <filter id="gl" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="gl2" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="880" height="360" fill="url(#bg)"/>
+  <rect width="880" height="360" fill="url(#gr)" opacity=".55"/>
+  <rect x="0.75" y="0.75" width="878.5" height="358.5" rx="14" fill="none" stroke="#22d3ee" stroke-opacity=".24" stroke-width="1.5"/>
+
+  <text x="440" y="26" font-size="15" font-weight="700" text-anchor="middle" fill="#e6edf3" filter="url(#gl)">哪些話可以說、哪些不能說</text>
+  <text x="440" y="46" font-size="10.5" text-anchor="middle" fill="#8b949e">用「單一錯誤對比率 + 同 seed 的 A/B」把假設逼到死角</text>
+  <line x1="180" y1="58" x2="700" y2="58" stroke="url(#rule)" stroke-width="2" filter="url(#gl)"/>
+
+  <g transform="translate(40,72)" font-size="10.5">
+    <text x="0" y="0" font-weight="700" fill="#e6edf3">命題</text>
+    <text x="270" y="0" font-weight="700" fill="#e6edf3">能不能說</text>
+
+    <g fill="#9aa7b6">
+      <text x="0" y="28">模型會利用背景線索</text>
+      <text x="0" y="64">那 42 個誤判是背景造成的</text>
+      <text x="0" y="100">ratio 可以當錯誤偵測器</text>
+      <text x="0" y="136">模型越大 ratio 越高</text>
+      <text x="0" y="172">低成本增強能修掉背景捷徑</text>
+      <text x="0" y="208">這是 32×32 的資訊上限</text>
+    </g>
+
+    <g font-weight="700">
+      <text x="270" y="28" fill="#3fb950" filter="url(#gl)">✅ 可以</text>
+      <text x="270" y="64" fill="#fbbf24" filter="url(#gl)">⚠️ 只能說「部分」</text>
+      <text x="270" y="100" fill="#f85149" filter="url(#gl)">❌ 不行</text>
+      <text x="270" y="136" fill="#fbbf24" filter="url(#gl)">⚠️ 很微弱</text>
+      <text x="270" y="172" fill="#f85149" filter="url(#gl)">❌ 不行</text>
+      <text x="270" y="208" fill="#f85149" filter="url(#gl)">❌ 不行</text>
+    </g>
+
+    <g font-size="9.5" fill="#6e7b8c">
+      <text x="380" y="28">換背景顏色就改變預測；物件蓋掉仍 56.7% 答對</text>
+      <text x="420" y="64">換植被修好 79%，但同操作也切掉翅膀</text>
+      <text x="380" y="100">猜對的樣本 ratio 一樣低</text>
+      <text x="380" y="136">0.163 → 0.192，遠低於 MNIST 的 0.38</text>
+      <text x="380" y="172">三種處方實測無效</text>
+      <text x="380" y="208">只改邊框顏色就翻轉 79% 的誤判</text>
+    </g>
+
+    <g stroke="#1e2a3a" stroke-width="1">
+      <line x1="0" y1="10" x2="800" y2="10"/>
+      <line x1="0" y1="46" x2="800" y2="46"/><line x1="0" y1="82" x2="800" y2="82"/>
+      <line x1="0" y1="118" x2="800" y2="118"/><line x1="0" y1="154" x2="800" y2="154"/>
+      <line x1="0" y1="190" x2="800" y2="190"/><line x1="0" y1="226" x2="800" y2="226"/>
+    </g>
+    <line x1="254" y1="-8" x2="254" y2="232" stroke="#22d3ee" stroke-width="1.2" opacity=".5"/>
+  </g>
+
+  <g>
+    <rect x="40" y="308" width="800" height="40" rx="9" fill="#0f1720" stroke="#a78bfa" stroke-width="1.3" filter="url(#gl)"/>
+    <text x="56" y="324" font-size="10" fill="#c3ccd8">還缺的那一塊：用真正的物件分割、只替換背景像素，能不能修掉？</text>
+    <text x="56" y="340" font-size="9.6" fill="#8b949e">這需要 mask（本專題的資料集沒有）——所以到此為止是誠實的邊界，而不是「我們放棄了」。</text>
+  </g>
+</svg>

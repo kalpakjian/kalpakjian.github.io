@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="only light">
+<meta name="color-scheme" content="dark">
 <title>第 8 章 把「誤判」拆成三種 ｜ CNN 專題</title>
 <meta name="description" content="decisive / mixed / blind 三種錯誤類型：19% 的誤判是被某個決定性線索騙的，而且依類別而異（ship 是 0%）。">
 <link rel="stylesheet" href="style.css">
@@ -36,6 +36,11 @@
   <h1>把「誤判」拆成三種</h1>
 
   <p class="onesent"><strong>一句話：</strong>錯誤不是只有「錯」一種——有的是「被某個線索騙了」，有的是「根本沒想法」。</p>
+
+  <figure class="fig">
+    <img src="img/11_taxonomy.svg" alt="錯誤分型堆疊圖：bird decisive 28%、dog 20%、ship 0%，其餘為 mixed 與 blind">
+    <figcaption>把每個類別的誤判依遮擋 ratio 分成三段：decisive（被單一線索帶走）、mixed（證據分散）、blind（毫無線索）。</figcaption>
+  </figure>
 
   <span class="sec-num">STEP 01</span>
   <h2>這個實驗在做什麼</h2>
