@@ -82,13 +82,43 @@
   <span class="sec-num">STEP 05</span>
   <h2>程式碼</h2>
   <div class="codebox">
-    <p class="file">inspect_model.py</p>
-    <p class="desc"><code>--occlusion</code>：單張圖的遮擋熱圖與 ratio 判讀</p>
-    <p class="file">occlusion_experiment.py</p>
-    <p class="desc">統計版：同一類別的「猜對 vs 猜錯」各抽 N 張比較 ratio 分布</p>
+    <p class="file">inspect_model.py · occlusion_sensitivity()</p>
+    <p class="desc">整個遮擋實驗就是這個雙迴圈：遮一塊、跑一次 forward、記下預測類別的機率。32×32 配 8×8 窗格、stride 4 → 7×7 = 49 次推論。</p>
+    <pre><code>@torch.no_grad()
+def occlusion_sensitivity(model, x, patch=8, stride=4, fill=0.0):
+    model.eval()
+    n, _, h, w = x.shape
+    probs = model(x).softmax(1)
+    top2 = probs.topk(2, dim=1).values
+    base_prob, pred = probs.max(1)
+    margin = top2[:, 0] - top2[:, 1]          # top1 − top2：模型離「翻盤」有多遠
+    rows = torch.arange(n, device=x.device)
+    acc = torch.zeros(n, h, w, device=x.device)
+    cnt = torch.zeros(h, w, device=x.device)
+
+    for y in range(0, h - patch + 1, stride):
+        for xx in range(0, w - patch + 1, stride):
+            occluded = x.clone()
+            occluded[:, :, y:y + patch, xx:xx + patch] = fill   # 蓋掉這一塊
+            p = model(occluded).softmax(1)[rows, pred]          # 預測類別的機率
+            acc[:, y:y + patch, xx:xx + patch] += p[:, None, None]
+            cnt[y:y + patch, xx:xx + patch] += 1
+
+    occ_prob = acc / cnt.clamp(min=1)[None]
+    return base_prob[:, None, None] - occ_prob, base_prob, pred, margin</code></pre>
+    <p class="desc" style="margin-top:14px">判讀用一個可比較的 ratio：最大下降 ÷ 當時的 top1−top2 差距。</p>
+    <pre><code>drop, base_prob, pred, margin = occlusion_sensitivity(model, x, patch=8, stride=4)
+ratio = drop.amax(dim=(1, 2)) / margin.clamp(min=1e-6)   # 最大下降 ÷ top1−top2 差距
+# ratio >= 0.5  → 有明確關鍵區
+# 0.15 ~ 0.5    → 證據分散
+# ratio &lt; 0.15  → 找不到任何單一決定區</code></pre>
     <p class="desc" style="margin-top:14px">執行方式：</p>
     <pre><code>python inspect_model.py --dataset cifar10 --errors 3 --occlusion
 python occlusion_experiment.py --dataset cifar10 --class bird --k 40 --min-conf 0.9</code></pre>
+    <div class="btns">
+      <a class="btn ghost" href="code/inspect_model.py">完整 inspect_model.py →</a>
+      <a class="btn ghost" href="code/occlusion_experiment.py">occlusion_experiment.py →</a>
+    </div>
   </div>
 
   <div class="pager">

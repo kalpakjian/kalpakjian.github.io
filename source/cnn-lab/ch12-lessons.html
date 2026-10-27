@@ -81,13 +81,36 @@
   <span class="sec-num">STEP 05</span>
   <h2>程式碼</h2>
   <div class="codebox">
-    <p class="file">全部七支腳本</p>
-    <p class="desc">見 <code>code/README.md</code> 的檔案對照表與最短重現路徑</p>
-    <p class="file">README.md</p>
-    <p class="desc">安裝指令、每支腳本的用途、四段式重現流程</p>
-    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <p class="file">安裝 + 七支腳本</p>
+    <p class="desc">七支腳本的分工（點檔名可看原始碼）：</p>
+    <ul class="codefile-list">
+      <li><a href="code/cnn_check.py">cnn_check.py</a> — 尺寸追蹤、參數量、padding 缺失與 GAP 對照（第 2 章）</li>
+      <li><a href="code/train_cnn.py">train_cnn.py</a> — 訓練：MNIST / CIFAR-10、small / wide、erase / bg-mix（第 3、9、11 章）</li>
+      <li><a href="code/inspect_model.py">inspect_model.py</a> — 特徵圖、Grad-CAM、遮擋、錯誤分析、kernel 視覺化（第 3–7 章）</li>
+      <li><a href="code/occlusion_experiment.py">occlusion_experiment.py</a> — 遮擋 ratio 的統計實驗（第 6 章）</li>
+      <li><a href="code/error_taxonomy.py">error_taxonomy.py</a> — decisive / mixed / blind 分型（第 8 章）</li>
+      <li><a href="code/confusion_probe.py">confusion_probe.py</a> — 混淆矩陣與單一捷徑比率（第 9、11 章）</li>
+      <li><a href="code/background_swap.py">background_swap.py</a> — 反事實測試（第 10 章）</li>
+    </ul>
+    <p class="desc" style="margin-top:14px">最短重現路徑（Windows PowerShell，CUDA 版 PyTorch）：</p>
     <pre><code>pip install torch torchvision matplotlib datasets pillow tqdm
-python cnn_check.py        # 先確認環境與模型定義沒問題</code></pre>
+
+# 第 2 章：先確認環境與模型定義沒問題
+python cnn_check.py
+
+# 第 3–7 章（MNIST）
+python train_cnn.py --dataset mnist --epochs 3 --dump-maps --plot
+python inspect_model.py --dataset mnist --n 4 --kernels --errors 3 --occlusion
+
+# 第 9–11 章（CIFAR-10，第一次會自動從 HuggingFace 取資料）
+python train_cnn.py --dataset cifar10 --arch wide --epochs 15 --batch-size 512 --lr 4e-3 --out run_wide
+python confusion_probe.py --ckpt run_wide\cifar10\best.pt --class bird --tag wide
+python error_taxonomy.py --classes bird,dog,ship --k 40 --ckpt run_wide\cifar10\best.pt
+python background_swap.py --ckpt run_wide\cifar10\best.pt --class bird --n 300 --tag bird</code></pre>
+    <div class="btns">
+      <a class="btn ghost" href="code/README.md">code/README.md（檔案對照表）→</a>
+      <a class="btn ghost" href="code/train_cnn.py">train_cnn.py →</a>
+    </div>
   </div>
 
   <div class="pager">

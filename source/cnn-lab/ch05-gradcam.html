@@ -79,10 +79,37 @@
   <span class="sec-num">STEP 05</span>
   <h2>程式碼</h2>
   <div class="codebox">
-    <p class="file">inspect_model.py</p>
-    <p class="desc">預設輸出 <code>gradcam_conv2.png</code> 與 <code>gradcam_conv3.png</code> 兩版對照</p>
-    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <p class="file">inspect_model.py · grad_cam()</p>
+    <p class="desc">Grad-CAM 的算式可以濃縮成四步：<b>梯度取平均當權重 → 乘回特徵圖 → ReLU → 放大回原圖</b>。注意放大那一步：7×7 → 32×32 就是位置誤差 ±4px 的來源。</p>
+    <pre><code>def grad_cam(model, x, layer="conv3"):
+    conv = conv_of(model, layer)                  # 取 conv2 或 conv3
+    feats, grads = {}, {}
+    h1 = conv.register_forward_hook(lambda m, i, o: feats.__setitem__("a", o))
+    h2 = conv.register_full_backward_hook(lambda m, gi, go: grads.__setitem__("g", go[0]))
+
+    model.zero_grad(set_to_none=True)
+    logits = model(x)
+    pred = logits.argmax(1)
+    rows = torch.arange(len(x), device=x.device)
+    logits[rows, pred].sum().backward()                 # 只對「預測類別」的分數反傳
+    h1.remove()
+    h2.remove()
+
+    a = feats["a"].detach()                             # (N, C, h, w) 特徵圖 A
+    g = grads["g"].detach()                             # 同一位置的梯度
+    weights = g.mean(dim=(2, 3), keepdim=True)          # w_c = 梯度的空間平均
+    cam = F.relu((weights * a).sum(1, keepdim=True))    # ReLU：只留正貢獻
+    cam = F.interpolate(cam, size=x.shape[-2:], mode="bilinear", align_corners=False)
+    cam = cam.squeeze(1)
+    lo = cam.amin(dim=(1, 2), keepdim=True)
+    hi = cam.amax(dim=(1, 2), keepdim=True)
+    cam = (cam - lo) / (hi - lo + 1e-8)                # 歸一化到 0..1
+    return cam.detach().cpu(), pred.detach().cpu(), logits.detach().cpu()</code></pre>
+    <p class="desc" style="margin-top:14px">執行方式（預設輸出 <code>gradcam_conv2.png</code> 與 <code>gradcam_conv3.png</code> 兩版對照）：</p>
     <pre><code>python inspect_model.py --dataset cifar10 --n 4</code></pre>
+    <div class="btns">
+      <a class="btn ghost" href="code/inspect_model.py">完整 inspect_model.py →</a>
+    </div>
   </div>
 
   <div class="pager">

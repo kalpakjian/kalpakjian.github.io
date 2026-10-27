@@ -85,12 +85,31 @@
   <span class="sec-num">STEP 05</span>
   <h2>程式碼</h2>
   <div class="codebox">
-    <p class="file">train_cnn.py</p>
-    <p class="desc">定義模型（<code>build_model</code>）；<code>--arch small|wide</code> 切換 95k / 964k 兩種容量</p>
-    <p class="file">cnn_check.py</p>
-    <p class="desc">用 forward hook 把每一層的輸出形狀與參數量印出來</p>
-    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <p class="file">train_cnn.py · build_model()（節錄）</p>
+    <p class="desc">整個 CNN 的本體只有這十幾行：三個 block（卷積 → BN → ReLU）夾著池化，最後用 GAP 收成 128 個數字。<code>--arch small|wide</code> 切換 95k / 964k 兩種容量。</p>
+    <pre><code>def build_model(in_ch, num_classes, arch="small"):
+    def block(cin, cout):
+        return nn.Sequential(
+            nn.Conv2d(cin, cout, 3, padding=1, bias=False),  # 小濾鏡；padding=1 讓長寬不變
+            nn.BatchNorm2d(cout),                            # 把輸出拉回穩定分布，收斂快
+            nn.ReLU(inplace=True),                           # 負值歸零：只留下「這裡有東西」
+        )
+
+    return nn.Sequential(
+        block(in_ch, 32), nn.MaxPool2d(2),   # 32×32 → 16×16
+        block(32, 64),    nn.MaxPool2d(2),   # 16×16 →  8×8
+        block(64, 128),   nn.MaxPool2d(2),   #  8×8  →  4×4
+        nn.AdaptiveAvgPool2d(1),             # GAP：每張特徵圖平均成 1 個數字 → 128 維
+        nn.Flatten(),
+        nn.Dropout(0.2),
+        nn.Linear(128, num_classes),         # 10 個分數
+    )</code></pre>
+    <p class="desc" style="margin-top:14px">把每一層的輸出形狀與參數量印出來（forward hook）：</p>
     <pre><code>python cnn_check.py</code></pre>
+    <div class="btns">
+      <a class="btn ghost" href="code/train_cnn.py">完整 train_cnn.py →</a>
+      <a class="btn ghost" href="code/cnn_check.py">cnn_check.py →</a>
+    </div>
   </div>
 
   <div class="pager">

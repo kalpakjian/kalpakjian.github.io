@@ -84,13 +84,38 @@
   <span class="sec-num">STEP 05</span>
   <h2>程式碼</h2>
   <div class="codebox">
-    <p class="file">train_cnn.py</p>
-    <p class="desc"><code>--erase</code>、<code>--bg-mix</code>、<code>--bg-fill image|color</code>、<code>--seed</code> 就是這次 A/B 的開關</p>
-    <p class="file">confusion_probe.py</p>
-    <p class="desc">每次訓練後量同一個指標，避免用總準確率自我安慰</p>
-    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <p class="file">train_cnn.py · mix_background()（處方②③）</p>
+    <p class="desc">「把邊框換掉」的實作：先畫出一個只有外框的遮罩，再決定這張圖要不要換、換成別張圖的邊框（image）或隨機純色（color）。</p>
+    <pre><code>@torch.no_grad()
+def mix_background(x, p, b, mode="image"):
+    if x.size(0) &lt; 2 or p &lt;= 0:
+        return x
+    n, c, h, w = x.shape
+    if mode == "color":
+        col = (torch.rand(n, c, 1, 1, device=x.device) * 3.0) - 1.5   # 正規化後的隨機色
+        src = col.expand(-1, -1, h, w)
+    else:
+        src = x[torch.randperm(n, device=x.device)]                   # 別張圖的邊框
+
+    pick = torch.rand(n, 1, 1, 1, device=x.device) &lt; p                # 這張要不要換
+    ring = torch.zeros_like(x, dtype=torch.bool)
+    ring[:, :, :b, :] = True
+    ring[:, :, -b:, :] = True
+    ring[:, :, :, :b] = True
+    ring[:, :, :, -b:] = True
+
+    return torch.where(pick &amp; ring, src, x)      # 只改邊框，中心一個像素都不動</code></pre>
+    <p class="desc" style="margin-top:14px">處方① 的 RandomErasing 只是資料增強清單裡的兩行：</p>
+    <pre><code>if erase &gt; 0:      # 大面積擦除：教模型「背景不見了也要活下來」
+    ops.append(transforms.RandomErasing(p=erase, scale=(0.08, 0.50),
+                                        ratio=(0.3, 3.3), value=0))</code></pre>
+    <p class="desc" style="margin-top:14px">執行方式（同 seed、同時長，唯一差別是被測的增強）：</p>
     <pre><code>python train_cnn.py --dataset cifar10 --arch wide --epochs 12 --batch-size 512 --seed 0 --erase 0.5 --out run_B
 python train_cnn.py --dataset cifar10 --arch wide --epochs 20 --batch-size 512 --seed 0 --bg-mix 0.9 --bg-fill color --out run_D</code></pre>
+    <div class="btns">
+      <a class="btn ghost" href="code/train_cnn.py">完整 train_cnn.py →</a>
+      <a class="btn ghost" href="code/confusion_probe.py">confusion_probe.py →</a>
+    </div>
   </div>
 
   <div class="pager">

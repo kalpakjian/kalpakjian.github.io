@@ -93,10 +93,29 @@
   <span class="sec-num">STEP 05</span>
   <h2>程式碼</h2>
   <div class="codebox">
-    <p class="file">error_taxonomy.py</p>
-    <p class="desc">多類別抽樣、分型、畫圖、輸出 <code>taxonomy.txt</code>（<code>--decisive/--blind</code> 可調門檻）</p>
+    <p class="file">error_taxonomy.py · 三行分型</p>
+    <p class="desc">分型規則本身簡單到可以背下來：ratio ≥ 0.60 算 decisive、&lt; 0.20 算 blind、中間是 mixed（兩個門檻都能用 CLI 改）。</p>
+    <pre><code>def classify(ratio, decisive, blind):
+    if ratio &gt;= decisive:      # 預設 0.60：某個局部線索就把答案帶走
+        return "decisive"
+    if ratio &lt; blind:          # 預設 0.20：遮哪裡都沒差
+        return "blind"
+    return "mixed"</code></pre>
+    <p class="desc" style="margin-top:14px">統計時對每個誤判跑一次遮擋、算 ratio，再丟進 <code>classify()</code> 累加：</p>
+    <pre><code>drop, base_prob, oc_pred, margin = occlusion_sensitivity(model, imgs[sel].to(device), 8, 4)
+ratio = (drop.amax(dim=(1, 2)) / margin.clamp(min=1e-6)).cpu()
+
+kinds = {}
+for i in idx_w:                                   # idx_w = 這個類別的誤判 index
+    kind = classify(float(ratio[i]), args.decisive, args.blind)
+    kinds[kind] = kinds.get(kind, 0) + 1
+
+share = {k: v / len(idx_w) for k, v in kinds.items()}   # bird: decisive 28% / mixed 38% / blind 34%</code></pre>
     <p class="desc" style="margin-top:14px">執行方式：</p>
     <pre><code>python error_taxonomy.py --classes bird,dog,ship --k 40 --ckpt run_wide\cifar10\best.pt</code></pre>
+    <div class="btns">
+      <a class="btn ghost" href="code/error_taxonomy.py">完整 error_taxonomy.py →</a>
+    </div>
   </div>
 
   <div class="pager">

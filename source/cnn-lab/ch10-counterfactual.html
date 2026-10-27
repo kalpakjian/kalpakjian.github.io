@@ -95,11 +95,53 @@
   <span class="sec-num">STEP 05</span>
   <h2>程式碼</h2>
   <div class="codebox">
-    <p class="file">background_swap.py</p>
-    <p class="desc"><code>--subset all|errors|errors:plane</code> 可切換樣本集，<code>--border</code> 控制邊框厚度</p>
+    <p class="file">background_swap.py · 五種條件（節錄）</p>
+    <p class="desc">整個反事實實驗只有兩個「塗抹」函式：一個塗外框、一個塗中心。顏色要先換算成模型看到的正規化數值，否則等於沒改。</p>
+    <pre><code>def fill_tensor(rgb, cfg):
+    """把畫面上的顏色換算成模型看到的正規化數值。"""
+    m = torch.tensor(cfg["mean"], dtype=torch.float32)
+    s = torch.tensor(cfg["std"], dtype=torch.float32)
+    return (torch.tensor(rgb, dtype=torch.float32) - m) / s
+
+def apply_ring(x, fill, b):
+    """只塗外圈 b 像素的邊框（物件不動）。"""
+    y = x.clone()
+    f = fill.view(1, -1, 1, 1)
+    y[:, :, :b, :] = f
+    y[:, :, -b:, :] = f
+    y[:, :, :, :b] = f
+    y[:, :, :, -b:] = f
+    return y
+
+def apply_center(x, fill, b):
+    """把中心正方形（物件）整個蓋掉。"""
+    y = x.clone()
+    y[:, :, b:-b, b:-b] = fill.view(1, -1, 1, 1)
+    return y
+
+def build_conditions(cfg, border):
+    gray  = fill_tensor(0.5, cfg)                    # 灰
+    grass = fill_tensor((0.28, 0.42, 0.16), cfg)     # 綠色植被
+    sky   = fill_tensor((0.45, 0.62, 0.88), cfg)     # 更像天空
+    return {
+        "original":     lambda x: x,
+        "ring->gray":   lambda x: apply_ring(x, gray, border),
+        "ring->green":  lambda x: apply_ring(x, grass, border),
+        "ring->sky":    lambda x: apply_ring(x, sky, border),
+        "center->gray": lambda x: apply_center(x, gray, border),
+    }</code></pre>
+    <p class="desc" style="margin-top:14px">量三件事：還答對幾 %、標籤被改掉幾 %、以及預測分布變成什麼樣子。</p>
+    <pre><code>for name, fn in conds.items():
+    p = model(fn(x0)).softmax(1).argmax(1)           # x0 = 同一批原圖
+    acc[name]  = float((p == cidx).float().mean())   # bird 準確率
+    flip[name] = float((p != base_pred).float().mean())   # 標籤改變率
+    dist[name] = torch.bincount(p, minlength=len(classes)) / len(p)</code></pre>
     <p class="desc" style="margin-top:14px">執行方式：</p>
     <pre><code>python background_swap.py --class bird --n 300 --tag bird
 python background_swap.py --class bird --subset errors:plane --tag bird2plane</code></pre>
+    <div class="btns">
+      <a class="btn ghost" href="code/background_swap.py">完整 background_swap.py →</a>
+    </div>
   </div>
 
   <div class="pager">

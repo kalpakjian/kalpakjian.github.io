@@ -85,13 +85,37 @@
   <span class="sec-num">STEP 05</span>
   <h2>程式碼</h2>
   <div class="codebox">
-    <p class="file">train_cnn.py</p>
-    <p class="desc">訓練；<code>--dump-maps</code> 會存每張圖的 32 張灰色特徵圖</p>
-    <p class="file">inspect_model.py</p>
-    <p class="desc">載入 <code>best.pt</code>，輸出三層特徵圖網格（不重訓）</p>
-    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <p class="file">inspect_model.py · 取特徵圖（節錄）</p>
+    <p class="desc">不用重訓：載入 <code>best.pt</code>，用 forward hook 一次抓三層的輸出，再挑「平均活化最強」的 8 個通道畫成網格。</p>
+    <pre><code># nn.Sequential 的位置：0=conv1 2=conv2 4=conv3
+LAYER_INDEX = {"conv1": 0, "conv2": 2, "conv3": 4}
+
+@torch.no_grad()
+def grab_features(model, x, names):
+    feats = {}
+    handles = [
+        conv_of(model, n).register_forward_hook(
+            lambda m, i, o, k=n: feats.__setitem__(k, o.detach().cpu()))
+        for n in names
+    ]
+    model(x)                     # 一次 forward，三層都有
+    for h in handles:
+        h.remove()
+    return feats
+
+feats = grab_features(model, x, ["conv1", "conv2", "conv3"])
+for layer in ("conv1", "conv2", "conv3"):
+    f = feats[layer]                                          # (N, C, H, W)
+    order = f.mean(dim=(0, 2, 3)).argsort(descending=True)[:8]  # 活化最強的 8 個通道
+    h, w = f.shape[-2:]
+    print(f"  {layer}: {f.shape[1]}ch {h}x{w}")                  # conv1: 32ch 28x28 → conv3: 128ch 7x7</code></pre>
+    <p class="desc" style="margin-top:14px">執行方式（<code>--dump-maps</code> 會順便存每張圖的 32 張灰色特徵圖）：</p>
     <pre><code>python train_cnn.py --dataset mnist --epochs 3 --dump-maps --plot
 python inspect_model.py --dataset mnist --n 4</code></pre>
+    <div class="btns">
+      <a class="btn ghost" href="code/inspect_model.py">完整 inspect_model.py →</a>
+      <a class="btn ghost" href="code/train_cnn.py">train_cnn.py →</a>
+    </div>
   </div>
 
   <div class="pager">

@@ -90,13 +90,37 @@
   <span class="sec-num">STEP 05</span>
   <h2>程式碼</h2>
   <div class="codebox">
-    <p class="file">train_cnn.py</p>
-    <p class="desc"><code>--arch wide</code> 訓練；資料來源 <code>--source auto|hf|torchvision</code></p>
-    <p class="file">confusion_probe.py</p>
-    <p class="desc">載入權重、建混淆矩陣、印出指定類別的混淆排行</p>
+    <p class="file">confusion_probe.py · 建矩陣（節錄：略過繪圖）</p>
+    <p class="desc">混淆矩陣沒有神祕公式：<code>cm[真值, 預測] += 1</code>，再按<b>列</b>正規化成百分比。每一格同時印出百分比與張數，才不會被「1 張 = 100%」騙。</p>
+    <pre><code>_, labels, preds, _ = scan_predictions(model, test_dl, device)
+
+n = len(classes)                                    # 10
+cm = torch.zeros(n, n, dtype=torch.long)
+for t, p in zip(labels.tolist(), preds.tolist()):
+    cm[t, p] += 1                                   # cm[真值, 預測]
+
+acc = (labels == preds).float().mean().item()
+rown = cm.float() / cm.sum(1, keepdim=True).clamp(min=1)     # 每列加起來 100%
+
+for i in range(n):
+    for j in range(n):
+        v = float(rown[i, j])
+        if v &gt;= 0.01:                                # 小於 1% 不標，否則整張圖都是字
+            ax.text(j, i, f"{v * 100:.0f}\n({int(cm[i, j])})",
+                    ha="center", va="center", fontsize=6.5)</code></pre>
+    <p class="desc" style="margin-top:14px">「誰最常被認成誰」的排行也是同一份矩陣算出來的：</p>
+    <pre><code>off = [(float(rown[i, j]), classes[i], classes[j])
+       for i in range(n) for j in range(n) if i != j]
+off.sort(reverse=True)
+for v, t, p in off[:8]:                              # 前 8 名
+    print(f"{t} -&gt; {p}: {v * 100:.1f}%")            # bird -> deer: 5.4%</code></pre>
     <p class="desc" style="margin-top:14px">執行方式：</p>
     <pre><code>python train_cnn.py --dataset cifar10 --arch wide --epochs 15 --batch-size 512 --lr 4e-3 --out run_wide
 python confusion_probe.py --ckpt run_wide\cifar10\best.pt --class bird --tag wide</code></pre>
+    <div class="btns">
+      <a class="btn ghost" href="code/confusion_probe.py">完整 confusion_probe.py →</a>
+      <a class="btn ghost" href="code/train_cnn.py">train_cnn.py →</a>
+    </div>
   </div>
 
   <div class="pager">

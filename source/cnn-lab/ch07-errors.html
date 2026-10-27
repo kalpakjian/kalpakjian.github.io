@@ -84,10 +84,33 @@
   <span class="sec-num">STEP 05</span>
   <h2>程式碼</h2>
   <div class="codebox">
-    <p class="file">inspect_model.py</p>
-    <p class="desc"><code>--errors N</code>：自動挑最糟的 N 個樣本並畫 Grad-CAM</p>
-    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <p class="file">inspect_model.py · 挑出「最自信的錯」</p>
+    <p class="desc">掃一遍測試集拿到每張的信心，然後<b>兩邊各排序一次</b>：錯誤的由高到低、正確的由低到高，各取 3 張。這是「信心不能用來篩錯」的最小實驗。</p>
+    <pre><code>@torch.no_grad()
+def scan_predictions(model, loader, device):
+    model.eval()
+    imgs, labels, preds, confs = [], [], [], []
+    for x, y in loader:
+        x = x.to(device)
+        p = model(x).softmax(1)
+        conf, pr = p.max(1)                # 信心 = 最高機率
+        imgs.append(x.cpu()); labels.append(y)
+        preds.append(pr.cpu()); confs.append(conf.cpu())
+    return torch.cat(imgs), torch.cat(labels), torch.cat(preds), torch.cat(confs)
+
+
+def pick_samples(labels, preds, confs, k=3):
+    wrong = preds != labels
+    # 錯得最有自信的 k 張
+    idx_wrong = torch.where(wrong)[0][confs[wrong].argsort(descending=True)][:k]
+    # 答對但最心虛的 k 張
+    idx_unsure = torch.where(~wrong)[0][confs[~wrong].argsort()][:k]
+    return idx_wrong, idx_unsure</code></pre>
+    <p class="desc" style="margin-top:14px">跑出來就是本章那 6 個樣本：誤判 98.9% / 97.5% / 96.9%，對照答對卻只有 27.4% / 35.0% / 35.6%。</p>
     <pre><code>python inspect_model.py --dataset mnist --errors 3</code></pre>
+    <div class="btns">
+      <a class="btn ghost" href="code/inspect_model.py">完整 inspect_model.py →</a>
+    </div>
   </div>
 
   <div class="pager">

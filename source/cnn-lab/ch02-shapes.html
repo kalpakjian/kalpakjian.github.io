@@ -81,10 +81,37 @@
   <span class="sec-num">STEP 05</span>
   <h2>程式碼</h2>
   <div class="codebox">
-    <p class="file">cnn_check.py</p>
-    <p class="desc">三種情況的實測腳本；同時印出 baseline 與 GAP 版的參數量（545,098 vs 94,986）</p>
-    <p class="desc" style="margin-top:14px">執行方式：</p>
+    <p class="file">cnn_check.py · 會炸的那份定義</p>
+    <p class="desc">課本版：<code>Flatten()</code> 之後寫死 <code>64 * 8 * 8</code>，等於宣告「我只吃 32×32」。</p>
+    <pre><code>baseline = nn.Sequential(
+    nn.Conv2d(3, 32, kernel_size=3, padding=1), nn.ReLU(), nn.MaxPool2d(2),
+    nn.Conv2d(32, 64, kernel_size=3, padding=1), nn.ReLU(), nn.MaxPool2d(2),
+    nn.Flatten(),
+    nn.Linear(64 * 8 * 8, 128),      # ← 4096 寫死，不隨輸入改變
+    nn.ReLU(),
+    nn.Linear(128, 10),
+)
+
+baseline(torch.randn(1, 3, 32, 32))      # OK：Flatten → 64×8×8 = 4096
+baseline(torch.randn(1, 3, 224, 224))    # RuntimeError: 64×56×56 = 200704 ≠ 4096</code></pre>
+    <p class="desc" style="margin-top:14px">換成 GAP：拿掉寫死的 4096，Flatten 後的長度永遠等於通道數。</p>
+    <pre><code>improved = nn.Sequential(
+    nn.Conv2d(3, 32, 3, padding=1), nn.BatchNorm2d(32), nn.ReLU(), nn.MaxPool2d(2),
+    nn.Conv2d(32, 64, 3, padding=1), nn.BatchNorm2d(64), nn.ReLU(), nn.MaxPool2d(2),
+    nn.Conv2d(64, 128, 3, padding=1), nn.BatchNorm2d(128), nn.ReLU(),
+    nn.AdaptiveAvgPool2d(1),           # 任意尺寸 → (B, 128, 1, 1)
+    nn.Flatten(),
+    nn.Dropout(0.2),
+    nn.Linear(128, 10),
+)
+
+for s in (32, 64, 224):                # 同一份權重，三種解析度都跑得動
+    print(s, tuple(improved(torch.randn(1, 3, s, s)).shape))</code></pre>
+    <p class="desc" style="margin-top:14px">執行方式（同時印出 baseline 與 GAP 版參數量：545,098 vs 94,986）：</p>
     <pre><code>python cnn_check.py</code></pre>
+    <div class="btns">
+      <a class="btn ghost" href="code/cnn_check.py">完整 cnn_check.py →</a>
+    </div>
   </div>
 
   <div class="pager">
