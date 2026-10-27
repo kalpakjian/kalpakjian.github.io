@@ -20,6 +20,9 @@
  *     （與 home-resources.js 同一套邏輯）。
  *
  * 版本：2026-10-25 初版。
+ *       2026-10-28 修正：改以「單張卡片」regex 取代 split(MARKER)，避免最後一張卡片
+ *       被隱藏時，把分頁器／footer／全部 <script> 一起吃掉（首頁 HTML 被截斷、
+ *       封面圖停在 loading.gif）。
  */
 
 // 首頁每篇文章的外層容器；這個 class 只出現在首頁（歸檔／分類／文章頁都沒有）。
@@ -51,25 +54,30 @@ hexo.extend.filter.register('after_render:html', function (str, data) {
   if (!hiddenPaths.length) return str;
   if (str.indexOf(MARKER) === -1) return str;   // 不是首頁
 
-  // 以 MARKER 切開：parts[0] 是前置內容，parts[i] 是第 i 篇的內文 + 它的收尾 </div>。
-  // 整段丟掉等於連同該篇一起移除，而且不影響其他篇的 div 配對。
-  const parts = str.split(MARKER);
-  if (parts.length < 2) return str;
+  // 以「一張卡片的完整範圍」為單位比對，而不是 str.split(MARKER)。
+  //
+  // 為什麼不能 split：split 之後，最後一張卡片之後的「收尾」——分頁器、footer、
+  // 以及 <body> 底部的全部 <script>（含 img-lazyload.js）——會黏在最後一個
+  // chunk 上。只要最後一張卡片剛好是 hide_from_home 的文章（首頁第 1 頁的
+  // 第 10 篇就是），整段收尾會被一起丟掉：HTML 在最後一張卡片的 </div> 後
+  // 直接結束、沒有 </body></html>、沒有任何主題 JS，於是封面圖的
+  // <img srcset="/img/loading.gif" lazyload> 永遠等不到 img-lazyload.js
+  // 把 srcset 拿掉，首頁封面就全部停在 loading.gif。
+  //
+  // 每張卡片固定從 MARKER 開始，到該卡唯一的 </article> 加外層 </div> 結束
+  // （index.ejs 一篇只渲染一個 <article>，卡片內沒有其他 </article>）。
+  const CARD_RE = /<div class="row mx-auto index-card">[\s\S]*?<\/article>\s*<\/div>/g;
 
-  let out = parts[0];
   let dropped = 0;
-  for (let i = 1; i < parts.length; i++) {
-    const chunk = parts[i];
+  const out = str.replace(CARD_RE, function (card) {
     const hidden = hiddenPaths.some(function (p) {
-      return chunk.indexOf('href="' + p + '"') !== -1 ||
-             chunk.indexOf('src="' + p) !== -1;
+      return card.indexOf('href="' + p + '"') !== -1 ||
+             card.indexOf('src="' + p) !== -1;
     });
-    if (hidden) {
-      dropped++;
-      continue;
-    }
-    out += MARKER + chunk;
-  }
+    if (!hidden) return card;
+    dropped++;
+    return '';
+  });
   if (dropped) {
     this.log.debug('hide_from_home: 首頁文章清單移除 %d 篇', dropped);
   }
