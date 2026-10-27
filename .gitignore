@@ -15,3 +15,7 @@ __pycache__/
 
 # 圖表工具的衍生檔（量測用 HTML，隨時可重新產生）
 tools/diagrams/**/_m_*.html
+
+# cnn-lab 圖檔產線的聯絡表（build_figs.py --preview 產生）
+source/cnn-lab/code/_preview.png
+

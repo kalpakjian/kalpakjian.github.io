@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="320"
+     viewBox="0 0 900 320" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" role="img"
+     aria-label="NEON 工具組自我檢查：標題、膠囊、卡片、圖例">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1424"/>
+      <stop offset="52%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#130d24"/>
+    </linearGradient>
+    <pattern id="gr" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#16233a" stroke-width="1"/>
+    </pattern>
+    <filter id="gl" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="gl2" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="50%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#f472b6"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="320" fill="url(#bg)"/>
+  <rect width="900" height="320" fill="url(#gr)" opacity=".55"/>
+  <rect x="0.75" y="0.75" width="898.5" height="318.5" rx="16"
+        fill="none" stroke="#22d3ee" stroke-opacity=".22" stroke-width="1.5"/>
+
+  <text x="60" y="92" font-size="34" font-weight="700"
+        fill="#e6edf3" filter="url(#gl2)">NEON 工具組</text>
+  <text x="60" y="126" font-size="14" fill="#a78bfa"
+        filter="url(#gl)">零依賴 Python → SVG，可完全離線</text>
+  <line x1="60" y1="146" x2="840" y2="146"
+        stroke="url(#rule)" stroke-width="3" filter="url(#gl)"/>
+
+  <rect x="60" y="176" width="190" height="34" rx="17"
+        fill="#0f1720" stroke="#22d3ee" stroke-width="1.3" filter="url(#gl)"/>
+  <text x="155" y="198" font-size="12.5"
+        text-anchor="middle" fill="#22d3ee" filter="url(#gl)">open_svg()</text>
+  <rect x="266" y="176" width="190" height="34" rx="17"
+        fill="#0f1720" stroke="#a78bfa" stroke-width="1.3" filter="url(#gl)"/>
+  <text x="361" y="198" font-size="12.5"
+        text-anchor="middle" fill="#a78bfa" filter="url(#gl)">frame()</text>
+  <rect x="472" y="176" width="190" height="34" rx="17"
+        fill="#0f1720" stroke="#f472b6" stroke-width="1.3" filter="url(#gl)"/>
+  <text x="567" y="198" font-size="12.5"
+        text-anchor="middle" fill="#f472b6" filter="url(#gl)">title() / pill()</text>
+  <rect x="678" y="176" width="162" height="34" rx="17"
+        fill="#0f1720" stroke="#fbbf24" stroke-width="1.3" filter="url(#gl)"/>
+  <text x="759" y="198" font-size="12.5"
+        text-anchor="middle" fill="#fbbf24" filter="url(#gl)">legend()</text>
+
+  <circle cx="66" cy="254" r="3.5" fill="#22d3ee" filter="url(#gl)"/>
+  <text x="80" y="258" font-size="12.5" fill="#9aa7b6">同一段 defs 換座標就能生新圖，風格不會跑掉</text>
+  <circle cx="66" cy="280" r="3.5" fill="#f472b6" filter="url(#gl)"/>
+  <text x="80" y="284" font-size="12.5" fill="#9aa7b6">光暈只加在標題與外框，內文保持可讀</text>
+
+  <text x="860" y="302" text-anchor="end" font-size="10.5" fill="#8b949e">900×320 · 無外部資源 · 可離線重建</text>
+</svg>
