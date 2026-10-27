@@ -426,9 +426,54 @@ README 原文：*"The benefit of this early kmod driver is that it does not requ
 1. **Turing 沒有 BF16、沒有 TF32、沒有 FP8**，也沒有結構化稀疏。它只有「FP16 搭 FP32 累加」這一個維度的半速。
 2. **Ampere 這套機制不能直接套用**：`FEAT_OVR_PLM`、`SS0`、`SS1` 這組暫存器是 GA10x 的佈局，Turing 的開機流程與安全處理器架構不同。
 
-**社群確實有請求**——Issue #30「Add turing support」、#97「support turing?」、#64「is there possibility for Nvidia 2000's cards」都還開著。但**目前沒有任何 Turing 實作 PR**：最新的相關 PR 是 #96（GA107 RTX 3050 Laptop）與 #82（AD107 RTX 4060 Laptop），都還在討論中。
+**社群確實有請求**——Issue #30「Add turing support」、#97「support turing?」、#64「is there possibility for Nvidia 2000's cards」都還開著。而 Ampere 專案本身**至今沒有任何 Turing 實作 PR**：最新的相關 PR 是 #96（GA107 RTX 3050 Laptop）與 #82（AD107 RTX 4060 Laptop），都還在討論中。
 
-所以正確的說法是：**「Turing 的鎖是真的，已經有人提出請求，但還沒有穩定可用的成果。」**
+**但「Ampere 專案沒有 Turing PR」不等於「Turing 沒有成果」。** 2026 年 10 月下旬，出現了**兩條彼此獨立的 Turing 路線**——它們都沒有把改動併回 Ampere 專案，而是各自另起爐灶：
+
+| 專案 | 開發者 | 建立日期 | 授權 | 實測卡 | 機制 |
+| --- | --- | --- | --- | --- | --- |
+| [nlzy/turing-unlock](https://github.com/nlzy/turing-unlock) | nlzy | 2026-10-24 | 模組與封裝 GPL-2.0-only；韌體保留 NVIDIA 授權 | Dell RTX 2080 Ti 22GB（`10de:1e07`），驅動 575.51.03，專有與 open 驅動皆可 | Linux 核心模組；寫 `SS0 = 0x88888888`、`SS1 = 0x8`，釋放 ACR mutex 3，走正常 Booter finalize 路徑 |
+| [KohakuBlueleaf/KohakUnlock](https://github.com/KohakuBlueleaf/KohakUnlock) | KohakuBlueleaf | 2026-10-25 | GPL-2.0 | 兩張 Leadtek TU102 rev a1（`10de:1e04` / `107d:1e04`），VBIOS `90.02.33.00.3F`，改裝成 22 GiB、68 SMs；核心 6.8.0-147 + open 595.99.02 | 有防護的 TU102 initramfs 移植；`make module` 預設編出**硬體執行關閉**的模組 |
+
+**KohakUnlock 揭露了一件對整個專題都有影響的事**：它自己 fork 了 `mmapeak`，原因是原始版的編譯期全零片段會讓編譯器把相同的 tile 計算折疊掉，而主機端仍照計完整 tile 的 FLOPs——**量測工具本身會高估**。它的結論是：*"The original compile-time all-zero fragments allowed the compiler to collapse identical tile calculations while the host still counted full-tile FLOPs. Our fork uses runtime-randomized inputs."* **引用任何以 `mmapeak` 為基礎的數字時，這一點都該記在心上。**
+
+它的測試邊界也寫得很清楚：TU102 **一次只跑一張**、公開執行器仍是單目標；兩卡 NCCL all-reduce 從 1 KiB 到 64 MiB 都通過（64 MiB 時演算法頻寬 36.77 GB/s，NV2 拓樸、雙向 peer access、NCCL direct P2P）；主機是 GIGABYTE MZ32-AR0／AMD 伺服器、獨立 ASPEED 顯示、停用 Secure Boot，並觀察到共享 IOMMU group 但沒有 bus-wide reset。README 最後一行寫著 **"Other board profiles and Blackwell remain research targets."**
+
+`nlzy/turing-unlock` 也把自己限制講清楚：**只測過那一張 22GB 的 2080 Ti，其他卡與其他驅動都沒測**，而且 README 頂端就是硬體警告：*"Tensor cores draw very high power. Unlocking them to full speed may damage your hardware. **Use at your own risk.**"*
+
+它的實測數字（cuBLAS FP16 矩陣乘法、FP32 累加、RTX 2080 Ti @250 W）：
+
+| M·N·K | 解鎖前 | 解鎖後 | 占 nlzy 標示的 100% peak |
+| --- | ---: | ---: | --- |
+| 1024 | 50.3 TFLOPS | **68.3 TFLOPS** | 88.4% → 120.0% |
+| 2048 | 55.7 TFLOPS | **91.4 TFLOPS** | 97.9% → 160.6% |
+| 4096 | 53.7 TFLOPS | **81.7 TFLOPS** | 94.4% → 143.6% |
+| 8192 | 52.8 TFLOPS | **77.9 TFLOPS** | 92.8% → 136.9% |
+
+這組數字有兩件事值得記。第一，**增益幅度落在 +29%～+64% 之間，不是「翻倍」**——而且解鎖後的數字超過 100% peak 的部分，代表作者的 peak 基準本身偏低。第二，**它的 100% peak 寫成 56.9 TFLOPS 並註明出自 NVIDIA Turing 架構白皮書**；但白皮書裡 RTX 2080 Ti 的「FP16 搭 FP32 累加」是 **53.8 TFLOPS**、「FP16 搭 FP16 累加」是 107.6（本篇上面引的就是這一組）。**兩個數字對不上**——這是「量測口徑不同」的典型案例，引用時務必註明 100% peak 是依誰的基準。
+
+所以正確的說法已經改寫成：**「Turing 的鎖是真的；Ampere 專案本身至今沒有 Turing PR，但社群已在 2026 年 10 月下旬做出兩條彼此獨立的 Turing 實作，各自在自己的硬體上驗證過。範圍仍然很窄——一張 2080 Ti 22GB、兩張 Leadtek TU102。」**
+
+### 媒體交叉印證：兩個反例與一個亮點（二手來源）
+
+以下三則來自媒體報導，**不是一手資料**，但與本篇的一手佐證方向一致，列出來是為了讓讀者知道「實務界怎麼看」：
+
+| 報導 | 內容 | 與本篇一手資料的關係 |
+| --- | --- | --- |
+| RTX 3080 Ti 20GB 解鎖後 **BF16 沒有提升** | 媒體引用 TweakTown | **與 Issue #28 完全一致**——那張卡「解鎖成功但維持半速」，是本篇記錄的兩種失敗案例之一 |
+| RTX 3090 Ti 在 ComfyUI 跑 **BF16 影像模型快約 56%～59%** | 媒體引用 TweakTown | 屬端到端負載，本篇只引用過 GEMM 微基準；**這是首次看到 ComfyUI 的端到端數字**，但沒有原始量測條件可查 |
+| RTX 4070 Ti SUPER 跑影片模型，**INT8 完全沒加快、NVFP4 快 24%** | 媒體引述留言區 | 與本篇「INT8／INT4 不經 FP32 累加路徑」的判準一致 |
+
+其中第二則值得留意：本篇一直強調「媒體說 decode 變快」與專案自身數據衝突，而 ComfyUI 的 BF16 影像模型**是 BF16 路徑**（會吃到 FP32 累加限速），所以它在原理上站得住——但因為拿不到原始量測條件，這裡只能標成「值得追」而不是「已證實」。
+
+### 授權條款：不只是技術問題
+
+NVIDIA GeForce 驅動程式授權條款第 2.6 條原文：
+
+> You may not **bypass, disable, or circumvent** any technical limitation, encryption, security, digital rights management or authentication mechanism in the SOFTWARE.
+
+這是明文。至於「在驅動程式載入前執行的核心模組」算不算 circumvent，目前沒有任何判例或官方說明；截至本文更新時，**NVIDIA 未對這批開源專案公開表態**。
+
 
 ## 這件事跟 RTX 40 有什麼關係
 
@@ -458,6 +503,10 @@ README 原文：*"The benefit of this early kmod driver is that it does not requ
 | GitHub PR 清單（14 個） | #24（AD103／AD106）、#41（AD103，已關閉）、#96／#82（跨架構嘗試） |
 | TensorFlow issue #24531 | Turing 的 FP32-累加半速佐證 |
 | Flopper.io 規格頁 | RTX 2080 Ti 的 53.8／107.6 TFLOPS 對照與 Turing 無 BF16 的確認 |
+| [nlzy/turing-unlock](https://github.com/nlzy/turing-unlock) README | Turing 實作：機制、實測卡、四組 M·N·K 數字、硬體警告 |
+| [KohakuBlueleaf/KohakUnlock](https://github.com/KohakuBlueleaf/KohakUnlock) README | Turing 實作：測試邊界、NCCL 雙卡結果、`mmapeak` 全零輸入缺陷 |
+| NVIDIA GeForce 授權條款 | 第 2.6 條「bypass, disable, or circumvent」原文 |
+| [gpu-unlock-ada Issue #12](https://github.com/JustAResearcher/gpu-unlock-ada/issues/12) | Blackwell 現況（見 [RTX 50 系查核](/2026/10/27/rtx50-blackwell-unlock-fact-check/)） |
 
 ## 參考資料
 
@@ -468,6 +517,13 @@ README 原文：*"The benefit of this early kmod driver is that it does not requ
 - Ada 版（本系列前篇）：[JustAResearcher/gpu-unlock-ada](https://github.com/JustAResearcher/gpu-unlock-ada)
 - 改裝 4080 的 Windows 實驗：[TOTORONG/AD103_win_unlocker](https://huggingface.co/TOTORONG/AD103_win_unlocker)
 - Turing 半速的原始討論：[tensorflow/tensorflow#24531](https://github.com/tensorflow/tensorflow/issues/24531)
+- Turing 世代的兩條新實作：[nlzy/turing-unlock](https://github.com/nlzy/turing-unlock)、[KohakuBlueleaf/KohakUnlock](https://github.com/KohakuBlueleaf/KohakUnlock)
+- NVIDIA GeForce 驅動程式授權條款：[nvidia.com/en-us/drivers/geforce-license](https://www.nvidia.com/en-us/drivers/geforce-license/)
+- 同系列查核文章：
+  - [RTX 40 系 Tensor 解鎖事實查核](/2026/10/25/rtx40-tensor-unlock-fact-check/)——Ada 版的完整查核
+  - [RTX 50 系 Blackwell 解鎖事實查核](/2026/10/27/rtx50-blackwell-unlock-fact-check/)——為什麼下一代解不動
+  - [RTX 4090 解除 gpu-unlock 操作筆記](/2026/10/25/rtx4090-gpu-unlock-guide/)——Ada 路徑的完整動手流程
+  - [RTX 3080 12GB 解除 gpu-unlock 操作筆記](/2026/10/25/rtx3080-12gb-gpu-unlock-guide/)——Ampere 路徑的完整動手流程
 
 ---
 

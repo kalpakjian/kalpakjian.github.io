@@ -293,6 +293,14 @@ journalctl -k -b | grep -i xid                 # 應該沒有 NVRM: Xid
 
 > <strong>白話說</strong>：解鎖是把「引擎檔位」從半速推回全速。你的變速箱齒比、路面、限速牌都沒變——所以只有「出力就是瓶頸」的負載會感受到差異。**逐 token 生成卡在記憶體頻寬上，跟引擎多強無關。**
 
+### 兩個值得知道的補充
+
+**第一，並非每張卡都有效。** 上游 Issue #28 記錄了一張 **RTX 3080 Ti 20GB OEM**（GA102-250，`10de:2205`）的案例：解鎖交易會成功結束、選擇器也確認寫進去了，**但 BF16 速率就是維持半速**。媒體後來也獨立報導了同一個現象。**這是本專題記錄最清楚的「看起來成功，其實沒用」案例**，也是「解鎖不是保證」的最佳教材——你會在 `dmesg` 裡看到 `gpu_unlock: unlocked`，但一點速度都沒有。
+
+**第二，ComfyUI 終於有端到端數字了。** 上游一直沒有涵蓋 ComfyUI；媒體引用 TweakTown 報導了一張 **RTX 3090 Ti 在 ComfyUI 跑 BF16 影像模型快約 56%～59%**。這個數字在原理上站得住——**BF16 影像模型走的正是 FP32 累加路徑**，是會吃到限速的那一條；而且它比本文引用的 GEMM 微基準（3090 Ti 的 BF16 是 +80%）保守得多，看起來比較像真實端到端而不是挑數字。不過因為拿不到原始量測條件，這裡只能標成「值得追」，不是「已證實」。
+
+順帶一提，媒體還引述了留言區的兩個對照：一張 RTX 4090 解鎖後約快 1.2 倍；一張 RTX 4070 Ti SUPER 跑影片模型，**INT8 版本完全沒有加快、NVFP4 版本快 24%**。這些留言未經獨立核實，但與本專題「INT8／INT4 不經 FP32 累加路徑」的判準完全吻合。
+
 ## 常見坑（都有 issue 編號可查）
 
 | 症狀 | 原因 | 解法 | 出處 |
@@ -344,6 +352,7 @@ gpu_unlock.resume=0
 - **NVIDIA 有強烈動機修掉這個漏洞**（它打的正是已簽章 booter 的溢位）。所以「更新驅動不用重打補丁」是站在短期使用的角度；長期來看這個方案可能被上游改動作廢。
 - **韌體資產釘在 NVIDIA 610.43.03**。NVIDIA 改版資產就得重新產生；每次核心更新也要重編模組、重建 initramfs。
 - **上游沒有做過長期穩定性測試**，也沒有涵蓋遊戲、ComfyUI、hibernate resume。
+- **授權條款也寫著紅燈**：NVIDIA GeForce 驅動程式授權條款第 2.6 條明文禁止 *"bypass, disable, or circumvent any technical limitation… in the SOFTWARE"*。這些工具在驅動程式載入前執行，**算不算 circumvent 沒有任何判例或官方說明**；截至本文更新時，NVIDIA 未對這批開源專案公開表態。
 
 **因此我的建議是**：先在一台你隨時可以重裝的機器上做，保留一個正常開機項，不要拿主力機或商用 SLA 主機先試。
 
@@ -448,6 +457,9 @@ python bench_gemm.py | tee unlocked.json
 - 同系列的查核文章：
   - [RTX 30 系 gpu-unlock 事實查核](https://kalpakjian.github.io/2026/10/25/rtx30-gpu-unlock-ampere-fact-check/)——「翻倍」與「全系列」兩句話都不成立的理由
   - [RTX 40 系 Tensor 解鎖事實查核](https://kalpakjian.github.io/2026/10/25/rtx40-tensor-unlock-fact-check/)——2× 指令率 vs 12～34% 實際 GEMM 增益
+  - [RTX 50 系 Blackwell 解鎖事實查核](https://kalpakjian.github.io/2026/10/27/rtx50-blackwell-unlock-fact-check/)——下一代解不動的理由（熔絲、FSP、booter 清點）
+- NVIDIA GeForce 驅動程式授權條款（第 2.6 條）：[nvidia.com/en-us/drivers/geforce-license](https://www.nvidia.com/en-us/drivers/geforce-license/)
+- Turing 世代的兩條獨立實作（如果你手上是 20 系）：[nlzy/turing-unlock](https://github.com/nlzy/turing-unlock)、[KohakuBlueleaf/KohakUnlock](https://github.com/KohakuBlueleaf/KohakUnlock)
 
 ---
 

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660" role="img" aria-label="Ada 與 Blackwell 的解鎖鏈對照：Ada 的主機寫入可以改變暫存器讀值，Blackwell 的寫入被無聲丟棄，速率改由熔絲決定" style="width:100%;height:auto;display:block">
+<defs><marker id="m2dd4bf" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker><marker id="mf472b6" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f472b6"/></marker></defs>
+<rect x="0.75" y="0.75" width="998.5" height="658.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一組暫存器，兩種結局</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ada 靠主機寫入解鎖；Blackwell 的速率改由熔絲決定，寫進去也沒用</text>
+<rect x="48" y="126" width="440" height="420" rx="12" fill="#1c2230" stroke="#2dd4bf55" stroke-width="1.5"/>
+<text x="72" y="158" font-size="15" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ada · RTX 4090（實測可解鎖）</text>
+<rect x="72" y="180" width="392" height="58" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="86" y="207.0" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SEC2 BooterLoad（Falcon）</text>
+<text x="86" y="229.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">已公開，可載入 payload</text>
+<path d="M 268 238 L 268 252" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#m2dd4bf)"/>
+<rect x="72" y="252" width="392" height="58" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="86" y="279.0" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">緩衝區溢位 → ROP</text>
+<text x="86" y="301.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">打開 FEAT_OVR_PLM 寫入保護</text>
+<path d="M 268 310 L 268 324" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#m2dd4bf)"/>
+<rect x="72" y="324" width="392" height="58" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="86" y="351.0" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">主機寫入 SS0 / SS1</text>
+<text x="86" y="373.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">寫得進去，讀回值變成 0</text>
+<path d="M 268 382 L 268 396" fill="none" stroke="#2dd4bf" stroke-width="2" marker-end="url(#m2dd4bf)"/>
+<rect x="72" y="396" width="392" height="58" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="86" y="423.0" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">fmla32：1 → 0</text>
+<text x="86" y="445.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1/2 速 → 全速</text>
+<text x="72" y="486" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">booter 明文是公開的，payload 可以照著寫</text>
+<text x="72" y="506" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SEC2 上跑的是簽章韌體，攻擊面在它自己的溢位</text>
+<rect x="512" y="126" width="440" height="420" rx="12" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<text x="536" y="158" font-size="15" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Blackwell · RTX 5090（寫不進去）</text>
+<rect x="536" y="180" width="392" height="58" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="550" y="207.0" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">沒有 Falcon SEC2 booter</text>
+<text x="550" y="229.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">改用 FSP（NV-RISCV）當根信任</text>
+<path d="M 732 238 L 732 252" fill="none" stroke="#f472b6" stroke-width="2" marker-end="url(#mf472b6)"/>
+<rect x="536" y="252" width="392" height="58" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="550" y="279.0" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GFW / FMC / GSP 全加密</text>
+<text x="550" y="301.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">開源模組查無 Blackwell booter</text>
+<path d="M 732 310 L 732 324" fill="none" stroke="#f472b6" stroke-width="2" marker-end="url(#mf472b6)"/>
+<rect x="536" y="324" width="392" height="58" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="550" y="351.0" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">主機寫入 SS0 / SS1 / PLM</text>
+<text x="550" y="373.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">讀回完全不變——無聲丟棄</text>
+<path d="M 732 382 L 732 396" fill="none" stroke="#f472b6" stroke-width="2" marker-end="url(#mf472b6)"/>
+<rect x="536" y="396" width="392" height="58" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="550" y="423.0" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">fmla32：3（熔絲決定）</text>
+<text x="550" y="445.0" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1/8 速，比 Ada 更嚴</text>
+<text x="536" y="486" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">開源模組對 Blackwell 的 booter 函式是回傳 NULL 的 stub</text>
+<text x="536" y="506" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">熔絲改了會讓卡 refuse to post，不是「沒反應」而是開不了機</text>
+<rect x="48" y="566" width="904" height="74" rx="10" fill="#1c2230" stroke="#fbbf2455" stroke-width="1.5"/>
+<text x="68" y="592" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩件事同時成立：暫存器還在、閘門關著。</text>
+<text x="68" y="614" font-size="13" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">差異不在「有沒有人做」，而在「寫不進去」——寫入階梯讀回完全不變，連 FLR 都不會發生。</text>
+</svg>

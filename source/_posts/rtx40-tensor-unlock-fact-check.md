@@ -81,6 +81,7 @@ banner_img: /img/covers/rtx40-tensor-unlock-fact-check.png
 | 「Windows 一鍵解鎖所有 RTX 40」 | 兩個彼此獨立的單卡實驗（HF 改裝 4080、repo 內 MSI 4070 Ti AD104），都不散佈可攜二進位、都只適用單一板型 | 不成立 |
 | 「效能提升必然更耗電」 | 固定 450 W 上限下功耗 307.67 → 308.59 W；4070 Ti SUPER 在同一個 240 W 上限下 FP16 翻倍 | 與實測相反 |
 | 「這是假的／是陰謀論」 | 是真的開源專案：原始碼、雜湊固定的韌體資產、配對實測、數值驗證、公開的限制聲明都齊備 | 過度懷疑 |
+| 「RTX 50 系的解鎖方案也快出來了」 | **不會。** 同一個專案的維護者 2026-10-26 公開回覆 *"The short answer is no"*：Blackwell 上主機寫入被丟棄、速率由熔絲決定、沒有公開的 SEC2 booter 可供 payload 執行 | 不成立（[詳見](/2026/10/27/rtx50-blackwell-unlock-fact-check/)） |
 
 ## 它到底做了什麼（白話版）
 
@@ -406,6 +407,19 @@ model card 開頭就自我限定得很清楚：
 | **RTX 4090 D**（AD102, `10de:2685`） | 實驗性旗標 | 未公布效能數據 | 最低 |
 | **RTX 4080 / 4080 SUPER** | **不支援** | — | 不在白名單；Issue #18 未獲回覆 |
 | **Windows AD104**（MSI 4070 Ti `10de:2782`） | 單板型手動 UEFI 移植 | cuBLAS FP16/FP32 +80.1%、BF16/FP32 +76.4% | 單卡單板型；不散佈二進位；需停 Secure Boot |
+| **Blackwell（RTX 50 系）** | **不支援，而且不是「尚未實作」** | — | 專案維護者 2026-10-26 公開回覆 *"The short answer is no"*：主機寫入被丟棄、速率由熔絲決定、沒有公開的 SEC2 booter（[詳見](/2026/10/27/rtx50-blackwell-unlock-fact-check/)） |
+
+## 下一代呢：為什麼連 RTX 50 也解不動
+
+「RTX 40 全系列都能解鎖」這句話的邊界，過去只能從原始碼白名單推導出來——**4 個 Ada 裝置 ID**。2026-10-25 起，專案在 GitHub 上開了 `work on 5090?` 這條討論串，兩天後由維護者 JustAResearcher 親手關掉，結論是：
+
+> The short answer is no. On Blackwell the same registers are there, but **host writes to them are dropped**, the rate comes from **fuses**, and there's **no published SEC2 booter** for an Ada-style payload to run in. The approach here doesn't carry over, and there's no Blackwell support planned in this repo.
+
+這句話的份量比「白名單只有四個」更重：**白名單只是範圍問題，而 Blackwell 是機制問題。**
+
+討論串裡的唯讀偵察把這一點坐實了——暫存器在 Blackwell 上**還在 Ada 的同一組位址**（`FEAT_OVR_PLM` 在 `0x00823804`、`SS0` 在 `0x0082381c`、`SS1` 在 `0x00823820`），但寫入階梯測試讀回完全不變，限速值改由 `FUSE_SS_*` 熔絲字決定。而且這一代連鎖法都換了：**`fmla32` 的速率編碼在 5090 上是 3（1/8 速），Ada 是 1（1/2 速）**——不是把 Ada 的鎖調深，是換了機制。
+
+完整的查核（含熔絲、FSP 取代 Falcon、booter 清點結果）見 [RTX 50 系 Blackwell 解鎖事實查核](/2026/10/27/rtx50-blackwell-unlock-fact-check/)。
 
 另外，專案 README 自己引用的獨立使用者配對實測（revision `8855e7b`，Linux `7.2.11-arch1-1`，NVIDIA `615.78.08`，同一個 450 W 上限）量到 **160.4 → 320.4 TF/s**（FP16/FP32）與 **159.7 → 320.2 TF/s**（BF16/FP32），與專案自己的 165.6 → 331.6 數據一致——**這是本專案證據鏈最紮實的一環**。
 
@@ -449,6 +463,8 @@ Issue #22 的實測回報：
 配對條件是同一張卡、同一個核心、同一個驅動、同一個 450 W 功耗上限、取樣間隔約 100 ms。**功耗幾乎沒動，溫度略升 6 °C**。
 
 更關鍵的佐證在 4070 Ti SUPER：**在完全相同的 240 W 功耗上限下**，FP16 指令速率從 95.0 直接翻到 189.9 TF/s。
+
+> <strong>但這句話有它的適用範圍</strong>：配對實測量的是「**最大取樣功耗**」（約 100 ms 取樣間隔），上游自己寫明了這組數字**不能**證明板載功耗、長期散熱或電氣安全。媒體另外引用過一組**峰值功耗**數字（RTX 4090 解鎖後 313 W → 346 W），那與「307.67 W → 308.59 W」並不矛盾——一個是取樣最大，一個是瞬時峰值。**兩個都對，但只有後者才提醒你「限速器拆掉之後，瞬間的電流需求會變大」**，也才對得起 Turing 分支 README 那句硬體警告：*"Tensor cores draw very high power. Unlocking them to full speed may damage your hardware."*
 
 > <strong>白話說</strong>：車子本來就被「限速牌」壓在 60 檔（功耗上限）。你把引擎的電子限速拆掉，它不會「多吃油」，因為油箱和引擎出力都被同一個上限管著——你得到的是**每公升跑更多公里**。真正會變差的是「長時間全油門時的散熱與供電裕度」，以及**你完全沒有長期穩定性資料**這件事。
 
@@ -509,7 +525,9 @@ Issue #22 的實測回報：
 | `docs/ad104-windows-latence-app.md` | Windows AD104 實測 |
 | `docs/testing.md` | 三層驗證分級定義 |
 | `firmware/NOTICE.md` | payload 來源與「重現位元組不等於執行期結果」的自省聲明 |
-| GitHub Issues API | #3（AD103/AD104）、#18（4080 SUPER）、#22（`0x2803` vs `0x2805`） |
+| GitHub Issues API | #3（AD103/AD104）、#18（4080 SUPER）、#22（`0x2803` vs `0x2805`）、**#12（`work on 5090?`，Blackwell 的完整結論）** |
+| NVIDIA 開源核心模組 `ctrl2080gr.h` | 速率欄位編碼定義（`fmla32` 的 0／1／2／3 = 全速／1-2／1-4／1-8） |
+| NVIDIA GeForce 授權條款 | 第 2.6 條「bypass, disable, or circumvent」原文 |
 | Hugging Face model card | 改裝 4080 的量測、EFI 釘選限制、風險聲明 |
 
 查核時另發現上游 `arch_610.h` 的註解仍寫 AD106「untested on silicon」，與 `docs/ada-2805-report.md` 已記錄的單卡實測不一致——這是上游 1.1.1 文件更新落後，引用時建議以 `docs/` 報告為準並註明版本。
@@ -525,6 +543,14 @@ Issue #22 的實測回報：
 - 韌體出處聲明：[firmware/NOTICE.md](https://github.com/JustAResearcher/gpu-unlock-ada/blob/main/firmware/NOTICE.md)
 - Hugging Face 改裝 4080 實驗：[TOTORONG/AD103_win_unlocker](https://huggingface.co/TOTORONG/AD103_win_unlocker)
 - 上游 Ampere 專案：[Zagitta/gpu-unlock](https://github.com/Zagitta/gpu-unlock)
+- Blackwell 討論串（本文新增的來源）：[gpu-unlock-ada Issue #12「work on 5090?」](https://github.com/JustAResearcher/gpu-unlock-ada/issues/12)
+- NVIDIA 開源核心模組：[github.com/NVIDIA/open-gpu-kernel-modules](https://github.com/NVIDIA/open-gpu-kernel-modules)
+- NVIDIA GeForce 驅動程式授權條款：[nvidia.com/en-us/drivers/geforce-license](https://www.nvidia.com/en-us/drivers/geforce-license/)
+- 同系列查核文章：
+  - [RTX 50 系 Blackwell 解鎖事實查核](/2026/10/27/rtx50-blackwell-unlock-fact-check/)——下一代解不動的理由
+  - [RTX 30 系 gpu-unlock 事實查核](/2026/10/25/rtx30-gpu-unlock-ampere-fact-check/)——Ampere 上游的完整版
+  - [RTX 4090 解除 gpu-unlock 操作筆記](/2026/10/25/rtx4090-gpu-unlock-guide/)——同一套流程的 Ada 版
+  - [RTX 3080 12GB 解除 gpu-unlock 操作筆記](/2026/10/25/rtx3080-12gb-gpu-unlock-guide/)——同一套流程的 Ampere 版
 
 ---
 

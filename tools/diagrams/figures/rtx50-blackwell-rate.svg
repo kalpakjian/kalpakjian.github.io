@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 570" role="img" aria-label="速率檔位對照：Ada 的 fmla32 是 1（1/2 速），Blackwell 是 3（1/8 速），而且 imla1 也被限速" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="998.5" height="568.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ada 的 1/2 速 vs Blackwell 的 1/8 速</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一組速率欄位，兩代的限速深度與受影響欄位都不一樣</text>
+<text x="48" y="128" font-size="12.5" fill="#8b949e" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">速率欄位</text>
+<text x="318" y="128" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ada · RTX 4090 stock</text>
+<text x="528" y="128" font-size="12.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ada · RTX 4090 解鎖後</text>
+<text x="738" y="128" font-size="12.5" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Blackwell · RTX 5090</text>
+<rect x="48" y="144" width="270" height="28" rx="6" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<text x="62" y="163" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">fmla32</text>
+<text x="144" y="163" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16 乘、FP32 累加</text>
+<rect x="318" y="144" width="200" height="28" rx="6" fill="#fbbf2422" stroke="#fbbf2499" stroke-width="1"/>
+<text x="418.0" y="162.5" font-size="12.5" fill="#fbbf24" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1 → 1/2 速</text>
+<rect x="528" y="144" width="200" height="28" rx="6" fill="#2dd4bf22" stroke="#2dd4bf99" stroke-width="1"/>
+<text x="628.0" y="162.5" font-size="12.5" fill="#2dd4bf" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0 → 全速</text>
+<rect x="738" y="144" width="214" height="28" rx="6" fill="#f472b622" stroke="#f472b699" stroke-width="1"/>
+<text x="845.0" y="162.5" font-size="12.5" fill="#f472b6" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3 → 1/8 速</text>
+<rect x="48" y="178" width="270" height="28" rx="6" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<text x="62" y="197" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">imla2</text>
+<text x="144" y="197" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">INT 模式</text>
+<rect x="318" y="178" width="200" height="28" rx="6" fill="#fbbf2422" stroke="#fbbf2499" stroke-width="1"/>
+<text x="418.0" y="196.5" font-size="12.5" fill="#fbbf24" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1 → 1/2 速</text>
+<rect x="528" y="178" width="200" height="28" rx="6" fill="#2dd4bf22" stroke="#2dd4bf99" stroke-width="1"/>
+<text x="628.0" y="196.5" font-size="12.5" fill="#2dd4bf" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0 → 全速</text>
+<rect x="738" y="178" width="214" height="28" rx="6" fill="#f472b622" stroke="#f472b699" stroke-width="1"/>
+<text x="845.0" y="196.5" font-size="12.5" fill="#f472b6" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3 → 1/8 速</text>
+<rect x="48" y="212" width="270" height="28" rx="6" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<text x="62" y="231" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">imla4</text>
+<text x="144" y="231" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">INT 模式</text>
+<rect x="318" y="212" width="200" height="28" rx="6" fill="#fbbf2422" stroke="#fbbf2499" stroke-width="1"/>
+<text x="418.0" y="230.5" font-size="12.5" fill="#fbbf24" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1 → 1/2 速</text>
+<rect x="528" y="212" width="200" height="28" rx="6" fill="#2dd4bf22" stroke="#2dd4bf99" stroke-width="1"/>
+<text x="628.0" y="230.5" font-size="12.5" fill="#2dd4bf" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0 → 全速</text>
+<rect x="738" y="212" width="214" height="28" rx="6" fill="#f472b622" stroke="#f472b699" stroke-width="1"/>
+<text x="845.0" y="230.5" font-size="12.5" fill="#f472b6" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3 → 1/8 速</text>
+<rect x="48" y="246" width="270" height="28" rx="6" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<text x="62" y="265" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">imla1</text>
+<text x="144" y="265" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">INT 模式</text>
+<rect x="318" y="246" width="200" height="28" rx="6" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<text x="418.0" y="264.5" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—</text>
+<rect x="528" y="246" width="200" height="28" rx="6" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<text x="628.0" y="264.5" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—</text>
+<rect x="738" y="246" width="214" height="28" rx="6" fill="#f472b622" stroke="#f472b699" stroke-width="1"/>
+<text x="845.0" y="264.5" font-size="12.5" fill="#f472b6" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3 → 1/8 速</text>
+<rect x="48" y="280" width="270" height="28" rx="6" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<text x="62" y="299" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">fmla16</text>
+<text x="144" y="299" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FP16 乘、FP16 累加</text>
+<rect x="318" y="280" width="200" height="28" rx="6" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<text x="418.0" y="298.5" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—</text>
+<rect x="528" y="280" width="200" height="28" rx="6" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<text x="628.0" y="298.5" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">—</text>
+<rect x="738" y="280" width="214" height="28" rx="6" fill="#161b22" stroke="#7d859044" stroke-width="1"/>
+<text x="845.0" y="298.5" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0 → 本來就全速</text>
+<rect x="48" y="336" width="904" height="76" rx="10" fill="#1c2230" stroke="#fbbf2455" stroke-width="1.5"/>
+<text x="68" y="362" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">速率編碼（NVIDIA 開源核心模組 ctrl2080gr.h）</text>
+<text x="68" y="386" font-size="12" fill="#e6edf3" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">FMLA32_FULL_SPEED = 0 ｜ REDUCED_SPEED_1_2 = 1 ｜ REDUCED_SPEED_1_4 = 2 ｜ REDUCED_SPEED_1_8 = 3</text>
+<text x="68" y="404" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「1/2 速」在 Ada 已經是極限；Blackwell 的「3」是 1/8 速——限得更深，而且連欄位集合都變了。</text>
+<rect x="48" y="428" width="904" height="76" rx="10" fill="#1c2230" stroke="#f472b655" stroke-width="1.5"/>
+<text x="68" y="454" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">所以「解鎖後衝上 420 TFLOPS」有兩層問題</text>
+<text x="68" y="478" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① 419 TFLOPS 是白皮書的 FP16 累加峰值，不是 FP32 累加；後者只有 209.5。</text>
+<text x="68" y="496" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② 就算解鎖成功，實測 FP16 累加也只有 324.6 TFLOPS——峰值規格本來就量不到。</text>
+<text x="48" y="534" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ada 欄位取自 gpu-unlock-ada 的 read_sm_rates.py 配對讀值；Blackwell 欄位取自 AndrewCTF（GB202）與 ElXreno（GB203M）的讀值。</text>
+</svg>

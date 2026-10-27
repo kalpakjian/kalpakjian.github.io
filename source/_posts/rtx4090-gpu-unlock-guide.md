@@ -380,6 +380,8 @@ Issue #17 的實測者用的是**中國市場改裝成 48 GB 的 4090**（AD102�
 
 **功耗幾乎沒變。** 原因是 4090 本來就被 450 W 上限壓住，解除速率限制後吃掉的是既有功耗預算——這是**效率**提升，不是耗電提升。
 
+> <strong>但這句話有它的適用範圍</strong>：配對實測量的是「**最大取樣功耗**」（約 100 ms 取樣間隔），而且上游自己寫明了這組數字**不能**證明板載功耗、長期散熱或電氣安全。媒體另外引用過一組**峰值功耗**數字（解鎖後 313 W → 346 W），那與「307.67 W → 308.59 W」並不矛盾——一个是取樣最大，一个是瞬時峰值。**兩個都對，但只有後者才提醒你「限速器拆掉之後，瞬間的電流需求會變大」。**
+
 但真正該擔心的是別的：
 
 - **上游只做了一組配對、沒有長時間穩定性測試。** Issue #17 的實測者跑了約 30 分鐘零 Xid，這是目前公開資料裡最長的負載記錄。
@@ -487,6 +489,8 @@ nvidia-smi --query-gpu=clocks.sm,temperature.gpu,power.draw \
   - [RTX 40 系 Tensor 解鎖事實查核](https://kalpakjian.github.io/2026/10/25/rtx40-tensor-unlock-fact-check/)——全系列、翻倍、Windows 一鍵用三個關鍵字都不成立的理由
   - [RTX 30 系 gpu-unlock 事實查核](https://kalpakjian.github.io/2026/10/25/rtx30-gpu-unlock-ampere-fact-check/)——Ampere 上游的完整版
   - [RTX 3080 12GB 解除 gpu-unlock 操作筆記](https://kalpakjian.github.io/2026/10/25/rtx3080-12gb-gpu-unlock-guide/)——同一套流程的 Ampere 版
+  - [RTX 50 系 Blackwell 解鎖事實查核](https://kalpakjian.github.io/2026/10/27/rtx50-blackwell-unlock-fact-check/)——為什麼下一代解不動（熔絲、FSP、booter 清點）
+- Blackwell 討論串：[gpu-unlock-ada Issue #12「work on 5090?」](https://github.com/JustAResearcher/gpu-unlock-ada/issues/12)
 
 ---
 
