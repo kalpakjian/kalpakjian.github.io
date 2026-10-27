@@ -61,6 +61,15 @@ jobs:
       - name: Build Hexo
         run: npx hexo clean && npx hexo generate
 
+      # cnn-lab 圖檔的結構守門員：純 Python、零依賴、結果確定（不合格就擋住部署）
+      - name: SVG structure gate (cnn-lab)
+        run: python3 source/cnn-lab/code/build_figs.py --no-measure
+
+      # 文字量測依賴 Chrome 字型度量，跨平台可能有 1–2px 差異 → 只做參考，不擋部署
+      - name: SVG text measurement (advisory)
+        continue-on-error: true
+        run: python3 source/cnn-lab/code/build_figs.py
+
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:

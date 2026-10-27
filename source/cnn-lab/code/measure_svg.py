@@ -43,6 +43,12 @@ CHROME_CANDIDATES = [
     os.path.expandvars(r"%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe"),
     r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
     r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
+    # CI（ubuntu-latest）與 macOS
+    "/usr/bin/google-chrome",
+    "/usr/bin/google-chrome-stable",
+    "/usr/bin/chromium",
+    "/usr/bin/chromium-browser",
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
 ]
 
 JS = r"""
