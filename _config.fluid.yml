@@ -12,6 +12,7 @@ navbar:
       icon: 'iconfont icon-books'
       submenu:
         # 專題依日期由新到舊排列（與首頁資源欄「專題」一致）
+        - { name: 'OCR：正體中文書頁辨識與校對', link: '/ocr/', icon: 'iconfont icon-bookmark' }
         - { name: 'gpu-unlock 專題：NVIDIA 消費級卡那道「半速鎖」怎麼被打開的', link: '/gpu-unlock/', icon: 'iconfont icon-bookmark' }
         - { name: 'CNN 專題：十個實驗，和三次被推翻的假設', link: '/cnn-lab/', icon: 'iconfont icon-bookmark' }
         - { name: '紫微斗數 · 命盤解讀', link: '/ziwei-fortune/', icon: 'iconfont icon-bookmark' }

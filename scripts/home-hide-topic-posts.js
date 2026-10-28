@@ -41,7 +41,12 @@ hexo.extend.filter.register('before_generate', function () {
   const locals = this.locals;
   const posts = (locals && locals.get && locals.get('posts')) || [];
   posts.forEach(function (post) {
-    if (post && post.hide_from_home) hiddenPaths.push('/' + post.path);
+    // post.path 一般沒有前導斜線（2026/10/28/foo/），但 front-matter 用
+    // `permalink: ocr/foo/` 覆寫時 Hexo 會保留前導斜線（/ocr/foo/）；
+    // 直接加 '/' 會變成 '//ocr/foo/'，比對不到卡片上的 href="/ocr/foo/"。
+    if (post && post.hide_from_home) {
+      hiddenPaths.push('/' + String(post.path).replace(/^\/+/, ''));
+    }
   });
   if (hiddenPaths.length) {
     this.log.debug('hide_from_home: 隱藏 %d 篇（%s）', hiddenPaths.length,
