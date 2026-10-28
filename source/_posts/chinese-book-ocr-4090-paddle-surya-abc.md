@@ -22,6 +22,8 @@ tags:
   - Python
   - 實測
 toc: true
+index_img: /img/covers/chinese-book-ocr-4090-paddle-surya-abc.png
+banner_img: /img/covers/chinese-book-ocr-4090-paddle-surya-abc.png
 ---
 
 手邊有一批手機翻拍的正體中文書頁（直排、雙欄、含印章與圖說），目標是把它變成可校對、可搜尋的文字稿。這篇記錄了完整過程：四個 OCR 引擎在同一批頁面上的實測、兩個一定會踩到的 Windows + CUDA 坑、以及最後用「Surya 骨架 + Paddle 補漏 + A/B/C 三層校對」把錯字壓下來的做法。
