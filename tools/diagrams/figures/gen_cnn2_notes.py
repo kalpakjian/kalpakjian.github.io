@@ -12,16 +12,27 @@ OUT = os.path.join(HERE, "cnn2-notes")
 
 BG, INK, DIM = "#0d1117", "#e6edf3", "#8b949e"
 TEAL, AMBER, ROSE, BLUE = "#4ecdc4", "#e0a458", "#ff7b72", "#58a6ff"
-FONT = "system-ui,-apple-system,Segoe UI,sans-serif"
+FONT = "'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif"
+
+# 每張圖唯一的 aria-label（契約 §12.2：量測工具與螢幕閱讀器都靠它定位）
+ARIA = {
+    "overview": "CNN 分類網路架構：Input → Conv 32 → Pool → Conv 64 → Pool → Flatten → Dense 1024 → Softmax 10 類",
+    "hierarchy": "表徵學習的三層階梯：低層學邊緣與暗斑，中層組合出眼睛、耳朵、鼻子，高層才有臉部結構",
+    "local": "卷積層的局部連接：3×3 濾波器滑過 6×6 輸入的一小塊 patch，同一組權重滑遍全圖",
+    "volume": "輸出體積與步幅：6×6 輸入、3×3 核、stride 2 得到 3×3 輸出，depth 等於濾波器數量",
+    "pool": "2×2 最大池化：4×4 輸入取每個鄰域的最大值，降成 2×2 輸出且沒有參數",
+    "tasks": "同一個卷積 backbone 接四種任務頭：分類、分割、上色、控制",
+}
 
 
 def esc(t):
     return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-def svg(w, h, body):
+def svg(slug, w, h, body):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" '
-            f'role="img">{DEFS}<rect width="{w}" height="{h}" fill="{BG}"/>{body}</svg>')
+            f'role="img" aria-label="{ARIA[slug]}">{DEFS}'
+            f'<rect width="{w}" height="{h}" fill="{BG}"/>{body}</svg>')
 
 
 DEFS = (f'<defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" '
@@ -77,7 +88,7 @@ def fig_overview():
             body.append(arrow(x + bw, y + bh / 2, x + bw + gap - 3, y + bh / 2))
         x += bw + gap
     body.append(label(20, y + bh + 30, "可訓練的權重只在 Conv 與 Dense；Pool 與 Softmax 沒有參數"))
-    return svg(880, 165, "".join(body))
+    return svg("overview", 880, 165, "".join(body))
 
 
 def fig_hierarchy():
@@ -92,7 +103,7 @@ def fig_hierarchy():
     body.append(arrow(262, 76, 276, 76))
     body.append(arrow(512, 76, 526, 76))
     body.append(label(30, 146, "沒有人教它「眼睛長什麼樣」——三層都是訓練時順手學出來的"))
-    return svg(800, 165, "".join(body))
+    return svg("hierarchy", 800, 165, "".join(body))
 
 
 def fig_local():
@@ -107,7 +118,7 @@ def fig_local():
             arrow(484, 88, 520, 88),
             box(524, 58, 156, 58, "特徵圖 1 格", AMBER, 12.5, "同一組權重滑遍全圖"),
             label(30, 176, "3×3 濾波器 = 9 個權重，走到哪裡都同一組")]
-    return svg(700, 190, "".join(body))
+    return svg("local", 700, 190, "".join(body))
 
 
 def fig_volume():
@@ -119,7 +130,7 @@ def fig_volume():
             box(340, 34, 300, 60, "O = (N + 2P − F) / S + 1", AMBER, 15),
             label(340, 120, "depth（d）= 濾波器數量，不是輸入通道數", TEAL, 12),
             label(230, 152, "每一格 = 一個濾波器在該位置的輸出")]
-    return svg(660, 170, "".join(body))
+    return svg("volume", 660, 170, "".join(body))
 
 
 def fig_pool():
@@ -141,7 +152,7 @@ def fig_pool():
     body.append(box(310, 34, 300, 58, "面積 ÷ 4、參數 0 個", BLUE, 14,
                     "鄰域內平移，輸出可能不變"))
     body.append(label(310, 128, "代價：只知道「這區有」，不知道在哪個像素"))
-    return svg(630, 150, "".join(body))
+    return svg("pool", 630, 150, "".join(body))
 
 
 def fig_tasks():
@@ -153,7 +164,7 @@ def fig_tasks():
         body.append(arrow(178, 95, 216, y + 17))
         body.append(box(220, y, 190, 34, name, col, 11.5, sub))
     body.append(label(24, 168, "換頭就換任務：分割、上色、超解析、端到端控制都是這樣組出來的"))
-    return svg(470, 180, "".join(body))
+    return svg("tasks", 470, 180, "".join(body))
 
 
 FIGS = {"overview": fig_overview, "hierarchy": fig_hierarchy, "local": fig_local,

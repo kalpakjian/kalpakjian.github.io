@@ -3,177 +3,363 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CNN 2 · 互動測驗（60 題）｜AI Tech Notes</title>
+<title>CNN 2 MC 模擬測驗（60 題）| AI Tech Notes</title>
 <style>
-:root{--bg:#0d1117;--panel:#161b22;--line:#222b36;--ink:#e6edf3;--dim:#8b949e;
---teal:#4ecdc4;--amber:#e0a458;--rose:#ff7b72;--ok:#3fb950}
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#e2e5ea; --txt:#1f2328; --dim:#5b636e;
+  --blue:#2563eb; --green:#15803d; --green-bg:#e8f6ec; --red:#b91c1c;
+  --red-bg:#fdeaea; --sel:#dbeafe; --sel-line:#2563eb;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;line-height:1.7}
-.wrap{max-width:860px;margin:0 auto;padding:28px 18px 80px}
-a.back{color:var(--teal);text-decoration:none;font-size:14px}
-h1{font-size:26px;margin:14px 0 4px}
-.sub{color:var(--dim);font-size:14px;margin-bottom:18px}
-.bar{position:sticky;top:0;z-index:5;display:flex;gap:14px;align-items:center;
-background:rgba(13,17,23,.94);padding:10px 0;border-bottom:1px solid var(--line);margin-bottom:18px;font-size:14px}
-.bar strong{color:var(--amber)}
-button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:7px 14px}
-button:hover{border-color:var(--teal)}
-.q{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 14px}
-.q h3{margin:0 0 10px;font-size:15.5px;font-weight:600}
-.q h3 span{color:var(--dim);font-weight:400;margin-right:8px}
-.opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#0d1117;color:var(--ink);border-radius:8px;padding:8px 12px;margin:6px 0;font-size:14.5px}
-.opt.right{border-color:var(--ok);background:#0f2417}
-.opt.wrong{border-color:var(--rose);background:#2a1416}
-.why{display:none;margin-top:8px;font-size:13.5px;color:var(--dim);border-left:2px solid var(--teal);padding-left:10px}
-.why.show{display:block}
-.score{font-size:15px;color:var(--teal)}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",
+    "Microsoft JhengHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+a{color:var(--blue)}
+.topbar{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  padding:12px 20px 10px;
+}
+.topbar .row1{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px}
+.topbar h1{font-size:17px; margin:0; font-weight:700}
+.topbar .back{font-size:13px; color:var(--dim); text-decoration:none}
+.topbar .back:hover{color:var(--blue)}
+.stats{display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; font-size:14px; color:var(--dim)}
+.stats b{font-size:18px; color:var(--txt)}
+.stats .ok b{color:var(--green)}
+.stats .no b{color:var(--red)}
+.saved{font-size:12px; color:var(--green); opacity:0; transition:opacity .3s}
+.saved.on{opacity:1}
+.progress{height:6px; background:var(--line); border-radius:99px; margin-top:10px; overflow:hidden}
+.progress i{display:block; height:100%; width:0; background:var(--blue); border-radius:99px; transition:width .25s}
+.controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+button{
+  font:inherit; font-size:13px; padding:6px 13px; border-radius:8px;
+  border:1px solid var(--line); background:#fff; color:var(--txt); cursor:pointer;
+  transition:.15s;
+}
+button:hover{border-color:#b9c0c9; background:#fbfbfc}
+button.primary{background:var(--blue); border-color:var(--blue); color:#fff}
+button.primary:hover{background:#1d4ed8}
+button.active{background:var(--sel); border-color:var(--sel-line); color:#1e40af; font-weight:600}
+button.danger{color:var(--red); border-color:#f0c4c4}
+button.danger:hover{background:var(--red-bg)}
+.navwrap{padding:16px 20px 0}
+.navgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px}
+.navgrid button{padding:6px 0; font-size:13px; border-radius:7px; text-align:center; font-variant-numeric:tabular-nums}
+.navgrid button.done{background:#eef2ff; border-color:#c7d2fe; color:#3730a3}
+.navgrid button.right{background:var(--green-bg); border-color:#a7d7b6; color:var(--green); font-weight:700}
+.navgrid button.wrong{background:var(--red-bg); border-color:#eeb4b4; color:var(--red); font-weight:700}
+main{max-width:900px; margin:0 auto; padding:20px 20px 80px}
+.parttitle{
+  margin:34px 0 14px; font-size:15px; font-weight:700; color:var(--dim);
+  border-left:4px solid var(--blue); padding-left:10px;
+}
+.q{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px 18px; margin-bottom:14px;
+}
+.q.correct{border-color:#a7d7b6; background:var(--green-bg)}
+.q.incorrect{border-color:#eeb4b4; background:var(--red-bg)}
+.qhead{display:flex; gap:10px; align-items:flex-start}
+.num{
+  flex:0 0 auto; min-width:30px; height:26px; line-height:26px; text-align:center;
+  background:#eef1f5; border-radius:7px; font-size:13px; font-weight:700;
+  color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.qtext{margin:0; font-weight:600; font-size:16px}
+.opts{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:7px}
+.opt{
+  display:flex; gap:10px; align-items:flex-start; padding:9px 12px;
+  border:1px solid var(--line); border-radius:9px; background:#fff;
+  cursor:pointer; transition:.12s; user-select:none;
+}
+.opt:hover{border-color:#b9c0c9; background:#fbfbfc}
+.opt .lt{
+  flex:0 0 auto; width:22px; height:22px; line-height:22px; text-align:center;
+  border-radius:6px; background:#eef1f5; font-size:12px; font-weight:700; color:var(--dim);
+}
+.opt.picked{border-color:var(--sel-line); background:var(--sel)}
+.opt.picked .lt{background:var(--sel-line); color:#fff}
+.opt.right{border-color:#7cc08f; background:var(--green-bg)}
+.opt.right .lt{background:var(--green); color:#fff}
+.opt.wrong{border-color:#e39191; background:var(--red-bg)}
+.opt.wrong .lt{background:var(--red); color:#fff}
+.tag{font-size:11px; padding:1px 7px; border-radius:99px; margin-left:auto;
+     flex:0 0 auto; font-weight:700; align-self:center}
+.tag.right{background:var(--green); color:#fff}
+.tag.wrong{background:var(--red); color:#fff}
+.expl{
+  margin-top:12px; padding:11px 14px; background:#f8fafc; border-radius:9px;
+  border-left:3px solid var(--blue); font-size:14.5px; color:#333a44;
+}
+.expl b{color:var(--txt)}
+.empty{text-align:center; color:var(--dim); padding:50px 20px; font-size:15px}
+footer{
+  max-width:900px; margin:0 auto; padding:0 20px 60px; color:var(--dim);
+  font-size:13px; text-align:center;
+}
+@media print{
+  .topbar,.navwrap,footer,.controls{display:none !important}
+  body{background:#fff; font-size:12pt}
+  main{max-width:none; padding:0}
+  .q{break-inside:avoid; page-break-inside:avoid; border-color:#999}
+}
+@media (max-width:560px){
+  .topbar{padding:10px 14px 8px}
+  .topbar h1{font-size:15px}
+  main{padding:14px 14px 60px}
+  .navwrap{padding:12px 14px 0}
+  .q{padding:13px 14px}
+  .qtext{font-size:15px}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-<a class="back" href="./">← 回到 CNN 2 學習筆記</a>
-<h1>CNN 2 · 互動測驗</h1>
-<div class="sub">60 題單選，涵蓋局部連接、輸出體積、ReLU、池化、空洞卷積、實作與實測。作答後即時顯示解析。</div>
-<div class="bar">
-  <span>作答 <strong id="done">0</strong> / <span id="total">0</span></span>
-  <span>答對 <strong id="right">0</strong></span>
-  <button id="reveal">顯示全部解析</button>
-  <button id="reset">重新作答</button>
+<header class="topbar">
+  <div class="row1">
+    <h1>CNN 2 學習筆記 · MC 模擬測驗</h1>
+    <a class="back" href="index.html">&larr; 回到 CNN 2 學習筆記</a>
+    <span class="saved" id="saved">進度已儲存 &#10003;</span>
+  </div>
+  <div class="stats">
+    <span>已答 <b id="nAns">0</b> / 60</span>
+    <span class="ok">得分 <b id="nScore">0</b> / 60</span>
+    <span class="no">答錯 <b id="nWrong">0</b></span>
+    <span id="hint">作答進度自動存在此瀏覽器，關掉再回來可繼續</span>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <button id="btnReveal" class="primary">顯示答案</button>
+    <button id="btnAll" class="active">全部 60 題</button>
+    <button id="btnUnans">只看未答</button>
+    <button id="btnWrong">只看答錯</button>
+    <button id="btnTop">回到頂部</button>
+    <button id="btnReset" class="danger">重設全部</button>
+  </div>
+</header>
+
+<div class="navwrap">
+  <div class="navgrid" id="navgrid"></div>
 </div>
-<div id="quiz"></div>
-<p class="score" id="final"></p>
-</div>
+
+<main id="quiz"></main>
+
+<footer>
+  <p>IVDC 電腦視覺課程個人學習筆記 · 涵蓋局部連接、輸出體積、ReLU、池化、空洞卷積與 33 組實測</p>
+  <p>單一 HTML 檔、無外部資源，可離線使用</p>
+</footer>
 <script>
-const QUESTIONS = [
-["課程把分類 CNN 拆成哪三個步驟？",["卷積 → 非線性 → 池化","卷積 → 池化 → 全連接","池化 → 卷積 → Softmax","正規化 → 卷積 → 池化"],0,"三步曲：Convolution、Non-linearity（ReLU）、Pooling。"],
-["卷積層的 depth 由什麼決定？",["輸入通道數","濾波器數量","輸入邊長","batch size"],1,"d = 濾波器數量。"],
-["下列哪一層沒有可學習參數？",["Conv2D","Dense","MaxPool2D","BatchNorm"],2,"池化只取最大或平均。"],
-["ReLU 的定義是？",["1/(1+e^-x)","max(0,x)","tanh(x)","x^2"],1,"ReLU 把負值歸零。"],
-["第一層卷積通常學到什麼？",["眼睛、鼻子","臉部結構","邊緣、暗斑","整張臉"],2,"低層＝邊緣與暗斑。"],
-["參數共享的意思是？",["每個位置用不同濾波器","同一組濾波器滑過整張圖","每層共用權重","權重由人工設計"],1,"同一組權重在不同位置重複使用。"],
-["輸出尺寸公式中 F 代表？",["步幅","填充","核邊長","輸出邊長"],2,"F 是濾波器邊長。"],
-["28×28、3×3 核、stride 1、不填充，卷積後邊長？",["28","27","26","25"],2,"(28−3)/1+1 = 26。"],
-["承上，接 2×2、stride 2 池化後邊長？",["26","13","11","5"],1,"26/2 = 13。"],
-["池化的兩個好處是？",["增加參數、提升準確率","降低維度、空間不變性","增加深度、保留位置","加速訓練、增加解析度"],1,"代價是放棄精確位置。"],
-["ReLU 單元「死掉」的定義是？",["輸出出現負值","對所有輸入都輸出 0","權重變成 0","學習率過大"],1,"梯度恆 0 → 權重永不再更新。"],
-["ReLU 輸出有 50% 是 0，代表？",["一半神經元死了","正常的稀疏性","訓練失敗","學習率太小"],1,"死亡要看「所有輸入都為 0」。"],
-["空洞卷積的主要效果？",["增加參數","擴大感受野但不增加參數","降低解析度","取代池化"],1,"等效核變大、參數量不變。"],
-["dilation d、核邊長 k 的等效核大小？",["k+d","k×(d−1)","k+(k−1)(d−1)","k×d"],2,"k_eff = k + (k−1)(d−1)。"],
-["softmax 的輸出性質是？",["任意實數","加總為 1 的機率","固定 0 或 1","負數"],1,"轉成機率分布。"],
-["整數標籤應配哪個損失？",["categorical_crossentropy","sparse_categorical_crossentropy","binary_crossentropy","mse"],1,"整數標籤配 sparse 版本。"],
-["Keras 3 的 Sequential 第一層直接放 Conv2D 會？",["自動推斷輸入形狀","報錯，需先給 Input","自動補 Input","只會警告"],1,"要先知道輸入形狀。"],
-["Conv2D 的核大小參數名稱是？",["filter_size","kernel_size","window_size","patch"],1,"Keras 用 kernel_size。"],
-["課程程式碼出現 SyntaxError 的最可能原因？",["缺少 import","彎引號被當成字串引號","縮排錯誤","變數未定義"],1,"U+2019 不是合法引號。"],
-["本筆記的模型在 MNIST 上的參數量？",["1,668,490","2,389,962","11,173,962","320"],0,"320 + 18,496 + 1,639,424 + 10,250。"],
-["參數主要集中在哪裡？",["第一個卷積層","第二個卷積層","攤平後的全連接層","softmax"],2,"約 98.9% 在 Flatten → Dense。"],
-["同架構換成 CIFAR-10，攤平後維度？",["1600","2304","4096","1024"],1,"6×6×64 = 2304。"],
-["全連接層為什麼被稱為「參數爆炸」？",["初始化很慢","參數量 ≈ 特徵維度 × 神經元數","需要更多激活函數","不能使用 GPU"],1,"例如 1600×1024。"],
-["stride 變大會有什麼效果？",["輸出變大","輸出變小、計算變便宜","參數變多","感受野變小"],1,"跳得遠 → 輸出較小。"],
-["感受野指的是？",["濾波器的大小","節點在輸入上連結到的區域","輸出通道數","池化窗口"],1,"層層堆疊會讓感受野變大。"],
-["FCN 拿掉全連接層的原因？",["參數太多","要輸出與輸入同尺寸的標籤圖","訓練較快","避免過擬合"],1,"全卷積才能保持解析度。"],
-["FCN 的上採樣通常用哪一層？",["Conv2D","Conv2DTranspose","MaxPool2D","Flatten"],1,"轉置卷積負責放大。"],
-["生物醫學分割除了分割圖還會輸出什麼？",["損失曲線","不確定性圖","邊界框","文字描述"],1,"要能說出「哪裡不確定」。"],
-["本筆記量到的「零激活／死濾波器」比例？",["50.6% / 0.0%","0.0% / 50.6%","50.6% / 50.6%","0.0% / 0.0%"],0,"稀疏是常態，但沒有濾波器死亡。"],
-["加上 dropout 0.3 的主要效果？",["準確率 +5 pp","train/val 差距縮小","訓練快 10 倍","取代池化"],1,"差距 8.9 → 4.0 pp，準確率只多 0.15 pp。"],
-["cutout 在 20 輪的效果？",["明顯提升","反而變差（欠擬合）","沒影響","+10 pp"],1,"0.8694 → 0.8171。"],
-["cutout 到 200 輪後？",["仍然變差","翻正並提升","與 20 輪相同","無法訓練"],1,"長排程才收得回增強的代價。"],
-["ResNet-18 + cutout、200 輪的最佳成績？",["0.89","0.92","0.94","0.96"],3,"0.9613（Linux GPU）。"],
-["20 輪看起來「到頂」通常是因為？",["模型太小","學習率還沒收尾","資料不足","正則化太強"],1,"最後 30 輪的 LR 衰減常貢獻 2–4 pp。"],
-["難類排序在換架構後？",["完全改變","順序不變（貓 < 狗 < 鳥）","只剩貓難","全部變簡單"],1,"難度來自資料。"],
-["小型 VGG 的參數比課程模型？",["更多","更少","一樣","無法比較"],1,"2.20 M vs 2.39 M，但準確率高 9 pp。"],
-["VGG 贏在哪裡？",["更多資料","深度 + BatchNorm + padding=same","更大的學習率","更多類別"],1,"架構設計，不是參數量。"],
-["課程模型在 MNIST 5 輪的準確率？",["0.95","0.97","0.99","0.80"],2,"0.9902。"],
-["把增強搬到 GPU 解決了什麼？",["準確率不足","資料管線瓶頸","記憶體不足","梯度消失"],1,"VGG 由 6.5 秒/epoch 降到約 1 秒。"],
-["同程式 Windows/Linux 重跑，差異通常？",["±0.05 pp","±2 pp","±10 pp","完全一致"],1,"20 輪落在曲線陡段，差異被放大。"],
-["Keras 的 CIFAR 鏡像在本機的問題？",["檔案損毀","被限速到約 46 KB/s","需要登入","已下架"],1,"改用 Hugging Face parquet 再轉檔。"],
-["轉檔後驗證資料正確的指標？",["像素總數","每通道均值 ≈ 125/123/114","檔案大小","標籤數"],1,"通道順序錯的話均值會不同。"],
-["把池化換成 stride=2 卷積的差別？",["多了可學習參數","不再降維","失去非線性","不能反向傳播"],0,"卷積有權重，池化沒有。"],
-["深度學習的「卷積」實務上是？",["真正的卷積（翻轉核）","互相關（不翻轉核）","傅立葉變換","矩陣乘法"],1,"對學出來的核沒差別。"],
-["padding=SAME 的作用？",["縮小輸出","輸出尺寸與輸入相同","增加參數","自動池化"],1,"補零讓尺寸不變。"],
-["VALID padding 的意思是？",["補零","不填充，輸出變小","補平均值","只在邊界補"],1,"輸出邊長會減少。"],
-["池化反向傳播時做什麼？",["隨機丟棄梯度","把梯度路由回最大值","平均分配","不傳梯度"],1,"沒有參數，只分配梯度。"],
-["要表達「模型哪裡不確定」，分割常用？",["dropout","不確定性圖","learning rate schedule","資料增強"],1,"醫療影像特別重視。"],
-["影像上色本質上是？",["分類","逐像素回歸","偵測","排序"],1,"輸出連續色度值。"],
-["超解析的輸入輸出關係？",["影像 → 類別","影像 → 影像","類別 → 影像","文字 → 影像"],1,"與 FCN 同類。"],
-["自駕的「端到端」是什麼？",["分段訓練再接","感測器直接學到控制指令","先偵測再規劃","只用 GPS"],1,"不需人工標註中間步驟。"],
-["部署前本 repo 的品質閘門要求？",["0 警告","0 失敗","覆蓋率 80%","人工審核"],1,"qa_notes.ps1 必須 0 失敗。"],
-["`MaxPool2D` 與 `MaxPooling2D` 的關係？",["不同層","同一個層的別名","前者已移除","後者沒有參數"],1,"兩者等價，可互換。"],
-["Dense(1024) 佔這個模型多少參數？",["約一半","約七成","約 98.9%","約 10%"],2,"1,639,424 / 1,668,490。"],
-["MNIST 攤平後是幾維？",["1024","1600","2304","784"],1,"5×5×64 = 1600。"],
-["softmax 之後要得到類別索引用？",["argmax","round","sum","softmax 再一次"],0,"取最大值的索引。"],
-["卷積層的參數量由什麼決定？",["輸入邊長","核大小 × 輸入通道 × 濾波器數","batch size","stride"],1,"(k×k×Cin+1)×Cout。"],
-["如果池化窗口 2×2、stride 1，輸出會？",["縮一半","只縮一格","不變","變大"],1,"步幅小於窗口時重疊。"],
-["哪個說法錯？",["池化沒有參數","卷積權重由資料學習","stride 越大輸出越小","depth 由輸入通道決定"],3,"depth 由濾波器數量決定。"],
-["把 28×28 影像接 1024 神經元的全連接層，權重約多少？",["8 千","8 萬","78 萬","780 萬"],2,"28×28×1024 ≈ 802,816。"],
-];
+const QUESTIONS = [{"q": "課程把分類 CNN 拆成哪三個步驟？", "o": ["卷積 → 非線性 → 池化", "卷積 → 池化 → 全連接", "池化 → 卷積 → Softmax", "正規化 → 卷積 → 池化"], "a": 0, "e": "三步曲：Convolution、Non-linearity（ReLU）、Pooling。"}, {"q": "卷積層的 depth 由什麼決定？", "o": ["輸入通道數", "濾波器數量", "輸入邊長", "batch size"], "a": 1, "e": "d = 濾波器數量。"}, {"q": "下列哪一層沒有可學習參數？", "o": ["Conv2D", "Dense", "MaxPool2D", "BatchNorm"], "a": 2, "e": "池化只取最大或平均。"}, {"q": "ReLU 的定義是？", "o": ["1/(1+e^-x)", "x^2", "tanh(x)", "max(0,x)"], "a": 3, "e": "ReLU 把負值歸零。"}, {"q": "第一層卷積通常學到什麼？", "o": ["邊緣、暗斑", "臉部結構", "眼睛、鼻子", "整張臉"], "a": 0, "e": "低層＝邊緣與暗斑。"}, {"q": "參數共享的意思是？", "o": ["每個位置用不同濾波器", "同一組濾波器滑過整張圖", "每層共用權重", "權重由人工設計"], "a": 1, "e": "同一組權重在不同位置重複使用。"}, {"q": "輸出尺寸公式中 F 代表？", "o": ["步幅", "填充", "核邊長", "輸出邊長"], "a": 2, "e": "F 是濾波器邊長。"}, {"q": "28×28、3×3 核、stride 1、不填充，卷積後邊長？", "o": ["28", "27", "25", "26"], "a": 3, "e": "(28−3)/1+1 = 26。"}, {"q": "承上，接 2×2、stride 2 池化後邊長？", "o": ["13", "26", "11", "5"], "a": 0, "e": "26/2 = 13。"}, {"q": "池化的兩個好處是？", "o": ["增加參數、提升準確率", "降低維度、空間不變性", "增加深度、保留位置", "加速訓練、增加解析度"], "a": 1, "e": "代價是放棄精確位置。"}, {"q": "ReLU 單元「死掉」的定義是？", "o": ["輸出出現負值", "權重變成 0", "對所有輸入都輸出 0", "學習率過大"], "a": 2, "e": "梯度恆 0 → 權重永不再更新。"}, {"q": "ReLU 輸出有 50% 是 0，代表？", "o": ["一半神經元死了", "學習率太小", "訓練失敗", "正常的稀疏性"], "a": 3, "e": "死亡要看「所有輸入都為 0」。"}, {"q": "空洞卷積的主要效果？", "o": ["擴大感受野但不增加參數", "增加參數", "降低解析度", "取代池化"], "a": 0, "e": "等效核變大、參數量不變。"}, {"q": "dilation d、核邊長 k 的等效核大小？", "o": ["k+d", "k+(k−1)(d−1)", "k×(d−1)", "k×d"], "a": 1, "e": "k_eff = k + (k−1)(d−1)。"}, {"q": "softmax 的輸出性質是？", "o": ["任意實數", "固定 0 或 1", "加總為 1 的機率", "負數"], "a": 2, "e": "轉成機率分布。"}, {"q": "整數標籤應配哪個損失？", "o": ["categorical_crossentropy", "mse", "binary_crossentropy", "sparse_categorical_crossentropy"], "a": 3, "e": "整數標籤配 sparse 版本。"}, {"q": "Keras 3 的 Sequential 第一層直接放 Conv2D 會？", "o": ["報錯，需先給 Input", "自動推斷輸入形狀", "自動補 Input", "只會警告"], "a": 0, "e": "要先知道輸入形狀。"}, {"q": "Conv2D 的核大小參數名稱是？", "o": ["filter_size", "kernel_size", "window_size", "patch"], "a": 1, "e": "Keras 用 kernel_size。"}, {"q": "課程程式碼出現 SyntaxError 的最可能原因？", "o": ["缺少 import", "縮排錯誤", "彎引號被當成字串引號", "變數未定義"], "a": 2, "e": "U+2019 不是合法引號。"}, {"q": "本筆記的模型在 MNIST 上的參數量？", "o": ["320", "2,389,962", "11,173,962", "1,668,490"], "a": 3, "e": "320 + 18,496 + 1,639,424 + 10,250。"}, {"q": "參數主要集中在哪裡？", "o": ["攤平後的全連接層", "第二個卷積層", "第一個卷積層", "softmax"], "a": 0, "e": "約 98.9% 在 Flatten → Dense。"}, {"q": "同架構換成 CIFAR-10，攤平後維度？", "o": ["1600", "2304", "4096", "1024"], "a": 1, "e": "6×6×64 = 2304。"}, {"q": "全連接層為什麼被稱為「參數爆炸」？", "o": ["初始化很慢", "需要更多激活函數", "參數量 ≈ 特徵維度 × 神經元數", "不能使用 GPU"], "a": 2, "e": "例如 1600×1024。"}, {"q": "stride 變大會有什麼效果？", "o": ["輸出變大", "感受野變小", "參數變多", "輸出變小、計算變便宜"], "a": 3, "e": "跳得遠 → 輸出較小。"}, {"q": "感受野指的是？", "o": ["節點在輸入上連結到的區域", "濾波器的大小", "輸出通道數", "池化窗口"], "a": 0, "e": "層層堆疊會讓感受野變大。"}, {"q": "FCN 拿掉全連接層的原因？", "o": ["參數太多", "要輸出與輸入同尺寸的標籤圖", "訓練較快", "避免過擬合"], "a": 1, "e": "全卷積才能保持解析度。"}, {"q": "FCN 的上採樣通常用哪一層？", "o": ["Conv2D", "MaxPool2D", "Conv2DTranspose", "Flatten"], "a": 2, "e": "轉置卷積負責放大。"}, {"q": "生物醫學分割除了分割圖還會輸出什麼？", "o": ["損失曲線", "文字描述", "邊界框", "不確定性圖"], "a": 3, "e": "要能說出「哪裡不確定」。"}, {"q": "本筆記量到的「零激活／死濾波器」比例？", "o": ["50.6% / 0.0%", "0.0% / 50.6%", "50.6% / 50.6%", "0.0% / 0.0%"], "a": 0, "e": "稀疏是常態，但沒有濾波器死亡。"}, {"q": "加上 dropout 0.3 的主要效果？", "o": ["準確率 +5 pp", "train/val 差距縮小", "訓練快 10 倍", "取代池化"], "a": 1, "e": "差距 8.9 → 4.0 pp，準確率只多 0.15 pp。"}, {"q": "cutout 在 20 輪的效果？", "o": ["明顯提升", "沒影響", "反而變差（欠擬合）", "+10 pp"], "a": 2, "e": "0.8694 → 0.8171。"}, {"q": "cutout 到 200 輪後？", "o": ["仍然變差", "無法訓練", "與 20 輪相同", "翻正並提升"], "a": 3, "e": "長排程才收得回增強的代價。"}, {"q": "ResNet-18 + cutout、200 輪的最佳成績？", "o": ["0.96", "0.92", "0.94", "0.89"], "a": 0, "e": "0.9613（Linux GPU）。"}, {"q": "20 輪看起來「到頂」通常是因為？", "o": ["模型太小", "學習率還沒收尾", "資料不足", "正則化太強"], "a": 1, "e": "最後 30 輪的 LR 衰減常貢獻 2–4 pp。"}, {"q": "難類排序在換架構後？", "o": ["完全改變", "只剩貓難", "順序不變（貓 < 狗 < 鳥）", "全部變簡單"], "a": 2, "e": "難度來自資料。"}, {"q": "小型 VGG 的參數比課程模型？", "o": ["更多", "無法比較", "一樣", "更少"], "a": 3, "e": "2.20 M vs 2.39 M，但準確率高 9 pp。"}, {"q": "VGG 贏在哪裡？", "o": ["深度 + BatchNorm + padding=same", "更多資料", "更大的學習率", "更多類別"], "a": 0, "e": "架構設計，不是參數量。"}, {"q": "課程模型在 MNIST 5 輪的準確率？", "o": ["0.95", "0.99", "0.97", "0.80"], "a": 1, "e": "0.9902。"}, {"q": "把增強搬到 GPU 解決了什麼？", "o": ["準確率不足", "記憶體不足", "資料管線瓶頸", "梯度消失"], "a": 2, "e": "VGG 由 6.5 秒/epoch 降到約 1 秒。"}, {"q": "同程式 Windows/Linux 重跑，差異通常？", "o": ["±0.05 pp", "完全一致", "±10 pp", "±2 pp"], "a": 3, "e": "20 輪落在曲線陡段，差異被放大。"}, {"q": "Keras 的 CIFAR 鏡像在本機的問題？", "o": ["被限速到約 46 KB/s", "檔案損毀", "需要登入", "已下架"], "a": 0, "e": "改用 Hugging Face parquet 再轉檔。"}, {"q": "轉檔後驗證資料正確的指標？", "o": ["像素總數", "每通道均值 ≈ 125/123/114", "檔案大小", "標籤數"], "a": 1, "e": "通道順序錯的話均值會不同。"}, {"q": "把池化換成 stride=2 卷積的差別？", "o": ["失去非線性", "不再降維", "多了可學習參數", "不能反向傳播"], "a": 2, "e": "卷積有權重，池化沒有。"}, {"q": "深度學習的「卷積」實務上是？", "o": ["真正的卷積（翻轉核）", "矩陣乘法", "傅立葉變換", "互相關（不翻轉核）"], "a": 3, "e": "對學出來的核沒差別。"}, {"q": "padding=SAME 的作用？", "o": ["輸出尺寸與輸入相同", "縮小輸出", "增加參數", "自動池化"], "a": 0, "e": "補零讓尺寸不變。"}, {"q": "VALID padding 的意思是？", "o": ["補零", "不填充，輸出變小", "補平均值", "只在邊界補"], "a": 1, "e": "輸出邊長會減少。"}, {"q": "池化反向傳播時做什麼？", "o": ["隨機丟棄梯度", "平均分配", "把梯度路由回最大值", "不傳梯度"], "a": 2, "e": "沒有參數，只分配梯度。"}, {"q": "要表達「模型哪裡不確定」，分割常用？", "o": ["dropout", "資料增強", "learning rate schedule", "不確定性圖"], "a": 3, "e": "醫療影像特別重視。"}, {"q": "影像上色本質上是？", "o": ["逐像素回歸", "分類", "偵測", "排序"], "a": 0, "e": "輸出連續色度值。"}, {"q": "超解析的輸入輸出關係？", "o": ["影像 → 類別", "影像 → 影像", "類別 → 影像", "文字 → 影像"], "a": 1, "e": "與 FCN 同類。"}, {"q": "自駕的「端到端」是什麼？", "o": ["分段訓練再接", "先偵測再規劃", "感測器直接學到控制指令", "只用 GPS"], "a": 2, "e": "不需人工標註中間步驟。"}, {"q": "部署前本 repo 的品質閘門要求？", "o": ["0 警告", "人工審核", "覆蓋率 80%", "0 失敗"], "a": 3, "e": "qa_notes.ps1 必須 0 失敗。"}, {"q": "`MaxPool2D` 與 `MaxPooling2D` 的關係？", "o": ["同一個層的別名", "不同層", "前者已移除", "後者沒有參數"], "a": 0, "e": "兩者等價，可互換。"}, {"q": "Dense(1024) 佔這個模型多少參數？", "o": ["約一半", "約 98.9%", "約七成", "約 10%"], "a": 1, "e": "1,639,424 / 1,668,490。"}, {"q": "MNIST 攤平後是幾維？", "o": ["1024", "2304", "1600", "784"], "a": 2, "e": "5×5×64 = 1600。"}, {"q": "softmax 之後要得到類別索引用？", "o": ["softmax 再一次", "round", "sum", "argmax"], "a": 3, "e": "取最大值的索引。"}, {"q": "卷積層的參數量由什麼決定？", "o": ["核大小 × 輸入通道 × 濾波器數", "輸入邊長", "batch size", "stride"], "a": 0, "e": "(k×k×Cin+1)×Cout。"}, {"q": "如果池化窗口 2×2、stride 1，輸出會？", "o": ["縮一半", "只縮一格", "不變", "變大"], "a": 1, "e": "步幅小於窗口時重疊。"}, {"q": "哪個說法錯？", "o": ["池化沒有參數", "卷積權重由資料學習", "depth 由輸入通道決定", "stride 越大輸出越小"], "a": 2, "e": "depth 由濾波器數量決定。"}, {"q": "把 28×28 影像接 1024 神經元的全連接層，權重約多少？", "o": ["8 千", "8 萬", "780 萬", "78 萬"], "a": 3, "e": "28×28×1024 ≈ 802,816。"}];
 
-const KEY = "cnn2-quiz";
-const state = JSON.parse(localStorage.getItem(KEY) || "{}");
-const quiz = document.getElementById("quiz");
-document.getElementById("total").textContent = QUESTIONS.length;
+const LET = 'ABCD';
+const KEY = 'cnn2-mc-quiz-v1';
+const state = { answers:{}, revealed:false, filter:'all' };
 
-QUESTIONS.forEach((item, qi) => {
-  const card = document.createElement("div");
-  card.className = "q";
-  const h = document.createElement("h3");
-  h.innerHTML = "<span>" + String(qi + 1).padStart(2, "0") + "</span>";
-  h.appendChild(document.createTextNode(item[0]));
-  card.appendChild(h);
-  item[1].forEach((opt, oi) => {
-    const b = document.createElement("button");
-    b.className = "opt";
-    b.textContent = "ABCD"[oi] + ". " + opt;
-    b.onclick = () => {
-      state[qi] = oi;
-      localStorage.setItem(KEY, JSON.stringify(state));
-      paint();
-    };
-    card.appendChild(b);
-  });
-  const w = document.createElement("div");
-  w.className = "why";
-  w.textContent = "解析：" + item[3];
-  card.appendChild(w);
-  quiz.appendChild(card);
-});
-
-function paint() {
-  let done = 0, right = 0;
-  Array.from(quiz.children).forEach((card, qi) => {
-    const picked = state[qi];
-    Array.from(card.querySelectorAll(".opt")).forEach((b, oi) => {
-      b.classList.remove("right", "wrong");
-      if (picked === undefined) return;
-      if (oi === QUESTIONS[qi][2]) b.classList.add("right");
-      else if (oi === picked) b.classList.add("wrong");
-    });
-    if (picked !== undefined) {
-      done++;
-      if (picked === QUESTIONS[qi][2]) right++;
-      card.querySelector(".why").classList.add("show");
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p && typeof p === 'object'){
+      state.answers = (p.answers && typeof p.answers === 'object') ? p.answers : {};
+      state.revealed = !!p.revealed;
+      state.filter = p.filter || 'all';
     }
-  });
-  document.getElementById("done").textContent = done;
-  document.getElementById("right").textContent = right;
-  document.getElementById("final").textContent = done === QUESTIONS.length
-    ? "全部答完：" + right + " / " + QUESTIONS.length + "（"
-      + Math.round(right / QUESTIONS.length * 100) + "%）" : "";
+  }catch(e){}
+}
+let savedTimer = null;
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const el = document.getElementById('saved');
+    if(el){ el.classList.add('on'); clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ el.classList.remove('on'); }, 1200); }
+  }catch(e){}
 }
 
-document.getElementById("reveal").onclick = () => {
-  const hidden = Array.from(quiz.querySelectorAll(".why"))
-    .some(w => !w.classList.contains("show"));
-  quiz.querySelectorAll(".why").forEach(w => w.classList.toggle("show", hidden));
-};
+function tally(){
+  let answered = 0, score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    if(a !== undefined && a !== null){
+      answered++;
+      if(a === QUESTIONS[i].a) score++;
+    }
+  }
+  return { answered:answered, score:score, wrong:answered-score };
+}
 
-document.getElementById("reset").onclick = () => {
-  localStorage.removeItem(KEY);
-  for (const k in state) delete state[k];
-  quiz.querySelectorAll(".why").forEach(w => w.classList.remove("show"));
-  paint();
-};
+function isVisible(i){
+  const a = state.answers[i];
+  const has = (a !== undefined && a !== null);
+  if(state.filter === 'unanswered') return !has;
+  if(state.filter === 'wrong') return has && a !== QUESTIONS[i].a;
+  return true;
+}
 
-paint();
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdInline(s){
+  s = esc(s);
+  let out = '';
+  let bold = false;
+  let i = 0;
+  while(i < s.length){
+    if(s.charAt(i) === '*' && s.charAt(i + 1) === '*'){
+      bold = !bold;
+      out += bold ? '<b>' : '</b>';
+      i += 2;
+    } else {
+      out += s.charAt(i);
+      i++;
+    }
+  }
+  return out;
+}
+
+function renderStats(){
+  const t = tally();
+  document.getElementById('nAns').textContent = t.answered;
+  document.getElementById('nScore').textContent = t.score;
+  document.getElementById('nWrong').textContent = t.wrong;
+  document.getElementById('bar').style.width = (t.answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('btnReveal').textContent = state.revealed ? '隱藏答案' : '顯示答案';
+  document.getElementById('hint').textContent = state.revealed
+    ? '已顯示正解與解析'
+    : '作答進度自動存在此瀏覽器，關掉再回來可繼續';
+}
+
+function renderNav(){
+  const nav = document.getElementById('navgrid');
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    const has = (a !== undefined && a !== null);
+    let cls = '';
+    if(has) cls = 'done';
+    if(state.revealed && has) cls = (a === QUESTIONS[i].a) ? 'right' : 'wrong';
+    html += '<button class="' + cls + '" data-goto="' + i + '">' + (i+1) + '</button>';
+  }
+  nav.innerHTML = html;
+}
+
+function renderQuestions(){
+  const box = document.getElementById('quiz');
+  let html = '';
+  let shown = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(!isVisible(i)) continue;
+    shown++;
+    const q = QUESTIONS[i];
+    if(i === 0 || i === 20 || i === 40){
+      const label = i === 0 ? '第一部分：分類三步曲、卷積與池化基礎、Keras 實作（1–20）'
+                  : i === 20 ? '第二部分：參數量、感受野、FCN 與六組實測（21–40）'
+                  : '第三部分：資料管線、padding、池化反向與應用版圖（41–60）';
+      html += '<div class="parttitle">' + label + '</div>';
+    }
+    const picked = state.answers[i];
+    const hasPicked = (picked !== undefined && picked !== null);
+    let qcls = '';
+    if(state.revealed && hasPicked) qcls = (picked === q.a) ? 'correct' : 'incorrect';
+
+    html += '<article class="q ' + qcls + '" id="q' + (i+1) + '">';
+    html += '<div class="qhead"><span class="num">' + (i+1) + '</span>';
+    html += '<p class="qtext">' + mdInline(q.q) + '</p></div>';
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      let cls = 'opt';
+      if(hasPicked && picked === k) cls += ' picked';
+      let tag = '';
+      if(state.revealed){
+        if(k === q.a){ cls += ' right'; tag = '<span class="tag right">正解</span>'; }
+        else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
+      }
+      html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
+    html += '<span class="lt">' + LET[k] + '</span><span>' + esc(q.o[k]) + '</span>' + tag + '</li>';
+}
+    html += '</ul>';
+    if(state.revealed){
+      html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
+    }
+    html += '</article>';
+  }
+  if(shown === 0){
+    html = '<div class="empty">目前篩選條件下沒有題目 &#128522;<br>換個篩選，或按「全部 60 題」。</div>';
+  }
+  box.innerHTML = html;
+}
+
+function renderAll(){ renderStats(); renderNav(); renderQuestions(); }
+
+document.addEventListener('click', function(ev){
+  const opt = ev.target.closest ? ev.target.closest('.opt') : null;
+  if(opt){
+    state.answers[parseInt(opt.getAttribute('data-q'), 10)] = parseInt(opt.getAttribute('data-k'), 10);
+    saveState();
+    renderAll();
+    return;
+  }
+  const go = ev.target.closest ? ev.target.closest('[data-goto]') : null;
+  if(go){
+    const idx = parseInt(go.getAttribute('data-goto'), 10);
+    if(state.filter !== 'all'){ state.filter = 'all'; syncFilterButtons(); renderAll(); }
+    const el = document.getElementById('q' + (idx + 1));
+    if(el){
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      el.style.transition = 'box-shadow .3s';
+      el.style.boxShadow = '0 0 0 3px rgba(37,99,235,.35)';
+      setTimeout(function(){ el.style.boxShadow = ''; }, 900);
+    }
+    saveState();
+  }
+});
+
+function syncFilterButtons(){
+  const map = { all:'btnAll', unanswered:'btnUnans', wrong:'btnWrong' };
+  for(const k in map){
+    const b = document.getElementById(map[k]);
+    if(b) b.classList.toggle('active', state.filter === k);
+  }
+}
+
+function setFilter(f){
+  state.filter = f;
+  syncFilterButtons();
+  saveState();
+  renderAll();
+}
+
+function bind(){
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.revealed = !state.revealed; saveState(); renderAll();
+  });
+  document.getElementById('btnAll').addEventListener('click', function(){ setFilter('all'); });
+  document.getElementById('btnUnans').addEventListener('click', function(){ setFilter('unanswered'); });
+  document.getElementById('btnWrong').addEventListener('click', function(){ setFilter('wrong'); });
+  document.getElementById('btnTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('確定要清除全部作答紀錄嗎？此動作無法復原。')) return;
+    state.answers = {}; state.revealed = false; state.filter = 'all';
+    saveState(); syncFilterButtons(); renderAll();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && state.revealed){ state.revealed = false; saveState(); renderAll(); }
+  });
+}
+
+loadState();
+syncFilterButtons();
+renderAll();
+bind();
 </script>
 </body>
 </html>

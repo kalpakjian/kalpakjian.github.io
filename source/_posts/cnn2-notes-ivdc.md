@@ -2,14 +2,15 @@
 title: "CNN 2：卷積神經網路（二）學習筆記 — 從局部連接、ReLU、池化到 33 組實測"
 date: 2026-10-29 03:30:00
 categories:
-  - 學習筆記
-  - IVDC
+  - 學習資源
 tags:
   - CNN
   - 深度學習
   - PyTorch
   - TensorFlow
   - 電腦視覺
+index_img: /img/covers/cnn2-notes.png
+banner_img: /img/covers/cnn2-notes.png
 ---
 
 第二堂 CNN 把「一個可訓練的分類網路」從頭組起來：局部連接、輸出體積與步幅、
@@ -26,7 +27,9 @@ ReLU 的兩個經典問題、池化的降維與空間不變性、空洞卷積，
 課程那份程式碼另外有三個會直接報錯的地方（彎引號、`filter_size`、缺 `Input`），
 筆記裡有一張勘誤表，以及修正後可直接執行的版本。
 
+<!-- more -->
+
 **👉 [看完整筆記](/cnn2-notes/)** ｜ [互動測驗 60 題](/cnn2-notes/mc-quiz.html)
 
 延伸：[CNN 1 筆記](/cnn-notes/)（卷積的數學與 LeNet-5）、
-[CNN 專題：十個實驗與三次被推翻的假設](/2026/10/29/cnn-2-experiments/)（實驗全紀錄）。
+[CNN 專題：十個實驗與三次被推翻的假設](/cnn-lab/)（實驗全紀錄）。
