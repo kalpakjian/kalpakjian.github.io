@@ -1,0 +1,183 @@
+# -*- coding: utf-8 -*-
+"""cnn2-notes: build the SVG figures for the CNN 2 lesson page.
+
+    python gen_cnn2_notes.py        # writes fig/*.svg + prints the caption map
+
+`build_cnn2_notes.py`然后負責把它們內嵌進 md 並轉成 index.html。
+"""
+import os
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(HERE, "cnn2-notes")
+
+BG, INK, DIM = "#0d1117", "#e6edf3", "#8b949e"
+TEAL, AMBER, ROSE, BLUE = "#4ecdc4", "#e0a458", "#ff7b72", "#58a6ff"
+FONT = "system-ui,-apple-system,Segoe UI,sans-serif"
+
+
+def esc(t):
+    return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def svg(w, h, body):
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" '
+            f'role="img">{DEFS}<rect width="{w}" height="{h}" fill="{BG}"/>{body}</svg>')
+
+
+DEFS = (f'<defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" '
+        f'orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="{DIM}"/></marker></defs>')
+
+
+def box(x, y, w, h, label, colour=TEAL, size=13, sub=""):
+    out = (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="7" fill="none" '
+           f'stroke="{colour}" stroke-width="1.6"/>'
+           f'<text x="{x + w / 2}" y="{y + h / 2 + (-4 if sub else 5)}" fill="{INK}" '
+           f'font-size="{size}" text-anchor="middle" font-family="{FONT}">{esc(label)}</text>')
+    if sub:
+        out += (f'<text x="{x + w / 2}" y="{y + h / 2 + 13}" fill="{DIM}" font-size="10.5" '
+                f'text-anchor="middle" font-family="{FONT}">{esc(sub)}</text>')
+    return out
+
+
+def arrow(x1, y1, x2, y2, colour=DIM):
+    return (f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{colour}" '
+            f'stroke-width="1.5" marker-end="url(#a)"/>')
+
+
+def label(x, y, text, colour=DIM, size=11.5, anchor="start"):
+    return (f'<text x="{x}" y="{y}" fill="{colour}" font-size="{size}" '
+            f'text-anchor="{anchor}" font-family="{FONT}">{esc(text)}</text>')
+
+
+def grid(x, y, n, cell, colour, fills=(), tag=""):
+    out = []
+    for i in range(n):
+        for j in range(n):
+            out.append(f'<rect x="{x + j * cell}" y="{y + i * cell}" width="{cell}" '
+                       f'height="{cell}" fill="none" stroke="{colour}" stroke-width="0.8" '
+                       f'opacity="0.5"/>')
+    for (r, c, col) in fills:
+        out.append(f'<rect x="{x + c * cell}" y="{y + r * cell}" width="{cell}" '
+                   f'height="{cell}" fill="{col}" opacity="0.3"/>')
+    if tag:
+        out.append(label(x, y - 7, tag))
+    return "".join(out)
+
+
+def fig_overview():
+    steps = [("Input", "影像"), ("Conv 32", "3×3+ReLU"), ("Pool", "2×2"),
+             ("Conv 64", "3×3+ReLU"), ("Pool", "2×2"), ("Flatten", "→ 向量"),
+             ("Dense", "1024+ReLU"), ("Softmax", "10 類")]
+    bw, gap, bh, y = 96, 16, 56, 60
+    body, x = [label(20, 30, "前五層學特徵，後三層做分類", AMBER, 12.5)], 20
+    for i, (main, sub) in enumerate(steps):
+        col = TEAL if i < 5 else (AMBER if i < 7 else ROSE)
+        body.append(box(x, y, bw, bh, main, col, 12, sub))
+        if i < len(steps) - 1:
+            body.append(arrow(x + bw, y + bh / 2, x + bw + gap - 3, y + bh / 2))
+        x += bw + gap
+    body.append(label(20, y + bh + 30, "可訓練的權重只在 Conv 與 Dense；Pool 與 Softmax 沒有參數"))
+    return svg(880, 165, "".join(body))
+
+
+def fig_hierarchy():
+    tiers = [("低層", "邊緣、暗斑", TEAL, 30), ("中層", "眼睛、耳朵、鼻子", BLUE, 280),
+             ("高層", "臉部結構", AMBER, 530)]
+    body = []
+    for tag, what, col, x in tiers:
+        body.append(f'<rect x="{x}" y="36" width="230" height="80" rx="9" fill="none" '
+                    f'stroke="{col}" stroke-width="1.8"/>')
+        body.append(label(x + 16, 62, tag, col, 12.5))
+        body.append(label(x + 16, 92, what, INK, 14))
+    body.append(arrow(262, 76, 276, 76))
+    body.append(arrow(512, 76, 526, 76))
+    body.append(label(30, 146, "沒有人教它「眼睛長什麼樣」——三層都是訓練時順手學出來的"))
+    return svg(800, 165, "".join(body))
+
+
+def fig_local():
+    body = [grid(30, 26, 6, 26, DIM, fills=[(1, 1, AMBER), (1, 2, AMBER), (2, 1, AMBER),
+                                             (2, 2, AMBER)], tag="輸入 6×6"),
+            f'<rect x="56" y="52" width="52" height="52" fill="none" stroke="{AMBER}" '
+            f'stroke-width="2.2"/>',
+            arrow(196, 88, 240, 88),
+            box(244, 58, 140, 58, "一個神經元", TEAL, 12.5, "加權和 + bias"),
+            arrow(388, 88, 424, 88),
+            box(428, 68, 52, 38, "ReLU", BLUE, 12.5),
+            arrow(484, 88, 520, 88),
+            box(524, 58, 156, 58, "特徵圖 1 格", AMBER, 12.5, "同一組權重滑遍全圖"),
+            label(30, 176, "3×3 濾波器 = 9 個權重，走到哪裡都同一組")]
+    return svg(700, 190, "".join(body))
+
+
+def fig_volume():
+    body = [grid(24, 30, 6, 24, DIM, fills=[(0, 0, TEAL), (0, 2, TEAL), (2, 0, TEAL),
+                                            (2, 2, TEAL), (4, 0, TEAL), (4, 2, TEAL)],
+                 tag="輸入 6×6，k=3、s=2"),
+            arrow(192, 102, 226, 102),
+            grid(230, 42, 3, 24, TEAL, tag="輸出 3×3"),
+            box(340, 34, 300, 60, "O = (N + 2P − F) / S + 1", AMBER, 15),
+            label(340, 120, "depth（d）= 濾波器數量，不是輸入通道數", TEAL, 12),
+            label(230, 152, "每一格 = 一個濾波器在該位置的輸出")]
+    return svg(660, 170, "".join(body))
+
+
+def fig_pool():
+    vals = [[1, 3, 2, 0], [4, 6, 1, 2], [0, 2, 8, 5], [1, 1, 3, 4]]
+    cell = 28
+    body = [grid(30, 30, 4, cell, DIM, tag="輸入 4×4")]
+    for r in range(4):
+        for c in range(4):
+            body.append(label(30 + c * cell + cell / 2, 30 + r * cell + 18,
+                              str(vals[r][c]), INK, 12, "middle"))
+    for (r0, c0) in [(0, 0), (0, 2), (2, 0), (2, 2)]:
+        body.append(f'<rect x="{30 + c0 * cell}" y="{30 + r0 * cell}" width="{2 * cell}" '
+                    f'height="{2 * cell}" fill="none" stroke="{AMBER}" stroke-width="2"/>')
+    body.append(arrow(158, 86, 196, 86))
+    body.append(grid(200, 58, 2, cell, TEAL, tag="輸出 2×2"))
+    for i, v in enumerate([6, 2, 2, 8]):
+        body.append(label(200 + (i % 2) * cell + cell / 2, 58 + (i // 2) * cell + 18,
+                          str(v), AMBER, 13, "middle"))
+    body.append(box(310, 34, 300, 58, "面積 ÷ 4、參數 0 個", BLUE, 14,
+                    "鄰域內平移，輸出可能不變"))
+    body.append(label(310, 128, "代價：只知道「這區有」，不知道在哪個像素"))
+    return svg(630, 150, "".join(body))
+
+
+def fig_tasks():
+    heads = [("分類 head", "全連接 + softmax", AMBER), ("分割 head", "全卷積 + 轉置卷積", BLUE),
+             ("上色 head", "2 個色度通道", AMBER), ("控制 head", "方向盤、油門", BLUE)]
+    body = [box(24, 64, 150, 62, "卷積 backbone", TEAL, 12.5, "同一組特徵抽取器")]
+    for k, (name, sub, col) in enumerate(heads):
+        y = 14 + k * 42
+        body.append(arrow(178, 95, 216, y + 17))
+        body.append(box(220, y, 190, 34, name, col, 11.5, sub))
+    body.append(label(24, 168, "換頭就換任務：分割、上色、超解析、端到端控制都是這樣組出來的"))
+    return svg(470, 180, "".join(body))
+
+
+FIGS = {"overview": fig_overview, "hierarchy": fig_hierarchy, "local": fig_local,
+        "volume": fig_volume, "pool": fig_pool, "tasks": fig_tasks}
+
+CAPTIONS = {
+    "overview": "整個分類網路：前五層抽特徵，後三層把特徵變成類別分數；可訓練的參數只在 Conv 與 Dense。",
+    "hierarchy": "表徵學習的階層：第一層看到邊緣，第二層組合出部件，第三層才有物件結構。",
+    "local": "局部連接：一個神經元只讀一小塊 patch，同一組權重滑過整張圖就是參數共享。",
+    "volume": "輸出體積與步幅。depth 由濾波器數量決定，面積由公式算。",
+    "pool": "最大池化：2×2 取最大，面積變四分之一，而且沒有參數可學。",
+    "tasks": "同一個 backbone、換一個頭，就是另一個任務。",
+}
+
+
+def main():
+    os.makedirs(OUT, exist_ok=True)
+    for slug, fn in FIGS.items():
+        path = os.path.join(OUT, slug + ".svg")
+        with open(path, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(fn())
+        print("wrote", path)
+
+
+if __name__ == "__main__":
+    main()
+

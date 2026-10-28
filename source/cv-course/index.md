@@ -71,6 +71,17 @@ date: 2026-10-10 23:40:00
 
 ---
 
+## 7 · Lesson 7 — CNN 2
+
+![CNN 2 學習筆記](/img/covers/cnn2-notes.png)
+
+- **涵蓋**：局部連接與參數共享、輸出體積 / stride / 感受野、ReLU 的兩個經典問題（何時回傳梯度、單元死亡）、池化的降維與空間不變性、空洞卷積、softmax、用 `tf.keras.Sequential` 組模型
+- **特別之處**：把課程那份程式碼**真的跑起來**，補上三個會直接報錯的寫法（彎引號、`filter_size`、缺 `Input`），並用 33 組實驗驗證課堂上的說法——課程的模型 0.80、小型 VGG 0.89、ResNet-18 到 **0.96**；另外量到「零激活 50.6% 但死濾波器 0%」，把「稀疏」與「死亡」分開
+- **👉 [看筆記](/cnn2-notes/)** ｜ [互動測驗 60 題](/cnn2-notes/mc-quiz.html)
+- **延伸**：實驗全紀錄 → [CNN 專題：十個實驗與三次被推翻的假設](/2026/10/29/cnn-2-experiments/)
+
+---
+
 ## 7 · Lesson 9 — Practical Application for Implementation and Demo
 
 ![Teachable Machine 實作學習筆記](/img/covers/cv-practical-notes.png)
@@ -110,7 +121,7 @@ date: 2026-10-10 23:40:00
 | **Lesson 4** | Test | — |
 | **Lesson 5** | Neural Network, Activation Function and Machine Learning | ✅ [Neural Network &amp; ML 學習筆記](/neural-network-notes/) |
 | **Lesson 6** | Convolutional Neural Network (CNN) 1 | ✅ [CNN 學習筆記](/cnn-notes/) |
-| **Lesson 7** | CNN 2 | ⏳ 待補 |
+| **Lesson 7** | CNN 2 | ✅ [CNN 2 學習筆記](/cnn2-notes/) |
 | **Lesson 8** | Tensorflow and Pytorch for Object Detection and CNN | ⏳ 待補 |
 | **Lesson 9** | Practical Application for Implementation and Demo | ✅ [Teachable Machine 實作筆記](/2026/10/28/cv-practical-teachable-machine-notes/) |
 | **Lesson 10** | Exam | — |

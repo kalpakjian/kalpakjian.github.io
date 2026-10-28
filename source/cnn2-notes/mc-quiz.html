@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CNN 2 · 互動測驗（60 題）｜AI Tech Notes</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--line:#222b36;--ink:#e6edf3;--dim:#8b949e;
+--teal:#4ecdc4;--amber:#e0a458;--rose:#ff7b72;--ok:#3fb950}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;line-height:1.7}
+.wrap{max-width:860px;margin:0 auto;padding:28px 18px 80px}
+a.back{color:var(--teal);text-decoration:none;font-size:14px}
+h1{font-size:26px;margin:14px 0 4px}
+.sub{color:var(--dim);font-size:14px;margin-bottom:18px}
+.bar{position:sticky;top:0;z-index:5;display:flex;gap:14px;align-items:center;
+background:rgba(13,17,23,.94);padding:10px 0;border-bottom:1px solid var(--line);margin-bottom:18px;font-size:14px}
+.bar strong{color:var(--amber)}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:7px 14px}
+button:hover{border-color:var(--teal)}
+.q{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 14px}
+.q h3{margin:0 0 10px;font-size:15.5px;font-weight:600}
+.q h3 span{color:var(--dim);font-weight:400;margin-right:8px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#0d1117;color:var(--ink);border-radius:8px;padding:8px 12px;margin:6px 0;font-size:14.5px}
+.opt.right{border-color:var(--ok);background:#0f2417}
+.opt.wrong{border-color:var(--rose);background:#2a1416}
+.why{display:none;margin-top:8px;font-size:13.5px;color:var(--dim);border-left:2px solid var(--teal);padding-left:10px}
+.why.show{display:block}
+.score{font-size:15px;color:var(--teal)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="./">← 回到 CNN 2 學習筆記</a>
+<h1>CNN 2 · 互動測驗</h1>
+<div class="sub">60 題單選，涵蓋局部連接、輸出體積、ReLU、池化、空洞卷積、實作與實測。作答後即時顯示解析。</div>
+<div class="bar">
+  <span>作答 <strong id="done">0</strong> / <span id="total">0</span></span>
+  <span>答對 <strong id="right">0</strong></span>
+  <button id="reveal">顯示全部解析</button>
+  <button id="reset">重新作答</button>
+</div>
+<div id="quiz"></div>
+<p class="score" id="final"></p>
+</div>
+<script>
+const QUESTIONS = [
+["課程把分類 CNN 拆成哪三個步驟？",["卷積 → 非線性 → 池化","卷積 → 池化 → 全連接","池化 → 卷積 → Softmax","正規化 → 卷積 → 池化"],0,"三步曲：Convolution、Non-linearity（ReLU）、Pooling。"],
+["卷積層的 depth 由什麼決定？",["輸入通道數","濾波器數量","輸入邊長","batch size"],1,"d = 濾波器數量。"],
+["下列哪一層沒有可學習參數？",["Conv2D","Dense","MaxPool2D","BatchNorm"],2,"池化只取最大或平均。"],
+["ReLU 的定義是？",["1/(1+e^-x)","max(0,x)","tanh(x)","x^2"],1,"ReLU 把負值歸零。"],
+["第一層卷積通常學到什麼？",["眼睛、鼻子","臉部結構","邊緣、暗斑","整張臉"],2,"低層＝邊緣與暗斑。"],
+["參數共享的意思是？",["每個位置用不同濾波器","同一組濾波器滑過整張圖","每層共用權重","權重由人工設計"],1,"同一組權重在不同位置重複使用。"],
+["輸出尺寸公式中 F 代表？",["步幅","填充","核邊長","輸出邊長"],2,"F 是濾波器邊長。"],
+["28×28、3×3 核、stride 1、不填充，卷積後邊長？",["28","27","26","25"],2,"(28−3)/1+1 = 26。"],
+["承上，接 2×2、stride 2 池化後邊長？",["26","13","11","5"],1,"26/2 = 13。"],
+["池化的兩個好處是？",["增加參數、提升準確率","降低維度、空間不變性","增加深度、保留位置","加速訓練、增加解析度"],1,"代價是放棄精確位置。"],
+["ReLU 單元「死掉」的定義是？",["輸出出現負值","對所有輸入都輸出 0","權重變成 0","學習率過大"],1,"梯度恆 0 → 權重永不再更新。"],
+["ReLU 輸出有 50% 是 0，代表？",["一半神經元死了","正常的稀疏性","訓練失敗","學習率太小"],1,"死亡要看「所有輸入都為 0」。"],
+["空洞卷積的主要效果？",["增加參數","擴大感受野但不增加參數","降低解析度","取代池化"],1,"等效核變大、參數量不變。"],
+["dilation d、核邊長 k 的等效核大小？",["k+d","k×(d−1)","k+(k−1)(d−1)","k×d"],2,"k_eff = k + (k−1)(d−1)。"],
+["softmax 的輸出性質是？",["任意實數","加總為 1 的機率","固定 0 或 1","負數"],1,"轉成機率分布。"],
+["整數標籤應配哪個損失？",["categorical_crossentropy","sparse_categorical_crossentropy","binary_crossentropy","mse"],1,"整數標籤配 sparse 版本。"],
+["Keras 3 的 Sequential 第一層直接放 Conv2D 會？",["自動推斷輸入形狀","報錯，需先給 Input","自動補 Input","只會警告"],1,"要先知道輸入形狀。"],
+["Conv2D 的核大小參數名稱是？",["filter_size","kernel_size","window_size","patch"],1,"Keras 用 kernel_size。"],
+["課程程式碼出現 SyntaxError 的最可能原因？",["缺少 import","彎引號被當成字串引號","縮排錯誤","變數未定義"],1,"U+2019 不是合法引號。"],
+["本筆記的模型在 MNIST 上的參數量？",["1,668,490","2,389,962","11,173,962","320"],0,"320 + 18,496 + 1,639,424 + 10,250。"],
+["參數主要集中在哪裡？",["第一個卷積層","第二個卷積層","攤平後的全連接層","softmax"],2,"約 98.9% 在 Flatten → Dense。"],
+["同架構換成 CIFAR-10，攤平後維度？",["1600","2304","4096","1024"],1,"6×6×64 = 2304。"],
+["全連接層為什麼被稱為「參數爆炸」？",["初始化很慢","參數量 ≈ 特徵維度 × 神經元數","需要更多激活函數","不能使用 GPU"],1,"例如 1600×1024。"],
+["stride 變大會有什麼效果？",["輸出變大","輸出變小、計算變便宜","參數變多","感受野變小"],1,"跳得遠 → 輸出較小。"],
+["感受野指的是？",["濾波器的大小","節點在輸入上連結到的區域","輸出通道數","池化窗口"],1,"層層堆疊會讓感受野變大。"],
+["FCN 拿掉全連接層的原因？",["參數太多","要輸出與輸入同尺寸的標籤圖","訓練較快","避免過擬合"],1,"全卷積才能保持解析度。"],
+["FCN 的上採樣通常用哪一層？",["Conv2D","Conv2DTranspose","MaxPool2D","Flatten"],1,"轉置卷積負責放大。"],
+["生物醫學分割除了分割圖還會輸出什麼？",["損失曲線","不確定性圖","邊界框","文字描述"],1,"要能說出「哪裡不確定」。"],
+["本筆記量到的「零激活／死濾波器」比例？",["50.6% / 0.0%","0.0% / 50.6%","50.6% / 50.6%","0.0% / 0.0%"],0,"稀疏是常態，但沒有濾波器死亡。"],
+["加上 dropout 0.3 的主要效果？",["準確率 +5 pp","train/val 差距縮小","訓練快 10 倍","取代池化"],1,"差距 8.9 → 4.0 pp，準確率只多 0.15 pp。"],
+["cutout 在 20 輪的效果？",["明顯提升","反而變差（欠擬合）","沒影響","+10 pp"],1,"0.8694 → 0.8171。"],
+["cutout 到 200 輪後？",["仍然變差","翻正並提升","與 20 輪相同","無法訓練"],1,"長排程才收得回增強的代價。"],
+["ResNet-18 + cutout、200 輪的最佳成績？",["0.89","0.92","0.94","0.96"],3,"0.9613（Linux GPU）。"],
+["20 輪看起來「到頂」通常是因為？",["模型太小","學習率還沒收尾","資料不足","正則化太強"],1,"最後 30 輪的 LR 衰減常貢獻 2–4 pp。"],
+["難類排序在換架構後？",["完全改變","順序不變（貓 < 狗 < 鳥）","只剩貓難","全部變簡單"],1,"難度來自資料。"],
+["小型 VGG 的參數比課程模型？",["更多","更少","一樣","無法比較"],1,"2.20 M vs 2.39 M，但準確率高 9 pp。"],
+["VGG 贏在哪裡？",["更多資料","深度 + BatchNorm + padding=same","更大的學習率","更多類別"],1,"架構設計，不是參數量。"],
+["課程模型在 MNIST 5 輪的準確率？",["0.95","0.97","0.99","0.80"],2,"0.9902。"],
+["把增強搬到 GPU 解決了什麼？",["準確率不足","資料管線瓶頸","記憶體不足","梯度消失"],1,"VGG 由 6.5 秒/epoch 降到約 1 秒。"],
+["同程式 Windows/Linux 重跑，差異通常？",["±0.05 pp","±2 pp","±10 pp","完全一致"],1,"20 輪落在曲線陡段，差異被放大。"],
+["Keras 的 CIFAR 鏡像在本機的問題？",["檔案損毀","被限速到約 46 KB/s","需要登入","已下架"],1,"改用 Hugging Face parquet 再轉檔。"],
+["轉檔後驗證資料正確的指標？",["像素總數","每通道均值 ≈ 125/123/114","檔案大小","標籤數"],1,"通道順序錯的話均值會不同。"],
+["把池化換成 stride=2 卷積的差別？",["多了可學習參數","不再降維","失去非線性","不能反向傳播"],0,"卷積有權重，池化沒有。"],
+["深度學習的「卷積」實務上是？",["真正的卷積（翻轉核）","互相關（不翻轉核）","傅立葉變換","矩陣乘法"],1,"對學出來的核沒差別。"],
+["padding=SAME 的作用？",["縮小輸出","輸出尺寸與輸入相同","增加參數","自動池化"],1,"補零讓尺寸不變。"],
+["VALID padding 的意思是？",["補零","不填充，輸出變小","補平均值","只在邊界補"],1,"輸出邊長會減少。"],
+["池化反向傳播時做什麼？",["隨機丟棄梯度","把梯度路由回最大值","平均分配","不傳梯度"],1,"沒有參數，只分配梯度。"],
+["要表達「模型哪裡不確定」，分割常用？",["dropout","不確定性圖","learning rate schedule","資料增強"],1,"醫療影像特別重視。"],
+["影像上色本質上是？",["分類","逐像素回歸","偵測","排序"],1,"輸出連續色度值。"],
+["超解析的輸入輸出關係？",["影像 → 類別","影像 → 影像","類別 → 影像","文字 → 影像"],1,"與 FCN 同類。"],
+["自駕的「端到端」是什麼？",["分段訓練再接","感測器直接學到控制指令","先偵測再規劃","只用 GPS"],1,"不需人工標註中間步驟。"],
+["部署前本 repo 的品質閘門要求？",["0 警告","0 失敗","覆蓋率 80%","人工審核"],1,"qa_notes.ps1 必須 0 失敗。"],
+["`MaxPool2D` 與 `MaxPooling2D` 的關係？",["不同層","同一個層的別名","前者已移除","後者沒有參數"],1,"兩者等價，可互換。"],
+["Dense(1024) 佔這個模型多少參數？",["約一半","約七成","約 98.9%","約 10%"],2,"1,639,424 / 1,668,490。"],
+["MNIST 攤平後是幾維？",["1024","1600","2304","784"],1,"5×5×64 = 1600。"],
+["softmax 之後要得到類別索引用？",["argmax","round","sum","softmax 再一次"],0,"取最大值的索引。"],
+["卷積層的參數量由什麼決定？",["輸入邊長","核大小 × 輸入通道 × 濾波器數","batch size","stride"],1,"(k×k×Cin+1)×Cout。"],
+["如果池化窗口 2×2、stride 1，輸出會？",["縮一半","只縮一格","不變","變大"],1,"步幅小於窗口時重疊。"],
+["哪個說法錯？",["池化沒有參數","卷積權重由資料學習","stride 越大輸出越小","depth 由輸入通道決定"],3,"depth 由濾波器數量決定。"],
+["把 28×28 影像接 1024 神經元的全連接層，權重約多少？",["8 千","8 萬","78 萬","780 萬"],2,"28×28×1024 ≈ 802,816。"],
+];
+
+const KEY = "cnn2-quiz";
+const state = JSON.parse(localStorage.getItem(KEY) || "{}");
+const quiz = document.getElementById("quiz");
+document.getElementById("total").textContent = QUESTIONS.length;
+
+QUESTIONS.forEach((item, qi) => {
+  const card = document.createElement("div");
+  card.className = "q";
+  const h = document.createElement("h3");
+  h.innerHTML = "<span>" + String(qi + 1).padStart(2, "0") + "</span>";
+  h.appendChild(document.createTextNode(item[0]));
+  card.appendChild(h);
+  item[1].forEach((opt, oi) => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.textContent = "ABCD"[oi] + ". " + opt;
+    b.onclick = () => {
+      state[qi] = oi;
+      localStorage.setItem(KEY, JSON.stringify(state));
+      paint();
+    };
+    card.appendChild(b);
+  });
+  const w = document.createElement("div");
+  w.className = "why";
+  w.textContent = "解析：" + item[3];
+  card.appendChild(w);
+  quiz.appendChild(card);
+});
+
+function paint() {
+  let done = 0, right = 0;
+  Array.from(quiz.children).forEach((card, qi) => {
+    const picked = state[qi];
+    Array.from(card.querySelectorAll(".opt")).forEach((b, oi) => {
+      b.classList.remove("right", "wrong");
+      if (picked === undefined) return;
+      if (oi === QUESTIONS[qi][2]) b.classList.add("right");
+      else if (oi === picked) b.classList.add("wrong");
+    });
+    if (picked !== undefined) {
+      done++;
+      if (picked === QUESTIONS[qi][2]) right++;
+      card.querySelector(".why").classList.add("show");
+    }
+  });
+  document.getElementById("done").textContent = done;
+  document.getElementById("right").textContent = right;
+  document.getElementById("final").textContent = done === QUESTIONS.length
+    ? "全部答完：" + right + " / " + QUESTIONS.length + "（"
+      + Math.round(right / QUESTIONS.length * 100) + "%）" : "";
+}
+
+document.getElementById("reveal").onclick = () => {
+  const hidden = Array.from(quiz.querySelectorAll(".why"))
+    .some(w => !w.classList.contains("show"));
+  quiz.querySelectorAll(".why").forEach(w => w.classList.toggle("show", hidden));
+};
+
+document.getElementById("reset").onclick = () => {
+  localStorage.removeItem(KEY);
+  for (const k in state) delete state[k];
+  quiz.querySelectorAll(".why").forEach(w => w.classList.remove("show"));
+  paint();
+};
+
+paint();
+</script>
+</body>
+</html>
