@@ -16,6 +16,8 @@ tags:
   - Mistral
   - 長尾
 toc: true
+index_img: /img/covers/stair-65x-factcheck.png
+banner_img: /img/covers/stair-65x-factcheck.png
 ---
 
 > <strong>整理說明</strong>：這篇是完整查核紀錄，不是轉述。我下載了 arXiv 2609.03874 v2 的 PDF 全文（11 頁），用 PyMuPDF 抽成純文字後逐節核對，**引文一律原文照錄並附英文原句**。<strong>論文原文、我的推導、貼文的說法</strong>三種來源分開標註，不混在一起講。查核日期 2026-10-29。
