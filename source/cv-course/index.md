@@ -71,6 +71,16 @@ date: 2026-10-10 23:40:00
 
 ---
 
+## 7 · Lesson 9 — Practical Application for Implementation and Demo
+
+![Teachable Machine 實作學習筆記](/img/covers/cv-practical-notes.png)
+
+- **涵蓋**：Teachable Machine（**Gather → Train → Export**）、圖像／聲音／姿勢三類專案、TensorFlow.js 與 TensorFlow 的關係、香蕉四類例子（含 `No banana`）、**本機訓練**（不上傳、不可切換分頁）、預覽與匯出（TF.js／TF／TF Lite）、機器學習的限制（**圖像只是像素規律**）、三個失敗案例（兩隻香蕉／換背景 **100 % → ≈60 %**／圖畫仍判 `Ripe` **≈88 %**）、穩健度三因素（樣本量與多樣性、背景與光線、方向），以及示範項目**「機械蛇（Teachable Machine + p5.js）」**
+- **特別之處**：把簡報 19 頁整理成 **22 節結構化筆記**，附 12 條自我檢測題、關鍵詞表、網址與程式碼速查表、溫習清單
+- **👉 [看筆記](/2026/10/28/cv-practical-teachable-machine-notes/)**
+
+---
+
 ## 筆記的共同規格
 
 | 項目 | 說明 |
@@ -102,5 +112,5 @@ date: 2026-10-10 23:40:00
 | **Lesson 6** | Convolutional Neural Network (CNN) 1 | ✅ [CNN 學習筆記](/cnn-notes/) |
 | **Lesson 7** | CNN 2 | ⏳ 待補 |
 | **Lesson 8** | Tensorflow and Pytorch for Object Detection and CNN | ⏳ 待補 |
-| **Lesson 9** | Practical Application for Implementation and Demo | ⏳ 待補 |
+| **Lesson 9** | Practical Application for Implementation and Demo | ✅ [Teachable Machine 實作筆記](/2026/10/28/cv-practical-teachable-machine-notes/) |
 | **Lesson 10** | Exam | — |
