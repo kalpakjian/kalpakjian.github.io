@@ -55,6 +55,7 @@ skip_render:
   - 'ml-models-notes/**'
   - 'h2o-automl-notes/**'
   - 'ml-textbook-notes/**'
+  - 'deep-learning-book-notes/**'
   - 'orange-ai-notes/**'
   - 'automl-unit2-extra-notes/**'
   - 'linear-regression-notes/**'

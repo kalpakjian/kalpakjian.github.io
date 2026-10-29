@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>《Deep Learning》導讀 MC 測驗（40 題）｜AI Tech Notes</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--line:#e2e5ea;--txt:#1f2328;--dim:#5b636e;
+  --blue:#2563eb;--green:#15803d;--green-bg:#e8f6ec;--red:#b91c1c;
+  --red-bg:#fdeaea;--sel:#dbeafe;--sel-line:#2563eb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);line-height:1.7;font-size:16px;
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",
+    "Microsoft JhengHei","Segoe UI",Roboto,sans-serif}
+a{color:var(--blue)}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 20px 10px}
+.topbar .row1{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px}
+.topbar h1{font-size:17px;margin:0;font-weight:700}
+.topbar .back{font-size:13px;color:var(--dim);text-decoration:none}
+.topbar .back:hover{color:var(--blue)}
+.stats{display:flex;flex-wrap:wrap;gap:16px;margin-top:8px;font-size:14px;color:var(--dim)}
+.stats b{font-size:18px;color:var(--txt)}
+.stats .ok b{color:var(--green)}
+.stats .no b{color:var(--red)}
+.saved{font-size:12px;color:var(--green);opacity:0;transition:opacity .3s}
+.saved.on{opacity:1}
+.progress{height:6px;background:var(--line);border-radius:99px;margin-top:10px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:var(--blue);
+  border-radius:99px;transition:width .25s}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+button{font:inherit;font-size:13px;padding:6px 13px;border-radius:8px;
+  border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer;transition:.15s}
+button:hover{border-color:#b9c0c9;background:#fbfbfc}
+button.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+button.primary:hover{background:#1d4ed8}
+button.active{background:var(--sel);border-color:var(--sel-line);color:#1e40af;font-weight:600}
+button.danger{color:var(--red);border-color:#f0c4c4}
+button.danger:hover{background:var(--red-bg)}
+.navwrap{padding:16px 20px 0}
+.navgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:6px}
+.navgrid button{padding:6px 0;font-size:13px;border-radius:7px;text-align:center}
+.navgrid button.done{background:#eef2ff;border-color:#c7d2fe;color:#3730a3}
+.navgrid button.right{background:var(--green-bg);border-color:#a7d7b6;color:var(--green);font-weight:700}
+.navgrid button.wrong{background:var(--red-bg);border-color:#eeb4b4;color:var(--red);font-weight:700}
+main{max-width:900px;margin:0 auto;padding:20px 20px 80px}
+.parttitle{margin:34px 0 14px;font-size:15px;font-weight:700;color:var(--dim)}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;margin:0 0 14px}
+.q.correct{border-color:#a7d7b6;box-shadow:0 0 0 2px var(--green-bg)}
+.q.incorrect{border-color:#eeb4b4;box-shadow:0 0 0 2px var(--red-bg)}
+.qhead{display:flex;gap:10px;align-items:flex-start}
+.num{flex:0 0 26px;height:26px;border-radius:50%;background:#eef2ff;color:#3730a3;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.qtext{margin:0;font-size:15.5px;font-weight:600}
+.opts{list-style:none;margin:12px 0 0;padding:0}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1px solid var(--line);
+  border-radius:9px;margin-bottom:8px;cursor:pointer;background:#fff;transition:.12s}
+.opt:hover{border-color:#b9c0c9;background:#fbfbfc}
+.opt .lt{flex:0 0 20px;font-weight:700;color:var(--dim)}
+.opt.picked{border-color:var(--sel-line);background:var(--sel)}
+.opt.right{border-color:#a7d7b6;background:var(--green-bg)}
+.opt.wrong{border-color:#eeb4b4;background:var(--red-bg)}
+.tag{margin-left:auto;font-size:11.5px;font-weight:700;white-space:nowrap}
+.tag.right{color:var(--green)}
+.tag.wrong{color:var(--red)}
+.expl{margin-top:10px;padding:10px 13px;background:#f6f8fa;border-left:4px solid var(--blue);
+  border-radius:0 8px 8px 0;font-size:14px;color:#374151}
+.empty{text-align:center;color:var(--dim);padding:40px 0;font-size:15px}
+footer{max-width:900px;margin:0 auto;padding:0 20px 60px;color:var(--dim);font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="row1">
+    <h1>《Deep Learning》導讀 MC 測驗（40 題）</h1>
+    <a class="back" href="index.html">← 回到導讀</a>
+    <a class="back" href="/">AI Tech Notes</a>
+    <span class="saved" id="saved">已自動儲存</span>
+  </div>
+  <div class="stats">
+    <span>已作答 <b id="nAns">0</b> / 40</span>
+    <span class="ok">答對 <b id="nScore">0</b></span>
+    <span class="no">答錯 <b id="nWrong">0</b></span>
+    <span id="hint"></span>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <button class="primary" id="btnReveal">顯示答案</button>
+    <button id="btnAll" class="active">全部 40 題</button>
+    <button id="btnUnans">未作答</button>
+    <button id="btnWrong">答錯的</button>
+    <button id="btnTop">回到頂端</button>
+    <button class="danger" id="btnReset">重置</button>
+  </div>
+</div>
+<div class="navwrap"><div class="navgrid" id="navgrid"></div></div>
+<main id="quiz"></main>
+<footer>
+  題目依《Deep Learning》（Goodfellow, Bengio, Courville, MIT Press, 2016）的章節順序編排；
+  本頁是原創中文命題，非原文試題。作答紀錄只存在你的瀏覽器（localStorage），不會上傳。
+</footer>
+<script>
+const QUESTIONS = [
+ {
+  "q": "深度學習與傳統機器學習最核心的差別是什麼？",
+  "o": [
+   "一定要用 GPU 才能訓練",
+   "一定需要更多標註資料",
+   "特徵（表示）由模型自己從資料中學出來",
+   "只能處理影像與語音"
+  ],
+  "a": 2,
+  "e": "傳統做法靠人設計特徵（HOG、SIFT、n-gram），深度學習把「表示」也交給多層可微函數學。"
+ },
+ {
+  "q": "書中把深度學習的第三次浪潮歸因於哪一組條件同時到位？",
+  "o": [
+   "新的數學理論突破",
+   "資料量、模型容量與算力同時放大",
+   "標註工具變便宜",
+   "網際網路協定標準化"
+  ],
+  "a": 1,
+  "e": "第 1 章反覆強調「規模本身就是方法」：資料、模型、算力一起放大會帶來行為上的質變。"
+ },
+ {
+  "q": "書名裡的「深度」指的是什麼？",
+  "o": [
+   "參數數量非常多",
+   "訓練時間很長",
+   "使用了很多種不同的演算法",
+   "表示（或計算圖）的層數很深"
+  ],
+  "a": 3,
+  "e": "深度指的是表示層數；一個 3 層但評估流程正確的網路，通常勝過 30 層卻沒有驗證集的網路。"
+ },
+ {
+  "q": "AI、機器學習、深度學習三者的關係是？",
+  "o": [
+   "三者是同一件事的不同說法",
+   "深度學習 ⊃ AI ⊃ 機器學習",
+   "AI ⊃ 機器學習 ⊃ 深度學習",
+   "機器學習 ⊃ AI ⊃ 深度學習"
+  ],
+  "a": 2,
+  "e": "人工智慧最大，機器學習是其中「從資料找規則」的一支，深度學習又是機器學習裡「多層表示學習」的一支。"
+ },
+ {
+  "q": "下列哪一個運算對「任意」矩陣都一定成立？",
+  "o": [
+   "奇異值分解（SVD）",
+   "特徵分解",
+   "必須是方陣才能轉置",
+   "一定存在反矩陣"
+  ],
+  "a": 0,
+  "e": "只有實對稱矩陣保證有實特徵值與正交特徵向量；SVD 對任意矩陣都成立，是 PCA 與偽逆的底層。"
+ },
+ {
+  "q": "用 Moore-Penrose 偽逆解線性系統，得到的解具有什麼性質？",
+  "o": [
+   "一定是唯一解",
+   "一定是整數解",
+   "一定會過擬合",
+   "在所有最小平方誤差的解中，範數最小"
+  ],
+  "a": 3,
+  "e": "偽逆給的是「最小範數的最小平方解」；這也解釋了為什麼線性回歸其實常常沒有唯一解。"
+ },
+ {
+  "q": "L1 與 L2 正則化最主要的差異是？",
+  "o": [
+   "L1 傾向把部分權重壓成正好 0，L2 只會讓權重整體變小",
+   "L1 只適用於分類",
+   "L2 會讓模型變成非線性",
+   "兩者完全等價，只差係數"
+  ],
+  "a": 0,
+  "e": "幾何上 L1 的約束是菱形，解容易落在頂點（稀疏）；L2 是圓球，解平滑但不會正好為 0。"
+ },
+ {
+  "q": "KL 散度 D(P‖Q) 為什麼不是「距離」？",
+  "o": [
+   "因為它一定大於 1",
+   "因為它不對稱：D(P‖Q) ≠ D(Q‖P)",
+   "因為它只能用在離散分布",
+   "因為它的值可以是負的"
+  ],
+  "a": 1,
+  "e": "KL 不對稱、也不滿足三角不等式。這個不對稱在變分推論裡決定了近似分布是覆蓋多模式還是鎖定單一模式。"
+ },
+ {
+  "q": "分類任務用交叉熵，本質上等價於什麼？",
+  "o": [
+   "最小化參數的 L2 範數",
+   "最小化負對數似然（最大似然）",
+   "最大化邊際距離",
+   "最小化輸出維度"
+  ],
+  "a": 1,
+  "e": "交叉熵與負對數似然只差一個與參數無關的常數項，所以最小化交叉熵就是在做最大似然。"
+ },
+ {
+  "q": "實作 softmax 時先減去輸入的最大值，主要目的是？",
+  "o": [
+   "加快收斂速度",
+   "讓輸出變成整數",
+   "避免 exp 上溢變成 inf／nan",
+   "讓梯度變成 0"
+  ],
+  "a": 2,
+  "e": "exp(1000) 會上溢。softmax(z) 與 softmax(z − max z) 數學上相等，但後者數值穩定。"
+ },
+ {
+  "q": "Hessian 矩陣的條件數很大，代表最佳化會遇到什麼問題？",
+  "o": [
+   "梯度一定為 0",
+   "損失函數不連續",
+   "模型參數太少",
+   "病態：某些方向很陡、某些方向很平，學習率難以兩全"
+  ],
+  "a": 3,
+  "e": "條件數大＝峽谷地形。學習率調大時陡的方向會爆、調小時平的方向幾乎不動。"
+ },
+ {
+  "q": "牛頓法在深度學習中很少直接使用，主要原因是？",
+  "o": [
+   "它只能解線性問題",
+   "它不需要梯度",
+   "它一定會收斂到全域最小值",
+   "需要計算並儲存 n×n 的 Hessian 及其逆矩陣"
+  ],
+  "a": 3,
+  "e": "參數數量 n 動輒百萬，Hessian 是 n×n，儲存與求逆都不可行；因此實務上用一階方法加自適應學習率。"
+ },
+ {
+  "q": "模型容量增加時，訓練誤差與泛化誤差通常如何變化？",
+  "o": [
+   "訓練誤差下降，泛化誤差先降後升",
+   "兩者都單調下降",
+   "兩者都單調上升",
+   "訓練誤差上升，泛化誤差下降"
+  ],
+  "a": 0,
+  "e": "泛化誤差是 U 形：容量不足會欠擬合，容量過大則過擬合，中間才是甜蜜點。"
+ },
+ {
+  "q": "期望測試誤差可以分解成哪三項？",
+  "o": [
+   "學習率 ＋ 動量 ＋ 權重衰減",
+   "精度 ＋ 召回率 ＋ F1",
+   "偏差² ＋ 方差 ＋ 不可約噪聲",
+   "訓練誤差 ＋ 驗證誤差 ＋ 測試誤差"
+  ],
+  "a": 2,
+  "e": "這條分解說明了為什麼「更大的模型」不是萬靈丹：容量↑ 通常偏差↓、方差↑。"
+ },
+ {
+  "q": "驗證集（validation set）與測試集（test set）的分工是？",
+  "o": [
+   "兩者可以互換使用",
+   "驗證集只用來訓練，測試集用來調參",
+   "只要資料夠多就不需要測試集",
+   "驗證集用來選超參數，測試集只用來回報一次成績"
+  ],
+  "a": 3,
+  "e": "用測試集挑超參數＝偷看考卷，回報的分數會系統性樂觀。"
+ },
+ {
+  "q": "「最大似然 ＋ L2 正則化」在貝氏觀點下等價於什麼？",
+  "o": [
+   "純最大似然",
+   "變分推論",
+   "最大後驗（MAP），且先驗是 Gaussian",
+   "蒙地卡羅估計"
+  ],
+  "a": 2,
+  "e": "L2 懲罰對應 Gaussian 先驗，所以加了 L2 的最大似然就是 MAP 估計。"
+ },
+ {
+  "q": "XOR 問題為什麼單層線性模型一定失敗？",
+  "o": [
+   "因為資料量太小",
+   "因為四個點不是線性可分的",
+   "因為輸出必須是機率",
+   "因為沒有使用激活函數"
+  ],
+  "a": 1,
+  "e": "任何一條直線都無法把 (0,0)、(1,1) 與 (0,1)、(1,0) 分開；需要隱藏層改變座標系。"
+ },
+ {
+  "q": "多類別互斥分類應該搭配哪一組輸出單元與損失？",
+  "o": [
+   "softmax ＋ categorical cross-entropy",
+   "sigmoid ＋ MSE",
+   "線性輸出 ＋ MAE",
+   "softmax ＋ MSE"
+  ],
+  "a": 0,
+  "e": "互斥類別用 softmax（總和為 1）＋ 交叉熵；多標籤才用多個 sigmoid。"
+ },
+ {
+  "q": "反向傳播演算法的本質是什麼？",
+  "o": [
+   "一種隨機搜尋",
+   "把鏈式法則排成「從輸出往輸入」的計算順序",
+   "一種初始化方法",
+   "一種正則化"
+  ],
+  "a": 1,
+  "e": "反向傳播不是新的數學，而是把鏈式法則在計算圖上排程，成本大約是前向的兩倍。"
+ },
+ {
+  "q": "ReLU 相對 sigmoid 的主要優勢是？",
+  "o": [
+   "輸出一定是正的機率",
+   "在大範圍內是線性的，梯度不會飽和",
+   "參數數量更少",
+   "不需要初始化"
+  ],
+  "a": 1,
+  "e": "sigmoid 兩端飽和導致梯度消失；ReLU 在正半軸梯度恆為 1，且輸出稀疏（一半為 0）。"
+ },
+ {
+  "q": "使用 Dropout 的模型在做推論（inference）時該怎麼做？",
+  "o": [
+   "照樣隨機丟掉單元",
+   "把學習率調成 0",
+   "把 batch size 設為 1",
+   "關掉 Dropout，並把權重乘上保留機率（或訓練時就用 inverted dropout）"
+  ],
+  "a": 3,
+  "e": "推論要的是期望輸出；若訓練時以機率 p 保留，推論就必須乘上 p，否則輸出尺度會偏大。"
+ },
+ {
+  "q": "早停（early stopping）為什麼算一種正則化？",
+  "o": [
+   "因為它限制參數能走多遠，等效於對參數空間加了約束",
+   "因為它會刪掉參數",
+   "因為它會增加資料量",
+   "因為它改變了損失函數的形式"
+  ],
+  "a": 0,
+  "e": "在驗證誤差回升時停止，等於限制模型走到高曲率、貼合訓練資料的區域，效果近似 L2。"
+ },
+ {
+  "q": "資料增強要有效，前提是什麼？",
+  "o": [
+   "增強後的資料越多越好",
+   "一定要用深度學習模型",
+   "增強方式要對應任務真正擁有的不變性",
+   "必須在測試集上也做同樣的增強"
+  ],
+  "a": 2,
+  "e": "把錯誤的不變性寫進資料（例如辨識數字卻隨機上下翻轉）會直接破壞標籤語意。"
+ },
+ {
+  "q": "高維參數空間裡，最佳化最常卡住的原因是？",
+  "o": [
+   "局部極小值遠多於鞍點",
+   "梯度恆為無窮大",
+   "鞍點：梯度接近 0 但並不是解",
+   "損失函數不可微"
+  ],
+  "a": 2,
+  "e": "高維下真正的局部極小很罕見，鞍點才是主要障礙；這也是動量與二階資訊有用的原因。"
+ },
+ {
+  "q": "Adam 結合了哪兩個機制？",
+  "o": [
+   "Dropout 與 BatchNorm",
+   "動量（一階矩）與梯度平方的移動平均（二階矩）",
+   "牛頓法與遺傳演算法",
+   "L1 與 L2"
+  ],
+  "a": 1,
+  "e": "Adam = momentum ＋ RMSProp ＋ 偏差修正，讓每個參數有自己的有效學習率。"
+ },
+ {
+  "q": "He／Kaiming 初始化的動機是什麼？",
+  "o": [
+   "讓所有權重初始化為 0",
+   "讓權重盡量小以加快收斂",
+   "讓梯度一定為 1",
+   "讓每一層輸出的變異數大致保持不變（配合 ReLU）"
+  ],
+  "a": 3,
+  "e": "Var(w) = 2/n_in 是為了在 ReLU 下保持訊號尺度；否則數十層之後訊號會爆掉或消失。"
+ },
+ {
+  "q": "卷積層的參數量要怎麼算（輸入通道 C_in、輸出 C_out、核大小 K）？",
+  "o": [
+   "K × C_in × C_out",
+   "K × K × C_in ＋ C_out",
+   "C_in × C_out",
+   "K × K × C_in × C_out ＋ C_out"
+  ],
+  "a": 3,
+  "e": "每個輸出通道有 K×K×C_in 個權重，再加一個偏差；參數共享讓這個量與影像大小無關。"
+ },
+ {
+  "q": "卷積網路的「平移等變性」指的是？",
+  "o": [
+   "輸入平移一格，輸出完全不變",
+   "輸入旋轉 90 度，輸出也不變",
+   "卷積的結果與輸入順序無關",
+   "輸入平移一格，輸出特徵也跟著平移一格"
+  ],
+  "a": 3,
+  "e": "等變（equivariance）與不變（invariance）不同：卷積是等變，池化才給局部不變。"
+ },
+ {
+  "q": "最大池化（max pooling）主要提供什麼？",
+  "o": [
+   "增加參數量",
+   "保證輸出可微",
+   "局部的平移不變性，代價是丟掉精確位置",
+   "把特徵圖放大"
+  ],
+  "a": 2,
+  "e": "池化把鄰域壓成一個值，小幅移動不影響結果；需要保留位置時可改用 stride 卷積。"
+ },
+ {
+  "q": "RNN 的梯度消失主要來自哪裡？",
+  "o": [
+   "激活函數選錯",
+   "學習率太小",
+   "參數初始化太大",
+   "梯度沿時間步連乘 Jacobian，數值逐步衰減"
+  ],
+  "a": 3,
+  "e": "展開後 RNN 是權重綁定的深網路，梯度要連乘每個時間步的 Jacobian；特徵值小於 1 就衰減。"
+ },
+ {
+  "q": "LSTM 之所以能緩解梯度消失，關鍵在於？",
+  "o": [
+   "cell state 走加法路徑，梯度不必層層連乘",
+   "它的參數比較少",
+   "它不使用梯度",
+   "它把序列長度固定"
+  ],
+  "a": 0,
+  "e": "C_t = f ⊙ C_(t−1) + i ⊙ g 這條加法路徑讓梯度可以直接流回去，閘門決定留多少。"
+ },
+ {
+  "q": "BPTT（時間反向傳播）與一般反向傳播的差別是？",
+  "o": [
+   "BPTT 先把網路沿時間軸展開，再對同一組共享權重累加梯度",
+   "BPTT 不需要鏈式法則",
+   "BPTT 只能用於卷積",
+   "BPTT 不能使用梯度裁剪"
+  ],
+  "a": 0,
+  "e": "展開後每個時間步共用同一組權重，梯度要把所有時間步的貢獻加總。"
+ },
+ {
+  "q": "學習曲線呈現「訓練誤差低、驗證誤差高而且差距大」，最可能是？",
+  "o": [
+   "過擬合",
+   "欠擬合",
+   "資料洩漏",
+   "程式有 bug 導致梯度為 0"
+  ],
+  "a": 0,
+  "e": "兩條線張開＝泛化差距大＝過擬合；對策是更多資料、正則化或縮小容量。"
+ },
+ {
+  "q": "同樣的預算下，隨機搜尋通常優於網格搜尋，主要理由是？",
+  "o": [
+   "隨機搜尋比較容易實作",
+   "高維中超參數的重要性差異很大，隨機搜尋能更有效地探索真正重要的維度",
+   "隨機搜尋一定找到全域最佳",
+   "網格搜尋不能處理連續值"
+  ],
+  "a": 1,
+  "e": "網格在每個維度都花同樣的解析度；隨機搜尋讓每個維度有更多不同的取值機會。"
+ },
+ {
+  "q": "自編碼器的「瓶頸」作用是什麼？",
+  "o": [
+   "加快訓練速度",
+   "讓輸出一定是機率",
+   "迫使模型只保留重建所需的重要資訊",
+   "避免使用梯度"
+  ],
+  "a": 2,
+  "e": "瓶頸（或稀疏、噪聲等約束）限制了資訊通道，模型因此必須學到結構而不是死記。"
+ },
+ {
+  "q": "去噪自編碼器（denoising autoencoder）學到的核心是什麼？",
+  "o": [
+   "如何把資料壓成 1 維",
+   "資料所在的流形：從被破壞的輸入重建乾淨版本",
+   "如何分類標籤",
+   "如何估計配分函數"
+  ],
+  "a": 1,
+  "e": "要從加噪輸入還原乾淨輸入，模型必須掌握資料的結構；這條思路通向後來的擴散模型。"
+ },
+ {
+  "q": "有向圖模型與無向圖模型最關鍵的實務差別是？",
+  "o": [
+   "有向圖不能表示條件獨立",
+   "有向圖的似然可以逐項計算，無向圖要面對算不出來的配分函數 Z",
+   "無向圖不需要參數",
+   "有向圖只能處理離散變數"
+  ],
+  "a": 1,
+  "e": "p(x) = ∏ p(x_i | pa_i) 可以直接算；無向圖的 p(x) = ∏ψ / Z，Z 通常算不出來。"
+ },
+ {
+  "q": "MCMC 在多峰分布上最常見的失敗模式是？",
+  "o": [
+   "鏈卡在單一模式，跨不過中間的低密度區域（混合不良）",
+   "取樣速度太快",
+   "樣本一定服從均勻分布",
+   "無法處理連續變數"
+  ],
+  "a": 0,
+  "e": "高維下模式之間隔著大片低密度區，接受率極低；對策是多鏈、溫度／平行回火、更好的提案。"
+ },
+ {
+  "q": "ELBO 的兩項分別對應什麼？",
+  "o": [
+   "偏差與方差",
+   "精確率與召回率",
+   "期望對數似然（重建）與 KL(q‖p)（複雜度懲罰）",
+   "權重衰減與動量"
+  ],
+  "a": 2,
+  "e": "最大化 ELBO 同時要求「解碼器解釋得準」與「近似後驗靠近先驗」，兩項互相拉扯。"
+ },
+ {
+  "q": "VAE 生成的樣本常被說「偏模糊」，最根本的原因是？",
+  "o": [
+   "ELBO 中重建項與 KL 項互相拉扯，近似後驗被拉向先驗",
+   "解碼器太小",
+   "取樣時沒有使用 GPU",
+   "使用了 L1 損失"
+  ],
+  "a": 0,
+  "e": "KL 項要求 q 靠近先驗，使潛在分布趨於平滑；極端情況就是 posterior collapse。"
+ }
+];
+
+const LET = 'ABCD';
+const KEY = 'dlbook-mc-quiz-v1';
+const state = { answers:{}, revealed:false, filter:'all' };
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p && typeof p === 'object'){
+      state.answers = (p.answers && typeof p.answers === 'object') ? p.answers : {};
+      state.revealed = !!p.revealed;
+      state.filter = p.filter || 'all';
+    }
+  }catch(e){}
+}
+let savedTimer = null;
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const el = document.getElementById('saved');
+    if(el){ el.classList.add('on'); clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ el.classList.remove('on'); }, 1200); }
+  }catch(e){}
+}
+function tally(){
+  let answered = 0, score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    if(a !== undefined && a !== null){ answered++; if(a === QUESTIONS[i].a) score++; }
+  }
+  return { answered:answered, score:score, wrong:answered-score };
+}
+function isVisible(i){
+  const a = state.answers[i];
+  const has = (a !== undefined && a !== null);
+  if(state.filter === 'unanswered') return !has;
+  if(state.filter === 'wrong') return has && a !== QUESTIONS[i].a;
+  return true;
+}
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdInline(s){
+  s = esc(s); let out = ''; let bold = false; let i = 0;
+  while(i < s.length){
+    if(s.charAt(i) === '*' && s.charAt(i + 1) === '*'){
+      bold = !bold; out += bold ? '<b>' : '</b>'; i += 2;
+    } else { out += s.charAt(i); i++; }
+  }
+  return out;
+}
+function renderStats(){
+  const t = tally();
+  document.getElementById('nAns').textContent = t.answered;
+  document.getElementById('nScore').textContent = t.score;
+  document.getElementById('nWrong').textContent = t.wrong;
+  document.getElementById('bar').style.width = (t.answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('btnReveal').textContent = state.revealed ? '隱藏答案' : '顯示答案';
+  document.getElementById('hint').textContent = state.revealed
+    ? '已顯示正解與解析'
+    : '作答進度自動存在此瀏覽器，關掉再回來可繼續';
+}
+function renderNav(){
+  const nav = document.getElementById('navgrid');
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    const has = (a !== undefined && a !== null);
+    let cls = '';
+    if(has) cls = 'done';
+    if(state.revealed && has) cls = (a === QUESTIONS[i].a) ? 'right' : 'wrong';
+    html += '<button class="' + cls + '" data-goto="' + i + '">' + (i+1) + '</button>';
+  }
+  nav.innerHTML = html;
+}
+const PARTS = [[0, "第一部分：定位、線性代數、機率與資訊理論（1–14）"], [14, "第二部分：ML 基礎、前饋網路、正則化與最佳化（15–27）"], [27, "第三部分：卷積、序列、圖模型、推論與生成（28–40）"]];
+
+function renderQuestions(){
+  const box = document.getElementById('quiz');
+  let html = '';
+  let shown = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(!isVisible(i)) continue;
+    shown++;
+    const q = QUESTIONS[i];
+    for(let p=0;p<PARTS.length;p++){
+      if(PARTS[p][0] === i){ html += '<div class="parttitle">' + PARTS[p][1] + '</div>'; }
+    }
+    const picked = state.answers[i];
+    const hasPicked = (picked !== undefined && picked !== null);
+    let qcls = '';
+    if(state.revealed && hasPicked) qcls = (picked === q.a) ? 'correct' : 'incorrect';
+    html += '<article class="q ' + qcls + '" id="q' + (i+1) + '">';
+    html += '<div class="qhead"><span class="num">' + (i+1) + '</span>';
+    html += '<p class="qtext">' + mdInline(q.q) + '</p></div>';
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      let cls = 'opt';
+      if(hasPicked && picked === k) cls += ' picked';
+      let tag = '';
+      if(state.revealed){
+        if(k === q.a){ cls += ' right'; tag = '<span class="tag right">正解</span>'; }
+        else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
+      }
+      html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
+      html += '<span class="lt">' + LET[k] + '</span><span>' + esc(q.o[k]) + '</span>' + tag + '</li>';
+    }
+    html += '</ul>';
+    if(state.revealed){
+      html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
+    }
+    html += '</article>';
+  }
+  if(shown === 0){
+    html = '<div class="empty">目前篩選條件下沒有題目 &#128522;<br>換個篩選，或按「全部 40 題」。</div>';
+  }
+  box.innerHTML = html;
+}
+function renderAll(){ renderStats(); renderNav(); renderQuestions(); }
+
+document.addEventListener('click', function(ev){
+  const opt = ev.target.closest ? ev.target.closest('.opt') : null;
+  if(opt){
+    state.answers[parseInt(opt.getAttribute('data-q'), 10)] =
+      parseInt(opt.getAttribute('data-k'), 10);
+    saveState(); renderAll(); return;
+  }
+  const go = ev.target.closest ? ev.target.closest('[data-goto]') : null;
+  if(go){
+    const idx = parseInt(go.getAttribute('data-goto'), 10);
+    if(state.filter !== 'all'){ state.filter = 'all'; syncFilterButtons(); renderAll(); }
+    const el = document.getElementById('q' + (idx + 1));
+    if(el){
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      el.style.transition = 'box-shadow .3s';
+      el.style.boxShadow = '0 0 0 3px rgba(37,99,235,.35)';
+      setTimeout(function(){ el.style.boxShadow = ''; }, 900);
+    }
+    saveState();
+  }
+});
+function syncFilterButtons(){
+  const map = { all:'btnAll', unanswered:'btnUnans', wrong:'btnWrong' };
+  for(const k in map){
+    const b = document.getElementById(map[k]);
+    if(b) b.classList.toggle('active', state.filter === k);
+  }
+}
+function setFilter(f){ state.filter = f; syncFilterButtons(); saveState(); renderAll(); }
+function bind(){
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.revealed = !state.revealed; saveState(); renderAll();
+  });
+  document.getElementById('btnAll').addEventListener('click', function(){ setFilter('all'); });
+  document.getElementById('btnUnans').addEventListener('click', function(){ setFilter('unanswered'); });
+  document.getElementById('btnWrong').addEventListener('click', function(){ setFilter('wrong'); });
+  document.getElementById('btnTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('確定要清除全部作答紀錄嗎？此動作無法復原。')) return;
+    state.answers = {}; state.revealed = false; state.filter = 'all';
+    saveState(); syncFilterButtons(); renderAll();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && state.revealed){ state.revealed = false; saveState(); renderAll(); }
+  });
+}
+loadState(); syncFilterButtons(); renderAll(); bind();
+
+
+
+</script>
+</body>
+</html>
