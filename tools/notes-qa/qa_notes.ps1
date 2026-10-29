@@ -111,8 +111,7 @@ $dirs = @()
 $skipped = @()
 foreach ($cand in Get-ChildItem -Path $Root -Directory) {
   if (-not (Test-Path (Join-Path $cand.FullName 'index.html'))) { continue }
-  $hasMd = @(Get-ChildItem -Path $cand.FullName -Filter '*_Study_Notes.md' -File |
-    Where-Object { $_.Name -notmatch '-ivdc\.md$' }).Count -gt 0
+  $hasMd = @(Get-ChildItem -Path $cand.FullName -Filter '*_Study_Notes.md' -File).Count -gt 0
   if ($hasMd) { $dirs += $cand } else { $skipped += $cand.Name }
 }
 
@@ -120,8 +119,7 @@ foreach ($d in $dirs) {
   $name = $d.Name
   $htmlPath = Join-Path $d.FullName 'index.html'
   $quizPath = Join-Path $d.FullName 'mc-quiz.html'
-  $mdFile = Get-ChildItem -Path $d.FullName -Filter '*_Study_Notes.md' -File |
-    Where-Object { $_.Name -notmatch '-ivdc\.md$' } | Select-Object -First 1
+  $mdFile = Get-ChildItem -Path $d.FullName -Filter '*_Study_Notes.md' -File | Select-Object -First 1
   $problems = @()
 
   $html = Get-Text $htmlPath

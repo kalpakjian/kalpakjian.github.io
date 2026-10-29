@@ -1,4 +1,4 @@
-# remove_ivdc_stubs.ps1 - delete the transitional "<slug>-ivdc" redirect folders.
+# remove_legacy_stubs.ps1 - delete the transitional "<slug>-ivdc" redirect folders.
 #
 # The site renamed its note posts away from the "-ivdc" suffix twice:
 #   2026-10-16  13 posts renamed, old URLs kept as meta-refresh stubs
@@ -8,8 +8,8 @@
 # 30-day grace period: 2026-11-28.
 #
 # Usage:
-#   pwsh -File tools/notes-qa/remove_ivdc_stubs.ps1 -DryRun   # list only
-#   pwsh -File tools/notes-qa/remove_ivdc_stubs.ps1           # delete
+#   pwsh -File tools/notes-qa/remove_legacy_stubs.ps1 -DryRun   # list only
+#   pwsh -File tools/notes-qa/remove_legacy_stubs.ps1           # delete
 #
 # Every target is checked first (folder + index.html + meta refresh); anything
 # that does not look like a redirect stub aborts the run untouched.

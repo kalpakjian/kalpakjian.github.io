@@ -105,7 +105,7 @@ HTML 對應：同一段放在 `<blockquote>` 裡，**每一行結尾加 `<br />`
 | `source/<dir>/index.html` | 網頁（單檔、零外部資源、內嵌圖） | ✅ 與 md 標題／文字一致 |
 | `source/<dir>/<Name>_Study_Notes.md` | 下載用 Markdown（**唯一來源**） | ✅ |
 | `source/<dir>/mc-quiz.html` | 互動測驗 | ✅ 題數與 nav 一致 |
-| `source/_posts/<dir>-ivdc.md` | 部落格貼文（摘要 + 連結） | ✅ 標題／數字一致 |
+| `source/_posts/<dir>.md` | 部落格貼文（摘要 + 連結） | ✅ 標題／數字一致 |
 
 > QA 只把「同時有 `index.html` 與 `*_Study_Notes.md`」的資料夾視為筆記；
 > 其他頁面資料夾（`coding-agent`、`dhh-rails-world-2026`…）會自動跳過。

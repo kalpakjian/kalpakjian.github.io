@@ -44,8 +44,7 @@ $notes = 0
 
 foreach ($cand in Get-ChildItem -Path $Root -Directory) {
   if (-not (Test-Path (Join-Path $cand.FullName 'index.html'))) { continue }
-  $hasMd = @(Get-ChildItem -Path $cand.FullName -Filter '*_Study_Notes.md' -File |
-    Where-Object { $_.Name -notmatch '-ivdc\.md$' }).Count -gt 0
+  $hasMd = @(Get-ChildItem -Path $cand.FullName -Filter '*_Study_Notes.md' -File).Count -gt 0
   if (-not $hasMd) { continue }
   $notes++
 

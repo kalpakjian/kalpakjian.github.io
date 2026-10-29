@@ -26,7 +26,7 @@ function Slug([string]$t) {
     return $out
 }
 
-$files = Get-ChildItem -Path $root -Recurse -Include *.md -File | Where-Object { $_.Name -notmatch 'ivdc' }
+$files = Get-ChildItem -Path $root -Recurse -Include *.md -File
 $grand = 0
 foreach ($mdFile in $files) {
     $htmlPath = Join-Path $mdFile.Directory.FullName 'index.html'
