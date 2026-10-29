@@ -8,6 +8,10 @@ description: '記錄本地 LLM、AI 工具實測、深度學習資源與硬體�
 keywords: 'AI, LLM, Agent, Ollama, Machine Learning, Hexo, Tech'
 author: kalpakjian
 language: zh-TW
+# 永久連結（:year/:month/:day/:title/）是用「建置機器」的時區算出來的，而這裡的
+# 日期字串用 Asia/Taipei 解析——兩者不一致時，00:00–07:59 發的貼文會少一天
+# （2026-10-29 03:30 → /2026/10/28/...）。CI 因此在 pages.yml 的 build job 釘了
+# TZ=Asia/Taipei，請不要移除；本機建置則本來就在 UTC+8。
 timezone: Asia/Taipei
 
 # URL

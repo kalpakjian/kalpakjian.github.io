@@ -45,6 +45,14 @@ jobs:
   build:
     needs: qa
     runs-on: ubuntu-latest
+    # Permalinks (:year/:month/:day) are rendered in the runner's local time,
+    # while _config.yml parses front-matter dates in Asia/Taipei. A UTC runner
+    # therefore puts any post dated 00:00-07:59 one day earlier than the author
+    # intended (2026-10-29 03:30 -> /2026/10/28/...), so the URL disagrees with
+    # the date shown on the page and with every local preview. Pin the runner to
+    # the site timezone so both sides compute the same URL.
+    env:
+      TZ: Asia/Taipei
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
