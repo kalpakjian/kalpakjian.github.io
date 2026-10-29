@@ -33,6 +33,7 @@ skip_render:
   - 'coding-agent/**'
   - 'opencv-notes/**'
   - 'cnn-notes/**'
+  - 'cnn2-notes/**'
   - 'ai-intro-notes/**'
   - 'cv-intro-notes/**'
   - 'local-gpu-ml-notes/**'
