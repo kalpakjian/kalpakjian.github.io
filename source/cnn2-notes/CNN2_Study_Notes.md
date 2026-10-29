@@ -2,8 +2,8 @@
 
 > 「CNN 1」講機器怎麼看與卷積的數學；「CNN 2」講**一個可訓練的分類 CNN 長什麼樣**：
 > 局部連接、輸出體積、ReLU、池化、空洞卷積，最後把模型組起來、看它在真實任務上的樣子。
-> 本筆記另外把簡報裡那段**範例程式碼**真的跑起來，用六組設定與三個平台看它在真實資料上的樣子。
-> 只想看結論的話，可直接跳到 §12；完整實驗紀錄在另一篇專題。
+> 本筆記只談課堂內容；簡報那段範例程式碼的 33 組實驗與這裡無關，另見 [CNN II 實驗紀錄](/2026/10/29/cnn-2-experiments/)。
+> 只想複習考點的話，看附錄 C 就夠。
 
 <!-- CNN2-FIGURE:overview -->
 <figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -240,36 +240,6 @@ def generate_model(input_shape=(28, 28, 1), n_classes=10):
 - **醫療**除了分割圖還輸出**不確定性圖**：不只要答案，還要說出哪裡不確定。
 - **DeepBind** 把 DNA 序列當一維影像卷積，說明局部模式 + 權重共享不限於影像。
 
-## 12. 實測：六組設定、三個平台
-
-完整紀錄（33 組 run、跨平台配對、五個被逐項測掉的假設）在
-[CNN II 實驗紀錄：33 組 run、三個平台，把 0.80 推到 0.96](/2026/10/29/cnn-2-experiments/)；這裡只留結論。
-
-> **注意**：這裡的「課程模型」指的是簡報上那段**示意用**的範例程式碼（很可能是網路現成片段，不是課程指定的模型），數字只描述那段程式碼的表現。
-
-| 設定 | CIFAR-10 測試準確率 |
-|---|---|
-| 簡報範例程式碼（20 輪） | 0.80 |
-| 加上 dropout 0.3 | 0.81 |
-| 換成小型 VGG（6 層卷積 + BN） | 0.89 |
-| 小型 VGG + cutout，200 輪 | 0.94 |
-| **ResNet-18 + cutout，200 輪** | **0.96** |
-
-<!-- CNN2-FIGURE:accuracy -->
-<figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
-<svg style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-label="CIFAR-10 準確率階梯：範例程式碼 0.80、加 dropout 0.81、小型 VGG 0.89、VGG+cutout 0.94、ResNet-18+cutout 0.96"><defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8b949e"/></marker></defs><rect fill="#0d1117"/><text x="30" y="30" fill="#e0a458" font-size="13" text-anchor="start" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一份資料：換架構與排程，0.80 → 0.96</text><line x1="210.0" y1="52" x2="210.0" y2="262" stroke="#8b949e" stroke-width="0.8" opacity="0.22"/><text x="210.0" y="284" fill="#8b949e" font-size="11" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.70</text><line x1="426.7" y1="52" x2="426.7" y2="262" stroke="#8b949e" stroke-width="0.8" opacity="0.22"/><text x="426.66666666666686" y="284" fill="#8b949e" font-size="11" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.80</text><line x1="643.3" y1="52" x2="643.3" y2="262" stroke="#8b949e" stroke-width="0.8" opacity="0.22"/><text x="643.3333333333334" y="284" fill="#8b949e" font-size="11" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.90</text><line x1="860.0" y1="52" x2="860.0" y2="262" stroke="#8b949e" stroke-width="0.8" opacity="0.22"/><text x="860.0" y="284" fill="#8b949e" font-size="11" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.00</text><rect x="210" y="67" width="216.7" height="22" rx="4" fill="#4ecdc4" opacity="0.85"/><text x="198" y="82" fill="#e6edf3" font-size="11.5" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">簡報範例程式碼（20 輪）</text><text x="436.66666666666686" y="82" fill="#4ecdc4" font-size="12.5" text-anchor="start" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.80</text><rect x="210" y="107" width="238.3" height="22" rx="4" fill="#4ecdc4" opacity="0.85"/><text x="198" y="122" fill="#e6edf3" font-size="11.5" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">加上 dropout 0.3</text><text x="458.3333333333335" y="122" fill="#4ecdc4" font-size="12.5" text-anchor="start" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.81</text><rect x="210" y="147" width="411.7" height="22" rx="4" fill="#e0a458" opacity="0.85"/><text x="198" y="162" fill="#e6edf3" font-size="11.5" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">小型 VGG（6 層卷積 + BN）</text><text x="631.6666666666667" y="162" fill="#e0a458" font-size="12.5" text-anchor="start" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.89</text><rect x="210" y="187" width="520.0" height="22" rx="4" fill="#e0a458" opacity="0.85"/><text x="198" y="202" fill="#e6edf3" font-size="11.5" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">VGG + cutout（200 輪）</text><text x="739.9999999999999" y="202" fill="#e0a458" font-size="12.5" text-anchor="start" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.94</text><rect x="210" y="227" width="563.3" height="22" rx="4" fill="#ff7b72" opacity="0.85"/><text x="198" y="242" fill="#e6edf3" font-size="11.5" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">ResNet-18 + cutout（200 輪）</text><text x="783.3333333333333" y="242" fill="#ff7b72" font-size="12.5" text-anchor="start" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.96</text><line x1="210" y1="52" x2="210" y2="262" stroke="#8b949e" stroke-width="1"/><text x="30" y="284" fill="#8b949e" font-size="10.5" text-anchor="start" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">橫軸從 0.70 起</text></svg>
-<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">六組設定的 CIFAR-10 測試準確率；換架構與長排程把 0.80 推到 0.96（橫軸從 0.70 起）。</figcaption>
-</figure>
-<!-- /CNN2-FIGURE:accuracy -->
-
-1. **那段範例程式碼 20 輪上限約 0.80**；換成有 BatchNorm 與 `padding="same"` 的 VGG 立刻多 9 個百分點
-   ——關鍵是深度與歸一化，不是參數量（VGG 參數反而更少）。
-2. **200 輪長排程拉到 0.96**，最後 30 輪的學習率收尾貢獻 2–4 個百分點。
-3. **難類排序完全沒變**：貓 < 狗 < 鳥 → 難度來自資料，不是訓練技巧。
-
-環境上的順帶結論：TensorFlow 在 Windows 拿不到 GPU（2.11 起沒有原生 CUDA），GPU 那幾組用 PyTorch；
-同一份程式搬到 Linux 的 TensorFlow 上，數字落在 ±2 pp 內。
-
 ## 附錄 A：名詞速查
 
 | 英文 | 中文 | 一句話 |
@@ -292,7 +262,7 @@ def generate_model(input_shape=(28, 28, 1), n_classes=10):
 | 「depth 由輸入通道決定」 | 由**濾波器數量**決定；輸入通道只影響每個濾波器的深度 |
 | 「池化是為了學特徵」 | 池化沒有參數，只降維與提供空間不變性 |
 | 「ReLU 一半是 0 就是死了」 | 那是稀疏；死亡要看「對所有輸入都輸出 0」 |
-| 「參數越多越準」 | 對照實驗裡參數更少的 VGG 反而高 9 個百分點 |
+| 「參數越多越準」 | 參數量不是唯一因素：深度、BatchNorm、`padding="same"` 都會影響 |
 | 「卷積就是數學上的卷積」 | 實務用的是互相關（核不翻轉），對學出來的核沒差別 |
 | 「20 輪沒進步就是到頂」 | 通常只是學習率還沒收尾 |
 
@@ -304,14 +274,13 @@ def generate_model(input_shape=(28, 28, 1), n_classes=10):
 4. ReLU：`max(0, x)`；死亡 = 梯度恆 0。
 5. 參數九成八在攤平後的全連接層。
 6. FCN 用 `Conv2DTranspose` 上採樣，才能輸出同尺寸標籤圖。
-7. 難類排序（貓 < 狗 < 鳥）在四種設定下都一樣。
 
-## 附錄 D：互動測驗（60 題）
+## 附錄 D：互動測驗（49 題）
 
-> **60 題單選、滿分 60 分、建議 60 分鐘。**
+> **49 題單選、滿分 49 分、建議 45 分鐘。**
 > 測驗以**互動網頁**形式提供（點選即時計分、進度自動儲存）；本筆記**不重複收錄題目**。
 
-**👉 [開始 60 題線上測驗](mc-quiz.html)**
+**👉 [開始 49 題線上測驗](mc-quiz.html)**
 
 線上版功能：
 
@@ -322,10 +291,10 @@ def generate_model(input_shape=(28, 28, 1), n_classes=10):
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 54–60 | 優異 | 直接看附錄 C 一頁精華即可上場 |
-| 45–53 | 良好 | 複習錯題所屬章節 |
-| 36–44 | 及格邊緣 | 重讀主要章節 + 附錄 A |
-| 0–35 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
+| 44–49 | 優異 | 直接看附錄 C 一頁精華即可上場 |
+| 37–43 | 良好 | 複習錯題所屬章節 |
+| 29–36 | 及格邊緣 | 重讀主要章節 + 附錄 A |
+| 0–28 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
 *本篇為個人學習筆記整理，課程內容版權屬匯縱專業發展中心（IVDC）所有。*
 

@@ -29,7 +29,7 @@ ReLU 的兩個經典問題、池化的降維與空間不變性、空洞卷積，
 
 <!-- more -->
 
-**👉 [看完整筆記](/cnn2-notes/)** ｜ [互動測驗 60 題](/cnn2-notes/mc-quiz.html)
+**👉 [看完整筆記](/cnn2-notes/)** ｜ [互動測驗 49 題](/cnn2-notes/mc-quiz.html)
 
 延伸：[CNN 1 筆記](/cnn-notes/)（卷積的數學與 LeNet-5）、
 [CNN II 實驗紀錄](/2026/10/29/cnn-2-experiments/)（33 組 run、三個平台、五個被逐項測掉的假設）、
