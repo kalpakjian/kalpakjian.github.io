@@ -185,6 +185,25 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 
 > 一律是 CRLF，CI 不會再對這些檔案發 lone-LF 警告。本機若出現 LF 檔（例如 ComfyUI／外部工具寫出來的），
 > 跑 `normalize_crlf.ps1` 修；`-DryRun` 可先預覽。
 
+**跨頁連結（`qa_notes.ps1` 看不到，要另外跑）**
+
+`qa_notes.ps1` 一次只讀一頁，所以它解析不了 `/2026/10/29/some-post/` 這種永久連結，
+也看不到相對路徑。建站之後再跑：
+
+```
+python tools/notes-qa/check_public_links.py
+```
+
+它把 `public\` 底下每個 `href`／`src`（root-relative、相對路徑、同站絕對網址都算）
+解析成檔案，`/dir/` 對到 `dir/index.html`；外部網域、`mailto:`、`tel:`、`#錨點` 略過。
+少一個就 exit 1 —— `pages.yml` 會在 `hexo generate` 之後跑這一步，**擋部署**。
+
+> 為什麼補這一步（2026-10-29）：① 筆記 §12 的「完整紀錄」指向一篇還沒發的貼文；
+> ② 那篇貼文發了之後，CI 用 UTC 算永久連結，實際網址變成前一天，所有 `/2026/10/29/…`
+> 連結全 404（本機預覽卻是好的）。兩件事 `qa_notes.ps1` 都看不到，而這支工具第一次跑
+> 就抓到 3 個既有的破圖（`/about/` 與 theme 自動生成的 `/links/` 都指向不存在的
+> `/img/favicon.png`），順手一併修掉。
+
 **自我測試樣本**：`tools\notes-qa\qa_selftest\bad-notes\` 是一份**故意有 13 種瑕疵**的假筆記，
 用來確認閘門還有效：
 
@@ -195,7 +214,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 
 
 ---
 
-## 10. 新筆記上線前 checklist（8 步）
+## 10. 新筆記上線前 checklist（9 步）
 
 1. ☐ PDF／PPTX 抽文字時**不帶頁碼**；草稿就寫「課程」不寫「原稿／教材」
 2. ☐ 寫 `<Name>_Study_Notes.md`（含頁首區塊、目錄、附錄 A–F）
@@ -204,7 +223,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\notes-qa\qa_notes.ps1 
 5. ☐ 跑 `regen_ids.ps1`（標題若有改動）
 6. ☐ 跑 `qa_notes.ps1` → **必須 0 失敗**
 7. ☐ 跑 `npx hexo clean && npx hexo generate` → 無錯誤
-8. ☐ push → 等 GitHub Actions `conclusion=success` → 開線上頁面抽查
+8. ☐ 跑 `python tools/notes-qa/check_public_links.py` → **broken = 0**（跨頁連結／破圖）
+9. ☐ push → 等 GitHub Actions `conclusion=success` → 開線上頁面抽查
 
 ---
 

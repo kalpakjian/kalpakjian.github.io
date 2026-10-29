@@ -115,6 +115,9 @@ ENC = "utf-8" if os.name != "nt" else locale.getpreferredencoding(False)
 
 
 def write(path, text):
+    parent = os.path.dirname(path)
+    if parent and not os.path.isdir(parent):
+        os.makedirs(parent)
     with open(path, "w", encoding="utf-8", newline="") as f:
         f.write(text)
 
@@ -137,7 +140,8 @@ def build(root):
     orphan = os.path.join(root, "source", "not-a-note")
     good = os.path.join(root, "source", "good-notes")
     tools = os.path.join(root, "tools", "notes-qa")
-    for d in (src, orphan, good, tools):
+    pub = os.path.join(root, "public")
+    for d in (src, orphan, good, tools, pub):
         os.makedirs(d)
     write(os.path.join(src, "index.html"), HTML)
     write(os.path.join(src, "Demo_Study_Notes.md"), MD)
@@ -148,6 +152,20 @@ def build(root):
     write(os.path.join(good, "index.html"), GOOD_HTML)
     write(os.path.join(good, "Good_Study_Notes.md"), GOOD_MD)
     write(os.path.join(good, "mc-quiz.html"), GOOD_QUIZ)
+    # --- fixture for check_public_links.py: a tiny built site -------------
+    write(os.path.join(pub, "index.html"),
+          '<a href="/about/">about</a>'
+          '<a href="/img/ok.png">img</a>'
+          '<a href="#top">self</a>'
+          '<a href="https://example.com/x">ext</a>'
+          '<a href="mailto:a@b.c">mail</a>\r\n')
+    write(os.path.join(pub, "about", "index.html"),
+          '<a href="../">home</a><a href="/img/ok.png">img</a>'
+          '<a href="/2026/10/29/ok/">permalink</a>\r\n')
+    write(os.path.join(pub, "2026", "10", "29", "ok", "index.html"), "ok\r\n")
+    write(os.path.join(pub, "broken", "index.html"),
+          '<a href="/2026/10/29/nope/">gone</a><img src="/img/missing.png">\r\n')
+    write(os.path.join(pub, "img", "ok.png"), "not really a png")
     for n in SCRIPTS:
         shutil.copy2(os.path.join(TOOLS_DIR, n), os.path.join(tools, n))
     write(os.path.join(root, "rules.txt"), "IVDC@@@IVDC-ORG\r\n")
@@ -160,6 +178,7 @@ def build(root):
         "goodquiz": os.path.join(good, "mc-quiz.html"),
         "tools": tools,
         "rules": os.path.join(root, "rules.txt"),
+        "public": pub,
         "root": root,
     }
 
@@ -170,6 +189,15 @@ def run(script, *args, cwd="."):
     cmd += list(args)
     p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True,
                        encoding=ENC, errors="replace")
+    out = ((p.stdout or "") + (p.stderr or "")).strip().replace("\n", " | ")
+    return p.returncode, out
+
+
+def run_py(script, *args, cwd="."):
+    """Run a python helper the same way (no shell, no cwd assumptions)."""
+    p = subprocess.run([sys.executable, script] + list(args), cwd=cwd,
+                       capture_output=True, text=True, encoding="utf-8",
+                       errors="replace")
     out = ((p.stdout or "") + (p.stderr or "")).strip().replace("\n", " | ")
     return p.returncode, out
 
@@ -261,6 +289,26 @@ def main():
         check("gate accepts good quiz",
               "PASS  good-notes" in out and "FAIL  good-notes" not in out,
               "rc=%d  %s" % (rc, out))
+
+        # 11) check_public_links.py -- must flag a link and an <img> that have
+        #     no file behind them (the class of 404 qa_notes.ps1 cannot see).
+        f = build(repo)
+        rc, out = run_py(os.path.join(TOOLS_DIR, "check_public_links.py"),
+                         "-Root", f["public"], cwd=foreign)
+        check("link gate flags 404s",
+              rc == 1
+              and "BROKEN  broken/index.html  ->  /2026/10/29/nope/" in out
+              and "/img/missing.png" in out and "broken = 2" in out,
+              "rc=%d  %s" % (rc, out))
+
+        # 12) positive control: the same site minus the broken page passes, so
+        #     relative "../", external, mailto and "#fragment" links are not
+        #     misreported.
+        shutil.rmtree(os.path.join(f["public"], "broken"))
+        rc, out = run_py(os.path.join(TOOLS_DIR, "check_public_links.py"),
+                         "-Root", f["public"], cwd=foreign)
+        check("link gate accepts clean site",
+              rc == 0 and "broken = 0" in out, "rc=%d  %s" % (rc, out))
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 

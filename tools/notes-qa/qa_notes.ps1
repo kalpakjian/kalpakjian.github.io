@@ -29,6 +29,12 @@
                           choice renders as an empty <li> and the reader sees
                           no options at all (this shipped broken in 12 quizzes)
 
+  Cross-page links are NOT checked here: this script only ever sees one page, so
+  it cannot resolve "/2026/10/29/some-post/" or a relative "../" link. After
+  `hexo generate`, tools/notes-qa/check_public_links.py walks every internal
+  href/src under public/ and exits 1 on a missing file (it is a blocking step in
+  .github/workflows/pages.yml). Two real 404s shipped through the gap this closes.
+
 
   Warnings (advisory, never fail the run):
     - lone LF line endings

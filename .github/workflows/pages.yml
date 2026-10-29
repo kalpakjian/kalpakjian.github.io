@@ -69,6 +69,11 @@ jobs:
       - name: Build Hexo
         run: npx hexo clean && npx hexo generate
 
+      # 站內連結守門員：qa_notes.ps1 只看單頁錨點，看不到跨頁與永久連結。
+      # 這一步抓過真的 404：連結指向還沒發的貼文，以及 CI 時區把網址算成前一天。
+      - name: Internal link gate (public/)
+        run: python3 tools/notes-qa/check_public_links.py
+
       # cnn-lab 圖檔的結構守門員：純 Python、零依賴、結果確定（不合格就擋住部署）
       - name: SVG structure gate (cnn-lab)
         run: python3 source/cnn-lab/code/build_figs.py --no-measure
