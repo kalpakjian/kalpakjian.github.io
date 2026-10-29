@@ -36,7 +36,7 @@ banner_img: /img/covers/cnn-2-experiments.png
 | 這篇在系列的位置 | 內容 |
 |---|---|
 | [CNN I：從視覺皮層到 LeNet-5](/2026/10/27/cnn-1-convnet-neon/) | 卷積的數學、參數共享、反向傳播 |
-| [CNN II：卷積神經網路（二）學習筆記](/2026/10/29/cnn2-notes-ivdc/)（[線上版](/cnn2-notes/)） | 局部連接、輸出體、ReLU、池化、空洞卷積 |
+| [CNN II：卷積神經網路（二）學習筆記](/2026/10/29/cnn2-notes/)（[線上版](/cnn2-notes/)） | 局部連接、輸出體、ReLU、池化、空洞卷積 |
 | **本篇：實驗紀錄** | 33 組 run、六種設定、三個平台、五個假設 |
 
 > **關於可重現性**：所有數字都對應 `runs/<name>/*-report.json`；四支程式
@@ -352,7 +352,7 @@ MNIST 1,668,490 / CIFAR 2,389,962）、`--dropout`、`--optimizer adam --schedul
 
 **相關文章**
 
-- [CNN II：卷積神經網路（二）學習筆記](/2026/10/29/cnn2-notes-ivdc/)（[線上版（含 60 題測驗）](/cnn2-notes/)）
+- [CNN II：卷積神經網路（二）學習筆記](/2026/10/29/cnn2-notes/)（[線上版（含 60 題測驗）](/cnn2-notes/)）
 - [CNN I：從視覺皮層到 LeNet-5](/2026/10/27/cnn-1-convnet-neon/)
 - [手寫數字辨識入門：用 MNIST 看懂 CNN 到底在學什麼](/2026/10/27/cnn-mnist-lab-pytorch/)（另一個專題：10 個 MNIST 實驗與 3 個被推翻的假設）
 

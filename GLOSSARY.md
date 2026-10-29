@@ -46,7 +46,7 @@
 | `source/img/covers/<slug>.png` | 封面 | 檔名與貼文 slug 相同 |
 
 **命名規則（2026-10-16 決定並驗證）**：**slug = `source/` 目錄名，一律不加後綴**；貼文檔名 = 封面檔名 = slug；frontmatter 的 `index_img` 必須等於 `banner_img`，且為 `/img/covers/<slug>.png`。
-原本的舊後綴已在 2026-10-16 全站移除（13 個貼文與封面改名、課程總覽頁的圖片連結同步），**舊網址以 meta refresh 轉址保留**在 `source/<yyyy>/<mm>/<dd>/<old-slug>/index.html`。
+原本的舊後綴已在 2026-10-16 全站移除（13 個貼文與封面改名、課程總覽頁的圖片連結同步），**舊網址以 meta refresh 轉址保留**在 `source/<yyyy>/<mm>/<dd>/<old-slug>/index.html`；2026-10-29 再把兩篇 CNN 貼文改名（`cnn-notes`、`cnn2-notes`）。目前共 **15 個轉址目錄**，預定 **2026-11-28** 用 `tools/notes-qa/remove_ivdc_stubs.ps1` 全部刪除（刪除後舊網址就是 404，內容本身都在）。
 
 **工作目錄（不是產出物，不要當成來源）**：
 - `_work/<topic>/` — 產線中途的腳本與暫存（`build_notes.py`、`build_quiz.py`、`verify_*.py`…）
