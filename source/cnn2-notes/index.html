@@ -297,7 +297,7 @@ def generate_model(input_shape=(28, 28, 1), n_classes=10):
 <table><thead><tr><th>任務</th><th>頭長什麼樣</th><th>課程的例子</th></tr></thead><tbody><tr><td>分類</td><td>全連接 + softmax</td><td>影像分類</td></tr><tr><td>偵測</td><td>邊界框 + 類別</td><td>人臉偵測、自駕</td></tr><tr><td>語意分割</td><td><strong>全卷積</strong>，輸出同尺寸</td><td>FCN、腦腫瘤、瘧疾</td></tr><tr><td>逐像素回歸</td><td>輸出 2 個色度通道</td><td>黑白上色</td></tr><tr><td>影像到影像</td><td>卷積 + 轉置卷積</td><td>超解析、後製優化</td></tr><tr><td>端到端控制</td><td>回歸方向盤與油門</td><td>自動駕駛</td></tr></tbody></table>
 <ul><li><strong>FCN</strong> 拿掉全連接，才能輸出「跟輸入一樣大」的標籤圖；上採樣用 <code>Conv2DTranspose</code>。</li><li><strong>自駕</strong>的輸入是相機 + GPS，輸出是控制指令，<strong>端到端訓練、不需人手標註</strong>。</li><li><strong>醫療</strong>除了分割圖還輸出<strong>不確定性圖</strong>：不只要答案，還要說出哪裡不確定。</li><li><strong>DeepBind</strong> 把 DNA 序列當一維影像卷積，說明局部模式 + 權重共享不限於影像。</li></ul>
 <h2 id="12-實測六組設定三個平台">12. 實測：六組設定、三個平台</h2>
-<p>完整紀錄（33 組 run、跨平台配對、三次被推翻的假設）在 <a href="/cnn-lab/">CNN 專題：十個實驗與三次被推翻的假設</a>；這裡只留結論。</p>
+<p>完整紀錄（33 組 run、跨平台配對、五個被逐項測掉的假設）在 <a href="/2026/10/29/cnn-2-experiments/">CNN II 實驗紀錄：33 組 run、三個平台，把 0.80 推到 0.96</a>；這裡只留結論。</p>
 <table><thead><tr><th>設定</th><th>CIFAR-10 測試準確率</th></tr></thead><tbody><tr><td>課程的架構（20 輪）</td><td>0.80</td></tr><tr><td>加上 dropout 0.3</td><td>0.81</td></tr><tr><td>換成小型 VGG（6 層卷積 + BN）</td><td>0.89</td></tr><tr><td>小型 VGG + cutout，200 輪</td><td>0.94</td></tr><tr><td><strong>ResNet-18 + cutout，200 輪</strong></td><td><strong>0.96</strong></td></tr></tbody></table>
 <!-- CNN2-FIGURE:accuracy -->
 <figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
