@@ -1,5 +1,5 @@
 <#
-  qa_notes.ps1 - quality gate for the IVDC study notes (index.html + *_Study_Notes.md + mc-quiz.html)
+  qa_notes.ps1 - quality gate for the study notes (index.html + *_Study_Notes.md + mc-quiz.html)
 
   Usage:
     powershell -NoProfile -ExecutionPolicy Bypass -File qa_notes.ps1

@@ -15,7 +15,7 @@ index_img: /img/covers/responsible-ai-notes.png
 banner_img: /img/covers/responsible-ai-notes.png
 ---
 
-為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程第四份課程《4 IVDC_Responsible AI.pptx》（24 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
+為了準備「Certificate in Application of Computer Vision Technology」的課程考試，我把第四份課程簡報（24 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
 這一份和前三份（Introduction to AI、Local GPU、Computer Vision、OpenCV）性質不同：**它幾乎沒有程式碼，全部都是觀念、原則與法規**——但正因為如此，考題更容易出「配對題」與「數字題」，反而更需要精確記憶。
 

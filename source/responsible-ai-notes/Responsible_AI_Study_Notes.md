@@ -1220,7 +1220,7 @@ existing social and economic inequalities 被 widening（擴大）
 
 | 需要什麼 | 離線做法 |
 |---|---|
-| 課程 PDF | 已下載於本機（`4 IVDC_Responsible AI.pdf`），可直接用瀏覽器或 PDF 閱讀器開啟 |
+| 課程 PDF | 已下載於本機（課程簡報 4），可直接用瀏覽器或 PDF 閱讀器開啟 |
 | PCPD 六原則官方頁面 | 有網路時先「**列印成 PDF**」或用瀏覽器的「**離線閱讀**」功能存檔 |
 | PDPO 條文（Cap. 486） | 到 Hong Kong e-Legislation 下載 PDF 版本存檔 |
 | 這份筆記的測驗 | `mc-quiz.html` 本身就是離線檔，不需網路 |
@@ -1255,7 +1255,7 @@ pip install numpy
 ## 附錄 D：一頁精華（考前 10 分鐘）
 
 ```
-================= Responsible AI（IVDC Lesson 4）=================
+================= Responsible AI（Lesson 4）=================
 
 【為什麼】Challenges on AI：不透明／偏誤／隱私／資安同意／問責／社會衝擊
 【怎麼做】12 項倫理原則＋ AI Practice Guide 6 階段

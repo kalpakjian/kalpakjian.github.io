@@ -22,7 +22,7 @@ archive: true
 
 ![Hugging Face for LLM 學習筆記](/img/covers/huggingface-notes.png)
 
-IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 6 — Hugging Face for LLM** 的完整學習筆記。
+「Certificate in Application of Large Language Model (LLM)」**Lesson 6 — Hugging Face for LLM** 的完整學習筆記。
 
 這一課的主題是：**「模型從哪裡來、怎麼用、怎麼改、怎麼放上線」**。Hugging Face 不訓練最強的大模型，但它幾乎是所有開源模型流通的必經之路——Llama、Mistral、Qwen、Gemma 發布時第一個落地的倉庫都在這裡。
 

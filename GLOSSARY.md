@@ -16,7 +16,7 @@
 | 詞 | English | 定義（一句話） | 在哪裡 | 不要叫它 |
 |---|---|---|---|---|
 | **課節** | lesson | 一個教材單位（一份 PDF／PPTX／notebook 組）→ 產出一份筆記 | `source/<dir>/` | 單元、lesson 檔 |
-| **系列** | series | 同一門課的多份筆記（本站：IVDC 13 份、AutoML 3 份） | `source/*-notes/` | 課程（見下）、分類 |
+| **系列** | series | 同一門課的多份筆記（本站：13 份、AutoML 3 份） | `source/*-notes/` | 課程（見下）、分類 |
 | **課程** | course | **教材本身的內容**（投影片／PDF／notebook 裡寫的東西） | 筆記內文 | ⛔ 原稿、教材、講義 |
 | **筆記** | study notes | 本站產出的那兩份檔案（md ＋ html） | `source/<dir>/` | ⛔ 講義、教材 |
 | **本筆記** | this note | 指「這份筆記自己」時的固定寫法 | 筆記內文 | ⛔ 本節、本文 |
@@ -46,7 +46,7 @@
 | `source/img/covers/<slug>.png` | 封面 | 檔名與貼文 slug 相同 |
 
 **命名規則（2026-10-16 決定並驗證）**：**slug = `source/` 目錄名，一律不加後綴**；貼文檔名 = 封面檔名 = slug；frontmatter 的 `index_img` 必須等於 `banner_img`，且為 `/img/covers/<slug>.png`。
-原本 IVDC 系列的 `-ivdc` 後綴已在 2026-10-16 全站移除（13 個貼文與封面改名、課程總覽頁的圖片連結同步），**舊網址以 meta refresh 轉址保留**在 `source/<yyyy>/<mm>/<dd>/<old-slug>/index.html`。
+原本的舊後綴已在 2026-10-16 全站移除（13 個貼文與封面改名、課程總覽頁的圖片連結同步），**舊網址以 meta refresh 轉址保留**在 `source/<yyyy>/<mm>/<dd>/<old-slug>/index.html`。
 
 **工作目錄（不是產出物，不要當成來源）**：
 - `_work/<topic>/` — 產線中途的腳本與暫存（`build_notes.py`、`build_quiz.py`、`verify_*.py`…）
@@ -71,7 +71,7 @@
 | `automl` / `gen` / `mlmodels` | `automl-notes` / `generalization-notes` / `ml-models-notes` | `<dir>` | 已驗證（目錄與檔名一致） |
 | `ed_king_queen` | `ai-intro-notes`（§8.1 的霓虹插圖，**不是封面**） | — | 已驗證（`embed_into_ai_intro.py` docstring） |
 
-> `l6`–`l9` 是 IVDC LLM 課程的**課節編號**，課程總覽頁是 `/llm-course/`。
+> `l6`–`l9` 是 LLM 課程的**課節編號**，課程總覽頁是 `/llm-course/`。
 > 其餘代號只在 `_covergen/` 內部使用；**要引用某份筆記時請寫 `source/` 目錄名，不要寫代號**。
 
 ---
@@ -119,7 +119,7 @@
 2. ~~**slug 要不要 `-ivdc` 後綴？**~~ **已決定（2026-10-16）：全站移除。** 13 個貼文與封面改名為 `<dir>`、課程總覽頁（`cv-course`／`llm-course`）的圖片連結同步更新、舊網址以 meta refresh 轉址保留。`AGENT-HEALTH.md` 裡的規則以這裡為準。
 3. ~~**`generalization-notes` 目前閘門 FAIL**~~ **已修（2026-10-16）**：禁詞與頁碼用 `yk_replace2.ps1` 清乾淨（`原稿` 104 處、`教材` 13 處、`pN` 31 處），16 份筆記現在 **0 失敗**。殘留警告：66 處「第 N 頁」寫法（advisory，與 `ml-models-notes` 的 106 處同性質）。
 4. ~~**`ml-models-notes` 硬性全過**，但 2332 處孤立 LF~~ **已修（2026-10-16）**：`normalize_crlf.ps1` 正規化 3 個檔案，並新增 `.gitattributes`（`*.md`／`*.html` = `text eol=crlf`）讓**簽出**（含 CI 的 Linux runner）也是 CRLF——CI 的閘門警告因此從 4 降到 3。剩下的警告只有「第 N 頁」寫法（`generalization-notes` 66、`ml-models-notes` 106、`responsible-ai-notes` 2），要不要改寫成內容描述由你決定。
-5. ~~**頁首區塊不是每份都有**~~ **已釐清（2026-10-16）**：頁首資訊有**兩個載體**——副標 `<div class="sub">`（16 份都要有；`llm-intro-notes` 原本是空的，已補成 `IVDC · … (LLM)` / `Lesson 3 · Introduction to LLM`）與 md 頁首區塊（**選用**，只有 AutoML 系列用）。契約 §3 已改寫成兩者對照表，§9 並註明 `header-br` 檢查原本是**休眠的**（`</h1>` 後面永遠隔著 `<div class="sub">`，從未觸發）——`generalization-notes` 的頁首因此漏掉 5 個 `<br />`、在網頁上擠成一整段。**兩者都已修（2026-10-16）**：`header-br` 已改成跳過副標與 `<hr>` 再找第一個 `<blockquote>`，並用「拿掉全部 `<br />` → 閘門 FAIL」實測過。
+5. ~~**頁首區塊不是每份都有**~~ **已釐清（2026-10-16）**：頁首資訊有**兩個載體**——副標 `<div class="sub">`（16 份都要有；`llm-intro-notes` 原本是空的，已補成 `… (LLM)` / `Lesson 3 · Introduction to LLM`）與 md 頁首區塊（**選用**，只有 AutoML 系列用）。契約 §3 已改寫成兩者對照表，§9 並註明 `header-br` 檢查原本是**休眠的**（`</h1>` 後面永遠隔著 `<div class="sub">`，從未觸發）——`generalization-notes` 的頁首因此漏掉 5 個 `<br />`、在網頁上擠成一整段。**兩者都已修（2026-10-16）**：`header-br` 已改成跳過副標與 `<hr>` 再找第一個 `<blockquote>`，並用「拿掉全部 `<br />` → 閘門 FAIL」實測過。
 6. ~~**閘門是非阻擋的**~~ **已修（2026-10-16）**：閘門搬進 `pages.yml` 當第一個 job，`build` 與 `deploy` 都 `needs` 它——**不通過就不部署**。已用一個故意塞入的禁詞實測過：gate failure → build／deploy skipped。
 7. ~~`ed_king_queen` 在 `_covergen/` 沒有對應筆記（一次性產物）~~ **更正（2026-10-16）**：`_covergen/ed_king_queen/` 是 **`ai-intro-notes` §8.1「king − man + woman = queen」霓虹插圖的產線**（`gen_king_queen.py` 產圖 → `embed_into_ai_intro.py` 用位元組層編輯把同一段 `<figure>` 嵌進該筆記的 md 與 html）。它不是孤兒，只是資料夾名字看不出目標；已補進 §3 的代號表。
 

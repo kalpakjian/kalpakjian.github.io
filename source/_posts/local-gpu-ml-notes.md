@@ -14,7 +14,7 @@ index_img: /img/covers/local-gpu-ml-notes.png
 banner_img: /img/covers/local-gpu-ml-notes.png
 ---
 
-最近為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Computer Vision Technology」的考試，我把課程《IVDC_Using Local GPU for ML.pptx》（26 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
+最近為了準備「Certificate in Application of Computer Vision Technology」的課程考試，我把課程簡報（26 頁）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
 筆記已發佈成獨立頁面：
 

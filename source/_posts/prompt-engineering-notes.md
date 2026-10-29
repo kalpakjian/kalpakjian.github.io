@@ -18,7 +18,7 @@ index_img: /img/covers/prompt-engineering-notes.png
 banner_img: /img/covers/prompt-engineering-notes.png
 ---
 
-為了準備 IVDC（匯縱專業發展中心）「Certificate in Application of Large Language Model (LLM)」的考試，我把課程第五份課程《9 IVDC_Prompt_Engineering (adjusted).pdf》（**92 頁**）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
+為了準備「Certificate in Application of Large Language Model (LLM)」的課程考試，我把第五份課程簡報（**92 頁**）完整重寫成一份可離線閱讀的學習筆記，並額外做了一份 60 題的 MC 模擬試卷。
 
 筆記已發佈成獨立頁面：
 

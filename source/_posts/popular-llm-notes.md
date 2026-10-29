@@ -17,7 +17,7 @@ archive: true
 
 ![Popular LLM Models 學習筆記](/img/covers/popular-llm-notes.png)
 
-IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 2 — Popular LLM Models** 的完整學習筆記。
+「Certificate in Application of Large Language Model (LLM)」**Lesson 2 — Popular LLM Models** 的完整學習筆記。
 
 
 <!-- more -->

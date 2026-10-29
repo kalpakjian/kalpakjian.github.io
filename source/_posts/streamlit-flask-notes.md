@@ -18,7 +18,7 @@ archive: true
 
 ![Streamlit and Flask 學習筆記](/img/covers/streamlit-flask-notes.png)
 
-IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 9 — Streamlit and Flask** 的完整學習筆記。
+「Certificate in Application of Large Language Model (LLM)」**Lesson 9 — Streamlit and Flask** 的完整學習筆記。
 
 這課把前面幾課串起來：**Streamlit 做前端畫面、Flask 做後端 API、LiteLLM 呼叫本機 Ollama**。課程只有兩支加起來 58 行的程式，但裡面藏了 **兩個會直接回 500 的真實漏洞**。
 

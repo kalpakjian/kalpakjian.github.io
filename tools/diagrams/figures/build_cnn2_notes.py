@@ -156,7 +156,7 @@ TPL = """<!DOCTYPE html>
   <a class="home" href="/cv-course/">📚 課程專題</a>
   <a class="quiz" href="mc-quiz.html">🖱️ 互動測驗（60 題）</a>
   <h1>CNN 2 學習筆記</h1>
-  <div class="sub">IVDC · Lesson 7 · Convolutional Neural Network (CNN) II</div>
+  <div class="sub">Lesson 7 · Convolutional Neural Network (CNN) II</div>
   <div class="toc">
 {toc}
   </div>

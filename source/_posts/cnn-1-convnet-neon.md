@@ -19,7 +19,7 @@ index_img: /img/covers/cnn-1-convnet-neon.png
 banner_img: /img/covers/cnn-1-convnet-neon-banner.png
 ---
 
-> <strong>整理說明</strong>：這是我上 IVDC「卷積神經網絡（CNN）I」的課後筆記。36 頁課程簡報講的是很標準的一條線：影像為什麼是數字、視覺皮層的四層抽象、卷積的三條規則、LeNet-5、以及卷積的反向傳播。簡報本身有幾個數字我算不回去（1080×1080×3 的向量長度、86 億神經元的連線總數、LeNet-5 的參數總數），我把它們全部重算一次，列在 <a href="#errata">第 9 節</a>。文中每一個參數量與乘加次數都是我逐層手算、再寫程式覆核的；插圖是自己畫的 SVG（霓虹風），封面是本地 ComfyUI 跑 Qwen-Image 2.1 生成的。
+> <strong>整理說明</strong>：這是我上「卷積神經網絡（CNN）I」的課後筆記。36 頁課程簡報講的是很標準的一條線：影像為什麼是數字、視覺皮層的四層抽象、卷積的三條規則、LeNet-5、以及卷積的反向傳播。簡報本身有幾個數字我算不回去（1080×1080×3 的向量長度、86 億神經元的連線總數、LeNet-5 的參數總數），我把它們全部重算一次，列在 <a href="#errata">第 9 節</a>。文中每一個參數量與乘加次數都是我逐層手算、再寫程式覆核的；插圖是自己畫的 SVG（霓虹風），封面是本地 ComfyUI 跑 Qwen-Image 2.1 生成的。
 
 <!-- more -->
 
@@ -1402,7 +1402,7 @@ C5 的感受野正好是 **32×32 = 整張輸入**。這不是巧合：如果最
 - LeCun, Bottou, Bengio & Haffner, *Gradient-Based Learning Applied to Document Recognition*, 1998 —— LeNet-5 原始論文。
 - Goodfellow, Bengio & Courville, *Deep Learning*, 2016 —— 簡報第 26 頁的邊緣核示意出自此。
 - Lee et al., ICML 2009 —— 「從資料學出特徵階層」的視覺化。
-- IVDC 匯縱專業發展中心「卷積神經網絡 I」課程簡報（36 頁）。
+- 「卷積神經網絡 I」課程簡報（36 頁）。
 - 本文的 9 張插圖是用 Python 產生、全部純 SVG（無點陣圖），霓虹配色沿用站上的 `#22d3ee` / `#f472b6`；封面由本地 ComfyUI 的 Qwen-Image 2.1 生成，無外部 API。
 
 > 這一講只到「卷積的反向傳播」為止，第 4 個模組（語義分割、人臉、自駕、上色、超解析、醫學、基因組）只點名沒有展開 —— 我在第 8 節補了一張總覽，真正展開應該是下一講 CNN II 的事。

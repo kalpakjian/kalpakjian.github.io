@@ -21,7 +21,7 @@ archive: true
 
 ![Local LLM Apps 學習筆記](/img/covers/local-llm-notes.png)
 
-IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 7 — Local LLM Apps** 的完整學習筆記。
+「Certificate in Application of Large Language Model (LLM)」**Lesson 7 — Local LLM Apps** 的完整學習筆記。
 
 這一課的主題很單純：**把 LLM 裝在自己的電腦上跑**。課程用四個桌面應用程式走完一遍——LM Studio、Ollama、AnythingLLM、GPT4All——然後課程附的 Lab 資料夾再把同一件事**用程式重做一次**。
 

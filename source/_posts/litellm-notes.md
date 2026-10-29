@@ -17,7 +17,7 @@ archive: true
 
 ![LiteLLM 學習筆記](/img/covers/litellm-notes.png)
 
-IVDC「Certificate in Application of Large Language Model (LLM)」**Lesson 8 — LiteLLM** 的完整學習筆記。
+「Certificate in Application of Large Language Model (LLM)」**Lesson 8 — LiteLLM** 的完整學習筆記。
 
 LiteLLM 解決的問題很單純：**N 個供應商 × M 個應用 = N×M 套整合程式碼**。它把所有供應商收斂成**同一個 `completion()`**，輸入輸出都是 OpenAI 的 chat 格式。課程寫「50+ LLM APIs」，本機實測 litellm 1.91.2 已有 **146 個供應商**。
 
@@ -30,7 +30,7 @@ LiteLLM 解決的問題很單純：**N 個供應商 × M 個應用 = N×M 套整
 - 五大供應商呼叫逐一拆解：ChatGPT／Claude-2／llama2 on Replicate／Command-Nightly／Azure OpenAI
 - **23 張 Qwen-Image 2.1 章節插圖**（內嵌，維持單檔離線）
 - **68 題互動 MC 測驗**（點選即時計分、進度自動存 localStorage）
-- **課堂`IVDC_LiteLLM.pptx`（11 頁）已整併**為 §21 ＋ 附錄 G：LLM Gateway 概念、虛擬金鑰／RBAC、多租戶成本治理、真實架構（Postgres／MCP），以及課程自己列出的限制
+- **課堂簡報（11 頁）已整併**為 §21 ＋ 附錄 G：LLM Gateway 概念、虛擬金鑰／RBAC、多租戶成本治理、真實架構（Postgres／MCP），以及課程自己列出的限制
 
 ## 章節
 

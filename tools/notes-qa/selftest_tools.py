@@ -37,7 +37,7 @@ HTML = (
     "<h1>Demo</h1>\r\n"
     "<blockquote>\r\n"
     "<p>\u8ab2\u7a0b\uff1aCertificate in Application of AI (Part-time)</p>\r\n"
-    "<p>\u6a5f\u69cb\uff1a\u532f\u7e31\u5c08\u696d\u767c\u5c55\u4e2d\u5fc3\uff08IVDC\uff09</p>\r\n"
+    "<p>\u6a5f\u69cb\uff1aDemo Org</p>\r\n"
     "</blockquote>\r\n"
     '<h2 id="bad id!!">1. AI \u662f\u4ec0\u9ebc</h2>\r\n'
     "<table>\r\n<tr>\r\n<td>1</td>\r\n"
@@ -168,7 +168,7 @@ def build(root):
     write(os.path.join(pub, "img", "ok.png"), "not really a png")
     for n in SCRIPTS:
         shutil.copy2(os.path.join(TOOLS_DIR, n), os.path.join(tools, n))
-    write(os.path.join(root, "rules.txt"), "IVDC@@@IVDC-ORG\r\n")
+    write(os.path.join(root, "rules.txt"), "Demo@@@Demo-ORG\r\n")
     return {
         "html": os.path.join(src, "index.html"),
         "md": os.path.join(src, "Demo_Study_Notes.md"),
@@ -240,7 +240,7 @@ def main():
         f = build(repo)
         rc, out = run(os.path.join(f["tools"], "yk_replace2.ps1"),
                       "-ruleFile", f["rules"], cwd=foreign)
-        check("yk_replace2.ps1", rc == 0 and "IVDC-ORG" in read(f["html"]),
+        check("yk_replace2.ps1", rc == 0 and "Demo-ORG" in read(f["html"]),
               "rc=%d  %s" % (rc, out))
 
         # 5) normalize_crlf.ps1 -DryRun -- must report and must NOT write

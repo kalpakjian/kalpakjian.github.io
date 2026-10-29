@@ -69,7 +69,6 @@ Neural Network, Activation Function and Machine Learning
 | 項目 | 內容 |
 |---|---|
 | 課程 | Certificate in Application of Computer Vision Technology (Part-time) |
-| 機構 | 匯縱專業發展中心（IVDC） |
 | 課程主題 | Neural Network, Activation Function and Machine Learning |
 | 頁數 | 30 頁（PowerPoint 匯出 PDF） |
 

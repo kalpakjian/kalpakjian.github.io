@@ -15,7 +15,7 @@ index_img: /img/covers/cv-practical-notes.png
 banner_img: /img/covers/cv-practical-notes.png
 ---
 
-繼前幾課（Introduction to AI、Local GPU、Computer Vision、OpenCV、Responsible AI、Neural Network、CNN）之後，這一篇是 IVDC 「Certificate in Application of Computer Vision Technology」**第 9 課：Practical Application for Implementation and Demo** 的整理。
+繼前幾課（Introduction to AI、Local GPU、Computer Vision、OpenCV、Responsible AI、Neural Network、CNN）之後，這一篇是「Certificate in Application of Computer Vision Technology」**第 9 課：Practical Application for Implementation and Demo** 的整理。
 
 這一課的主軸是 **Teachable Machine**：用瀏覽器、零編程訓練一個圖像分類器，再匯出成 **TensorFlow.js** 模型，最後接上 **p5.js** 做示範（課堂示範項目是「機械蛇」）。簡報後半部全部在講**模型為何會失敗**——兩隻香蕉、換背景、換光線、甚至一張香蕉圖畫，都能讓它出錯——而這正好是考試最常考的地方。
 
@@ -23,10 +23,9 @@ banner_img: /img/covers/cv-practical-notes.png
 
 <!-- more -->
 
-**原始簡報：** `9 IVDC_Practical Application for Implementation and Demo.pdf`（19 頁）
+**原始簡報：** 課程簡報 9（19 頁）
 **課程：** 電腦視覺技術應用證書（兼讀制）
 **單元：** 電腦視覺技術的實施與示範之實踐應用
-**出版／版權：** 匯縱專業發展中心（IVDC）— 版權所有
 **本篇涵蓋工具：** [Teachable Machine](https://teachablemachine.withgoogle.com/) + TensorFlow.js、p5.js
 
 > 本筆記把 19 頁簡報重整成方便溫習的文件，並以 `[p. n]` 標示對應的原簡報頁碼，方便隨時翻查。

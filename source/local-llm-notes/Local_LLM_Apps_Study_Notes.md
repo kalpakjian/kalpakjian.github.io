@@ -4489,7 +4489,7 @@ tree = nltk.ne_chunk(lotr_pos_tags)
 |---|---|---|
 | `PERSON` | 人物 | Frodo, Sagan |
 | `GPE` | 地理政治實體（國家／城市） | Hong Kong, Paris |
-| `ORG` | 組織 | NASA, IVDC |
+| `ORG` | 組織 | NASA, UN |
 | `DATE` | 日期 | 1889 |
 | `MONEY` | 金額 | $100 |
 
@@ -4716,7 +4716,7 @@ tree = nltk.ne_chunk(lotr_pos_tags)
 |---|---|---|
 | `train.jsonl` | 總行數 | **73** |
 | `train.jsonl` | **唯一內容數** | **1** ⚠️ |
-| `4 IVDC_Local_LLM Apps.pdf` | 頁數 | **44 頁** |
+| 課程簡報 4 | 頁數 | **44 頁** |
 
 ### 38.9 本機版本 vs 最新版本（2026-10 實查）
 

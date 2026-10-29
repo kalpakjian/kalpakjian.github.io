@@ -53,8 +53,8 @@ const TOPICS_SORTED = TOPICS.map(function (item, i) { return { item: item, i: i 
 
 // 學習筆記：課程／教材整理成的離線筆記，每份都有互動測驗
 const NOTES = [
-  { title: 'IVDC 電腦視覺課程', href: '/cv-course/' },
-  { title: 'IVDC LLM 與生成式 AI 課程', href: '/llm-course/' },
+  { title: '電腦視覺課程', href: '/cv-course/' },
+  { title: 'LLM 與生成式 AI 課程', href: '/llm-course/' },
   { title: 'AutoML 應用證書課程', href: '/automl-course/' }
 ];
 

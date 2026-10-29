@@ -51,14 +51,14 @@
 
 | 載體 | 在哪裡 | 內容 | 規定 |
 |---|---|---|---|
-| **副標 `<div class="sub">`** | 只在 `index.html`（md 沒有這一層） | 課程＋課節，例：`IVDC · Certificate in Application of Large Language Model (LLM)`<br>`Lesson 3 · Introduction to LLM` | **每一份都要有內容**（不要留空） |
+| **副標 `<div class="sub">`** | 只在 `index.html`（md 沒有這一層） | 課程＋課節，例：`Certificate in Application of Large Language Model (LLM)`<br>`Lesson 3 · Introduction to LLM` | **每一份都要有內容**（不要留空） |
 | **頁首區塊 `> 課程：…`** | md 的標題下方（html 對應 `<blockquote>`） | 課程／機構／涵蓋檔案／實測環境／測驗連結 | **選用、系列制**：目前只有 AutoML 系列（`automl-notes`、`generalization-notes`、`ml-models-notes`）採用；LLM／CV 系列用副標代替 |
 
 Markdown 頁首區塊（**採用時**的格式）：
 
 ```
 > 課程：Certificate in Application of Large Language Model (LLM) (Part-time) — Lesson N
-> 機構：匯縱專業發展中心（IVDC）
+> 機構：（依實際情況填寫）
 > 涵蓋檔案：`a.ipynb`、`b.py`、`C.pptx`
 > 本筆記依課程大綱每一個標題逐一填充內容，並補上定義、參數說明、常見錯誤與考點。
 > 所有程式碼與數字都在本機實測（…版本…），實測輸出直接寫進內文。
