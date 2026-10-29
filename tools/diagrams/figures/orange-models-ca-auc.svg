@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 665" role="img" aria-label="iris 14 個分類模型的 CA 與 AUC 比較（含 Constant 基準線）" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="663.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">14 個分類模型：CA 長條、AUC 圓點</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">iris 交叉驗證，random_state=42</text>
+<rect x="620" y="102" width="26" height="12" rx="3" fill="#2dd4bf"/>
+<text x="654" y="112" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">CA（長條）</text>
+<circle cx="764.0" cy="108.0" r="5" fill="#fbbf24"/>
+<text x="776" y="112" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AUC（圓點）</text>
+<path d="M 252.0 146 L 252.0 604" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="252.0" y="626" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.00</text>
+<path d="M 392.0 146 L 392.0 604" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="392.0" y="626" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.25</text>
+<path d="M 532.0 146 L 532.0 604" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="532.0" y="626" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.50</text>
+<path d="M 672.0 146 L 672.0 604" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="672.0" y="626" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.75</text>
+<path d="M 812.0 146 L 812.0 604" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="812.0" y="626" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.00</text>
+<rect x="252" y="159" width="541.4" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="172" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">kNN</text>
+<text x="785.352" y="172" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9667</text>
+<circle cx="804.7" cy="168.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="191" width="541.4" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="204" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Logistic Regression</text>
+<text x="785.352" y="204" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9667</text>
+<circle cx="810.7" cy="200.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="223" width="541.4" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="236" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Stacking</text>
+<text x="785.352" y="236" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9667</text>
+<circle cx="810.3" cy="232.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="255" width="537.6" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="268" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Calibrated Learner</text>
+<text x="781.6" y="268" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9600</text>
+<circle cx="810.2" cy="264.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="287" width="537.6" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="300" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVM</text>
+<text x="781.6" y="300" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9600</text>
+<circle cx="795.2" cy="296.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="319" width="537.6" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="332" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AdaBoost</text>
+<text x="781.6" y="332" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9600</text>
+<circle cx="799.8" cy="328.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="351" width="533.8" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="364" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Gradient Boosting</text>
+<text x="777.8480000000001" y="364" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9533</text>
+<circle cx="805.8" cy="360.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="383" width="533.8" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="396" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Neural Network</text>
+<text x="777.8480000000001" y="396" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9533</text>
+<circle cx="810.0" cy="392.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="415" width="530.2" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="428" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Tree</text>
+<text x="774.152" y="428" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9467</text>
+<circle cx="790.3" cy="424.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="447" width="530.2" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="460" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Random Forest</text>
+<text x="774.152" y="460" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9467</text>
+<circle cx="809.4" cy="456.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="479" width="500.2" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="492" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">CN2 Rule Induction</text>
+<text x="744.248" y="492" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.8933</text>
+<circle cx="786.9" cy="488.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="511" width="489.0" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="524" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Naive Bayes</text>
+<text x="733.048" y="524" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.8733</text>
+<circle cx="801.5" cy="520.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="543" width="466.6" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
+<text x="240" y="556" font-size="12" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SGD</text>
+<text x="710.648" y="556" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.8333</text>
+<circle cx="742.0" cy="552.0" r="4.5" fill="#fbbf24"/>
+<rect x="252" y="575" width="186.6" height="18" rx="4" fill="#f472b6" opacity="0.85"/>
+<text x="240" y="588" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Constant（基準線）</text>
+<text x="430.648" y="588" font-size="11.5" fill="#08141a" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.3333</text>
+<circle cx="532.0" cy="584.0" r="4.5" fill="#fbbf24"/>
+<text x="252" y="650" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Constant 就是「永遠猜最多數類別」：CA = 50/150 = 0.3333、AUC = 0.5；任何模型都要先贏過它。</text>
+</svg>

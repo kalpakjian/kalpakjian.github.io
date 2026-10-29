@@ -752,6 +752,62 @@ lasso.fit(X_train, y_train)
 | 12 | 1.0000 | 0.9250 | 0.0750 | 過擬合（無改善） |
 | 不限 | 1.0000 | 0.9250 | 0.0750 | 過擬合 |
 
+<!-- FIGURE:generalization-validation -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-label="決策樹 max_depth 的驗證曲線：訓練分數與驗證分數" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="468.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">驗證曲線：max_depth 的甜點區</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">乳癌資料集，5 折交叉驗證</text>
+<text x="48" y="112" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">分數</text>
+<path d="M 118 351.67999999999995 L 842 351.67999999999995" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="355.67999999999995" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.900</text>
+<path d="M 118 301.27999999999986 L 842 301.27999999999986" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="305.27999999999986" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.925</text>
+<path d="M 118 250.88 L 842 250.88" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="254.88" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.950</text>
+<path d="M 118 200.47999999999988 L 842 200.47999999999988" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="204.47999999999988" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.975</text>
+<path d="M 118 150.07999999999979 L 842 150.07999999999979" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="154.07999999999979" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.000</text>
+<path d="M 118 392 L 842 392" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="152" y="414" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="260" y="414" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="368" y="414" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="476" y="414" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="584" y="414" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text>
+<text x="692" y="414" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">12</text>
+<text x="800" y="414" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不限</text>
+<text x="118" y="430" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">max_depth</text>
+<path d="M 476 134 L 476 392" fill="none" stroke="#3fb950" stroke-width="1.4" stroke-dasharray="5 4" opacity="0.85"/>
+<path d="M 152.0 293.2 L 260.0 248.3 L 368.0 202.1 L 476.0 160.8 L 584.0 150.1 L 692.0 150.1 L 800.0 150.1" fill="none" stroke="#2dd4bf" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 152.0 348.7 L 260.0 301.7 L 368.0 311.0 L 476.0 296.6 L 584.0 301.3 L 692.0 301.3 L 800.0 301.3" fill="none" stroke="#fbbf24" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="152.0" cy="293.2" r="4.5" fill="#2dd4bf"/>
+<circle cx="152.0" cy="348.7" r="4.5" fill="#fbbf24"/>
+<circle cx="260.0" cy="248.3" r="4.5" fill="#2dd4bf"/>
+<circle cx="260.0" cy="301.7" r="4.5" fill="#fbbf24"/>
+<circle cx="368.0" cy="202.1" r="4.5" fill="#2dd4bf"/>
+<circle cx="368.0" cy="311.0" r="4.5" fill="#fbbf24"/>
+<circle cx="476.0" cy="160.8" r="4.5" fill="#2dd4bf"/>
+<circle cx="476.0" cy="296.6" r="4.5" fill="#fbbf24"/>
+<circle cx="584.0" cy="150.1" r="4.5" fill="#2dd4bf"/>
+<circle cx="584.0" cy="301.3" r="4.5" fill="#fbbf24"/>
+<circle cx="692.0" cy="150.1" r="4.5" fill="#2dd4bf"/>
+<circle cx="692.0" cy="301.3" r="4.5" fill="#fbbf24"/>
+<circle cx="800.0" cy="150.1" r="4.5" fill="#2dd4bf"/>
+<circle cx="800.0" cy="301.3" r="4.5" fill="#fbbf24"/>
+<text x="486" y="282.64319999999987" font-size="12" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">驗證最佳 0.9273（depth=5）</text>
+<text x="594" y="170.07999999999979" font-size="11.5" fill="#2dd4bf" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練滿分 1.0000</text>
+<text x="594" y="327.27999999999986" font-size="11.5" fill="#fbbf24" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">驗證停在 0.9250</text>
+<circle cx="640.0" cy="112.0" r="5" fill="#2dd4bf"/>
+<text x="654" y="116" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練分數</text>
+<circle cx="754.0" cy="112.0" r="5" fill="#fbbf24"/>
+<text x="768" y="116" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">驗證分數</text>
+<text x="48" y="452" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">depth 1→5 兩條線一起上升；5→8 之後訓練滿分、驗證反而下滑——教科書級的過擬合指紋。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 12：<strong>驗證曲線</strong>——depth 1→5 兩條線一起上升；depth 8 之後訓練滿分 1.0000、驗證反而停在 0.9250，是過擬合的指紋。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIGURE:generalization-validation -->
+
 **這張表就是「架構控制」的實證**：`max_depth` 從 1 加到 5 時驗證分數一路上升（0.9015 → 0.9273）；但從 5 加到 8 之後，**訓練分數滿分（1.0000）而驗證分數反而下降**——教科書級的過擬合指紋。**樹不是越深越好。**
 
 ### 8.3 早停法（Early Stopping）

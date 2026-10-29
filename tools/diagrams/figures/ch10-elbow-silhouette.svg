@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-label="手肘法與輪廓係數：inertia 與 silhouette 隨 K 的變化，最佳 K=4" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">手肘法 + 輪廓係數：兩個方法一起指到 K=4</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">300 點、真實 4 群、cluster_std=0.60</text>
+<text x="88" y="146" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① inertia（WCSS）：找轉折點</text>
+<path d="M 88 400.0 L 438 400.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="80" y="404.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text>
+<path d="M 88 342.0 L 438 342.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="80" y="346.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5,000</text>
+<path d="M 88 284.0 L 438 284.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="80" y="288.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">10,000</text>
+<path d="M 88 226.0 L 438 226.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="80" y="230.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">15,000</text>
+<path d="M 88 168.0 L 438 168.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="80" y="172.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">20,000</text>
+<path d="M 88 400 L 438 400" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="88.0" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="126.88888888888889" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="165.77777777777777" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="204.66666666666666" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="243.55555555555554" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="282.44444444444446" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<text x="321.3333333333333" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7</text>
+<text x="360.22222222222223" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text>
+<text x="399.1111111111111" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">9</text>
+<text x="438.0" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">10</text>
+<text x="263.0" y="444" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">K</text>
+<path d="M 88.0 172.0 L 126.9 295.0 L 165.8 379.4 L 204.7 397.6 L 243.6 397.9 L 282.4 398.1 L 321.3 398.3 L 360.2 398.5 L 399.1 398.6 L 438.0 398.8" fill="none" stroke="#2dd4bf" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="88.0" cy="172.0" r="4" fill="#2dd4bf"/>
+<circle cx="126.9" cy="295.0" r="4" fill="#2dd4bf"/>
+<circle cx="165.8" cy="379.4" r="4" fill="#2dd4bf"/>
+<circle cx="204.7" cy="397.6" r="4" fill="#2dd4bf"/>
+<circle cx="243.6" cy="397.9" r="4" fill="#2dd4bf"/>
+<circle cx="282.4" cy="398.1" r="4" fill="#2dd4bf"/>
+<circle cx="321.3" cy="398.3" r="4" fill="#2dd4bf"/>
+<circle cx="360.2" cy="398.5" r="4" fill="#2dd4bf"/>
+<circle cx="399.1" cy="398.6" r="4" fill="#2dd4bf"/>
+<circle cx="438.0" cy="398.8" r="4" fill="#2dd4bf"/>
+<path d="M 204.66666666666666 164 L 204.66666666666666 400" fill="none" stroke="#3fb950" stroke-width="1.4" stroke-dasharray="5 4" opacity="0.85"/>
+<text x="198.66666666666666" y="180" font-size="11.5" fill="#3fb950" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">手肘 K=4</text>
+<text x="248" y="340" font-size="12" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">K=4→5 降幅 1569.9 → 19.5</text>
+<text x="546" y="146" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② silhouette：越高越好</text>
+<path d="M 546 364.3076923076923 L 856 364.3076923076923" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="538" y="368.3076923076923" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.40</text>
+<path d="M 546 292.9230769230769 L 856 292.9230769230769" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="538" y="296.9230769230769" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.60</text>
+<path d="M 546 221.53846153846155 L 856 221.53846153846155" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="538" y="225.53846153846155" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.80</text>
+<path d="M 546 400 L 856 400" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="546.0" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="584.75" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="623.5" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="662.25" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="701.0" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<text x="739.75" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7</text>
+<text x="778.5" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text>
+<text x="817.25" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">9</text>
+<text x="856.0" y="420" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">10</text>
+<text x="701.0" y="444" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">K</text>
+<path d="M 546.0 287.4 L 584.8 221.8 L 623.5 194.6 L 662.2 237.5 L 701.0 289.3 L 739.8 345.0 L 778.5 385.3 L 817.2 386.5 L 856.0 378.9" fill="none" stroke="#fbbf24" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="546.0" cy="287.4" r="4" fill="#fbbf24"/>
+<circle cx="584.8" cy="221.8" r="4" fill="#fbbf24"/>
+<circle cx="623.5" cy="194.6" r="4" fill="#fbbf24"/>
+<circle cx="662.2" cy="237.5" r="4" fill="#fbbf24"/>
+<circle cx="701.0" cy="289.3" r="4" fill="#fbbf24"/>
+<circle cx="739.8" cy="345.0" r="4" fill="#fbbf24"/>
+<circle cx="778.5" cy="385.3" r="4" fill="#fbbf24"/>
+<circle cx="817.2" cy="386.5" r="4" fill="#fbbf24"/>
+<circle cx="856.0" cy="378.9" r="4" fill="#fbbf24"/>
+<path d="M 623.5 164 L 623.5 400" fill="none" stroke="#3fb950" stroke-width="1.4" stroke-dasharray="5 4" opacity="0.85"/>
+<text x="631.5" y="182.55507692307688" font-size="11.5" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">最高 0.8756</text>
+<text x="48" y="470" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩個方法一致指向 K = 4：inertia 的降幅在 K=4→5 之間從 1569.9 崩到 19.5（手肘），輪廓係數也在 K=4 達到最高。</text>
+</svg>
