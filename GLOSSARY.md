@@ -61,10 +61,10 @@
 
 | 產線代號 | 對應筆記（`source/`） | 貼文 slug | 驗證狀態 |
 |---|---|---|---|
-| `l6` | `huggingface-notes` | `huggingface-notes-ivdc` | 已驗證（`l6_chapters/ch03-why-huggingface`） |
-| `l7` | `local-llm-notes` | `local-llm-notes-ivdc` | 已驗證（`l7_chapters/ch03-gguf-quantization`） |
-| `l8` | `litellm-notes` | `litellm-notes-ivdc` | 已驗證（`make_cover_l89.py` docstring） |
-| `l9` | `streamlit-flask-notes` | `streamlit-flask-notes-ivdc` | 已驗證（同上） |
+| `l6` | `huggingface-notes` | （舊名，已移除） | 已驗證（`l6_chapters/ch03-why-huggingface`） |
+| `l7` | `local-llm-notes` | （舊名，已移除） | 已驗證（`l7_chapters/ch03-gguf-quantization`） |
+| `l8` | `litellm-notes` | （舊名，已移除） | 已驗證（`make_cover_l89.py` docstring） |
+| `l9` | `streamlit-flask-notes` | （舊名，已移除） | 已驗證（同上） |
 | `ai_intro` / `cv_intro` / `llm_intro` | `ai-intro-notes` / `cv-intro-notes` / `llm-intro-notes` | `<dir>` | 命名對應（推論） |
 | `opencv` / `popular` / `pe` / `rai` / `sf` | `opencv-notes` / `popular-llm-notes` / `prompt-engineering-notes` / `responsible-ai-notes` / `streamlit-flask-notes` | `<dir>` | 命名對應（推論） |
 | `local_gpu_ml` / `nn5` | `local-gpu-ml-notes` / `neural-network-notes` | `<dir>` | 命名對應（推論） |
@@ -116,7 +116,7 @@
 ## 6. 待對齊（open questions，尚未決定）
 
 1. ~~**互動測驗是附錄 E 還是 F？**~~ **已決定（2026-10-16）：統一為「附錄 E」。** 那 2 份 AutoML 筆記原本多一個「離線執行與實測原始輸出」卡在 D，把後面全部往後推一格；現已把它移到文末成為 **附錄 G**，並把 一頁精華→**D**、互動測驗→**E**、答錯題目對照→**F**。16 份筆記的附錄字母順序現在完全一致，閘門 0 失敗。
-2. ~~**slug 要不要 `-ivdc` 後綴？**~~ **已決定（2026-10-16）：全站移除。** 13 個貼文與封面改名為 `<dir>`、課程總覽頁（`cv-course`／`llm-course`）的圖片連結同步更新、舊網址以 meta refresh 轉址保留。`AGENT-HEALTH.md` 裡的規則以這裡為準。
+2. ~~**slug 要不要加課程代號後綴？**~~ **已決定（2026-10-16）：全站移除。** 13 個貼文與封面改名為 `<dir>`、課程總覽頁（`cv-course`／`llm-course`）的圖片連結同步更新、舊網址以 meta refresh 轉址保留。`AGENT-HEALTH.md` 裡的規則以這裡為準。
 3. ~~**`generalization-notes` 目前閘門 FAIL**~~ **已修（2026-10-16）**：禁詞與頁碼用 `yk_replace2.ps1` 清乾淨（`原稿` 104 處、`教材` 13 處、`pN` 31 處），16 份筆記現在 **0 失敗**。殘留警告：66 處「第 N 頁」寫法（advisory，與 `ml-models-notes` 的 106 處同性質）。
 4. ~~**`ml-models-notes` 硬性全過**，但 2332 處孤立 LF~~ **已修（2026-10-16）**：`normalize_crlf.ps1` 正規化 3 個檔案，並新增 `.gitattributes`（`*.md`／`*.html` = `text eol=crlf`）讓**簽出**（含 CI 的 Linux runner）也是 CRLF——CI 的閘門警告因此從 4 降到 3。剩下的警告只有「第 N 頁」寫法（`generalization-notes` 66、`ml-models-notes` 106、`responsible-ai-notes` 2），要不要改寫成內容描述由你決定。
 5. ~~**頁首區塊不是每份都有**~~ **已釐清（2026-10-16）**：頁首資訊有**兩個載體**——副標 `<div class="sub">`（16 份都要有；`llm-intro-notes` 原本是空的，已補成 `… (LLM)` / `Lesson 3 · Introduction to LLM`）與 md 頁首區塊（**選用**，只有 AutoML 系列用）。契約 §3 已改寫成兩者對照表，§9 並註明 `header-br` 檢查原本是**休眠的**（`</h1>` 後面永遠隔著 `<div class="sub">`，從未觸發）——`generalization-notes` 的頁首因此漏掉 5 個 `<br />`、在網頁上擠成一整段。**兩者都已修（2026-10-16）**：`header-br` 已改成跳過副標與 `<hr>` 再找第一個 `<blockquote>`，並用「拿掉全部 `<br />` → 閘門 FAIL」實測過。

@@ -9,7 +9,7 @@
 | `NOTE_STYLE_CONTRACT.md` | **寫作契約**：用詞、頁碼、頁首、標題／錨點、表格、測驗、檔案配對、上線 checklist |
 | `qa_notes.ps1` | **品質閘門**：11 項硬性檢查 + 2 項警告，離開碼 0／1（可當 CI gate） |
 | `check_public_links.py` | **站內連結閘門**：`hexo generate` 之後掃 `public/`，把每個 href／src（含相對路徑與同站絕對網址）解析成檔案，少一個就 exit 1 |
-| `remove_legacy_stubs.ps1` | 刪除 15 個 `<slug>-ivdc` 過渡轉址目錄（預定 2026-11-28 執行；`-DryRun` 可先預覽） |
+| `remove_legacy_stubs.ps1` | 刪除 15 個過渡轉址目錄（2026-10-16 與 10-29 兩次改名的舊網址；預定 2026-11-28 執行，`-DryRun` 可先預覽） |
 | `regen_ids.ps1` | 由標題文字重生所有 `id`，並同步 md／html 的 `](#…)` 連結 |
 | `yk_replace2.ps1` | 規則式批次取代（md＋html＋quiz 同時處理），規則檔格式 `pattern@@@replacement` |
 | `fix_toc_dup.ps1` | 移除目錄「編號重複」 |
