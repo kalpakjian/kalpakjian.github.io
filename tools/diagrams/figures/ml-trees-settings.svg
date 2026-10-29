@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-label="決策樹六種設定的訓練與測試準確率" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="428.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">決策樹設定：訓練 vs 測試</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">breast_cancer，單次切分</text>
+<path d="M 118 372.0 L 846 372.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="376.0" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.900</text>
+<path d="M 118 317.2380952380951 L 846 317.2380952380951" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="321.2380952380951" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.925</text>
+<path d="M 118 262.4761904761905 L 846 262.4761904761905" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="266.4761904761905" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.950</text>
+<path d="M 118 207.7142857142856 L 846 207.7142857142856" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="211.7142857142856" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.975</text>
+<path d="M 118 152.95238095238074 L 846 152.95238095238074" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="156.95238095238074" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.000</text>
+<path d="M 118 372 L 846 372" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="172" y="394" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">gini</text>
+<text x="290" y="394" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">entropy</text>
+<text x="408" y="394" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">depth=1</text>
+<text x="526" y="394" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">depth=3</text>
+<text x="644" y="394" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">depth=5</text>
+<text x="762" y="394" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">None</text>
+<rect x="146.0" y="153.0" width="24.0" height="219.0" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<rect x="174.0" y="332.4" width="24.0" height="39.6" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="186" y="324.3523809523809" font-size="10" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9181</text>
+<rect x="264.0" y="153.0" width="24.0" height="219.0" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<rect x="292.0" y="268.2" width="24.0" height="103.8" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="304" y="260.17142857142846" font-size="10" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9474</text>
+<rect x="382.0" y="312.6" width="24.0" height="59.4" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<rect x="410.0" y="345.1" width="24.0" height="26.9" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="422" y="337.0571428571429" font-size="10" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9123</text>
+<rect x="500.0" y="197.0" width="24.0" height="175.0" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<rect x="528.0" y="319.4" width="24.0" height="52.6" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="540" y="311.42857142857133" font-size="10" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9240</text>
+<rect x="618.0" y="163.9" width="24.0" height="208.1" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<rect x="646.0" y="306.7" width="24.0" height="65.3" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="658" y="298.72380952380956" font-size="10" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9298</text>
+<rect x="736.0" y="153.0" width="24.0" height="219.0" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<rect x="764.0" y="332.4" width="24.0" height="39.6" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="776" y="324.3523809523809" font-size="10" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9181</text>
+<text x="48" y="112" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">準確率</text>
+<rect x="640.0" y="100.0" width="12.0" height="12.0" rx="3" fill="#2dd4bf" opacity="0.86"/>
+<text x="660" y="111" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練</text>
+<rect x="720.0" y="100.0" width="12.0" height="12.0" rx="3" fill="#fbbf24" opacity="0.86"/>
+<text x="740" y="111" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">測試</text>
+<text x="48" y="412" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">depth=1 兩邊都低（0.9271／0.9123）＝欠擬合；gini 與 None 訓練 1.0000、測試 0.9181＝過擬合。</text>
+</svg>

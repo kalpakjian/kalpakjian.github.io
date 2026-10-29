@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" role="img" aria-label="三個模型的校準指標：Brier、LogLoss、ECE" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="398.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">校準指標：三個模型比一比</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">breast_cancer；三項都是越小越好</text>
+<text x="100" y="146" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Brier ↓</text>
+<path d="M 100 330.0 L 330 330.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="92" y="334.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.00</text>
+<path d="M 100 249.0 L 330 249.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="92" y="253.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.04</text>
+<path d="M 100 168.0 L 330 168.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="92" y="172.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.08</text>
+<rect x="144.0" y="196.8" width="40.0" height="133.2" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<text x="164" y="188.75500000000002" font-size="10.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0658</text>
+<rect x="206.0" y="257.3" width="40.0" height="72.7" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="226" y="249.3025" font-size="10.5" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0359</text>
+<rect x="268.0" y="249.2" width="40.0" height="80.8" rx="4" fill="#f472b6" opacity="0.86"/>
+<text x="288" y="241.2025" font-size="10.5" fill="#f472b6" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0399</text>
+<path d="M 100 330 L 330 330" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="164" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVC+Platt</text>
+<text x="226" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF</text>
+<text x="288" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF+校準</text>
+<text x="360" y="146" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LogLoss ↓</text>
+<path d="M 360 330.0 L 590 330.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="352" y="334.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.00</text>
+<path d="M 360 249.0 L 590 249.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="352" y="253.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.13</text>
+<path d="M 360 168.0 L 590 168.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="352" y="172.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.26</text>
+<rect x="404.0" y="192.5" width="40.0" height="137.5" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<text x="424" y="184.54923076923077" font-size="10.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.2206</text>
+<rect x="466.0" y="256.2" width="40.0" height="73.8" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="486" y="248.22769230769234" font-size="10.5" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.1184</text>
+<rect x="528.0" y="245.8" width="40.0" height="84.2" rx="4" fill="#f472b6" opacity="0.86"/>
+<text x="548" y="237.8223076923077" font-size="10.5" fill="#f472b6" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.1351</text>
+<path d="M 360 330 L 590 330" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="424" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVC+Platt</text>
+<text x="486" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF</text>
+<text x="548" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF+校準</text>
+<text x="620" y="146" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">ECE ↓</text>
+<path d="M 620 330.0 L 850 330.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="612" y="334.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.00</text>
+<path d="M 620 249.0 L 850 249.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="612" y="253.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.05</text>
+<path d="M 620 168.0 L 850 168.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="612" y="172.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.10</text>
+<rect x="664.0" y="239.8" width="40.0" height="90.2" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<text x="684" y="231.76600000000002" font-size="10.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0557</text>
+<rect x="726.0" y="241.7" width="40.0" height="88.3" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="746" y="233.71" font-size="10.5" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0545</text>
+<rect x="788.0" y="210.4" width="40.0" height="119.6" rx="4" fill="#f472b6" opacity="0.86"/>
+<text x="808" y="202.44400000000002" font-size="10.5" fill="#f472b6" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0738</text>
+<path d="M 620 330 L 850 330" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="684" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVC+Platt</text>
+<text x="746" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF</text>
+<text x="808" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF+校準</text>
+<rect x="70.0" y="98.0" width="12.0" height="12.0" rx="3" fill="#2dd4bf" opacity="0.86"/>
+<text x="90" y="109" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVC+Platt</text>
+<rect x="200.0" y="98.0" width="12.0" height="12.0" rx="3" fill="#fbbf24" opacity="0.86"/>
+<text x="220" y="109" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF</text>
+<rect x="330.0" y="98.0" width="12.0" height="12.0" rx="3" fill="#f472b6" opacity="0.86"/>
+<text x="350" y="109" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF+校準</text>
+<text x="48" y="372" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AUC 0.9696／0.9923／0.9921、準確率 0.9181／0.9415／0.9415：校準只改「分數→機率」，不改排序，也不是無腦加分項。</text>
+</svg>

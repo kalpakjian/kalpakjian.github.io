@@ -1817,6 +1817,75 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tr>
 </tbody>
 </table>
+<!-- FIGURE:ml-calibration -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" role="img" aria-label="三個模型的校準指標：Brier、LogLoss、ECE" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="398.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">校準指標：三個模型比一比</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">breast_cancer；三項都是越小越好</text>
+<text x="100" y="146" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Brier ↓</text>
+<path d="M 100 330.0 L 330 330.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="92" y="334.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.00</text>
+<path d="M 100 249.0 L 330 249.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="92" y="253.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.04</text>
+<path d="M 100 168.0 L 330 168.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="92" y="172.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.08</text>
+<rect x="144.0" y="196.8" width="40.0" height="133.2" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<text x="164" y="188.75500000000002" font-size="10.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0658</text>
+<rect x="206.0" y="257.3" width="40.0" height="72.7" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="226" y="249.3025" font-size="10.5" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0359</text>
+<rect x="268.0" y="249.2" width="40.0" height="80.8" rx="4" fill="#f472b6" opacity="0.86"/>
+<text x="288" y="241.2025" font-size="10.5" fill="#f472b6" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0399</text>
+<path d="M 100 330 L 330 330" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="164" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVC+Platt</text>
+<text x="226" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF</text>
+<text x="288" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF+校準</text>
+<text x="360" y="146" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">LogLoss ↓</text>
+<path d="M 360 330.0 L 590 330.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="352" y="334.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.00</text>
+<path d="M 360 249.0 L 590 249.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="352" y="253.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.13</text>
+<path d="M 360 168.0 L 590 168.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="352" y="172.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.26</text>
+<rect x="404.0" y="192.5" width="40.0" height="137.5" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<text x="424" y="184.54923076923077" font-size="10.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.2206</text>
+<rect x="466.0" y="256.2" width="40.0" height="73.8" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="486" y="248.22769230769234" font-size="10.5" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.1184</text>
+<rect x="528.0" y="245.8" width="40.0" height="84.2" rx="4" fill="#f472b6" opacity="0.86"/>
+<text x="548" y="237.8223076923077" font-size="10.5" fill="#f472b6" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.1351</text>
+<path d="M 360 330 L 590 330" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="424" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVC+Platt</text>
+<text x="486" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF</text>
+<text x="548" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF+校準</text>
+<text x="620" y="146" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">ECE ↓</text>
+<path d="M 620 330.0 L 850 330.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="612" y="334.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.00</text>
+<path d="M 620 249.0 L 850 249.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="612" y="253.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.05</text>
+<path d="M 620 168.0 L 850 168.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="612" y="172.0" font-size="10.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.10</text>
+<rect x="664.0" y="239.8" width="40.0" height="90.2" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<text x="684" y="231.76600000000002" font-size="10.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0557</text>
+<rect x="726.0" y="241.7" width="40.0" height="88.3" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="746" y="233.71" font-size="10.5" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0545</text>
+<rect x="788.0" y="210.4" width="40.0" height="119.6" rx="4" fill="#f472b6" opacity="0.86"/>
+<text x="808" y="202.44400000000002" font-size="10.5" fill="#f472b6" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0738</text>
+<path d="M 620 330 L 850 330" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="684" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVC+Platt</text>
+<text x="746" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF</text>
+<text x="808" y="350" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF+校準</text>
+<rect x="70.0" y="98.0" width="12.0" height="12.0" rx="3" fill="#2dd4bf" opacity="0.86"/>
+<text x="90" y="109" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SVC+Platt</text>
+<rect x="200.0" y="98.0" width="12.0" height="12.0" rx="3" fill="#fbbf24" opacity="0.86"/>
+<text x="220" y="109" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF</text>
+<rect x="330.0" y="98.0" width="12.0" height="12.0" rx="3" fill="#f472b6" opacity="0.86"/>
+<text x="350" y="109" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RF+校準</text>
+<text x="48" y="372" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AUC 0.9696／0.9923／0.9921、準確率 0.9181／0.9415／0.9415：校準只改「分數→機率」，不改排序，也不是無腦加分項。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 27：<strong>校準指標</strong>——隨機森林本來就校準得不錯，再校準反而讓 Brier（0.0359→0.0399）與 ECE（0.0545→0.0738）變差；AUC 幾乎不變。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIGURE:ml-calibration -->
+
 <blockquote>
 <p>⚠️ <strong>反直覺結果</strong>：對<strong>本來就校準得不錯</strong>的隨機森林再校準，Brier 由 0.0359 <strong>變差</strong>到 0.0399、ECE 由 0.0545 變差到 0.0738。三個模型的 AUC 幾乎一樣（0.9696 / 0.9923 / 0.9921）→ <strong>校準只改「分數→機率」的映射，不改排序</strong>；它也不是無腦加分項。</p>
 <p><strong>考點</strong>：① 簡報原句「校準改善機率品質，<strong>不保證分類準確率提升</strong>」——本機實測完全吻合（RF 校準前後準確率都是 0.9415）。② Platt scaling 的公式 <span class="math" title="1/(1+e^{As+B})"><svg role="img" focusable="false" style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="13.571ex" height="2.532ex" role="img" focusable="false" viewBox="0 -869.3 5998.2 1119.3" xmlns:xlink="http://www.w3.org/1999/xlink"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(500,0)"><g data-mml-node="mo"><use data-c="2F" xlink:href="#MJX-TEX-N-2F"></use></g></g><g data-mml-node="mo" transform="translate(1000,0)"><use data-c="28" xlink:href="#MJX-TEX-N-28"></use></g><g data-mml-node="mn" transform="translate(1389,0)"><use data-c="31" xlink:href="#MJX-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(2111.2,0)"><use data-c="2B" xlink:href="#MJX-TEX-N-2B"></use></g><g data-mml-node="msup" transform="translate(3111.4,0)"><g data-mml-node="mi"><use data-c="1D452" xlink:href="#MJX-TEX-I-1D452"></use></g><g data-mml-node="TeXAtom" transform="translate(499,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D434" xlink:href="#MJX-TEX-I-1D434"></use></g><g data-mml-node="mi" transform="translate(750,0)"><use data-c="1D460" xlink:href="#MJX-TEX-I-1D460"></use></g><g data-mml-node="mo" transform="translate(1219,0)"><use data-c="2B" xlink:href="#MJX-TEX-N-2B"></use></g><g data-mml-node="mi" transform="translate(1997,0)"><use data-c="1D435" xlink:href="#MJX-TEX-I-1D435"></use></g></g></g><g data-mml-node="mo" transform="translate(5609.2,0)"><use data-c="29" xlink:href="#MJX-TEX-N-29"></use></g></g></g></svg></span> 要記住。③ 「為什麼需要額外資料？」→ 校準曲線不能在同一批資料上擬合（會過擬合），所以用 <code>cv</code> 的折外預測。④ 「Brier / ECE 在量什麼？」→ Brier 是機率的平方誤差、ECE 是「信心 vs 實際命中率」的分箱落差。</p>
@@ -2103,6 +2172,58 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tr>
 </tbody>
 </table>
+<!-- FIGURE:ml-trees-settings -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-label="決策樹六種設定的訓練與測試準確率" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="428.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">決策樹設定：訓練 vs 測試</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">breast_cancer，單次切分</text>
+<path d="M 118 372.0 L 846 372.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="376.0" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.900</text>
+<path d="M 118 317.2380952380951 L 846 317.2380952380951" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="321.2380952380951" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.925</text>
+<path d="M 118 262.4761904761905 L 846 262.4761904761905" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="266.4761904761905" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.950</text>
+<path d="M 118 207.7142857142856 L 846 207.7142857142856" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="211.7142857142856" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.975</text>
+<path d="M 118 152.95238095238074 L 846 152.95238095238074" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="156.95238095238074" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.000</text>
+<path d="M 118 372 L 846 372" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="172" y="394" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">gini</text>
+<text x="290" y="394" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">entropy</text>
+<text x="408" y="394" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">depth=1</text>
+<text x="526" y="394" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">depth=3</text>
+<text x="644" y="394" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">depth=5</text>
+<text x="762" y="394" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">None</text>
+<rect x="146.0" y="153.0" width="24.0" height="219.0" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<rect x="174.0" y="332.4" width="24.0" height="39.6" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="186" y="324.3523809523809" font-size="10" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9181</text>
+<rect x="264.0" y="153.0" width="24.0" height="219.0" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<rect x="292.0" y="268.2" width="24.0" height="103.8" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="304" y="260.17142857142846" font-size="10" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9474</text>
+<rect x="382.0" y="312.6" width="24.0" height="59.4" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<rect x="410.0" y="345.1" width="24.0" height="26.9" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="422" y="337.0571428571429" font-size="10" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9123</text>
+<rect x="500.0" y="197.0" width="24.0" height="175.0" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<rect x="528.0" y="319.4" width="24.0" height="52.6" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="540" y="311.42857142857133" font-size="10" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9240</text>
+<rect x="618.0" y="163.9" width="24.0" height="208.1" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<rect x="646.0" y="306.7" width="24.0" height="65.3" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="658" y="298.72380952380956" font-size="10" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9298</text>
+<rect x="736.0" y="153.0" width="24.0" height="219.0" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<rect x="764.0" y="332.4" width="24.0" height="39.6" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="776" y="324.3523809523809" font-size="10" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9181</text>
+<text x="48" y="112" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">準確率</text>
+<rect x="640.0" y="100.0" width="12.0" height="12.0" rx="3" fill="#2dd4bf" opacity="0.86"/>
+<text x="660" y="111" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練</text>
+<rect x="720.0" y="100.0" width="12.0" height="12.0" rx="3" fill="#fbbf24" opacity="0.86"/>
+<text x="740" y="111" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">測試</text>
+<text x="48" y="412" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">depth=1 兩邊都低（0.9271／0.9123）＝欠擬合；gini 與 None 訓練 1.0000、測試 0.9181＝過擬合。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 26：<strong>決策樹六種設定</strong>——depth=1 兩邊都低（欠擬合）；gini 與 None 訓練 1.0000、測試 0.9181（過擬合）；entropy 的 0.9474 屬單次切分波動。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIGURE:ml-trees-settings -->
+
 <blockquote>
 <p><strong>考點</strong>：① Gini 與熵的公式都要會寫（本機手算：4:4 時 <span class="math" title="H=1.0"><svg role="img" focusable="false" style="vertical-align: -0.186ex;" xmlns="http://www.w3.org/2000/svg" width="7.918ex" height="1.731ex" role="img" focusable="false" viewBox="0 -683 3499.6 765" xmlns:xlink="http://www.w3.org/1999/xlink"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D43B" xlink:href="#MJX-TEX-I-1D43B"></use></g><g data-mml-node="mo" transform="translate(1165.8,0)"><use data-c="3D" xlink:href="#MJX-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2221.6,0)"><use data-c="31" xlink:href="#MJX-TEX-N-31"></use><use data-c="2E" xlink:href="#MJX-TEX-N-2E" transform="translate(500,0)"></use><use data-c="30" xlink:href="#MJX-TEX-N-30" transform="translate(778,0)"></use></g></g></g></svg></span>、Gini <span class="math" title="=0.5"><svg role="img" focusable="false" style="vertical-align: -0.186ex;" xmlns="http://www.w3.org/2000/svg" width="5.28ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 2333.8 748" xmlns:xlink="http://www.w3.org/1999/xlink"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><use data-c="3D" xlink:href="#MJX-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(1055.8,0)"><use data-c="30" xlink:href="#MJX-TEX-N-30"></use><use data-c="2E" xlink:href="#MJX-TEX-N-2E" transform="translate(500,0)"></use><use data-c="35" xlink:href="#MJX-TEX-N-35" transform="translate(778,0)"></use></g></g></g></svg></span>）。② 「決策樹需要特徵縮放嗎？」→ <strong>不需要</strong>（只看大小順序）。③ 「訓練集 100%、測試 91.8% 是什麼問題？」→ <strong>過擬合</strong>，用 <code>max_depth</code>／<code>min_samples_leaf</code> 剪枝。④ 別過度解讀 gini 0.9181 vs entropy 0.9474 的差距——本機單次切分差 0.0293，屬抽樣波動。</p>
 </blockquote>

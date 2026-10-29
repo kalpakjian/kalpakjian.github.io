@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-label="L2 正則化 alpha 的 RMSE：訓練與測試誤差" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="468.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">L2 的 alpha：太小沒作用、太大欠擬合</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">degree=15 多項式，乳癌資料集</text>
+<path d="M 118 380.0 L 846 380.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="384.0" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text>
+<path d="M 118 332.0 L 846 332.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="336.0" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<path d="M 118 284.0 L 846 284.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="288.0" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<path d="M 118 236.0 L 846 236.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="240.0" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<path d="M 118 188.0 L 846 188.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="192.0" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text>
+<path d="M 118 140.0 L 846 140.0" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="108" y="144.0" font-size="11.5" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">10</text>
+<path d="M 118 380 L 846 380" fill="none" stroke="#7d8590" stroke-width="1.2"/>
+<text x="150" y="402" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text>
+<text x="272" y="402" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1e-4</text>
+<text x="394" y="402" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.01</text>
+<text x="516" y="402" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="638" y="402" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">100</text>
+<text x="760" y="402" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">10000</text>
+<text x="118" y="424" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">alpha（L2 強度）</text>
+<text x="48" y="112" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RMSE</text>
+<path d="M 638 134 L 638 380" fill="none" stroke="#3fb950" stroke-width="1.4" stroke-dasharray="5 4" opacity="0.85"/>
+<text x="650" y="274.896" font-size="12" fill="#3fb950" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">alpha=100（測試 2.546）</text>
+<path d="M 150.0 334.2 L 272.0 352.0 L 394.0 352.0 L 516.0 349.7 L 638.0 340.5 L 760.0 327.2" fill="none" stroke="#2dd4bf" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 150.0 256.9 L 272.0 158.8 L 394.0 168.9 L 516.0 191.1 L 638.0 318.9 L 760.0 284.1" fill="none" stroke="#fbbf24" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="150.0" cy="334.2" r="4.5" fill="#2dd4bf"/>
+<circle cx="150.0" cy="256.9" r="4.5" fill="#fbbf24"/>
+<circle cx="272.0" cy="352.0" r="4.5" fill="#2dd4bf"/>
+<circle cx="272.0" cy="158.8" r="4.5" fill="#fbbf24"/>
+<circle cx="394.0" cy="352.0" r="4.5" fill="#2dd4bf"/>
+<circle cx="394.0" cy="168.9" r="4.5" fill="#fbbf24"/>
+<circle cx="516.0" cy="349.7" r="4.5" fill="#2dd4bf"/>
+<circle cx="516.0" cy="191.1" r="4.5" fill="#fbbf24"/>
+<circle cx="638.0" cy="340.5" r="4.5" fill="#2dd4bf"/>
+<circle cx="638.0" cy="318.9" r="4.5" fill="#fbbf24"/>
+<circle cx="760.0" cy="327.2" r="4.5" fill="#2dd4bf"/>
+<circle cx="760.0" cy="284.1" r="4.5" fill="#fbbf24"/>
+<text x="280" y="146.816" font-size="12" fill="#fbbf24" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">9.216</text>
+<circle cx="650.0" cy="112.0" r="5" fill="#2dd4bf"/>
+<text x="664" y="116" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">訓練 RMSE</text>
+<circle cx="770.0" cy="112.0" r="5" fill="#fbbf24"/>
+<text x="784" y="116" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">測試 RMSE</text>
+<text x="48" y="440" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">alpha 不是越大或越小越好：太小幾乎沒作用（9.216）、100 最好（2.546），開到 10000 連訓練誤差都上升＝欠擬合。</text>
+</svg>

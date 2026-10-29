@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 415" role="img" aria-label="H2O AutoML Leaderboard 前五名的 rmse 與 mae" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="413.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Leaderboard 前 5 名：rmse 差距只有 0.025</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AutoML 依 rmse 由小到大排序，第一名＝最佳</text>
+<text x="268" y="130" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">rmse（越小越好，排序依據）</text>
+<text x="812" y="130" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">mae</text>
+<path d="M 285.4000000000019 138 L 285.4000000000019 340" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="285.4000000000019" y="360" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.445</text>
+<path d="M 459.4000000000019 138 L 459.4000000000019 340" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="459.4000000000019" y="360" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.455</text>
+<path d="M 633.4000000000019 138 L 633.4000000000019 340" fill="none" stroke="#30363d" stroke-width="1" opacity="0.45"/>
+<text x="633.4000000000019" y="360" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.465</text>
+<rect x="268.0" y="142.0" width="48.7" height="20.0" rx="4" fill="#fbbf24" opacity="0.86"/>
+<text x="256" y="156" font-size="11.5" fill="#e6edf3" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SE BestOfFamily_6</text>
+<text x="324.7200000000023" y="156" font-size="11" fill="#fbbf24" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.4468</text>
+<text x="812" y="156" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.0084</text>
+<rect x="268.0" y="182.0" width="83.5" height="20.0" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<text x="256" y="196" font-size="11.5" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SE BestOfFamily_7</text>
+<text x="359.5200000000023" y="196" font-size="11" fill="#fbbf24" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.4488</text>
+<text x="812" y="196" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.9986</text>
+<rect x="268.0" y="222.0" width="113.1" height="20.0" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<text x="256" y="236" font-size="11.5" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SE BestOfFamily_4</text>
+<text x="389.099999999999" y="236" font-size="11" fill="#fbbf24" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.4505</text>
+<text x="812" y="236" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.0072</text>
+<rect x="268.0" y="262.0" width="360.2" height="20.0" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<text x="256" y="276" font-size="11.5" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GBM_grid_77</text>
+<text x="636.1799999999987" y="276" font-size="11" fill="#fbbf24" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.4647</text>
+<text x="812" y="276" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.0196</text>
+<rect x="268.0" y="302.0" width="483.7" height="20.0" rx="4" fill="#2dd4bf" opacity="0.86"/>
+<text x="256" y="316" font-size="11.5" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GBM_grid_49</text>
+<text x="759.7200000000004" y="316" font-size="11" fill="#fbbf24" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.4718</text>
+<text x="812" y="316" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.0443</text>
+<text x="48" y="392" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">前 5 名的 rmse 只差 0.025（1.4468→1.4718），但 mae 幾乎並列（0.9986–1.0443）：排序看 rmse，別把差距讀成碾壓。</text>
+</svg>
