@@ -32,6 +32,21 @@ navbar:
     - { key: 'tag', link: '/tags/', icon: 'iconfont icon-tags-fill' }
     - { key: 'about', link: '/about/', icon: 'iconfont icon-user-fill' }
 
+# /about/ 頁面（theme 預設會顯示 "Fluid / An elegant theme for Hexo" 與一個指向
+# /img/favicon.png 的微信 QR——本站沒有那張圖，會變成破圖）。這裡整段覆寫。
+about:
+  avatar: /img/avatar.png
+  name: 'AI Tech Notes'
+  intro: '本地 LLM 部署 · AI 工具實測 · 深度學習筆記 · 硬體效能評測'
+  icons:
+    - { class: 'iconfont icon-github-fill', link: 'https://github.com/kalpakjian', tip: 'GitHub' }
+
+# theme 會無條件生成一份 /links/「友鏈」頁，預設塞三個 Fluid 官方 demo 連結，
+# 而且頭像指向不存在的 /img/favicon.png（破圖）。本站沒有友鏈頁，關掉。
+links:
+  enable: false
+
+
 index:
   banner_img: https://images.unsplash.com/photo-1518770660439-4636190af475?w=1600
   banner_mask_alpha: 0.3
