@@ -22,6 +22,8 @@ ARIA = {
     "volume": "輸出體積與步幅：6×6 輸入、3×3 核、stride 2 得到 3×3 輸出，depth 等於濾波器數量",
     "pool": "2×2 最大池化：4×4 輸入取每個鄰域的最大值，降成 2×2 輸出且沒有參數",
     "tasks": "同一個卷積 backbone 接四種任務頭：分類、分割、上色、控制",
+    "params": "參數量分佈：1,668,490 個參數中 Dense(1024) 佔 1,639,424（98.2%），Conv 層共 18,816（1.1%），輸出層 10,250（0.6%）",
+    "accuracy": "CIFAR-10 準確率階梯：課程架構 0.80、加 dropout 0.81、小型 VGG 0.89、VGG+cutout 0.94、ResNet-18+cutout 0.96",
 }
 
 
@@ -88,7 +90,7 @@ def fig_overview():
             body.append(arrow(x + bw, y + bh / 2, x + bw + gap - 3, y + bh / 2))
         x += bw + gap
     body.append(label(20, y + bh + 30, "可訓練的權重只在 Conv 與 Dense；Pool 與 Softmax 沒有參數"))
-    return svg("overview", 880, 165, "".join(body))
+    return svg("overview", 920, 165, "".join(body))
 
 
 def fig_hierarchy():
@@ -117,8 +119,8 @@ def fig_local():
             box(428, 68, 52, 38, "ReLU", BLUE, 12.5),
             arrow(484, 88, 520, 88),
             box(524, 58, 156, 58, "特徵圖 1 格", AMBER, 12.5, "同一組權重滑遍全圖"),
-            label(30, 176, "3×3 濾波器 = 9 個權重，走到哪裡都同一組")]
-    return svg("local", 700, 190, "".join(body))
+            label(30, 200, "3×3 濾波器 = 9 個權重，走到哪裡都同一組")]
+    return svg("local", 700, 215, "".join(body))
 
 
 def fig_volume():
@@ -130,7 +132,7 @@ def fig_volume():
             box(340, 34, 300, 60, "O = (N + 2P − F) / S + 1", AMBER, 15),
             label(340, 120, "depth（d）= 濾波器數量，不是輸入通道數", TEAL, 12),
             label(230, 152, "每一格 = 一個濾波器在該位置的輸出")]
-    return svg("volume", 660, 170, "".join(body))
+    return svg("volume", 660, 195, "".join(body))
 
 
 def fig_pool():
@@ -158,17 +160,76 @@ def fig_pool():
 def fig_tasks():
     heads = [("分類 head", "全連接 + softmax", AMBER), ("分割 head", "全卷積 + 轉置卷積", BLUE),
              ("上色 head", "2 個色度通道", AMBER), ("控制 head", "方向盤、油門", BLUE)]
+    bh, dy, y0 = 38, 46, 12
     body = [box(24, 64, 150, 62, "卷積 backbone", TEAL, 12.5, "同一組特徵抽取器")]
     for k, (name, sub, col) in enumerate(heads):
-        y = 14 + k * 42
-        body.append(arrow(178, 95, 216, y + 17))
-        body.append(box(220, y, 190, 34, name, col, 11.5, sub))
-    body.append(label(24, 168, "換頭就換任務：分割、上色、超解析、端到端控制都是這樣組出來的"))
-    return svg("tasks", 470, 180, "".join(body))
+        y = y0 + k * dy
+        body.append(arrow(178, 95, 216, y + bh / 2))
+        body.append(box(220, y, 190, bh, name, col, 11.5, sub))
+    body.append(label(24, 210, "換頭就換任務：分割、上色、超解析、端到端控制都是這樣組出來的"))
+    return svg("tasks", 470, 220, "".join(body))
+
+
+def fig_params():
+    """參數量分佈：1,668,490 個參數裡 98.2% 在 Flatten 之後。"""
+    total = 1668490
+    segs = [("Dense(1024)", 1639424, AMBER, "98.2%"),
+            ("Conv 32 + Conv 64", 18816, TEAL, "1.1%"),
+            ("Dense(10, softmax)", 10250, BLUE, "0.6%")]
+    bw, x0, y0, bh = 820, 40, 56, 44
+    body = [label(40, 30, "1,668,490 個參數，98.2% 集中在 Flatten 之後", AMBER, 13)]
+    x = x0
+    for name, n, col, pct in segs:
+        w = bw * n / total
+        rx = 3 if w > 20 else 0
+        body.append(f'<rect x="{x:.2f}" y="{y0}" width="{w:.2f}" height="{bh}" '
+                    f'rx="{rx}" fill="{col}" opacity="0.85"/>')
+        x += w
+    body.append(f'<rect x="{x0}" y="{y0}" width="{bw}" height="{bh}" rx="1" '
+                f'fill="none" stroke="{DIM}" stroke-width="0.8" opacity="0.5"/>')
+    for i, (name, n, col, pct) in enumerate(segs):
+        ly = 148 + i * 30
+        body.append(f'<rect x="40" y="{ly - 10}" width="12" height="12" rx="3" '
+                    f'fill="{col}" opacity="0.85"/>')
+        body.append(label(62, ly, "%s  %s（%s）" % (name, format(n, ","), pct),
+                          INK, 12.5))
+    body.append(label(40, 148 + 3 * 30, "MaxPool / Flatten：0 個參數", DIM, 11.5))
+    return svg("params", 900, 250, "".join(body))
+
+
+def fig_accuracy():
+    """六組設定的準確率階梯（橫軸從 0.70 起，避免差異被壓扁）。"""
+    data = [("課程的架構（20 輪）", 0.80), ("加上 dropout 0.3", 0.81),
+            ("小型 VGG（6 層卷積 + BN）", 0.89), ("VGG + cutout（200 輪）", 0.94),
+            ("ResNet-18 + cutout（200 輪）", 0.96)]
+    x0, x1, lo, hi = 210, 860, 0.70, 1.00
+    body = [label(30, 30, "同一份資料：換架構與排程，0.80 → 0.96", AMBER, 13)]
+
+    def vx(v):
+        return x0 + (v - lo) / (hi - lo) * (x1 - x0)
+
+    for t in (0.70, 0.80, 0.90, 1.00):
+        body.append(f'<line x1="{vx(t):.1f}" y1="52" x2="{vx(t):.1f}" y2="262" '
+                    f'stroke="{DIM}" stroke-width="0.8" opacity="0.22"/>')
+        body.append(label(vx(t), 284, "%.2f" % t, DIM, 11, "middle"))
+
+    for i, (name, v) in enumerate(data):
+        cy = 78 + i * 40
+        col = TEAL if i < 2 else (AMBER if i < 4 else ROSE)
+        body.append(f'<rect x="{x0}" y="{cy - 11}" width="{vx(v) - x0:.1f}" '
+                    f'height="22" rx="4" fill="{col}" opacity="0.85"/>')
+        body.append(label(x0 - 12, cy + 4, name, INK, 11.5, "end"))
+        body.append(label(vx(v) + 10, cy + 4, "%.2f" % v, col, 12.5))
+
+    body.append(f'<line x1="{x0}" y1="52" x2="{x0}" y2="262" stroke="{DIM}" '
+                f'stroke-width="1"/>')
+    body.append(label(30, 284, "橫軸從 0.70 起", DIM, 10.5))
+    return svg("accuracy", 900, 300, "".join(body))
 
 
 FIGS = {"overview": fig_overview, "hierarchy": fig_hierarchy, "local": fig_local,
-        "volume": fig_volume, "pool": fig_pool, "tasks": fig_tasks}
+        "volume": fig_volume, "pool": fig_pool, "tasks": fig_tasks,
+        "params": fig_params, "accuracy": fig_accuracy}
 
 CAPTIONS = {
     "overview": "整個分類網路：前五層抽特徵，後三層把特徵變成類別分數；可訓練的參數只在 Conv 與 Dense。",
@@ -177,6 +238,8 @@ CAPTIONS = {
     "volume": "輸出體積與步幅。depth 由濾波器數量決定，面積由公式算。",
     "pool": "最大池化：2×2 取最大，面積變四分之一，而且沒有參數可學。",
     "tasks": "同一個 backbone、換一個頭，就是另一個任務。",
+    "params": "參數量分佈：98.2% 集中在 Flatten 之後的 Dense(1024)，卷積層本身只佔 1.1%。",
+    "accuracy": "六組設定的 CIFAR-10 測試準確率；換架構與長排程把 0.80 推到 0.96（橫軸從 0.70 起）。",
 }
 
 
