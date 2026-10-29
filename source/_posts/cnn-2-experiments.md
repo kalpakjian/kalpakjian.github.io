@@ -18,7 +18,11 @@ index_img: /img/covers/cnn-2-experiments.png
 banner_img: /img/covers/cnn-2-experiments.png
 ---
 
-> <strong>一句話結論</strong>：課程那個 2,389,962 個參數的模型，在 CIFAR-10 跑 20 輪只有 <strong>0.7578</strong>；換成<strong>參數更少</strong>的小型 VGG 是 <strong>0.8694</strong>，跑滿 200 輪加 cutout 是 <strong>0.9409</strong>，ResNet-18 到 <strong>0.9587</strong>（Linux 重跑 0.9613）。但 33 組 run 裡最有用的一課不是「誰最準」，而是——<strong>跨框架的差距幾乎都來自沒被明寫的預設值</strong>：把資料增強對齊後，TF 與 torch 的平均差距從 4.00 pp 降到 2.56 pp，而剩下那 5 pp 找不到單一原因。
+> <strong>一句話結論</strong>：簡報裡那段示範程式碼（2,389,962 個參數）在 CIFAR-10 跑 20 輪只有 <strong>0.7578</strong>；換成<strong>參數更少</strong>的小型 VGG 是 <strong>0.8694</strong>，跑滿 200 輪加 cutout 是 <strong>0.9409</strong>，ResNet-18 到 <strong>0.9587</strong>（Linux 重跑 0.9613）。但 33 組 run 裡最有用的一課不是「誰最準」，而是——<strong>跨框架的差距幾乎都來自沒被明寫的預設值</strong>：把資料增強對齊後，TF 與 torch 的平均差距從 4.00 pp 降到 2.56 pp，而剩下那 5 pp 找不到單一原因。
+
+> <strong>先說清楚：那段程式碼不是教材</strong>——簡報上那段 Keras 程式碼是**示意用的範例**（很可能是從網路上找來的現成片段，貼進去讓版面完整），
+> 不是課程指定的模型，也沒有保證可執行（實際上有三個地方會直接報錯）。
+> 所以下面每一個數字，測的都是**那段程式碼**，不代表課程教得好不好，也不代表 CNN 的極限。
 
 講義只有 32 頁，但真的把它跑起來之後，累積了 **33 組 run**、跨三個平台
 （Windows/CPU、Linux/GPU、Windows/GPU）、以及五個被逐項測掉的假設——份量已經超過筆記本文。
@@ -41,9 +45,9 @@ banner_img: /img/covers/cnn-2-experiments.png
 
 ## 先講結論
 
-1. **參數量不是瓶頸，深度與歸一化才是。** 小型 VGG 參數比課程模型少（2.20M vs 2.39M），
+1. **參數量不是瓶頸，深度與歸一化才是。** 小型 VGG 參數比那段範例程式碼少（2.20M vs 2.39M），
    準確率卻高 11 個百分點——差別是 6 層卷積 + BatchNorm + `padding="same"`，
-   特徵圖不再被逐層裁掉（課程版 32→30→15→13→6）。
+   特徵圖不再被逐層裁掉（那段程式碼 32→30→15→13→6）。
 2. **20 輪的「到頂」是假的。** VGG + cutout 從 20 輪的 0.8171 走到 200 輪的 0.9409，
    其中 2–4 pp 純粹來自最後 30 輪的學習率收尾。同一組權重、同一個模型，只換排程就差這麼多。
 3. **dropout 買到的是「訓練/驗證差距」，不是準確率。** 差距 8.9 pp → 4.0 pp、
@@ -68,7 +72,7 @@ banner_img: /img/covers/cnn-2-experiments.png
 - 33 組 run 的命名規則：`runs/<平台>-<資料集>-<輪數>[-<變體>]`，例如
   `runs/linux-cifar-200-r18`（Linux、CIFAR、200 輪、ResNet-18）。
 
-## 1. MNIST：簡報模型的第一次實測
+## 1. MNIST：那段範例程式碼的第一次實測
 
 ```
 python ivdc_cnn_train.py --dataset mnist --epochs 5 --outdir runs/mnist-5ep
@@ -152,8 +156,8 @@ python ivdc_cnn_train.py --dataset cifar10 ^
 
 | 設定 | 參數 | 訓練 | 測試 acc | 測試 loss | macro F1 | 差距 |
 |---|---|---|---|---|---|---|
-| 講義架構（20 ep, TF/CPU） | 2,389,962 | 1.2 min | 0.7578 | 0.7716 | 0.7543 | 8.9 pp |
-| 講義架構 + Dropout 0.3（20 ep, TF/CPU） | 2,389,962 | 1.3 min | 0.7593 | 0.7098 | 0.7558 | 4.0 pp |
+| 簡報範例程式碼（20 ep, TF/CPU） | 2,389,962 | 1.2 min | 0.7578 | 0.7716 | 0.7543 | 8.9 pp |
+| 簡報範例程式碼 + Dropout 0.3（20 ep, TF/CPU） | 2,389,962 | 1.3 min | 0.7593 | 0.7098 | 0.7558 | 4.0 pp |
 | 小型 VGG（20 ep, TF/CPU） | 2,199,498 | 16.5 min | 0.8694 | 0.3974 | 0.8695 | 2.3 pp |
 | 小型 VGG + Cutout（20 ep, TF/CPU） | 2,199,498 | 15.5 min | 0.8171 | 0.5395 | 0.8140 | −8.1 pp\* |
 | 小型 VGG + Cutout（200 ep, torch/GPU） | 2,197,706 | 24.9 min | 0.9409 | 0.2509 | 0.9408 | 3.0 pp |
@@ -169,16 +173,16 @@ python ivdc_cnn_train.py --dataset cifar10 ^
 
 - **dropout 的效果在「差距」而不是「準確率」**：train/val 差距由 8.9 pp 砍到 4.0 pp，
   測試 loss 由 0.772 降到 0.710（−8%），但準確率只多 0.15 pp。
-  → 20 輪的預算內，講義架構的瓶頸是**模型容量**，不是正則化不足。
+  → 20 輪的預算內，那段程式碼的瓶頸是**模型容量**，不是正則化不足。
 - **VGG 用更少參數（2.20M < 2.39M）卻高出 11 pp**：關鍵不是參數量，而是
   **深度（6 個卷積）+ BatchNorm + `padding="same"`**——特徵圖不再被逐層裁掉
-  （講義版 32→30→15→13→6，每層卷積都在丟邊界資訊）。它的 train/val 差距只有 2.3 pp，
+  （那段程式碼 32→30→15→13→6，每層卷積都在丟邊界資訊）。它的 train/val 差距只有 2.3 pp，
   測試 loss 0.397 遠低於另外兩者 → 信心校準也明顯更好。
 - VGG 的 val 曲線有兩段跳升，都緊跟 `ReduceLROnPlateau`：ep9 降 lr 後 ep10 由 0.759 → 0.822；
   ep15 再降後 ep18 到 0.869。最好一輪是 ep19 = 0.8764（checkpoint 存的就是這輪）。
 - 難類排序不變、數值整體上移：cat 0.581 → **0.749**、dog 0.663 → 0.809、bird 0.678 → 0.833；
   最好的是 automobile 0.938、ship 0.917、truck 0.914。→ 這三類是真難，不是訓練不足。
-- 代價：VGG 每輪 49 秒（講義版 4 秒，慢 12 倍），20 輪共 16.5 分鐘。
+- 代價：VGG 每輪 49 秒（那段程式碼 4 秒，慢 12 倍），20 輪共 16.5 分鐘。
   母筆記 §10 那些應用之所以全部改用深網，就是這個「容量換算力」的取捨。
 
 **cutout 在 20 輪是負面結果（0.8171，−5.2 pp），而原因比「變差」有意思：**
@@ -212,7 +216,7 @@ python ivdc_cnn_train.py --dataset cifar10 ^
 - 難類還是同一組：cat **0.909**、dog 0.923（最好 horse 0.982、automobile 0.976）。
   連 11M 參數的 ResNet 都只能把 cat 推到 0.91，「貓與狗的紋理相似」確實是 CIFAR 的天花板之一。
 
-> VGG 與 cutout 都**不在講義裡**，是為了讓「參數量 ≠ 表現」和「增強不是萬靈丹」有對照組才加的
+> VGG 與 cutout 都**不在簡報那段程式碼裡**，是為了讓「參數量 ≠ 表現」和「增強不是萬靈丹」有對照組才加的
 > （`--arch vgg` / `--cutout`）。33 組 run 疊在一起的曲線圖：`runs/cifar-compare.png`。
 
 ## 4. Linux / GPU 重跑：同程式碼的跨平台對照
