@@ -230,6 +230,7 @@ $h = (Invoke-WebRequest "https://kalpakjian.github.io/<note>/" -UseBasicParsing)
 | 檔案 | 用途 |
 |---|---|
 | `inventory.py` | **先跑這個**：即時盤點還剩哪些圖；也可列出／印出單一區塊 |
+| `table_inventory.py` | 盤點「量化表格」（標籤欄＋數字欄）→ 列出適合轉成圖表的候選 |
 | `svglib.py` | **引擎**：house style、卡片／徽章／匯流排／圖例／elbow、`check()` 碰撞自檢、`save()`／`figure()` |
 | `embed_figs.py` | 讀 plan JSON，把第 N 個真圖區塊換成內嵌 SVG（md + html 同步） |
 | `figures/gen_*.py` | 各筆記的產生器（資料驅動，改資料即可重用） |

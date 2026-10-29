@@ -24,6 +24,7 @@ ARIA = {
     "tasks": "同一個卷積 backbone 接四種任務頭：分類、分割、上色、控制",
     "params": "參數量分佈：1,668,490 個參數中 Dense(1024) 佔 1,639,424（98.2%），Conv 層共 18,816（1.1%），輸出層 10,250（0.6%）",
     "accuracy": "CIFAR-10 準確率階梯：課程架構 0.80、加 dropout 0.81、小型 VGG 0.89、VGG+cutout 0.94、ResNet-18+cutout 0.96",
+    "shapes": "張量形狀階梯：28×28×1 經 Conv 變 26×26×32、Pool 變 13×13×32、再 Conv 變 11×11×64、Pool 變 5×5×64，Flatten 後 1600 維",
 }
 
 
@@ -227,9 +228,29 @@ def fig_accuracy():
     return svg("accuracy", 900, 300, "".join(body))
 
 
+def fig_shapes():
+    """張量形狀階梯：28×28×1 → 26×26×32 → 13×13×32 → 11×11×64 → 5×5×64 → 1600。"""
+    chips = [("28×28×1", TEAL), ("26×26×32", TEAL), ("13×13×32", BLUE),
+             ("11×11×64", TEAL), ("5×5×64", BLUE), ("1600 維", AMBER)]
+    ops = ["Conv 3×3", "Pool 2×2", "Conv 3×3", "Pool 2×2", "Flatten"]
+    cw, gap, x0, y0, ch = 100, 52, 40, 74, 54
+    body = [label(40, 32, "同一個模型，張量一路縮小：28×28×1 → 1600 維", AMBER, 13)]
+    x = x0
+    for i, (shape, col) in enumerate(chips):
+        body.append(f'<rect x="{x}" y="{y0}" width="{cw}" height="{ch}" rx="8" '
+                    f'fill="none" stroke="{col}" stroke-width="1.6"/>')
+        body.append(label(x + cw / 2, y0 + ch / 2 + 5, shape, INK, 12.5, "middle"))
+        if i < len(ops):
+            body.append(arrow(x + cw, y0 + ch / 2, x + cw + gap - 4, y0 + ch / 2))
+            body.append(label(x + cw + gap / 2, y0 - 12, ops[i], DIM, 10.5, "middle"))
+        x += cw + gap
+    body.append(label(40, 178, "卷積只改 channel 數（= 濾波器數量），池化只砍面積，Flatten 只攤平。"))
+    return svg("shapes", 940, 210, "".join(body))
+
+
 FIGS = {"overview": fig_overview, "hierarchy": fig_hierarchy, "local": fig_local,
         "volume": fig_volume, "pool": fig_pool, "tasks": fig_tasks,
-        "params": fig_params, "accuracy": fig_accuracy}
+        "params": fig_params, "accuracy": fig_accuracy, "shapes": fig_shapes}
 
 CAPTIONS = {
     "overview": "整個分類網路：前五層抽特徵，後三層把特徵變成類別分數；可訓練的參數只在 Conv 與 Dense。",
@@ -240,6 +261,7 @@ CAPTIONS = {
     "tasks": "同一個 backbone、換一個頭，就是另一個任務。",
     "params": "參數量分佈：98.2% 集中在 Flatten 之後的 Dense(1024)，卷積層本身只佔 1.1%。",
     "accuracy": "六組設定的 CIFAR-10 測試準確率；換架構與長排程把 0.80 推到 0.96（橫軸從 0.70 起）。",
+    "shapes": "課程模型的張量形狀：28×28×1 → 26×26×32 → 13×13×32 → 11×11×64 → 5×5×64 → 1600 維。",
 }
 
 
