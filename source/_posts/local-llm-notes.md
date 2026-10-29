@@ -1,5 +1,5 @@
 ---
-title: Local LLM Apps 學習筆記（IVDC Lesson 7）
+title: Local LLM Apps 學習筆記（Lesson 7）
 date: 2026-10-13 12:20:00
 tags:
   - LLM
@@ -8,7 +8,6 @@ tags:
   - GPT4All
   - AnythingLLM
   - RAG
-  - IVDC
   - 學習筆記
   - Python
 categories:

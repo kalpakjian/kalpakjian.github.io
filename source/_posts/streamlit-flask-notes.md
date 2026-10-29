@@ -1,11 +1,10 @@
 ---
-title: Streamlit and Flask 學習筆記（IVDC Lesson 9）
+title: Streamlit and Flask 學習筆記（Lesson 9）
 date: 2026-10-13 11:45:00
 tags:
   - LLM
   - Streamlit
   - Flask
-  - IVDC
   - 學習筆記
   - Python
 categories:

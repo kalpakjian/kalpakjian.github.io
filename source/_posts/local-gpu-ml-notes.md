@@ -1,6 +1,6 @@
 ---
-title: Using Local GPU for Machine Learning 學習筆記：IVDC 課程完整複習 + 60 題 MC 模擬試卷
-archive: true   # 已歸入「IVDC 電腦視覺課程」學習筆記，不列在首頁
+title: Using Local GPU for Machine Learning 學習筆記：課程完整複習 + 60 題 MC 模擬試卷
+archive: true   # 已歸入「電腦視覺課程」學習筆記，不列在首頁
 date: 2026-10-10 23:00:00
 categories:
   - 學習資源
@@ -9,7 +9,6 @@ tags:
   - CUDA
   - cuDNN
   - PyTorch
-  - IVDC
   - 學習筆記
 index_img: /img/covers/local-gpu-ml-notes.png
 banner_img: /img/covers/local-gpu-ml-notes.png

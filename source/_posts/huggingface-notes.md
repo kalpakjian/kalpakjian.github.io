@@ -1,5 +1,5 @@
 ---
-title: Hugging Face for LLM 學習筆記（IVDC Lesson 6）
+title: Hugging Face for LLM 學習筆記（Lesson 6）
 date: 2026-10-13 15:40:00
 tags:
   - LLM
@@ -9,7 +9,6 @@ tags:
   - PEFT
   - LoRA
   - QLoRA
-  - IVDC
   - 學習筆記
   - Python
 categories:

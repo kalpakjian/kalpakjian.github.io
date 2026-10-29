@@ -1,6 +1,6 @@
 ---
-title: CNN 卷積神經網路學習筆記：IVDC Lesson 6 完整複習 + 60 題 MC 模擬試卷
-archive: true   # 已歸入「IVDC 電腦視覺課程」學習筆記，不列在首頁
+title: CNN 卷積神經網路學習筆記：Lesson 6 完整複習 + 60 題 MC 模擬試卷
+archive: true   # 已歸入「電腦視覺課程」學習筆記，不列在首頁
 date: 2026-10-26 20:30:00
 categories:
   - 學習資源
@@ -8,7 +8,6 @@ tags:
   - CNN
   - 卷積神經網路
   - 電腦視覺
-  - IVDC
   - 學習筆記
   - 考試
 index_img: /img/covers/cnn-notes.png

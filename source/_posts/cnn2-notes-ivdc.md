@@ -1,7 +1,7 @@
 ---
 title: "CNN 2：卷積神經網路（二）學習筆記 — 從局部連接、ReLU、池化到可執行的實作"
 date: 2026-10-29 03:30:00
-archive: true   # 已歸入「IVDC 電腦視覺課程」學習筆記（/cv-course/ 第 8 節），不列在首頁
+archive: true   # 已歸入「電腦視覺課程」學習筆記（/cv-course/ 第 8 節），不列在首頁
 categories:
   - 學習資源
 tags:

@@ -1,6 +1,6 @@
 ---
-title: Responsible AI 學習筆記：IVDC 課程完整複習 + 60 題 MC 模擬試卷
-archive: true   # 已歸入「IVDC 電腦視覺課程」學習筆記，不列在首頁
+title: Responsible AI 學習筆記：課程完整複習 + 60 題 MC 模擬試卷
+archive: true   # 已歸入「電腦視覺課程」學習筆記，不列在首頁
 date: 2026-10-12 18:00:00
 categories:
   - 學習資源
@@ -9,7 +9,6 @@ tags:
   - Responsible AI
   - 倫理
   - PDPO
-  - IVDC
   - 學習筆記
   - 考試
 index_img: /img/covers/responsible-ai-notes.png

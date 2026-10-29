@@ -1,6 +1,6 @@
 ---
-title: Teachable Machine 實作：IVDC Lesson 9 完整筆記（機械蛇示範）
-archive: true   # 已徵入「IVDC 電腦視覺課程」專題頁，不列在首頁
+title: Teachable Machine 實作：Lesson 9 完整筆記（機械蛇示範）
+archive: true   # 已徵入「電腦視覺課程」專題頁，不列在首頁
 date: 2026-10-28 12:00:00
 categories:
   - 學習資源
@@ -9,7 +9,6 @@ tags:
   - TensorFlow.js
   - p5.js
   - 電腦視覺
-  - IVDC
   - 學習筆記
   - 考試
 index_img: /img/covers/cv-practical-notes.png
@@ -20,7 +19,7 @@ banner_img: /img/covers/cv-practical-notes.png
 
 這一課的主軸是 **Teachable Machine**：用瀏覽器、零編程訓練一個圖像分類器，再匯出成 **TensorFlow.js** 模型，最後接上 **p5.js** 做示範（課堂示範項目是「機械蛇」）。簡報後半部全部在講**模型為何會失敗**——兩隻香蕉、換背景、換光線、甚至一張香蕉圖畫，都能讓它出錯——而這正好是考試最常考的地方。
 
-課程總覽與其他課的筆記：**[IVDC 電腦視覺課程 學習筆記總覽](/cv-course/)**
+課程總覽與其他課的筆記：**[電腦視覺課程 學習筆記總覽](/cv-course/)**
 
 <!-- more -->
 

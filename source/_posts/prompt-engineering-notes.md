@@ -1,6 +1,6 @@
 ---
-title: Prompt Engineering 學習筆記：IVDC Lesson 5 完整複習 + 60 題 MC 模擬試卷
-archive: true   # 已歸入「IVDC LLM 課程」學習筆記，不列在首頁
+title: Prompt Engineering 學習筆記：Lesson 5 完整複習 + 60 題 MC 模擬試卷
+archive: true   # 已歸入「LLM 課程」學習筆記，不列在首頁
 date: 2026-10-13 10:20:00
 categories:
   - 學習資源
@@ -12,7 +12,6 @@ tags:
   - Tree-of-Thoughts
   - ReAct
   - RAG
-  - IVDC
   - 學習筆記
   - 考試
 index_img: /img/covers/prompt-engineering-notes.png

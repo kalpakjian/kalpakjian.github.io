@@ -1,11 +1,10 @@
 ---
-title: Popular LLM Models 學習筆記（IVDC Lesson 2）
+title: Popular LLM Models 學習筆記（Lesson 2）
 date: 2026-10-13 13:20:00
 tags:
   - LLM
   - Generative AI
   - RAG
-  - IVDC
   - 學習筆記
 categories:
   - AI

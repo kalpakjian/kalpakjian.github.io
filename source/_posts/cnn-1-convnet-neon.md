@@ -13,7 +13,6 @@ tags:
   - 感受野
   - 反向傳播
   - 深度學習
-  - IVDC
   - Qwen-Image
 toc: true
 index_img: /img/covers/cnn-1-convnet-neon.png

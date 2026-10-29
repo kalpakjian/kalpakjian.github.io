@@ -1,10 +1,9 @@
 ---
-title: LiteLLM 學習筆記（IVDC Lesson 8）
+title: LiteLLM 學習筆記（Lesson 8）
 date: 2026-10-13 11:40:00
 tags:
   - LLM
   - LiteLLM
-  - IVDC
   - 學習筆記
   - Python
 categories:
