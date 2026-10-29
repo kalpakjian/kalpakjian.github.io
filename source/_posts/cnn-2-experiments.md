@@ -40,8 +40,8 @@ banner_img: /img/covers/cnn-2-experiments.png
 | **本篇：實驗紀錄** | 33 組 run、六種設定、三個平台、五個假設 |
 
 > **關於可重現性**：所有數字都對應 `runs/<name>/*-report.json`；四支程式
-> （`ivdc_cnn_train.py`、`ivdc_cnn_torch.py`、`summarize_runs.py`、`compare_platforms.py`）
-> 與 33 組 report 都在 **private repo** `ivdc-cnn-course` 裡，網站這篇只放得下的結論與圖。
+> （`cnn_train.py`、`cnn_torch.py`、`summarize_runs.py`、`compare_platforms.py`）
+> 與 33 組 report 都在 **private repo** `cnn-course-demo` 裡，網站這篇只放得下的結論與圖。
 > 想照著跑的話，下面每一節都附了當時的指令。
 
 ## 先講結論
@@ -76,7 +76,7 @@ banner_img: /img/covers/cnn-2-experiments.png
 ## 1. MNIST：那段範例程式碼的第一次實測
 
 ```
-python ivdc_cnn_train.py --dataset mnist --epochs 5 --outdir runs/mnist-5ep
+python cnn_train.py --dataset mnist --epochs 5 --outdir runs/mnist-5ep
 ```
 
 | epoch | train acc | val acc | train loss | val loss |
@@ -118,7 +118,7 @@ python ivdc_cnn_train.py --dataset mnist --epochs 5 --outdir runs/mnist-5ep
 ## 2. CIFAR-10：只跑 2 輪會怎樣
 
 ```
-python ivdc_cnn_train.py --dataset cifar10 ^
+python cnn_train.py --dataset cifar10 ^
   --cifar-dir %USERPROFILE%\.keras\datasets\cifar-10-batches-py ^
   --epochs 2 --augment --outdir runs/cifar-2ep
 ```
@@ -250,7 +250,7 @@ python ivdc_cnn_train.py --dataset cifar10 ^
    ——**資料管線才是瓶頸**，這正好解釋為什麼 torch 那份要加 `--gpu-augment`。
 5. **`EarlyStopping` 會讓跨平台比較失真**：同一份程式在 GPU 上 val_acc 約 8–10 輪就見頂，
    `patience=3` 會讓 20 輪的 run 在 11／13 輪就停，跟 Windows「跑滿 20」不能直接比。
-   `ivdc_cnn_train.py` 已加 `--early-stop-patience 0` 供固定 epoch 的對照使用。
+   `cnn_train.py` 已加 `--early-stop-patience 0` 供固定 epoch 的對照使用。
    這是我原本寫死 `patience=3` 留下的坑。
 
 > 工具：`compare_platforms.py`（配對 + 差異表）、`summarize_runs.py`（全部 run 一張表）、
@@ -259,7 +259,7 @@ python ivdc_cnn_train.py --dataset cifar10 ^
 ## 5. Windows 全 GPU（torch，配方對齊 TF）
 
 Windows 上「全部用 GPU」只能走 PyTorch——TF ≥ 2.11 沒有原生 Windows CUDA。
-為了讓比較有意義，torch 這邊補了 `--dataset mnist`、`--arch ivdc`（簡報模型，參數量與 TF 版**完全相同**：
+為了讓比較有意義，torch 這邊補了 `--dataset mnist`、`--arch demo`（簡報模型，參數量與 TF 版**完全相同**：
 MNIST 1,668,490 / CIFAR 2,389,962）、`--dropout`、`--optimizer adam --schedule plateau`
 （＝TF 的 Adam 1e-3 + ReduceLROnPlateau），並把增強改成 GPU 端批次運算。
 
