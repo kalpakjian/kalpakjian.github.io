@@ -1,6 +1,7 @@
 ---
 title: "CNN II 實驗紀錄：33 組 run、三個平台，把 0.80 推到 0.96"
 date: 2026-10-29 04:10:00
+archive: true   # 獨立文章（與課程無關）；不放首頁，入口在 /cnn2-notes/ §前言與 /cv-course/ 第 8 節
 categories:
   - 學習資源
 tags:
