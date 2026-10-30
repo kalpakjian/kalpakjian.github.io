@@ -334,6 +334,7 @@ softmax(z)_i = exp(z_i) / Σ exp(z_j)
 - [Dive into Deep Learning（繁中）— 卷積神經網路](https://zh.d2l.ai/chapter_convolutional-neural-networks/index.html)
 - [LeCun et al., Gradient-Based Learning Applied to Document Recognition (1998)](http://yann.lecun.com/exdb/lenet/)
 - [Convolutional Neural Networks Definition（Dragon1）](https://www.dragon1.com/terms/convolutional-neural-networks-definition)——另一種白話定義與四個應用例子（貓狗、交通號誌、手寫數字、醫學影像）。<br />該頁的示意圖為 **© Dragon1（All rights reserved）**，因此本筆記只引用連結、不重製圖片；要看圖請直接開原頁。
+- [Convolutional Neural Network (CNN): A Complete Guide（LearnOpenCV, Bill Kromydas, 2023-01-18）](https://learnopencv.com/understanding-convolutional-neural-networks-cnn/)——以 VGG-16 為例，從 MLP 的三個問題（不具平移不變、參數爆炸、易過擬合）一路講到卷積、池化與全連接分類頭（© BIG VISION LLC）。<br />附註：該文的參數量範例有筆誤——`224×224×3` 接三層 128 與 10 類，實算約 **1,929 萬**（150,528×128 + 128×128 + 128×10），不是文中寫的「3,000 億」。
 
 離線：本頁是**單一 HTML 檔、零外部資源**，下載後直接雙擊就能看；原始 Markdown 也在同一層。
 
