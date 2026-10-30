@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 
+
 <html lang="zh-Hant">
+
 
 <head>
 
+
 <meta charset="utf-8">
+
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
 <title>CAM：用 GAP 算出模型在看哪裡｜AI Tech Notes</title>
 
+
 <meta name="description" content="CAM 怎麼算：GAP 把通道對應到一個數、分類權重乘回特徵圖、mean(CAM) = logit − bias 的實測、手算 2×2 例子與 Grad-CAM 的關係；4 張手繪內嵌 SVG，數字全部本機實測。">
+
 
 <style>
 :root {
@@ -143,28 +150,42 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 
 </style>
 
+
 <style>pre.code{background:#0d1117;color:#c9d1d9;border:1px solid #222b36;border-radius:8px;padding:12px 14px;overflow-x:auto;line-height:1.55;font-size:13.5px}pre.code code{font-family:ui-monospace,Consolas,monospace;color:#c9d1d9;background:none;padding:0}</style>
+
 
 </head>
 
+
 <body>
+
 
 <div class="layout">
 
+
 <nav class="sidebar">
+
 
   <a class="home" href="/">← 回到 AI Tech Notes</a>
 
+
   <a class="home" href="/cv-course/">📚 課程專題</a>
+  <a class="home" href="/cnn-series/">📚 CNN 圖解系列</a>
+
 
   <a class="home" href="CNN_CAM_Study_Notes.md">📄 下載原始 Markdown</a>
+
   <a class="quiz" href="mc-quiz.html">🖱️ 互動測驗（30 題）</a>
+
 
   <h1>CAM：用 GAP 算出模型在看哪裡</h1>
 
+
   <div class="sub">GAP → 線性權重 → CAM · 手算例子 · Grad-CAM</div>
 
+
   <div class="toc">
+
 
 <ul>
 <li><a href="#1-一句話gap-是那座橋">1. 一句話：GAP 是那座橋</a>
@@ -199,11 +220,15 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 </li>
 </ul>
 
+
   </div>
+
 
 </nav>
 
+
 <main>
+
 
 <h1 id="cam用-gap-把模型在看哪裡算出來">CAM：用 GAP 把「模型在看哪裡」算出來</h1>
 <blockquote><p>系列第七篇。上一篇（<a href="/cnn-gap-head/">GAP 是什麼</a>）講 GAP 怎麼把特徵圖壓成一個數；這一篇講它附帶的一個禮物：<br /><strong>因為 GAP 把「一張特徵圖」對應到「一個數」，分類層的權重就可以直接乘回那張圖，變成一張熱圖。</strong><br />這就是 CAM（Class Activation Mapping）：<strong>訊號一路線性，所以「分類權重」與「空間位置」可以相乘。</strong><br />所有數字都是本機用 NumPy 算的（Python 3.15.1 / NumPy 2.5.4），原始輸出在附錄 G。</p></blockquote>
@@ -357,11 +382,16 @@ M_c               = ReLU( CAM_c / (H·W) )</code></pre>
 <hr />
 <p><em>本頁為個人學習筆記整理；圖表為手繪內嵌 SVG，數字全部由附錄 G 的程式算出。</em></p>
 
+
 </main>
+
 
 </div>
 
+
 </body>
 
+
 </html>
+
 

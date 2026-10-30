@@ -1,10 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
+
 <head>
+
 <meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Grad-CAM：用梯度算出模型在看哪裡｜AI Tech Notes</title>
+
 <meta name="description" content="Grad-CAM 怎麼運作：七個步驟、梯度平均得到 alpha 的手算、ReLU 的作用、選層與上採樣、與 CAM 的等價條件、以及熱圖什麼時候會騙人；4 張手繪內嵌 SVG，數字全部本機實測。">
+
 <style>
 :root {
   --accent:#c0392b;
@@ -135,17 +142,30 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 }
 
 </style>
+
 <style>pre.code{background:#0d1117;color:#c9d1d9;border:1px solid #222b36;border-radius:8px;padding:12px 14px;overflow-x:auto;line-height:1.55;font-size:13.5px}pre.code code{font-family:ui-monospace,Consolas,monospace;color:#c9d1d9;background:none;padding:0}</style>
+
 </head>
+
 <body>
+
 <div class="layout">
+
 <nav class="sidebar">
+
   <a class="home" href="/">← 回到 AI Tech Notes</a>
+
   <a class="home" href="/cv-course/">📚 課程專題</a>
+  <a class="home" href="/cnn-series/">📚 CNN 圖解系列</a>
+
   <a class="home" href="CNN_Grad_CAM_Study_Notes.md">📄 下載原始 Markdown</a>
+
   <h1>Grad-CAM：用梯度算出模型在看哪裡</h1>
+
   <div class="sub">梯度權重 · ReLU · 選層 · 上採樣 · 捷徑特徵</div>
+
   <div class="toc">
+
 <ul>
 <li><a href="#1-一句話">1. 一句話</a>
 </li>
@@ -183,9 +203,13 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 <li><a href="#附錄-g-實測原始輸出">附錄 G 實測原始輸出</a>
 </li>
 </ul>
+
   </div>
+
 </nav>
+
 <main>
+
 <h1 id="grad-cam用梯度算出模型在看哪裡">Grad-CAM：用梯度算出模型在看哪裡</h1>
 <blockquote><p>系列第八篇。上一篇（<a href="/cnn-cam/">CAM</a>）講 GAP 讓「分類權重」可以乘回特徵圖；但那個方法要求末端是 GAP + Linear。<br /><strong>Grad-CAM 把權重換成「梯度」</strong>，於是幾乎任何 CNN 都能算——不必改架構、不必重訓。<br />這篇把七個步驟、手算例子、ReLU 的作用、選層與上採樣都算一次。<br />所有數字都是本機用 NumPy 算的（Python 3.15.1 / NumPy 2.5.4），原始輸出在附錄 G。</p></blockquote>
 <!-- CNGC-FIGURE:flow -->
@@ -327,7 +351,12 @@ w / (H·W)       = [0.0938, −0.0438, 0.0250]      ← 不一樣了</code></pre
 ------------------------------------------------------------------------</code></pre>
 <hr />
 <p><em>本頁為個人學習筆記整理；圖表為手繪內嵌 SVG，數字全部由附錄 G 的程式算出。</em></p>
+
 </main>
+
 </div>
+
 </body>
+
 </html>
+

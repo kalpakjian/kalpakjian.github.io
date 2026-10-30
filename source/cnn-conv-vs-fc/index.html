@@ -1,10 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
+
 <head>
+
 <meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>卷積層 vs 全連接層｜AI Tech Notes</title>
+
 <meta name="description" content="卷積層與全連接層的對照：同樣產出 25,088 個值，參數差 61,544 倍、算力差 87 倍；含平移特性與 GAP。4 張手繪內嵌 SVG，數字全部本機實測。">
+
 <style>
 :root {
   --accent:#c0392b;
@@ -135,17 +142,30 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 }
 
 </style>
+
 <style>pre.code{background:#0d1117;color:#c9d1d9;border:1px solid #222b36;border-radius:8px;padding:12px 14px;overflow-x:auto;line-height:1.55;font-size:13.5px}pre.code code{font-family:ui-monospace,Consolas,monospace;color:#c9d1d9;background:none;padding:0}</style>
+
 </head>
+
 <body>
+
 <div class="layout">
+
 <nav class="sidebar">
+
   <a class="home" href="/">← 回到 AI Tech Notes</a>
+
   <a class="home" href="/cv-course/">📚 課程專題</a>
+  <a class="home" href="/cnn-series/">📚 CNN 圖解系列</a>
+
   <a class="home" href="CNN_Conv_vs_FC_Study_Notes.md">📄 下載原始 Markdown</a>
+
   <h1>卷積層 vs 全連接層</h1>
+
   <div class="sub">局部連接 vs 完全連接 · 參數與算力 · 平移特性 · GAP</div>
+
   <div class="toc">
+
 <ul>
 <li><a href="#1-一張表看完">1. 一張表看完</a>
 </li>
@@ -179,9 +199,13 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 <li><a href="#附錄-g-實測原始輸出">附錄 G 實測原始輸出</a>
 </li>
 </ul>
+
   </div>
+
 </nav>
+
 <main>
+
 <h1 id="卷積層-vs-全連接層一張表兩個實驗一個結論">卷積層 vs 全連接層：一張表、兩個實驗、一個結論</h1>
 <blockquote><p>系列第五篇，也是收尾。前四篇把每個零件拆開講（<a href="/cnn-illustrated/">圖解 CNN</a>、<a href="/cnn-conv-details/">卷積層的運作細節</a>、<br /><a href="/cnn-activation-pooling/">激活函數與池化層</a>、<a href="/cnn-fully-connected/">全連接層的運作</a>），這一篇把它們放在一起比。<br />結論先講：<strong>卷積層用「同一組小權重到處找局部特徵」，全連接層用「所有特徵各給一票做最終判斷」。</strong><br />所有數字都是本機用 NumPy 算的（Python 3.15.1 / NumPy 2.5.4），原始輸出在附錄 G。</p></blockquote>
 <!-- CNVF-FIGURE:side-by-side -->
@@ -309,7 +333,12 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 ------------------------------------------------------------------------</code></pre>
 <hr />
 <p><em>本頁為個人學習筆記整理；圖表為手繪內嵌 SVG，數字全部由附錄 G 的程式算出。</em></p>
+
 </main>
+
 </div>
+
 </body>
+
 </html>
+

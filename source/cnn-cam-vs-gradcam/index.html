@@ -1,10 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
+
 <head>
+
 <meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>CAM vs Grad-CAM：同一個熱圖，兩種權重｜AI Tech Notes</title>
+
 <meta name="description" content="CAM 與 Grad-CAM 的對照：公式只差權重怎麼來、九個面向的差異、為什麼 CAM 一定要 GAP，以及「α 隨影像改變」的實測與但書；3 張手繪內嵌 SVG，數字全部本機實測。">
+
 <style>
 :root {
   --accent:#c0392b;
@@ -135,17 +142,30 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 }
 
 </style>
+
 <style>pre.code{background:#0d1117;color:#c9d1d9;border:1px solid #222b36;border-radius:8px;padding:12px 14px;overflow-x:auto;line-height:1.55;font-size:13.5px}pre.code code{font-family:ui-monospace,Consolas,monospace;color:#c9d1d9;background:none;padding:0}</style>
+
 </head>
+
 <body>
+
 <div class="layout">
+
 <nav class="sidebar">
+
   <a class="home" href="/">← 回到 AI Tech Notes</a>
+
   <a class="home" href="/cv-course/">📚 課程專題</a>
+  <a class="home" href="/cnn-series/">📚 CNN 圖解系列</a>
+
   <a class="home" href="CNN_CAM_vs_GradCAM_Study_Notes.md">📄 下載原始 Markdown</a>
+
   <h1>CAM vs Grad-CAM：同一個熱圖，兩種權重</h1>
+
   <div class="sub">公式對照 · 權重來源 · 架構需求 · 成本</div>
+
   <div class="toc">
+
 <ul>
 <li><a href="#1-公式對照">1. 公式對照</a>
 </li>
@@ -174,9 +194,13 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 <li><a href="#附錄-g-實測原始輸出">附錄 G 實測原始輸出</a>
 </li>
 </ul>
+
   </div>
+
 </nav>
+
 <main>
+
 <h1 id="cam-vs-grad-cam同一個熱圖兩種權重">CAM vs Grad-CAM：同一個熱圖，兩種權重</h1>
 <blockquote><p>系列第九篇。前兩篇分別講了 <a href="/cnn-cam/">CAM</a> 與 <a href="/cnn-gradcam/">Grad-CAM</a> 的完整流程；這一篇只做一件事：<strong>把兩者並排比較</strong>。<br />結論先講：<strong>公式一樣，差別只在「那 K 個權重怎麼來」</strong>——一個是訓練好的參數，一個是推論時算的梯度。<br />所有數字都是本機用 NumPy 算的（Python 3.15.1 / NumPy 2.5.4），原始輸出在附錄 G。<br />如果你只記得一句：<strong>CAM 的權重是模型的常識，Grad-CAM 的權重是這張圖的判斷。</strong></p></blockquote>
 <!-- CNCG-FIGURE:formula -->
@@ -293,7 +317,12 @@ yᶜ  = Σ_k w[k, c] · F_k + b_c             ← 分類層
 ------------------------------------------------------------------------</code></pre>
 <hr />
 <p><em>本頁為個人學習筆記整理；圖表為手繪內嵌 SVG，數字全部由附錄 G 的程式算出。</em></p>
+
 </main>
+
 </div>
+
 </body>
+
 </html>
+

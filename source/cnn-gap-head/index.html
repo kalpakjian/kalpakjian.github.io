@@ -1,10 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
+
 <head>
+
 <meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>GAP 是什麼？為什麼現代 CNN 用它取代全連接層｜AI Tech Notes</title>
+
 <meta name="description" content="GAP 是什麼：逐通道取平均、與一般平均池化的差別、分類頭參數 25,089,000 → 513,000、三個架構的分類頭佔比、輸入尺寸自由、平移穩健與 CAM；6 張手繪內嵌 SVG，數字全部本機實測。">
+
 <style>
 :root {
   --accent:#c0392b;
@@ -135,17 +142,30 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 }
 
 </style>
+
 <style>pre.code{background:#0d1117;color:#c9d1d9;border:1px solid #222b36;border-radius:8px;padding:12px 14px;overflow-x:auto;line-height:1.55;font-size:13.5px}pre.code code{font-family:ui-monospace,Consolas,monospace;color:#c9d1d9;background:none;padding:0}</style>
+
 </head>
+
 <body>
+
 <div class="layout">
+
 <nav class="sidebar">
+
   <a class="home" href="/">← 回到 AI Tech Notes</a>
+
   <a class="home" href="/cv-course/">📚 課程專題</a>
+  <a class="home" href="/cnn-series/">📚 CNN 圖解系列</a>
+
   <a class="home" href="CNN_GAP_Head_Study_Notes.md">📄 下載原始 Markdown</a>
+
   <h1>GAP 是什麼？為什麼現代 CNN 用它取代全連接層</h1>
+
   <div class="sub">GAP 定義 · 與平均池化的差別 · 分類頭參數 · CAM</div>
+
   <div class="toc">
+
 <ul>
 <li><a href="#1-舊寫法的代價">1. 舊寫法的代價</a>
 </li>
@@ -182,9 +202,13 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 <li><a href="#附錄-g-實測原始輸出">附錄 G 實測原始輸出</a>
 </li>
 </ul>
+
   </div>
+
 </nav>
+
 <main>
+
 <h1 id="gap-是什麼為什麼現代-cnn-用它取代全連接層">GAP 是什麼？為什麼現代 CNN 用它取代全連接層</h1>
 <blockquote><p>系列第六篇。前五篇把卷積、激活、池化、全連接層都拆過了，這一篇回答兩個連在一起的問題：<br /><strong>① GAP 到底在做什麼？② 為什麼 2015 年之後的分類頭，幾乎都從「Flatten + 大 FC」換成「GAP + 一個小 Linear」？</strong><br />GAP 本身只有一行公式、零參數；它換來的東西（參數量、尺寸自由、可解釋性）才是重點。<br />所有數字都是本機用 NumPy 算的（Python 3.15.1 / NumPy 2.5.4），原始輸出在附錄 G。</p></blockquote>
 <!-- CNGH-FIGURE:heads -->
@@ -351,7 +375,12 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 ------------------------------------------------------------------------</code></pre>
 <hr />
 <p><em>本頁為個人學習筆記整理；圖表為手繪內嵌 SVG，數字全部由附錄 G 的程式算出。</em></p>
+
 </main>
+
 </div>
+
 </body>
+
 </html>
+

@@ -1,10 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
+
 <head>
+
 <meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>激活函數與池化層｜AI Tech Notes</title>
+
 <meta name="description" content="激活函數與池化層：ReLU 與三個變體、死亡 ReLU、Max／Average Pooling、補邊用 −∞、GAP、一個 block 的形狀流；5 張手繪內嵌 SVG，數字全部本機實測。">
+
 <style>
 :root {
   --accent:#c0392b;
@@ -135,17 +142,30 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 }
 
 </style>
+
 <style>pre.code{background:#0d1117;color:#c9d1d9;border:1px solid #222b36;border-radius:8px;padding:12px 14px;overflow-x:auto;line-height:1.55;font-size:13.5px}pre.code code{font-family:ui-monospace,Consolas,monospace;color:#c9d1d9;background:none;padding:0}</style>
+
 </head>
+
 <body>
+
 <div class="layout">
+
 <nav class="sidebar">
+
   <a class="home" href="/">← 回到 AI Tech Notes</a>
+
   <a class="home" href="/cv-course/">📚 課程專題</a>
+  <a class="home" href="/cnn-series/">📚 CNN 圖解系列</a>
+
   <a class="home" href="CNN_Activation_Pooling_Study_Notes.md">📄 下載原始 Markdown</a>
+
   <h1>激活函數與池化層</h1>
+
   <div class="sub">ReLU 家族 · Max／Average Pooling · GAP · Conv→ReLU→Pool</div>
+
   <div class="toc">
+
 <ul>
 <li><a href="#1-這兩層都不學參數">1. 這兩層都不學參數</a>
 </li>
@@ -184,9 +204,13 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 <li><a href="#附錄-g-實測原始輸出">附錄 G 實測原始輸出</a>
 </li>
 </ul>
+
   </div>
+
 </nav>
+
 <main>
+
 <h1 id="激活函數與池化層relu-家族與下採樣">激活函數與池化層：ReLU 家族與下採樣</h1>
 <blockquote><p>系列第三篇。前兩篇談卷積本身（<a href="/cnn-illustrated/">圖解 CNN</a>、<a href="/cnn-conv-details/">卷積層的運作細節</a>），<br />這一篇只談接在卷積後面的兩層：<strong>激活函數</strong>（把線性結果轉成非線性）與 <strong>池化</strong>（下採樣）。<br />兩者都<strong>沒有可學習的參數</strong>：激活函數是固定的逐元素函數，池化只決定「怎麼掃」。<br />所有數字都是本機用 NumPy 算的（Python 3.15.1 / NumPy 2.5.4），原始輸出在附錄 G。</p></blockquote>
 <!-- CNPA-FIGURE:relu-variants -->
@@ -375,7 +399,12 @@ winner (2,0)=3   winner (3,3)=4       [[6, 8],
 ------------------------------------------------------------------------</code></pre>
 <hr />
 <p><em>本頁為個人學習筆記整理；圖表為手繪內嵌 SVG，數字全部由附錄 G 的程式算出。</em></p>
+
 </main>
+
 </div>
+
 </body>
+
 </html>
+

@@ -1,10 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
+
 <head>
+
 <meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>卷積層的運作細節｜AI Tech Notes</title>
+
 <meta name="description" content="卷積層的運作細節：一個輸出值的手算、多通道 kernel、參數量、stride 與 padding、感受野、空洞卷積；5 張手繪內嵌 SVG，數字全部本機實測。">
+
 <style>
 :root {
   --accent:#c0392b;
@@ -135,17 +142,30 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 }
 
 </style>
+
 <style>pre.code{background:#0d1117;color:#c9d1d9;border:1px solid #222b36;border-radius:8px;padding:12px 14px;overflow-x:auto;line-height:1.55;font-size:13.5px}pre.code code{font-family:ui-monospace,Consolas,monospace;color:#c9d1d9;background:none;padding:0}</style>
+
 </head>
+
 <body>
+
 <div class="layout">
+
 <nav class="sidebar">
+
   <a class="home" href="/">← 回到 AI Tech Notes</a>
+
   <a class="home" href="/cv-course/">📚 課程專題</a>
+  <a class="home" href="/cnn-series/">📚 CNN 圖解系列</a>
+
   <a class="home" href="CNN_Conv_Layer_Study_Notes.md">📄 下載原始 Markdown</a>
+
   <h1>卷積層的運作細節</h1>
+
   <div class="sub">kernel · 通道 · stride／padding · 感受野 · 空洞卷積</div>
+
   <div class="toc">
+
 <ul>
 <li><a href="#1-卷積層同時做兩件事">1. 卷積層同時做兩件事</a>
 </li>
@@ -188,9 +208,13 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 <li><a href="#附錄-g-實測原始輸出">附錄 G 實測原始輸出</a>
 </li>
 </ul>
+
   </div>
+
 </nav>
+
 <main>
+
 <h1 id="卷積層的運作細節kernel通道stridepadding感受野與空洞卷積">卷積層的運作細節：kernel、通道、stride／padding、感受野與空洞卷積</h1>
 <blockquote><p>前一篇〈<a href="/cnn-illustrated/">圖解 CNN</a>〉把整個網路的資料流走過一遍；這一篇只拆<strong>卷積層本身</strong>。<br />一個卷積層同時做兩件事：<strong>提取局部模式</strong>，以及<strong>保留「這個模式在哪裡」</strong>。<br />下面每個數字都是本機用 NumPy 算的（Python 3.15.1 / NumPy 2.5.4），程式與原始輸出在附錄 G。<br />沒有互動測驗（附錄 E／F 從缺）；要回頭看全貌請走附錄 C 的連結。</p></blockquote>
 <!-- CNVD-FIGURE:single -->
@@ -372,7 +396,12 @@ kernel k  × k  × C_in           ← 深度必須等於 C_in
 ------------------------------------------------------------------------</code></pre>
 <hr />
 <p><em>本頁為個人學習筆記整理；圖表為手繪內嵌 SVG，數字全部由附錄 G 的程式算出。</em></p>
+
 </main>
+
 </div>
+
 </body>
+
 </html>
+
