@@ -35,6 +35,7 @@ const MARKER = 'data-home-resources';
 // 專題（首頁左欄）：每筆帶 date 欄位，輸出時由新到舊排序。
 // date 用 ISO 日期字串（YYYY-MM-DD）；新增專題只要補上日期，順序自動對。
 const TOPICS = [
+  { title: 'CNN 專題：九篇圖解系列、課程筆記與實驗', href: '/cnn/', date: '2026-10-30' },
   { title: 'OCR：正體中文書頁辨識與校對', href: '/ocr/', date: '2026-10-28' },
   { title: 'gpu-unlock 專題：NVIDIA 消費級卡那道「半速鎖」怎麼被打開的', href: '/gpu-unlock/', date: '2026-10-27' },
   { title: 'Agent 時代，你可能累錯地方了', href: '/2026/10/16/matt-pocock-18-agent-mistakes/', date: '2026-10-16' },
