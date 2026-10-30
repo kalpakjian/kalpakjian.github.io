@@ -78,7 +78,7 @@ date: 2026-10-10 23:40:00
 - **涵蓋**：局部連接與參數共享、輸出體積 / stride / 感受野、ReLU 的兩個經典問題（何時回傳梯度、單元死亡）、池化的降維與空間不變性、空洞卷積、softmax、用 `tf.keras.Sequential` 組模型
 - **特別之處**：課程示範碼有三個會直接報錯的寫法（彎引號、`filter_size`、缺 `Input`），筆記 §10 附勘誤表與修正後可直接執行的版本；另外量到「零激活 50.6% 但死濾波器 0%」，把「稀疏」與「死亡」分開
 - **👉 [看筆記](/cnn2-notes/)** ｜ [互動測驗 49 題](/cnn2-notes/mc-quiz.html)
-- **系列總覽**：九篇 CNN 圖解（從資料流到 CAM）→ [CNN 圖解系列](/cnn-series/)
+- **主題目錄**：九篇圖解系列、課程筆記與實驗都在 → [CNN 專題](/cnn/)
 - **延伸**：簡報那段範例程式碼的 33 組實驗（與課程內容無關）→ [CNN II 實驗紀錄](/2026/10/29/cnn-2-experiments/) ｜ 卷積 / ReLU / 池化 / softmax 的圖解版 → [圖解 CNN](/cnn-illustrated/) ｜ 只拆卷積層（kernel 深度、stride、感受野、空洞）→ [卷積層的運作細節](/cnn-conv-details/) ｜ ReLU 與池化的細節 → [激活函數與池化層](/cnn-activation-pooling/) ｜ 最後一哩的全連接層與 softmax → [全連接層的運作](/cnn-fully-connected/) ｜ 兩者對照總整理 → [卷積層 vs 全連接層](/cnn-conv-vs-fc/) ｜ 為什麼現代 CNN 改用 GAP 頭 → [分類頭與 GAP](/cnn-gap-head/) ｜ GAP 怎麼變成熱圖 → [CAM](/cnn-cam/) ｜ 用梯度算熱圖 → [Grad-CAM](/cnn-gradcam/) ｜ 兩者差在哪 → [CAM vs Grad-CAM](/cnn-cam-vs-gradcam/)
 
 ---

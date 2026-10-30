@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 
+
 <html lang="zh-Hant">
+
 
 <head>
 
+
 <meta charset="utf-8">
+
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
 <title>全連接層的運作｜AI Tech Notes</title>
 
+
 <meta name="description" content="全連接層的運作：Wx + b 的手算、flatten、參數量為什麼爆炸、softmax 的三個性質、梯度與加權投票；5 張手繪內嵌 SVG，數字全部本機實測。">
+
 
 <style>
 :root {
@@ -143,28 +150,41 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 
 </style>
 
+
 <style>pre.code{background:#0d1117;color:#c9d1d9;border:1px solid #222b36;border-radius:8px;padding:12px 14px;overflow-x:auto;line-height:1.55;font-size:13.5px}pre.code code{font-family:ui-monospace,Consolas,monospace;color:#c9d1d9;background:none;padding:0}</style>
+
 
 </head>
 
+
 <body>
+
 
 <div class="layout">
 
+
 <nav class="sidebar">
+
 
   <a class="home" href="/">← 回到 AI Tech Notes</a>
 
+
   <a class="home" href="/cv-course/">📚 課程專題</a>
-  <a class="home" href="/cnn-series/">📚 CNN 圖解系列</a>
+
+  <a class="home" href="/cnn/">📚 CNN 專題</a>
+
 
   <a class="home" href="CNN_Fully_Connected_Study_Notes.md">📄 下載原始 Markdown</a>
 
+
   <h1>全連接層的運作</h1>
+
 
   <div class="sub">Flatten · Wx + b · Softmax · 加權投票</div>
 
+
   <div class="toc">
+
 
 <ul>
 <li><a href="#1-一句話矩陣乘法加-bias">1. 一句話：矩陣乘法加 bias</a>
@@ -206,11 +226,15 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 </li>
 </ul>
 
+
   </div>
+
 
 </nav>
 
+
 <main>
+
 
 <h1 id="全連接層的運作flattenwx-b-與-softmax">全連接層的運作：Flatten、Wx + b 與 Softmax</h1>
 <blockquote><p>系列第四篇。前三篇談卷積與池化（<a href="/cnn-illustrated/">圖解 CNN</a>、<a href="/cnn-conv-details/">卷積層的運作細節</a>、<a href="/cnn-activation-pooling/">激活函數與池化層</a>），<br />這一篇談最後一哩：<strong>把特徵向量變成類別分數的全連接層</strong>，以及接在它後面的 softmax。<br />全連接層的參數量往往是整個網路最大的來源——這一篇會把「為什麼」算給你看。<br />所有數字都是本機用 NumPy 算的（Python 3.15.1 / NumPy 2.5.4），原始輸出在附錄 G。</p></blockquote>
@@ -368,11 +392,16 @@ z₃ = ((−0.5)×2 + 0.6×1 + 0.8×0 + (−0.2)×3) + 0.3
 <hr />
 <p><em>本頁為個人學習筆記整理；圖表為手繪內嵌 SVG，數字全部由附錄 G 的程式算出。</em></p>
 
+
 </main>
+
 
 </div>
 
+
 </body>
 
+
 </html>
+
 
