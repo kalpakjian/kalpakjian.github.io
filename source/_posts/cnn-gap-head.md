@@ -25,7 +25,7 @@ banner_img: /img/covers/cnn-gap-head.png
 
 **👉 [看完整圖解](/cnn-gap-head/)** ｜ [下載原始 Markdown](/cnn-gap-head/CNN_GAP_Head_Study_Notes.md)
 
-六張圖：兩種分類頭、GAP 的逐通道機制、三個架構的分類頭佔比、輸入尺寸自由、平移穩健、以及 CAM。
+七張圖：兩種分類頭、GAP 的逐通道機制、三個架構的分類頭佔比、VGG16 的逐階段參數、輸入尺寸自由、平移穩健、以及 CAM。
 
 實測數字（NumPy 2.5.4 / Python 3.15.1，程式與原始輸出在文末附錄）：
 

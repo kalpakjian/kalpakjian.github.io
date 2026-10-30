@@ -21,6 +21,7 @@ ARIA = {
     "shift": "平移穩健性：同一張特徵圖橫移一格，GAP 的輸出完全不變（25.0），展平後 49 個位置全部改變",
     "gap-mechanics": "GAP 的機制：4×4 的通道 1 平均成 8.5，其餘通道各自平均，輸出 1×1×C；逐通道互不相干",
     "cam": "GAP 的權重就是 CAM 的權重：三個通道各乘上類別權重後相加成 5×5 熱圖，而它的空間平均剛好等於該類別的 logit",
+    "vgg16": "VGG16 逐階段參數：五個卷積階段共 14,714,688（10.6%），三層全連接共 123,642,856（89.4%），總計 138,357,544",
 }
 
 CAPTIONS = {
@@ -30,6 +31,7 @@ CAPTIONS = {
     "shift": "同一張特徵圖往右移一格：GAP 的輸出一個小數點都沒變，展平後的向量 49 個位置全部換了。",
     "gap-mechanics": "4×4 的通道平均成 8.5，512 個通道各做一次就是 512 維；GAP 沒有權重也沒有 bias。",
     "cam": "通道權重乘上特徵圖相加就是 CAM；而它的空間平均正好等於 GAP + Linear 算出的 logit。",
+    "vgg16": "VGG16 的參數分佈：卷積骨幹只佔 10.6%，其餘 89.4% 都在最後三層全連接；光是 25,088 到 4,096 那層就 1.03 億。",
 }
 
 
@@ -216,8 +218,54 @@ def fig_cam():
     return svg("cam", 1000, 390, "".join(body))
 
 
+def fig_vgg16():
+    blocks = [("conv1 ×2", "112×112×64", "38,720", TEAL),
+              ("conv2 ×2", "56×56×128", "221,440", TEAL),
+              ("conv3 ×3", "28×28×256", "1,475,328", TEAL),
+              ("conv4 ×3", "14×14×512", "5,899,776", TEAL),
+              ("conv5 ×3", "7×7×512", "7,079,424", TEAL),
+              ("FC 4096", "25,088→4,096", "102,764,544", ROSE),
+              ("FC 4096", "4,096→4,096", "16,781,312", ROSE),
+              ("FC 1000", "4,096→1,000", "4,097,000", ROSE)]
+    body = [text(40, 44, "VGG16：89.4% 的參數都在最後三層", 20, INK, "700"),
+            text(40, 72, "同一張 224×224×3 的圖；每塊下面的數字是那一階段的參數量", 13, DIM)]
+    w, gap, x0, y0, bh = 108, 14, 22, 118, 88
+    for i, (name, shape, params, colour) in enumerate(blocks):
+        x = x0 + i * (w + gap)
+        body.append(rect(x, y0, w, bh, stroke=colour + "aa", sw=1.5, fill=CELL, rx=8,
+                         opacity=0.95))
+        body.append(text(x + w / 2, y0 + 24, name, 10.5, colour, "700", "middle"))
+        body.append(text(x + w / 2, y0 + 48, shape, 9.5, INK, "normal", "middle"))
+        body.append(text(x + w / 2, y0 + 70, params, 9, DIM, "normal", "middle"))
+        if i < len(blocks) - 1:
+            body.append(arrow(x + w + 1, y0 + bh / 2, x + w + gap - 3, y0 + bh / 2))
+    # brackets
+    body.append('<line x1="22" y1="104" x2="618" y2="104" stroke="%s" stroke-width="1"/>'
+                % TEAL)
+    body.append(text(320, 96, "卷積骨幹 14,714,688（10.6%）", 11, TEAL, "700", "middle"))
+    body.append('<line x1="646" y1="104" x2="976" y2="104" stroke="%s" stroke-width="1"/>'
+                % ROSE)
+    body.append(text(811, 96, "分類頭 123,642,856（89.4%）", 11, ROSE, "700", "middle"))
+    # share bar
+    body.append(rect(22, 254, 960, 30, stroke=LINE, sw=1, fill="#161b22", rx=4))
+    body.append(rect(22, 254, 102, 30, stroke="none", fill=TEAL, rx=4, sw=1,
+                     opacity=0.85))
+    body.append(rect(124, 254, 858, 30, stroke="none", fill=ROSE, rx=4, sw=1,
+                     opacity=0.85))
+    body.append(text(73, 274, "10.6%", 11, "#08141a", "700", "middle"))
+    body.append(text(553, 274, "89.4%（123,642,856）", 11, "#08141a", "700", "middle"))
+    body.append(rect(22, 306, 960, 78, stroke=BLUE + "55", fill="#1c2230", rx=10))
+    body.append(text(42, 334, "光是 25,088 → 4,096 那一層就 102,764,544 個參數", 12, INK))
+    body.append(text(42, 360, "—— 比整個卷積骨幹（14,714,688）的 6.9 倍還多，"
+                               "而且它丢掉所有空間結構。", 11.5, DIM))
+    body.append(text(22, 416, "把這三層換成 GAP + Linear(512→1000)，"
+                               "分類頭會從 1.24 億降到 51.3 萬。", 12, DIM))
+    return svg("vgg16", 1000, 440, "".join(body))
+
+
 FIGS = {"heads": fig_heads, "share": fig_share, "input-size": fig_input_size,
-        "shift": fig_shift, "gap-mechanics": fig_gap_mechanics, "cam": fig_cam}
+        "shift": fig_shift, "gap-mechanics": fig_gap_mechanics, "cam": fig_cam,
+        "vgg16": fig_vgg16}
 
 
 def main():

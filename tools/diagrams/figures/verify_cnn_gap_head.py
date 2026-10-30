@@ -140,11 +140,34 @@ def main():
     print("   -> the classifier weight IS the CAM weight; GAP only averages it")
 
     print(SEP)
-    print("10. the same head accepts any input size")
-    for side in (7, 14, 28):
-        print("   %2dx%2dx512 -> GAP 512 -> Linear(512->1000) works: %s"
-              % (side, side, True))
+    print("11. VGG16, stage by stage (the figure on the page)")
+    stages = [("conv1", 64, 2, (224, 224), "112x112x64"),
+              ("conv2", 128, 2, (112, 112), "56x56x128"),
+              ("conv3", 256, 3, (56, 56), "28x28x256"),
+              ("conv4", 512, 3, (28, 28), "14x14x512"),
+              ("conv5", 512, 3, (14, 14), "7x7x512")]
+    prev, conv_total = 3, 0
+    for name, out_ch, n, (h, w), shape in stages:
+        p = 0
+        cin = prev
+        for _ in range(n):
+            p += 3 * 3 * cin * out_ch + out_ch
+            cin = out_ch
+        print("   %-6s %d conv  -> %-11s params %d" % (name, n, shape, p))
+        conv_total += p
+        prev = out_ch
+    fc1 = 7 * 7 * 512 * 4096 + 4096
+    fc2 = 4096 * 4096 + 4096
+    fc3 = 4096 * 1000 + 1000
+    head = fc1 + fc2 + fc3
+    total = conv_total + head
+    print("   flatten -> FC4096  params %d" % fc1)
+    print("   FC4096  -> FC4096 params %d" % fc2)
+    print("   FC4096  -> FC1000 params %d" % fc3)
+    print("   conv total %d | classifier %d (%.1f%%) | all %d"
+          % (conv_total, head, 100.0 * head / total, total))
     print(SEP)
+
 
 
 
