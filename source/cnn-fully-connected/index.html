@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>全連接層的運作｜AI Tech Notes</title>
+<meta name="description" content="全連接層的運作：Wx + b 的手算、flatten、參數量為什麼爆炸、softmax 的三個性質、梯度與加權投票；5 張手繪內嵌 SVG，數字全部本機實測。">
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+
+</style>
+<style>pre.code{background:#0d1117;color:#c9d1d9;border:1px solid #222b36;border-radius:8px;padding:12px 14px;overflow-x:auto;line-height:1.55;font-size:13.5px}pre.code code{font-family:ui-monospace,Consolas,monospace;color:#c9d1d9;background:none;padding:0}</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/">← 回到 AI Tech Notes</a>
+  <a class="home" href="/cv-course/">📚 課程專題</a>
+  <a class="home" href="CNN_Fully_Connected_Study_Notes.md">📄 下載原始 Markdown</a>
+  <h1>全連接層的運作</h1>
+  <div class="sub">Flatten · Wx + b · Softmax · 加權投票</div>
+  <div class="toc">
+<ul>
+<li><a href="#1-一句話矩陣乘法加-bias">1. 一句話：矩陣乘法加 bias</a>
+</li>
+<li><a href="#2-手算一個-4-3-的例子">2. 手算一個 4 → 3 的例子</a>
+<ul>
+<li><a href="#21-兩個最容易算錯的地方">2.1 兩個最容易算錯的地方</a></li>
+<li><a href="#22-這個例子的參數量">2.2 這個例子的參數量</a></li>
+</ul>
+</li>
+<li><a href="#3-flatten只是換形狀">3. Flatten：只是換形狀</a>
+</li>
+<li><a href="#4-參數量為什麼爆炸">4. 參數量為什麼爆炸</a>
+</li>
+<li><a href="#5-softmax分數變成機率">5. Softmax：分數變成機率</a>
+<ul>
+<li><a href="#51-三個性質都實測過">5.1 三個性質（都實測過）</a></li>
+</ul>
+</li>
+<li><a href="#6-反向傳播兩個轉置就結束">6. 反向傳播：兩個轉置就結束</a>
+</li>
+<li><a href="#7-在-cnn-裡的角色加權投票">7. 在 CNN 裡的角色：加權投票</a>
+</li>
+<li><a href="#8-與卷積層的差別">8. 與卷積層的差別</a>
+</li>
+<li><a href="#9-現代-cnn-為什麼少用大-fc">9. 現代 CNN 為什麼少用「大 FC」</a>
+</li>
+<li><a href="#10-六個常見誤解">10. 六個常見誤解</a>
+</li>
+<li><a href="#附錄-a-速查表">附錄 A 速查表</a>
+</li>
+<li><a href="#附錄-b-常見錯誤">附錄 B 常見錯誤</a>
+</li>
+<li><a href="#附錄-c-延伸閱讀與離線使用">附錄 C 延伸閱讀與離線使用</a>
+</li>
+<li><a href="#附錄-d-一頁精華考前-10-分鐘">附錄 D 一頁精華（考前 10 分鐘）</a>
+</li>
+<li><a href="#附錄-g-實測原始輸出">附錄 G 實測原始輸出</a>
+</li>
+</ul>
+  </div>
+</nav>
+<main>
+<h1 id="全連接層的運作flattenwx-b-與-softmax">全連接層的運作：Flatten、Wx + b 與 Softmax</h1>
+<blockquote><p>系列第四篇。前三篇談卷積與池化（<a href="/cnn-illustrated/">圖解 CNN</a>、<a href="/cnn-conv-details/">卷積層的運作細節</a>、<a href="/cnn-activation-pooling/">激活函數與池化層</a>），<br />這一篇談最後一哩：<strong>把特徵向量變成類別分數的全連接層</strong>，以及接在它後面的 softmax。<br />全連接層的參數量往往是整個網路最大的來源——這一篇會把「為什麼」算給你看。<br />所有數字都是本機用 NumPy 算的（Python 3.15.1 / NumPy 2.5.4），原始輸出在附錄 G。</p></blockquote>
+<!-- CNFC-FIGURE:dense -->
+<figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" role="img" aria-label="全連接層的形狀：3×4 的權重矩陣乘上 4 維輸入再加 3 維 bias，得到 3 個 logits 2.4、1.2、負 0.7"><defs><marker id="arf" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8b949e"/></marker></defs><rect x="0.75" y="0.75" width="998.5" height="398.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/><text x="40" y="44" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">全連接層＝一次矩陣乘法</text><text x="40" y="72" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4 個輸入、3 個輸出：W 是 3×4、b 是 3，輸出 3 個 logits</text><text x="60" y="118" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">W（m×n = 3×4）</text><rect x="60" y="130" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="83.0" y="156.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.2</text><rect x="106" y="130" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="129.0" y="156.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.4</text><rect x="152" y="130" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="175.0" y="156.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">-0.1</text><rect x="198" y="130" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="221.0" y="156.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.5</text><rect x="60" y="176" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="83.0" y="202.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.7</text><rect x="106" y="176" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="129.0" y="202.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">-0.3</text><rect x="152" y="176" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="175.0" y="202.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.2</text><rect x="198" y="176" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="221.0" y="202.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.1</text><rect x="60" y="222" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="83.0" y="248.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">-0.5</text><rect x="106" y="222" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="129.0" y="248.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.6</text><rect x="152" y="222" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="175.0" y="248.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.8</text><rect x="198" y="222" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="221.0" y="248.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">-0.2</text><text x="258" y="208" font-size="16" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">·</text><rect x="276" y="130" width="46" height="46" rx="4" fill="#12181f" stroke="#58a6ffaa" stroke-width="1.3"/><text x="299.0" y="158.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text><rect x="276" y="176" width="46" height="46" rx="4" fill="#12181f" stroke="#58a6ffaa" stroke-width="1.3"/><text x="299.0" y="204.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="276" y="222" width="46" height="46" rx="4" fill="#12181f" stroke="#58a6ffaa" stroke-width="1.3"/><text x="299.0" y="250.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="276" y="268" width="46" height="46" rx="4" fill="#12181f" stroke="#58a6ffaa" stroke-width="1.3"/><text x="299.0" y="296.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text><text x="299.0" y="120" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">x</text><text x="340" y="208" font-size="16" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">=</text><rect x="356" y="130" width="46" height="46" rx="4" fill="#12181f" stroke="#4ecdc4aa" stroke-width="1.3"/><text x="379.0" y="158.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2.4</text><rect x="356" y="176" width="46" height="46" rx="4" fill="#12181f" stroke="#4ecdc4aa" stroke-width="1.3"/><text x="379.0" y="204.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.2</text><rect x="356" y="222" width="46" height="46" rx="4" fill="#12181f" stroke="#4ecdc4aa" stroke-width="1.3"/><text x="379.0" y="250.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">−0.7</text><text x="379.0" y="120" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Wx</text><text x="424" y="208" font-size="16" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+</text><rect x="440" y="130" width="46" height="46" rx="4" fill="#12181f" stroke="#e0a458aa" stroke-width="1.3"/><text x="463.0" y="158.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.1</text><rect x="440" y="176" width="46" height="46" rx="4" fill="#12181f" stroke="#e0a458aa" stroke-width="1.3"/><text x="463.0" y="204.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">−0.2</text><rect x="440" y="222" width="46" height="46" rx="4" fill="#12181f" stroke="#e0a458aa" stroke-width="1.3"/><text x="463.0" y="250.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.3</text><text x="463.0" y="120" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">b</text><text x="508" y="208" font-size="16" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">=</text><rect x="524" y="130" width="46" height="46" rx="4" fill="#12181f" stroke="#ff7b72aa" stroke-width="1.3"/><text x="547.0" y="158.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2.4</text><rect x="524" y="176" width="46" height="46" rx="4" fill="#12181f" stroke="#ff7b72aa" stroke-width="1.3"/><text x="547.0" y="204.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.2</text><rect x="524" y="222" width="46" height="46" rx="4" fill="#12181f" stroke="#ff7b72aa" stroke-width="1.3"/><text x="547.0" y="250.0" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">−0.7</text><text x="547.0" y="120" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">logits</text><rect x="620" y="116" width="340" height="140" rx="12" fill="#1c2230" stroke="#4ecdc455" stroke-width="1.4"/><text x="640" y="144" font-size="12" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">z₁ 怎麼來的（第一列 · x + b₁）</text><text x="640" y="172" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.2×2 + 0.4×1 + (−0.1)×0 + 0.5×3</text><text x="640" y="194" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">= 0.4 + 0.4 + 0 + 1.5 = 2.3</text><text x="640" y="218" font-size="12.5" fill="#4ecdc4" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2.3 + 0.1 = 2.4</text><text x="640" y="242" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三列各自做一次，就是 z</text><text x="40" y="336" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一個輸出都連到全部 4 個輸入：W 有 12 個權重、b 有 3 個，合計 15 個參數。</text><text x="40" y="360" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">z₃ 是負的——logits 可以是任意實數，要經過 softmax 才是機率。</text></svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">全連接層就是一次矩陣乘法：W（3×4）乘 x（4）加 b（3）。每個輸出神經元都看得到全部 4 個輸入。</figcaption>
+</figure>
+<!-- /CNFC-FIGURE:dense -->
+<h2 id="1-一句話矩陣乘法加-bias">1. 一句話：矩陣乘法加 bias</h2>
+<pre class="code"><code>z = W x + b</code></pre>
+<table><thead><tr><th>符號</th><th>意義</th><th>形狀</th></tr></thead><tbody><tr><td><code>x</code></td><td>前一層（展平後）的特徵向量</td><td><code>n × 1</code></td></tr><tr><td><code>W</code></td><td>權重矩陣</td><td><code>m × n</code></td></tr><tr><td><code>b</code></td><td>bias</td><td><code>m × 1</code></td></tr><tr><td><code>z</code></td><td>輸出 logits</td><td><code>m × 1</code></td></tr></tbody></table>
+<p>逐元素寫出來就是「每個輸入乘以對應權重、全部相加、再加 bias」：</p>
+<pre class="code"><code>z_j = Σ_i ( w[j, i] × x_i ) + b_j        i = 1..n, j = 1..m</code></pre>
+<p>「全連接」的意思就在這裡：<strong>每一個輸出 j 都連到每一個輸入 i</strong>，所以 <code>W</code> 是一個完整的 <code>m × n</code> 矩陣——沒有任何位置被共用。</p>
+<h2 id="2-手算一個-4-3-的例子">2. 手算一個 4 → 3 的例子</h2>
+<p>輸入 <code>x = [2, 1, 0, 3]</code>，<code>W</code> 是 3×4、<code>b = [0.1, −0.2, 0.3]</code>：</p>
+<pre class="code"><code>z₁ = (0.2×2 + 0.4×1 + (−0.1)×0 + 0.5×3) + 0.1
+   = 0.4 + 0.4 + 0 + 1.5 + 0.1 = 2.4
+
+z₂ = (0.7×2 + (−0.3)×1 + 0.2×0 + 0.1×3) + (−0.2)
+   = 1.4 − 0.3 + 0 + 0.3 − 0.2 = 1.2
+
+z₃ = ((−0.5)×2 + 0.6×1 + 0.8×0 + (−0.2)×3) + 0.3
+   = −1.0 + 0.6 + 0 − 0.6 + 0.3 = −0.7</code></pre>
+<p>所以實測的 logits 是 <strong><code>[2.4, 1.2, −0.7]</code></strong>。</p>
+<h3 id="21-兩個最容易算錯的地方">2.1 兩個最容易算錯的地方</h3>
+<table><thead><tr><th>錯誤</th><th>後果</th></tr></thead><tbody><tr><td>忘了加 bias，或把 bias 加在「整張矩陣」上</td><td>第一列就少了 0.1；第二、三列會偏掉 0.2／0.3</td></tr><tr><td>把 <code>W</code> 的行列方向搞反（用 <code>x·W</code> 而不是 <code>W·x</code>）</td><td>形狀直接對不上：<code>(4,)</code> 乘 <code>(3,4)</code> 不合法</td></tr></tbody></table>
+<p>還有一個常被忽略的事實：<strong>logits 可以是負的</strong>。<code>z₃ = −0.7</code> 完全正常，它只是還沒被壓成機率的分數。</p>
+<h3 id="22-這個例子的參數量">2.2 這個例子的參數量</h3>
+<p><code>W</code> 有 3×4 = <strong>12</strong> 個權重，<code>b</code> 有 <strong>3</strong> 個，合計 <strong>15</strong> 個參數——而且跟輸入有幾個樣本完全無關。這也是為什麼「同一個全連接層」可以套在任意 batch 上：參數只在 <code>W</code> 與 <code>b</code>。</p>
+<h2 id="3-flatten只是換形狀">3. Flatten：只是換形狀</h2>
+<!-- CNFC-FIGURE:flatten -->
+<figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 350" role="img" aria-label="7×7×64 的特徵圖展平成 3136 維向量，接 Dense 128 再 Dense 10 加 softmax；展平本身沒有參數"><defs><marker id="arf" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8b949e"/></marker></defs><rect x="0.75" y="0.75" width="998.5" height="348.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/><text x="40" y="44" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Flatten：只重排、不運算</text><text x="40" y="72" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7×7×64 的特徵圖展平成 3136 維；這一步沒有參數</text><rect x="55" y="130" width="96" height="96" rx="6" fill="#12181f" stroke="#4ecdc488" stroke-width="1.4" opacity="0.95"/><text x="103" y="184" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7×7</text><rect x="166" y="130" width="96" height="96" rx="6" fill="#12181f" stroke="#4ecdc488" stroke-width="1.4" opacity="0.95"/><text x="214" y="184" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7×7</text><rect x="277" y="130" width="96" height="96" rx="6" fill="#12181f" stroke="#4ecdc488" stroke-width="1.4" opacity="0.95"/><text x="325" y="184" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7×7</text><text x="55" y="256" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">…共 64 個通道</text><line x1="392" y1="178" x2="430" y2="178" stroke="#8b949e" stroke-width="1.5" marker-end="url(#ar)"/><text x="411" y="160" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">flatten</text><rect x="436" y="156" width="14" height="44" rx="3" fill="#12181f" stroke="#58a6ff88" stroke-width="1.1"/><rect x="452" y="156" width="14" height="44" rx="3" fill="#12181f" stroke="#58a6ff88" stroke-width="1.1"/><rect x="468" y="156" width="14" height="44" rx="3" fill="#12181f" stroke="#58a6ff88" stroke-width="1.1"/><rect x="484" y="156" width="14" height="44" rx="3" fill="#12181f" stroke="#58a6ff88" stroke-width="1.1"/><rect x="500" y="156" width="14" height="44" rx="3" fill="#12181f" stroke="#58a6ff88" stroke-width="1.1"/><rect x="516" y="156" width="14" height="44" rx="3" fill="#12181f" stroke="#58a6ff88" stroke-width="1.1"/><rect x="532" y="156" width="14" height="44" rx="3" fill="#12181f" stroke="#58a6ff88" stroke-width="1.1"/><rect x="548" y="156" width="14" height="44" rx="3" fill="#12181f" stroke="#58a6ff88" stroke-width="1.1"/><rect x="564" y="156" width="14" height="44" rx="3" fill="#12181f" stroke="#58a6ff88" stroke-width="1.1"/><rect x="580" y="156" width="14" height="44" rx="3" fill="#12181f" stroke="#58a6ff88" stroke-width="1.1"/><rect x="596" y="156" width="14" height="44" rx="3" fill="#12181f" stroke="#58a6ff88" stroke-width="1.1"/><rect x="612" y="156" width="14" height="44" rx="3" fill="#12181f" stroke="#58a6ff88" stroke-width="1.1"/><text x="436" y="148" font-size="11" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3136 維</text><line x1="636" y1="178" x2="668" y2="178" stroke="#8b949e" stroke-width="1.5" marker-end="url(#ar)"/><rect x="672" y="138" width="120" height="80" rx="9" fill="#12181f" stroke="#4ecdc4" stroke-width="1.6"/><text x="732" y="172" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Dense 128</text><text x="732" y="194" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">參數 50,240</text><line x1="798" y1="178" x2="830" y2="178" stroke="#8b949e" stroke-width="1.5" marker-end="url(#ar)"/><rect x="834" y="138" width="136" height="80" rx="9" fill="#12181f" stroke="#ff7b72" stroke-width="1.6"/><text x="902" y="170" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Dense 10</text><text x="902" y="190" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+ softmax</text><text x="40" y="316" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">參數全在兩個 Dense：3136×128 + 128 = 401,536，128×10 + 10 = 1,290。</text></svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">Flatten 只重排資料、不做運算；真正花參數的是後面的 Dense。</figcaption>
+</figure>
+<!-- /CNFC-FIGURE:flatten -->
+<p>卷積與池化的輸出是三維張量（<code>H × W × C</code>）。全連接層只吃向量，所以中間要插一步 <strong>flatten</strong>：</p>
+<pre class="code"><code>7 × 7 × 64  →  3136</code></pre>
+<p>三件要記住的事：</p>
+<ul><li><strong>flatten 沒有參數</strong>，它只是把 <code>(7, 7, 64)</code> 的數字按固定順序攤成 <code>3136</code> 個。</li><li><strong>順序必須固定</strong>：PyTorch 是 channel-major（先 H、再 W、再 C），換框架要確認，否則權重與特徵對不上。</li><li><strong>flatten 之後，空間關係就沒了</strong>：<code>3136</code> 這個向量裡，第 1 個數字與第 2 個數字是鄰居這件事不再被編碼。這是全連接層「表達能力強、但不保留空間結構」的根源。</li></ul>
+<h2 id="4-參數量為什麼爆炸">4. 參數量為什麼爆炸</h2>
+<!-- CNFC-FIGURE:params -->
+<figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 380" role="img" aria-label="參數量比較：小 CNN 的卷積層共 1248 個參數，全連接層共 50890 個，占 97.6%"><defs><marker id="arf" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8b949e"/></marker></defs><rect x="0.75" y="0.75" width="998.5" height="378.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/><text x="40" y="44" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">參數幾乎都在全連接層</text><text x="40" y="72" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個 MNIST 小 CNN：總計 52,138 個參數，全連接占 50,890（97.6%）</text><text x="340" y="127" font-size="11.5" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">卷積層（3×3×1→8、3×3×8→16）</text><rect x="360" y="110" width="12.9171974522293" height="24" rx="4" fill="#4ecdc4" stroke="none" stroke-width="1" opacity="0.85"/><text x="382.9171974522293" y="127" font-size="12" fill="#4ecdc4" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1,248</text><text x="340" y="185" font-size="11.5" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">全連接 784 → 64</text><rect x="360" y="168" width="520.0" height="24" rx="4" fill="#ff7b72" stroke="none" stroke-width="1" opacity="0.85"/><text x="890.0" y="185" font-size="12" fill="#ff7b72" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">50,240</text><text x="340" y="243" font-size="11.5" fill="#e6edf3" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">全連接 64 → 10</text><rect x="360" y="226" width="6.727707006369426" height="24" rx="4" fill="#e0a458" stroke="none" stroke-width="1" opacity="0.85"/><text x="376.7277070063694" y="243" font-size="12" fill="#e0a458" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">650</text><text x="40" y="320" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">另一組對照：3136 → 128 是 401,536 個參數；同樣輸入直接接 10 類只要 31,370 個（差 12.8 倍）。</text><text x="40" y="344" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">全連接是 m×n + m；卷積是 (k×k×C_in + 1)×C_out，與影像大小無關。</text></svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">同一個小 CNN：卷積層 1,248 個參數，全連接層 50,890 個——占全部參數 97.6%。</figcaption>
+</figure>
+<!-- /CNFC-FIGURE:params -->
+<pre class="code"><code>參數 = m × n（權重） + m（bias）</code></pre>
+<table><thead><tr><th>這一層</th><th>參數</th></tr></thead><tbody><tr><td>3136 → 128</td><td>401,408 + 128 = <strong>401,536</strong></td></tr><tr><td>3136 → 10（直接分類）</td><td>31,360 + 10 = 31,370</td></tr><tr><td>784 → 64</td><td>50,176 + 64 = 50,240</td></tr><tr><td>64 → 10</td><td>640 + 10 = 650</td></tr><tr><td>128 → 10</td><td>1,280 + 10 = <strong>1,290</strong></td></tr></tbody></table>
+<p>把它放進一個完整的小 CNN 看比例（MNIST 版本：兩層卷積 + 784→64→10）：</p>
+<table><thead><tr><th>部分</th><th>參數</th><th>佔比</th></tr></thead><tbody><tr><td>卷積層（兩層合計）</td><td>1,248</td><td>2.4%</td></tr><tr><td>全連接層（784→64 與 64→10）</td><td>50,890</td><td><strong>97.6%</strong></td></tr><tr><td>合計</td><td>52,138</td><td>100%</td></tr></tbody></table>
+<p>這就是「CNN 參數少」這句話的真正範圍：<strong>少的是卷積層，不是整個網路</strong>。也因為如此，現代 CNN 會用全域平均池化（GAP）或 <code>1×1</code> 卷積取代那個巨大的全連接層（見 §9）。</p>
+<h2 id="5-softmax分數變成機率">5. Softmax：分數變成機率</h2>
+<!-- CNFC-FIGURE:softmax -->
+<figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" role="img" aria-label="softmax 把 logits 2.4、1.2、負 0.7 轉成 0.7428、0.2237、0.0335，總和 1.000000"><defs><marker id="arf" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8b949e"/></marker></defs><rect x="0.75" y="0.75" width="998.5" height="418.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/><text x="40" y="44" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Softmax：把 logits 變成加總為 1 的機率</text><text x="40" y="72" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">pⱼ = e^zⱼ / Σ e^z_k；排序不變，總和一定是 1</text><text x="60" y="118" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">logits</text><text x="316" y="118" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">機率</text><text x="60" y="155" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">貓</text><text x="140" y="155" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2.4</text><line x1="240" y1="150" x2="296" y2="150" stroke="#8b949e" stroke-width="1.5" marker-end="url(#ar)"/><rect x="316" y="138" width="341.688" height="24" rx="4" fill="#4ecdc4" stroke="none" stroke-width="1" opacity="0.9"/><text x="667.688" y="155" font-size="12" fill="#4ecdc4" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.7428</text><text x="60" y="201" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">狗</text><text x="140" y="201" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1.2</text><line x1="240" y1="196" x2="296" y2="196" stroke="#8b949e" stroke-width="1.5" marker-end="url(#ar)"/><rect x="316" y="184" width="102.902" height="24" rx="4" fill="#58a6ff" stroke="none" stroke-width="1" opacity="0.9"/><text x="428.902" y="201" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.2237</text><text x="60" y="247" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">鳥</text><text x="140" y="247" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">−0.7</text><line x1="240" y1="242" x2="296" y2="242" stroke="#8b949e" stroke-width="1.5" marker-end="url(#ar)"/><rect x="316" y="230" width="15.41" height="24" rx="4" fill="#58a6ff" stroke="none" stroke-width="1" opacity="0.9"/><text x="341.41" y="247" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.0335</text><text x="316" y="300" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.7428 + 0.2237 + 0.0335 = 1.000000</text><rect x="60" y="320" width="880" height="80" rx="12" fill="#1c2230" stroke="#58a6ff55" stroke-width="1.4"/><text x="80" y="348" font-size="12" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">實測兩個性質：① 全部 logits 同時 +100，機率完全不變（平移不變）</text><text x="80" y="374" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② argmax 不變（2.4 還是最大）；logits 差距 3.10，機率比 22.2 倍</text></svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">softmax 只做兩件事：取指數、除以總和。排序不變，總和一定是 1。</figcaption>
+</figure>
+<!-- /CNFC-FIGURE:softmax -->
+<pre class="code"><code>p_j = e^{z_j} / Σ_k e^{z_k}</code></pre>
+<p>實測（把上一節的 <code>[2.4, 1.2, −0.7]</code> 丢進去）：</p>
+<table><thead><tr><th>類別</th><th>logit</th><th>機率</th></tr></thead><tbody><tr><td>貓</td><td>2.4</td><td><strong>0.7428</strong></td></tr><tr><td>狗</td><td>1.2</td><td>0.2237</td></tr><tr><td>鳥</td><td>−0.7</td><td>0.0335</td></tr><tr><td>合計</td><td>—</td><td><strong>1.000000</strong></td></tr></tbody></table>
+<blockquote><p>網路上常看到「logits <code>[2.4, 1.5, 1.1]</code> → 機率 <code>[0.55, 0.22, 0.15]</code>」這種例子：那三個數字加起來只有 <strong>0.92</strong>，不可能是 softmax 的輸出。要嘛換一組 logits，要嘛重算——這是很常見的抄錯。</p></blockquote>
+<h3 id="51-三個性質都實測過">5.1 三個性質（都實測過）</h3>
+<ul><li><strong>總和一定是 1</strong>：這是除以 <code>Σ e^{z_k}</code> 的直接結果。</li><li><strong>排序不變</strong>：<code>e^z</code> 是單調函數，所以 argmax 不會變。推論時直接取 <code>argmax(logits)</code> 就好，不一定要算 softmax。</li><li><strong>平移不變</strong>：所有 logits 同時 <code>+100</code>，機率完全不變（實測完全相同）。所以「多加一個對所有類別一樣的 bias」對預測沒有任何影響——bias 有意義的前提是<strong>每個類別各自不同</strong>。</li></ul>
+<p>另外，logits 的差距會被指數放大：這個例子 <code>max − min = 3.10</code>，對應的機率比是 <strong>22.2 倍</strong>。</p>
+<h2 id="6-反向傳播兩個轉置就結束">6. 反向傳播：兩個轉置就結束</h2>
+<p>全連接層的梯度有現成的形式（<code>δ = ∂L/∂z</code> 是上游傳回來的梯度）：</p>
+<pre class="code"><code>∂L/∂W = δ xᵀ         形狀 (m, 1) × (1, n) = (m, n)   ← 跟 W 一樣大
+∂L/∂b = δ            形狀 (m, 1)
+∂L/∂x = Wᵀ δ         形狀 (n, m) × (m, 1) = (n, 1)   ← 傳回前一層</code></pre>
+<p>實測（隨機 <code>W</code>、<code>x</code>，<code>δ = [1, −0.5, 0.25, 0, 2]</code>）：用<strong>中心差分</strong>算出的數值梯度與 <code>δ xᵀ</code> <strong>完全一致</strong>（<code>allclose</code> 為 True）。這也是為什麼全連接層在框架裡幾乎不需要特別處理——它就是一次外積。</p>
+<p>代價是：<code>∂L/∂W</code> 跟 <code>W</code> 一樣大，所以參數多的地方梯度也大。訓練時記憶體爆掉，通常不是因為特徵圖，而是因為這些大矩陣的梯度。</p>
+<h2 id="7-在-cnn-裡的角色加權投票">7. 在 CNN 裡的角色：加權投票</h2>
+<!-- CNFC-FIGURE:vote -->
+<figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" role="img" aria-label="加權投票：4 個特徵各自對 3 個類別投一票，共 12 條邊、12 個獨立權重"><defs><marker id="arf" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8b949e"/></marker></defs><rect x="0.75" y="0.75" width="998.5" height="438.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/><text x="40" y="44" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">把全連接層想成一場加權投票</text><text x="40" y="72" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">12 條邊就是 12 個獨立權重；線越粗代表票越重，紅色是負票</text><rect x="60" y="110" width="120" height="52" rx="9" fill="#12181f" stroke="#4ecdc4" stroke-width="1.5"/><text x="120" y="142" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">x₁ = 2</text><rect x="60" y="186" width="120" height="52" rx="9" fill="#12181f" stroke="#4ecdc4" stroke-width="1.5"/><text x="120" y="218" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">x₂ = 1</text><rect x="60" y="262" width="120" height="52" rx="9" fill="#12181f" stroke="#4ecdc4" stroke-width="1.5"/><text x="120" y="294" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">x₃ = 0</text><rect x="60" y="338" width="120" height="52" rx="9" fill="#12181f" stroke="#4ecdc4" stroke-width="1.5"/><text x="120" y="370" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">x₄ = 3</text><rect x="760" y="150" width="150" height="56" rx="9" fill="#12181f" stroke="#4ecdc4" stroke-width="1.6"/><text x="835" y="185" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">貓</text><rect x="760" y="234" width="150" height="56" rx="9" fill="#12181f" stroke="#58a6ff" stroke-width="1.6"/><text x="835" y="269" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">狗</text><rect x="760" y="318" width="150" height="56" rx="9" fill="#12181f" stroke="#c084fc" stroke-width="1.6"/><text x="835" y="353" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">鳥</text><line x1="180" y1="136" x2="760" y2="178" stroke="#4ecdc4" stroke-width="1.6" opacity="0.55"/><line x1="180" y1="212" x2="760" y2="178" stroke="#4ecdc4" stroke-width="2.6" opacity="0.55"/><line x1="180" y1="288" x2="760" y2="178" stroke="#ff7b72" stroke-width="1.1" opacity="0.55"/><line x1="180" y1="364" x2="760" y2="178" stroke="#4ecdc4" stroke-width="3.1" opacity="0.55"/><line x1="180" y1="136" x2="760" y2="262" stroke="#4ecdc4" stroke-width="4.1" opacity="0.55"/><line x1="180" y1="212" x2="760" y2="262" stroke="#ff7b72" stroke-width="2.1" opacity="0.55"/><line x1="180" y1="288" x2="760" y2="262" stroke="#4ecdc4" stroke-width="1.6" opacity="0.55"/><line x1="180" y1="364" x2="760" y2="262" stroke="#4ecdc4" stroke-width="1.1" opacity="0.55"/><line x1="180" y1="136" x2="760" y2="346" stroke="#ff7b72" stroke-width="3.1" opacity="0.55"/><line x1="180" y1="212" x2="760" y2="346" stroke="#4ecdc4" stroke-width="3.6" opacity="0.55"/><line x1="180" y1="288" x2="760" y2="346" stroke="#4ecdc4" stroke-width="4.6" opacity="0.55"/><line x1="180" y1="364" x2="760" y2="346" stroke="#ff7b72" stroke-width="1.6" opacity="0.55"/><text x="440" y="410" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">W[j][i] 就是「第 i 個特徵對第 j 個類別的票」（粗細＝|w|，紅＝負票）</text></svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">把全連接層想成一場加權投票：每個特徵對每個類別都有一票，票的輕重就是權重。</figcaption>
+</figure>
+<!-- /CNFC-FIGURE:vote -->
+<p>把 <code>W</code> 的每一列讀成「某個類別對所有特徵的評分權重」，整層就很像一場投票：</p>
+<ul><li>每個特徵 <code>x_i</code> 對每個類別 <code>j</code> 都有一票，票的輕重是 <code>w[j, i]</code>。</li><li>負權重就是「反對票」：這個特徵越強，該類別的分數越低。</li><li>總票數（加權和）再加 bias，才是最後的分數。</li></ul>
+<p>這也是為什麼全連接層<strong>不保留空間結構</strong>：投票的時候，特徵在哪個位置已經不重要了，重要的是「這個特徵有多強」。對分類來說這正好；對分割、偵測這種需要位置的任務就不行。</p>
+<h2 id="8-與卷積層的差別">8. 與卷積層的差別</h2>
+<table><thead><tr><th>項目</th><th>卷積層</th><th>全連接層</th></tr></thead><tbody><tr><td>連接方式</td><td>每個輸出只看局部窗口</td><td>每個輸出看全部輸入</td></tr><tr><td>權重共享</td><td>有（同一組 kernel 掃全圖）</td><td>沒有（每個位置獨立）</td></tr><tr><td>保留空間結構</td><td>有</td><td>展平後通常沒有</td></tr><tr><td>參數量</td><td><code>(k²·C_in + 1)·C_out</code>，與影像大小無關</td><td><code>m·n + m</code>，隨特徵維度爆炸</td></tr><tr><td>常見用途</td><td>提取邊緣、紋理、部件</td><td>整合特徵、分類／回歸</td></tr></tbody></table>
+<h2 id="9-現代-cnn-為什麼少用大-fc">9. 現代 CNN 為什麼少用「大 FC」</h2>
+<p>那個 3136 → 128 的層就是 40 萬個參數，而它前面的卷積可能只有一兩千個。三個常見的替代方案：</p>
+<table><thead><tr><th>做法</th><th>怎麼運作</th><th>省下什麼</th></tr></thead><tbody><tr><td>全域平均池化（GAP）</td><td>每個通道平均成 1 個數 → 直接接 <code>Dense(K)</code></td><td><code>3136×128</code> 換成 <code>64×K</code></td></tr><tr><td><code>1×1</code> 卷積</td><td>在通道維度做線性組合，保留空間維度</td><td>參數 <code>C_in×C_out</code>，且不破壞位置資訊</td></tr><tr><td>Dropout</td><td>訓練時隨機丟掉一部分輸入</td><td>不省參數，但抑制大 FC 的過擬合</td></tr></tbody></table>
+<h2 id="10-六個常見誤解">10. 六個常見誤解</h2>
+<table><thead><tr><th>誤解</th><th>事實</th></tr></thead><tbody><tr><td>全連接層的參數量跟 batch 有關</td><td>無關，只有 <code>m·n + m</code>；batch 只是同時算多筆</td></tr><tr><td>logits 就是機率</td><td>logits 可正可負、可大於 1；softmax 之後才是機率</td></tr><tr><td>softmax 會改變預測類別</td><td>不會，它保序；<code>argmax(logits)</code> 就等於 <code>argmax(probs)</code></td></tr><tr><td>flatten 有參數</td><td>沒有，它只是重排；參數全在下一個 Dense</td></tr><tr><td>全連接層一定在最後</td><td>不一定，也可以夾在中間（例如 VGG 的 classifier 段）；只是現代網路傾向少用</td></tr><tr><td>bias 一定有幫助</td><td>對所有類別加同一個常數不改變 softmax；bias 要「每類不同」才有意義</td></tr></tbody></table>
+<h2 id="附錄-a-速查表">附錄 A 速查表</h2>
+<table><thead><tr><th>想問的事</th><th>答案</th></tr></thead><tbody><tr><td>公式</td><td><code>z = Wx + b</code></td></tr><tr><td>參數量</td><td><code>m×n + m</code></td></tr><tr><td>輸入形狀</td><td><code>n</code>（flatten 後的特徵維度）</td></tr><tr><td>輸出形狀</td><td><code>m</code>（類別數或下一層寬度）</td></tr><tr><td>7×7×64 展平</td><td>3,136</td></tr><tr><td>3136 → 128</td><td>401,536 個參數</td></tr><tr><td>softmax</td><td><code>e^{z_j} / Σ e^{z_k}</code>，總和 1、保序、平移不變</td></tr><tr><td>梯度</td><td><code>∂L/∂W = δxᵀ</code>、<code>∂L/∂x = Wᵀδ</code></td></tr><tr><td>想省參數</td><td>GAP 或 <code>1×1</code> 卷積取代大 FC</td></tr></tbody></table>
+<h2 id="附錄-b-常見錯誤">附錄 B 常見錯誤</h2>
+<ol><li><strong>忘記加 bias</strong>：<code>Wx</code> 與 <code>Wx + b</code> 是兩件事。</li><li><strong>把 W 的行列搞反</strong>：<code>W</code> 是 <code>m × n</code>（輸出 × 輸入），不是反過來。</li><li><strong>以為 flatten 會正規化</strong>：它不縮放、不標準化，只重排。</li><li><strong>softmax 之後又取 log</strong>：交叉熵通常直接吃 logits（<code>CrossEntropyLoss</code> 內含 softmax）。</li><li><strong>在 softmax 前後搞錯維度</strong>：softmax 要沿「類別」維度做，不是沿 batch。</li><li><strong>用 Flatten 接大 Dense 然後說模型很小</strong>：<code>3136×128</code> 就 40 萬個參數。</li></ol>
+<h2 id="附錄-c-延伸閱讀與離線使用">附錄 C 延伸閱讀與離線使用</h2>
+<p>站內：</p>
+<ul><li><a href="/cnn-cam-vs-gradcam/">CAM vs Grad-CAM：同一個熱圖，只差權重怎麼來</a>——九個面向的對照與 α 的實測</li><li><a href="/cnn-gradcam/">Grad-CAM：用梯度算出模型在看哪裡</a>——七個步驟、ReLU、選層，與 CAM 的等價條件</li><li><a href="/cnn-cam/">CAM：用 GAP 算出模型在看哪裡</a>——GAP 之後的分類權重怎麼變成熱圖（含 Grad-CAM）</li><li><a href="/cnn-gap-head/">為什麼現代 CNN 常不用全連接層</a>——GAP 分類頭：25,089,000 → 513,000 個參數</li><li><a href="/cnn-conv-vs-fc/">卷積層 vs 全連接層</a>——系列總整理：參數、算力與平移特性的對照</li><li><a href="/cnn-illustrated/">圖解 CNN：從 5×5 小圖算到類別機率</a>——softmax 的第一個版本</li><li><a href="/cnn-conv-details/">卷積層的運作細節</a>——為什麼卷積的參數與影像大小無關</li><li><a href="/cnn-activation-pooling/">激活函數與池化層</a>——GAP 與 Flatten 的取捨</li><li><a href="/cnn-notes/">CNN 學習筆記（Lesson 6）</a>——LeNet-5 的 61,706 個參數怎麼分布</li></ul>
+<p>站外：</p>
+<ul><li><a href="https://pytorch.org/docs/stable/generated/torch.nn.Linear.html">PyTorch <code>nn.Linear</code> 文件</a></li><li><a href="https://zh.d2l.ai/chapter_linear-networks/softmax-regression.html">Dive into Deep Learning（繁中）— softmax 迴歸</a></li></ul>
+<p>離線：本頁是<strong>單一 HTML 檔、零外部資源</strong>；原始 Markdown 在同一層。</p>
+<h2 id="附錄-d-一頁精華考前-10-分鐘">附錄 D 一頁精華（考前 10 分鐘）</h2>
+<table><thead><tr><th>#</th><th>記這一條</th></tr></thead><tbody><tr><td>1</td><td>全連接＝<code>z = Wx + b</code>，<code>W</code> 是 <code>m×n</code></td></tr><tr><td>2</td><td>參數 <code>m·n + m</code>；與 batch、與影像大小都無關</td></tr><tr><td>3</td><td>7×7×64 = 3,136；flatten 沒有參數</td></tr><tr><td>4</td><td>小 CNN 的參數 97.6% 在全連接層</td></tr><tr><td>5</td><td>softmax：總和 1、保序、平移不變</td></tr><tr><td>6</td><td>推論可直接 <code>argmax(logits)</code></td></tr><tr><td>7</td><td><code>∂L/∂W = δxᵀ</code>、<code>∂L/∂x = Wᵀδ</code></td></tr><tr><td>8</td><td>想省參數：GAP 或 <code>1×1</code> 卷積</td></tr></tbody></table>
+<h2 id="附錄-g-實測原始輸出">附錄 G 實測原始輸出</h2>
+<p><code>verify_cnn_fully_connected.py</code> 的完整輸出（Python 3.15.1 / NumPy 2.5.4，本機執行）：</p>
+<pre class="code"><code>------------------------------------------------------------------------
+1. z = Wx + b   (4 in, 3 out)
+   x: [2. 1. 0. 3.]  W.shape: (3, 4)  b: [ 0.1 -0.2  0.3]
+   row-by-row dot product, before bias: [ 2.3  1.4 -1. ]
+   z = Wx + b : [ 2.4  1.2 -0.7]
+   step by step:
+     z1 = (0.2×2 + 0.4×1 + -0.1×0 + 0.5×3) + 0.1 = 2.4000
+     z2 = (0.7×2 + -0.3×1 + 0.2×0 + 0.1×3) + -0.2 = 1.2000
+     z3 = (-0.5×2 + 0.6×1 + 0.8×0 + -0.2×3) + 0.3 = -0.7000
+------------------------------------------------------------------------
+2. what the draft&#x27;s numbers would require
+   draft claims z = [2.4, 1.5, 1.1]
+   computed     z = [ 2.4  1.2 -0.7]
+   difference   : [0.  0.3 1.8]
+------------------------------------------------------------------------
+3. softmax
+   computed z               -&gt; [0.7428 0.2237 0.0335]  sum = 1.000000
+   draft z [2.4, 1.5, 1.1]  -&gt; [0.5956 0.2421 0.1623]  sum = 1.000000
+   draft claims [0.55, 0.22, 0.15], which sums to 0.92
+------------------------------------------------------------------------
+4. softmax properties
+   shift all logits by +100 -&gt; same probabilities? True
+   order preserved? argmax 0 == 0
+   max-minus-min of logits: 3.10 -&gt; probability ratio 22.20
+------------------------------------------------------------------------
+5. parameter counts   params = m*n + m
+   3136 -&gt; 128 : 401408 weights + 128 bias = 401536
+   3136 -&gt;  10 : 31360 weights + 10 bias = 31370
+    784 -&gt;  64 : 50176 weights + 64 bias = 50240
+     64 -&gt;  10 : 640 weights + 10 bias = 650
+    128 -&gt;  10 : 1280 weights + 10 bias = 1290
+   small MNIST CNN: conv total 1248, fc total 50890 -&gt; fc is 97.6% of 52138
+------------------------------------------------------------------------
+6. flatten does not compute anything
+   7x7x64 = 3136 values; 7*7*64 = 3136
+   7x7x64 -&gt; 3136, params 0; the same numbers, new shape
+------------------------------------------------------------------------
+7. backward pass of a fully connected layer
+   dL/dW = delta x^T, shape (5, 4)
+   dL/dx = W^T delta, shape (4,)
+   finite-difference matches delta x^T: True
+------------------------------------------------------------------------
+8. bias shifts every logit by the same amount
+   z (bias 0) : [ 2.3  1.4 -1. ]
+   z (bias+1) : [3.3 2.4 0. ]
+   softmax(bias 0) : [0.6928 0.2817 0.0256]
+   softmax(bias+1) : [0.6928 0.2817 0.0256]
+------------------------------------------------------------------------</code></pre>
+<hr />
+<p><em>本頁為個人學習筆記整理；圖表為手繪內嵌 SVG，數字全部由附錄 G 的程式算出。</em></p>
+</main>
+</div>
+</body>
+</html>
