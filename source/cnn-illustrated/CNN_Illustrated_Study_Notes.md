@@ -333,6 +333,7 @@ softmax(z)_i = exp(z_i) / Σ exp(z_j)
 
 - [Dive into Deep Learning（繁中）— 卷積神經網路](https://zh.d2l.ai/chapter_convolutional-neural-networks/index.html)
 - [LeCun et al., Gradient-Based Learning Applied to Document Recognition (1998)](http://yann.lecun.com/exdb/lenet/)
+- [Convolutional Neural Networks Definition（Dragon1）](https://www.dragon1.com/terms/convolutional-neural-networks-definition)——另一種白話定義與四個應用例子（貓狗、交通號誌、手寫數字、醫學影像）。<br />該頁的示意圖為 **© Dragon1（All rights reserved）**，因此本筆記只引用連結、不重製圖片；要看圖請直接開原頁。
 
 離線：本頁是**單一 HTML 檔、零外部資源**，下載後直接雙擊就能看；原始 Markdown 也在同一層。
 
