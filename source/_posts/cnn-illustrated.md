@@ -26,8 +26,9 @@ banner_img: /img/covers/cnn-illustrated.png
 
 **👉 [看完整圖解](/cnn-illustrated/)** ｜ [下載原始 Markdown](/cnn-illustrated/CNN_Illustrated_Study_Notes.md)
 
-八張圖全部是**手繪內嵌 SVG**（每個標籤都是真正的 `<text>` 元素，不是 ASCII 文字圖）：資料流、
-卷積滑動、輸出尺寸三種設定、多個 filter 產生多通道、ReLU 折線、最大／平均池化、分類頭、MNIST 形狀階梯。
+十張圖全部是**手繪內嵌 SVG**（每個標籤都是真正的 `<text>` 元素，不是 ASCII 文字圖）：資料流、
+卷積滑動、輸出尺寸三種設定、多個 filter 產生多通道、ReLU 折線、最大／平均池化、分類頭、MNIST 形狀階梯，
+加上兩張「教科書常見畫法」的重畫（概念架構、三種任務）。
 
 幾個實測數字（NumPy 2.5.4 / Python 3.15.1，程式與原始輸出都附在文末附錄）：
 

@@ -98,6 +98,8 @@ ARIA = {
     "pool": "2×2 最大池化與平均池化：4×4 輸入切成四塊，最大池化取 6、8、4、9，平均池化取 3.75、5.25、2.5、3.75",
     "head": "分類頭：7×7×16 攤平成 784 維，接 64 個神經元，再由 softmax 把 logits 4.2、1.3、0.4 變成 0.9282、0.0511、0.0208 的機率",
     "mnist": "MNIST 小 CNN 的形狀階梯：28×28×1 → 28×28×8 → 14×14×8 → 14×14×16 → 7×7×16 → 784 維 → 64 維 → 10 個類別",
+    "concept-arch": "概念架構：輸入 224×224×3 一路縮到 14×14×256 再攤平，最後由 Dense 加 softmax 給出貓 0.93、狗 0.05、鳥 0.02",
+    "tasks": "同一張圖的三種任務：分類輸出一個標籤、偵測輸出框加類別、分割輸出逐像素遮罩",
 }
 
 CAPTIONS = {
@@ -109,6 +111,8 @@ CAPTIONS = {
     "pool": "池化把 2×2 壓成一格：最大池化留下最強響應，平均池化留下平均亮度；兩者都沒有可訓練參數。",
     "head": "分類頭的工作：把攤平後的特徵向量壓成 10 個分數（logits），再用 softmax 轉成加總為 1 的機率。",
     "mnist": "一個能跑 MNIST 的小 CNN 的形狀階梯：卷積改通道數、池化砍面積、Flatten 只負責攤平、Dense 才做判斷。",
+    "concept-arch": "概念架構的常見畫法：方塊高度就是解析度，一路變小、通道一路變多，最後才接決策頭。",
+    "tasks": "同一張圖餵進同一個骨幹，換一個輸出頭就是另一個任務：分類只看有沒有、偵測要位置、分割要每個像素。",
 }
 
 
@@ -374,9 +378,91 @@ def fig_mnist():
     return svg("mnist", 1000, 300, "".join(body))
 
 
+def fig_concept_arch():
+    """The classic 'conceptual architecture' picture: shrinking maps, then a head."""
+    slabs = [("輸入", "224×224×3", 160, TEAL),
+             ("Conv+ReLU", "112×112×64", 134, TEAL),
+             ("Pool", "56×56×64", 110, BLUE),
+             ("Conv+ReLU", "28×28×256", 86, TEAL),
+             ("Pool", "14×14×256", 62, BLUE),
+             ("Flatten", "25,088", 40, AMBER)]
+    body = [text(40, 44, "概念架構：一路變小，最後才做決定", 20, INK, "700"),
+            text(40, 72, "每個方塊的「高度」就是空間解析度；通道數正好相反，一路變多", 13, DIM)]
+    base, x0, w, gap = 320, 50, 96, 32
+    for i, (name, shape, h, colour) in enumerate(slabs):
+        x = x0 + i * (w + gap)
+        body.append(rect(x, base - h, w, h, stroke=colour + "aa", sw=1.4, fill=CELL,
+                         rx=6, opacity=0.95))
+        for k in range(1, 4):
+            body.append('<line x1="%s" y1="%s" x2="%s" y2="%s" stroke="%s" '
+                        'stroke-width="0.7" opacity="0.35"/>'
+                        % (x, base - h + k * h / 4, x + w, base - h + k * h / 4, colour))
+        body.append(text(x + w / 2, base + 22, shape, 9.5, INK, "normal", "middle"))
+        body.append(text(x + w / 2, base + 40, name, 9.5, DIM, "normal", "middle"))
+        if i < len(slabs) - 1:
+            body.append(arrow(x + w + 3, base - h / 2, x + w + gap - 5, base - h / 2))
+    body.append('<line x1="78" y1="96" x2="640" y2="96" stroke="%s" stroke-width="1"/>'
+                % TEAL)
+    body.append(text(359, 88, "特徵抽取：Conv → ReLU → Pool（重複 N 次）", 11, TEAL, "700",
+                     "middle"))
+    body.append('<line x1="806" y1="96" x2="976" y2="96" stroke="%s" stroke-width="1"/>'
+                % AMBER)
+    body.append(text(891, 88, "決策", 11, AMBER, "700", "middle"))
+    # head
+    body.append(rect(806, 180, 170, 140, stroke=ROSE + "99", sw=1.4, fill=CELL, rx=10))
+    body.append(text(822, 206, "Dense → softmax", 11, ROSE, "700"))
+    for i, (name, p) in enumerate((("貓", 0.93), ("狗", 0.05), ("鳥", 0.02))):
+        y = 226 + i * 26
+        body.append(text(822, y + 10, name, 10, DIM))
+        body.append(rect(846, y, max(p * 80, 3), 16, stroke="none", fill=ROSE, rx=3,
+                         sw=1, opacity=0.8))
+        body.append(text(852 + max(p * 80, 3), y + 11, "%.2f" % p, 9.5, DIM))
+    body.append(arrow(790, 250, 802, 250))
+    body.append(text(50, 386, "同一張圖，換掉最後那一段（決策頭）就是另一個任務——見下圖。", 12, DIM))
+    return svg("concept-arch", 1000, 410, "".join(body))
+
+
+def fig_tasks():
+    panels = [("分類", "這張圖是什麼？", "一個標籤", "1 個類別機率", TEAL, "cell"),
+              ("偵測", "物件在哪裡？", "框 + 類別", "K × (x, y, w, h, 類別)", AMBER, "box"),
+              ("分割", "每個像素是什麼？", "逐像素遮罩", "H × W × 類別", VIOLET, "mask")]
+    body = [text(40, 44, "同一張圖，三種答案", 20, INK, "700"),
+            text(40, 72, "骨幹可以完全一樣；差別在「輸出頭」與「損失函數」", 13, DIM)]
+    for i, (name, question, out, shape, colour, mode) in enumerate(panels):
+        x = 30 + i * 318
+        body.append(rect(x, 96, 300, 250, stroke=colour + "88", sw=1.4, fill=CELL,
+                         rx=12, opacity=0.6))
+        body.append(text(x + 16, 122, name, 13, colour, "700"))
+        body.append(text(x + 66, 122, question, 10.5, DIM))
+        gx, gy, cell = x + 20, 140, 26
+        for r in range(6):
+            for c in range(6):
+                fill = CELL
+                if mode == "mask" and (r in (2, 3) and c in (2, 3, 4)):
+                    fill = VIOLET + "55"
+                body.append(rect(gx + c * cell, gy + r * cell, cell, cell, stroke=LINE,
+                                 sw=0.8, fill=fill, rx=2))
+        if mode == "box":
+            body.append(rect(gx + 1 * cell, gy + 1 * cell, 3 * cell, 3 * cell,
+                             stroke=AMBER, sw=2, rx=2))
+        body.append(arrow(gx + 6 * cell + 4, gy + 78, gx + 6 * cell + 34, gy + 78))
+        body.append(text(x + 210, gy + 50, out, 10.5, INK, "700", "middle"))
+        body.append(text(x + 210, gy + 72, "輸出", 9.5, DIM, "normal", "middle"))
+        body.append(text(x + 210, gy + 92, shape, 9, colour, "normal", "middle"))
+        body.append(text(x + 16, 288, "標籤" if mode == "cell" else
+                         ("座標 + 標籤" if mode == "box" else "像素級標註"), 10, DIM))
+        body.append(text(x + 16, 312, {"cell": "只看「有沒有」",
+                                       "box": "還要「在哪裡」",
+                                       "mask": "每個位置都要"}[mode], 10.5, colour))
+    body.append(text(40, 384, "這也是為什麼分類可以用 GAP 收尾，而偵測／分割必須保留空間維度。",
+                     12, DIM))
+    return svg("tasks", 1000, 410, "".join(body))
+
+
 FIGS = {"pipeline": fig_pipeline, "conv": fig_conv, "hyper": fig_hyper,
         "multi": fig_multi, "relu": fig_relu, "pool": fig_pool,
-        "head": fig_head, "mnist": fig_mnist}
+        "head": fig_head, "mnist": fig_mnist,
+        "concept-arch": fig_concept_arch, "tasks": fig_tasks}
 
 
 def main():

@@ -246,7 +246,7 @@ def main():
     md = read_text(MD)
 
     # a rebuild must not stack figure blocks: drop whatever sits between markers
-    md = re.sub(r"<!-- CNNI-FIGURE:([a-z]+) -->.*?<!-- /CNNI-FIGURE:\1 -->",
+    md = re.sub(r"<!-- CNNI-FIGURE:([a-z0-9][a-z0-9-]*) -->.*?<!-- /CNNI-FIGURE:\1 -->",
                 r"<!-- CNNI-FIGURE:\1 -->", md, flags=re.S)
     used = []
 
@@ -258,7 +258,7 @@ def main():
         return ("<!-- CNNI-FIGURE:%s -->\n%s\n<!-- /CNNI-FIGURE:%s -->"
                 % (slug, FIG_TPL.format(s=inline_svg(slug), c=CAPTIONS[slug]), slug))
 
-    md = re.sub(r"<!--\s*CNNI-FIGURE:([a-z]+)\s*-->", repl, md)
+    md = re.sub(r"<!--\s*CNNI-FIGURE:([a-z0-9][a-z0-9-]*)\s*-->", repl, md)
     write_crlf(MD, md)
 
     body, headings = md_to_html(md)
