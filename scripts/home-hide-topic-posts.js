@@ -23,6 +23,9 @@
  *       2026-10-28 修正：改以「單張卡片」regex 取代 split(MARKER)，避免最後一張卡片
  *       被隱藏時，把分頁器／footer／全部 <script> 一起吃掉（首頁 HTML 被截斷、
  *       封面圖停在 loading.gif）。
+ *       2026-10-30 專題大改組：專題子頁改吃 Fluid 主題自己的 `hide: true`（在
+ *       before_generate 就從 locals.posts 移除，分頁因此只算真正的文章），
+ *       目前**沒有任何貼文使用 hide_from_home**，本檔保留作為備援機制。
  */
 
 // 首頁每篇文章的外層容器；這個 class 只出現在首頁（歸檔／分類／文章頁都沒有）。

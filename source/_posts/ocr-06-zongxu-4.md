@@ -10,7 +10,7 @@ tags:
   - 理財
   - 馬年開運
 toc: true
-hide_from_home: true
+hide_from_home: true   # 專題子頁：不列首頁（歸檔／分類／標籤照常）
 permalink: ocr/zongxu-4/
 ---
 

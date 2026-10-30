@@ -1,6 +1,17 @@
 ---
 title: gpu-unlock 專題：NVIDIA 消費級卡那道「半速鎖」，是怎麼被打開的
 date: 2026-10-25 23:10:00
+permalink: gpu-unlock/
+categories:
+  - AI
+  - 硬體
+tags:
+  - NVIDIA
+  - GPU
+  - 硬體解鎖
+  - 逆向工程
+  - 實測
+toc: true
 ---
 
 ## 這個專題在講什麼

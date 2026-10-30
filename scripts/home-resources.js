@@ -37,9 +37,7 @@ const MARKER = 'data-home-resources';
 const TOPICS = [
   { title: 'CNN 專題：九篇圖解系列、課程筆記與實驗', href: '/cnn/', date: '2026-10-30' },
   { title: 'OCR：正體中文書頁辨識與校對', href: '/ocr/', date: '2026-10-28' },
-  { title: 'gpu-unlock 專題：NVIDIA 消費級卡那道「半速鎖」怎麼被打開的', href: '/gpu-unlock/', date: '2026-10-27' },
-  { title: 'Agent 時代，你可能累錯地方了', href: '/2026/10/16/matt-pocock-18-agent-mistakes/', date: '2026-10-16' },
-  { title: '用 Python 解決問題：24 類工作 × 48 個套件', href: '/2026/10/16/python-problem-solving-toolkit/', date: '2026-10-16' },
+  { title: 'CNN 專題：十個實驗，和三次被推翻的假設', href: '/cnn-lab/', date: '2026-10-27' },
   { title: '從零打造一個 coding agent', href: '/coding-agent/', date: '2026-10-11' },
   { title: '手寫程式碼的時代正式結束｜DHH 宣布退休', href: '/dhh-rails-world-2026/index.html', date: '2026-09-27' }
 ];

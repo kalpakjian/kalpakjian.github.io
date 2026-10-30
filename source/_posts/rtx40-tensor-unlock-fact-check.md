@@ -17,7 +17,7 @@ tags:
   - Linux
   - Windows
   - 深度學習
-hide_from_home: true
+hide_from_home: true   # 專題子頁：不列首頁（歸檔／分類／標籤照常）
 toc: true
 index_img: /img/covers/rtx40-tensor-unlock-fact-check.png
 banner_img: /img/covers/rtx40-tensor-unlock-fact-check.png
