@@ -3,7 +3,9 @@
 > 「CNN 1」講機器怎麼看與卷積的數學；「CNN 2」講**一個可訓練的分類 CNN 長什麼樣**：
 > 局部連接、輸出體積、ReLU、池化、空洞卷積，最後把模型組起來、看它在真實任務上的樣子。
 > 本筆記只談課堂內容；簡報那段範例程式碼的 33 組實驗與這裡無關，另見 [CNN II 實驗紀錄](/2026/10/29/cnn-2-experiments/)。
-> 只想複習考點的話，看附錄 C 就夠。
+> 只想複習考點的話，看[一頁精華](/cnn-cheatsheet/#onepage)就夠。
+> **🧪 配套實作（可跑，不用 Colab）**：逐層看 28×28 → 26×26×32 → 13×13×32 → 5408 → 10，並用一張真實照片體驗前處理的影響 → [Lab 2 原始碼與說明](https://github.com/kalpakjian/cnn-course-demo/tree/main/labs/lab2-pipeline)
+> **📐 跨課速查**：術語、陷阱、一頁精華 → [/cnn-cheatsheet/](/cnn-cheatsheet/)
 
 <!-- CNN2-FIGURE:overview -->
 <figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -192,7 +194,7 @@ def generate_model(input_shape=(28, 28, 1), n_classes=10):
 | 3 | `Sequential([Conv2D(...)])` 直接開頭 | Keras 3 要求先知道輸入形狀 | 加 `tf.keras.Input(shape=...)` |
 
 `MaxPool2D` 是 `MaxPooling2D` 的別名，可照用；`Dense(1024)` 對 10 類偏大
-（佔全模型 98.9% 參數），實務上會加 dropout 或縮小。
+（**Dense(1024) 單層**佔全模型 **98.2%**；連 Dense(10) 一起算才是 98.9%），實務上會加 dropout 或縮小。
 
 實測層形狀（MNIST，28×28×1）：
 
@@ -242,38 +244,15 @@ def generate_model(input_shape=(28, 28, 1), n_classes=10):
 
 ## 附錄 A：名詞速查
 
-| 英文 | 中文 | 一句話 |
-|---|---|---|
-| convolution | 卷積 | 濾波器滑過輸入做加權和 |
-| filter / kernel | 濾波器／卷積核 | 可學習的權重小矩陣 |
-| feature map | 特徵圖 | 一個濾波器的輸出 |
-| stride | 步幅 | 濾波器每次移動的格數 |
-| padding（SAME／VALID） | 填充 | SAME 保住尺寸、VALID 不填充 |
-| receptive field | 感受野 | 節點在輸入上看到的區域 |
-| pooling | 池化 | 鄰域取最大或平均，降維 |
-| dilation | 空洞率 | 濾波器元素之間插入間隔 |
-| de novo feature learning | 從零學特徵 | 特徵是訓練出來的，不是人工設計 |
-| dying ReLU | ReLU 死亡 | 單元恆輸出 0、梯度恆 0 |
+> **已移至跨課速查**（與 CNN 1 合訂，唯一維護版）：[術語對照](/cnn-cheatsheet/#terms)。
 
 ## 附錄 B：常見陷阱
 
-| 陷阱 | 正確說法 |
-|---|---|
-| 「depth 由輸入通道決定」 | 由**濾波器數量**決定；輸入通道只影響每個濾波器的深度 |
-| 「池化是為了學特徵」 | 池化沒有參數，只降維與提供空間不變性 |
-| 「ReLU 一半是 0 就是死了」 | 那是稀疏；死亡要看「對所有輸入都輸出 0」 |
-| 「參數越多越準」 | 參數量不是唯一因素：深度、BatchNorm、`padding="same"` 都會影響 |
-| 「卷積就是數學上的卷積」 | 實務用的是互相關（核不翻轉），對學出來的核沒差別 |
-| 「20 輪沒進步就是到頂」 | 通常只是學習率還沒收尾 |
+> **已移至跨課速查**：[常見陷阱總表](/cnn-cheatsheet/#traps)（含 CNN 1 的十三條）。
 
 ## 附錄 C：一頁精華（考前 10 分鐘）
 
-1. 分類三步曲：**卷積 → 非線性 → 池化**，權重只在卷積與全連接層。
-2. `O = (N + 2P − F)/S + 1`；`d` 是濾波器數量。
-3. 池化：無參數、降維、空間不變、放棄精確位置。
-4. ReLU：`max(0, x)`；死亡 = 梯度恆 0。
-5. 參數九成八在攤平後的全連接層。
-6. FCN 用 `Conv2DTranspose` 上採樣，才能輸出同尺寸標籤圖。
+> **已移至跨課速查**：[一頁精華](/cnn-cheatsheet/#onepage)（CNN 1＋CNN 2 合訂）。
 
 ## 附錄 D：互動測驗（49 題）
 
@@ -291,9 +270,9 @@ def generate_model(input_shape=(28, 28, 1), n_classes=10):
 
 | 分數 | 程度 | 建議 |
 |---|---|---|
-| 44–49 | 優異 | 直接看附錄 C 一頁精華即可上場 |
+| 44–49 | 優異 | 直接看[一頁精華](/cnn-cheatsheet/#onepage)即可上場 |
 | 37–43 | 良好 | 複習錯題所屬章節 |
-| 29–36 | 及格邊緣 | 重讀主要章節 + 附錄 A |
+| 29–36 | 及格邊緣 | 重讀主要章節 + [術語對照](/cnn-cheatsheet/#terms) |
 | 0–28 | 需加強 | 整份筆記重讀一遍，再重做本卷 |
 
 *本篇為個人學習筆記整理，內容為個人理解與重點摘錄。*
