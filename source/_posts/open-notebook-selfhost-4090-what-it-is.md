@@ -247,6 +247,88 @@ similarity: 0.6249
 - 議程 **4 項**：Introduction to Prompt Engineering、Advanced Techniques、Applications & Tools、Conclusion & Future Directions——與投影片第 3 頁完全一致。
 - 進階技術整理成 **6 大類**：基礎技巧（Zero-Shot / Few-Shot）、情境與角色（System / Role / Contextual / Markdown）、推理與規劃（CoT / TCoT / SoT / Step-Back）、高階整合（Least-to-Most / ToT / iToT / Self-Generated）、風格語氣（Persona / Predictive）、專門化（Constitutional AI / Perspective-Taking / Analogical / Multi-Modal）。
 
+<!-- FIG3 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" role="img" aria-label="從 92 頁簡報歸納出的六類提示技術：基礎技巧 2 種、情境與角色 4 種、推理與規劃 4 種、高階整合 4 種、風格與語氣 2 種、專門化 4 種，共 20 種" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="978.5" height="618.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從 92 頁簡報歸納出的 6 類 20 種提示技術</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8B 模型的答案；名稱回查結果：16 個完整命中、4 個為模型改寫的標籤</text>
+<rect x="48" y="122" width="290" height="176" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="80" cy="156" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="80" y="161.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="110" y="161" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">基礎技巧</text>
+<text x="110" y="180" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2 種</text>
+<circle cx="76" cy="210" r="3.5" fill="#2dd4bf"/>
+<text x="88" y="214" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Zero-Shot</text>
+<circle cx="76" cy="231" r="3.5" fill="#2dd4bf"/>
+<text x="88" y="235" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Few-Shot</text>
+<rect x="345" y="122" width="290" height="176" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="377" cy="156" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="377" y="161.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="407" y="161" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">情境與角色</text>
+<text x="407" y="180" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4 種</text>
+<circle cx="373" cy="210" r="3.5" fill="#58a6ff"/>
+<text x="385" y="214" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">System</text>
+<circle cx="373" cy="231" r="3.5" fill="#58a6ff"/>
+<text x="385" y="235" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Role</text>
+<circle cx="373" cy="252" r="3.5" fill="#58a6ff"/>
+<text x="385" y="256" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Contextual</text>
+<circle cx="373" cy="273" r="3.5" fill="#58a6ff"/>
+<text x="385" y="277" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Markdown</text>
+<rect x="642" y="122" width="290" height="176" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="674" cy="156" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="674" y="161.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="704" y="161" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">推理與規劃</text>
+<text x="704" y="180" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4 種</text>
+<circle cx="670" cy="210" r="3.5" fill="#fbbf24"/>
+<text x="682" y="214" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Chain-of-Thought</text>
+<circle cx="670" cy="231" r="3.5" fill="#fbbf24"/>
+<text x="682" y="235" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Tabular CoT</text>
+<circle cx="670" cy="252" r="3.5" fill="#fbbf24"/>
+<text x="682" y="256" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Skeleton-of-Thought</text>
+<circle cx="670" cy="273" r="3.5" fill="#fbbf24"/>
+<text x="682" y="277" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Step-Back</text>
+<rect x="48" y="318" width="290" height="176" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="80" cy="352" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="80" y="357.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="110" y="357" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">高階整合</text>
+<text x="110" y="376" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4 種</text>
+<circle cx="76" cy="406" r="3.5" fill="#c084fc"/>
+<text x="88" y="410" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Least-to-Most</text>
+<circle cx="76" cy="427" r="3.5" fill="#c084fc"/>
+<text x="88" y="431" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Tree-of-Thoughts</text>
+<circle cx="76" cy="448" r="3.5" fill="#c084fc"/>
+<text x="88" y="452" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Interactive ToT</text>
+<circle cx="76" cy="469" r="3.5" fill="#c084fc"/>
+<text x="88" y="473" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Self-Generated</text>
+<rect x="345" y="318" width="290" height="176" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<circle cx="377" cy="352" r="15" fill="#f472b6" opacity="0.92"/>
+<text x="377" y="357.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="407" y="357" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">風格與語氣</text>
+<text x="407" y="376" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2 種</text>
+<circle cx="373" cy="406" r="3.5" fill="#f472b6"/>
+<text x="385" y="410" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Persona</text>
+<circle cx="373" cy="427" r="3.5" fill="#f472b6"/>
+<text x="385" y="431" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Predictive</text>
+<rect x="642" y="318" width="290" height="176" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<circle cx="674" cy="352" r="15" fill="#3fb950" opacity="0.92"/>
+<text x="674" y="357.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<text x="704" y="357" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">專門化</text>
+<text x="704" y="376" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4 種</text>
+<circle cx="670" cy="406" r="3.5" fill="#3fb950"/>
+<text x="682" y="410" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Constitutional AI</text>
+<circle cx="670" cy="427" r="3.5" fill="#3fb950"/>
+<text x="682" y="431" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Perspective-Taking</text>
+<circle cx="670" cy="448" r="3.5" fill="#3fb950"/>
+<text x="682" y="452" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Analogical</text>
+<circle cx="670" cy="469" r="3.5" fill="#3fb950"/>
+<text x="682" y="473" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Multi-Modal</text>
+<text x="48" y="592" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">※ 這 6 個分類是我要求「用中文整理」後模型自己歸納的，簡報原文沒有這層結構。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left"><strong>圖三：6 類 20 種提示技術。</strong>這個分類結構是 8B 模型自己歸納的——原始簡報只是一頁一頁介紹技術，沒有這層組織。20 個名稱我逐一回查：16 個完整命中，4 個是模型把原文的基礎詞（System / Role / Contextual / Markdown）改寫成標籤，不是憑空發明。</figcaption>
+</figure>
+<!-- /FIG3 -->
+
 看起來很漂亮，但**漂亮正是需要查證的時候**。我把答案裡每個技術名稱拿回原始檔逐一比對：
 
 | 技術名稱 | 原文出現次數 | 技術名稱 | 原文出現次數 |
@@ -322,6 +404,47 @@ similarity: 0.6249
 | 當筆記的最終儲存處 | ⚠️ 不建議 | 筆記存在 DB 裡，不是 `.md` 檔；我的站是 git 版控的檔案，兩邊並存等於兩份真相 |
 
 ### 我的結論：當「唯讀查詢層」，不要當產線
+
+<!-- FIG4 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 500" role="img" aria-label="決策流：需要跨語料問答或讓 agent 查語料時值得安裝；要產出 HTML、題庫或 OCR 時不該用；只要全文檢索則 SQLite FTS5 就足夠" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="978.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你要的是問答，還是產出？</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個工具，三種需求三種答案</text>
+<rect x="360" y="112" width="260" height="54" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="490.0" y="144.22" font-size="14.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你的需求是哪一種？</text>
+<rect x="48" y="280" width="209" height="168" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="152.5" y="316" font-size="15" fill="#3fb950" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">值得裝</text>
+<text x="152.5" y="354" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">跨語料問答</text>
+<text x="152.5" y="384" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">文件、轉錄稿</text>
+<text x="152.5" y="406" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">混在一起問</text>
+<rect x="273" y="280" width="209" height="168" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="377.5" y="316" font-size="15" fill="#3fb950" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">值得裝</text>
+<text x="377.5" y="354" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">讓 agent 查語料</text>
+<text x="377.5" y="384" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">接到 Cline 的 MCP</text>
+<text x="377.5" y="406" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">取代 grep</text>
+<rect x="498" y="280" width="209" height="168" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="602.5" y="316" font-size="15" fill="#f472b6" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不要用</text>
+<text x="602.5" y="354" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">產出 HTML／題庫</text>
+<text x="602.5" y="384" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">既有產線</text>
+<text x="602.5" y="406" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">已經在做</text>
+<rect x="723" y="280" width="209" height="168" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="827.5" y="316" font-size="15" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FTS5 就夠</text>
+<text x="827.5" y="354" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只要全文檢索</text>
+<text x="827.5" y="384" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">單機、不需向量</text>
+<text x="827.5" y="406" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一個 SQLite 檔</text>
+<path d="M 490 166 L 490 246" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 152.5 246 L 827.5 246" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 152.5 246 L 152.5 278" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 377.5 246 L 377.5 278" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 602.5 246 L 602.5 278" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 827.5 246 L 827.5 278" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="48" y="476" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">判斷依據：它輸出的是「對話 + 引用」，不是可發佈的頁面。要交付檔案，既有產線仍是唯一選擇。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left"><strong>圖四：該不該用。</strong>決定因素不是「它功能多不多」，而是「你要的是問答還是產出」。左邊兩種需求值得裝，右邊兩種不值得——尤其是產出型工作，它給的是對話與引用，不是可發佈的頁面。</figcaption>
+</figure>
+<!-- /FIG4 -->
 
 三條路，我選第一條：
 

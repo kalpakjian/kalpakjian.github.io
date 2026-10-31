@@ -137,6 +137,95 @@ def build_metrics():
     return s
 
 
+def build_taxonomy():
+    """6 類 20 種提示技術（8B 的答案，名稱已回查原始檔）。"""
+    s = Svg(
+        980,
+        620,
+        "從 92 頁簡報歸納出的六類提示技術：基礎技巧 2 種、情境與角色 4 種、"
+        "推理與規劃 4 種、高階整合 4 種、風格與語氣 2 種、專門化 4 種，共 20 種",
+        "從 92 頁簡報歸納出的 6 類 20 種提示技術",
+        "8B 模型的答案；名稱回查結果：16 個完整命中、4 個為模型改寫的標籤",
+    )
+
+    cats = [
+        ("1", "基礎技巧", "teal", ["Zero-Shot", "Few-Shot"]),
+        ("2", "情境與角色", "blue", ["System", "Role", "Contextual", "Markdown"]),
+        ("3", "推理與規劃", "amber",
+         ["Chain-of-Thought", "Tabular CoT", "Skeleton-of-Thought", "Step-Back"]),
+        ("4", "高階整合", "violet",
+         ["Least-to-Most", "Tree-of-Thoughts", "Interactive ToT", "Self-Generated"]),
+        ("5", "風格與語氣", "rose", ["Persona", "Predictive"]),
+        ("6", "專門化", "green",
+         ["Constitutional AI", "Perspective-Taking", "Analogical", "Multi-Modal"]),
+    ]
+
+    cw, ch = 290, 176
+    xs = [48, 345, 642]
+    ys = [122, 318]
+    for i, (num, name, stage, items) in enumerate(cats):
+        x = xs[i % 3]
+        y = ys[i // 3]
+        col = C[stage]
+        s.rect(x, y, cw, ch, fill="#161b22", stroke=col + "66", rx=10)
+        s.badge(x + 32, y + 34, num, col)
+        s.text(x + 62, y + 39, name, 15.5, TXT, "700")
+        s.text(x + 62, y + 58, "%d 種" % len(items), 11.5, MUT)
+        ly = y + 92
+        for it in items:
+            s.p.append('<circle cx="%s" cy="%s" r="3.5" fill="%s"/>'
+                       % (x + 28, ly - 4, col))
+            s.text(x + 40, ly, it, 12.5, TXT)
+            ly += 21
+
+    s.text(48, 592,
+           "※ 這 6 個分類是我要求「用中文整理」後模型自己歸納的，簡報原文沒有這層結構。",
+           11.5, MUT)
+    return s
+
+
+def build_decision():
+    """該不該用：同一工具，三種需求三種答案。"""
+    s = Svg(
+        980,
+        500,
+        "決策流：需要跨語料問答或讓 agent 查語料時值得安裝；要產出 HTML、題庫或 OCR 時"
+        "不該用；只要全文檢索則 SQLite FTS5 就足夠",
+        "你要的是問答，還是產出？",
+        "同一個工具，三種需求三種答案",
+    )
+
+    s.box(360, 112, 260, 54, "你的需求是哪一種？", None, "blue", tsize=14.5)
+
+    cards = [
+        ("跨語料問答", ["文件、轉錄稿", "混在一起問"], "值得裝", "green"),
+        ("讓 agent 查語料", ["接到 Cline 的 MCP", "取代 grep"], "值得裝", "green"),
+        ("產出 HTML／題庫", ["既有產線", "已經在做"], "不要用", "rose"),
+        ("只要全文檢索", ["單機、不需向量", "一個 SQLite 檔"], "FTS5 就夠", "amber"),
+    ]
+
+    xs = [48, 273, 498, 723]
+    cw, ch, top = 209, 168, 280
+    targets = []
+    for x, (title, subs, verdict, stage) in zip(xs, cards):
+        col = C[stage]
+        s.rect(x, top, cw, ch, fill="#161b22", stroke=col + "66", rx=10)
+        s.text(x + cw / 2, top + 36, verdict, 15, col, "700", "middle")
+        s.text(x + cw / 2, top + 74, title, 14, TXT, "700", "middle")
+        ly = top + 104
+        for sub in subs:
+            s.text(x + cw / 2, ly, sub, 11.5, MUT, anchor="middle")
+            ly += 22
+        targets.append((x + cw / 2, top))
+
+    s.bus_out((490, 166), targets, colour="#7d8590", stub=34)
+
+    s.text(48, 476,
+           "判斷依據：它輸出的是「對話 + 引用」，不是可發佈的頁面。要交付檔案，既有產線仍是唯一選擇。",
+           11.5, MUT)
+    return s
+
+
 CAP_ARCH = (
     "<strong>圖一：四個程序的實際呼叫方向。</strong>"
     "前端只跟 API 說話，API 把長工作寫進 SurrealDB 的 <code>command</code> 表，"
@@ -151,9 +240,25 @@ CAP_METRICS = (
     "這就是第一輪 7 分鐘吐不出 token 的原因，不是程式錯誤。"
 )
 
+CAP_TAX = (
+    "<strong>圖三：6 類 20 種提示技術。</strong>"
+    "這個分類結構是 8B 模型自己歸納的——原始簡報只是一頁一頁介紹技術，沒有這層組織。"
+    "20 個名稱我逐一回查：16 個完整命中，4 個是模型把原文的基礎詞"
+    "（System / Role / Contextual / Markdown）改寫成標籤，不是憑空發明。"
+)
+
+CAP_DEC = (
+    "<strong>圖四：該不該用。</strong>"
+    "決定因素不是「它功能多不多」，而是「你要的是問答還是產出」。"
+    "左邊兩種需求值得裝，右邊兩種不值得——尤其是產出型工作，"
+    "它給的是對話與引用，不是可發佈的頁面。"
+)
+
 FIGS = [
     ("FIG1", "open-notebook-arch", build_arch, CAP_ARCH),
     ("FIG2", "open-notebook-metrics", build_metrics, CAP_METRICS),
+    ("FIG3", "open-notebook-taxonomy", build_taxonomy, CAP_TAX),
+    ("FIG4", "open-notebook-decision", build_decision, CAP_DEC),
 ]
 
 
