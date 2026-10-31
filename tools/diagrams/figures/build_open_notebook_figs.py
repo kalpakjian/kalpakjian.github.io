@@ -226,6 +226,55 @@ def build_decision():
     return s
 
 
+def build_timeline():
+    """來源 → 切塊 → 向量 → 索引 → 引用 的五階段資料流。"""
+    s = Svg(
+        980,
+        360,
+        "資料流時間軸：92 頁 PDF 抽出 43,304 字元後切成 106 塊，用 bge-m3 向量化"
+        "寫入 SurrealDB，檢索時以 0.625 相似度命中並回傳段落原文與頁碼；"
+        "聊天只走前兩段，Ask 走完全程",
+        "從檔案到可引用答案：五個階段",
+        "同一份 92 頁簡報，全部在本機完成；數字為實測值",
+    )
+
+    stages = [
+        ("來源", ["92 頁 PDF", "43,304 字元"], "16.5 s", "blue"),
+        ("切塊", ["400 tokens/塊", "overlap 15%"], "106 塊", "teal"),
+        ("向量化", ["bge-m3（Ollama）", "寫入 source_embedding"], "42.5 s", "amber"),
+        ("索引", ["BM25 + 向量", "SurrealDB 雙索引"], "2 個 function", "violet"),
+        ("檢索 → 引用", ["段落原文 + 頁碼", "可追溯 [source:id]"], "0.625", "green"),
+    ]
+
+    xs = [96, 288, 480, 672, 864]
+    for i, (title, details, value, stage) in enumerate(stages):
+        cx = xs[i]
+        col = C[stage]
+        s.rect(cx - 82, 96, 164, 92, fill="#161b22", stroke=col + "66", rx=10)
+        s.text(cx, 126, title, 14, TXT, "700", "middle")
+        ly = 150
+        for d in details:
+            s.text(cx, ly, d, 11.5, MUT, anchor="middle")
+            ly += 19
+        s.badge(cx, 214, str(i + 1), col, r=15, size=13)
+        s.text(cx, 252, value, 12.5, col, "700", "middle")
+
+    for i in range(4):
+        s.arrow(xs[i] + 17, 214, xs[i + 1] - 17, 214, "#7d8590", 1.8)
+
+    # 誰走哪幾段（括號 + 端點刻線）
+    s.line(96, 292, 288, 292, C["rose"], 2)
+    s.line(96, 292, 96, 284, C["rose"], 2)
+    s.line(288, 292, 288, 284, C["rose"], 2)
+    s.text(192, 276, "聊天：只走 ①→②（把全文塞進 prompt）", 11, C["rose"], anchor="middle")
+    s.line(96, 328, 864, 328, C["teal"], 2)
+    s.line(96, 328, 96, 320, C["teal"], 2)
+    s.line(864, 328, 864, 320, C["teal"], 2)
+    s.text(480, 312, "Ask：走完 ①→⑤（檢索、引用、綜合）", 11, C["teal"], anchor="middle")
+
+    return s
+
+
 CAP_ARCH = (
     "<strong>圖一：四個程序的實際呼叫方向。</strong>"
     "前端只跟 API 說話，API 把長工作寫進 SurrealDB 的 <code>command</code> 表，"
@@ -254,11 +303,19 @@ CAP_DEC = (
     "它給的是對話與引用，不是可發佈的頁面。"
 )
 
+CAP_FLOW = (
+    "<strong>圖五：資料流時間軸。</strong>"
+    "五個階段全部在本機完成，數字是實測值。注意下半部兩條括號——"
+    "單一來源聊天只走 ①→②（把全文塞進 prompt），"
+    "只有 Ask 會走完 ①→⑤（檢索、引用、綜合）。這就是「算不算 RAG」的分界線。"
+)
+
 FIGS = [
     ("FIG1", "open-notebook-arch", build_arch, CAP_ARCH),
     ("FIG2", "open-notebook-metrics", build_metrics, CAP_METRICS),
     ("FIG3", "open-notebook-taxonomy", build_taxonomy, CAP_TAX),
     ("FIG4", "open-notebook-decision", build_decision, CAP_DEC),
+    ("FIG5", "open-notebook-timeline", build_timeline, CAP_FLOW),
 ]
 
 

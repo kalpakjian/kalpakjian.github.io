@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 360" role="img" aria-label="資料流時間軸：92 頁 PDF 抽出 43,304 字元後切成 106 塊，用 bge-m3 向量化寫入 SurrealDB，檢索時以 0.625 相似度命中並回傳段落原文與頁碼；聊天只走前兩段，Ask 走完全程" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="978.5" height="358.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從檔案到可引用答案：五個階段</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一份 92 頁簡報，全部在本機完成；數字為實測值</text>
+<rect x="14" y="96" width="164" height="92" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="96" y="126" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">來源</text>
+<text x="96" y="150" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">92 頁 PDF</text>
+<text x="96" y="169" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">43,304 字元</text>
+<circle cx="96" cy="214" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="96" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="96" y="252" font-size="12.5" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">16.5 s</text>
+<rect x="206" y="96" width="164" height="92" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="288" y="126" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">切塊</text>
+<text x="288" y="150" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">400 tokens/塊</text>
+<text x="288" y="169" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">overlap 15%</text>
+<circle cx="288" cy="214" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="288" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="288" y="252" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">106 塊</text>
+<rect x="398" y="96" width="164" height="92" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="480" y="126" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">向量化</text>
+<text x="480" y="150" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">bge-m3（Ollama）</text>
+<text x="480" y="169" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">寫入 source_embedding</text>
+<circle cx="480" cy="214" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="480" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="480" y="252" font-size="12.5" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">42.5 s</text>
+<rect x="590" y="96" width="164" height="92" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="672" y="126" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">索引</text>
+<text x="672" y="150" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BM25 + 向量</text>
+<text x="672" y="169" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SurrealDB 雙索引</text>
+<circle cx="672" cy="214" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="672" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="672" y="252" font-size="12.5" fill="#c084fc" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2 個 function</text>
+<rect x="782" y="96" width="164" height="92" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="864" y="126" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">檢索 → 引用</text>
+<text x="864" y="150" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">段落原文 + 頁碼</text>
+<text x="864" y="169" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">可追溯 [source:id]</text>
+<circle cx="864" cy="214" r="15" fill="#3fb950" opacity="0.92"/>
+<text x="864" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="864" y="252" font-size="12.5" fill="#3fb950" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.625</text>
+<path d="M 113 214 L 271 214" fill="none" stroke="#7d8590" stroke-width="1.8" marker-end="url(#m7d8590)"/>
+<path d="M 305 214 L 463 214" fill="none" stroke="#7d8590" stroke-width="1.8" marker-end="url(#m7d8590)"/>
+<path d="M 497 214 L 655 214" fill="none" stroke="#7d8590" stroke-width="1.8" marker-end="url(#m7d8590)"/>
+<path d="M 689 214 L 847 214" fill="none" stroke="#7d8590" stroke-width="1.8" marker-end="url(#m7d8590)"/>
+<path d="M 96 292 L 288 292" fill="none" stroke="#f472b6" stroke-width="2"/>
+<path d="M 96 292 L 96 284" fill="none" stroke="#f472b6" stroke-width="2"/>
+<path d="M 288 292 L 288 284" fill="none" stroke="#f472b6" stroke-width="2"/>
+<text x="192" y="276" font-size="11" fill="#f472b6" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">聊天：只走 ①→②（把全文塞進 prompt）</text>
+<path d="M 96 328 L 864 328" fill="none" stroke="#2dd4bf" stroke-width="2"/>
+<path d="M 96 328 L 96 320" fill="none" stroke="#2dd4bf" stroke-width="2"/>
+<path d="M 864 328 L 864 320" fill="none" stroke="#2dd4bf" stroke-width="2"/>
+<text x="480" y="312" font-size="11" fill="#2dd4bf" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ask：走完 ①→⑤（檢索、引用、綜合）</text>
+</svg>

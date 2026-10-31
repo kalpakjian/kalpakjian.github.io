@@ -369,7 +369,119 @@ similarity: 0.6249
 | `bge-m3`（嵌入） | — | ✅ 106 chunk / 42.5 秒 |
 | `qwen3.8-27b-uncensored-32k` | 19 GB | ❌ 需降 `num_ctx` 或改用量化版 |
 
-## 七、四個會咬人的坑
+## 七、這算不算 RAG？
+
+算——但要看你走哪條路。它同時實作了「**真檢索**」與「**長上下文塞入**」兩條路線，共用同一份索引，而**只有 Ask 與搜尋走 RAG**。
+
+<!-- FIG5 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 360" role="img" aria-label="資料流時間軸：92 頁 PDF 抽出 43,304 字元後切成 106 塊，用 bge-m3 向量化寫入 SurrealDB，檢索時以 0.625 相似度命中並回傳段落原文與頁碼；聊天只走前兩段，Ask 走完全程" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="978.5" height="358.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">從檔案到可引用答案：五個階段</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一份 92 頁簡報，全部在本機完成；數字為實測值</text>
+<rect x="14" y="96" width="164" height="92" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="96" y="126" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">來源</text>
+<text x="96" y="150" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">92 頁 PDF</text>
+<text x="96" y="169" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">43,304 字元</text>
+<circle cx="96" cy="214" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="96" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="96" y="252" font-size="12.5" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">16.5 s</text>
+<rect x="206" y="96" width="164" height="92" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="288" y="126" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">切塊</text>
+<text x="288" y="150" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">400 tokens/塊</text>
+<text x="288" y="169" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">overlap 15%</text>
+<circle cx="288" cy="214" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="288" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="288" y="252" font-size="12.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">106 塊</text>
+<rect x="398" y="96" width="164" height="92" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="480" y="126" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">向量化</text>
+<text x="480" y="150" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">bge-m3（Ollama）</text>
+<text x="480" y="169" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">寫入 source_embedding</text>
+<circle cx="480" cy="214" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="480" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="480" y="252" font-size="12.5" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">42.5 s</text>
+<rect x="590" y="96" width="164" height="92" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="672" y="126" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">索引</text>
+<text x="672" y="150" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">BM25 + 向量</text>
+<text x="672" y="169" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SurrealDB 雙索引</text>
+<circle cx="672" cy="214" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="672" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="672" y="252" font-size="12.5" fill="#c084fc" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2 個 function</text>
+<rect x="782" y="96" width="164" height="92" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="864" y="126" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">檢索 → 引用</text>
+<text x="864" y="150" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">段落原文 + 頁碼</text>
+<text x="864" y="169" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">可追溯 [source:id]</text>
+<circle cx="864" cy="214" r="15" fill="#3fb950" opacity="0.92"/>
+<text x="864" y="218.94" font-size="13" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="864" y="252" font-size="12.5" fill="#3fb950" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0.625</text>
+<path d="M 113 214 L 271 214" fill="none" stroke="#7d8590" stroke-width="1.8" marker-end="url(#m7d8590)"/>
+<path d="M 305 214 L 463 214" fill="none" stroke="#7d8590" stroke-width="1.8" marker-end="url(#m7d8590)"/>
+<path d="M 497 214 L 655 214" fill="none" stroke="#7d8590" stroke-width="1.8" marker-end="url(#m7d8590)"/>
+<path d="M 689 214 L 847 214" fill="none" stroke="#7d8590" stroke-width="1.8" marker-end="url(#m7d8590)"/>
+<path d="M 96 292 L 288 292" fill="none" stroke="#f472b6" stroke-width="2"/>
+<path d="M 96 292 L 96 284" fill="none" stroke="#f472b6" stroke-width="2"/>
+<path d="M 288 292 L 288 284" fill="none" stroke="#f472b6" stroke-width="2"/>
+<text x="192" y="276" font-size="11" fill="#f472b6" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">聊天：只走 ①→②（把全文塞進 prompt）</text>
+<path d="M 96 328 L 864 328" fill="none" stroke="#2dd4bf" stroke-width="2"/>
+<path d="M 96 328 L 96 320" fill="none" stroke="#2dd4bf" stroke-width="2"/>
+<path d="M 864 328 L 864 320" fill="none" stroke="#2dd4bf" stroke-width="2"/>
+<text x="480" y="312" font-size="11" fill="#2dd4bf" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ask：走完 ①→⑤（檢索、引用、綜合）</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left"><strong>圖五：資料流時間軸。</strong>五個階段全部在本機完成，數字是實測值。注意下半部兩條括號——單一來源聊天只走 ①→②（把全文塞進 prompt），只有 Ask 會走完 ①→⑤（檢索、引用、綜合）。這就是「算不算 RAG」的分界線。</figcaption>
+</figure>
+<!-- /FIG5 -->
+
+| 端點 | 機制 | 是 RAG 嗎 |
+|---|---|---|
+| `POST /api/search/ask` | 產生 ≤5 個查詢 → 各自 `vector_search(term, 10)` → 每個查詢各自回答 → 最後綜合 | ✅ 是，而且是**多查詢 RAG** |
+| `POST /api/search` | 純檢索（向量或 BM25），回傳段落原文與相似度 | ⭕ 只有 R（檢索段） |
+| 單一來源聊天 | `build_source_context(max_tokens=50000)` 把整份 `full_text` 塞進 system prompt | ❌ 不是（context stuffing） |
+| Notebook 聊天 | 依 UI 勾選的 `not in` / `insights` / `full content` 拼接全文 | ❌ 不是（使用者手動選上下文） |
+
+`build_notebook_context()` 的 docstring 自己寫得很清楚：它把每份來源的 `get_context("short"/"long")` **串起來**，整段程式裡沒有任何一次 embedding 查詢。也就是說，**聊天完全不碰向量索引**。
+
+### 我的實測正好佐證
+
+那份來源 43,304 字元 ≈ **11k tokens**，遠低於 50k 預算，所以**沒有觸發截斷**——8B 是讀完整份 92 頁才寫出 6 大類 20 種技術的。
+
+如果那條路是向量檢索，它只會拿到 top-10 個 chunk，不可能歸納出完整分類。**那份答案的結構感，恰恰證明它是 stuffing 而不是 RAG。**
+
+同一件事也解釋了兩個現象：為什麼問答會慢（大段 prefill + 8192 輸出上限），以及為什麼 27B 會爆 VRAM（KV cache 隨上下文長度線性成長）。
+
+### RAG 的五個要素，它都有
+
+| 要素 | 實作 | 狀態 |
+|---|---|---|
+| 切塊 | `OPEN_NOTEBOOK_CHUNK_SIZE=400` tokens、overlap 60（15%） | ✅ |
+| 向量化 | `bge-m3`，寫入 `source_embedding`（實測 106 塊 / 42.5 秒） | ✅ |
+| 索引 | SurrealDB `fn::vector_search` ＋ `fn::text_search`（BM25） | ✅ 雙索引 |
+| 檢索 | `minimum_score=0.2` 門檻、`limit` 可調 | ✅ |
+| 增強生成 | 每段命中各自生成答案再綜合，保留 `[source:id]` 引用 | ✅ |
+
+### 但離「進階 RAG」還缺幾塊
+
+| 常見做法 | 它有嗎 |
+|---|---|
+| 混合檢索分數融合（RRF / weighted） | ❌ 向量與 BM25 是兩個獨立端點，沒有融合排序 |
+| Reranker（cross-encoder 重排） | ❌ 沒有 |
+| 查詢改寫（HyDE / Query2Doc） | ❌ 但 Ask 的 strategy 節點會產生多查詢，效果接近 |
+| 相鄰 chunk 擴展、父文件回填 | ❌ 沒有 |
+| 檢索後去重 | ❌ 沒有 |
+
+**結論**：它的 RAG 是「能用、夠用」的那種，不是論文級。
+
+### 所以怎麼用
+
+| 你的目的 | 該用哪條路 | 為什麼 |
+|---|---|---|
+| 跨語料問一句、要出處 | **Ask** | 真 RAG，才吃得到向量索引與 `minimum_score` |
+| 把一份文件讀透、整理成結構 | **單一來源聊天** | stuffing 品質更好，但吃 VRAM |
+| 只想找段落原文 | **搜尋端點** | 回傳 chunk 本身，不經過模型改寫 |
+
+順帶一個副作用：它不適合當「高頻檢索服務」。每次 Ask 至少 3 次模型呼叫（strategy + N 個 answer + synthesis），單人研究夠用，多人併發會很痛。
+
+## 八、四個會咬人的坑
 
 | 坑 | 症狀 | 原因與解法 |
 |---|---|---|
@@ -378,7 +490,7 @@ similarity: 0.6249
 | **追問時前端像「卡住」** | SSE 只回 `user_message`，長時間空白，最後一次吐出全文 | `graphs/source_chat.py` 用的是 `model.invoke()` 而非串流，節點跑完才送。不是壞掉 |
 | **`embedded_chunks` 顯示 0** | 列表顯示 `embedded: true` 但 `embedded_chunks: 0` | 列表端點的計數沒對上；DB 裡實際有 106 塊，**功能正常、顯示錯誤** |
 
-## 八、所以對我有什麼用
+## 九、所以對我有什麼用
 
 講功能不痛不癢，直接對照我手上的語料：
 
@@ -452,7 +564,7 @@ similarity: 0.6249
 2. **接 MCP 給 coding agent**：讓 Cline 這類工具直接查語料，取代 `grep` 加手寫檢查腳本。
 3. **跳過**：如果九成時間都是「已知主題、要做成頁面」，那缺的不是這個工具，是更好的全文索引——SQLite FTS5 就夠，不需要 SurrealDB。
 
-## 九、如果你也想裝：最小步驟
+## 十、如果你也想裝：最小步驟
 
 ```powershell
 git clone https://github.com/lfnovo/open-notebook.git
@@ -483,7 +595,7 @@ cd frontend; npm run dev
 
 模型不要寫在 `.env` 裡（那條路已標示棄用），開 UI → `Manage → Models` 新增 Ollama 憑證（`base_url=http://localhost:11434`、`num_ctx` 依你的模型調整），再新增一個 `language` 模型與一個 `embedding` 模型（我用 `bge-m3`），最後在預設值把 chat / transformation / large_context / tools 指到同一個聊天模型。
 
-## 十、結論
+## 十一、結論
 
 - **它是什麼**：MIT 授權、可自架的 NotebookLM 替代品，核心是「來源 → 向量 → 可引用問答」。
 - **它能做什麼**：多模態來源、BM25 + 向量混合搜尋、中文問答、筆記、1–4 人 podcast、REST API 與 MCP。
