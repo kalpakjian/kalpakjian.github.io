@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630"
-     width="1200" height="630" role="img"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640"
+     width="1600" height="640" role="img"
      aria-label="中文書頁 OCR 封面：PaddleOCR 與 Surya 合併、本地 LLM 校對、RTX 4090">
   <title>中文書頁 OCR</title>
   <defs>
@@ -19,52 +19,52 @@
       <stop offset="1" stop-color="#07070f" stop-opacity="0.92"/>
     </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="#07070f"/>
-  <rect width="1200" height="630" fill="url(#grid)" opacity="0.6"/>
+  <rect width="1600" height="640" fill="#07070f"/>
+  <rect width="1600" height="640" fill="url(#grid)" opacity="0.6"/>
 
-  <g opacity="0.5">
-    <line x1="0" y1="120" x2="1200" y2="120" stroke="#22d3ee" stroke-width="1" opacity="0.35"/>
-    <line x1="0" y1="510" x2="1200" y2="510" stroke="#ff2bd6" stroke-width="1" opacity="0.35"/>
+  <g opacity="0.45">
+    <line x1="0" y1="108" x2="1600" y2="108" stroke="#22d3ee" stroke-width="1" opacity="0.35"/>
+    <line x1="0" y1="524" x2="1600" y2="524" stroke="#ff2bd6" stroke-width="1" opacity="0.35"/>
   </g>
 
-  <text x="80" y="205" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="13" letter-spacing="6"
+  <text x="340" y="196" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="13" letter-spacing="6"
         fill="#22d3ee" filter="url(#softglow)">LOCAL OCR · NVIDIA RTX 4090 · NO CLOUD</text>
 
-  <text x="80" y="285" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="62" font-weight="800"
+  <text x="340" y="282" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="64" font-weight="800"
         fill="#e8eaff" filter="url(#glow)">中文書頁 OCR</text>
 
-  <text x="80" y="340" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="21" fill="#22d3ee">
+  <text x="340" y="338" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="22" fill="#22d3ee">
     PaddleOCR × Surya × 本地 LLM
   </text>
 
-  <text x="80" y="386" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="14.5" fill="#8b8fb3">
+  <text x="340" y="384" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="15" fill="#8b8fb3">
     正體中文 · 直排雙欄 · 手機翻拍 → 可校對的文字稿
   </text>
 
   <g font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="13">
-    <rect x="80" y="430" width="150" height="40" rx="20" fill="#0b0b18"
+    <rect x="340" y="424" width="150" height="40" rx="20" fill="#0b0b18"
           stroke="#34d399" stroke-width="1.4"/>
-    <text x="155" y="455" fill="#34d399" text-anchor="middle">B 規則 11</text>
+    <text x="415" y="449" fill="#34d399" text-anchor="middle">B 規則 11</text>
 
-    <rect x="246" y="430" width="150" height="40" rx="20" fill="#0b0b18"
+    <rect x="506" y="424" width="150" height="40" rx="20" fill="#0b0b18"
           stroke="#22d3ee" stroke-width="1.4"/>
-    <text x="321" y="455" fill="#22d3ee" text-anchor="middle">C LLM 31</text>
+    <text x="581" y="449" fill="#22d3ee" text-anchor="middle">C LLM 31</text>
 
-    <rect x="412" y="430" width="150" height="40" rx="20" fill="#0b0b18"
+    <rect x="672" y="424" width="150" height="40" rx="20" fill="#0b0b18"
           stroke="#fbbf24" stroke-width="1.4"/>
-    <text x="487" y="455" fill="#fbbf24" text-anchor="middle">人工 7</text>
+    <text x="747" y="449" fill="#fbbf24" text-anchor="middle">人工 7</text>
   </g>
 
   <g opacity="0.9">
-    <text x="1120" y="205" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="12" letter-spacing="3"
+    <text x="1260" y="196" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="12" letter-spacing="3"
           fill="#ff2bd6" text-anchor="end" filter="url(#softglow)">SCAN → MERGE → PROOF</text>
-    <text x="1120" y="330" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="54" font-weight="800"
+    <text x="1260" y="316" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="52" font-weight="800"
           fill="#ff2bd6" text-anchor="end" filter="url(#glow)">98.3%</text>
-    <text x="1120" y="360" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="13" fill="#8b8fb3"
-          text-anchor="end">同源引擎重疊率 → 所以只選異質互補</text>
-    <text x="1120" y="470" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="42" font-weight="800"
+    <text x="1260" y="346" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="13" fill="#8b8fb3"
+          text-anchor="end">同源引擎重疊率 → 只選異質互補</text>
+    <text x="1260" y="452" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="40" font-weight="800"
           fill="#22d3ee" text-anchor="end" filter="url(#glow)">7,729</text>
-    <text x="1120" y="498" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="13" fill="#8b8fb3"
+    <text x="1260" y="480" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="13" fill="#8b8fb3"
           text-anchor="end">字 · 11 頁 · 兩輪校對</text>
   </g>
 </svg>
