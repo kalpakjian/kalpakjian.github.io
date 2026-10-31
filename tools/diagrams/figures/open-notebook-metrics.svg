@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 430" role="img" aria-label="實測數據：首次資料庫遷移 180 秒、內容抽取 16.5 秒、106 個 chunk 向量化 42.5 秒；27B 模型加 32k context 佔用 23,508 MiB，只剩約 1,056 MiB 給 KV cache" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="978.5" height="428.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">實測數據：耗時與 VRAM 預算</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一台機器（RTX 4090 24 GB）、同一份 92 頁簡報；時間為秒，記憶體為 MiB</text>
+<text x="48" y="128" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① 處理耗時</text>
+<text x="48" y="166" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">首次資料庫遷移（25 個 migration）</text>
+<rect x="48" y="174" width="300" height="15" rx="4" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<rect x="48" y="174" width="300.0" height="15" rx="4" fill="#fbbf24" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="356" y="186" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">180 s</text>
+<text x="48" y="228" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">向量化 106 個 chunk（bge-m3）</text>
+<rect x="48" y="236" width="300" height="15" rx="4" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<rect x="48" y="236" width="70.83333333333334" height="15" rx="4" fill="#2dd4bf" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="356" y="248" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">42.5 s</text>
+<text x="48" y="290" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">內容抽取 + 存檔</text>
+<rect x="48" y="298" width="300" height="15" rx="4" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<rect x="48" y="298" width="27.5" height="15" rx="4" fill="#58a6ff" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="356" y="310" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">16.5 s</text>
+<text x="48" y="372" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">程式碼端量到的，不含模型載入時間。</text>
+<text x="520" y="128" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② VRAM 佔用（總量 24,564 MiB）</text>
+<text x="520" y="176" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">27B + 32k context</text>
+<rect x="520" y="184" width="350" height="17" rx="4" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<rect x="520" y="184" width="334.95359062042013" height="17" rx="4" fill="#f472b6" stroke="#f472b6" stroke-width="1.5"/>
+<text x="878" y="197" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">23,508 MiB</text>
+<text x="520" y="246" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8B + bge-m3</text>
+<rect x="520" y="254" width="350" height="17" rx="4" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<rect x="520" y="254" width="106.8637029799707" height="17" rx="4" fill="#3fb950" stroke="#3fb950" stroke-width="1.5"/>
+<text x="878" y="267" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7,500 MiB</text>
+<rect x="520" y="300" width="350" height="66" rx="8" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<text x="536" y="324" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">27B 只剩 1,056 MiB 給 KV cache</text>
+<text x="536" y="348" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 7 分鐘 0 token；8B 才是可用組合</text>
+</svg>

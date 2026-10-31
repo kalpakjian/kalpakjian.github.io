@@ -82,19 +82,63 @@ banner_img: /img/covers/open-notebook-selfhost-4090.png
 
 ### 架構：四個程序，順序不能亂
 
-```
-瀏覽器
-  │
-  ▼
-Next.js 前端 ── 開發 :3000 │ Docker 映像 :8502
-  │  把 /api/* 反向代理到 INTERNAL_API_URL（預設 http://localhost:5055）
-  ▼
-FastAPI 後端 ── :5055 (api/main.py)        背景 worker
-  │                                          (surreal-commands-worker --import-modules commands)
-  │  送出工作 ─────────► SurrealDB 工作佇列 ◄──────── 取工作
-  ▼                              │
-SurrealDB ────── :8000 ◄─────────┘
-```
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 650" role="img" aria-label="Open Notebook 的四個程序與呼叫方向：瀏覽器經 Next.js 前端打到 FastAPI，後端把長工作丟進 SurrealDB 的 command 佇列，由背景 worker 取走；資料與向量都存在 SurrealDB，聊天歷史存在 SQLite，模型走 Ollama" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker><marker id="m3fb950" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3fb950"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker><marker id="mc084fc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker></defs>
+<rect x="0.75" y="0.75" width="978.5" height="648.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">四個程序的實際呼叫方向</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">實線＝同步呼叫；佇列是 SurrealDB 裡的一張表，不是獨立的訊息中介</text>
+<rect x="380" y="112" width="220" height="50" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="490.0" y="142.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">瀏覽器</text>
+<path d="M 490 162 L 490 188" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="330" y="190" width="320" height="64" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="490.0" y="220.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Next.js 前端</text>
+<text x="490.0" y="242.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">開發 :3000 ／ 映像 :8502 · 代理 /api/*</text>
+<path d="M 490 254 L 490 290" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="500" y="278" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HTTP + SSE</text>
+<rect x="330" y="292" width="320" height="64" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="490.0" y="322.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FastAPI 後端 :5055</text>
+<text x="490.0" y="344.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">chat / ask 同步處理，長工作往外送</text>
+<rect x="48" y="292" width="230" height="64" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="163.0" y="322.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SQLite checkpoint</text>
+<text x="163.0" y="344.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">聊天歷史存在這裡</text>
+<path d="M 328 324 L 282 324" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="305" y="314" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">存檔</text>
+<rect x="730" y="292" width="200" height="64" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="830.0" y="322.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ollama :11434</text>
+<text x="830.0" y="344.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8B 聊天 + bge-m3</text>
+<path d="M 652 324 L 726 324" fill="none" stroke="#3fb950" stroke-width="2" marker-end="url(#m3fb950)"/>
+<text x="689" y="314" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型呼叫</text>
+<rect x="390" y="388" width="200" height="44" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="490.0" y="414.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">command 佇列</text>
+<path d="M 420 358 L 420 386" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mfbbf24)"/>
+<text x="428" y="371" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">submit</text>
+<rect x="730" y="388" width="200" height="64" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="830.0" y="418.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">背景 worker</text>
+<text x="830.0" y="440.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8 個 command</text>
+<path d="M 590 410 L 690 410" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<path d="M 690 410 L 726 410" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mfbbf24)"/>
+<text x="640" y="400" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">pick up</text>
+<rect x="48" y="486" width="882" height="84" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="489.0" y="526.0" font-size="16.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SurrealDB 2.x :8000</text>
+<text x="489.0" y="548.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">notebook · source · source_embedding · note · chat_session ｜ 圖邊 reference / artifact / refers_to ｜ fn::text_search（BM25）· fn::vector_search</text>
+<path d="M 360 358 L 360 484" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#mc084fc)"/>
+<path d="M 830 454 L 830 484" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#mc084fc)"/>
+<path d="M 490 434 L 490 484" fill="none" stroke="#c084fc" stroke-width="1.5"/>
+<text x="500" y="470" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">工作也存在 DB</text>
+<circle cx="77" cy="612" r="7" fill="#2dd4bf"/>
+<text x="92" y="616" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">前端 / 後端</text>
+<circle cx="287" cy="612" r="7" fill="#fbbf24"/>
+<text x="302" y="616" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">背景工作</text>
+<circle cx="497" cy="612" r="7" fill="#c084fc"/>
+<text x="512" y="616" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">資料庫</text>
+<circle cx="707" cy="612" r="7" fill="#3fb950"/>
+<text x="722" y="616" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型推論</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left"><strong>圖一：四個程序的實際呼叫方向。</strong>前端只跟 API 說話，API 把長工作寫進 SurrealDB 的 <code>command</code> 表，背景 worker 用 LIVE query 取走。沒有 worker，來源處理與向量化會永遠停在 Queued——這是最容易誤判成「程式壞了」的地方。</figcaption>
+</figure>
+<!-- /FIG1 -->
 
 | # | 程序 | 埠 | 我的啟動方式 |
 |---|---|---|---|
@@ -141,6 +185,43 @@ SurrealDB ────── :8000 ◄─────────┘
 | 向量搜尋（查「Chain-of-Thought 的實際例子」） | 命中正確段落，**相似度 0.6250** |
 | 中文問答（8B） | **2,381 字**，含模型載入約 45–60 秒 |
 | 中文問答（27B） | ❌ **7 分鐘無輸出**，手動中止 |
+
+<!-- FIG2 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 430" role="img" aria-label="實測數據：首次資料庫遷移 180 秒、內容抽取 16.5 秒、106 個 chunk 向量化 42.5 秒；27B 模型加 32k context 佔用 23,508 MiB，只剩約 1,056 MiB 給 KV cache" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="978.5" height="428.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">實測數據：耗時與 VRAM 預算</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一台機器（RTX 4090 24 GB）、同一份 92 頁簡報；時間為秒，記憶體為 MiB</text>
+<text x="48" y="128" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① 處理耗時</text>
+<text x="48" y="166" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">首次資料庫遷移（25 個 migration）</text>
+<rect x="48" y="174" width="300" height="15" rx="4" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<rect x="48" y="174" width="300.0" height="15" rx="4" fill="#fbbf24" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="356" y="186" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">180 s</text>
+<text x="48" y="228" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">向量化 106 個 chunk（bge-m3）</text>
+<rect x="48" y="236" width="300" height="15" rx="4" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<rect x="48" y="236" width="70.83333333333334" height="15" rx="4" fill="#2dd4bf" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="356" y="248" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">42.5 s</text>
+<text x="48" y="290" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">內容抽取 + 存檔</text>
+<rect x="48" y="298" width="300" height="15" rx="4" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<rect x="48" y="298" width="27.5" height="15" rx="4" fill="#58a6ff" stroke="#58a6ff" stroke-width="1.5"/>
+<text x="356" y="310" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">16.5 s</text>
+<text x="48" y="372" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">程式碼端量到的，不含模型載入時間。</text>
+<text x="520" y="128" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② VRAM 佔用（總量 24,564 MiB）</text>
+<text x="520" y="176" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">27B + 32k context</text>
+<rect x="520" y="184" width="350" height="17" rx="4" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<rect x="520" y="184" width="334.95359062042013" height="17" rx="4" fill="#f472b6" stroke="#f472b6" stroke-width="1.5"/>
+<text x="878" y="197" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">23,508 MiB</text>
+<text x="520" y="246" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8B + bge-m3</text>
+<rect x="520" y="254" width="350" height="17" rx="4" fill="#1c2230" stroke="#222b36" stroke-width="1.5"/>
+<rect x="520" y="254" width="106.8637029799707" height="17" rx="4" fill="#3fb950" stroke="#3fb950" stroke-width="1.5"/>
+<text x="878" y="267" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7,500 MiB</text>
+<rect x="520" y="300" width="350" height="66" rx="8" fill="#1c2230" stroke="#f472b666" stroke-width="1.5"/>
+<text x="536" y="324" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">27B 只剩 1,056 MiB 給 KV cache</text>
+<text x="536" y="348" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 7 分鐘 0 token；8B 才是可用組合</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left"><strong>圖二：耗時與 VRAM。</strong>左側是程式碼端量到的時間，右側是 27B 與 8B 的實測佔用。24,564 MiB 的 4090 扣掉 19 GB 權重後，32k context 的 KV cache 只剩約 1 GiB——這就是第一輪 7 分鐘吐不出 token 的原因，不是程式錯誤。</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 搜尋回傳的不是「一份文件」，而是**命中的段落原文**，這點做得很對：
 

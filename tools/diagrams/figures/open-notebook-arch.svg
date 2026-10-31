@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 650" role="img" aria-label="Open Notebook 的四個程序與呼叫方向：瀏覽器經 Next.js 前端打到 FastAPI，後端把長工作丟進 SurrealDB 的 command 佇列，由背景 worker 取走；資料與向量都存在 SurrealDB，聊天歷史存在 SQLite，模型走 Ollama" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker><marker id="m3fb950" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3fb950"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker><marker id="mc084fc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c084fc"/></marker></defs>
+<rect x="0.75" y="0.75" width="978.5" height="648.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">四個程序的實際呼叫方向</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">實線＝同步呼叫；佇列是 SurrealDB 裡的一張表，不是獨立的訊息中介</text>
+<rect x="380" y="112" width="220" height="50" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="490.0" y="142.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">瀏覽器</text>
+<path d="M 490 162 L 490 188" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="330" y="190" width="320" height="64" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="490.0" y="220.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Next.js 前端</text>
+<text x="490.0" y="242.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">開發 :3000 ／ 映像 :8502 · 代理 /api/*</text>
+<path d="M 490 254 L 490 290" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="500" y="278" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">HTTP + SSE</text>
+<rect x="330" y="292" width="320" height="64" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="490.0" y="322.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FastAPI 後端 :5055</text>
+<text x="490.0" y="344.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">chat / ask 同步處理，長工作往外送</text>
+<rect x="48" y="292" width="230" height="64" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="163.0" y="322.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SQLite checkpoint</text>
+<text x="163.0" y="344.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">聊天歷史存在這裡</text>
+<path d="M 328 324 L 282 324" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<text x="305" y="314" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">存檔</text>
+<rect x="730" y="292" width="200" height="64" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="830.0" y="322.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Ollama :11434</text>
+<text x="830.0" y="344.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8B 聊天 + bge-m3</text>
+<path d="M 652 324 L 726 324" fill="none" stroke="#3fb950" stroke-width="2" marker-end="url(#m3fb950)"/>
+<text x="689" y="314" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型呼叫</text>
+<rect x="390" y="388" width="200" height="44" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="490.0" y="414.86" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">command 佇列</text>
+<path d="M 420 358 L 420 386" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mfbbf24)"/>
+<text x="428" y="371" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">submit</text>
+<rect x="730" y="388" width="200" height="64" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="830.0" y="418.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">背景 worker</text>
+<text x="830.0" y="440.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8 個 command</text>
+<path d="M 590 410 L 690 410" fill="none" stroke="#fbbf24" stroke-width="2"/>
+<path d="M 690 410 L 726 410" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mfbbf24)"/>
+<text x="640" y="400" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">pick up</text>
+<rect x="48" y="486" width="882" height="84" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="489.0" y="526.0" font-size="16.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SurrealDB 2.x :8000</text>
+<text x="489.0" y="548.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">notebook · source · source_embedding · note · chat_session ｜ 圖邊 reference / artifact / refers_to ｜ fn::text_search（BM25）· fn::vector_search</text>
+<path d="M 360 358 L 360 484" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#mc084fc)"/>
+<path d="M 830 454 L 830 484" fill="none" stroke="#c084fc" stroke-width="2" marker-end="url(#mc084fc)"/>
+<path d="M 490 434 L 490 484" fill="none" stroke="#c084fc" stroke-width="1.5"/>
+<text x="500" y="470" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">工作也存在 DB</text>
+<circle cx="77" cy="612" r="7" fill="#2dd4bf"/>
+<text x="92" y="616" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">前端 / 後端</text>
+<circle cx="287" cy="612" r="7" fill="#fbbf24"/>
+<text x="302" y="616" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">背景工作</text>
+<circle cx="497" cy="612" r="7" fill="#c084fc"/>
+<text x="512" y="616" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">資料庫</text>
+<circle cx="707" cy="612" r="7" fill="#3fb950"/>
+<text x="722" y="616" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型推論</text>
+</svg>
