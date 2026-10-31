@@ -179,7 +179,7 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 <p>LeNet-5 的感受野：5 → 6 → 14 → 16 → 32（C5 剛好看見整張 32×32）。</p>
 <a id="params"></a>
 <h2 id="二參數速算三個模型對照">二、參數速算（三個模型對照）</h2>
-<table><thead><tr><th>模型</th><th>總參數</th><th>真卷積</th><th>全連接</th><th>重點</th></tr></thead><tbody><tr><td>LeNet-5</td><td>61,706（含可訓練平均池化 61,750）</td><td>2,572（4.2%）</td><td>11,014（17.8%）</td><td>C5 佔 <strong>78.0%</strong>：它是 5×5 卷積但輸出 1×1，等效 FC</td></tr><tr><td>CNN 2 deck 模型</td><td>1,668,490</td><td>18,816（1.1%）</td><td>1,649,674</td><td><strong>Dense(1024) 單層 98.2%</strong>；連 Dense(10) 一起算才是 98.9%</td></tr><tr><td>Lab 2 小模型</td><td>693,962</td><td>320（0.05%）</td><td>693,642（99.95%）</td><td>卷積幾乎免費，貴的永遠是攤平後那層</td></tr></tbody></table>
+<table><thead><tr><th>模型</th><th>總參數</th><th>真卷積</th><th>全連接</th><th>重點</th></tr></thead><tbody><tr><td>LeNet-5</td><td><strong>61,706</strong>（不含池化）／61,750（含可訓練平均池化）</td><td>2,572（4.2%）</td><td>11,014（17.8%）</td><td>C5 佔 <strong>78.0%</strong>：它是 5×5 卷積但輸出 1×1，等效 FC</td></tr><tr><td>CNN 2 deck 模型</td><td>1,668,490</td><td>18,816（1.1%）</td><td>1,649,674</td><td><strong>Dense(1024) 單層 98.2%</strong>；連 Dense(10) 一起算才是 98.9%</td></tr><tr><td>Lab 2 小模型</td><td>693,962</td><td>320（0.05%）</td><td>693,642（99.95%）</td><td>卷積幾乎免費，貴的永遠是攤平後那層</td></tr></tbody></table>
 <p><strong>口徑說明</strong>（兩份筆記以前各寫一個數字，就是差在這裡）：</p>
 <ul><li>「全連接」指 Dense 類層；LeNet 的 C5 是<strong>卷積</strong>，只是輸出 1×1 常被畫成 FC。</li><li>百分比的分母都是該模型的總參數；引用時請連括號裡的範圍一起寫。</li></ul>
 <p><strong>卷積 vs 全連接的差距</strong>（deck 6 的例子）：1024 → 120 全連接要 123,000 個權重， 換成 5×5 卷積只要 25 個 → 差 <strong>4,920 倍</strong>。</p>
