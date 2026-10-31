@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500"
+     width="1200" height="500" role="img"
+     aria-label="OCR 工作流：影像輸入、三引擎並跑、合併補漏、兩層校對、人工確認">
+  <title>OCR 工作流</title>
+  <defs>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#141428" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07070f" stop-opacity="0"/>
+      <stop offset="1" stop-color="#07070f" stop-opacity="0.92"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="500" fill="#07070f"/>
+  <rect width="1200" height="500" fill="url(#grid)" opacity="0.55"/>
+  <rect width="1200" height="500" fill="url(#fade)"/>
+
+  <text x="56" y="86" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="12" letter-spacing="4"
+        fill="#22d3ee" filter="url(#softglow)">OCR PIPELINE / NEON EDITION</text>
+  <text x="56" y="136" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="40" font-weight="800"
+        fill="#e8eaff">中文書頁 OCR 工作流</text>
+  <text x="56" y="168" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="14" fill="#8b8fb3">
+    正體中文 · 直排雙欄 · 手機翻拍 → 可校對的文字稿
+  </text>
+
+  <g>
+  <g>
+    <rect x="56" y="190" width="196" height="176" rx="14"
+          fill="#0b0b18" stroke="#22d3ee" stroke-width="1.6" opacity="0.96"/>
+    <rect x="56" y="190" width="196" height="3.5" rx="2" fill="#22d3ee" filter="url(#softglow)"/>
+    <circle cx="86" cy="232" r="15" fill="none" stroke="#22d3ee" stroke-width="1.8" filter="url(#softglow)"/>
+    <text x="86" y="237" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="14" font-weight="700"
+          fill="#22d3ee" text-anchor="middle">1</text>
+    <text x="112" y="238" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="17" font-weight="700"
+          fill="#e8eaff">影像輸入</text>
+    <text x="78" y="274" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="12.5"
+          fill="#8b8fb3">· 手機翻拍書頁</text>
+    <text x="78" y="296" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="12.5"
+          fill="#8b8fb3">· 直排 / 雙欄 / 印章</text>
+    <line x1="74" y1="336" x2="234" y2="336"
+          stroke="#22d3ee" stroke-width="1" opacity="0.35"/>
+    <text x="78" y="356" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="11.5"
+          fill="#22d3ee" opacity="0.95">→ 原始 JPG</text>
+  </g>
+  <g opacity="0.9">
+    <line x1="256" y1="278.0" x2="272" y2="278.0"
+          stroke="#ff2bd6" stroke-width="1.6" filter="url(#softglow)"/>
+    <path d="M272,278.0 l-7,-4 v8 z" fill="#ff2bd6"/>
+  </g>
+  <g>
+    <rect x="276" y="190" width="196" height="176" rx="14"
+          fill="#0b0b18" stroke="#ff2bd6" stroke-width="1.6" opacity="0.96"/>
+    <rect x="276" y="190" width="196" height="3.5" rx="2" fill="#ff2bd6" filter="url(#softglow)"/>
+    <circle cx="306" cy="232" r="15" fill="none" stroke="#ff2bd6" stroke-width="1.8" filter="url(#softglow)"/>
+    <text x="306" y="237" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="14" font-weight="700"
+          fill="#ff2bd6" text-anchor="middle">2</text>
+    <text x="332" y="238" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="17" font-weight="700"
+          fill="#e8eaff">三引擎並跑</text>
+    <text x="298" y="274" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="12.5"
+          fill="#8b8fb3">· PaddleOCR 召回</text>
+    <text x="298" y="296" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="12.5"
+          fill="#8b8fb3">· Surya 順序</text>
+    <text x="298" y="318" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="12.5"
+          fill="#8b8fb3">· RapidOCR 速度</text>
+    <line x1="294" y1="336" x2="454" y2="336"
+          stroke="#ff2bd6" stroke-width="1" opacity="0.35"/>
+    <text x="298" y="356" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="11.5"
+          fill="#ff2bd6" opacity="0.95">→ 3 份文字</text>
+  </g>
+  <g opacity="0.9">
+    <line x1="476" y1="278.0" x2="492" y2="278.0"
+          stroke="#a78bfa" stroke-width="1.6" filter="url(#softglow)"/>
+    <path d="M492,278.0 l-7,-4 v8 z" fill="#a78bfa"/>
+  </g>
+  <g>
+    <rect x="496" y="190" width="196" height="176" rx="14"
+          fill="#0b0b18" stroke="#a78bfa" stroke-width="1.6" opacity="0.96"/>
+    <rect x="496" y="190" width="196" height="3.5" rx="2" fill="#a78bfa" filter="url(#softglow)"/>
+    <circle cx="526" cy="232" r="15" fill="none" stroke="#a78bfa" stroke-width="1.8" filter="url(#softglow)"/>
+    <text x="526" y="237" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="14" font-weight="700"
+          fill="#a78bfa" text-anchor="middle">3</text>
+    <text x="552" y="238" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="17" font-weight="700"
+          fill="#e8eaff">合併補漏</text>
+    <text x="518" y="274" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="12.5"
+          fill="#8b8fb3">· Surya 骨架</text>
+    <text x="518" y="296" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="12.5"
+          fill="#8b8fb3">· Paddle 補 [漏]</text>
+    <text x="518" y="318" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="12.5"
+          fill="#8b8fb3">· n-gram 判定</text>
+    <line x1="514" y1="336" x2="674" y2="336"
+          stroke="#a78bfa" stroke-width="1" opacity="0.35"/>
+    <text x="518" y="356" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="11.5"
+          fill="#a78bfa" opacity="0.95">→ 合併稿</text>
+  </g>
+  <g opacity="0.9">
+    <line x1="696" y1="278.0" x2="712" y2="278.0"
+          stroke="#34d399" stroke-width="1.6" filter="url(#softglow)"/>
+    <path d="M712,278.0 l-7,-4 v8 z" fill="#34d399"/>
+  </g>
+  <g>
+    <rect x="716" y="190" width="196" height="176" rx="14"
+          fill="#0b0b18" stroke="#34d399" stroke-width="1.6" opacity="0.96"/>
+    <rect x="716" y="190" width="196" height="3.5" rx="2" fill="#34d399" filter="url(#softglow)"/>
+    <circle cx="746" cy="232" r="15" fill="none" stroke="#34d399" stroke-width="1.8" filter="url(#softglow)"/>
+    <text x="746" y="237" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="14" font-weight="700"
+          fill="#34d399" text-anchor="middle">4</text>
+    <text x="772" y="238" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="17" font-weight="700"
+          fill="#e8eaff">兩層校對</text>
+    <text x="738" y="274" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="12.5"
+          fill="#8b8fb3">· B 規則 11 處</text>
+    <text x="738" y="296" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="12.5"
+          fill="#8b8fb3">· C 本地 LLM 31 處</text>
+    <line x1="734" y1="336" x2="894" y2="336"
+          stroke="#34d399" stroke-width="1" opacity="0.35"/>
+    <text x="738" y="356" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="11.5"
+          fill="#34d399" opacity="0.95">→ 校正稿</text>
+  </g>
+  <g opacity="0.9">
+    <line x1="916" y1="278.0" x2="932" y2="278.0"
+          stroke="#fbbf24" stroke-width="1.6" filter="url(#softglow)"/>
+    <path d="M932,278.0 l-7,-4 v8 z" fill="#fbbf24"/>
+  </g>
+  <g>
+    <rect x="936" y="190" width="196" height="176" rx="14"
+          fill="#0b0b18" stroke="#fbbf24" stroke-width="1.6" opacity="0.96"/>
+    <rect x="936" y="190" width="196" height="3.5" rx="2" fill="#fbbf24" filter="url(#softglow)"/>
+    <circle cx="966" cy="232" r="15" fill="none" stroke="#fbbf24" stroke-width="1.8" filter="url(#softglow)"/>
+    <text x="966" y="237" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="14" font-weight="700"
+          fill="#fbbf24" text-anchor="middle">5</text>
+    <text x="992" y="238" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="17" font-weight="700"
+          fill="#e8eaff">人工確認</text>
+    <text x="958" y="274" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="12.5"
+          fill="#8b8fb3">· 11 點逐條問</text>
+    <text x="958" y="296" font-family="'Microsoft JhengHei','Noto Sans TC','PingFang TC',sans-serif" font-size="12.5"
+          fill="#8b8fb3">· 7 改 / 4 保留</text>
+    <line x1="954" y1="336" x2="1114" y2="336"
+          stroke="#fbbf24" stroke-width="1" opacity="0.35"/>
+    <text x="958" y="356" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="11.5"
+          fill="#fbbf24" opacity="0.95">→ 定稿</text>
+  </g>
+  </g>
+
+  <line x1="56" y1="424" x2="1144" y2="424" stroke="#141428" stroke-width="1"/>
+  <text x="56" y="456" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="13" fill="#34d399"
+        filter="url(#softglow)">B 規則 11</text>
+  <text x="196" y="456" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="13" fill="#22d3ee">C LLM 31</text>
+  <text x="324" y="456" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="13" fill="#fbbf24">人工 7</text>
+  <text x="1144" y="456" font-family="'Cascadia Mono',Consolas,'Courier New',monospace" font-size="13" fill="#8b8fb3"
+        text-anchor="end">11 頁 · 7,729 字 · RTX 4090</text>
+</svg>

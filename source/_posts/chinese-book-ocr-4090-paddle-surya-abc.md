@@ -22,13 +22,19 @@ tags:
   - Python
   - 實測
 toc: true
-index_img: /img/covers/chinese-book-ocr-4090-paddle-surya-abc.png
-banner_img: /img/covers/chinese-book-ocr-4090-paddle-surya-abc.png
+index_img: /img/covers/chinese-book-ocr-4090.svg
+banner_img: /img/covers/chinese-book-ocr-4090.svg
 ---
 
 手邊有一批手機翻拍的正體中文書頁（直排、雙欄、含印章與圖說），目標是把它變成可校對、可搜尋的文字稿。這篇記錄了完整過程：四個 OCR 引擎在同一批頁面上的實測、兩個一定會踩到的 Windows + CUDA 坑、以及最後用「Surya 骨架 + Paddle 補漏 + A/B/C 三層校對」把錯字壓下來的做法。
 
 <!-- more -->
+
+<figure style="margin:28px 0">
+  <img src="/img/diagrams/ocr-pipeline.svg" alt="OCR 工作流五步：影像輸入、三引擎並跑、合併補漏、兩層校對、人工確認" style="width:100%;max-width:1120px;border-radius:16px;box-shadow:0 12px 36px rgba(0,0,0,.45)">
+  <figcaption style="text-align:center;color:#8b8fb3;font-size:13px;margin-top:10px">圖 1：五步工作流 —— 三引擎並跑、Surya 提供骨架並補回 Paddle 的漏字、兩層校對、逐條人工確認</figcaption>
+</figure>
+
 
 ## 一、測試條件
 
@@ -47,6 +53,11 @@ banner_img: /img/covers/chinese-book-ocr-4090-paddle-surya-abc.png
 | Tesseract 5.5 | `chi_tra_vert`、PSM 5 | CPU | 771 | **0/5** | 3.2 s | 直排全亂碼，不可用 |
 | EasyOCR 1.7 | `ch_tra` | 4090 GPU | 0 | — | — | 直排細長框裁切失敗 |
 | Indra OCR | 1M 參數 ONNX | CPU | ~400 | — | 0.3 s | 錯字多（「仁者定令」） |
+
+<figure style="margin:28px 0">
+  <img src="/img/diagrams/ocr-engines.svg" alt="四個 OCR 引擎在同一頁的召回字數與速度：PaddleOCR 683 字 1.1 秒、Surya 734 字 4 到 9 秒、RapidOCR 514 字 0.6 秒、Tesseract 771 字但關鍵詞 0、EasyOCR 直排失敗" style="width:100%;max-width:1120px;border-radius:16px;box-shadow:0 12px 36px rgba(0,0,0,.45)">
+  <figcaption style="text-align:center;color:#8b8fb3;font-size:13px;margin-top:10px">圖 2：召回字數只是參考 —— Tesseract 字數最高卻全是亂碼（關鍵詞命中 0），長條以「有效召回」呈現</figcaption>
+</figure>
 
 ### 幾個值得記住的結論
 
