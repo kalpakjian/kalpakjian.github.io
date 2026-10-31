@@ -38,6 +38,7 @@ skip_render:
   - 'opencv-notes/**'
   - 'cnn-notes/**'
   - 'cnn2-notes/**'
+  - 'cnn-cheatsheet/**'
   - 'ai-intro-notes/**'
   - 'cv-intro-notes/**'
   - 'local-gpu-ml-notes/**'
