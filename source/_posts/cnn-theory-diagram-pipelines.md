@@ -1,6 +1,8 @@
----
+﻿---
 title: 用 AI 生成「複雜理論示意圖」：六條路線實測（附 CNN 範例）
 date: 2026-10-31 08:30:00
+index_img: /img/covers/cnn-theory-diagram-pipelines.png
+banner_img: /img/covers/cnn-theory-diagram-pipelines.png
 categories:
   - AI
   - 工具實測
@@ -49,7 +51,7 @@ tags:
 
 輸入一段方法描述，LLM 直接寫 SVG 程式碼，再用 cairosvg 實際渲染驗證，失敗就帶著錯誤訊息回頭修。
 
-![技術路線圖：Input、Cross-Attention Fusion、Decoding、Losses 四層架構](/img/report-2026-10-31/route_short.png)
+![技術路線圖：Input、Cross-Attention Fusion、Decoding、Losses 四層架構](/img/report-2026-10-31/route_short.svg)
 
 - 耗時 **1.5 分鐘**、花費 **$0.008**
 - 產出 `technical_route_bw_*.svg`（12.7 KB）+ PNG
@@ -57,7 +59,7 @@ tags:
 
 餵一份 4.25 MB 的真實講義 PDF 也可以：
 
-![由 CNN 講義 PDF 生成的概覽圖](/img/report-2026-10-31/route_pdf_cnn.png)
+![由 CNN 講義 PDF 生成的概覽圖](/img/report-2026-10-31/route_pdf_cnn.svg)
 
 代價是時間拉長到約 12 分鐘，而且 `Implementation:` 這類長標籤會和內文重疊，需要在 Inkscape 微調。
 
@@ -163,13 +165,13 @@ tags:
 
 ### ① CNN 整體架構（黑白，1.5 分鐘）
 
-![CNN 整體架構：Input → Conv → ReLU → Pool → 特徵階層 → Flatten → FC → Softmax](/img/report-2026-10-31/cnn_arch.png)
+![CNN 整體架構：Input → Conv → ReLU → Pool → 特徵階層 → Flatten → FC → Softmax](/img/report-2026-10-31/cnn_arch.svg)
 
 含 40+ 標籤：Input & Preprocessing、Convolutional Block、Hierarchical Feature Learning（Early / Middle / Deep + receptive field）、Classification Head、Training Process。
 
 ### ② 卷積運算原理（黑白，1.5 分鐘）
 
-![卷積運算原理：3×3 kernel 滑動、權重共享、局部連接、stride 與 padding](/img/report-2026-10-31/cnn_conv.png)
+![卷積運算原理：3×3 kernel 滑動、權重共享、局部連接、stride 與 padding](/img/report-2026-10-31/cnn_conv.svg)
 
 含 Sliding Window、Kernel 3×3、Stride & Padding、Element-wise Product & Sum、Weight Sharing、Local Connectivity、Feature Map。
 
@@ -183,9 +185,9 @@ parser.add_argument("--palette", default="",
 req = Paper2FigureRequest(..., tech_route_palette=args.palette)
 ```
 
-![CNN 架構彩色版：academic_blue 色卡](/img/report-2026-10-31/cnn_arch_color.png)
+![CNN 架構彩色版：academic_blue 色卡](/img/report-2026-10-31/cnn_arch_color.svg)
 
-![卷積原理彩色版：四色全用](/img/report-2026-10-31/cnn_conv_color.png)
+![卷積原理彩色版：四色全用](/img/report-2026-10-31/cnn_conv_color.svg)
 
 **但這裡有個實測教訓**：`technical_route_colorize_svg` 不是「把黑白圖上色」，而是**讓 LLM 重新生成一整份著色 SVG**。
 

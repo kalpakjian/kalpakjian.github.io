@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1150" class="w-full h-auto" style="font-family: sans-serif;">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0B3D91" />
+    </marker>
+  </defs>
+
+  <text x="400" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#0B3D91">
+    Convolution Operation Principle in CNN
+  </text>
+  <text x="400" y="65" text-anchor="middle" font-size="14" fill="#1F6FEB">
+    Technical Route: Sliding Window, Local Connectivity &amp; Feature Extraction
+  </text>
+
+  <rect x="50" y="90" width="700" height="120" fill="none" stroke="#0B3D91" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="115" text-anchor="middle" font-size="16" font-weight="bold" fill="#0B3D91">
+    Sliding Window Mechanism
+  </text>
+
+  <g transform="translate(110, 130)">
+    <rect x="0" y="0" width="180" height="60" fill="#A7C7FF" stroke="#0B3D91" stroke-width="1.5" />
+    <text x="90" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Input Image/Patch</text>
+    <text x="90" y="45" text-anchor="middle" font-size="10" fill="#1F6FEB">Spatial Data Input</text>
+  </g>
+
+  <g transform="translate(310, 130)">
+    <rect x="0" y="0" width="180" height="60" fill="#A7C7FF" stroke="#0B3D91" stroke-width="1.5" />
+    <text x="90" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Kernel (3×3)</text>
+    <text x="90" y="45" text-anchor="middle" font-size="10" fill="#1F6FEB">Small Learnable Weights</text>
+  </g>
+
+  <g transform="translate(510, 130)">
+    <rect x="0" y="0" width="180" height="60" fill="#A7C7FF" stroke="#0B3D91" stroke-width="1.5" />
+    <text x="90" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Stride &amp; Padding</text>
+    <text x="90" y="45" text-anchor="middle" font-size="10" fill="#1F6FEB">Step Size &amp; Border Control</text>
+  </g>
+
+  <line x1="400" y1="210" x2="400" y2="240" stroke="#0B3D91" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="50" y="240" width="700" height="140" fill="none" stroke="#0B3D91" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="265" text-anchor="middle" font-size="16" font-weight="bold" fill="#0B3D91">
+    Computation &amp; Local Connectivity
+  </text>
+
+  <rect x="100" y="280" width="600" height="80" fill="#60A5FA" stroke="#0B3D91" stroke-width="1.5" />
+  
+  <g transform="translate(120, 290)">
+    <text x="0" y="20" font-size="14" font-weight="bold" fill="#0B3D91">Convolution Computation</text>
+    <line x1="0" y1="30" x2="560" y2="30" stroke="#A7C7FF" stroke-width="1" />
+    
+    <g transform="translate(0, 45)">
+      <rect x="0" y="0" width="170" height="30" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="85" y="20" text-anchor="middle" font-size="11" fill="#0B3D91">Element-wise Product &amp; Sum</text>
+    </g>
+    
+    <g transform="translate(195, 45)">
+      <rect x="0" y="0" width="170" height="30" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="85" y="20" text-anchor="middle" font-size="11" fill="#0B3D91">Weight Sharing (9 Weights)</text>
+    </g>
+    
+    <g transform="translate(390, 45)">
+      <rect x="0" y="0" width="170" height="30" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="85" y="20" text-anchor="middle" font-size="11" fill="#0B3D91">Local Connectivity</text>
+    </g>
+  </g>
+
+  <line x1="400" y1="380" x2="400" y2="410" stroke="#0B3D91" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="50" y="410" width="700" height="420" fill="none" stroke="#0B3D91" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="435" text-anchor="middle" font-size="16" font-weight="bold" fill="#0B3D91">
+    Feature Map Transformation &amp; Architecture
+  </text>
+
+  <g transform="translate(70, 460)">
+    <text x="80" y="-10" text-anchor="middle" font-size="14" font-weight="bold" fill="#0B3D91">Inputs</text>
+    <rect x="0" y="0" width="160" height="340" fill="none" stroke="#60A5FA" stroke-dasharray="4,4" />
+    
+    <rect x="20" y="40" width="120" height="50" fill="#A7C7FF" stroke="#0B3D91" />
+    <text x="80" y="65" text-anchor="middle" font-size="11" fill="#0B3D91">Input Volume</text>
+    <text x="80" y="80" text-anchor="middle" font-size="10" fill="#1F6FEB">Input Data</text>
+
+    <rect x="20" y="120" width="120" height="50" fill="#A7C7FF" stroke="#0B3D91" />
+    <text x="80" y="145" text-anchor="middle" font-size="11" fill="#0B3D91">Spatial Dim</text>
+    <text x="80" y="160" text-anchor="middle" font-size="10" fill="#1F6FEB">(Height × Width)</text>
+  </g>
+
+  <line x1="230" y1="630" x2="260" y2="630" stroke="#0B3D91" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <g transform="translate(260, 460)">
+    <text x="140" y="-10" text-anchor="middle" font-size="14" font-weight="bold" fill="#0B3D91">Processing Modules</text>
+    <rect x="0" y="0" width="280" height="340" fill="none" stroke="#60A5FA" stroke-dasharray="4,4" />
+
+    <g transform="translate(20, 20)">
+      <rect x="0" y="0" width="240" height="80" fill="#60A5FA" stroke="#0B3D91" />
+      <text x="120" y="20" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Convolution Operation</text>
+      
+      <rect x="10" y="35" width="220" height="35" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="120" y="57" text-anchor="middle" font-size="11" fill="#0B3D91">Sliding Window, Summation, Output Value</text>
+    </g>
+
+    <g transform="translate(20, 120)">
+      <rect x="0" y="0" width="240" height="80" fill="#60A5FA" stroke="#0B3D91" />
+      <text x="120" y="20" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Pooling</text>
+      
+      <rect x="10" y="35" width="220" height="35" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="120" y="57" text-anchor="middle" font-size="11" fill="#0B3D91">Aggregates Neighbouring Activations</text>
+    </g>
+
+    <g transform="translate(20, 220)">
+      <rect x="0" y="0" width="240" height="80" fill="#60A5FA" stroke="#0B3D91" />
+      <text x="120" y="20" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Layer Stacking</text>
+      
+      <rect x="10" y="35" width="220" height="35" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="120" y="57" text-anchor="middle" font-size="11" fill="#0B3D91">Enlarges Effective Receptive Field</text>
+    </g>
+
+    <line x1="120" y1="100" x2="120" y2="120" stroke="#0B3D91" stroke-width="1.5" marker-end="url(#arrowhead)" />
+    <line x1="120" y1="200" x2="120" y2="220" stroke="#0B3D91" stroke-width="1.5" marker-end="url(#arrowhead)" />
+  </g>
+
+  <line x1="540" y1="630" x2="570" y2="630" stroke="#0B3D91" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <g transform="translate(570, 460)">
+    <text x="80" y="-10" text-anchor="middle" font-size="14" font-weight="bold" fill="#0B3D91">Outputs</text>
+    <rect x="0" y="0" width="160" height="340" fill="none" stroke="#60A5FA" stroke-dasharray="4,4" />
+    
+    <rect x="20" y="100" width="120" height="60" fill="#A7C7FF" stroke="#0B3D91" />
+    <text x="80" y="125" text-anchor="middle" font-size="11" fill="#0B3D91">Output Feature</text>
+    <text x="80" y="145" text-anchor="middle" font-size="11" fill="#0B3D91">Maps</text>
+
+    <rect x="20" y="180" width="120" height="60" fill="#A7C7FF" stroke="#0B3D91" />
+    <text x="80" y="205" text-anchor="middle" font-size="11" fill="#0B3D91">Multi-Channel</text>
+    <text x="80" y="225" text-anchor="middle" font-size="11" fill="#0B3D91">Stacking</text>
+
+    <text x="80" y="280" text-anchor="middle" font-size="10" font-weight="bold" fill="#1F6FEB">Channels grow</text>
+    <text x="80" y="295" text-anchor="middle" font-size="10" fill="#1F6FEB">Spatial res. decreases</text>
+  </g>
+
+  <line x1="400" y1="830" x2="400" y2="860" stroke="#0B3D91" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="50" y="860" width="700" height="180" fill="none" stroke="#0B3D91" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="885" text-anchor="middle" font-size="16" font-weight="bold" fill="#0B3D91">
+    Effective Receptive Field &amp; Hierarchy
+  </text>
+
+  <g transform="translate(100, 900)">
+    <rect x="0" y="0" width="600" height="40" fill="#A7C7FF" stroke="#0B3D91" stroke-width="1" stroke-dasharray="4,4" />
+    <text x="20" y="25" font-size="12" font-weight="bold" fill="#0B3D91">Layer 1:</text>
+    <text x="100" y="25" font-size="12" fill="#0B3D91">Local Features (Small Receptive Field)</text>
+
+    <rect x="0" y="50" width="600" height="40" fill="#A7C7FF" stroke="#0B3D91" stroke-width="1" stroke-dasharray="4,4" />
+    <text x="20" y="75" font-size="12" font-weight="bold" fill="#0B3D91">Layer 2:</text>
+    <text x="100" y="75" font-size="12" fill="#0B3D91">Intermediate Patterns (Medium Receptive Field)</text>
+
+    <rect x="0" y="100" width="600" height="40" fill="#A7C7FF" stroke="#0B3D91" stroke-width="1" stroke-dasharray="4,4" />
+    <text x="20" y="125" font-size="12" font-weight="bold" fill="#0B3D91">Stacking Layers:</text>
+    <text x="130" y="125" font-size="12" fill="#0B3D91">Enlarges Effective Receptive Field for Global Context</text>
+
+    <rect x="0" y="135" width="600" height="35" fill="#60A5FA" stroke="#0B3D91" />
+    <text x="300" y="158" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Trade-off: Spatial Resolution ↓  |  Channels ↑</text>
+  </g>
+
+  <line x1="400" y1="1040" x2="400" y2="1070" stroke="#0B3D91" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="150" y="1070" width="500" height="50" fill="#A7C7FF" stroke="#0B3D91" stroke-width="2" />
+  <text x="400" y="1100" text-anchor="middle" font-size="14" font-weight="bold" fill="#0B3D91">
+    Conclusion: Hierarchical Extraction, Spatial Compression, Channel Expansion
+  </text>
+</svg>
