@@ -1,4 +1,4 @@
-﻿# Hexo Configuration
+# Hexo Configuration
 ## Docs: https://hexo.io/docs/configuration.html
 
 # Site
@@ -55,11 +55,22 @@ skip_render:
   - 'ml-models-notes/**'
   - 'h2o-automl-notes/**'
   - 'ml-textbook-notes/**'
+  - 'deep-learning-book-notes/**'
   - 'orange-ai-notes/**'
   - 'automl-unit2-extra-notes/**'
   - 'linear-regression-notes/**'
   - 'rmse-notes/**'
   - 'tpot-notes/**'
+  - 'cnn-illustrated/**'
+  - 'cnn-conv-details/**'
+  - 'cnn-activation-pooling/**'
+  - 'cnn-fully-connected/**'
+  - 'cnn-conv-vs-fc/**'
+  - 'cnn-gap-head/**'
+  - 'cnn-cam/**'
+  - 'cnn-gradcam/**'
+  - 'cnn-cam-vs-gradcam/**'
+  - 'cnn-series/**'
   # 舊網址轉址頁（2026-10-16 移除課程代號後綴時建立）：原樣複製，不套主題外框
   - '2026/**'
 

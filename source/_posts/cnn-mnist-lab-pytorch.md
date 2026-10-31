@@ -1,4 +1,5 @@
 ---
+archive: true   # 已歸入 /cnn/ 專題目錄，不列在首頁
 title: 手寫數字辨識入門：用 MNIST 看懂 CNN 到底在學什麼（PyTorch 實作 ＋ feature map 視覺化）
 date: 2026-10-27 13:20:00
 categories:
@@ -16,6 +17,8 @@ math: true
 index_img: /img/covers/cnn-mnist-lab.png
 banner_img: /img/covers/cnn-mnist-lab.png
 ---
+
+> 📚 這篇文章已歸入主題目錄：[CNN 專題](/cnn/)（九篇圖解系列、課程筆記與實驗都在那裡）。
 
 > <strong>一句話結論</strong>：把 CS231n 筆記裡的公式寫成 <code>if</code> 會比背下來有用得多——我讓訓練迴圈在每個 epoch 開頭把「公式推導」與「實際張量形狀」逐層比對，任何一層對不上就印 <code>✗</code>。
 > 這個小改動讓「輸出尺寸公式」從需要記憶的規則，變成每次跑都會自我驗證的斷言。

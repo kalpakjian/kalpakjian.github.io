@@ -1,4 +1,5 @@
 ---
+archive: true   # 已歸入 /cnn/ 專題目錄，不列在首頁
 title: CNN I：機器怎麼「看」？從視覺皮層到 LeNet-5 的 61,750 個參數
 date: 2026-10-27 14:30:00
 categories:
@@ -18,6 +19,8 @@ toc: true
 index_img: /img/covers/cnn-1-convnet-neon.png
 banner_img: /img/covers/cnn-1-convnet-neon-banner.png
 ---
+
+> 📚 這篇文章已歸入主題目錄：[CNN 專題](/cnn/)（九篇圖解系列、課程筆記與實驗都在那裡）。
 
 > <strong>整理說明</strong>：這是我上「卷積神經網絡（CNN）I」的課後筆記。36 頁課程簡報講的是很標準的一條線：影像為什麼是數字、視覺皮層的四層抽象、卷積的三條規則、LeNet-5、以及卷積的反向傳播。簡報本身有幾個數字我算不回去（1080×1080×3 的向量長度、86 億神經元的連線總數、LeNet-5 的參數總數），我把它們全部重算一次，列在 <a href="#errata">第 9 節</a>。文中每一個參數量與乘加次數都是我逐層手算、再寫程式覆核的；插圖是自己畫的 SVG（霓虹風），封面是本地 ComfyUI 跑 Qwen-Image 2.1 生成的。
 

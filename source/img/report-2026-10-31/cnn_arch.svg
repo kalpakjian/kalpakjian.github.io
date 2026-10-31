@@ -1,0 +1,161 @@
+<svg viewBox="0 0 800 1200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#000" />
+    </marker>
+  </defs>
+
+  <text x="400" y="40" text-anchor="middle" font-size="24" font-weight="bold">CNN Fundamentals: Technical Roadmap</text>
+  <text x="400" y="65" text-anchor="middle" font-size="14" fill="#555">Convolutional Neural Network Architecture</text>
+
+  <rect x="50" y="90" width="700" height="120" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="115" text-anchor="middle" font-size="16" font-weight="bold">Input &amp; Preprocessing</text>
+
+  <g transform="translate(70, 130)">
+    <rect x="0" y="0" width="200" height="60" fill="#fff" stroke="#000" stroke-width="1.5" />
+    <text x="100" y="25" text-anchor="middle" font-size="12" font-weight="bold">Input Image</text>
+    <text x="100" y="45" text-anchor="middle" font-size="10">Raw pixel data (H x W x C)</text>
+  </g>
+
+  <g transform="translate(290, 130)">
+    <rect x="0" y="0" width="220" height="60" fill="#fff" stroke="#000" stroke-width="1.5" />
+    <text x="110" y="25" text-anchor="middle" font-size="12" font-weight="bold">Normalization</text>
+    <text x="110" y="45" text-anchor="middle" font-size="10">Scale pixel values to [0,1] or [-1,1]</text>
+  </g>
+
+  <g transform="translate(530, 130)">
+    <rect x="0" y="0" width="200" height="60" fill="#fff" stroke="#000" stroke-width="1.5" />
+    <text x="100" y="25" text-anchor="middle" font-size="12" font-weight="bold">Data Augmentation</text>
+    <text x="100" y="45" text-anchor="middle" font-size="10">Random transforms for robustness</text>
+  </g>
+
+  <line x1="400" y1="210" x2="400" y2="240" stroke="#000" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="50" y="240" width="700" height="180" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="265" text-anchor="middle" font-size="16" font-weight="bold">Convolutional Block Structure</text>
+
+  <rect x="100" y="280" width="600" height="120" fill="#fff" stroke="#000" stroke-width="1.5" />
+
+  <g transform="translate(120, 290)">
+    <text x="0" y="20" font-size="14" font-weight="bold">Core Operations (Repeated in Stacked Layers)</text>
+    <line x1="0" y1="30" x2="560" y2="30" stroke="#ddd" stroke-width="1" />
+
+    <g transform="translate(0, 45)">
+      <rect x="0" y="0" width="170" height="50" fill="#f9f9f9" stroke="#333" />
+      <text x="85" y="20" text-anchor="middle" font-size="11" font-weight="bold">Convolution</text>
+      <text x="85" y="40" text-anchor="middle" font-size="10">Sliding kernels, local connectivity</text>
+    </g>
+
+    <g transform="translate(195, 45)">
+      <rect x="0" y="0" width="170" height="50" fill="#f9f9f9" stroke="#333" />
+      <text x="85" y="20" text-anchor="middle" font-size="11" font-weight="bold">ReLU Activation</text>
+      <text x="85" y="40" text-anchor="middle" font-size="10">Non-linearity: max(0, x)</text>
+    </g>
+
+    <g transform="translate(390, 45)">
+      <rect x="0" y="0" width="170" height="50" fill="#f9f9f9" stroke="#333" />
+      <text x="85" y="20" text-anchor="middle" font-size="11" font-weight="bold">Max Pooling</text>
+      <text x="85" y="40" text-anchor="middle" font-size="10">Spatial downsampling</text>
+    </g>
+  </g>
+
+  <line x1="400" y1="420" x2="400" y2="450" stroke="#000" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="50" y="450" width="700" height="200" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="475" text-anchor="middle" font-size="16" font-weight="bold">Hierarchical Feature Learning</text>
+
+  <g transform="translate(70, 490)">
+    <rect x="0" y="0" width="220" height="140" fill="none" stroke="#666" stroke-dasharray="4,4" />
+    <text x="110" y="-10" text-anchor="middle" font-size="14" font-weight="bold">Early Layers</text>
+
+    <rect x="20" y="30" width="180" height="40" fill="#fff" stroke="#000" />
+    <text x="110" y="50" text-anchor="middle" font-size="11">Low-level Features</text>
+    <text x="110" y="65" text-anchor="middle" font-size="10">Edges, colors, gradients</text>
+
+    <rect x="20" y="85" width="180" height="40" fill="#f0f0f0" stroke="#333" />
+    <text x="110" y="105" text-anchor="middle" font-size="10">Small receptive fields</text>
+    <text x="110" y="120" text-anchor="middle" font-size="10">High spatial resolution</text>
+  </g>
+
+  <g transform="translate(315, 490)">
+    <rect x="0" y="0" width="220" height="140" fill="none" stroke="#666" stroke-dasharray="4,4" />
+    <text x="110" y="-10" text-anchor="middle" font-size="14" font-weight="bold">Middle Layers</text>
+
+    <rect x="20" y="30" width="180" height="40" fill="#fff" stroke="#000" />
+    <text x="110" y="50" text-anchor="middle" font-size="11">Mid-level Features</text>
+    <text x="110" y="65" text-anchor="middle" font-size="10">Textures, patterns, object parts</text>
+
+    <rect x="20" y="85" width="180" height="40" fill="#f0f0f0" stroke="#333" />
+    <text x="110" y="105" text-anchor="middle" font-size="10">Medium receptive fields</text>
+    <text x="110" y="120" text-anchor="middle" font-size="10">Reduced resolution</text>
+  </g>
+
+  <g transform="translate(560, 490)">
+    <rect x="0" y="0" width="170" height="140" fill="none" stroke="#666" stroke-dasharray="4,4" />
+    <text x="85" y="-10" text-anchor="middle" font-size="14" font-weight="bold">Deep Layers</text>
+
+    <rect x="20" y="30" width="130" height="40" fill="#fff" stroke="#000" />
+    <text x="85" y="50" text-anchor="middle" font-size="11">High-level Features</text>
+    <text x="85" y="65" text-anchor="middle" font-size="10">Whole objects, semantics</text>
+
+    <rect x="20" y="85" width="130" height="40" fill="#f0f0f0" stroke="#333" />
+    <text x="85" y="105" text-anchor="middle" font-size="10">Large receptive fields</text>
+    <text x="85" y="120" text-anchor="middle" font-size="10">Low resolution</text>
+  </g>
+
+  <line x1="290" y1="560" x2="315" y2="560" stroke="#000" stroke-width="1.5" marker-end="url(#arrowhead)" />
+  <line x1="535" y1="560" x2="560" y2="560" stroke="#000" stroke-width="1.5" marker-end="url(#arrowhead)" />
+
+  <line x1="400" y1="650" x2="400" y2="680" stroke="#000" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="50" y="680" width="700" height="180" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="705" text-anchor="middle" font-size="16" font-weight="bold">Classification Head</text>
+
+  <g transform="translate(100, 720)">
+    <rect x="0" y="0" width="600" height="120" fill="#fff" stroke="#000" stroke-width="1.5" />
+
+    <g transform="translate(20, 20)">
+      <rect x="0" y="0" width="170" height="80" fill="#f9f9f9" stroke="#333" />
+      <text x="85" y="25" text-anchor="middle" font-size="11" font-weight="bold">Flatten</text>
+      <text x="85" y="45" text-anchor="middle" font-size="10">2D feature maps</text>
+      <text x="85" y="60" text-anchor="middle" font-size="10">to 1D vector</text>
+    </g>
+
+    <g transform="translate(215, 20)">
+      <rect x="0" y="0" width="170" height="80" fill="#f9f9f9" stroke="#333" />
+      <text x="85" y="25" text-anchor="middle" font-size="11" font-weight="bold">Fully Connected</text>
+      <text x="85" y="45" text-anchor="middle" font-size="10">Dense layers</text>
+      <text x="85" y="60" text-anchor="middle" font-size="10">learn combinations</text>
+    </g>
+
+    <g transform="translate(410, 20)">
+      <rect x="0" y="0" width="170" height="80" fill="#f9f9f9" stroke="#333" />
+      <text x="85" y="25" text-anchor="middle" font-size="11" font-weight="bold">Softmax</text>
+      <text x="85" y="45" text-anchor="middle" font-size="10">Class probabilities</text>
+      <text x="85" y="60" text-anchor="middle" font-size="10">sum to 1.0</text>
+    </g>
+
+    <line x1="170" y1="60" x2="215" y2="60" stroke="#000" stroke-width="1.5" marker-end="url(#arrowhead)" />
+    <line x1="385" y1="60" x2="410" y2="60" stroke="#000" stroke-width="1.5" marker-end="url(#arrowhead)" />
+  </g>
+
+  <line x1="400" y1="860" x2="400" y2="890" stroke="#000" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="50" y="890" width="700" height="140" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="915" text-anchor="middle" font-size="16" font-weight="bold">Training Process</text>
+
+  <g transform="translate(100, 930)">
+    <rect x="0" y="0" width="600" height="40" fill="#fff" stroke="#000" stroke-width="1" stroke-dasharray="4,4" />
+    <text x="20" y="25" font-size="12" font-weight="bold">Loss Function:</text>
+    <text x="130" y="25" font-size="12">Cross-entropy loss between predicted and true labels</text>
+
+    <rect x="0" y="50" width="600" height="40" fill="#fff" stroke="#000" stroke-width="1" stroke-dasharray="4,4" />
+    <text x="20" y="75" font-size="12" font-weight="bold">Optimization:</text>
+    <text x="130" y="75" font-size="12">Backpropagation computes gradients; SGD/Adam updates weights</text>
+  </g>
+
+  <line x1="400" y1="1030" x2="400" y2="1060" stroke="#000" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="150" y="1060" width="500" height="50" fill="#fff" stroke="#000" stroke-width="2" />
+  <text x="400" y="1090" text-anchor="middle" font-size="14" font-weight="bold">Conclusion: Weight Sharing &amp; Hierarchical Representation Enable Efficient Vision</text>
+</svg>

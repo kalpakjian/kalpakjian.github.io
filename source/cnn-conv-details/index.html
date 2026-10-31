@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Hant">
+
+
+<head>
+
+
+<meta charset="utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>卷積層的運作細節｜AI Tech Notes</title>
+
+
+<meta name="description" content="卷積層的運作細節：一個輸出值的手算、多通道 kernel、參數量、stride 與 padding、感受野、空洞卷積；5 張手繪內嵌 SVG，數字全部本機實測。">
+
+
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+
+</style>
+
+
+<style>pre.code{background:#0d1117;color:#c9d1d9;border:1px solid #222b36;border-radius:8px;padding:12px 14px;overflow-x:auto;line-height:1.55;font-size:13.5px}pre.code code{font-family:ui-monospace,Consolas,monospace;color:#c9d1d9;background:none;padding:0}</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="layout">
+
+
+<nav class="sidebar">
+
+
+  <a class="home" href="/">← 回到 AI Tech Notes</a>
+
+
+  <a class="home" href="/cv-course/">📚 課程專題</a>
+
+  <a class="home" href="/cnn/">📚 CNN 專題</a>
+
+
+  <a class="home" href="CNN_Conv_Layer_Study_Notes.md">📄 下載原始 Markdown</a>
+
+
+  <h1>卷積層的運作細節</h1>
+
+
+  <div class="sub">kernel · 通道 · stride／padding · 感受野 · 空洞卷積</div>
+
+
+  <div class="toc">
+
+
+<ul>
+<li><a href="#1-卷積層同時做兩件事">1. 卷積層同時做兩件事</a>
+</li>
+<li><a href="#2-一個輸出值逐元素相乘相加加-bias">2. 一個輸出值：逐元素相乘、相加、加 bias</a>
+<ul>
+<li><a href="#21-手算一次">2.1 手算一次</a></li>
+<li><a href="#22-bias-的角色">2.2 bias 的角色</a></li>
+</ul>
+</li>
+<li><a href="#3-多通道輸入通道是加起來的維度">3. 多通道輸入：通道是「加起來」的維度</a>
+<ul>
+<li><a href="#31-形狀規則">3.1 形狀規則</a></li>
+<li><a href="#32-為什麼-kernel-深度一定等於-c_in">3.2 為什麼 kernel 深度一定等於 C_in</a></li>
+</ul>
+</li>
+<li><a href="#4-參數量只跟-kernel-大小與通道數有關">4. 參數量：只跟 kernel 大小與通道數有關</a>
+</li>
+<li><a href="#5-stride-與-padding控制輸出尺寸">5. stride 與 padding：控制輸出尺寸</a>
+<ul>
+<li><a href="#51-一條公式">5.1 一條公式</a></li>
+<li><a href="#52-same-的-padding-怎麼決定">5.2 same 的 padding 怎麼決定</a></li>
+</ul>
+</li>
+<li><a href="#6-感受野一個輸出看多大範圍">6. 感受野：一個輸出看多大範圍</a>
+</li>
+<li><a href="#7-空洞卷積不增參數也能擴大視野">7. 空洞卷積：不增參數也能擴大視野</a>
+</li>
+<li><a href="#8-一層卷積的完整流程">8. 一層卷積的完整流程</a>
+</li>
+<li><a href="#9-六個常見誤解">9. 六個常見誤解</a>
+</li>
+<li><a href="#附錄-a-速查表">附錄 A 速查表</a>
+</li>
+<li><a href="#附錄-b-常見錯誤">附錄 B 常見錯誤</a>
+</li>
+<li><a href="#附錄-c-延伸閱讀與離線使用">附錄 C 延伸閱讀與離線使用</a>
+</li>
+<li><a href="#附錄-d-一頁精華考前-10-分鐘">附錄 D 一頁精華（考前 10 分鐘）</a>
+</li>
+<li><a href="#附錄-g-實測原始輸出">附錄 G 實測原始輸出</a>
+</li>
+</ul>
+
+
+  </div>
+
+
+</nav>
+
+
+<main>
+
+
+<h1 id="卷積層的運作細節kernel通道stridepadding感受野與空洞卷積">卷積層的運作細節：kernel、通道、stride／padding、感受野與空洞卷積</h1>
+<blockquote><p>前一篇〈<a href="/cnn-illustrated/">圖解 CNN</a>〉把整個網路的資料流走過一遍；這一篇只拆<strong>卷積層本身</strong>。<br />一個卷積層同時做兩件事：<strong>提取局部模式</strong>，以及<strong>保留「這個模式在哪裡」</strong>。<br />下面每個數字都是本機用 NumPy 算的（Python 3.15.1 / NumPy 2.5.4），程式與原始輸出在附錄 G。<br />沒有互動測驗（附錄 E／F 從缺）；要回頭看全貌請走附錄 C 的連結。</p></blockquote>
+<!-- CNVD-FIGURE:single -->
+<figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" role="img" aria-label="單一輸出值的計算：5×5 輸入左上角 3×3 區塊與 3×3 kernel 逐元素相乘相加得到 8，整張輸出為 3×3 特徵圖"><defs><marker id="ard" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8b949e"/></marker></defs><rect x="0.75" y="0.75" width="998.5" height="558.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/><text x="40" y="44" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一個輸出值是怎麼算出來的</text><text x="40" y="72" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5×5 影像、3×3 kernel、stride 1、不補邊 → 3×3 特徵圖</text><text x="60" y="126" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸入 5×5</text><text x="356" y="126" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">kernel 3×3</text><text x="532" y="126" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸出 3×3</text><rect x="60" y="140" width="46" height="46" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.6"/><text x="83.0" y="168.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="106" y="140" width="46" height="46" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.6"/><text x="129.0" y="168.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text><rect x="152" y="140" width="46" height="46" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.6"/><text x="175.0" y="168.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text><rect x="198" y="140" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="221.0" y="168.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="244" y="140" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="267.0" y="168.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="60" y="186" width="46" height="46" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.6"/><text x="83.0" y="214.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="106" y="186" width="46" height="46" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.6"/><text x="129.0" y="214.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="152" y="186" width="46" height="46" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.6"/><text x="175.0" y="214.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text><rect x="198" y="186" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="221.0" y="214.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text><rect x="244" y="186" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="267.0" y="214.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="60" y="232" width="46" height="46" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.6"/><text x="83.0" y="260.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text><rect x="106" y="232" width="46" height="46" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.6"/><text x="129.0" y="260.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="152" y="232" width="46" height="46" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.6"/><text x="175.0" y="260.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="198" y="232" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="221.0" y="260.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="244" y="232" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="267.0" y="260.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="60" y="278" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="83.0" y="306.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="106" y="278" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="129.0" y="306.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text><rect x="152" y="278" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="175.0" y="306.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="198" y="278" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="221.0" y="306.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text><rect x="244" y="278" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="267.0" y="306.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="60" y="324" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="83.0" y="352.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="106" y="324" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="129.0" y="352.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="152" y="324" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="175.0" y="352.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="198" y="324" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="221.0" y="352.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text><rect x="244" y="324" width="46" height="46" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="267.0" y="352.04" font-size="14" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="60" y="140" width="138" height="138" rx="6" fill="none" stroke="#e0a458" stroke-width="2.4"/><rect x="356" y="140" width="40" height="40" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="376.0" y="164.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="396" y="140" width="40" height="40" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="416.0" y="164.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="436" y="140" width="40" height="40" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="456.0" y="164.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="356" y="180" width="40" height="40" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="376.0" y="204.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="396" y="180" width="40" height="40" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="416.0" y="204.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="436" y="180" width="40" height="40" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="456.0" y="204.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="356" y="220" width="40" height="40" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="376.0" y="244.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="396" y="220" width="40" height="40" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="416.0" y="244.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="436" y="220" width="40" height="40" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="456.0" y="244.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="532" y="140" width="44" height="44" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.6"/><text x="554.0" y="166.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text><rect x="576" y="140" width="44" height="44" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="598.0" y="166.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text><rect x="620" y="140" width="44" height="44" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="642.0" y="166.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text><rect x="532" y="184" width="44" height="44" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="554.0" y="210.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text><rect x="576" y="184" width="44" height="44" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="598.0" y="210.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">10</text><rect x="620" y="184" width="44" height="44" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="642.0" y="210.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text><rect x="532" y="228" width="44" height="44" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="554.0" y="254.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text><rect x="576" y="228" width="44" height="44" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="598.0" y="254.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text><rect x="620" y="228" width="44" height="44" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="642.0" y="254.86" font-size="13.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text><line x1="294" y1="200" x2="346" y2="200" stroke="#8b949e" stroke-width="1.5" marker-end="url(#ar)"/><line x1="482" y1="206" x2="524" y2="206" stroke="#8b949e" stroke-width="1.5" marker-end="url(#ar)"/><text x="700" y="176" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">滑一格再算一次：</text><text x="700" y="198" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">共 (5−3+1)² = 9 個位置</text><rect x="48" y="392" width="904" height="108" rx="12" fill="#1c2230" stroke="#58a6ff55" stroke-width="1.4"/><text x="68" y="420" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">左上角那一格：逐元素相乘再相加</text><text x="68" y="448" font-size="12.5" fill="#e0a458" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">(1×1 + 2×0 + 3×1)  ＋  (0×0 + 1×1 + 2×0)  ＋  (2×1 + 0×0 + 1×1)  =  4 + 1 + 3  =  8</text><text x="68" y="476" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">bias 加在整個特徵圖上（這裡 bias = 0）；若 bias = 1，九格全部 +1。</text><text x="48" y="534" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸出尺寸：O = ⌊(W − K)/S⌋ + 1 = ⌊(5 − 3)/1⌋ + 1 = 3</text></svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">一個輸出值＝局部區塊與 kernel 逐元素相乘、全部相加，再加上 bias。滑一格就換算下一個值。</figcaption>
+</figure>
+<!-- /CNVD-FIGURE:single -->
+<h2 id="1-卷積層同時做兩件事">1. 卷積層同時做兩件事</h2>
+<table><thead><tr><th>它做的事</th><th>靠什麼達成</th><th>代價</th></tr></thead><tbody><tr><td>提取局部模式</td><td>一個小 kernel 只看 <code>k × k</code> 的鄰域</td><td>單層看不到大範圍</td></tr><tr><td>保留空間關係</td><td>輸出仍是二維網格，每個位置對應原圖的一塊</td><td>感受野隨層數成長</td></tr><tr><td>省參數</td><td>同一組權重滑過整張圖（權重共享）</td><td>位置資訊變模糊</td></tr></tbody></table>
+<p>這三件事是同一組設計的結果，不是三個獨立技巧：<strong>局部連接</strong>讓參數量可控，<strong>權重共享</strong>再把它壓到跟影像大小無關，而「輸出仍是網格」讓下一層還能在空間上滑動。</p>
+<h2 id="2-一個輸出值逐元素相乘相加加-bias">2. 一個輸出值：逐元素相乘、相加、加 bias</h2>
+<h3 id="21-手算一次">2.1 手算一次</h3>
+<p>輸入是一張 5×5 的灰階圖，kernel 是 3×3、步幅 1、不補邊：</p>
+<pre class="code"><code>輸入 5×5                 kernel 3×3
+1 2 3 0 1               1 0 1
+0 1 2 3 1               0 1 0
+2 0 1 1 0               1 0 1
+1 2 0 3 1
+0 1 1 2 0</code></pre>
+<p>左上角的 3×3 區塊是 <code>[[1,2,3],[0,1,2],[2,0,1]]</code>，與 kernel 逐元素相乘再相加：</p>
+<pre class="code"><code>(1×1 + 2×0 + 3×1) + (0×0 + 1×1 + 2×0) + (2×1 + 0×0 + 1×1)
+= 4 + 1 + 3
+= 8</code></pre>
+<p>這一格就是特徵圖左上角的 <strong>8</strong>。把 kernel 往右滑一格、再算一次，滑完整張圖（共 <code>(5 − 3 + 1)² = 9</code> 個位置）就得到實測的 3×3 特徵圖：</p>
+<pre class="code"><code>[[ 8,  5,  8],
+ [ 3, 10,  5],
+ [ 6,  4,  5]]</code></pre>
+<p>最大值 10 出現在中間：那個位置的 3×3 區塊與 kernel 的「四角 + 中心」樣式最吻合。<strong>特徵圖上的數值大，代表這個位置越像 kernel 想找的模式</strong>——這就是「feature map 可以當偵測器輸出讀」的意思。</p>
+<h3 id="22-bias-的角色">2.2 bias 的角色</h3>
+<p>每個輸出通道通常還有一個 bias，它加在整張特徵圖的每一格上：</p>
+<pre class="code"><code>output[i, j] = Σ (patch × kernel) + bias</code></pre>
+<p>實測：上面那張特徵圖在 <code>bias = 1</code> 時，九格全部 +1（左上角由 8 變 9）。bias 的用途是<strong>平移激活門檻</strong>：同一個 kernel 在偏暗的圖上可能全部算出偏小的值，bias 讓它可以整體抬高或壓低，不必改權重。參數量因此是 <code>(k × k × C_in + 1) × C_out</code>，那個 <code>+1</code> 就是它。</p>
+<h2 id="3-多通道輸入通道是加起來的維度">3. 多通道輸入：通道是「加起來」的維度</h2>
+<!-- CNVD-FIGURE:channels -->
+<figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 430" role="img" aria-label="多通道卷積：三個輸入通道各配一個 3×3 kernel，分別算出 3、2、負 4，相加再加 bias 2 得到 3，輸出一格"><defs><marker id="ard" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8b949e"/></marker></defs><rect x="0.75" y="0.75" width="998.5" height="428.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/><text x="40" y="44" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">多通道：三個通道加起來才是一個值</text><text x="40" y="72" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">kernel 的深度必須等於輸入通道數；這裡是 3×3×3，共 27 個權重</text><text x="60" y="153" font-size="11.5" fill="#4ecdc4" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">通道 1</text><rect x="140" y="104" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="155.0" y="122.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="170" y="104" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="185.0" y="122.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="200" y="104" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="215.0" y="122.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="140" y="134" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="155.0" y="152.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="170" y="134" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="185.0" y="152.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="200" y="134" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="215.0" y="152.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="140" y="164" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="155.0" y="182.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="170" y="164" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="185.0" y="182.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="200" y="164" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="215.0" y="182.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><text x="250" y="148" font-size="15" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">×</text><rect x="268" y="104" width="30" height="30" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="283.0" y="122.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="298" y="104" width="30" height="30" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="313.0" y="122.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="328" y="104" width="30" height="30" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="343.0" y="122.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="268" y="134" width="30" height="30" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="283.0" y="152.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="298" y="134" width="30" height="30" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="313.0" y="152.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="328" y="134" width="30" height="30" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="343.0" y="152.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="268" y="164" width="30" height="30" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="283.0" y="182.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="298" y="164" width="30" height="30" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="313.0" y="182.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="328" y="164" width="30" height="30" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="343.0" y="182.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><text x="378" y="148" font-size="15" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">=</text><text x="400" y="153" font-size="16" fill="#4ecdc4" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text><line x1="428" y1="149" x2="450" y2="149" stroke="#30363d" stroke-width="1.4"/><text x="60" y="249" font-size="11.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">通道 2</text><rect x="140" y="200" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="155.0" y="218.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text><rect x="170" y="200" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="185.0" y="218.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="200" y="200" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="215.0" y="218.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="140" y="230" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="155.0" y="248.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="170" y="230" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="185.0" y="248.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="200" y="230" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="215.0" y="248.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text><rect x="140" y="260" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="155.0" y="278.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="170" y="260" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="185.0" y="278.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="200" y="260" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="215.0" y="278.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><text x="250" y="244" font-size="15" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">×</text><rect x="268" y="200" width="30" height="30" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="283.0" y="218.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="298" y="200" width="30" height="30" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="313.0" y="218.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="328" y="200" width="30" height="30" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="343.0" y="218.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="268" y="230" width="30" height="30" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="283.0" y="248.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="298" y="230" width="30" height="30" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="313.0" y="248.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="328" y="230" width="30" height="30" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="343.0" y="248.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="268" y="260" width="30" height="30" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="283.0" y="278.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="298" y="260" width="30" height="30" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="313.0" y="278.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="328" y="260" width="30" height="30" rx="4" fill="#58a6ff26" stroke="#58a6ff" stroke-width="1.6"/><text x="343.0" y="278.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><text x="378" y="244" font-size="15" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">=</text><text x="400" y="249" font-size="16" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text><line x1="428" y1="245" x2="450" y2="245" stroke="#30363d" stroke-width="1.4"/><text x="60" y="345" font-size="11.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">通道 3</text><rect x="140" y="296" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="155.0" y="314.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="170" y="296" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="185.0" y="314.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="200" y="296" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="215.0" y="314.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="140" y="326" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="155.0" y="344.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="170" y="326" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="185.0" y="344.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="200" y="326" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="215.0" y="344.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="140" y="356" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="155.0" y="374.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="170" y="356" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="185.0" y="374.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="200" y="356" width="30" height="30" rx="4" fill="#12181f" stroke="#30363d" stroke-width="0.9" opacity="0.85"/><text x="215.0" y="374.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><text x="250" y="340" font-size="15" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">×</text><rect x="268" y="296" width="30" height="30" rx="4" fill="#c084fc26" stroke="#c084fc" stroke-width="1.6"/><text x="283.0" y="314.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="298" y="296" width="30" height="30" rx="4" fill="#c084fc26" stroke="#c084fc" stroke-width="1.6"/><text x="313.0" y="314.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">-1</text><rect x="328" y="296" width="30" height="30" rx="4" fill="#c084fc26" stroke="#c084fc" stroke-width="1.6"/><text x="343.0" y="314.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="268" y="326" width="30" height="30" rx="4" fill="#c084fc26" stroke="#c084fc" stroke-width="1.6"/><text x="283.0" y="344.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">-1</text><rect x="298" y="326" width="30" height="30" rx="4" fill="#c084fc26" stroke="#c084fc" stroke-width="1.6"/><text x="313.0" y="344.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="328" y="326" width="30" height="30" rx="4" fill="#c084fc26" stroke="#c084fc" stroke-width="1.6"/><text x="343.0" y="344.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">-1</text><rect x="268" y="356" width="30" height="30" rx="4" fill="#c084fc26" stroke="#c084fc" stroke-width="1.6"/><text x="283.0" y="374.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><rect x="298" y="356" width="30" height="30" rx="4" fill="#c084fc26" stroke="#c084fc" stroke-width="1.6"/><text x="313.0" y="374.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">-1</text><rect x="328" y="356" width="30" height="30" rx="4" fill="#c084fc26" stroke="#c084fc" stroke-width="1.6"/><text x="343.0" y="374.96" font-size="11" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">0</text><text x="378" y="340" font-size="15" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">=</text><text x="400" y="345" font-size="16" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">−4</text><line x1="428" y1="341" x2="450" y2="341" stroke="#30363d" stroke-width="1.4"/><line x1="450" y1="149" x2="450" y2="341" stroke="#30363d" stroke-width="1.4"/><line x1="450" y1="245" x2="496" y2="245" stroke="#8b949e" stroke-width="1.5" marker-end="url(#ar)"/><rect x="500" y="190" width="180" height="92" rx="10" fill="#12181f" stroke="#e0a45899" stroke-width="1.5"/><text x="590" y="220" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Σ + bias 2</text><text x="590" y="252" font-size="12.5" fill="#e0a458" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3 + 2 − 4 + 2 = 3</text><line x1="686" y1="236" x2="720" y2="236" stroke="#8b949e" stroke-width="1.5" marker-end="url(#ar)"/><rect x="724" y="190" width="130" height="92" rx="10" fill="#12181f" stroke="#4ecdc499" stroke-width="1.5"/><text x="789" y="220" font-size="12" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸出一格</text><text x="789" y="254" font-size="22" fill="#4ecdc4" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text><text x="40" y="404" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">這一層若用 64 個 kernel，就有 64 張特徵圖（64 個輸出通道），每張 26×26（28×28 輸入、valid）。</text></svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">通道是「加起來」的維度：三個通道各算一份，總和才是一個輸出值；kernel 的深度必須等於輸入通道數。</figcaption>
+</figure>
+<!-- /CNVD-FIGURE:channels -->
+<h3 id="31-形狀規則">3.1 形狀規則</h3>
+<p>彩色影像是 <code>H × W × 3</code>，所以一個 kernel 也必須是 <code>k × k × 3</code>——<strong>每個輸入通道配一張 k × k 的子 kernel</strong>。計算時三個通道各自乘加，再把三個結果<strong>相加</strong>，得到「一個」數字。</p>
+<p>實測一組（3×3×3 的 kernel、bias = 2）：</p>
+<table><thead><tr><th>通道</th><th>該通道的乘加結果</th></tr></thead><tbody><tr><td>通道 1</td><td>3</td></tr><tr><td>通道 2</td><td>2</td></tr><tr><td>通道 3</td><td>−4</td></tr><tr><td>小計</td><td>1</td></tr><tr><td>加 bias 2</td><td><strong>3</strong></td></tr></tbody></table>
+<p>所以「通道」在卷積裡是<strong>被加總掉的維度</strong>，不是被保留的維度。保留的是「kernel 的數量」：</p>
+<pre class="code"><code>輸入   H  × W  × C_in
+kernel k  × k  × C_in           ← 深度必須等於 C_in
+輸出   H&#x27; × W&#x27; × C_out          ← C_out = kernel 的數量</code></pre>
+<h3 id="32-為什麼-kernel-深度一定等於-c_in">3.2 為什麼 kernel 深度一定等於 C_in</h3>
+<p>因為要「逐元素相乘」，兩邊形狀必須一致。若輸入是 3 通道而 kernel 只有 3×3×1，那它只看得到其中一個通道，另外兩個通道的資訊就被丟掉了。反過來，<strong>輸出通道數沒有限制</strong>：想要 64 個輸出通道，就用 64 個獨立的 3×3×3 kernel，各自產生一張特徵圖，疊成 64 層。</p>
+<h2 id="4-參數量只跟-kernel-大小與通道數有關">4. 參數量：只跟 kernel 大小與通道數有關</h2>
+<pre class="code"><code>參數 = (k × k × C_in + 1) × C_out</code></pre>
+<p>實測幾個常見設定：</p>
+<table><thead><tr><th>設定</th><th>權重</th><th>bias</th><th>合計</th></tr></thead><tbody><tr><td>3×3、C_in = 3、C_out = 64</td><td>1,728</td><td>64</td><td><strong>1,792</strong></td></tr><tr><td>3×3、C_in = 3、C_out = 1（單一濾波器）</td><td>27</td><td>1</td><td>28</td></tr><tr><td>3×3、C_in = 16、C_out = 32</td><td>4,608</td><td>32</td><td>4,640</td></tr><tr><td>5×5、C_in = 1、C_out = 6（LeNet-5 的 C1）</td><td>150</td><td>6</td><td>156</td></tr></tbody></table>
+<p>兩個推論：</p>
+<ul><li><strong>參數量與影像大小無關</strong>。同一個 <code>3×3×3 → 64</code> 套在 28×28 或 224×224 上，都是 1,792 個參數；變多的是<strong>乘加次數</strong>（每個位置都要算一次）。</li><li><strong>參數量跟通道數成正比</strong>。<code>C_in</code>、<code>C_out</code> 各加倍，參數就是四倍。行動網路的瓶頸幾乎都來自這件事，所以才有 depthwise separable convolution。</li></ul>
+<h2 id="5-stride-與-padding控制輸出尺寸">5. stride 與 padding：控制輸出尺寸</h2>
+<!-- CNVD-FIGURE:sizes -->
+<figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" role="img" aria-label="四種 stride 與 padding 設定的輸出尺寸：28×28 輸入配 3×3 kernel，valid 得 26×26、same 得 28×28、stride 2 補 1 得 14×14、5×5 kernel 補 2 得 28×28"><defs><marker id="ard" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8b949e"/></marker></defs><rect x="0.75" y="0.75" width="998.5" height="338.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/><text x="40" y="44" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一張 28×28，四種設定</text><text x="40" y="72" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">O = ⌊(W + 2P − K) / S⌋ + 1　（除不盡往下取整）</text><rect x="30" y="96" width="220" height="170" rx="8" fill="#12181f" stroke="#4ecdc488" stroke-width="1.5" opacity="0.9"/><text x="44" y="124" font-size="12" fill="#4ecdc4" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">valid</text><text x="44" y="148" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">(28 − 3)/1 + 1</text><text x="44" y="192" font-size="22" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">26×26</text><text x="44" y="246" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">邊角像素只被掃到 1 次</text><rect x="265" y="96" width="220" height="170" rx="8" fill="#12181f" stroke="#58a6ff88" stroke-width="1.5" opacity="0.9"/><text x="279" y="124" font-size="12" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">same（p = 1）</text><text x="279" y="148" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">(28 + 2 − 3)/1 + 1</text><text x="279" y="192" font-size="22" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">28×28</text><text x="279" y="246" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">尺寸不變，邊界用 0 補</text><rect x="500" y="96" width="220" height="170" rx="8" fill="#12181f" stroke="#e0a45888" stroke-width="1.5" opacity="0.9"/><text x="514" y="124" font-size="12" fill="#e0a458" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">stride 2 + p = 1</text><text x="514" y="148" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">(28 + 2 − 3)/2 + 1</text><text x="514" y="192" font-size="22" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">14×14</text><text x="514" y="246" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一半解析度，常見於降採樣</text><rect x="735" y="96" width="220" height="170" rx="8" fill="#12181f" stroke="#c084fc88" stroke-width="1.5" opacity="0.9"/><text x="749" y="124" font-size="12" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5×5 kernel + p = 2</text><text x="749" y="148" font-size="10.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">(28 + 4 − 5)/1 + 1</text><text x="749" y="192" font-size="22" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">28×28</text><text x="749" y="246" font-size="10" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">大 kernel 也能維持 same</text><text x="40" y="308" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">same 的 padding 由 kernel 決定：K = 3 → P = 1、K = 5 → P = 2；偶數 kernel 湊不出真正的 same。</text></svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">同樣的 28×28 輸入，改 stride 與 padding 就是完全不同的輸出尺寸——公式只有一條。</figcaption>
+</figure>
+<!-- /CNVD-FIGURE:sizes -->
+<h3 id="51-一條公式">5.1 一條公式</h3>
+<pre class="code"><code>O = ⌊(W + 2P − K) / S⌋ + 1</code></pre>
+<table><thead><tr><th>符號</th><th>意思</th><th>常見值</th></tr></thead><tbody><tr><td><code>W</code></td><td>輸入的寬或高</td><td>28、32、224</td></tr><tr><td><code>K</code></td><td>kernel 邊長</td><td>3、5、7</td></tr><tr><td><code>P</code></td><td>單側補幾圈 0</td><td>0、1、2</td></tr><tr><td><code>S</code></td><td>步幅（每次滑幾格）</td><td>1、2</td></tr></tbody></table>
+<p>實測（28×28 輸入）：</p>
+<table><thead><tr><th>設定</th><th>算式</th><th>輸出</th></tr></thead><tbody><tr><td>3×3、S1、P = 0（valid）</td><td>(28 − 3)/1 + 1</td><td>26×26</td></tr><tr><td>3×3、S1、P = 1（same）</td><td>(28 + 2 − 3)/1 + 1</td><td>28×28</td></tr><tr><td>3×3、S2、P = 1</td><td>(28 + 2 − 3)/2 + 1</td><td>14×14</td></tr><tr><td>3×3、S2、P = 0</td><td>(28 − 3)/2 + 1</td><td>13×13（除不盡，往下取整）</td></tr><tr><td>5×5、S1、P = 2（same）</td><td>(28 + 4 − 5)/1 + 1</td><td>28×28</td></tr></tbody></table>
+<h3 id="52-same-的-padding-怎麼決定">5.2 same 的 padding 怎麼決定</h3>
+<p>要讓輸出等於輸入（<code>S = 1</code>），解 <code>W + 2P − K + 1 = W</code> 得：</p>
+<pre class="code"><code>P = (K − 1) / 2</code></pre>
+<p>所以 K = 3 → P = 1、K = 5 → P = 2、K = 7 → P = 3。<strong>偶數 kernel 湊不出對稱的 same</strong>（P 會是 .5），這就是實務上幾乎只用奇數 kernel 的原因之一。</p>
+<p>padding 的另一個作用不是「尺寸」而是「邊界」：不補邊時，影像四角的像素只會被掃到 1 次，中央被掃 9 次，邊界資訊天然吃虧。補零讓邊角至少被多算幾次。</p>
+<h2 id="6-感受野一個輸出看多大範圍">6. 感受野：一個輸出看多大範圍</h2>
+<!-- CNVD-FIGURE:receptive -->
+<figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" role="img" aria-label="感受野成長：9×9 輸入上疊四層 3×3 卷積，第 1 層看 3×3、第 2 層 5×5、第 3 層 7×7、第 4 層 9×9"><defs><marker id="ard" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8b949e"/></marker></defs><rect x="0.75" y="0.75" width="998.5" height="468.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/><text x="40" y="44" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">感受野：每疊一層就多看一圈</text><text x="40" y="72" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">四層 3×3、stride 1 的卷積，最深那一層的一個神經元看得到整張 9×9</text><rect x="60" y="100" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="94" y="100" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="128" y="100" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="162" y="100" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="196" y="100" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="230" y="100" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="264" y="100" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="298" y="100" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="332" y="100" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="60" y="134" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="94" y="134" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="128" y="134" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="162" y="134" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="196" y="134" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="230" y="134" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="264" y="134" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="298" y="134" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="332" y="134" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="60" y="168" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="94" y="168" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="128" y="168" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="162" y="168" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="196" y="168" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="230" y="168" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="264" y="168" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="298" y="168" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="332" y="168" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="60" y="202" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="94" y="202" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="128" y="202" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="162" y="202" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="196" y="202" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="230" y="202" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="264" y="202" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="298" y="202" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="332" y="202" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="60" y="236" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="94" y="236" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="128" y="236" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="162" y="236" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="196" y="236" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="230" y="236" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="264" y="236" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="298" y="236" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="332" y="236" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="60" y="270" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="94" y="270" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="128" y="270" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="162" y="270" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="196" y="270" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="230" y="270" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="264" y="270" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="298" y="270" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="332" y="270" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="60" y="304" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="94" y="304" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="128" y="304" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="162" y="304" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="196" y="304" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="230" y="304" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="264" y="304" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="298" y="304" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="332" y="304" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="60" y="338" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="94" y="338" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="128" y="338" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="162" y="338" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="196" y="338" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="230" y="338" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="264" y="338" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="298" y="338" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="332" y="338" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="60" y="372" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="94" y="372" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="128" y="372" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="162" y="372" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="196" y="372" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="230" y="372" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="264" y="372" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="298" y="372" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="332" y="372" width="34" height="34" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.45"/><rect x="162" y="202" width="102" height="102" rx="4" fill="#4ecdc41a" stroke="#4ecdc4" stroke-width="2.2"/><rect x="128" y="168" width="170" height="170" rx="4" fill="none" stroke="#58a6ff" stroke-width="2.2"/><rect x="94" y="134" width="238" height="238" rx="4" fill="none" stroke="#c084fc" stroke-width="2.2"/><rect x="60" y="100" width="306" height="306" rx="4" fill="none" stroke="#e0a458" stroke-width="1.6"/><rect x="430" y="119" width="12" height="12" rx="3" fill="#4ecdc444" stroke="#4ecdc4" stroke-width="1.5"/><text x="452" y="130" font-size="12" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 1 層：3×3</text><rect x="430" y="163" width="12" height="12" rx="3" fill="#58a6ff44" stroke="#58a6ff" stroke-width="1.5"/><text x="452" y="174" font-size="12" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 2 層：5×5</text><rect x="430" y="207" width="12" height="12" rx="3" fill="#c084fc44" stroke="#c084fc" stroke-width="1.5"/><text x="452" y="218" font-size="12" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 3 層：7×7</text><rect x="430" y="251" width="12" height="12" rx="3" fill="#e0a45844" stroke="#e0a458" stroke-width="1.5"/><text x="452" y="262" font-size="12" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 4 層：9×9</text><text x="430" y="322" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">RFₙ = RFₙ₋₁ + (K − 1) × jump</text><text x="430" y="344" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">jump = 前面所有 stride 的乘積</text><text x="60" y="432" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">若每層都 stride 2：3 → 7 → 15 → 31（用解析度換視野，ResNet 之後很常見）</text></svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">感受野隨層數長大：每多一層 3×3、stride 1，就多看到外圍一圈。</figcaption>
+</figure>
+<!-- /CNVD-FIGURE:receptive -->
+<p>單層 3×3 卷積，每個輸出只直接依賴輸入的 3×3；但疊起來之後，深層的神經元會<strong>間接</strong>看到更大的原始區域：</p>
+<table><thead><tr><th>層數（每層 3×3、stride 1）</th><th>感受野</th></tr></thead><tbody><tr><td>1 層</td><td>3×3</td></tr><tr><td>2 層</td><td>5×5</td></tr><tr><td>3 層</td><td>7×7</td></tr><tr><td>4 層</td><td>9×9</td></tr></tbody></table>
+<p>遞推式是</p>
+<pre class="code"><code>RFₙ = RFₙ₋₁ + (K − 1) × jump         jump = 前面所有 stride 的乘積</code></pre>
+<p><code>stride = 1</code> 時 <code>jump</code> 恆為 1，所以每多一層就多兩圈。<strong>一旦有 stride 2，jump 開始翻倍</strong>：每層 3×3、stride 2 的堆疊，感受野依序是 3 → 7 → 15 → 31，但解析度也一路砍半。這就是「用解析度換視野」的取捨。</p>
+<p>順帶一個常被拿來比較的帳：<strong>兩層 3×3 的感受野等於一層 5×5，但參數只要 <code>2 × 9 = 18</code>（同通道數），5×5 要 25，而且兩層多了一次非線性</strong>。這是 VGG 之後「小 kernel 疊深」的理由。</p>
+<h2 id="7-空洞卷積不增參數也能擴大視野">7. 空洞卷積：不增參數也能擴大視野</h2>
+<!-- CNVD-FIGURE:dilation -->
+<figure style="margin:22px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 430" role="img" aria-label="空洞卷積：3×3 kernel 在 dilation 1 時覆蓋 3×3、dilation 2 時覆蓋 5×5，但兩者都只有 9 個權重"><defs><marker id="ard" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8b949e"/></marker></defs><rect x="0.75" y="0.75" width="998.5" height="428.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/><text x="40" y="44" font-size="20" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">空洞卷積：跳著看，視野變大、參數不變</text><text x="40" y="72" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3×3 kernel、dilation 2 → 有效覆蓋 5×5，但還是只有 9 個權重</text><text x="60" y="118" font-size="12" fill="#4ecdc4" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">d = 1（一般卷積）</text><rect x="60" y="136" width="40" height="40" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="80.0" y="160.32" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="100" y="136" width="40" height="40" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="120.0" y="160.32" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="140" y="136" width="40" height="40" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="160.0" y="160.32" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="60" y="176" width="40" height="40" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="80.0" y="200.32" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="100" y="176" width="40" height="40" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="120.0" y="200.32" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="140" y="176" width="40" height="40" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="160.0" y="200.32" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="60" y="216" width="40" height="40" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="80.0" y="240.32" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="100" y="216" width="40" height="40" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="120.0" y="240.32" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="140" y="216" width="40" height="40" rx="4" fill="#4ecdc426" stroke="#4ecdc4" stroke-width="1.6"/><text x="160.0" y="240.32" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="54" y="130" width="124" height="124" rx="6" fill="none" stroke="#4ecdc466" stroke-width="1.2"/><text x="60" y="280" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">覆蓋 3×3</text><text x="280" y="104" font-size="12" fill="#e0a458" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">d = 2（空洞卷積）</text><rect x="280" y="122" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="320" y="122" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="360" y="122" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="400" y="122" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="440" y="122" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="280" y="162" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="320" y="162" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="360" y="162" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="400" y="162" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="440" y="162" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="280" y="202" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="320" y="202" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="360" y="202" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="400" y="202" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="440" y="202" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="280" y="242" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="320" y="242" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="360" y="242" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="400" y="242" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="440" y="242" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="280" y="282" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="320" y="282" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="360" y="282" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="400" y="282" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="440" y="282" width="40" height="40" rx="3" fill="none" stroke="#30363d" stroke-width="0.8" opacity="0.4"/><rect x="284" y="126" width="32" height="32" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.4"/><text x="300" y="147" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="364" y="126" width="32" height="32" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.4"/><text x="380" y="147" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="444" y="126" width="32" height="32" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.4"/><text x="460" y="147" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="284" y="206" width="32" height="32" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.4"/><text x="300" y="227" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="364" y="206" width="32" height="32" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.4"/><text x="380" y="227" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="444" y="206" width="32" height="32" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.4"/><text x="460" y="227" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="284" y="286" width="32" height="32" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.4"/><text x="300" y="307" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="364" y="286" width="32" height="32" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.4"/><text x="380" y="307" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="444" y="286" width="32" height="32" rx="4" fill="#e0a45826" stroke="#e0a458" stroke-width="1.4"/><text x="460" y="307" font-size="12" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text><rect x="274" y="116" width="204" height="204" rx="6" fill="none" stroke="#e0a45866" stroke-width="1.2"/><text x="280" y="350" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">覆蓋 5×5，同一組 9 個權重</text><text x="540" y="140" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">k_eff = d × (k − 1) + 1 = 2 × 2 + 1 = 5</text><text x="540" y="176" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">28×28 輸入、p = 0 → 輸出 24×24</text><text x="540" y="200" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">28×28 輸入、p = 2 → 輸出 28×28</text><text x="540" y="236" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">代價：跳過的鄰居像素仍然看不到，細節會被略過；</text><text x="540" y="258" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">所以實務上常和一般卷積交錯使用（hybrid）。</text><text x="40" y="404" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">把 d 想成「kernel 元素之間的間隔」；d = 1 就退化成一般卷積。</text></svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">空洞卷積用「跳著看」換視野：覆蓋範圍變 5×5，權重還是 9 個。</figcaption>
+</figure>
+<!-- /CNVD-FIGURE:dilation -->
+<p>空洞（擴張）卷積在 kernel 元素之間插入間隔。<code>k × k</code> 的 kernel、dilation 為 <code>d</code> 時，有效覆蓋範圍是</p>
+<pre class="code"><code>k_eff = d × (k − 1) + 1</code></pre>
+<table><thead><tr><th>kernel</th><th>d</th><th>有效覆蓋</th><th>權重數</th></tr></thead><tbody><tr><td>3×3</td><td>1</td><td>3×3</td><td>9</td></tr><tr><td>3×3</td><td>2</td><td>5×5</td><td>9</td></tr><tr><td>3×3</td><td>3</td><td>7×7</td><td>9</td></tr><tr><td>3×3</td><td>4</td><td>9×9</td><td>9</td></tr></tbody></table>
+<p>含 dilation 的完整輸出尺寸公式：</p>
+<pre class="code"><code>O = ⌊(W + 2P − d(k − 1) − 1) / S⌋ + 1</code></pre>
+<p><code>d = 1</code> 時就退化成一般卷積。實測（28×28、3×3）：</p>
+<table><thead><tr><th>d</th><th>P</th><th>輸出</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>26×26</td></tr><tr><td>1</td><td>1</td><td>28×28</td></tr><tr><td>2</td><td>0</td><td>24×24</td></tr><tr><td>2</td><td>2</td><td>28×28</td></tr></tbody></table>
+<p>代價要講清楚：<strong>跳過去的鄰居像素仍然看不到</strong>。d = 2 的 3×3 kernel 只看 5×5 範圍裡間隔著的那 9 格，中間的格子完全沒讀到；所以實務上不會整層都用大 dilation，而是「一般卷積與空洞卷積交錯」（hybrid dilation），或像 DeepLab 那樣堆 1, 2, 4 的組合，讓多個尺度同時被覆蓋。這也是語意分割需要大上下文時的標準做法。</p>
+<h2 id="8-一層卷積的完整流程">8. 一層卷積的完整流程</h2>
+<ol><li>取一組 <code>k × k × C_in</code> 的 kernel（這一層有 <code>C_out</code> 組）。</li><li>在輸入的空間維度上，以 stride 滑動（是否補邊由 padding 決定）。</li><li>每個位置把 kernel 與對應的多通道區塊<strong>逐元素相乘再加總</strong>。</li><li>加上 bias。</li><li>對每個 kernel 重複 → 得到 <code>C_out</code> 張特徵圖。</li><li>接非線性（通常是 ReLU）。</li></ol>
+<p>值得記住的是第 3 步「加總」的範圍：<strong>跨通道加總、跨位置不加總</strong>。所以輸出仍然是多張二維圖，位置資訊還在；被消掉的是「是哪個輸入通道貢獻的」。</p>
+<h2 id="9-六個常見誤解">9. 六個常見誤解</h2>
+<table><thead><tr><th>誤解</th><th>事實</th></tr></thead><tbody><tr><td>kernel 越大越強</td><td>兩層 3×3 = 一層 5×5 的感受野，參數 18 vs 25，還多一層非線性</td></tr><tr><td>輸出通道數等於輸入通道數</td><td>輸出通道數＝kernel 的數量，與 <code>C_in</code> 無關</td></tr><tr><td>kernel 可以是 3×3×1 去讀彩色圖</td><td>深度必須等於 <code>C_in</code>，否則只看得到一個通道</td></tr><tr><td>padding 是補在輸出</td><td>padding 補在輸入邊緣，公式裡要乘 2</td></tr><tr><td>stride 越大輸出越大</td><td>相反：stride 越大，滑的次數越少、輸出越小</td></tr><tr><td>感受野等於輸出尺寸</td><td>兩件事無關：輸出尺寸看公式，感受野看層數與 stride</td></tr></tbody></table>
+<h2 id="附錄-a-速查表">附錄 A 速查表</h2>
+<table><thead><tr><th>想問的事</th><th>答案</th></tr></thead><tbody><tr><td>一個輸出值</td><td><code>Σ(patch × kernel) + bias</code></td></tr><tr><td>kernel 深度</td><td>必須等於 <code>C_in</code></td></tr><tr><td>輸出通道數</td><td>kernel 的數量 <code>C_out</code></td></tr><tr><td>參數量</td><td><code>(k × k × C_in + 1) × C_out</code></td></tr><tr><td>輸出尺寸</td><td><code>O = ⌊(W + 2P − d(k−1) − 1) / S⌋ + 1</code></td></tr><tr><td>same 的 padding</td><td><code>P = (K − 1) / 2</code>（只對奇數 K 成立）</td></tr><tr><td>感受野</td><td><code>RFₙ = RFₙ₋₁ + (K − 1) × jump</code></td></tr><tr><td>空洞卷積覆蓋範圍</td><td><code>d(k − 1) + 1</code></td></tr><tr><td>通道在哪裡消失</td><td>在「跨通道加總」那一步，不是被池化掉</td></tr></tbody></table>
+<h2 id="附錄-b-常見錯誤">附錄 B 常見錯誤</h2>
+<ol><li><strong>忘記 bias 也要乘 kernel 數量</strong>：<code>C_out</code> 個 kernel 就有 <code>C_out</code> 個 bias。</li><li><strong>把 padding 寫成 <code>+P</code> 而不是 <code>+2P</code></strong>：左右各補一次。</li><li><strong>除不盡時四捨五入</strong>：公式是 floor，往下取整。</li><li><strong>以為 stride 2 一定會整除</strong>：<code>(28 − 3)/2 + 1 = 13</code>，不是 13.5。</li><li><strong>把 dilation 當成「kernel 變大」</strong>：權重數量沒變，變的只是取樣間隔。</li><li><strong>用 <code>same</code> 就以為邊界資訊沒問題</strong>：補的是 0，不是真的鄰居，邊界仍然比中央「看」得少。</li></ol>
+<h2 id="附錄-c-延伸閱讀與離線使用">附錄 C 延伸閱讀與離線使用</h2>
+<p>站內：</p>
+<ul><li><a href="/cnn-cam-vs-gradcam/">CAM vs Grad-CAM：同一個熱圖，只差權重怎麼來</a>——九個面向的對照與 α 的實測</li><li><a href="/cnn-gradcam/">Grad-CAM：用梯度算出模型在看哪裡</a>——七個步驟、ReLU、選層，與 CAM 的等價條件</li><li><a href="/cnn-cam/">CAM：用 GAP 算出模型在看哪裡</a>——GAP 之後的分類權重怎麼變成熱圖（含 Grad-CAM）</li><li><a href="/cnn-gap-head/">為什麼現代 CNN 常不用全連接層</a>——GAP 分類頭：25,089,000 → 513,000 個參數</li><li><a href="/cnn-conv-vs-fc/">卷積層 vs 全連接層</a>——系列總整理：參數、算力與平移特性的對照</li><li><a href="/cnn-illustrated/">圖解 CNN：從 5×5 小圖算到類別機率</a>——整體資料流、ReLU、池化、softmax</li><li><a href="/cnn-activation-pooling/">激活函數與池化層</a>——本篇的續篇：ReLU 家族、Max／Average Pooling、GAP</li><li><a href="/cnn-notes/">CNN 學習筆記（Lesson 6）</a>——卷積的數學、LeNet-5、卷積的反向傳播</li><li><a href="/cnn-fully-connected/">全連接層的運作</a>——最後一哩：Wx + b、flatten、softmax</li><li><a href="/cnn2-notes/">CNN 2 學習筆記（Lesson 7）</a>——輸出體積、stride、感受野、空洞卷積的課堂版本</li><li><a href="/cnn-lab/">CNN 專題：十個實驗</a>——把這些層真的訓練起來</li></ul>
+<p>站外：</p>
+<ul><li><a href="https://zh.d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html">Dive into Deep Learning（繁中）— 填充與步幅</a></li><li><a href="https://arxiv.org/abs/1603.07285">A guide to convolution arithmetic for deep learning（Dumoulin &amp; Visin, 2018）</a></li></ul>
+<p>離線：本頁是<strong>單一 HTML 檔、零外部資源</strong>；原始 Markdown 在同一層。</p>
+<h2 id="附錄-d-一頁精華考前-10-分鐘">附錄 D 一頁精華（考前 10 分鐘）</h2>
+<table><thead><tr><th>#</th><th>記這一條</th></tr></thead><tbody><tr><td>1</td><td>一個值＝<code>Σ(patch × kernel) + bias</code>，跨通道加總、跨位置不加總</td></tr><tr><td>2</td><td>kernel 深度 = <code>C_in</code>；輸出通道 = kernel 數量</td></tr><tr><td>3</td><td>參數 <code>(k²·C_in + 1)·C_out</code>，與影像大小無關</td></tr><tr><td>4</td><td><code>O = ⌊(W + 2P − d(k−1) − 1)/S⌋ + 1</code></td></tr><tr><td>5</td><td>same 的 <code>P = (K − 1)/2</code>，所以幾乎只用奇數 kernel</td></tr><tr><td>6</td><td>感受野 <code>RFₙ = RFₙ₋₁ + (K − 1)·jump</code>，stride 會讓 jump 翻倍</td></tr><tr><td>7</td><td>空洞卷積覆蓋 <code>d(k−1) + 1</code>，權重不變但細節會被跳過</td></tr></tbody></table>
+<h2 id="附錄-g-實測原始輸出">附錄 G 實測原始輸出</h2>
+<p><code>verify_cnn_conv_details.py</code> 的完整輸出（Python 3.15.1 / NumPy 2.5.4，本機執行）：</p>
+<pre class="code"><code>------------------------------------------------------------------------
+1. 5x5 input, 3x3 kernel, stride 1, no padding, bias 0
+   input:
+ [[1 2 3 0 1]
+ [0 1 2 3 1]
+ [2 0 1 1 0]
+ [1 2 0 3 1]
+ [0 1 1 2 0]]
+   top-left 3x3:
+ [[1 2 3]
+ [0 1 2]
+ [2 0 1]]
+   kernel:
+ [[1 0 1]
+ [0 1 0]
+ [1 0 1]]
+   feature map:
+ [[ 8  5  8]
+ [ 3 10  5]
+ [ 6  4  5]]
+   top-left cell = 8
+   with bias 1  = 9
+------------------------------------------------------------------------
+2. output size  O = floor((W + 2P - d(k-1) - 1) / S) + 1
+   28,3x3,s1,pad0 (valid)       -&gt; 26
+   28,3x3,s1,pad1 (same)        -&gt; 28
+   28,3x3,s2,pad1               -&gt; 14
+   28,5x5,s1,pad2 (same)        -&gt; 28
+   28,3x3,s2,pad0               -&gt; 13
+------------------------------------------------------------------------
+3. dilated kernel footprint  k_eff = d(k-1) + 1
+   3x3, d=1 -&gt; footprint 3 (weights still 9)
+   3x3, d=2 -&gt; footprint 5 (weights still 9)
+   3x3, d=3 -&gt; footprint 7 (weights still 9)
+   3x3, d=4 -&gt; footprint 9 (weights still 9)
+   28x28, 3x3, d=1, s1, pad0 -&gt; out 26
+   28x28, 3x3, d=2, s1, pad0 -&gt; out 24
+   28x28, 3x3, d=2, s1, pad2 -&gt; out 28
+------------------------------------------------------------------------
+4. parameter counts   (k*k*C_in + 1) * C_out
+   3x3, C_in=3, C_out=64 -&gt; weights 1728 + bias 64 = 1792
+   3x3, C_in=3, C_out=1 -&gt; weights 27 + bias 1 = 28
+   3x3, C_in=16, C_out=32 -&gt; weights 4608 + bias 32 = 4640
+   5x5, C_in=1, C_out=6 -&gt; weights 150 + bias 6 = 156
+------------------------------------------------------------------------
+5. receptive field, stacked 3x3 stride 1
+   after layer 1: 3 x 3
+   after layer 2: 5 x 5
+   after layer 3: 7 x 7
+   after layer 4: 9 x 9
+   same stack, every layer stride 2:
+   after layer 1: rf 3, jump 2
+   after layer 2: rf 7, jump 4
+   after layer 3: rf 15, jump 8
+   after layer 4: rf 31, jump 16
+------------------------------------------------------------------------
+6. multi-channel kernel: 3 channels summed into one value
+   per-channel sums: [3, 2, -4] -&gt; total 1 | + bias 2 = 3
+------------------------------------------------------------------------</code></pre>
+<hr />
+<p><em>本頁為個人學習筆記整理；圖表為手繪內嵌 SVG，數字全部由附錄 G 的程式算出。</em></p>
+
+
+</main>
+
+
+</div>
+
+
+</body>
+
+
+</html>
+
+

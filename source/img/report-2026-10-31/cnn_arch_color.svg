@@ -1,0 +1,166 @@
+<svg viewBox="0 0 800 1150" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0B3D91" />
+    </marker>
+  </defs>
+
+  <text x="400" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#0B3D91">CNN Fundamentals: Technical Roadmap</text>
+  <text x="400" y="65" text-anchor="middle" font-size="14" fill="#0B3D91">Convolutional Neural Network Architecture</text>
+
+  <rect x="50" y="90" width="700" height="120" fill="none" stroke="#0B3D91" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="115" text-anchor="middle" font-size="16" font-weight="bold" fill="#0B3D91">Input &amp; Preprocessing</text>
+
+  <g transform="translate(70, 130)">
+    <rect x="0" y="0" width="200" height="60" fill="#A7C7FF" stroke="#0B3D91" stroke-width="1.5" />
+    <text x="100" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Raw Image Input</text>
+    <text x="100" y="45" text-anchor="middle" font-size="10" fill="#0B3D91">RGB or Grayscale Pixels</text>
+  </g>
+
+  <g transform="translate(290, 130)">
+    <rect x="0" y="0" width="220" height="60" fill="#A7C7FF" stroke="#0B3D91" stroke-width="1.5" />
+    <text x="110" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Local Connectivity</text>
+    <text x="110" y="45" text-anchor="middle" font-size="10" fill="#0B3D91">Receptive Field Processing</text>
+  </g>
+
+  <g transform="translate(530, 130)">
+    <rect x="0" y="0" width="200" height="60" fill="#A7C7FF" stroke="#0B3D91" stroke-width="1.5" />
+    <text x="100" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Weight Sharing</text>
+    <text x="100" y="45" text-anchor="middle" font-size="10" fill="#0B3D91">Same Kernel Across Space</text>
+  </g>
+
+  <line x1="400" y1="210" x2="400" y2="240" stroke="#0B3D91" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="50" y="240" width="700" height="140" fill="none" stroke="#0B3D91" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="265" text-anchor="middle" font-size="16" font-weight="bold" fill="#0B3D91">Convolutional Layer Stack</text>
+
+  <rect x="100" y="280" width="600" height="80" fill="#60A5FA" stroke="#0B3D91" stroke-width="1.5" />
+
+  <g transform="translate(120, 290)">
+    <text x="0" y="20" font-size="14" font-weight="bold" fill="#0B3D91">Core Operations: Convolution + ReLU + Pooling</text>
+    <line x1="0" y1="30" x2="560" y2="30" stroke="#A7C7FF" stroke-width="1" />
+
+    <g transform="translate(0, 45)">
+      <rect x="0" y="0" width="170" height="30" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="85" y="20" text-anchor="middle" font-size="11" fill="#0B3D91">Sliding Kernel</text>
+    </g>
+
+    <g transform="translate(195, 45)">
+      <rect x="0" y="0" width="170" height="30" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="85" y="20" text-anchor="middle" font-size="11" fill="#0B3D91">ReLU Activation</text>
+    </g>
+
+    <g transform="translate(390, 45)">
+      <rect x="0" y="0" width="170" height="30" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="85" y="20" text-anchor="middle" font-size="11" fill="#0B3D91">Max Pooling</text>
+    </g>
+  </g>
+
+  <line x1="400" y1="380" x2="400" y2="410" stroke="#0B3D91" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="50" y="410" width="700" height="420" fill="none" stroke="#0B3D91" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="435" text-anchor="middle" font-size="16" font-weight="bold" fill="#0B3D91">Hierarchical Feature Extraction</text>
+
+  <g transform="translate(70, 460)">
+    <text x="80" y="-10" text-anchor="middle" font-size="14" font-weight="bold" fill="#0B3D91">Layer Depth</text>
+    <rect x="0" y="0" width="160" height="340" fill="none" stroke="#0B3D91" stroke-dasharray="4,4" />
+
+    <rect x="20" y="40" width="120" height="50" fill="#A7C7FF" stroke="#0B3D91" />
+    <text x="80" y="65" text-anchor="middle" font-size="11" fill="#0B3D91">Early Layers</text>
+    <text x="80" y="80" text-anchor="middle" font-size="10" fill="#0B3D91">Edges &amp; Colors</text>
+
+    <rect x="20" y="120" width="120" height="50" fill="#A7C7FF" stroke="#0B3D91" />
+    <text x="80" y="145" text-anchor="middle" font-size="11" fill="#0B3D91">Middle Layers</text>
+    <text x="80" y="160" text-anchor="middle" font-size="10" fill="#0B3D91">Textures &amp; Parts</text>
+
+    <rect x="20" y="200" width="120" height="50" fill="#A7C7FF" stroke="#0B3D91" />
+    <text x="80" y="225" text-anchor="middle" font-size="11" fill="#0B3D91">Deep Layers</text>
+    <text x="80" y="240" text-anchor="middle" font-size="10" fill="#0B3D91">Whole Objects</text>
+  </g>
+
+  <line x1="230" y1="630" x2="260" y2="630" stroke="#0B3D91" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <g transform="translate(260, 460)">
+    <text x="140" y="-10" text-anchor="middle" font-size="14" font-weight="bold" fill="#0B3D91">Feature Processing</text>
+    <rect x="0" y="0" width="280" height="340" fill="none" stroke="#0B3D91" stroke-dasharray="4,4" />
+
+    <g transform="translate(20, 20)">
+      <rect x="0" y="0" width="240" height="80" fill="#60A5FA" stroke="#0B3D91" />
+      <text x="120" y="20" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Spatial Downsampling</text>
+
+      <rect x="10" y="35" width="105" height="35" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="62.5" y="57" text-anchor="middle" font-size="11" fill="#0B3D91">Reduce Resolution</text>
+
+      <rect x="125" y="35" width="105" height="35" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="177.5" y="57" text-anchor="middle" font-size="11" fill="#0B3D91">Increase Channels</text>
+    </g>
+
+    <g transform="translate(20, 120)">
+      <rect x="0" y="0" width="240" height="80" fill="#60A5FA" stroke="#0B3D91" />
+      <text x="120" y="20" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Non-Linearity &amp; Pooling</text>
+
+      <rect x="10" y="35" width="65" height="35" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="42.5" y="57" text-anchor="middle" font-size="10" fill="#0B3D91">ReLU</text>
+
+      <rect x="87.5" y="35" width="65" height="35" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="120" y="57" text-anchor="middle" font-size="10" fill="#0B3D91">MaxPool</text>
+
+      <rect x="165" y="35" width="65" height="35" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="197.5" y="57" text-anchor="middle" font-size="10" fill="#0B3D91">Stride</text>
+    </g>
+
+    <g transform="translate(20, 220)">
+      <rect x="0" y="0" width="240" height="80" fill="#60A5FA" stroke="#0B3D91" />
+      <text x="120" y="20" text-anchor="middle" font-size="12" font-weight="bold" fill="#0B3D91">Feature Map Output</text>
+
+      <rect x="10" y="35" width="105" height="35" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="62.5" y="57" text-anchor="middle" font-size="11" fill="#0B3D91">Flatten</text>
+
+      <rect x="125" y="35" width="105" height="35" fill="#A7C7FF" stroke="#0B3D91" />
+      <text x="177.5" y="57" text-anchor="middle" font-size="11" fill="#0B3D91">Vectorize</text>
+    </g>
+
+    <line x1="120" y1="100" x2="120" y2="120" stroke="#0B3D91" stroke-width="1.5" marker-end="url(#arrowhead)" />
+    <line x1="120" y1="200" x2="120" y2="220" stroke="#0B3D91" stroke-width="1.5" marker-end="url(#arrowhead)" />
+  </g>
+
+  <line x1="540" y1="630" x2="570" y2="630" stroke="#0B3D91" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <g transform="translate(570, 460)">
+    <text x="80" y="-10" text-anchor="middle" font-size="14" font-weight="bold" fill="#0B3D91">Classification</text>
+    <rect x="0" y="0" width="160" height="340" fill="none" stroke="#0B3D91" stroke-dasharray="4,4" />
+
+    <rect x="20" y="100" width="120" height="60" fill="#A7C7FF" stroke="#0B3D91" />
+    <text x="80" y="125" text-anchor="middle" font-size="11" fill="#0B3D91">Fully Connected</text>
+    <text x="80" y="145" text-anchor="middle" font-size="11" fill="#0B3D91">Layers</text>
+
+    <rect x="20" y="180" width="120" height="60" fill="#A7C7FF" stroke="#0B3D91" />
+    <text x="80" y="205" text-anchor="middle" font-size="11" fill="#0B3D91">Softmax Output</text>
+    <text x="80" y="225" text-anchor="middle" font-size="11" fill="#0B3D91">Class Probabilities</text>
+  </g>
+
+  <line x1="400" y1="830" x2="400" y2="860" stroke="#0B3D91" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="50" y="860" width="700" height="180" fill="none" stroke="#0B3D91" stroke-width="2" stroke-dasharray="8,8" />
+  <text x="400" y="885" text-anchor="middle" font-size="16" font-weight="bold" fill="#0B3D91">Training &amp; Optimization</text>
+
+  <g transform="translate(100, 900)">
+    <rect x="0" y="0" width="600" height="40" fill="#A7C7FF" stroke="#0B3D91" stroke-width="1" stroke-dasharray="4,4" />
+    <text x="20" y="25" font-size="12" font-weight="bold" fill="#0B3D91">Loss Function:</text>
+    <text x="140" y="25" font-size="12" fill="#0B3D91">Cross-Entropy Loss for Classification</text>
+
+    <rect x="0" y="50" width="600" height="40" fill="#A7C7FF" stroke="#0B3D91" stroke-width="1" stroke-dasharray="4,4" />
+    <text x="20" y="75" font-size="12" font-weight="bold" fill="#0B3D91">Optimization:</text>
+    <text x="140" y="75" font-size="12" fill="#0B3D91">Backpropagation + Gradient Descent</text>
+
+    <rect x="0" y="100" width="600" height="40" fill="#A7C7FF" stroke="#0B3D91" stroke-width="1" stroke-dasharray="4,4" />
+    <text x="20" y="125" font-size="12" font-weight="bold" fill="#0B3D91">Updates:</text>
+    <text x="140" y="125" font-size="12" fill="#0B3D91">All Convolution Kernel Weights Learned</text>
+  </g>
+
+  <line x1="400" y1="1040" x2="400" y2="1070" stroke="#0B3D91" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <rect x="150" y="1070" width="500" height="50" fill="#60A5FA" stroke="#0B3D91" stroke-width="2" />
+  <text x="400" y="1100" text-anchor="middle" font-size="14" font-weight="bold" fill="#0B3D91">Conclusion: Hierarchical Visual Representation Learning</text>
+
+</svg>
