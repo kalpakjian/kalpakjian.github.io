@@ -19,3 +19,6 @@ tools/diagrams/**/_m_*.html
 # cnn-lab 圖檔產線的聯絡表（build_figs.py --preview 產生）
 source/cnn-lab/code/_preview.png
 
+
+# reel-taste smoke test screenshots (generated)
+tools/reel-taste/*.png

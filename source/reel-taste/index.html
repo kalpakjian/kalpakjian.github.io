@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="only dark" />
+<meta name="darkreader-lock" content="true" />
+<title>Reel Taste · 我的串流推薦站</title>
+<meta name="description" content="匯入你自己的觀看紀錄（Netflix／Trakt／Letterboxd／手動），用可解釋的口味向量推薦下一步要看什麼。沒有帳號、沒有追蹤，資料只留在這台瀏覽器。" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d1117'/%3E%3Crect x='7' y='9' width='18' height='14' rx='2' fill='none' stroke='%2340e0d0' stroke-width='2'/%3E%3Cpath d='M11 9v14M21 9v14M7 13h18M7 19h18' stroke='%2340e0d0' stroke-width='1.2' opacity='.6'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">
+    <span class="brand-mark">RT</span>
+    <span class="brand-text">Reel Taste<small>你自己的推薦引擎</small></span>
+  </a>
+  <nav class="tabs" role="tablist">
+    <button class="tab is-active" data-tab="import" role="tab" aria-selected="true">① 匯入紀錄</button>
+    <button class="tab" data-tab="taste" role="tab" aria-selected="false">② 你的口味</button>
+    <button class="tab" data-tab="feed" role="tab" aria-selected="false">③ 推薦</button>
+  </nav>
+  <div class="topbar-actions">
+    <button id="settingsBtn" class="ghost-btn">設定</button>
+    <button id="exportBtn" class="ghost-btn">匯出</button>
+  </div>
+</header>
+
+<main class="page">
+
+  <!-- ============ ① 匯入 ============ -->
+  <section class="panel is-active" id="panel-import">
+    <div class="hero">
+      <p class="eyebrow">STEP 1 · 把你的觀看紀錄變成資料</p>
+      <h1>先讓它知道你看過什麼，<br />它才推薦得出來。</h1>
+      <p class="hero-copy">
+        這一步完全在你這台瀏覽器裡完成：檔案不會上傳到任何伺服器，沒有帳號、沒有追蹤。
+        三個平台都沒有開放的觀看紀錄 API，所以最快的路徑是「匯出 → 丟進來」。
+      </p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2 class="card-title">丟檔案或貼文字</h2>
+        <div class="drop" id="drop">
+          <p class="drop-title">把 CSV 拖到這裡</p>
+          <p class="drop-hint">Netflix 的 <code>ViewingActivity.csv</code>、Trakt／Letterboxd 匯出的 CSV 都認得</p>
+          <button type="button" class="btn" id="pickBtn">選擇檔案</button>
+          <input type="file" id="pick" accept=".csv,.txt,text/csv,text/plain" multiple hidden />
+        </div>
+        <div class="or"><span>或直接貼</span></div>
+        <textarea id="paste" rows="7" spellcheck="false"
+          placeholder="一行一個片名，也可以帶日期與評分：&#10;Shogun&#10;Dune: Part Two | 2026-10-02 | 9&#10;Severance | 2026-09-01&#10;Note: 以 # 開頭的行會被忽略"></textarea>
+        <div class="row">
+          <button type="button" class="btn btn-primary" id="parseBtn">解析</button>
+          <button type="button" class="btn ghost" id="demoBtn">載入示範資料</button>
+          <button type="button" class="btn ghost danger" id="clearBtn">清空全部</button>
+        </div>
+        <p class="status" id="importStatus" role="status"></p>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">怎麼匯出？（各平台現況）</h2>
+        <ul class="howto">
+          <li>
+            <strong>Netflix</strong>
+            <span>帳號 → 下載你的個人資料 → 取得 zip → 裡面找 <code>ViewingActivity.csv</code>（通常 30 天內寄到信箱）。只有標題、時間、時長，<b>沒有評分</b>。</span>
+          </li>
+          <li>
+            <strong>Trakt</strong>
+            <span>Settings → Data → Export（CSV／JSON）。如果你有用 Trakt 追劇，這是最完整的來源，含 1–10 分評分。</span>
+          </li>
+          <li>
+            <strong>Letterboxd</strong>
+            <span>Settings → Import &amp; Export → 匯出 <code>ratings.csv</code> 或 <code>diary.csv</code>。評分是 0.5–5 星。</span>
+          </li>
+          <li>
+            <strong>Disney+ / HBO Max / Prime Video</strong>
+            <span class="muted">這三家<b>目前都沒有</b>可用的觀看紀錄匯出。實務做法是用瀏覽器擴充功能 scrobble 到 Trakt，或直接在下面手動補幾部代表作。</span>
+          </li>
+        </ul>
+        <p class="note">
+          <b>沒有資料也能玩：</b>按「載入示範資料」會用一份虛構的觀看紀錄跑一次完整流程，先看看推薦品質再決定要不要整理自己的紀錄。
+        </p>
+      </div>
+    </div>
+
+    <div class="card" id="manualCard">
+      <h2 class="card-title">手動補：你最近最喜歡的幾部</h2>
+      <p class="card-hint">至少 5 部就會有像樣的結果；有評分（1–10）會準很多。這些會跟你匯入的檔案合併。</p>
+      <div class="manual-row">
+        <input type="text" id="mTitle" placeholder="片名（例：The Bear）" />
+        <select id="mType">
+          <option value="movie">電影</option>
+          <option value="tv">影集</option>
+        </select>
+        <input type="number" id="mRating" min="1" max="10" step="0.5" placeholder="評分" />
+        <button type="button" class="btn btn-primary" id="mAdd">加入</button>
+      </div>
+      <ul class="chips" id="manualList"></ul>
+    </div>
+  </section>
+
+  <!-- ============ ② 口味 ============ -->
+  <section class="panel" id="panel-taste">
+    <div class="hero compact">
+      <p class="eyebrow">STEP 2 · 你為什麼會看到這些推薦</p>
+      <h1>你的口味，<br />看得見的權重。</h1>
+      <p class="hero-copy">
+        這一頁就是整個系統的「為什麼」。右邊每一條推薦，都是從這裡的權重算出來的——
+        不是黑箱，也沒有偷偷調參數。
+      </p>
+    </div>
+    <div id="tasteBody" class="taste-body">
+      <p class="empty">還沒有資料。先到「① 匯入紀錄」丟個檔案或按示範資料。</p>
+    </div>
+  </section>
+
+  <!-- ============ ③ 推薦 ============ -->
+  <section class="panel" id="panel-feed">
+    <div class="hero compact">
+      <p class="eyebrow">STEP 3 · 下一步看什麼</p>
+      <h1>給你的推薦。</h1>
+      <p class="hero-copy" id="feedSub">每一則都附理由。不要的直接按 ✕，它會記住你不想要。</p>
+    </div>
+
+    <div class="feed-controls">
+      <div class="seg" id="typeSeg">
+        <button class="seg-btn is-active" data-type="all">全部</button>
+        <button class="seg-btn" data-type="movie">電影</button>
+        <button class="seg-btn" data-type="tv">影集</button>
+      </div>
+      <label class="ctl">半衰期
+        <select id="halfLife">
+          <option value="270">9 個月（口味變化快）</option>
+          <option value="540" selected>18 個月（預設）</option>
+          <option value="1080">3 年（口味很穩）</option>
+        </select>
+      </label>
+      <label class="ctl">多樣性
+        <select id="diversity">
+          <option value="3">嚴格（同類型最多 3）</option>
+          <option value="6" selected>平衡（同類型最多 6）</option>
+          <option value="20">不管（讓我全看同類型）</option>
+        </select>
+      </label>
+      <button class="btn btn-primary" id="refreshBtn">重新整理推薦</button>
+    </div>
+
+    <div class="feed" id="feed">
+      <p class="empty">還沒有推薦。先完成「① 匯入紀錄」。</p>
+    </div>
+  </section>
+</main>
+
+<dialog id="settingsDlg" class="dlg">
+  <form method="dialog" class="dlg-form">
+    <h2>設定</h2>
+    <p class="card-hint">
+      TMDB API key 只是拿來查片名對應的類型／年份／評分。<b>沒有 key 也能用</b>——
+      會改用站內內建的目錄快照，只是片單比較少。key 只存在這台瀏覽器。
+    </p>
+    <label class="field">
+      <span>TMDB API Key（v3 key 或 v4 Read Access Token 都可）</span>
+      <input type="password" id="apiKey" placeholder="貼上 key，或留空使用離線快照" autocomplete="off" />
+    </label>
+    <p class="src-status" id="srcStatus"></p>
+    <div class="dlg-actions">
+      <button type="submit" class="btn" value="cancel">取消</button>
+      <button type="button" class="btn btn-primary" id="saveKey">儲存</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="./recommender.js"></script>
+<script src="./tmdb.js"></script>
+<script src="./import.js"></script>
+<script src="./demo-data.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
+

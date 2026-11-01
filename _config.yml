@@ -33,6 +33,7 @@ i18n_dir: :lang
 skip_render:
   - 'cnn-lab/**'
   - 'ziwei-fortune/**'
+  - 'reel-taste/**'
   - 'dhh-rails-world-2026/**'
   - 'coding-agent/**'
   - 'opencv-notes/**'

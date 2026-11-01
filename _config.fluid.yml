@@ -20,6 +20,7 @@ navbar:
         - { name: '手寫程式碼的時代正式結束（DHH 退休）', link: '/dhh-rails-world-2026/index.html', icon: 'iconfont icon-bookmark' }
     # 單頁互動應用（不是文章、也不是多頁專題），獨立一格
     - { key: 'ziwei', name: '紫微斗數', link: '/ziwei-fortune/', icon: 'iconfont icon-bookmark' }
+    - { key: 'reel', name: '串流推薦', link: '/reel-taste/', icon: 'iconfont icon-bookmark' }
     - key: 'notes'
       name: '學習筆記'
       icon: 'iconfont icon-notebook'
