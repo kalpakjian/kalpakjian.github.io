@@ -59,9 +59,20 @@ const NOTES = [
 ];
 
 // 左欄＝專題、右欄＝學習筆記；「文章」標題之後接主題產生的最新文章清單
+//
+// 2026-11-01：首頁不再顯示專題與學習筆記兩欄，只保留「文章」標題 + 卡片清單。
+//   兩個入口改由頁頂導覽列的下拉式表單提供（_config.fluid.yml 的 navbar.menu：
+//   `topics` / `notes` 兩個群組），因此首頁不需要重複列一次。
+//
+//   保留這個空陣列的用意：整支腳本（偵測首頁、注入「文章」標題、防重複注入）
+//   都還在運作，要恢復兩欄時只要把 TOPICS / NOTES 的內容填回去即可，
+//   不需要改任何其他檔案。COLUMNS 為空時 renderColumn 不會被呼叫。
+//
+//   ⚠️ source/css/custom.css 的 .home-resources-2col / .res-list 等樣式
+//   暫時沒有使用者；恢復兩欄時會直接生效，所以先不刪。
 const COLUMNS = [
-  { id: 'topics', icon: 'icon-books', title: '專題', items: TOPICS_SORTED },
-  { id: 'notes', icon: 'icon-notebook', title: '學習筆記', items: NOTES }
+  // { id: 'topics', icon: 'icon-books', title: '專題', items: TOPICS_SORTED },
+  // { id: 'notes', icon: 'icon-notebook', title: '學習筆記', items: NOTES }
 ];
 
 const ARTICLES = { id: 'articles', icon: 'icon-articles', title: '文章' };
@@ -117,16 +128,21 @@ hexo.extend.filter.register('after_render:html', function (str) {
   if (index === -1) return str;
 
   const block = [
-    '  <div class="home-resources-2col">',
-    COLUMNS.map(renderColumn).join('\n'),
-    '  </div>',
+    // COLUMNS 目前是空的（首頁不顯示專題／學習筆記兩欄），
+    // 空陣列時連外層 .home-resources-2col 都不輸出，避免留下一塊
+    // 帶 2.5rem 下邊距的空白。
+    ...(COLUMNS.length
+      ? ['  <div class="home-resources-2col">',
+         COLUMNS.map(renderColumn).join('\n'),
+         '  </div>']
+      : []),
     '  ' + renderArticlesHeading()
   ].join('\n');
 
-  this.log.debug(
-    'home-resources: 首頁已注入（左欄專題 %d / 右欄學習筆記 %d）',
-    TOPICS.length,
-    NOTES.length
+  this.log.info(
+    'home-resources: 首頁已注入（專題 %d / 學習筆記 %d / 文章清單由主題輸出）',
+    COLUMNS.length ? TOPICS.length : 0,
+    COLUMNS.length ? NOTES.length : 0
   );
 
   return `${str.slice(0, index)}${block}\n\n  ${str.slice(index)}`;
