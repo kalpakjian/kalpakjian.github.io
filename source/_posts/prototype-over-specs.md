@@ -91,6 +91,73 @@ Pocock 給原型的定義很簡潔：
 
 `/prototype` skill 會依問題性質走兩條路，產出的東西完全不同：
 
+<!-- FIG1 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 790" role="img" aria-label="兩個分支：問題性質決定原型的型態" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="788.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩個分支：問題性質決定原型的型態</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">邏輯／狀態問題走單檔 HTML，外觀／表現問題走多變體</text>
+<rect x="48" y="112" width="330" height="62" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="213.0" y="141.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一個還沒定案的設計問題</text>
+<text x="213.0" y="163.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先問：這是「能不能聊清楚」的嗎？</text>
+<path d="M 213 174 L 213 200" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="200" width="330" height="52" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="213.0" y="224.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">先用對話把問題逼出來</text>
+<text x="213.0" y="246.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">grilling session（便宜、答案不一定可靠）</text>
+<path d="M 213 252 L 213 282" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="48" y="282" width="330" height="56" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="213" y="305" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">關鍵問題是「長什麼樣」</text>
+<text x="213" y="325" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">或「怎麼表現」？</text>
+<path d="M 378 310 L 470 310" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 470 310 L 470 190" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 470 190 L 512 190" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="512" y="158" width="340" height="62" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="682.0" y="187.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① 邏輯／狀態模型對不對？</text>
+<text x="682.0" y="209.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">例：狀態機的邊界情況推不出來</text>
+<rect x="512" y="236" width="340" height="150" rx="12" fill="#1c2230" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="528" y="262" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">產出：單一可分享 HTML 檔</text>
+<text x="528" y="288" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 自包含，雙擊就能開（不用 build／server）</text>
+<text x="528" y="312" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 標籤化狀態面板，每次點擊後重繪</text>
+<text x="528" y="336" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 分頁走查：一個 tab 一個情境</text>
+<text x="528" y="360" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 邏輯層是純模組（沒有一行 DOM）</text>
+<text x="528" y="384" font-size="11.5" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 驗證過的邏輯可直接搬進正式碼</text>
+<path d="M 470 310 L 470 470" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 470 470 L 512 470" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="512" y="438" width="340" height="62" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="682.0" y="467.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② 這到底該長什麼樣？</text>
+<text x="682.0" y="489.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">例：不確定搜尋結果該怎麼呈現</text>
+<rect x="512" y="516" width="340" height="150" rx="12" fill="#1c2230" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="528" y="542" font-size="13" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">產出：同一路由上數個變體</text>
+<text x="528" y="568" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 浮動底欄 ＋ ?variant= 參數切換</text>
+<text x="528" y="592" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 變體必須在「結構」上分歧，不是換色</text>
+<text x="528" y="616" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 在真實頁面／真實資料密度上渲染</text>
+<text x="528" y="640" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">· 空白頁上評估的變體永遠看起來沒問題</text>
+<text x="528" y="664" font-size="11.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 挑一個，再與其他變體的元素混搭</text>
+<path d="M 682 668 L 682 690" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 682 690 L 470 690" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 470 690 L 470 726" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 470 726 L 512 726" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="512" y="700" width="340" height="52" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="682.0" y="724.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">答案先落地，原型進分支</text>
+<text x="682.0" y="746.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">main 只留決定，原型留作「證據」</text>
+<text x="48" y="430" font-size="12.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩條產線的共通點：</text>
+<text x="48" y="456" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">狀態存在記憶體、零設定就能跑，</text>
+<text x="48" y="478" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一步之後都看得到完整狀態。</text>
+<text x="48" y="500" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif"></text>
+<text x="48" y="522" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一旦開始「加固」它——加測試、</text>
+<text x="48" y="544" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">接真資料庫、為未來做一般化——</text>
+<text x="48" y="566" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">你就已經不是在原型了。</text>
+<text x="48" y="588" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif"></text>
+<text x="48" y="610" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">如果做了一天還沒做完，</text>
+<text x="48" y="632" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">問題太大了，要拆。</text>
+<text x="48" y="700" font-size="13" fill="#8b949e" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">問題的性質決定原型的型態；</text>
+<text x="48" y="722" font-size="13" fill="#8b949e" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不是每種問題都該做同一種原型。</text>
+</svg>
+<figcaption class="image-caption" style="opacity:1;margin-bottom:0;font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：`/prototype` 的兩條產線——左邊回答「邏輯對不對」，產出單一自包含 HTML；右邊回答「該長什麼樣」，產出同路由上的數個結構性變體。兩者共同的硬規則是不寫測試、不接真資料庫、不做抽象。｜手繪 SVG 圖表</figcaption>
+</figure>
+<!-- /FIG1 -->
+
 | 問題類型 | 產出物 | 機制 |
 |---|---|---|
 | **「這套邏輯／狀態模型對不對？」** | **單一可分享的 HTML 檔** | 一個自包含頁面，不用 build、不用 server，雙擊就能開。有標籤化的狀態面板（每次點擊後重新渲染）、自由操作按鈕、分頁的引導式走查（一個 tab 一個情境） |
