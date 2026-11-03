@@ -37,6 +37,10 @@ banner_img: /img/covers/ivdc-tf-pytorch-detection-cnn.png
 > 而是同一個網路結構用兩套框架各寫一遍，讓你看見<strong>框架只是語法，架構才是本體</strong>。
 > 文中附上逐層對照表。另外，實測過程發現四個會讓程式當場掛掉的問題，
 > 這些是簡報不會告訴你的。
+>
+> <strong>📚 課程筆記版</strong>：完整筆記（含目錄、名詞速查、常見陷阱、一頁精華與 40 題測驗）
+> → <a href="/ivdc-det-notes/">Lesson 8 物件偵測與 CNN 學習筆記</a>
+
 
 ## 一、這份材料在教什麼
 

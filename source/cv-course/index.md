@@ -83,7 +83,19 @@ date: 2026-10-10 23:40:00
 
 ---
 
-## 9 · Lesson 9 — Practical Application for Implementation and Demo
+## 9 · Lesson 8 — TensorFlow and PyTorch for Object Detection and CNN
+
+![TensorFlow 與 PyTorch 物件偵測與 CNN 學習筆記](/img/covers/ivdc-tf-pytorch-detection-cnn.png)
+
+- **涵蓋**：物件偵測三方案（TF-Hub **SSD MobileNet V2**、torchvision **Faster R-CNN**、**YOLOv8**）與即時 webcam 版；CNN 分類（MNIST）在兩套框架下的完整五階段；**逐層 API 對照表**（Conv2D↔Conv2d、sparse_categorical_crossentropy↔CrossEntropyLoss、通道位置差異）
+- **特別之處**：簡報的程式碼全是截圖且有三處被滾動箭頭遮住，筆記逐段還原成 **8 支可執行腳本**並在真機重測；附**四個會讓程式當場掛掉的坑**（攝影機不在 index 0、headless opencv 讓 imshow 拋例外、resnet50 只有 1 FPS、最快的模型反而 0 檢出）
+- **實測數據**：YOLOv8n `imgsz=640` **37.4 FPS** vs Faster R-CNN **1.1 FPS**（差 34 倍）；PyTorch CNN 測試準確率 **99.09%**（loss 0.1847→0.0218）
+- **👉 [看筆記](/ivdc-det-notes/)** ｜ [互動測驗 40 題](/ivdc-det-notes/mc-quiz.html)
+- **延伸**：完整說明與踩坑紀錄的部落格版 → [同一份課堂材料，用 TensorFlow 與 PyTorch 各跑一遍](/2026/11/03/ivdc-tf-pytorch-object-detection-cnn/)
+
+---
+
+## 10 · Lesson 9 — Practical Application for Implementation and Demo
 
 ![Teachable Machine 實作學習筆記](/img/covers/cv-practical-notes.png)
 
@@ -123,6 +135,6 @@ date: 2026-10-10 23:40:00
 | **Lesson 5** | Neural Network, Activation Function and Machine Learning | ✅ [Neural Network &amp; ML 學習筆記](/neural-network-notes/) |
 | **Lesson 6** | Convolutional Neural Network (CNN) 1 | ✅ [CNN 學習筆記](/cnn-notes/) |
 | **Lesson 7** | CNN 2 | ✅ [CNN 2 學習筆記](/cnn2-notes/) |
-| **Lesson 8** | Tensorflow and Pytorch for Object Detection and CNN | ⏳ 待補 |
+| **Lesson 8** | Tensorflow and Pytorch for Object Detection and CNN | ✅ [物件偵測與 CNN 學習筆記](/ivdc-det-notes/) |
 | **Lesson 9** | Practical Application for Implementation and Demo | ✅ [Teachable Machine 實作筆記](/2026/10/28/cv-practical-teachable-machine-notes/) |
 | **Lesson 10** | Exam | — |

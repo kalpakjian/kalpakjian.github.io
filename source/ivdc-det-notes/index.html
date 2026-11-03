@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TensorFlow 與 PyTorch 物件偵測與 CNN 學習筆記｜AI Tech Notes</title>
+<meta name="description" content="Lesson 8：TensorFlow 與 PyTorch 的物件偵測與 CNN，含實測速度、逐層 API 對照與四個會讓程式掛掉的坑。">
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/">← 回到 AI Tech Notes</a>
+  <a class="home" href="/cv-course/">📚 課程專題</a>
+  <a class="quiz" href="mc-quiz.html">🖱️ 互動測驗（40 題）</a>
+  <h1>TensorFlow 與 PyTorch 物件偵測與 CNN 學習筆記</h1>
+  <div class="sub">Certificate in Application of Computer Vision Technology (Part-time)<br />Lesson 8 · TensorFlow and PyTorch for Object Detection and CNN</div>
+  <div class="toc">
+<ul>
+<li><a href="#0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</a></li>
+<li><a href="#1-這份材料在教什麼">1. 這份材料在教什麼</a></li>
+<li><a href="#2-先把環境量清楚">2. 先把環境量清楚</a></li>
+<li><a href="#21-第一個坑hasattr-檢查不出-imshow-的問題">2.1 第一個坑：`hasattr` 檢查不出 imshow 的問題</a></li>
+<li><a href="#3-物件偵測TensorFlow-版">3. 物件偵測：TensorFlow 版</a></li>
+<li><a href="#31-即時-webcam-版">3.1 即時 webcam 版</a></li>
+<li><a href="#4-物件偵測PyTorch-版">4. 物件偵測：PyTorch 版</a></li>
+<li><a href="#41-即時-webcam-版">4.1 即時 webcam 版</a></li>
+<li><a href="#5-YOLOv8四行方案">5. YOLOv8：四行方案</a></li>
+<li><a href="#6-實測速度與準確度的取捨">6. 實測：速度與準確度的取捨</a></li>
+<li><a href="#7-CNN-分類TensorFlow-版">7. CNN 分類：TensorFlow 版</a></li>
+<li><a href="#71-載入資料">7.1 載入資料</a></li>
+<li><a href="#72-前處理">7.2 前處理</a></li>
+<li><a href="#73-建立模型">7.3 建立模型</a></li>
+<li><a href="#74-編譯與訓練">7.4 編譯與訓練</a></li>
+<li><a href="#75-單張推論">7.5 單張推論</a></li>
+<li><a href="#8-CNN-分類PyTorch-版">8. CNN 分類：PyTorch 版</a></li>
+<li><a href="#81-載入資料">8.1 載入資料</a></li>
+<li><a href="#82-建立模型">8.2 建立模型</a></li>
+<li><a href="#83-訓練">8.3 訓練</a></li>
+<li><a href="#84-實測結果">8.4 實測結果</a></li>
+<li><a href="#85-單張推論">8.5 單張推論</a></li>
+<li><a href="#9-兩套框架逐層對照">9. 兩套框架逐層對照</a></li>
+<li><a href="#10-四個會讓程式當場掛掉的坑">10. 四個會讓程式當場掛掉的坑</a></li>
+<li><a href="#101-攝影機不一定在-index-0">10.1 攝影機不一定在 index 0</a></li>
+<li><a href="#102-Windows-上要用-DirectShow">10.2 Windows 上要用 DirectShow</a></li>
+<li><a href="#103-攝影機剛開的前幾幀不能用">10.3 攝影機剛開的前幾幀不能用</a></li>
+<li><a href="#104-imshow-沒有-fallback-會直接崩">10.4 imshow 沒有 fallback 會直接崩</a></li>
+<li><a href="#11-檔案清單">11. 檔案清單</a></li>
+<li><a href="#12-幾點檢討">12. 幾點檢討</a></li>
+<li><a href="#附錄-A名詞速查">附錄 A：名詞速查</a></li>
+<li><a href="#附錄-B常見陷阱">附錄 B：常見陷阱</a></li>
+<li><a href="#附錄-C一頁精華考前-10-分鐘">附錄 C：一頁精華（考前 10 分鐘）</a></li>
+<li><a href="#附錄-D互動測驗40-題">附錄 D：互動測驗（40 題）</a></li>
+</ul>
+  </div>
+</nav>
+<main>
+<h1 id="Lesson-8TensorFlow-與-PyTorch-的物件偵測與-CNN-學習筆記">Lesson 8：TensorFlow 與 PyTorch 的物件偵測與 CNN 學習筆記</h1>
+<blockquote><p>同一堂課用兩套框架各寫一遍：物件偵測（webcam 與 YOLO）與 CNN 分類（MNIST）。<br />本筆記把簡報裡以截圖呈現的程式碼逐段還原成可執行版本，並在真機上重新實測每一段。<br />量到的速度與準確度直接寫進內文，速度不如預期的地方也照實記錄。<br />只想複習考點的話，看附錄 C 的一頁精華就夠。</p></blockquote>
+<h2 id="0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</h2>
+<pre><code>物件偵測：載入模型 → 讀圖轉張量 → 模型推論 → 過濾門檻 → 畫框 → 顯示
+CNN 分類：載入資料 → 前處理(reshape/255) → 建模型 → 訓練 → 單張推論</code></pre>
+<table>
+<tr><th>想問的事</th><th>一句話答案</th></tr>
+<tr><td>兩套框架最根本的差異</td><td>張量格式：TF 是 <code>(H,W,C)</code>，PyTorch 是 <code>(C,H,W)</code></td></tr>
+<tr><td>PyTorch 為何不加 softmax</td><td><code>CrossEntropyLoss</code> 內含 softmax，加了等於算兩次</td></tr>
+<tr><td>TensorFlow 的框座標格式</td><td>歸一化 0～1，順序 <code>ymin, xmin, ymax, xmax</code></td></tr>
+<tr><td>PyTorch 的框座標格式</td><td>絕對像素，順序 <code>x0, y0, x1, y1</code></td></tr>
+<tr><td>CPU 上最快又能用的模型</td><td>YOLOv8n <code>imgsz=640</code>，實測約 37 FPS</td></tr>
+<tr><td>簡報示範的模型為何卡</td><td><code>fasterrcnn_resnet50</code> 在 CPU 只有約 1 FPS</td></tr>
+<tr><td>為何 <code>Conv2D</code> 要 reshape</td><td>要補上通道維度，灰階圖通道數為 1</td></tr>
+<tr><td><code>64 × 5 × 5</code> 怎麼來的</td><td>28→26→13→11→5，兩次卷積兩次池化</td></tr>
+<tr><td>攝影機開得起來卻全黑</td><td>索引不對，實際裝置可能不在 0</td></tr>
+<tr><td>為何 imshow 會當掉</td><td>headless 版 opencv 沒有實作 GUI 後端</td></tr>
+</table>
+<h2 id="1-這份材料在教什麼">1. 這份材料在教什麼</h2>
+<p>課程簡報的結構很對稱，分成兩大塊，每塊都用兩個框架各講一次：</p>
+<table>
+<tr><th>區塊</th><th>內容</th><th>對應腳本</th></tr>
+<tr><td>物件偵測（TensorFlow）</td><td>SSD MobileNet V2，單張圖與即時 webcam</td><td><code>01</code>、<code>02</code></td></tr>
+<tr><td>物件偵測（PyTorch）</td><td>Faster R-CNN，單張圖與即時 webcam</td><td><code>03</code>、<code>04</code></td></tr>
+<tr><td>物件偵測（推薦方案）</td><td>YOLOv8，四行程式</td><td><code>05</code></td></tr>
+<tr><td>CNN 分類（TensorFlow）</td><td>MNIST 數字分類，五個階段</td><td><code>06</code></td></tr>
+<tr><td>CNN 分類（PyTorch）</td><td>MNIST 數字分類，同樣五個階段</td><td><code>07</code></td></tr>
+</table>
+<p>兩個 CNN 區塊的流程完全一樣，都是**載入資料 → 建模型 → 訓練 → 看輸出 → 單張推論**。 這種安排是刻意的：先看懂一個，再看另一個，差異就只剩 API 名稱。 課程對模型選擇也有明確建議：</p>
+<table>
+<tr><th>模型</th><th>特性</th></tr>
+<tr><td>SSD MobileNet V2</td><td>快，適合即時應用，初學者最容易上手</td></tr>
+<tr><td>EfficientDet</td><td>準確度更好，速度尚可</td></tr>
+<tr><td>Faster R-CNN</td><td>準確度高但慢</td></tr>
+<tr><td>YOLOv8</td><td>速度與準確度平衡最好，課程標註為推薦方案</td></tr>
+<tr><td>DETR</td><td>Transformer 架構，準確度好但吃資源</td></tr>
+</table>
+<h2 id="2-先把環境量清楚">2. 先把環境量清楚</h2>
+<p>在寫任何程式之前先確認機器上有什麼。這個動作後來證明很關鍵， 因為它直接揭露了第一個致命問題。</p>
+<table>
+<tr><th>套件</th><th>版本</th><th>狀態</th></tr>
+<tr><td>Python</td><td>3.15.1</td><td>可用</td></tr>
+<tr><td>torch</td><td>2.14.1+cpu</td><td>已裝</td></tr>
+<tr><td>torchvision</td><td>0.29.1+cpu</td><td>已裝</td></tr>
+<tr><td>numpy</td><td>2.5.4</td><td>已裝</td></tr>
+<tr><td>opencv</td><td>5.0.0</td><td>已裝，但沒有 GUI</td></tr>
+<tr><td>matplotlib</td><td>3.11.2</td><td>已裝</td></tr>
+<tr><td>pillow</td><td>13.0.0</td><td>已裝</td></tr>
+<tr><td>tensorflow</td><td>未安裝</td><td>需另外安裝</td></tr>
+<tr><td>ultralytics</td><td>未安裝</td><td>需另外安裝</td></tr>
+</table>
+<p>自檢腳本的核心是這一段。注意 &lt;strong&gt;<code>imshow</code> 必須真的呼叫一次&lt;/strong&gt;， 不能只檢查函式是否存在：</p>
+<pre><code>import importlib
+import cv2
+import numpy as np
+
+PACKAGES = [
+    (&quot;cv2&quot;, &quot;opencv-python&quot;),
+    (&quot;torch&quot;, &quot;torch&quot;),
+    (&quot;torchvision&quot;, &quot;torchvision&quot;),
+    (&quot;tensorflow&quot;, &quot;tensorflow&quot;),
+    (&quot;ultralytics&quot;, &quot;ultralytics&quot;),
+]
+for module, package in PACKAGES:
+    try:
+        mod = importlib.import_module(module)
+        print(f&quot;  OK      {module:16s} {getattr(mod, &#x27;__version__&#x27;, &#x27;?&#x27;)}&quot;)
+    except Exception as exc:
+        print(f&quot;  MISSING {module:16s} -&gt; pip install {package}&quot;)
+
+try:
+    print(&quot;  UI 框架:&quot;, cv2.currentUIFramework() or &quot;(空 = 無)&quot;)
+    cv2.imshow(&quot;__probe__&quot;, np.zeros((20, 20, 3), np.uint8))
+    cv2.waitKey(1)
+    cv2.destroyAllWindows()
+    print(&quot;  OK  可以正常彈窗&quot;)
+except Exception as exc:
+    print(f&quot;  失敗: {exc}&quot;)</code></pre>
+<h3 id="21-第一個坑hasattr-檢查不出-imshow-的問題">2.1 第一個坑：<code>hasattr</code> 檢查不出 imshow 的問題</h3>
+<p><code>hasattr(cv2, "imshow")</code> 會回傳 <code>True</code>，但實際呼叫卻拋出例外：</p>
+<pre><code>cv2.error: (-2:Unspecified error) The function is not implemented.
+Rebuild the library with Windows, GTK+ 2.x or Cocoa support.</code></pre>
+<p>這是因為裝的是 <code>opencv-python-headless</code>，&lt;strong&gt;函式存在、後端沒有實作&lt;/strong&gt;。 <code>currentUIFramework()</code> 回傳空字串就是徵兆。修法是換成帶 GUI 的版本：</p>
+<pre><code>pip uninstall opencv-python-headless -y
+pip install opencv-python</code></pre>
+<p>換完之後 <code>UI 框架</code> 顯示 <code>WIN32</code>，<code>imshow</code> 恢復正常。</p>
+<h2 id="3-物件偵測TensorFlow-版">3. 物件偵測：TensorFlow 版</h2>
+<p>課程示範使用 TF-Hub 的 SSD MobileNet V2。載入模型與前處理的部分如下：</p>
+<pre><code>import tensorflow as tf
+import tensorflow_hub as hub
+import cv2
+
+MODEL_URL = &quot;https://tfhub.dev/tensorflow/ssd_mobilenet_v2/2&quot;
+
+model = hub.load(MODEL_URL)
+
+image = cv2.imread(&quot;image.jpg&quot;)
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+input_tensor = tf.convert_to_tensor(image_rgb, dtype=tf.uint8)
+input_tensor = tf.expand_dims(input_tensor, 0)   # (1, H, W, 3)</code></pre>
+<p>推論與取結果的部分，簡報的截圖被遮住了，依標準介面補完：</p>
+<pre><code>detections = model(input_tensor)
+
+boxes = detections[&quot;detection_boxes&quot;][0].numpy()
+scores = detections[&quot;detection_scores&quot;][0].numpy()
+classes = detections[&quot;detection_classes&quot;][0].numpy().astype(int)</code></pre>
+<p>&lt;strong&gt;這裡最容易寫錯的是座標格式&lt;/strong&gt;：<code>detection_boxes</code> 是歸一化的 0～1， 順序為 <code>ymin, xmin, ymax, xmax</code>，要各自乘上畫面寬高才能畫。</p>
+<h3 id="31-即時-webcam-版">3.1 即時 webcam 版</h3>
+<pre><code>cap = cv2.VideoCapture(0)
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    input_tensor = tf.convert_to_tensor(rgb, dtype=tf.uint8)
+    input_tensor = tf.expand_dims(input_tensor, 0)
+
+    detections = model(input_tensor)
+
+    h, w = frame.shape[:2]
+    for box, score in zip(detections[&quot;detection_boxes&quot;][0].numpy(),
+                          detections[&quot;detection_scores&quot;][0].numpy()):
+        if score &lt; 0.5:
+            continue
+        ymin, xmin, ymax, xmax = box
+        cv2.rectangle(frame, (int(xmin * w), int(ymin * h)),
+                      (int(xmax * w), int(ymax * h)), (0, 0, 255), 2)
+
+    cv2.imshow(&quot;Detection&quot;, frame)
+    if cv2.waitKey(1) &amp; 0xFF == ord(&quot;q&quot;):
+        break
+
+cap.release()
+cv2.destroyAllWindows()</code></pre>
+<h2 id="4-物件偵測PyTorch-版">4. 物件偵測：PyTorch 版</h2>
+<p>同一件事換一套框架，差異一目了然。課程示範的模型是 <code>fasterrcnn_resnet50_fpn</code>：</p>
+<pre><code>import torch
+import torchvision
+from torchvision import transforms
+from PIL import Image
+
+model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights=&quot;DEFAULT&quot;)
+model.eval()
+
+image = Image.open(&quot;image.jpg&quot;).convert(&quot;RGB&quot;)
+transform = transforms.ToTensor()
+tensor = transform(image).unsqueeze(0)      # (1, 3, H, W)
+
+with torch.no_grad():
+    prediction = model(tensor)[0]
+
+boxes = prediction[&quot;boxes&quot;].numpy()
+scores = prediction[&quot;scores&quot;].numpy()
+labels = prediction[&quot;labels&quot;].numpy()</code></pre>
+<p>跟 TensorFlow 版比，有兩個關鍵差異：</p>
+<ol><li>&lt;strong&gt;<code>model.eval()</code> 一定要呼叫&lt;/strong&gt;。Faster R-CNN 在 train 模式下回傳的是 loss，不是預測框。</li><li>&lt;strong&gt;座標是絕對像素&lt;/strong&gt;，順序 <code>[x0, y0, x1, y1]</code>，不需要再乘寬高。</li></ol>
+<p>鍵名對照如下，兩套框架一一對應但名稱不同：</p>
+<table>
+<tr><th>TensorFlow</th><th>PyTorch</th></tr>
+<tr><td><code>detection_boxes</code></td><td><code>boxes</code></td></tr>
+<tr><td><code>detection_scores</code></td><td><code>scores</code></td></tr>
+<tr><td><code>detection_classes</code></td><td><code>labels</code></td></tr>
+</table>
+<h3 id="41-即時-webcam-版">4.1 即時 webcam 版</h3>
+<pre><code>import cv2
+import torchvision
+from PIL import Image
+from torchvision import transforms
+
+model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights=&quot;DEFAULT&quot;)
+model.eval()
+transform = transforms.ToTensor()
+
+cap = cv2.VideoCapture(0)
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    tensor = transform(Image.fromarray(rgb)).unsqueeze(0)
+
+    with torch.no_grad():
+        prediction = model(tensor)[0]
+
+    for box, score in zip(prediction[&quot;boxes&quot;].numpy(),
+                          prediction[&quot;scores&quot;].numpy()):
+        if score &lt; 0.5:
+            break      # 已依分數降序排列
+        x0, y0, x1, y1 = [int(v) for v in box]
+        cv2.rectangle(frame, (x0, y0), (x1, y1), (0, 255, 0), 2)
+
+    cv2.imshow(&quot;PyTorch Detection&quot;, frame)
+    if cv2.waitKey(1) &amp; 0xFF == ord(&quot;q&quot;):
+        break</code></pre>
+<p>torchvision 的偵測結果已經依信心分數由高到低排序， 所以門檻判斷可以用 <code>break</code> 而不是 <code>continue</code>。</p>
+<h2 id="5-YOLOv8四行方案">5. YOLOv8：四行方案</h2>
+<p>課程把 YOLO 標為推薦方案，內文只有四行：</p>
+<pre><code>from ultralytics import YOLO
+
+model = YOLO(&quot;yolov8n.pt&quot;)
+model.predict(source=0, show=True)</code></pre>
+<p>實務上會加上幾個參數：</p>
+<pre><code>results = model.predict(
+    source=0,
+    show=True,
+    conf=0.25,
+    imgsz=640,      # 推論解析度
+    stream=True,    # webcam 要開
+)</code></pre>
+<h2 id="6-實測速度與準確度的取捨">6. 實測：速度與準確度的取捨</h2>
+<p>課程把這段標題定為即時偵測，但實測並不是每個模型都做得到。 以下數字取自同一台機器、同一個 1280×720 畫面，程式跑在 CPU 上：</p>
+<table>
+<tr><th>模型</th><th>速度</th><th>最高信心分數</th><th>檢出數</th></tr>
+<tr><td><code>fasterrcnn_resnet50</code></td><td>1.1 FPS</td><td>0.830</td><td>4</td></tr>
+<tr><td><code>fasterrcnn_mobilenet</code></td><td>5.4 FPS</td><td>0.938</td><td>1</td></tr>
+<tr><td><code>fasterrcnn_mobilenet_320</code></td><td>24.6 FPS</td><td>0.194</td><td>0</td></tr>
+<tr><td><code>ssdlite320</code></td><td>19.5 FPS</td><td>0.355</td><td>1</td></tr>
+</table>
+<p>&lt;strong&gt;這裡有一個反直覺的結果&lt;/strong&gt;：最快的 <code>mobilenet_320</code> 竟然什麼都沒偵測到。 它把輸入縮到 320×320，小目標全部糊掉，加上場景光線偏暗，信心分數最高只有 0.19。 所以快與有用是兩件事，預設值要選在平衡點上。 YOLOv8n 的表現好很多，而且解析度可控：</p>
+<table>
+<tr><th>imgsz</th><th>速度</th><th>準確度（官方測試圖）</th></tr>
+<tr><td>640</td><td>37.4 FPS</td><td>bus 0.87、person 0.87／0.85／0.83</td></tr>
+<tr><td>960</td><td>18.8 FPS</td><td>中間檔</td></tr>
+<tr><td>1280</td><td>11.1 FPS</td><td>同圖檢出 7 個，小目標更完整</td></tr>
+</table>
+<p>YOLO 在 640 解析度下就有約 37 FPS，比課程示範的 Faster R-CNN 快約 34 倍， 準確度也沒有犧牲。課程標註推薦方案，實測確實如此。 &lt;strong&gt;要注意的另一個陷阱&lt;/strong&gt;：用昏暗的室內畫面測 YOLO 也會 0 檢出。 不是所有東西都在 COCO 的 80 個類別裡，洗衣機不在其中， 模型會硬猜成 toilet 或 truck，信心分數自然低。換成官方測試圖就完全正常。</p>
+<h2 id="7-CNN-分類TensorFlow-版">7. CNN 分類：TensorFlow 版</h2>
+<p>用 MNIST 手寫數字做分類，五個階段。</p>
+<h3 id="71-載入資料">7.1 載入資料</h3>
+<pre><code>from tensorflow.keras.datasets import mnist
+
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+print(&quot;Training Data Shape:&quot;, x_train.shape)   # (60000, 28, 28)
+print(&quot;Test Data Shape:&quot;, x_test.shape)        # (10000, 28, 28)</code></pre>
+<h3 id="72-前處理">7.2 前處理</h3>
+<pre><code>x_train = x_train.reshape(-1, 28, 28, 1) / 255.0
+x_test = x_test.reshape(-1, 28, 28, 1) / 255.0</code></pre>
+<p><code>reshape</code> 多出來的那一維是&lt;strong&gt;通道數&lt;/strong&gt;。<code>Conv2D</code> 要求輸入為 <code>(H, W, C)</code>， 灰階圖的 C 就是 1。除以 255 是正規化到 0～1。</p>
+<h3 id="73-建立模型">7.3 建立模型</h3>
+<pre><code>from tensorflow import keras
+from tensorflow.keras import layers
+
+model = keras.Sequential([
+    layers.Conv2D(32, (3, 3), activation=&quot;relu&quot;, input_shape=(28, 28, 1)),
+    layers.MaxPooling2D((2, 2)),
+    layers.Conv2D(64, (3, 3), activation=&quot;relu&quot;),
+    layers.MaxPooling2D((2, 2)),
+    layers.Flatten(),
+    layers.Dense(128, activation=&quot;relu&quot;),
+    layers.Dense(10, activation=&quot;softmax&quot;),
+])</code></pre>
+<h3 id="74-編譯與訓練">7.4 編譯與訓練</h3>
+<pre><code>model.compile(
+    optimizer=&quot;adam&quot;,
+    loss=&quot;sparse_categorical_crossentropy&quot;,
+    metrics=[&quot;accuracy&quot;],
+)
+
+history = model.fit(
+    x_train, y_train,
+    epochs=5,
+    validation_split=0.1,
+)</code></pre>
+<h3 id="75-單張推論">7.5 單張推論</h3>
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+index = 0
+plt.imshow(x_test[index].reshape(28, 28), cmap=&quot;gray&quot;)
+plt.show()
+
+prediction = model.predict(x_test[index:index + 1])
+print(&quot;Predicted Class:&quot;, np.argmax(prediction))
+print(&quot;Actual Class:&quot;, y_test[index])</code></pre>
+<p><code>np.argmax</code> 取出 10 個機率裡最大的索引，那就是預測的數字。</p>
+<h2 id="8-CNN-分類PyTorch-版">8. CNN 分類：PyTorch 版</h2>
+<p>同樣五個階段，換 PyTorch 寫。這段已在本機完整跑完訓練。</p>
+<h3 id="81-載入資料">8.1 載入資料</h3>
+<pre><code>import torchvision
+import torchvision.transforms as transforms
+
+transform = transforms.ToTensor()
+
+train_dataset = torchvision.datasets.MNIST(
+    root=&quot;./data&quot;, train=True, download=True, transform=transform)
+test_dataset = torchvision.datasets.MNIST(
+    root=&quot;./data&quot;, train=False, download=True, transform=transform)
+
+print(&quot;Training samples:&quot;, len(train_dataset))   # 60000
+print(&quot;Test samples:&quot;, len(test_dataset))        # 10000
+print(&quot;Image shape:&quot;, train_dataset[0][0].shape) # torch.Size([1, 28, 28])</code></pre>
+<p>形狀是 <code>(1, 28, 28)</code>，通道在最前面，跟 TensorFlow 的 <code>(28, 28, 1)</code> 相反。 這是兩套框架最根本的差異之一。</p>
+<h3 id="82-建立模型">8.2 建立模型</h3>
+<pre><code>import torch
+import torch.nn as nn
+
+class CNN(nn.Module):
+    def __init__(self):
+        super(CNN, self).__init__()
+        self.conv1 = nn.Conv2d(1, 32, 3)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.conv2 = nn.Conv2d(32, 64, 3)
+        self.fc1 = nn.Linear(64 * 5 * 5, 128)
+        self.fc2 = nn.Linear(128, 10)
+
+    def forward(self, x):
+        x = self.pool(torch.relu(self.conv1(x)))
+        x = self.pool(torch.relu(self.conv2(x)))
+        x = x.view(-1, 64 * 5 * 5)
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x</code></pre>
+<p>&lt;strong&gt;<code>64 × 5 × 5</code> 這個數字怎麼來的&lt;/strong&gt;：28 進 3×3 卷積（無 padding）得 26， 池化得 13，再卷積得 11，再池化得 5。所以特徵圖是 <code>64 × 5 × 5</code>。 這個計算是初學者最常卡住的地方。 PyTorch 版&lt;strong&gt;最後一層沒有 softmax&lt;/strong&gt;。因為 <code>CrossEntropyLoss</code> 內部已經含 softmax， 再加一次等於算了兩遍。</p>
+<h3 id="83-訓練">8.3 訓練</h3>
+<pre><code>import torch.optim as optim
+
+train_loader = torch.utils.data.DataLoader(
+    train_dataset, batch_size=64, shuffle=True)
+
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+for epoch in range(5):
+    running_loss = 0.0
+    for images, labels in train_loader:
+        optimizer.zero_grad()
+        outputs = model(images)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+        running_loss += loss.item()
+    print(f&quot;Epoch {epoch + 1}/5, Loss: {running_loss / len(train_loader):.4f}&quot;)</code></pre>
+<h3 id="84-實測結果">8.4 實測結果</h3>
+<p>本機實際跑完的完整輸出：</p>
+<pre><code>PyTorch Version: 2.14.1+cpu
+Training samples: 60000
+Test samples: 10000
+Image shape: torch.Size([1, 28, 28])
+CNN(
+  (conv1): Conv2d(1, 32, kernel_size=(3, 3), stride=(1, 1))
+  (pool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (conv2): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1))
+  (fc1): Linear(in_features=1600, out_features=128, bias=True)
+  (fc2): Linear(in_features=128, out_features=10, bias=True)
+)
+Epoch 1/5, Loss: 0.1847
+Epoch 2/5, Loss: 0.0521
+Epoch 3/5, Loss: 0.0372
+Epoch 4/5, Loss: 0.0289
+Epoch 5/5, Loss: 0.0218
+Test accuracy: 0.9909 (9909/10000)
+Predicted Class: 7
+Actual Class: 7</code></pre>
+<p>注意 <code>fc1</code> 的 <code>in_features=1600</code>，正是 <code>64 × 5 × 5</code>，跟前面的計算一致。</p>
+<h3 id="85-單張推論">8.5 單張推論</h3>
+<pre><code>image, actual_label = test_dataset[0]
+
+with torch.no_grad():
+    output = model(image.unsqueeze(0))
+    predicted_label = torch.argmax(output, dim=1).item()
+
+print(&quot;Predicted Class:&quot;, predicted_label)
+print(&quot;Actual Class:&quot;, actual_label)</code></pre>
+<p><code>image.unsqueeze(0)</code> 把 <code>(1, 28, 28)</code> 變成 <code>(1, 1, 28, 28)</code>，也就是加上 batch 維度。 PyTorch 模型永遠吃批次，即使只有一張圖。</p>
+<h2 id="9-兩套框架逐層對照">9. 兩套框架逐層對照</h2>
+<p>把兩個版本並排看，這才是這份材料真正的教學重點。</p>
+<table>
+<tr><th>TensorFlow / Keras</th><th>PyTorch</th><th>說明</th></tr>
+<tr><td><code>layers.Conv2D(32, (3,3), activation='relu')</code></td><td><code>nn.Conv2d(1, 32, 3)</code> + <code>torch.relu</code></td><td>激活函式要自己接</td></tr>
+<tr><td><code>layers.MaxPooling2D((2,2))</code></td><td><code>nn.MaxPool2d(2, 2)</code></td><td>等價</td></tr>
+<tr><td><code>layers.Conv2D(64, (3,3), activation='relu')</code></td><td><code>nn.Conv2d(32, 64, 3)</code> + <code>torch.relu</code></td><td>等價</td></tr>
+<tr><td><code>layers.Flatten()</code></td><td><code>x.view(-1, 64*5*5)</code></td><td>要自己算維度</td></tr>
+<tr><td><code>layers.Dense(128, activation='relu')</code></td><td><code>nn.Linear(64*5*5, 128)</code> + <code>torch.relu</code></td><td>等價</td></tr>
+<tr><td><code>layers.Dense(10, activation='softmax')</code></td><td><code>nn.Linear(128, 10)</code></td><td>不加 softmax</td></tr>
+<tr><td><code>loss='sparse_categorical_crossentropy'</code></td><td><code>nn.CrossEntropyLoss()</code></td><td>後者內建 softmax</td></tr>
+<tr><td><code>optimizer='adam'</code></td><td><code>optim.Adam(lr=1e-3)</code></td><td>預設學習率不同</td></tr>
+<tr><td>輸入 <code>(28, 28, 1)</code></td><td>輸入 <code>(1, 28, 28)</code></td><td>通道位置相反</td></tr>
+<tr><td><code>model.fit(...)</code></td><td>自己寫訓練迴圈</td><td>PyTorch 沒有高階 API</td></tr>
+</table>
+<p>三條最值得記住的差異：</p>
+<ol><li>**通道位置**：TF 是 <code>(H, W, C)</code>，PyTorch 是 <code>(C, H, W)</code>。</li><li>**softmax**：TF 的 <code>Dense(10, activation='softmax')</code> 對應 PyTorch 的</li></ol>
+<p><code>nn.Linear(128, 10)</code> &lt;strong&gt;不加激活&lt;/strong&gt;，因為 <code>CrossEntropyLoss</code> 已經內含。</p>
+<ol><li>**訓練迴圈**：Keras 一行 <code>fit()</code>，PyTorch 要手寫</li></ol>
+<p><code>zero_grad → forward → loss → backward → step</code> 五步。</p>
+<h2 id="10-四個會讓程式當場掛掉的坑">10. 四個會讓程式當場掛掉的坑</h2>
+<p>這些是課程不會告訴你、但實測一定會遇到的。</p>
+<h3 id="101-攝影機不一定在-index-0">10.1 攝影機不一定在 index 0</h3>
+<p>這是最陰險的一個。<code>cv2.VideoCapture(0)</code> &lt;strong&gt;會成功開啟、不會報錯&lt;/strong&gt;， 但畫面上是純黑。不會看到任何錯誤訊息，只會覺得怎麼都偵測不到東西。 實測列舉本機攝影機：</p>
+<table>
+<tr><th>索引</th><th>畫面平均亮度</th><th>實際狀況</th></tr>
+<tr><td>camera 0</td><td>2.4</td><td>虛擬設備，黑畫面</td></tr>
+<tr><td>camera 1</td><td>2.5</td><td>黑畫面</td></tr>
+<tr><td>camera 2</td><td>93～110</td><td>真正的攝影機</td></tr>
+</table>
+<p>修法是逐個試、看畫面亮度：</p>
+<pre><code>def pick_camera(preferred=0, max_index=6, min_brightness=20.0):
+    &quot;&quot;&quot;回傳第一個真的有畫面的攝影機索引。&quot;&quot;&quot;
+    order = [preferred] + [i for i in range(max_index + 1) if i != preferred]
+    for idx in order:
+        cap = cv2.VideoCapture(idx, cv2.CAP_DSHOW)
+        if not cap.isOpened():
+            cap.release()
+            continue
+        mean = -1.0
+        for _ in range(12):          # 等自動曝光穩定
+            ok, frame = cap.read()
+            if ok and frame is not None:
+                mean = float(frame.mean())
+        if mean &gt;= min_brightness:
+            print(f&quot;using camera {idx} (brightness {mean:.0f})&quot;)
+            return cap
+        cap.release()
+        print(f&quot;camera {idx}: black (mean {mean:.1f}) - skip&quot;)
+    return None</code></pre>
+<h3 id="102-Windows-上要用-DirectShow">10.2 Windows 上要用 DirectShow</h3>
+<p><code>VideoCapture(0)</code> 不指定後端時，Windows 會自己挑，但常常挑到打不開的那個。 實測 <code>CAP_MSMF</code> 就是打不開的。要依序重試：</p>
+<pre><code>backends = [cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_ANY]
+for api in backends:
+    cap = cv2.VideoCapture(0, api)
+    if cap.isOpened():
+        break</code></pre>
+<h3 id="103-攝影機剛開的前幾幀不能用">10.3 攝影機剛開的前幾幀不能用</h3>
+<p>自動曝光需要 1～2 秒才穩定，這段時間的畫面會過曝或全黑。 直接拿去偵測會得到一堆假結果。修法是丟掉前 N 幀：</p>
+<pre><code>frames = 0
+while True:
+    ret, frame = cap.read()
+    frames += 1
+    if frames &lt;= 10:      # warmup
+        continue
+    # 開始真正處理</code></pre>
+<h3 id="104-imshow-沒有-fallback-會直接崩">10.4 imshow 沒有 fallback 會直接崩</h3>
+<p>如果程式跑在 headless 環境（例如考試機、伺服器）， <code>cv2.imshow</code> 會拋出例外，整個程式當場結束。 正確做法是先偵測、不能彈窗就轉成存檔模式：</p>
+<pre><code>import numpy as np
+
+def imshow_available():
+    try:
+        cv2.imshow(&quot;__probe__&quot;, np.zeros((4, 4, 3), np.uint8))
+        cv2.waitKey(1)
+        cv2.destroyWindow(&quot;__probe__&quot;)
+        return True
+    except Exception:
+        return False
+
+show_gui = imshow_available()
+# 之後用 if show_gui: cv2.imshow(...) 包起來</code></pre>
+<h2 id="11-檔案清單">11. 檔案清單</h2>
+<p>全部腳本各自獨立可跑：</p>
+<table>
+<tr><th>檔案</th><th>內容</th></tr>
+<tr><td><code>00_check_env.py</code></td><td>環境自檢（套件、GUI、攝影機）</td></tr>
+<tr><td><code>01_tf_object_detection_image.py</code></td><td>TF 單張圖偵測</td></tr>
+<tr><td><code>02_tf_webcam_detection.py</code></td><td>TF 即時偵測</td></tr>
+<tr><td><code>03_torch_object_detection_image.py</code></td><td>PyTorch 單張圖偵測</td></tr>
+<tr><td><code>04_torch_webcam_detection.py</code></td><td>PyTorch 即時偵測（多模型可切換）</td></tr>
+<tr><td><code>05_yolo_detection.py</code></td><td>YOLOv8 偵測</td></tr>
+<tr><td><code>06_tf_cnn_mnist.py</code></td><td>TF CNN 分類</td></tr>
+<tr><td><code>07_torch_cnn_mnist.py</code></td><td>PyTorch CNN 分類</td></tr>
+</table>
+<p>跑法：</p>
+<pre><code>python 00_check_env.py                                   # 先自檢
+python 04_torch_webcam_detection.py                      # 即時偵測
+python 04_torch_webcam_detection.py --model fasterrcnn_resnet50
+python 07_torch_cnn_mnist.py                             # CNN 訓練</code></pre>
+<h2 id="12-幾點檢討">12. 幾點檢討</h2>
+<hr>
+<p>**課程標題的即時偵測需要打折看。** 標題寫的是即時偵測，但課程示範的 Faster R-CNN + resnet50 在 CPU 上只有 1.1 FPS。這不是課程寫錯， 而是它假設有 GPU。在 CPU 環境下必須換 backbone 或改用 YOLO 才真的即時。 **推薦 YOLO 是有道理的。** 實測差距 34 倍，而且 YOLO 的程式碼只有四行。 如果只能記一個方案，記 YOLO。 **還原截圖程式碼有風險。** 課程簡報有三處程式碼被滾動箭頭遮住， 只能依框架的標準介面補完。補完的部分在腳本裡都標註了哪些是原文、 哪些是補的，這種標註習慣比程式碼本身重要。 **TensorFlow 那三支腳本沒能實際驗證。** 這台機器的 Python 3.15 裝不上 TensorFlow，所以 <code>01</code>／<code>02</code>／<code>06</code> 只驗證了語法與錯誤處理路徑。 PyTorch 那條線（<code>03</code>／<code>04</code>／<code>07</code>）是完整跑過的。 *本頁為個人學習筆記整理。*</p>
+<h2 id="附錄-A名詞速查">附錄 A：名詞速查</h2>
+<table>
+<tr><th>名詞</th><th>說明</th></tr>
+<tr><td>物件偵測</td><td>找出圖中物件的位置（框）與類別</td></tr>
+<tr><td>邊界框（bounding box）</td><td>框住物件的矩形，格式各框架不同</td></tr>
+<tr><td>信心分數（score）</td><td>模型對該偵測的信心，0～1</td></tr>
+<tr><td>非極大值抑制（NMS）</td><td>去掉重疊的重複框，偵測模型內部處理</td></tr>
+<tr><td>COCO 80 類</td><td>通用偵測模型的類別集，不含洗衣機等</td></tr>
+<tr><td><code>detection_boxes</code></td><td>TF 的框，歸一化 0～1，順序 ymin/xmin/ymax/xmax</td></tr>
+<tr><td><code>boxes</code></td><td>PyTorch 的框，絕對像素，順序 x0/y0/x1/y1</td></tr>
+<tr><td><code>model.eval()</code></td><td>切到推論模式，偵測模型必呼叫</td></tr>
+<tr><td><code>torch.no_grad()</code></td><td>關閉梯度記錄，省記憶體並加速</td></tr>
+<tr><td><code>unsqueeze(0)</code></td><td>加上 batch 維度</td></tr>
+<tr><td>通道位置</td><td>TF 用 (H,W,C)，PyTorch 用 (C,H,W)</td></tr>
+<tr><td><code>CrossEntropyLoss</code></td><td>PyTorch 的交叉熵，內建 softmax</td></tr>
+<tr><td><code>sparse_categorical_crossentropy</code></td><td>Keras 對應版本，標籤為整數時使用</td></tr>
+<tr><td><code>ToTensor()</code></td><td>PIL 影像轉張量，同時縮放到 0～1</td></tr>
+<tr><td>stride</td><td>卷積核移動步長</td></tr>
+<tr><td>特徵圖（feature map）</td><td>卷積輸出的每個通道</td></tr>
+<tr><td>warmup 幀</td><td>攝影機開頭不穩定的幀，應丟棄</td></tr>
+</table>
+<h2 id="附錄-B常見陷阱">附錄 B：常見陷阱</h2>
+<table>
+<tr><th>症狀</th><th>原因</th><th>處理</th></tr>
+<tr><td>畫面全黑但不報錯</td><td>選到虛擬攝影機</td><td>逐個索引試亮度</td></tr>
+<tr><td><code>objects 0</code> 但畫面正常</td><td>門檻太高或物件不在 COCO 類別</td><td>降門檻、換真實物件</td></tr>
+<tr><td><code>The function is not implemented</code></td><td>headless opencv</td><td>裝 <code>opencv-python</code> 或改存檔模式</td></tr>
+<tr><td>一直 1 FPS</td><td>resnet50 太重</td><td>換 mobilenet backbone 或 YOLO</td></tr>
+<tr><td>框畫在錯的位置</td><td>TF 忘了乘寬高</td><td>歸一化座標要乘回像素</td></tr>
+<tr><td><code>mat1 and mat2 shapes cannot be multiplied</code></td><td><code>view</code> 的維度算錯</td><td>檢查 <code>64*5*5</code></td></tr>
+<tr><td>偵測模型回傳 loss 不是框</td><td>忘了 <code>model.eval()</code></td><td>補呼叫</td></tr>
+<tr><td>訓練 loss 不下降</td><td>忘了除以 255 正規化</td><td>前處理補上</td></tr>
+<tr><td><code>cannot open video source</code></td><td>攝影機被其他程式占用</td><td>關掉 Teams／Zoom／微信</td></tr>
+<tr><td>CUDA out of memory</td><td>批次太大</td><td>降 batch size</td></tr>
+</table>
+<h2 id="附錄-C一頁精華考前-10-分鐘">附錄 C：一頁精華（考前 10 分鐘）</h2>
+<pre><code>【物件偵測三方案】
+
+TensorFlow   hub.load(SSD MobileNet V2)
+             → tf.expand_dims(img, 0)
+             → detections[&quot;detection_boxes&quot;]（歸一化 0~1）
+
+PyTorch      fasterrcnn_resnet50_fpn(weights=&quot;DEFAULT&quot;)
+             → model.eval()（必呼叫）
+             → prediction[&quot;boxes&quot;]（絕對像素 x0,y0,x1,y1）
+
+YOLO         YOLO(&quot;yolov8n.pt&quot;).predict(source=0, show=True)
+             （四行完成，實測最快）
+
+【CNN 五階段】
+載入 → 前處理(reshape + /255) → 建模型 → 訓練 → 單張推論
+
+【張量格式】
+TF      (60000, 28, 28, 1)    通道在最後
+PyTorch (60000, 1, 28, 28)    通道在前</code></pre>
+<h2 id="附錄-D互動測驗40-題">附錄 D：互動測驗（40 題）</h2>
+<p>本筆記附 40 題線上測驗，即時計分、進度自動儲存，可離線使用。</p>
+</main>
+</div>
+</body>
+</html>

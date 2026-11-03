@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 8 互動測驗（40 題）｜AI Tech Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#e2e5ea; --txt:#1f2328; --dim:#5b636e;
+  --blue:#2563eb; --green:#15803d; --green-bg:#e8f6ec; --red:#b91c1c;
+  --red-bg:#fdeaea; --sel:#dbeafe; --sel-line:#2563eb;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",
+    "Microsoft JhengHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.7; font-size:16px;
+}
+a{color:var(--blue)}
+.topbar{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  padding:12px 20px 10px;
+}
+.topbar .row1{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px}
+.topbar h1{font-size:17px; margin:0; font-weight:700}
+.topbar .back{font-size:13px; color:var(--dim); text-decoration:none}
+.topbar .back:hover{color:var(--blue)}
+.stats{display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; font-size:14px; color:var(--dim)}
+.stats b{font-size:18px; color:var(--txt)}
+.stats .ok b{color:var(--green)}
+.stats .no b{color:var(--red)}
+.saved{font-size:12px; color:var(--green); opacity:0; transition:opacity .3s}
+.saved.on{opacity:1}
+.progress{height:6px; background:var(--line); border-radius:99px; margin-top:10px; overflow:hidden}
+.progress i{display:block; height:100%; width:0; background:var(--blue); border-radius:99px; transition:width .25s}
+.controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+button{
+  font:inherit; font-size:13px; padding:6px 13px; border-radius:8px;
+  border:1px solid var(--line); background:#fff; color:var(--txt); cursor:pointer;
+  transition:.15s;
+}
+button:hover{border-color:#b9c0c9; background:#fbfbfc}
+button.primary{background:var(--blue); border-color:var(--blue); color:#fff}
+button.primary:hover{background:#1d4ed8}
+button.active{background:var(--sel); border-color:var(--sel-line); color:#1e40af; font-weight:600}
+button.danger{color:var(--red); border-color:#f0c4c4}
+button.danger:hover{background:var(--red-bg)}
+.navwrap{padding:16px 20px 0}
+.navgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px}
+.navgrid button{padding:6px 0; font-size:13px; border-radius:7px; text-align:center; font-variant-numeric:tabular-nums}
+.navgrid button.done{background:#eef2ff; border-color:#c7d2fe; color:#3730a3}
+.navgrid button.right{background:var(--green-bg); border-color:#a7d7b6; color:var(--green); font-weight:700}
+.navgrid button.wrong{background:var(--red-bg); border-color:#eeb4b4; color:var(--red); font-weight:700}
+main{max-width:900px; margin:0 auto; padding:20px 20px 80px}
+.parttitle{
+  margin:34px 0 14px; font-size:15px; font-weight:700; color:var(--dim);
+  border-left:4px solid var(--blue); padding-left:10px;
+}
+.q{
+  background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:16px 18px; margin-bottom:14px;
+}
+.q.correct{border-color:#a7d7b6; background:var(--green-bg)}
+.q.incorrect{border-color:#eeb4b4; background:var(--red-bg)}
+.qhead{display:flex; gap:10px; align-items:flex-start}
+.num{
+  flex:0 0 auto; min-width:30px; height:26px; line-height:26px; text-align:center;
+  background:#eef1f5; border-radius:7px; font-size:13px; font-weight:700;
+  color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.qtext{margin:0; font-weight:600; font-size:16px}
+.opts{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:7px}
+.opt{
+  display:flex; gap:10px; align-items:flex-start; padding:9px 12px;
+  border:1px solid var(--line); border-radius:9px; background:#fff;
+  cursor:pointer; transition:.12s; user-select:none;
+}
+.opt:hover{border-color:#b9c0c9; background:#fbfbfc}
+.opt .lt{
+  flex:0 0 auto; width:22px; height:22px; line-height:22px; text-align:center;
+  border-radius:6px; background:#eef1f5; font-size:12px; font-weight:700; color:var(--dim);
+}
+.opt.picked{border-color:var(--sel-line); background:var(--sel)}
+.opt.picked .lt{background:var(--sel-line); color:#fff}
+.opt.right{border-color:#7cc08f; background:var(--green-bg)}
+.opt.right .lt{background:var(--green); color:#fff}
+.opt.wrong{border-color:#e39191; background:var(--red-bg)}
+.opt.wrong .lt{background:var(--red); color:#fff}
+.tag{font-size:11px; padding:1px 7px; border-radius:99px; margin-left:auto;
+     flex:0 0 auto; font-weight:700; align-self:center}
+.tag.right{background:var(--green); color:#fff}
+.tag.wrong{background:var(--red); color:#fff}
+.expl{
+  margin-top:12px; padding:11px 14px; background:#f8fafc; border-radius:9px;
+  border-left:3px solid var(--blue); font-size:14.5px; color:#333a44;
+}
+.expl b{color:var(--txt)}
+.empty{text-align:center; color:var(--dim); padding:50px 20px; font-size:15px}
+footer{
+  max-width:900px; margin:0 auto; padding:0 20px 60px; color:var(--dim);
+  font-size:13px; text-align:center;
+}
+@media print{
+  .topbar,.navwrap,footer,.controls{display:none !important}
+  body{background:#fff; font-size:12pt}
+  main{max-width:none; padding:0}
+  .q{break-inside:avoid; page-break-inside:avoid; border-color:#999}
+}
+@media (max-width:560px){
+  .topbar{padding:10px 14px 8px}
+  .topbar h1{font-size:15px}
+  main{padding:14px 14px 60px}
+  .navwrap{padding:12px 14px 0}
+  .q{padding:13px 14px}
+  .qtext{font-size:15px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="row1">
+    <h1>Lesson 8 互動測驗</h1>
+    <a class="back" href="index.html">&larr; 回到 TensorFlow 與 PyTorch 物件偵測與 CNN</a>
+    <span class="saved" id="saved">進度已儲存 &#10003;</span>
+  </div>
+  <div class="stats">
+    <span>已答 <b id="nAns">0</b> / 49</span>
+    <span class="ok">得分 <b id="nScore">0</b> / 49</span>
+    <span class="no">答錯 <b id="nWrong">0</b></span>
+    <span id="hint">作答進度自動存在此瀏覽器，關掉再回來可繼續</span>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <button id="btnReveal" class="primary">顯示答案</button>
+    <button id="btnAll" class="active">全部 49 題</button>
+    <button id="btnUnans">只看未答</button>
+    <button id="btnWrong">只看答錯</button>
+    <button id="btnTop">回到頂部</button>
+    <button id="btnReset" class="danger">重設全部</button>
+  </div>
+</header>
+
+<div class="navwrap">
+  <div class="navgrid" id="navgrid"></div>
+</div>
+
+<main id="quiz"></main>
+
+<footer>
+  <p>電腦視覺課程個人學習筆記 · 涵蓋 TensorFlow 與 PyTorch 的物件偵測、YOLOv8 與 MNIST CNN 分類</p>
+  <p>單一 HTML 檔、無外部資源，可離線使用</p>
+</footer>
+<script>
+const QUESTIONS = [{"q": "這份材料用幾個框架示範物件偵測？", "o": ["一個", "兩個", "三個", "四個"], "a": 1, "e": "TensorFlow 與 PyTorch 各示範一次。"}, {"q": "TensorFlow 示範的偵測模型是？", "o": ["SSD MobileNet V2", "Faster R-CNN", "YOLOv8", "DETR"], "a": 0, "e": "TF-Hub 的 SSD MobileNet V2。"}, {"q": "PyTorch 示範的偵測模型是？", "o": ["SSD MobileNet", "Faster R-CNN resnet50", "YOLOv5", "RetinaNet"], "a": 1, "e": "fasterrcnn_resnet50_fpn。"}, {"q": "課程把哪個模型標為推薦方案？", "o": ["SSD", "Faster R-CNN", "YOLOv8", "DETR"], "a": 2, "e": "簡報標題就叫 Yolo (Recommended)。"}, {"q": "TensorFlow 的框座標格式是？", "o": ["絕對像素", "歸一化 0~1", "中心點加寬高", "極座標"], "a": 1, "e": "detection_boxes 是 0~1 的比例。"}, {"q": "PyTorch 的框座標格式是？", "o": ["歸一化 0~1", "絕對像素", "只給中心點", "無座標"], "a": 1, "e": "prediction['boxes'] 是絕對像素。"}, {"q": "TensorFlow 的框順序是？", "o": ["x0,y0,x1,y1", "ymin,xmin,ymax,xmax", "x,y,w,h", "y,x,h,w"], "a": 1, "e": "注意是 y 在前。"}, {"q": "PyTorch 的框順序是？", "o": ["ymin,xmin,ymax,xmax", "x0,y0,x1,y1", "w,h,x,y", "無固定順序"], "a": 1, "e": "x0,y0,x1,y1。"}, {"q": "PyTorch 偵測模型為何一定要呼叫 eval()？", "o": ["加速", "train 模式回傳 loss 不是框", "節省記憶體", "避免 overfit"], "a": 1, "e": "eval 才會輸出預測框。"}, {"q": "torch.no_grad() 的作用是？", "o": ["關閉梯度記錄", "關閉訓練", "清空快取", "重置權重"], "a": 0, "e": "省記憶體並加速推論。"}, {"q": "tf.expand_dims(x, 0) 的目的？", "o": ["壓縮維度", "加上 batch 維度", "轉 RGB", "正規化"], "a": 1, "e": "變成 (1, H, W, 3)。"}, {"q": "模型輸入的 batch 維度代表？", "o": ["通道數", "一次處理幾張圖", "類別數", "層數"], "a": 1, "e": "batch size。"}, {"q": "實測 CPU 上 fasterrcnn_resnet50 約幾 FPS？", "o": ["約 1", "約 5", "約 25", "約 37"], "a": 0, "e": "約 1.1 FPS，非常慢。"}, {"q": "實測最快的 Faster R-CNN 變體是哪個？", "o": ["resnet50", "mobilenet", "mobilenet_320", "retinanet"], "a": 2, "e": "mobilenet_320 約 24.6 FPS。"}, {"q": "上題那個最快變體的主要問題是？", "o": ["太慢", "幾乎偵測不到東西", "太耗記憶體", "無法載入"], "a": 1, "e": "320 解析度太小，漏檢嚴重。"}, {"q": "實測 YOLOv8n 在 imgsz=640 時約幾 FPS？", "o": ["約 11", "約 19", "約 37", "約 60"], "a": 2, "e": "約 37.4 FPS。"}, {"q": "YOLO 的 imgsz 調大會怎樣？", "o": ["更快更準", "更慢但更準", "更快但更差", "沒影響"], "a": 1, "e": "1280 約 11 FPS 但檢出更多。"}, {"q": "YOLO 對洗衣機這類物件為何分數低？", "o": ["模型壞了", "不在 COCO 80 類裡", "圖片太大", "光線問題"], "a": 1, "e": "超出訓練類別範圍。"}, {"q": "MNIST 訓練集有幾張？", "o": ["1000", "10000", "60000", "100000"], "a": 2, "e": "60000 張。"}, {"q": "MNIST 測試集有幾張？", "o": ["1000", "10000", "60000", "100000"], "a": 1, "e": "10000 張。"}, {"q": "MNIST 單張圖片尺寸是？", "o": ["32x32", "28x28", "64x64", "224x224"], "a": 1, "e": "28x28 灰階。"}, {"q": "TensorFlow 前處理要 reshape 成？", "o": ["(28,28,1)", "(1,28,28)", "(28,28)", "(1,1,28,28)"], "a": 0, "e": "通道在最後。"}, {"q": "PyTorch 載入後的張量形狀是？", "o": ["(28,28,1)", "(1,28,28)", "(28,28)", "(3,28,28)"], "a": 1, "e": "通道在最前面。"}, {"q": "為何要除以 255？", "o": ["降低解析度", "正規化到 0~1", "轉灰階", "增加通道"], "a": 1, "e": "讓數值落在 0~1。"}, {"q": "TensorFlow 模型第一層卷積的 filters 是？", "o": ["16", "32", "64", "128"], "a": 1, "e": "Conv2D(32, ...)。"}, {"q": "TensorFlow 模型第二層卷積的 filters 是？", "o": ["16", "32", "64", "128"], "a": 2, "e": "Conv2D(64, ...)。"}, {"q": "28x28 經 3x3 卷積（無 padding）後邊長？", "o": ["28", "27", "26", "25"], "a": 2, "e": "28-3+1 = 26。"}, {"q": "26x26 經 2x2 池化後邊長？", "o": ["26", "13", "12", "11"], "a": 1, "e": "26/2 = 13。"}, {"q": "13x13 經 3x3 卷積後邊長？", "o": ["13", "12", "11", "10"], "a": 2, "e": "13-3+1 = 11。"}, {"q": "11x11 經 2x2 池化後邊長？", "o": ["11", "6", "5", "4"], "a": 2, "e": "11//2 = 5。"}, {"q": "PyTorch 版 fc1 的 in_features 是多少？", "o": ["1600", "1024", "640", "128"], "a": 0, "e": "64*5*5 = 1600。"}, {"q": "為何 PyTorch 最後一層不加 softmax？", "o": ["忘記加", "CrossEntropyLoss 已內含", "softmax 沒用", "會報錯"], "a": 1, "e": "加了等於算兩次。"}, {"q": "Keras 用哪個 loss 處理整數標籤？", "o": ["mse", "categorical_crossentropy", "sparse_categorical_crossentropy", "binary_crossentropy"], "a": 2, "e": "標籤是整數時用 sparse 版。"}, {"q": "PyTorch 訓練迴圈的正確順序？", "o": ["forward→zero_grad→step→backward", "zero_grad→forward→loss→backward→step", "backward→forward→step", "step→forward→backward"], "a": 1, "e": "標準五步。"}, {"q": "np.argmax 在分類中的用途？", "o": ["取最大值索引當預測類別", "正規化", "排序", "轉機率"], "a": 0, "e": "10 個機率取最大。"}, {"q": "實測 PyTorch CNN 的測試準確率約？", "o": ["90%", "95%", "99%", "100%"], "a": 2, "e": "0.9909。"}, {"q": "VideoCapture(0) 打得開但全黑，原因是？", "o": ["攝影機壞了", "索引不對，實際裝置在別的索引", "解析度太高", "權限全關"], "a": 1, "e": "虛擬裝置佔用低索引。"}, {"q": "Windows 上建議指定哪個後端？", "o": ["CAP_MSMF", "CAP_DSHOW", "CAP_GSTREAMER", "CAP_FFMPEG"], "a": 1, "e": "DirectShow 最穩。"}, {"q": "攝影機開頭幾幀為何要丟棄？", "o": ["節省時間", "自動曝光尚未穩定", "畫質太低", "記憶體不足"], "a": 1, "e": "會過曝或全黑。"}, {"q": "openCV 是 headless 版時 imshow 會？", "o": ["正常顯示", "拋出 not implemented 例外", "回傳 False", "自動存檔"], "a": 1, "e": "沒有 GUI 後端。"}];
+
+const LET = 'ABCD';
+const KEY = 'ivdc-det-mc-quiz-v1';
+const state = { answers:{}, revealed:false, filter:'all' };
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p && typeof p === 'object'){
+      state.answers = (p.answers && typeof p.answers === 'object') ? p.answers : {};
+      state.revealed = !!p.revealed;
+      state.filter = p.filter || 'all';
+    }
+  }catch(e){}
+}
+let savedTimer = null;
+function saveState(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const el = document.getElementById('saved');
+    if(el){ el.classList.add('on'); clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ el.classList.remove('on'); }, 1200); }
+  }catch(e){}
+}
+
+function tally(){
+  let answered = 0, score = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    if(a !== undefined && a !== null){
+      answered++;
+      if(a === QUESTIONS[i].a) score++;
+    }
+  }
+  return { answered:answered, score:score, wrong:answered-score };
+}
+
+function isVisible(i){
+  const a = state.answers[i];
+  const has = (a !== undefined && a !== null);
+  if(state.filter === 'unanswered') return !has;
+  if(state.filter === 'wrong') return has && a !== QUESTIONS[i].a;
+  return true;
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mdInline(s){
+  s = esc(s);
+  let out = '';
+  let bold = false;
+  let i = 0;
+  while(i < s.length){
+    if(s.charAt(i) === '*' && s.charAt(i + 1) === '*'){
+      bold = !bold;
+      out += bold ? '<b>' : '</b>';
+      i += 2;
+    } else {
+      out += s.charAt(i);
+      i++;
+    }
+  }
+  return out;
+}
+
+function renderStats(){
+  const t = tally();
+  document.getElementById('nAns').textContent = t.answered;
+  document.getElementById('nScore').textContent = t.score;
+  document.getElementById('nWrong').textContent = t.wrong;
+  document.getElementById('bar').style.width = (t.answered / QUESTIONS.length * 100) + '%';
+  document.getElementById('btnReveal').textContent = state.revealed ? '隱藏答案' : '顯示答案';
+  document.getElementById('hint').textContent = state.revealed
+    ? '已顯示正解與解析'
+    : '作答進度自動存在此瀏覽器，關掉再回來可繼續';
+}
+
+function renderNav(){
+  const nav = document.getElementById('navgrid');
+  let html = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const a = state.answers[i];
+    const has = (a !== undefined && a !== null);
+    let cls = '';
+    if(has) cls = 'done';
+    if(state.revealed && has) cls = (a === QUESTIONS[i].a) ? 'right' : 'wrong';
+    html += '<button class="' + cls + '" data-goto="' + i + '">' + (i+1) + '</button>';
+  }
+  nav.innerHTML = html;
+}
+
+function renderQuestions(){
+  const box = document.getElementById('quiz');
+  let html = '';
+  let shown = 0;
+  for(let i=0;i<QUESTIONS.length;i++){
+    if(!isVisible(i)) continue;
+    shown++;
+    const q = QUESTIONS[i];
+    if(i === 0 || i === 20 || i === 40){
+      const label = i === 0 ? '第一部分：分類三步曲、卷積與池化基礎、Keras 實作（1–20）'
+                  : i === 20 ? '第二部分：參數量、感受野、FCN（21–29）'
+                  : '第三部分：資料管線、padding、池化反向與應用版圖（30–49）';
+      html += '<div class="parttitle">' + label + '</div>';
+    }
+    const picked = state.answers[i];
+    const hasPicked = (picked !== undefined && picked !== null);
+    let qcls = '';
+    if(state.revealed && hasPicked) qcls = (picked === q.a) ? 'correct' : 'incorrect';
+
+    html += '<article class="q ' + qcls + '" id="q' + (i+1) + '">';
+    html += '<div class="qhead"><span class="num">' + (i+1) + '</span>';
+    html += '<p class="qtext">' + mdInline(q.q) + '</p></div>';
+    html += '<ul class="opts">';
+    for(let k=0;k<q.o.length;k++){
+      let cls = 'opt';
+      if(hasPicked && picked === k) cls += ' picked';
+      let tag = '';
+      if(state.revealed){
+        if(k === q.a){ cls += ' right'; tag = '<span class="tag right">正解</span>'; }
+        else if(hasPicked && picked === k){ cls += ' wrong'; tag = '<span class="tag wrong">你選的</span>'; }
+      }
+      html += '<li class="' + cls + '" data-q="' + i + '" data-k="' + k + '">';
+    html += '<span class="lt">' + LET[k] + '</span><span>' + esc(q.o[k]) + '</span>' + tag + '</li>';
+}
+    html += '</ul>';
+    if(state.revealed){
+      html += '<div class="expl"><b>答案 ' + LET[q.a] + '。</b> ' + mdInline(q.e) + '</div>';
+    }
+    html += '</article>';
+  }
+  if(shown === 0){
+    html = '<div class="empty">目前篩選條件下沒有題目 &#128522;<br>換個篩選，或按「全部 49 題」。</div>';
+  }
+  box.innerHTML = html;
+}
+
+function renderAll(){ renderStats(); renderNav(); renderQuestions(); }
+
+document.addEventListener('click', function(ev){
+  const opt = ev.target.closest ? ev.target.closest('.opt') : null;
+  if(opt){
+    state.answers[parseInt(opt.getAttribute('data-q'), 10)] = parseInt(opt.getAttribute('data-k'), 10);
+    saveState();
+    renderAll();
+    return;
+  }
+  const go = ev.target.closest ? ev.target.closest('[data-goto]') : null;
+  if(go){
+    const idx = parseInt(go.getAttribute('data-goto'), 10);
+    if(state.filter !== 'all'){ state.filter = 'all'; syncFilterButtons(); renderAll(); }
+    const el = document.getElementById('q' + (idx + 1));
+    if(el){
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      el.style.transition = 'box-shadow .3s';
+      el.style.boxShadow = '0 0 0 3px rgba(37,99,235,.35)';
+      setTimeout(function(){ el.style.boxShadow = ''; }, 900);
+    }
+    saveState();
+  }
+});
+
+function syncFilterButtons(){
+  const map = { all:'btnAll', unanswered:'btnUnans', wrong:'btnWrong' };
+  for(const k in map){
+    const b = document.getElementById(map[k]);
+    if(b) b.classList.toggle('active', state.filter === k);
+  }
+}
+
+function setFilter(f){
+  state.filter = f;
+  syncFilterButtons();
+  saveState();
+  renderAll();
+}
+
+function bind(){
+  document.getElementById('btnReveal').addEventListener('click', function(){
+    state.revealed = !state.revealed; saveState(); renderAll();
+  });
+  document.getElementById('btnAll').addEventListener('click', function(){ setFilter('all'); });
+  document.getElementById('btnUnans').addEventListener('click', function(){ setFilter('unanswered'); });
+  document.getElementById('btnWrong').addEventListener('click', function(){ setFilter('wrong'); });
+  document.getElementById('btnTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    if(!confirm('確定要清除全部作答紀錄嗎？此動作無法復原。')) return;
+    state.answers = {}; state.revealed = false; state.filter = 'all';
+    saveState(); syncFilterButtons(); renderAll();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && state.revealed){ state.revealed = false; saveState(); renderAll(); }
+  });
+}
+
+loadState();
+syncFilterButtons();
+renderAll();
+bind();
+</script>
+</body>
+</html>
