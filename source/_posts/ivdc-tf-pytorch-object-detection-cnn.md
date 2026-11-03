@@ -65,6 +65,42 @@ banner_img: /img/covers/ivdc-tf-pytorch-detection-cnn.png
 - **YOLOv8**：速度與準確度平衡最好，標註「Recommended」
 - **DETR**：Transformer 架構，準確度好但吃資源
 
+### 25 頁對照表（拿到 PDF 就能跟著看）
+
+我把簡報逐頁核過一遍，這張表是拿掉猜測後的結果。「↓」代表那一頁的程式碼截圖被向下捲動箭頭蓋住：
+
+| 頁 | 標題 | 內容 | 狀態 |
+|---|---|---|---|
+| 1 | Certificate in Application… | 封面 | 文字層只有這頁與各頁大標題 |
+| 2 | Tensorflow for Object Detection | SSD MobileNet V2 單張圖 | **↓ 第 16 行以下看不到** |
+| 3 | Real Time Webcam Detection | TF webcam 迴圈 | **↓ 第 16 行以下看不到** |
+| 4 | Real Time Object Detection | 五個模型建議（含 EfficientDet） | 純文字 |
+| 5 | Pytorch for Object Detection | Faster R-CNN 單張圖 | **↓ 第 12 行以下看不到** |
+| 6 | Real Time Webcam Detection | torch webcam | **↓ 第 13 行以下看不到** |
+| 7 | Yolo (Recommended) | 四行程式 + 模型比較 | 只有 4 行 |
+| 8 | Tensorflow for CNN | 匯入 + 印版本 | — |
+| 9 | Tensorflow for CNN | 與第 8 頁完全相同 | **重複頁** |
+| 10–12 | Load Data | `mnist.load_data()` → 形狀 → `reshape` + `/255.0` | — |
+| 13 | CNN | Keras Sequential 模型 | — |
+| 14 | CNN Model Output | `compile` + `fit(epochs=5, validation_split=0.1)` | — |
+| 15 | CNN Model Output | 示範輸出 `0.95 / 0.15` → `0.99 / 0.03` | 標題寫 Example output |
+| 16–17 | Classification Result | `predict` + `argmax`、輸出 7/7 | — |
+| 18 | Or you could use Pytorch | 匯入 + 印版本 | **↓** |
+| 19 | Load Data | `torchvision.datasets.MNIST` | **↓ 第 16 行以下看不到** |
+| 20 | Load Data | 預期輸出 60000／10000／`(1, 28, 28)` | — |
+| 21 | CNN | `nn.Module` 版 CNN | 底部兩行被裁掉 |
+| 22 | CNN Model Output | `DataLoader` + `CrossEntropyLoss` + `Adam(lr=0.001)` | **↓ 第 16 行以下看不到** |
+| 23 | CNN Model Output | 示範輸出 `0.1805` → `0.0225` | 標題寫 Example output |
+| 24–25 | Classification Result | torch 版推論、輸出 7/7 | 第 25 頁與第 17 頁同 |
+
+兩個順帶的觀察：
+
+- **被箭頭遮住的是 7 頁，不是 3 頁**（第 2、3、5、6、18、19、22 頁）。我第一版寫「三處」是低估，
+  當時只有 PDF 的截圖可看，沒有逐頁比對行號。
+- 第 15／23 頁的輸出是<strong>投影片自己的示範值</strong>——第 23 頁旁邊還寫著
+  「Take a screenshot showing: Training command / Epochs / Loss values」。
+  所以「跟簡報數字接近」不能當正確性證據，它本來就不是量測結果。
+
 ## 二、先把環境量清楚
 
 在寫任何程式之前，我先確認機器上有什麼。這個動作後來證明非常關鍵，
@@ -141,33 +177,37 @@ pip install opencv-python
 
 ## 三、物件偵測：TensorFlow 版
 
-簡報第 2 頁給的是單張圖片的流程。這裡有一件事要說明：**簡報的程式碼截圖被右下角的
-滾動箭頭蓋住了一部分**，所以尾巴幾行是看不到的。我用 TF-Hub 的標準介面把它補完。
+簡報第 2 頁給的是單張圖片的流程。那頁的截圖被向下捲動箭頭蓋住，**第 16 行以下看不到**，
+所以尾巴幾行是我用 TF-Hub 標準介面補的。原文照抄、補的標出來：
 
 ```python
 import tensorflow as tf
 import tensorflow_hub as hub
 import cv2
+import numpy as np
+import matplotlib.pyplot as plt
 
-MODEL_URL = "https://tfhub.dev/tensorflow/ssd_mobilenet_v2/2"
+# Load pre-trained object detection model
+model = hub.load("https://tfhub.dev/tensorflow/ssd_mobilenet_v2/2")
 
-# 載入預訓練模型
-model = hub.load(MODEL_URL)
-
-# 讀圖並轉成模型要的格式
+# Load image
 image = cv2.imread("image.jpg")
 image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-# 準備輸入張量
-input_tensor = tf.convert_to_tensor(image_rgb, dtype=tf.uint8)
-input_tensor = tf.expand_dims(input_tensor, 0)   # (1, H, W, 3)
+# Prepare image
+input_tensor = tf.convert_to_tensor(image_rgb, dtype=tf.uint8)  # 原文可見的最後一行（第 15 行）
+input_tensor = tf.expand_dims(input_tensor, 0)                  # 第 16 行，被箭頭遮住
 
-# 推論——簡報截圖到此為止，以下為補完
+# [補完] 以下簡報上完全看不到，依 TF-Hub 標準介面補
 detections = model(input_tensor)
 boxes = detections["detection_boxes"][0].numpy()
 scores = detections["detection_scores"][0].numpy()
 classes = detections["detection_classes"][0].numpy().astype(int)
 ```
+
+<small>原文的註解是英文（`# Load pre-trained object detection model`／`# Load image`／`# Prepare image`），
+照抄不改；`numpy` 與 `matplotlib` 兩行也在原文第 4–5 行，後面被遮住的程式碼用不到，腳本裡仍保留，
+方便你對行號。</small>
 
 即時 webcam 版本（簡報第 3 頁）的骨架是這樣，下面同樣是補完後的完整迴圈：
 
@@ -211,19 +251,22 @@ cv2.destroyAllWindows()
 
 ## 四、物件偵測：PyTorch 版
 
-同一件事換一套框架，差異一目了然。簡報第 5 頁用的模型是 `fasterrcnn_resnet50_fpn`：
+同一件事換一套框架，差異一目了然。簡報第 5 頁（單張圖）與第 6 頁（webcam）用的模型都是
+`fasterrcnn_resnet50_fpn(weights="DEFAULT")`：
 
 ```python
 import torch
 import torchvision
 from torchvision import transforms
 from PIL import Image
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
-# 載入預訓練模型——這一行是簡報的重點
+# Load pre-trained Faster R-CNN model
 model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights="DEFAULT")
 model.eval()
 
-# 簡報截圖到此為止，以下為補完
+# [補完] 第 12 行以下被箭頭遮住，依 torchvision 標準介面補完
 image = Image.open("image.jpg").convert("RGB")
 transform = transforms.ToTensor()
 tensor = transform(image).unsqueeze(0)      # (1, 3, H, W)
@@ -416,7 +459,7 @@ history = model.fit(
 )
 ```
 
-簡報給的預期輸出是準確率從 0.95 爬到 0.99，損失從 0.15 降到 0.03。
+簡報給的預期輸出是準確率從 0.95 爬到 0.99，損失從 0.15 降到 0.03（第 15 頁，標題就是「Example output」，是示範值不是量測值）。
 
 我實際跑了一次（TF 2.21.0 / Keras 3.15.1 / Python 3.11 / CPU，5 epochs、batch 32）：
 
@@ -766,8 +809,9 @@ model = torchvision.models.detection.fasterrcnn_resnet50_fpn(
 如果只能記一個方案，記 YOLO。同機再補兩個數：`ssdlite320` 在 webcam 上 9.2 FPS，
 `yolov8n` 在 640 推論 19.8 ms（≈50 FPS）。
 
-**還原截圖程式碼有風險。** 這份簡報有三處程式碼被截圖的滾動箭頭遮住，
-我只能依框架的標準介面補完。補完的部分我在腳本裡都標註了哪些是原文、
+**還原截圖程式碼有風險。** 逐頁比對之後，被截圖的向下捲動箭頭遮住程式碼的是
+<strong>7 頁</strong>（第 2、3、5、6、18、19、22 頁），我第一版只寫「三處」是低估。
+補完的部分依框架的標準介面寫，而且每一段都在腳本裡標註了哪些是原文、
 哪些是補的——這種標註習慣比程式碼本身重要，否則半年後連自己都分不清。
 腳本現在公開在 [kalpakjian/ivdc_handout](https://github.com/kalpakjian/ivdc_handout)，
 `# [原文]`／`# [補完]` 就標在原本那幾行旁邊，讀者可以直接查證。
