@@ -565,7 +565,7 @@ print(&quot;Actual Class:&quot;, actual_label)</code></pre>
 <tr><td><code>layers.Dense(128, activation='relu')</code></td><td><code>nn.Linear(64*5*5, 128)</code> + <code>torch.relu</code></td><td>等價</td></tr>
 <tr><td><code>layers.Dense(10, activation='softmax')</code></td><td><code>nn.Linear(128, 10)</code></td><td>不加 softmax</td></tr>
 <tr><td><code>loss='sparse_categorical_crossentropy'</code></td><td><code>nn.CrossEntropyLoss()</code></td><td>後者內建 softmax</td></tr>
-<tr><td><code>optimizer='adam'</code></td><td><code>optim.Adam(lr=1e-3)</code></td><td>預設學習率不同</td></tr>
+<tr><td><code>optimizer='adam'</code></td><td><code>optim.Adam(lr=1e-3)</code></td><td>兩邊預設都是 1e-3</td></tr>
 <tr><td>輸入 <code>(28, 28, 1)</code></td><td>輸入 <code>(1, 28, 28)</code></td><td>通道位置相反</td></tr>
 <tr><td><code>model.fit(...)</code></td><td>自己寫訓練迴圈</td><td>PyTorch 沒有高階 API</td></tr>
 </table>
@@ -655,7 +655,7 @@ python 04_torch_webcam_detection.py --model fasterrcnn_resnet50
 python 07_torch_cnn_mnist.py                             # CNN 訓練</code></pre>
 <h2 id="12-幾點檢討">12. 幾點檢討</h2>
 <hr>
-<p>**課程標題的即時偵測需要打折看。** 標題寫的是即時偵測，但課程示範的 Faster R-CNN + resnet50 在 CPU 上只有 1.1 FPS。這不是課程寫錯， 而是它假設有 GPU。在 CPU 環境下必須換 backbone 或改用 YOLO 才真的即時。 **推薦 YOLO 是有道理的。** 實測差距 34 倍，而且 YOLO 的程式碼只有四行。 如果只能記一個方案，記 YOLO。 **還原截圖程式碼有風險。** 課程簡報有三處程式碼被滾動箭頭遮住， 只能依框架的標準介面補完。補完的部分在腳本裡都標註了哪些是原文、 哪些是補的，這種標註習慣比程式碼本身重要。 **TensorFlow 那三支腳本沒能實際驗證。** 這台機器的 Python 3.15 裝不上 TensorFlow，所以 <code>01</code>／<code>02</code>／<code>06</code> 只驗證了語法與錯誤處理路徑。 PyTorch 那條線（<code>03</code>／<code>04</code>／<code>07</code>）是完整跑過的。 *本頁為個人學習筆記整理。*</p>
+<p>**課程標題的即時偵測需要打折看。** 標題寫的是即時偵測，但課程示範的 Faster R-CNN + resnet50 在 CPU 上只有 1.1 FPS。這不是課程寫錯， 而是它假設有 GPU。在 CPU 環境下必須換 backbone 或改用 YOLO 才真的即時。 **推薦 YOLO 是有道理的。** 實測差距 34 倍，而且 YOLO 的程式碼只有四行。 如果只能記一個方案，記 YOLO。 **還原截圖程式碼有風險。** 課程簡報有三處程式碼被滾動箭頭遮住， 只能依框架的標準介面補完。補完的部分在腳本裡都標註了哪些是原文、 哪些是補的，這種標註習慣比程式碼本身重要。 **TensorFlow 那三支腳本，改版後補跑了。** 用 <code>uv run --python 3.11</code> 隔離環境就行（06 實跑 test accuracy 0.9872、01 在 bus.jpg 上 person 0.861／bus 0.756、02 在 webcam 上 8.6 FPS）。真正卡住人的是 <code>tensorflow_hub</code> 依賴 <code>pkg_resources</code>，而 setuptools 81 之後把它移除了（實測 84.0.0 → ModuleNotFoundError），要 <code>--with 'setuptools&lt;81'</code>。 PyTorch 那條線（<code>03</code>／<code>04</code>／<code>07</code>）是完整跑過的。 *本頁為個人學習筆記整理。*</p>
 <h2 id="附錄-A名詞速查">附錄 A：名詞速查</h2>
 <table>
 <tr><th>名詞</th><th>說明</th></tr>

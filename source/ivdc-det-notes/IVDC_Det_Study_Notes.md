@@ -527,7 +527,7 @@ PyTorch 模型永遠吃批次，即使只有一張圖。
 | `layers.Dense(128, activation='relu')` | `nn.Linear(64*5*5, 128)` + `torch.relu` | 等價 |
 | `layers.Dense(10, activation='softmax')` | `nn.Linear(128, 10)` | 不加 softmax |
 | `loss='sparse_categorical_crossentropy'` | `nn.CrossEntropyLoss()` | 後者內建 softmax |
-| `optimizer='adam'` | `optim.Adam(lr=1e-3)` | 預設學習率不同 |
+| `optimizer='adam'` | `optim.Adam(lr=1e-3)` | 兩邊預設都是 1e-3（實測） |
 | 輸入 `(28, 28, 1)` | 輸入 `(1, 28, 28)` | 通道位置相反 |
 | `model.fit(...)` | 自己寫訓練迴圈 | PyTorch 沒有高階 API |
 
@@ -667,7 +667,7 @@ Faster R-CNN + resnet50 在 CPU 上只有 1.1 FPS。這不是課程寫錯，
 只能依框架的標準介面補完。補完的部分在腳本裡都標註了哪些是原文、
 哪些是補的，這種標註習慣比程式碼本身重要。
 
-**TensorFlow 那三支腳本沒能實際驗證。** 這台機器的 Python 3.15
+**TensorFlow 那三支腳本，改版後補跑了。** 用 `uv run --python 3.11` 隔離環境就行（06 實跑 test accuracy 0.9872、01 在 bus.jpg 上 person 0.861／bus 0.756、02 在 webcam 上 8.6 FPS）。真正卡住人的是 `tensorflow_hub` 依賴 `pkg_resources`，而 setuptools 81 之後把它移除了（實測 84.0.0 → ModuleNotFoundError），要 `--with 'setuptools<81'`。原本的 Python 3.15
 裝不上 TensorFlow，所以 `01`／`02`／`06` 只驗證了語法與錯誤處理路徑。
 PyTorch 那條線（`03`／`04`／`07`）是完整跑過的。
 

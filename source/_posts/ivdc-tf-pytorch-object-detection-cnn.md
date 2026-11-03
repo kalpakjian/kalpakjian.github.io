@@ -321,14 +321,16 @@ results = model.predict(
 我在同一台機器、同一個 1280×720 的攝影機畫面上，量了各個模型的速度
 （程式跑在 CPU 上）：
 
-| 模型 | 速度 | 最高信心分數 | 檢出數 |
+| 模型（torchvision 函式名） | 速度 | 最高信心分數 | 檢出數 |
 |---|---|---|---|
-| `fasterrcnn_resnet50`（簡報原版） | **1.1 FPS** | 0.830 | 4 個 |
-| `fasterrcnn_mobilenet` | **5.4 FPS** | 0.938 | 1 個 |
-| `fasterrcnn_mobilenet_320` | 24.6 FPS | 0.194 | <strong>0 個</strong> |
-| `ssdlite320` | 19.5 FPS | 0.355 | 1 個（誤檢） |
+| `fasterrcnn_resnet50_fpn`（簡報原版） | **1.1 FPS** | 0.830 | 4 個 |
+| `fasterrcnn_mobilenet_v3_large_fpn` | **5.4 FPS** | 0.938 | 1 個 |
+| `fasterrcnn_mobilenet_v3_large_320_fpn` | 24.6 FPS | 0.194 | <strong>0 個</strong> |
+| `ssdlite320_mobilenet_v3_large` | 19.5 FPS | 0.355 | 1 個（誤檢） |
 
-<strong>這裡有個反直覺的結果</strong>：最快的 `mobilenet_320`（24.6 FPS）竟然一個東西都沒偵測到。
+<small>表格本來用 `fasterrcnn_resnet50`／`fasterrcnn_mobilenet` 這種簡寫，改版時換成 torchvision 的真名：直接 `getattr` 簡寫會 `AttributeError`，因為 torchvision 只有 `fasterrcnn_resnet50_fpn`、`fasterrcnn_mobilenet_v3_large_fpn`、`fasterrcnn_mobilenet_v3_large_320_fpn`、`ssdlite320_mobilenet_v3_large`。`04_torch_webcam_detection.py` 的 `--model` 認得簡寫，內部會翻成真名。</small>
+
+<strong>這裡有個反直覺的結果</strong>：最快的 `..._320_fpn`（24.6 FPS）竟然一個東西都沒偵測到。
 原因是它把輸入縮到 320×320，小目標全部糊掉，加上測試場景光線偏暗，
 信心分數最高只有 0.19。
 
@@ -350,6 +352,11 @@ YOLO 在 640 解析度下就有 37 FPS，比簡報用的 Faster R-CNN 快約 <st
 結果也是 0 檢出，差點誤判成模型有問題。換成官方測試圖後完全正常。
 差別在於——不是所有東西都在 COCO 的 80 個類別裡，洗衣機不在其中，
 模型會硬猜成 `toilet` 或 `truck`，信心分數自然低。
+
+<strong>但這張表的上下兩半不能直接相除。</strong> 上面四個 torchvision 模型的 FPS 是在
+1280×720 的 webcam 實況上量的，YOLO 的準確度是在官方 `bus.jpg` 上量的；
+`37.4 / 1.1 ≈ 34` 混了兩個不同場景。當「量級差」看可以，當嚴格基準線不行。
+要比就得同一段畫面各跑一次。
 
 ## 七、CNN 分類：TensorFlow 版
 
@@ -410,7 +417,27 @@ history = model.fit(
 ```
 
 簡報給的預期輸出是準確率從 0.95 爬到 0.99，損失從 0.15 降到 0.03。
-實測結果幾乎吻合。
+
+我實際跑了一次（TF 2.21.0 / Keras 3.15.1 / Python 3.11 / CPU，5 epochs、batch 32）：
+
+```
+Epoch 1/5 - accuracy: 0.9574 - loss: 0.1398 - val_accuracy: 0.9787 - val_loss: 0.0756
+Epoch 2/5 - accuracy: 0.9859 - loss: 0.0461 - val_accuracy: 0.9872 - val_loss: 0.0440
+Epoch 3/5 - accuracy: 0.9901 - loss: 0.0312 - val_accuracy: 0.9877 - val_loss: 0.0473
+Epoch 4/5 - accuracy: 0.9926 - loss: 0.0228 - val_accuracy: 0.9888 - val_loss: 0.0422
+Epoch 5/5 - accuracy: 0.9946 - loss: 0.0164 - val_accuracy: 0.9873 - val_loss: 0.0476
+Test loss: 0.0404
+Test accuracy: 0.9872
+```
+
+跟簡報預期同一個量級（loss 0.140 → 0.016，test 0.9872）。
+
+<strong>為什麼之前驗不了</strong>：這台機器的 Python 3.15 沒有 TensorFlow 的 wheel，
+而我當時沒想到用臨時環境繞過去。正確做法：
+
+```bash
+uv run --no-project --python 3.11 --with tensorflow-cpu -- python 06_tf_cnn_mnist.py
+```
 
 ### 單張推論
 
@@ -508,6 +535,20 @@ for epoch in range(5):
     print(f"Epoch {epoch + 1}/5, Loss: {running_loss / len(train_loader):.4f}")
 ```
 
+### 評估
+
+簡報沒貼這段，但它的輸出裡有 `Test accuracy`，中間缺的就是這幾行：
+
+```python
+model.eval()
+correct = 0
+test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=512)
+with torch.no_grad():
+    for images, labels in test_loader:
+        correct += (torch.argmax(model(images), dim=1) == labels).sum().item()
+print(f"Test accuracy: {correct / len(test_dataset):.4f} ({correct}/{len(test_dataset)})")
+```
+
 ### 實測結果
 
 這是本機實際跑出來的完整輸出：
@@ -534,9 +575,14 @@ Predicted Class: 7
 Actual Class: 7
 ```
 
-跟簡報給的範例輸出（loss 從 0.1805 降到 0.0225）幾乎逐位吻合，
-證明架構還原正確。<strong>注意 `fc1` 的 `in_features=1600`</strong>，
-正是 `64 × 5 × 5`，跟前面算的一致。
+跟簡報的範例輸出（loss 0.1805 → 0.0225）落同一個量級。
+
+<strong>但 loss 曲線不能當「架構還原正確」的證明</strong>：隨機初始化、shuffle 順序一換就會漂，
+差 0.01 是日常。真正硬的證據是<strong>參數量</strong>——兩套框架都是 **225,034**
+（1×32×9+32、32×64×9+64、1600×128+128、128×10+10），這才是「同一個網路」的意思。
+我另外獨立跑一次得到 0.1868／0.0558／0.0373／0.0283／0.0214、test 0.9904，也落在同一條線上。
+
+<strong>注意 `fc1` 的 `in_features=1600`</strong>，正是 `64 × 5 × 5`，跟前面算的一致。
 
 ### 單張推論
 
@@ -567,7 +613,7 @@ PyTorch 模型永遠吃批次，即使只有一張圖。
 | `layers.Dense(128, activation='relu')` | `nn.Linear(64*5*5, 128)` + `torch.relu` | 等價 |
 | `layers.Dense(10, activation='softmax')` | `nn.Linear(128, 10)` | <strong>PyTorch 不加 softmax</strong> |
 | `loss='sparse_categorical_crossentropy'` | `nn.CrossEntropyLoss()` | 後者內建 softmax |
-| `optimizer='adam'` | `optim.Adam(lr=1e-3)` | 預設學習率不同，要顯式指定 |
+| `optimizer='adam'` | `optim.Adam(lr=1e-3)` | 兩邊預設都是 1e-3（實測 Keras 3.15.1 與 torch 2.15.0）；PyTorch 慣例把 lr 顯式寫出來 |
 | 輸入 `(28, 28, 1)` | 輸入 `(1, 28, 28)` | <strong>通道位置相反</strong> |
 | `model.fit(...)` | 自己寫訓練迴圈 | PyTorch 沒有高階 API |
 
@@ -599,16 +645,19 @@ PyTorch 模型永遠吃批次，即使只有一張圖。
 修法是逐個試、看畫面亮度：
 
 ```python
-def pick_camera(preferred=0, max_index=6, min_brightness=20.0):
-    """回傳第一個真的有畫面的攝影機索引。"""
+def pick_camera(preferred=0, max_index=6, min_brightness=20.0, warmup=1.0):
+    """回傳第一個真的有畫面的攝影機（已開好、已暖機）。"""
     order = [preferred] + [i for i in range(max_index + 1) if i != preferred]
     for idx in order:
-        cap = cv2.VideoCapture(idx, cv2.CAP_DSHOW)
+        # 注意這一行：寫死 CAP_DSHOW，在 Linux/macOS 上會每個 index 都開不起來
+        api = cv2.CAP_DSHOW if sys.platform == "win32" else cv2.CAP_ANY
+        cap = cv2.VideoCapture(idx, api)
         if not cap.isOpened():
             cap.release()
             continue
         mean = -1.0
-        for _ in range(12):          # 等自動曝光穩定
+        t0 = time.time()
+        while time.time() - t0 < warmup:   # 等自動曝光穩定（用時間，不是固定幀數）
             ok, frame = cap.read()
             if ok and frame is not None:
                 mean = float(frame.mean())
@@ -636,16 +685,18 @@ for api in backends:
 ### 坑三：攝影機剛開的前幾幀不能用
 
 自動曝光需要 1～2 秒才穩定，這段時間的畫面會過曝或全黑。
-直接拿去偵測會得到一堆假結果。修法是丟掉前 N 幀：
+直接拿去偵測會得到一堆假結果。
+
+<strong>這裡有個容易寫錯的地方</strong>：丟「10 幀」聽起來夠，但 30 fps 下只有 0.33 秒，
+根本不到 1～2 秒。要用時間當條件：
 
 ```python
-frames = 0
-while True:
-    ret, frame = cap.read()
-    frames += 1
-    if frames <= 10:      # warmup
-        continue
-    # 開始真正處理
+import time
+
+t0 = time.time()
+while time.time() - t0 < 1.5:      # warmup：1.5 秒
+    cap.read()
+# 開始真正處理
 ```
 
 ### 坑四：`imshow` 沒有 fallback 會直接崩
@@ -670,26 +721,30 @@ show_gui = imshow_available()
 
 ## 十一、檔案清單
 
-全部腳本都放在 `ivdc_handout/src/`，各自獨立可跑：
+全部腳本都在 **[kalpakjian/ivdc_handout](https://github.com/kalpakjian/ivdc_handout)** 的 `src/`，各自獨立可跑。
+每一支都用註解標了 `# [原文]`（簡報截圖讀得到）與 `# [補完]`（截圖被遮住／講義省略），
+標在原本那一行旁邊——不用回頭翻這篇文章找「哪段是他補的」。
 
 | 檔案 | 內容 |
 |---|---|
-| `00_check_env.py` | 環境自檢（套件、GUI、攝影機） |
-| `01_tf_object_detection_image.py` | TF 單張圖偵測 |
-| `02_tf_webcam_detection.py` | TF 即時偵測 |
-| `03_torch_object_detection_image.py` | PyTorch 單張圖偵測 |
-| `04_torch_webcam_detection.py` | PyTorch 即時偵測（多模型可切換） |
-| `05_yolo_detection.py` | YOLOv8 偵測 |
-| `06_tf_cnn_mnist.py` | TF CNN 分類 |
-| `07_torch_cnn_mnist.py` | PyTorch CNN 分類 |
+| [`00_check_env.py`](https://github.com/kalpakjian/ivdc_handout/blob/main/src/00_check_env.py) | 環境自檢（套件、GUI、攝影機） |
+| [`01_tf_object_detection_image.py`](https://github.com/kalpakjian/ivdc_handout/blob/main/src/01_tf_object_detection_image.py) | TF 單張圖偵測 |
+| [`02_tf_webcam_detection.py`](https://github.com/kalpakjian/ivdc_handout/blob/main/src/02_tf_webcam_detection.py) | TF 即時偵測 |
+| [`03_torch_object_detection_image.py`](https://github.com/kalpakjian/ivdc_handout/blob/main/src/03_torch_object_detection_image.py) | PyTorch 單張圖偵測 |
+| [`04_torch_webcam_detection.py`](https://github.com/kalpakjian/ivdc_handout/blob/main/src/04_torch_webcam_detection.py) | PyTorch 即時偵測（多模型可切換） |
+| [`05_yolo_detection.py`](https://github.com/kalpakjian/ivdc_handout/blob/main/src/05_yolo_detection.py) | YOLOv8 偵測 |
+| [`06_tf_cnn_mnist.py`](https://github.com/kalpakjian/ivdc_handout/blob/main/src/06_tf_cnn_mnist.py) | TF CNN 分類 |
+| [`07_torch_cnn_mnist.py`](https://github.com/kalpakjian/ivdc_handout/blob/main/src/07_torch_cnn_mnist.py) | PyTorch CNN 分類 |
 
-跑法：
+跑法（每支都支援 `--no-show` 與 `--max-frames`，沒有螢幕的機器也跑得完）：
 
-```powershell
+```bash
 python 00_check_env.py                                   # 先自檢
 python 04_torch_webcam_detection.py                      # 即時偵測
-python 04_torch_webcam_detection.py --model fasterrcnn_resnet50
+python 04_torch_webcam_detection.py --model fasterrcnn_mobilenet_320
+python 04_torch_webcam_detection.py --model fasterrcnn_resnet50_fpn --min-size 400
 python 07_torch_cnn_mnist.py                             # CNN 訓練
+python 02_tf_webcam_detection.py --no-show --max-frames 60
 ```
 
 ## 十二、幾點檢討
@@ -698,17 +753,48 @@ python 07_torch_cnn_mnist.py                             # CNN 訓練
 Faster R-CNN + resnet50 在 CPU 上只有 1.1 FPS。這不是簡報寫錯，
 而是它假設有 GPU。在 CPU 環境下必須換 backbone 或改用 YOLO 才真的即時。
 
+不過「換 backbone」之前還有一個更便宜的旋鈕沒提：`fasterrcnn_resnet50_fpn` 預設
+`min_size=800`，會把 720p 的短邊放大到 800（約 1422×800），CPU 上光這一步就吃掉大半時間。
+降到 400 通常能拿回 2～3 倍 FPS，掉不到幾個點：
+
+```python
+model = torchvision.models.detection.fasterrcnn_resnet50_fpn(
+    weights="DEFAULT", min_size=400, max_size=667)
+```
+
 **「推薦 YOLO」是有道理的。** 實測差距 34 倍，而且 YOLO 的程式碼只有四行。
-如果只能記一個方案，記 YOLO。
+如果只能記一個方案，記 YOLO。同機再補兩個數：`ssdlite320` 在 webcam 上 9.2 FPS，
+`yolov8n` 在 640 推論 19.8 ms（≈50 FPS）。
 
 **還原截圖程式碼有風險。** 這份簡報有三處程式碼被截圖的滾動箭頭遮住，
 我只能依框架的標準介面補完。補完的部分我在腳本裡都標註了哪些是原文、
 哪些是補的——這種標註習慣比程式碼本身重要，否則半年後連自己都分不清。
+腳本現在公開在 [kalpakjian/ivdc_handout](https://github.com/kalpakjian/ivdc_handout)，
+`# [原文]`／`# [補完]` 就標在原本那幾行旁邊，讀者可以直接查證。
 
-**最後，TensorFlow 那三支腳本我沒能實際驗證。** 這台機器的 Python 3.15
-裝不上 TensorFlow，所以 `01`／`02`／`06` 只驗證了語法與錯誤處理路徑。
-PyTorch 那條線（`03`／`04`／`07`）是完整跑過的。
-如果要用 TensorFlow 版，記得先在目標機器上跑一次 `00_check_env.py`。
+**TensorFlow 那三支腳本，改版後補跑了。** 這台機器的 Python 3.15 裝不上 TensorFlow，
+但我原本下的結論（「所以只驗證語法」）是錯的——用 `uv run --python 3.11` 隔離環境就行：
+`06_tf_cnn_mnist.py` 實跑 test accuracy **0.9872**、`01` 在官方 `bus.jpg` 上
+person 0.861／bus 0.756、`02` 在 webcam 上 **8.6 FPS**。
 
+**真正卡住人的是 `tensorflow_hub` 被 setuptools 版本搞死。** 它 import 時會
+`from pkg_resources import parse_version`，而 setuptools 81 之後把 `pkg_resources` 移除了。
+實測 setuptools 84.0.0 → `ModuleNotFoundError: No module named 'pkg_resources'`，
+而且錯在 import 階段，訊息完全看不出跟 TF Hub 有關（很容易誤判成模型網址壞了）。裝舊的就好：
 
+```bash
+uv run --no-project --python 3.11 --with tensorflow-cpu \
+    --with tensorflow-hub --with 'setuptools<81' -- python 01_tf_object_detection_image.py
+```
 
+順帶一個容易誤判的：`tfhub.dev` 的網址用 `curl` 去摸會回 404（網頁層已下架），
+但 `hub.load()` 仍然解析得到模型檔。**404 不代表模型沒了**，別急著換 URL。
+
+**torchvision 的 SSD 家族沒有 `.weights` 屬性。** 想印類別名稱時
+`model.weights.meta["categories"]` 在 Faster R-CNN 上可以，在 `ssdlite320_mobilenet_v3_large`
+上會 `AttributeError`；要改從 `WeightsEnum` 拿
+（`get_weight("SSDLite320_MobileNet_V3_Large_Weights.DEFAULT")`）。
+
+**最後，換一個說法。** 這一版把「實測」兩個字重新校準：數字都附環境
+（TF 2.21.0 / Keras 3.15.1 / torch 2.15.0+cpu / torchvision 0.29.2+cpu / OpenCV 5.0.0 / Python 3.11 與 3.14），
+跑不動的項目直接寫跑不動，而不是用「應該吻合」填空。
