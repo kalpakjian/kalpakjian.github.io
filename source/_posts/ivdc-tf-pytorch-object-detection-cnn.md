@@ -359,47 +359,57 @@ results = model.predict(
 
 ## 六、實測：速度與準確度的取捨
 
-這是整篇筆記最有價值的一段，因為**簡報標題寫「Real Time」，但實測並不是每個模型都做得到**。
+這是全篇最容易誤讀的一段，因為<strong>比較必須同一段畫面</strong>。
+上一版我把 torchvision 的 FPS（webcam 實況）和 YOLO 的準確度（官方 `bus.jpg`）並排，
+再相除得出「差 34 倍」——算術沒錯，但那是跨基準線的相除。
+這次全部重測：<strong>同一台機器、同一張 1280×720 的實機影格、同一個 0.5 門檻、CPU 單張推論</strong>。
+畫面就是那台洗衣機（正好是下面要講的陷阱本身）：
 
-我在同一台機器、同一個 1280×720 的攝影機畫面上，量了各個模型的速度
-（程式跑在 CPU 上）：
+| 模型（torchvision／ultralytics 函式名） | 延遲 | 速度 | 最高信心 | ≥0.5 檢出 | 猜成什麼 |
+|---|---|---|---|---|---|
+| `fasterrcnn_resnet50_fpn`（簡報原版） | 731 ms | **1.4 FPS** | 0.584 | 1 | `toilet` |
+| `fasterrcnn_resnet50_fpn` ＋ `min_size=400` | 266 ms | 3.8 FPS | 0.494 | 0 | — |
+| `fasterrcnn_mobilenet_v3_large_fpn` | 137 ms | 7.3 FPS | **0.697** | 2 | `toilet`、`refrigerator` |
+| `fasterrcnn_mobilenet_v3_large_320_fpn` | 29 ms | 34.6 FPS | 0.464 | <strong>0</strong> | — |
+| `ssdlite320_mobilenet_v3_large` | 30 ms | 33.1 FPS | 0.561 | 1 | `refrigerator` |
+| `yolov8n` imgsz=640 | 28 ms | 35.8 FPS | 0.404 | <strong>0</strong> | `refrigerator` |
+| `yolov8n` imgsz=960 | 36 ms | 27.5 FPS | 0.253 | <strong>0</strong> | `refrigerator` |
+| `yolov8n` imgsz=1280 | 33 ms | 30.0 FPS | 0.394 | <strong>0</strong> | `toilet` |
 
-| 模型（torchvision 函式名） | 速度 | 最高信心分數 | 檢出數 |
-|---|---|---|---|
-| `fasterrcnn_resnet50_fpn`（簡報原版） | **1.1 FPS** | 0.830 | 4 個 |
-| `fasterrcnn_mobilenet_v3_large_fpn` | **5.4 FPS** | 0.938 | 1 個 |
-| `fasterrcnn_mobilenet_v3_large_320_fpn` | 24.6 FPS | 0.194 | <strong>0 個</strong> |
-| `ssdlite320_mobilenet_v3_large` | 19.5 FPS | 0.355 | 1 個（誤檢） |
+三個反直覺的結果：
 
-<small>表格本來用 `fasterrcnn_resnet50`／`fasterrcnn_mobilenet` 這種簡寫，改版時換成 torchvision 的真名：直接 `getattr` 簡寫會 `AttributeError`，因為 torchvision 只有 `fasterrcnn_resnet50_fpn`、`fasterrcnn_mobilenet_v3_large_fpn`、`fasterrcnn_mobilenet_v3_large_320_fpn`、`ssdlite320_mobilenet_v3_large`。`04_torch_webcam_detection.py` 的 `--model` 認得簡寫，內部會翻成真名。</small>
+1. **最快的兩個模型一個東西都沒偵測到**：`..._320_fpn`（34.6 FPS）與 `yolov8n`（三種解析度都是 0）。
+   它把輸入縮到 320×320、或整張圖縮到 640，小目標全部糊掉，信心最高只到 0.40–0.46。
+2. **這一幕沒有任何模型答對**——<strong>洗衣機不在 COCO 的 80 個類別裡</strong>，模型只能硬猜。
+   Faster R-CNN 猜 `toilet`，YOLO 猜 `refrigerator` 或 `toilet`。
+   （上一版寫「硬猜成 `toilet` 或 `truck`」，實測是 `toilet` 或 `refrigerator`，`truck` 沒出現。）
+3. **「快」跟「有用」是兩件事**：34.6 FPS 的模型不是「看得很準」，是「很快地什麼都沒看到」。
 
-<strong>這裡有個反直覺的結果</strong>：最快的 `..._320_fpn`（24.6 FPS）竟然一個東西都沒偵測到。
-原因是它把輸入縮到 320×320，小目標全部糊掉，加上測試場景光線偏暗，
-信心分數最高只有 0.19。
+<strong>同一基準下的差距是 25.6 倍</strong>（1.4 → 35.8 FPS），不是 34 倍——上一版把兩個不同場景相除了。
+<strong>`min_size` 也真的有用</strong>：731 → 266 ms（2.7 倍），而這一幕本來就沒有真陽性可掉
+（最高信心 0.584 → 0.494），所以是純賺。
 
-所以「快」跟「有用」是兩件事，預設值要選在平衡點上，
-不能無腦挑 FPS 最高的那個。
+換成「有答案」的官方測試圖 `bus.jpg`，YOLOv8n 就恢復正常（同一台機器）：
 
-YOLOv8n 的表現則好很多，而且解析度是可控的：
+| `imgsz` | 延遲 | 速度 | ≥0.5 檢出 | 內容 |
+|---|---|---|---|---|
+| 640 | 27.6 ms | 36.2 FPS | 4 | `bus 0.873` ＋ `person 0.866 / 0.853 / 0.825` |
+| 960 | 29.6 ms | 33.8 FPS | 4 | 同樣四個，`person 0.886` 最高 |
+| 1280 | 41.8 ms | 23.9 FPS | 6 | 多出 `bus 0.690 / 0.634 / 0.542` <strong>三個重複框</strong> |
 
-| `imgsz` | 速度 | 準確度（用官方 bus.jpg 測試） |
-|---|---|---|
-| 640 | **37.4 FPS** | `bus 0.87` + `person 0.87/0.85/0.83`，4 個全對 |
-| 960 | 18.8 FPS | — |
-| 1280 | 11.1 FPS | 同一張圖檢出 7 個，小目標更完整 |
+所以「解析度拉高、檢出更多」要打折看：1280 多出來的是<strong>同一台公車被框三次</strong>，
+外加一個信心 0.289 的 `skateboard`。解析度不是免費的午餐，NMS 也救不回重疊框。
 
-YOLO 在 640 解析度下就有 37 FPS，比簡報用的 Faster R-CNN 快約 <strong>34 倍</strong>，
-而且準確度沒有犧牲。簡報說「Yolo (Recommended)」，實測確實如此。
+<small>上一版（Windows／另一台機器）量到 `fasterrcnn_resnet50_fpn` 1.1 FPS、`yolov8n` 640 是 37.4 FPS，
+和這裡的 1.4／36.2 同一個量級——差別只在「有沒有用同一段畫面比」。上面的表全部是
+2026-11 在 Linux（torch 2.15.0+cpu / torchvision 0.29.2+cpu / ultralytics 8.4.201 / OpenCV 5.0.0）
+配一支 1280×720 的 USB 攝影機量的。這些是<strong>單次量測</strong>，同一台機器重跑會有 ±10% 跳動
+（`ssdlite320` 我在 26–33 ms 之間看過）；但「哪個模型 0 檢出、猜成哪一類」每次跑都一樣。
+要重跑這張表：
 
-<strong>但要注意一個陷阱</strong>：我一開始拿隨手拍的昏暗房間畫面測 YOLO，
-結果也是 0 檢出，差點誤判成模型有問題。換成官方測試圖後完全正常。
-差別在於——不是所有東西都在 COCO 的 80 個類別裡，洗衣機不在其中，
-模型會硬猜成 `toilet` 或 `truck`，信心分數自然低。
-
-<strong>但這張表的上下兩半不能直接相除。</strong> 上面四個 torchvision 模型的 FPS 是在
-1280×720 的 webcam 實況上量的，YOLO 的準確度是在官方 `bus.jpg` 上量的；
-`37.4 / 1.1 ≈ 34` 混了兩個不同場景。當「量級差」看可以，當嚴格基準線不行。
-要比就得同一段畫面各跑一次。
+```bash
+python bench/bench_detection.py --camera 0 --yolo     # 在 ivdc_handout repo 裡
+```</small>
 
 ## 七、CNN 分類：TensorFlow 版
 
@@ -793,7 +803,7 @@ python 02_tf_webcam_detection.py --no-show --max-frames 60
 ## 十二、幾點檢討
 
 **簡報的「Real Time」需要打折看。** 標題寫的是即時偵測，但簡報示範的
-Faster R-CNN + resnet50 在 CPU 上只有 1.1 FPS。這不是簡報寫錯，
+Faster R-CNN + resnet50 在 CPU 上只有 1.1～1.4 FPS（兩台機器各量一次）。這不是簡報寫錯，
 而是它假設有 GPU。在 CPU 環境下必須換 backbone 或改用 YOLO 才真的即時。
 
 不過「換 backbone」之前還有一個更便宜的旋鈕沒提：`fasterrcnn_resnet50_fpn` 預設
@@ -805,9 +815,13 @@ model = torchvision.models.detection.fasterrcnn_resnet50_fpn(
     weights="DEFAULT", min_size=400, max_size=667)
 ```
 
-**「推薦 YOLO」是有道理的。** 實測差距 34 倍，而且 YOLO 的程式碼只有四行。
-如果只能記一個方案，記 YOLO。同機再補兩個數：`ssdlite320` 在 webcam 上 9.2 FPS，
-`yolov8n` 在 640 推論 19.8 ms（≈50 FPS）。
+**「推薦 YOLO」只在「好用」這件事上成立。** 同一段畫面上 `yolov8n`（640）35.8 FPS
+對上簡報示範的 `fasterrcnn_resnet50_fpn` 1.4 FPS，差 <strong>25.6 倍</strong>，而且只有四行程式碼。
+但換成同一個 torchvision 家族的 `ssdlite320_mobilenet_v3_large`（33.1 FPS），
+在 `bus.jpg` 上它的信心其實<strong>更高</strong>：`person 0.989`／`bus 0.985`，
+YOLOv8n 是 `person 0.866`／`bus 0.873`。
+所以「記 YOLO」的理由是<strong>四行程式碼、換模型不用改程式</strong>，不是數字最漂亮——
+速度與準確度的天花板，`ssdlite320` 站在同一格。
 
 **還原截圖程式碼有風險。** 逐頁比對之後，被截圖的向下捲動箭頭遮住程式碼的是
 <strong>7 頁</strong>（第 2、3、5、6、18、19、22 頁），我第一版只寫「三處」是低估。
