@@ -6,7 +6,10 @@ node_modules/
 public/
 .deploy*/
 _multiconfig.yml
-_covergen/
+# 封面產線：腳本要版控，產出的圖（15 MB）不要
+_covergen/out/
+_covergen/**/__pycache__/
+.DS_Store
 _work/
 
 # Python 快取（tools/ 底下的腳本會產生）
