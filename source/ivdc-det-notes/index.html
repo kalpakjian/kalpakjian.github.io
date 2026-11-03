@@ -407,6 +407,8 @@ model.predict(source=0, show=True)</code></pre>
 <tr><td><code>fasterrcnn_mobilenet_320</code></td><td>24.6 FPS</td><td>0.194</td><td>0</td></tr>
 <tr><td><code>ssdlite320</code></td><td>19.5 FPS</td><td>0.355</td><td>1</td></tr>
 </table>
+<p>⚠️ 這張表是<strong>跨基準線</strong>的舊版數字（torchvision 用 webcam 實況、YOLO 用 <code>bus.jpg</code>）。同一段畫面重測後的結果與解讀，以文章版為準 → <a href="https://kalpakjian.github.io/2026/11/03/ivdc-tf-pytorch-object-detection-cnn/">同一份課堂材料，用 TensorFlow 與 PyTorch 各跑一遍</a></p>
+
 <p>&lt;strong&gt;這裡有一個反直覺的結果&lt;/strong&gt;：最快的 <code>mobilenet_320</code> 竟然什麼都沒偵測到。 它把輸入縮到 320×320，小目標全部糊掉，加上場景光線偏暗，信心分數最高只有 0.19。 所以快與有用是兩件事，預設值要選在平衡點上。 YOLOv8n 的表現好很多，而且解析度可控：</p>
 <table>
 <tr><th>imgsz</th><th>速度</th><th>準確度（官方測試圖）</th></tr>

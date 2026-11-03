@@ -297,6 +297,8 @@ results = model.predict(
 | `fasterrcnn_mobilenet_320` | 24.6 FPS | 0.194 | 0 |
 | `ssdlite320` | 19.5 FPS | 0.355 | 1 |
 
+> ⚠️ 這張表是**跨基準線**的舊版數字（torchvision 用 webcam 實況、YOLO 用 `bus.jpg`）。同一段畫面重測後的結果與解讀，以文章版為準 → [同一份課堂材料，用 TensorFlow 與 PyTorch 各跑一遍](https://kalpakjian.github.io/2026/11/03/ivdc-tf-pytorch-object-detection-cnn/)
+
 <strong>這裡有一個反直覺的結果</strong>：最快的 `mobilenet_320` 竟然什麼都沒偵測到。
 它把輸入縮到 320×320，小目標全部糊掉，加上場景光線偏暗，信心分數最高只有 0.19。
 所以快與有用是兩件事，預設值要選在平衡點上。
