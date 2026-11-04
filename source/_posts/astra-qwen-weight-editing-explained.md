@@ -68,6 +68,49 @@ banner_img: /img/covers/astra-qwen-weight-editing.png
 
 這是整件事最容易被模糊的地方。拆成兩半看：
 
+<!-- FIG1 -->
+<figure style="margin:24px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 560" role="img" aria-label="從配對樣本到秩一編輯的五步流程：配對、取方向、回溯通道、因果驗證、秩一編輯" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="938.5" height="558.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">五步把「卡住的模型」變成「講得完的模型」</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 2 步的差值不是逐層掃描，而是殘差流上的方向；第 4 步才是「不是亂改」的證據</text>
+<rect x="60" y="108" width="820" height="54" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<circle cx="92" cy="135.0" r="15" fill="#2dd4bf" opacity="0.92"/>
+<text x="92" y="140.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="120" y="132.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">配對樣本：同一題跑兩次</text>
+<text x="120" y="153.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">A 正常講完答對（productive）　·　B 卡進復讀（repetitive）　各 4 組</text>
+<rect x="60" y="180" width="820" height="54" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<circle cx="92" cy="207.0" r="15" fill="#58a6ff" opacity="0.92"/>
+<text x="92" y="212.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<text x="120" y="204.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">取方向：在第 16 / 20 層殘差輸出，算 B 多出來的方向 u</text>
+<text x="120" y="225.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不是比每一層的神經元差值 —— 那是「相關」，不是「因果」</text>
+<rect x="60" y="252" width="820" height="54" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<circle cx="92" cy="279.0" r="15" fill="#c084fc" opacity="0.92"/>
+<text x="92" y="284.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<text x="120" y="276.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">回溯：誰在往 u 這個方向寫？→ FFN 的 down_proj 輸出通道</text>
+<text x="120" y="297.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">候選＝第 15、19 層各 64 支筆（共 128 個通道）</text>
+<rect x="60" y="324" width="820" height="54" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<circle cx="92" cy="351.0" r="15" fill="#fbbf24" opacity="0.92"/>
+<text x="92" y="356.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<text x="120" y="348.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">因果驗證：劑量測試 ＋ 單層隔離 ＋ norm-matched 隨機正交</text>
+<text x="120" y="369.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">隨機正交只漲 +1.56 分（SE 3.52）；針對性干預漲 +49.8 分</text>
+<rect x="60" y="396" width="820" height="54" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<circle cx="92" cy="423.0" r="15" fill="#3fb950" opacity="0.92"/>
+<text x="92" y="428.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<text x="120" y="420.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">秩一編輯：沿 u 把那 64 支筆的分量減弱（係數 6）</text>
+<text x="120" y="441.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只碰兩個張量：131,072 個權重值　·　嵌入層 / 輸出層 / final norm 不動</text>
+<path d="M 470.0 164 L 470.0 177" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 470.0 236 L 470.0 249" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 470.0 308 L 470.0 321" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 470.0 380 L 470.0 393" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="60" y="476" width="820" height="42" rx="8" fill="#2a0f12" stroke="#7d2b33" stroke-width="1.5"/>
+<text x="78" y="503" font-size="13" fill="#f85149" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">若跳過第 4 步：你只知道「這幾層差值大」，不知道是真的病因，還是所有難題都會亮的同一盞燈。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：五步流程。第 2 步是殘差流上的方向（不是逐層比神經元差值），第 4 步的因果驗證才是「不是亂改」的證據。</figcaption>
+</figure>
+<!-- /FIG1 -->
+
 ### 3.1 評估與搜尋：真的沒有梯度
 
 規則明文禁止 backward、autograd、optimizer、任何「對 loss 迭代擬合權重」；Astra 只有兩種工具：
@@ -79,7 +122,7 @@ banner_img: /img/covers/astra-qwen-weight-editing.png
 
 ### 3.2 方向怎麼來的：不是 LLM「讀懂」，是對比分析
 
-這才是重點。方向是用**對比分析（contrastive analysis）**算出來的：
+這才是重點。方向是用 **對比分析（contrastive analysis）** 算出來的：
 
 - 取 **4 組配對**：同一道題「講完答對」vs「卡進復讀」。
 - 在**第 16、20 層的殘差輸出**上，求「復讀端多出來的方向」`u`。
@@ -96,13 +139,43 @@ Astra 做的事是**把這整套流程自動跑完**：設計對比、篩通道�
 
 ### 4.1 劑量測試（dose-response）
 
-沿復讀方向施加 alpha = 1 / 2 / 4：
-
-| 施加強度 | 復讀分支 log-prob 變化 | 正常解題分支變化 |
-|---|---|---|
-| alpha = 1 | −0.0241 nats/token | 幾乎不變 |
-| alpha = 2 | −0.0487 nats/token | 幾乎不變 |
-| alpha = 4 | −0.1037 nats/token | 幾乎不變 |
+<!-- FIG2 -->
+<figure style="margin:24px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 500" role="img" aria-label="兩組因果證據：劑量測試讓復讀分支單調下降而正常分支幾乎不變；隨機正交對照只漲 1.56 分" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="938.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩張證據，把「相關」推成「因果」</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">左：劑量越大壓得越深，且只壓復讀、不壓解題　·　右：同樣大小的隨機干預幾乎無效</text>
+<text x="60" y="106" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">劑量測試：沿 u 施加 alpha</text>
+<text x="60" y="130" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">單位：nats/token 的 log-prob 變化</text>
+<path d="M 300 128 L 300 304" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="60" y="157" font-size="13.5" fill="#8b949e" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">alpha = 1</text>
+<rect x="265.055" y="141" width="34.945" height="24" rx="6" fill="#2dd4bf" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="312" y="157" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">−0.0241</text>
+<text x="60" y="203" font-size="13.5" fill="#8b949e" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">alpha = 2</text>
+<rect x="229.385" y="187" width="70.615" height="24" rx="6" fill="#2dd4bf" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="312" y="203" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">−0.0487</text>
+<text x="60" y="249" font-size="13.5" fill="#8b949e" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">alpha = 4</text>
+<rect x="149.635" y="233" width="150.365" height="24" rx="6" fill="#2dd4bf" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="312" y="249" font-size="13" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">−0.1037</text>
+<text x="60" y="295" font-size="13.5" fill="#8b949e" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">正常解題分支</text>
+<rect x="286.9065" y="279" width="13.0935" height="24" rx="6" fill="#58a6ff" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="312" y="295" font-size="13" fill="#58a6ff" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">−0.0090（幾乎不動）</text>
+<text x="660" y="106" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">隨機正交對照：一樣大，方向亂選</text>
+<text x="660" y="130" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">MATH-500 等練習題的配對增益（百分比點）</text>
+<rect x="660" y="202.68" width="96" height="169.32" rx="6" fill="#fbbf24" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="708.0" y="190.68" font-size="17" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+49.8</text>
+<text x="708.0" y="394" font-size="13" fill="#e6edf3" font-weight="600" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">針對性干預</text>
+<text x="708.0" y="412" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SE 1.5</text>
+<rect x="830" y="366.696" width="96" height="5.304" rx="6" fill="#7d8590" stroke="#7d859066" stroke-width="1.5"/>
+<text x="878.0" y="354.696" font-size="17" fill="#7d8590" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+1.6</text>
+<text x="878.0" y="394" font-size="13" fill="#e6edf3" font-weight="600" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">隨機正交</text>
+<text x="878.0" y="412" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">SE 3.52</text>
+<path d="M 646 372 L 966 372" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="646" y="462" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同樣量級的改動，差了 30 倍：這不是「亂改也會好」</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：左＝劑量測試（復讀分支單調下降，正常解題分支幾乎不動）；右＝同樣大小的隨機正交干預幾乎無效。</figcaption>
+</figure>
+<!-- /FIG2 -->
 
 **劑量越大，復讀越被壓下去，而正常解題路徑幾乎不受影響。** 這是「真的有因果」的形狀。稀疏版（top64、alpha=6）也保留同樣的選擇性：復讀 −0.10311、正常 −0.00903 nats/token。
 
@@ -112,12 +185,7 @@ Astra 做的事是**把這整套流程自動跑完**：設計對比、篩通道�
 
 ### 4.3 隨機正交對照（最關鍵的一組）
 
-拿一個**大小相同、但方向隨機、還做了 norm 匹配**的干預來比：
-
-| 干預 | 增益 |
-|---|---|
-| 針對性干預 | **+49.8 分**（SE 1.5） |
-| norm-matched 隨機正交 | +1.56 分（SE 3.52） |
+拿一個**大小相同、但方向隨機、還做了 norm 匹配**的干預來比（見圖 2 右）：**針對性干預 +49.8 分（SE 1.5）**，而 **norm-matched 隨機正交只有 +1.56 分（SE 3.52）**。
 
 差距大到沒得爭。**沒有這組對照，「+49.8」根本無法排除「亂改剛好有用」的可能。**
 
@@ -125,14 +193,14 @@ Astra 做的事是**把這整套流程自動跑完**：設計對比、篩通道�
 
 p50c 的最終提交只動兩個張量：
 
-```
+```text
 model.language_model.layers.15.mlp.down_proj.weight
 model.language_model.layers.19.mlp.down_proj.weight
 ```
 
 編輯式：
 
-```
+```text
 W(新) = W(舊) − 6 · outer( u , mask64 · (u @ W(舊)) )
 ```
 
@@ -198,6 +266,39 @@ W(新) = W(舊) − 6 · outer( u , mask64 · (u @ W(舊)) )
 
 **結論寫在作者 README 裡：Qwen 的漲幅來自「移除循環」，不是「增加能力」。沒有病灶可拆，同樣的方法幾乎什麼都換不到。**
 
+<!-- FIG3 -->
+<figure style="margin:24px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 400" role="img" aria-label="兩個模型的病灶規模與同一刀的收益：Qwen 90% 截斷換到 49.8 分，Gemma 8.5% 截斷只有 0.9 分" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="938.5" height="398.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">拆牆 ≠ 蓋樓：同一把刀，兩個模型</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">病灶越單一、越極端，無梯度編輯越有效；沒有牆可拆時，幾乎什麼都換不到</text>
+<rect x="60" y="120" width="380" height="190" rx="12" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="80" y="152" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Qwen3.5-0.8B（有牆可拆）</text>
+<text x="80" y="196" font-size="34" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">93%</text>
+<text x="152" y="196" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">答案撞上 32,768 token 上限</text>
+<text x="80" y="220" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1038 / 1152 題被截斷</text>
+<path d="M 80 238 L 420 238" fill="none" stroke="#30363d" stroke-width="1"/>
+<text x="80" y="272" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一刀的收益</text>
+<text x="178" y="276" font-size="26" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+49.8</text>
+<text x="253" y="276" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">pp</text>
+<text x="80" y="298" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">576 / 579 次救援原本是被截斷的題</text>
+<rect x="500" y="120" width="380" height="190" rx="12" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="520" y="152" font-size="15" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Gemma 3 270M（沒有牆）</text>
+<text x="520" y="196" font-size="34" fill="#7d8590" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8.5%</text>
+<text x="616" y="196" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">答案撞上 token 上限</text>
+<text x="520" y="220" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">幾乎每一題都講得完</text>
+<path d="M 520 238 L 860 238" fill="none" stroke="#30363d" stroke-width="1"/>
+<text x="520" y="272" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一刀的收益</text>
+<text x="618" y="276" font-size="26" fill="#7d8590" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">+0.9</text>
+<text x="678" y="276" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">pp（不顯著）</text>
+<text x="520" y="298" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Astra 自評：這個提升沒有站得住腳</text>
+<text x="60" y="350" font-size="13.5" fill="#fbbf24" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Qwen 的漲幅來自「移除循環」，不是「增加能力」——作者在 Gemma 對照組的 README 裡寫得很清楚。</text>
+<text x="60" y="372" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">所以正確定位是接力而非替代：梯度下降負責學會能力，無梯度編輯負責把被擋住的能力放出來。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 3：同一把刀，兩個模型。Qwen 有 93% 的答案卡在循環，一刀換到 49.8 分；Gemma 只有 8.5%，同樣的刀只換到 0.9 分。</figcaption>
+</figure>
+<!-- /FIG3 -->
+
 > 這條結論很貴。它價值在於：它把「無梯度權重編輯」的能力上限，用一個乾淨的對照實驗釘死了。
 
 ## 八、那「梯度下降收斂完，真的最好嗎？」
@@ -214,10 +315,12 @@ Qwen 的案例證明：**「表徵對、但輸出通道被某個強勢方向壓�
 
 ### 8.2 但邊際收益完全取決於病灶大小
 
-| 模型 | 病灶規模 | 同樣一刀的收益 |
+| 模型 | 病灶規模 | 同一把刀的收益 |
 |---|---|---|
-| Qwen 3.5-0.8B | 90% 答案被截斷 | **+49.8 pp** |
-| Gemma 3 270M | 8.5% 答案被截斷 | **+0.9 pp**（不顯著） |
+| Qwen 3.5-0.8B | 93% 答案撞上 token 上限 | **+49.8 pp** |
+| Gemma 3 270M | 8.5% 答案撞上 token 上限 | **+0.9 pp**（不顯著） |
+
+（同一組數字的視覺版見圖 3。）
 
 **病灶越單一、越極端，這招越神；越接近「品質微調」，這招越沒力。** 原因很直覺：秩一編輯能刪掉一個強勢方向，但沒辦法憑空造出一個模型沒有的特徵。
 
