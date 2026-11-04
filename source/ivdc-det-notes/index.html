@@ -185,7 +185,7 @@ hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
 </nav>
 <main>
 <h1 id="Lesson-8TensorFlow-與-PyTorch-的物件偵測與-CNN-學習筆記">Lesson 8：TensorFlow 與 PyTorch 的物件偵測與 CNN 學習筆記</h1>
-<blockquote><p>同一堂課用兩套框架各寫一遍：物件偵測（webcam 與 YOLO）與 CNN 分類（MNIST）。<br />本筆記把簡報裡以截圖呈現的程式碼逐段還原成可執行版本，並在真機上重新實測每一段。<br />量到的速度與準確度直接寫進內文，速度不如預期的地方也照實記錄。<br />只想複習考點的話，看附錄 C 的一頁精華就夠。</p></blockquote>
+<blockquote><p>同一堂課用兩套框架各寫一遍：物件偵測（webcam 與 YOLO）與 CNN 分類（MNIST）。<br />本筆記把課程簡報裡以截圖呈現的程式碼逐段還原成可執行版本，並在真機上重新實測每一段。<br />量到的速度與準確度直接寫進內文，速度不如預期的地方也照實記錄。<br />只想複習考點的話，看附錄 C 的一頁精華就夠。</p></blockquote>
 <h2 id="0-30-秒總複習考前最後掃描">0. 30 秒總複習（考前最後掃描）</h2>
 <pre><code>物件偵測：載入模型 → 讀圖轉張量 → 模型推論 → 過濾門檻 → 畫框 → 顯示
 CNN 分類：載入資料 → 前處理(reshape/255) → 建模型 → 訓練 → 單張推論</code></pre>
@@ -195,8 +195,8 @@ CNN 分類：載入資料 → 前處理(reshape/255) → 建模型 → 訓練 �
 <tr><td>PyTorch 為何不加 softmax</td><td><code>CrossEntropyLoss</code> 內含 softmax，加了等於算兩次</td></tr>
 <tr><td>TensorFlow 的框座標格式</td><td>歸一化 0～1，順序 <code>ymin, xmin, ymax, xmax</code></td></tr>
 <tr><td>PyTorch 的框座標格式</td><td>絕對像素，順序 <code>x0, y0, x1, y1</code></td></tr>
-<tr><td>CPU 上最快又能用的模型</td><td>YOLOv8n <code>imgsz=640</code>，實測約 37 FPS</td></tr>
-<tr><td>簡報示範的模型為何卡</td><td><code>fasterrcnn_resnet50</code> 在 CPU 只有約 1 FPS</td></tr>
+<tr><td>CPU 上最快又能用的模型</td><td>YOLOv8n <code>imgsz=640</code>，同一基準約 36 FPS</td></tr>
+<tr><td>課程示範的模型為何卡</td><td><code>fasterrcnn_resnet50</code> 在 CPU 只有約 1.4 FPS</td></tr>
 <tr><td>為何 <code>Conv2D</code> 要 reshape</td><td>要補上通道維度，灰階圖通道數為 1</td></tr>
 <tr><td><code>64 × 5 × 5</code> 怎麼來的</td><td>28→26→13→11→5，兩次卷積兩次池化</td></tr>
 <tr><td>攝影機開得起來卻全黑</td><td>索引不對，實際裝置可能不在 0</td></tr>
@@ -212,7 +212,7 @@ CNN 分類：載入資料 → 前處理(reshape/255) → 建模型 → 訓練 �
 <tr><td>CNN 分類（TensorFlow）</td><td>MNIST 數字分類，五個階段</td><td><code>06</code></td></tr>
 <tr><td>CNN 分類（PyTorch）</td><td>MNIST 數字分類，同樣五個階段</td><td><code>07</code></td></tr>
 </table>
-<p>兩個 CNN 區塊的流程完全一樣，都是**載入資料 → 建模型 → 訓練 → 看輸出 → 單張推論**。 這種安排是刻意的：先看懂一個，再看另一個，差異就只剩 API 名稱。 課程對模型選擇也有明確建議：</p>
+<p>兩個 CNN 區塊的流程完全一樣，都是<strong>載入資料 → 建模型 → 訓練 → 看輸出 → 單張推論</strong>。 這種安排是刻意的：先看懂一個，再看另一個，差異就只剩 API 名稱。 課程對模型選擇也有明確建議：</p>
 <table>
 <tr><th>模型</th><th>特性</th></tr>
 <tr><td>SSD MobileNet V2</td><td>快，適合即時應用，初學者最容易上手</td></tr>
@@ -235,7 +235,7 @@ CNN 分類：載入資料 → 前處理(reshape/255) → 建模型 → 訓練 �
 <tr><td>tensorflow</td><td>未安裝</td><td>需另外安裝</td></tr>
 <tr><td>ultralytics</td><td>未安裝</td><td>需另外安裝</td></tr>
 </table>
-<p>自檢腳本的核心是這一段。注意 &lt;strong&gt;<code>imshow</code> 必須真的呼叫一次&lt;/strong&gt;， 不能只檢查函式是否存在：</p>
+<p>自檢腳本的核心是這一段。注意 <strong><code>imshow</code> 必須真的呼叫一次</strong>， 不能只檢查函式是否存在：</p>
 <pre><code>import importlib
 import cv2
 import numpy as np
@@ -266,7 +266,7 @@ except Exception as exc:
 <p><code>hasattr(cv2, "imshow")</code> 會回傳 <code>True</code>，但實際呼叫卻拋出例外：</p>
 <pre><code>cv2.error: (-2:Unspecified error) The function is not implemented.
 Rebuild the library with Windows, GTK+ 2.x or Cocoa support.</code></pre>
-<p>這是因為裝的是 <code>opencv-python-headless</code>，&lt;strong&gt;函式存在、後端沒有實作&lt;/strong&gt;。 <code>currentUIFramework()</code> 回傳空字串就是徵兆。修法是換成帶 GUI 的版本：</p>
+<p>這是因為裝的是 <code>opencv-python-headless</code>，<strong>函式存在、後端沒有實作</strong>。 <code>currentUIFramework()</code> 回傳空字串就是徵兆。修法是換成帶 GUI 的版本：</p>
 <pre><code>pip uninstall opencv-python-headless -y
 pip install opencv-python</code></pre>
 <p>換完之後 <code>UI 框架</code> 顯示 <code>WIN32</code>，<code>imshow</code> 恢復正常。</p>
@@ -285,13 +285,13 @@ image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 input_tensor = tf.convert_to_tensor(image_rgb, dtype=tf.uint8)
 input_tensor = tf.expand_dims(input_tensor, 0)   # (1, H, W, 3)</code></pre>
-<p>推論與取結果的部分，簡報的截圖被遮住了，依標準介面補完：</p>
+<p>推論與取結果的部分，課程簡報的截圖被遮住了，依標準介面補完：</p>
 <pre><code>detections = model(input_tensor)
 
 boxes = detections[&quot;detection_boxes&quot;][0].numpy()
 scores = detections[&quot;detection_scores&quot;][0].numpy()
 classes = detections[&quot;detection_classes&quot;][0].numpy().astype(int)</code></pre>
-<p>&lt;strong&gt;這裡最容易寫錯的是座標格式&lt;/strong&gt;：<code>detection_boxes</code> 是歸一化的 0～1， 順序為 <code>ymin, xmin, ymax, xmax</code>，要各自乘上畫面寬高才能畫。</p>
+<p><strong>這裡最容易寫錯的是座標格式</strong>：<code>detection_boxes</code> 是歸一化的 0～1， 順序為 <code>ymin, xmin, ymax, xmax</code>，要各自乘上畫面寬高才能畫。</p>
 <h3 id="31-即時-webcam-版">3.1 即時 webcam 版</h3>
 <pre><code>cap = cv2.VideoCapture(0)
 
@@ -342,7 +342,7 @@ boxes = prediction[&quot;boxes&quot;].numpy()
 scores = prediction[&quot;scores&quot;].numpy()
 labels = prediction[&quot;labels&quot;].numpy()</code></pre>
 <p>跟 TensorFlow 版比，有兩個關鍵差異：</p>
-<ol><li>&lt;strong&gt;<code>model.eval()</code> 一定要呼叫&lt;/strong&gt;。Faster R-CNN 在 train 模式下回傳的是 loss，不是預測框。</li><li>&lt;strong&gt;座標是絕對像素&lt;/strong&gt;，順序 <code>[x0, y0, x1, y1]</code>，不需要再乘寬高。</li></ol>
+<ol><li><strong><code>model.eval()</code> 一定要呼叫</strong>。Faster R-CNN 在 train 模式下回傳的是 loss，不是預測框。</li><li><strong>座標是絕對像素</strong>，順序 <code>[x0, y0, x1, y1]</code>，不需要再乘寬高。</li></ol>
 <p>鍵名對照如下，兩套框架一一對應但名稱不同：</p>
 <table>
 <tr><th>TensorFlow</th><th>PyTorch</th></tr>
@@ -399,24 +399,32 @@ model.predict(source=0, show=True)</code></pre>
     stream=True,    # webcam 要開
 )</code></pre>
 <h2 id="6-實測速度與準確度的取捨">6. 實測：速度與準確度的取捨</h2>
-<p>課程把這段標題定為即時偵測，但實測並不是每個模型都做得到。 以下數字取自同一台機器、同一個 1280×720 畫面，程式跑在 CPU 上：</p>
+<p>課程把這段標題定為即時偵測，但實測並不是每個模型都做得到。 <strong>比較必須同一段畫面</strong>。以下全部取自同一台機器、同一張 1280×720 的實機影格、 同一個 0.5 門檻、CPU 單張推論：</p>
 <table>
-<tr><th>模型</th><th>速度</th><th>最高信心分數</th><th>檢出數</th></tr>
-<tr><td><code>fasterrcnn_resnet50</code></td><td>1.1 FPS</td><td>0.830</td><td>4</td></tr>
-<tr><td><code>fasterrcnn_mobilenet</code></td><td>5.4 FPS</td><td>0.938</td><td>1</td></tr>
-<tr><td><code>fasterrcnn_mobilenet_320</code></td><td>24.6 FPS</td><td>0.194</td><td>0</td></tr>
-<tr><td><code>ssdlite320</code></td><td>19.5 FPS</td><td>0.355</td><td>1</td></tr>
+<tr><th>模型</th><th>延遲</th><th>速度</th><th>最高信心</th><th>檢出</th><th>猜成什麼</th></tr>
+<tr><td><code>fasterrcnn_resnet50_fpn</code>（課程原版）</td><td>731 ms</td><td><strong>1.4 FPS</strong></td><td>0.584</td><td>1</td><td><code>toilet</code></td></tr>
+<tr><td><code>fasterrcnn_resnet50_fpn</code> ＋ <code>min_size=400</code></td><td>266 ms</td><td>3.8 FPS</td><td>0.494</td><td>0</td><td>—</td></tr>
+<tr><td><code>fasterrcnn_mobilenet_v3_large_fpn</code></td><td>137 ms</td><td>7.3 FPS</td><td><strong>0.697</strong></td><td>2</td><td><code>toilet</code>、<code>refrigerator</code></td></tr>
+<tr><td><code>fasterrcnn_mobilenet_v3_large_320_fpn</code></td><td>29 ms</td><td>34.6 FPS</td><td>0.464</td><td>0</td><td>—</td></tr>
+<tr><td><code>ssdlite320_mobilenet_v3_large</code></td><td>30 ms</td><td>33.1 FPS</td><td>0.561</td><td>1</td><td><code>refrigerator</code></td></tr>
+<tr><td><code>yolov8n</code> imgsz=640</td><td>28 ms</td><td>35.8 FPS</td><td>0.404</td><td>0</td><td><code>refrigerator</code></td></tr>
+<tr><td><code>yolov8n</code> imgsz=960</td><td>36 ms</td><td>27.5 FPS</td><td>0.253</td><td>0</td><td><code>refrigerator</code></td></tr>
+<tr><td><code>yolov8n</code> imgsz=1280</td><td>33 ms</td><td>30.0 FPS</td><td>0.394</td><td>0</td><td><code>toilet</code></td></tr>
 </table>
-<p>⚠️ 這張表是<strong>跨基準線</strong>的舊版數字（torchvision 用 webcam 實況、YOLO 用 <code>bus.jpg</code>）。同一段畫面重測後的結果與解讀，以文章版為準 → <a href="https://kalpakjian.github.io/2026/11/03/ivdc-tf-pytorch-object-detection-cnn/">同一份課堂材料，用 TensorFlow 與 PyTorch 各跑一遍</a></p>
-
-<p>&lt;strong&gt;這裡有一個反直覺的結果&lt;/strong&gt;：最快的 <code>mobilenet_320</code> 竟然什麼都沒偵測到。 它把輸入縮到 320×320，小目標全部糊掉，加上場景光線偏暗，信心分數最高只有 0.19。 所以快與有用是兩件事，預設值要選在平衡點上。 YOLOv8n 的表現好很多，而且解析度可控：</p>
+<p>三個反直覺的結果：</p>
+<ol><li><strong>最快的兩個模型一個東西都沒偵測到</strong>：<code>..._320_fpn</code>（34.6 FPS）與 <code>yolov8n</code>（三種解析度都是 0）。</li></ol>
+<p>把輸入縮到 320×320 或整張圖縮到 640，小目標全部糊掉，信心最高只到 0.40–0.46。</p>
+<ol><li><strong>這一幕沒有任何模型答對</strong>，因為洗衣機不在 COCO 的 80 個類別裡，模型只能硬猜。</li></ol>
+<p>Faster R-CNN 猜 <code>toilet</code>，YOLO 猜 <code>refrigerator</code> 或 <code>toilet</code>。</p>
+<ol><li><strong>快與有用是兩件事</strong>：34.6 FPS 的模型不是看得很準，是很快地什麼都沒看到。</li></ol>
+<p><strong>同一基準下的差距是 25.6 倍</strong>（1.4 → 35.8 FPS）。 <strong><code>min_size</code> 也真的有用</strong>：731 → 266 ms（2.7 倍），而這一幕本來就沒有真陽性可掉 （最高信心 0.584 → 0.494），所以是純賺。 換成有答案的官方測試圖 <code>bus.jpg</code>，YOLOv8n 就恢復正常：</p>
 <table>
-<tr><th>imgsz</th><th>速度</th><th>準確度（官方測試圖）</th></tr>
-<tr><td>640</td><td>37.4 FPS</td><td>bus 0.87、person 0.87／0.85／0.83</td></tr>
-<tr><td>960</td><td>18.8 FPS</td><td>中間檔</td></tr>
-<tr><td>1280</td><td>11.1 FPS</td><td>同圖檢出 7 個，小目標更完整</td></tr>
+<tr><th>imgsz</th><th>延遲</th><th>速度</th><th>檢出</th><th>內容</th></tr>
+<tr><td>640</td><td>27.6 ms</td><td>36.2 FPS</td><td>4</td><td>bus 0.873、person 0.866／0.853／0.825</td></tr>
+<tr><td>960</td><td>29.6 ms</td><td>33.8 FPS</td><td>4</td><td>同樣四個</td></tr>
+<tr><td>1280</td><td>33 ms</td><td>30.0 FPS</td><td>更多</td><td>小目標更完整</td></tr>
 </table>
-<p>YOLO 在 640 解析度下就有約 37 FPS，比課程示範的 Faster R-CNN 快約 34 倍， 準確度也沒有犧牲。課程標註推薦方案，實測確實如此。 &lt;strong&gt;要注意的另一個陷阱&lt;/strong&gt;：用昏暗的室內畫面測 YOLO 也會 0 檢出。 不是所有東西都在 COCO 的 80 個類別裡，洗衣機不在其中， 模型會硬猜成 toilet 或 truck，信心分數自然低。換成官方測試圖就完全正常。</p>
+<p><strong>要注意的另一個陷阱</strong>：用昏暗的室內畫面測 YOLO 也會 0 檢出。 不是所有東西都在 COCO 的 80 個類別裡，換成官方測試圖就完全正常。</p>
 <h2 id="7-CNN-分類TensorFlow-版">7. CNN 分類：TensorFlow 版</h2>
 <p>用 MNIST 手寫數字做分類，五個階段。</p>
 <h3 id="71-載入資料">7.1 載入資料</h3>
@@ -429,7 +437,7 @@ print(&quot;Test Data Shape:&quot;, x_test.shape)        # (10000, 28, 28)</code
 <h3 id="72-前處理">7.2 前處理</h3>
 <pre><code>x_train = x_train.reshape(-1, 28, 28, 1) / 255.0
 x_test = x_test.reshape(-1, 28, 28, 1) / 255.0</code></pre>
-<p><code>reshape</code> 多出來的那一維是&lt;strong&gt;通道數&lt;/strong&gt;。<code>Conv2D</code> 要求輸入為 <code>(H, W, C)</code>， 灰階圖的 C 就是 1。除以 255 是正規化到 0～1。</p>
+<p><code>reshape</code> 多出來的那一維是<strong>通道數</strong>。<code>Conv2D</code> 要求輸入為 <code>(H, W, C)</code>， 灰階圖的 C 就是 1。除以 255 是正規化到 0～1。</p>
 <h3 id="73-建立模型">7.3 建立模型</h3>
 <pre><code>from tensorflow import keras
 from tensorflow.keras import layers
@@ -504,7 +512,7 @@ class CNN(nn.Module):
         x = torch.relu(self.fc1(x))
         x = self.fc2(x)
         return x</code></pre>
-<p>&lt;strong&gt;<code>64 × 5 × 5</code> 這個數字怎麼來的&lt;/strong&gt;：28 進 3×3 卷積（無 padding）得 26， 池化得 13，再卷積得 11，再池化得 5。所以特徵圖是 <code>64 × 5 × 5</code>。 這個計算是初學者最常卡住的地方。 PyTorch 版&lt;strong&gt;最後一層沒有 softmax&lt;/strong&gt;。因為 <code>CrossEntropyLoss</code> 內部已經含 softmax， 再加一次等於算了兩遍。</p>
+<p><strong><code>64 × 5 × 5</code> 這個數字怎麼來的</strong>：28 進 3×3 卷積（無 padding）得 26， 池化得 13，再卷積得 11，再池化得 5。所以特徵圖是 <code>64 × 5 × 5</code>。 這個計算是初學者最常卡住的地方。 PyTorch 版<strong>最後一層沒有 softmax</strong>。因為 <code>CrossEntropyLoss</code> 內部已經含 softmax， 再加一次等於算了兩遍。</p>
 <h3 id="83-訓練">8.3 訓練</h3>
 <pre><code>import torch.optim as optim
 
@@ -567,19 +575,19 @@ print(&quot;Actual Class:&quot;, actual_label)</code></pre>
 <tr><td><code>layers.Dense(128, activation='relu')</code></td><td><code>nn.Linear(64*5*5, 128)</code> + <code>torch.relu</code></td><td>等價</td></tr>
 <tr><td><code>layers.Dense(10, activation='softmax')</code></td><td><code>nn.Linear(128, 10)</code></td><td>不加 softmax</td></tr>
 <tr><td><code>loss='sparse_categorical_crossentropy'</code></td><td><code>nn.CrossEntropyLoss()</code></td><td>後者內建 softmax</td></tr>
-<tr><td><code>optimizer='adam'</code></td><td><code>optim.Adam(lr=1e-3)</code></td><td>兩邊預設都是 1e-3</td></tr>
+<tr><td><code>optimizer='adam'</code></td><td><code>optim.Adam(lr=1e-3)</code></td><td>兩邊預設都是 1e-3（實測）</td></tr>
 <tr><td>輸入 <code>(28, 28, 1)</code></td><td>輸入 <code>(1, 28, 28)</code></td><td>通道位置相反</td></tr>
 <tr><td><code>model.fit(...)</code></td><td>自己寫訓練迴圈</td><td>PyTorch 沒有高階 API</td></tr>
 </table>
 <p>三條最值得記住的差異：</p>
-<ol><li>**通道位置**：TF 是 <code>(H, W, C)</code>，PyTorch 是 <code>(C, H, W)</code>。</li><li>**softmax**：TF 的 <code>Dense(10, activation='softmax')</code> 對應 PyTorch 的</li></ol>
-<p><code>nn.Linear(128, 10)</code> &lt;strong&gt;不加激活&lt;/strong&gt;，因為 <code>CrossEntropyLoss</code> 已經內含。</p>
-<ol><li>**訓練迴圈**：Keras 一行 <code>fit()</code>，PyTorch 要手寫</li></ol>
+<ol><li><strong>通道位置</strong>：TF 是 <code>(H, W, C)</code>，PyTorch 是 <code>(C, H, W)</code>。</li><li><strong>softmax</strong>：TF 的 <code>Dense(10, activation='softmax')</code> 對應 PyTorch 的</li></ol>
+<p><code>nn.Linear(128, 10)</code> <strong>不加激活</strong>，因為 <code>CrossEntropyLoss</code> 已經內含。</p>
+<ol><li><strong>訓練迴圈</strong>：Keras 一行 <code>fit()</code>，PyTorch 要手寫</li></ol>
 <p><code>zero_grad → forward → loss → backward → step</code> 五步。</p>
 <h2 id="10-四個會讓程式當場掛掉的坑">10. 四個會讓程式當場掛掉的坑</h2>
 <p>這些是課程不會告訴你、但實測一定會遇到的。</p>
 <h3 id="101-攝影機不一定在-index-0">10.1 攝影機不一定在 index 0</h3>
-<p>這是最陰險的一個。<code>cv2.VideoCapture(0)</code> &lt;strong&gt;會成功開啟、不會報錯&lt;/strong&gt;， 但畫面上是純黑。不會看到任何錯誤訊息，只會覺得怎麼都偵測不到東西。 實測列舉本機攝影機：</p>
+<p>這是最陰險的一個。<code>cv2.VideoCapture(0)</code> <strong>會成功開啟、不會報錯</strong>， 但畫面上是純黑。不會看到任何錯誤訊息，只會覺得怎麼都偵測不到東西。 實測列舉本機攝影機：</p>
 <table>
 <tr><th>索引</th><th>畫面平均亮度</th><th>實際狀況</th></tr>
 <tr><td>camera 0</td><td>2.4</td><td>虛擬設備，黑畫面</td></tr>
@@ -657,7 +665,7 @@ python 04_torch_webcam_detection.py --model fasterrcnn_resnet50
 python 07_torch_cnn_mnist.py                             # CNN 訓練</code></pre>
 <h2 id="12-幾點檢討">12. 幾點檢討</h2>
 <hr>
-<p>**課程標題的即時偵測需要打折看。** 標題寫的是即時偵測，但課程示範的 Faster R-CNN + resnet50 在 CPU 上只有 1.1 FPS。這不是課程寫錯， 而是它假設有 GPU。在 CPU 環境下必須換 backbone 或改用 YOLO 才真的即時。 **推薦 YOLO 是有道理的。** 實測差距 34 倍，而且 YOLO 的程式碼只有四行。 如果只能記一個方案，記 YOLO。 **還原截圖程式碼有風險。** 課程簡報有三處程式碼被滾動箭頭遮住， 只能依框架的標準介面補完。補完的部分在腳本裡都標註了哪些是原文、 哪些是補的，這種標註習慣比程式碼本身重要。 **TensorFlow 那三支腳本，改版後補跑了。** 用 <code>uv run --python 3.11</code> 隔離環境就行（06 實跑 test accuracy 0.9872、01 在 bus.jpg 上 person 0.861／bus 0.756、02 在 webcam 上 8.6 FPS）。真正卡住人的是 <code>tensorflow_hub</code> 依賴 <code>pkg_resources</code>，而 setuptools 81 之後把它移除了（實測 84.0.0 → ModuleNotFoundError），要 <code>--with 'setuptools&lt;81'</code>。 PyTorch 那條線（<code>03</code>／<code>04</code>／<code>07</code>）是完整跑過的。 *本頁為個人學習筆記整理。*</p>
+<p><strong>課程標題的即時偵測需要打折看。</strong> 標題寫的是即時偵測，但課程示範的 Faster R-CNN + resnet50 在 CPU 上只有 1.4 FPS。這不是課程寫錯， 而是它假設有 GPU。在 CPU 環境下必須換 backbone 或改用 YOLO 才真的即時。 <strong>推薦 YOLO 是有道理的。</strong> 同一基準下差距 25.6 倍，而且 YOLO 的程式碼只有四行。 如果只能記一個方案，記 YOLO。 <strong>還原截圖程式碼有風險。</strong> 課程簡報有三處程式碼被滾動箭頭遮住， 只能依框架的標準介面補完。補完的部分在腳本裡都標註了哪些是原文、 哪些是補的，這種標註習慣比程式碼本身重要。 <strong>TensorFlow 那三支腳本，改版後補跑了。</strong> 用 <code>uv run --python 3.11</code> 隔離環境就行（06 實跑 test accuracy 0.9872、01 在 bus.jpg 上 person 0.861／bus 0.756、02 在 webcam 上 8.6 FPS）。真正卡住人的是 <code>tensorflow_hub</code> 依賴 <code>pkg_resources</code>，而 setuptools 81 之後把它移除了（實測 84.0.0 → ModuleNotFoundError），要 <code>--with 'setuptools&lt;81'</code>。原本的 Python 3.15 裝不上 TensorFlow，所以 <code>01</code>／<code>02</code>／<code>06</code> 只驗證了語法與錯誤處理路徑。 PyTorch 那條線（<code>03</code>／<code>04</code>／<code>07</code>）是完整跑過的。 *本頁為個人學習筆記整理。*</p>
 <h2 id="附錄-A名詞速查">附錄 A：名詞速查</h2>
 <table>
 <tr><th>名詞</th><th>說明</th></tr>

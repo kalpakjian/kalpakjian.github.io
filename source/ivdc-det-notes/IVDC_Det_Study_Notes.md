@@ -1,7 +1,7 @@
 # Lesson 8：TensorFlow 與 PyTorch 的物件偵測與 CNN 學習筆記
 
 > 同一堂課用兩套框架各寫一遍：物件偵測（webcam 與 YOLO）與 CNN 分類（MNIST）。<br />
-> 本筆記把簡報裡以截圖呈現的程式碼逐段還原成可執行版本，並在真機上重新實測每一段。<br />
+> 本筆記把課程簡報裡以截圖呈現的程式碼逐段還原成可執行版本，並在真機上重新實測每一段。<br />
 > 量到的速度與準確度直接寫進內文，速度不如預期的地方也照實記錄。<br />
 > 只想複習考點的話，看附錄 C 的一頁精華就夠。
 
@@ -18,8 +18,8 @@ CNN 分類：載入資料 → 前處理(reshape/255) → 建模型 → 訓練 �
 | PyTorch 為何不加 softmax | `CrossEntropyLoss` 內含 softmax，加了等於算兩次 |
 | TensorFlow 的框座標格式 | 歸一化 0～1，順序 `ymin, xmin, ymax, xmax` |
 | PyTorch 的框座標格式 | 絕對像素，順序 `x0, y0, x1, y1` |
-| CPU 上最快又能用的模型 | YOLOv8n `imgsz=640`，實測約 37 FPS |
-| 簡報示範的模型為何卡 | `fasterrcnn_resnet50` 在 CPU 只有約 1 FPS |
+| CPU 上最快又能用的模型 | YOLOv8n `imgsz=640`，同一基準約 36 FPS |
+| 課程示範的模型為何卡 | `fasterrcnn_resnet50` 在 CPU 只有約 1.4 FPS |
 | 為何 `Conv2D` 要 reshape | 要補上通道維度，灰階圖通道數為 1 |
 | `64 × 5 × 5` 怎麼來的 | 28→26→13→11→5，兩次卷積兩次池化 |
 | 攝影機開得起來卻全黑 | 索引不對，實際裝置可能不在 0 |
@@ -138,7 +138,7 @@ input_tensor = tf.convert_to_tensor(image_rgb, dtype=tf.uint8)
 input_tensor = tf.expand_dims(input_tensor, 0)   # (1, H, W, 3)
 ```
 
-推論與取結果的部分，簡報的截圖被遮住了，依標準介面補完：
+推論與取結果的部分，課程簡報的截圖被遮住了，依標準介面補完：
 
 ```python
 detections = model(input_tensor)
@@ -288,35 +288,43 @@ results = model.predict(
 ## 6. 實測：速度與準確度的取捨
 
 課程把這段標題定為即時偵測，但實測並不是每個模型都做得到。
-以下數字取自同一台機器、同一個 1280×720 畫面，程式跑在 CPU 上：
 
-| 模型 | 速度 | 最高信心分數 | 檢出數 |
-|---|---|---|---|
-| `fasterrcnn_resnet50` | 1.1 FPS | 0.830 | 4 |
-| `fasterrcnn_mobilenet` | 5.4 FPS | 0.938 | 1 |
-| `fasterrcnn_mobilenet_320` | 24.6 FPS | 0.194 | 0 |
-| `ssdlite320` | 19.5 FPS | 0.355 | 1 |
+<strong>比較必須同一段畫面</strong>。以下全部取自同一台機器、同一張 1280×720 的實機影格、
+同一個 0.5 門檻、CPU 單張推論：
 
-> ⚠️ 這張表是**跨基準線**的舊版數字（torchvision 用 webcam 實況、YOLO 用 `bus.jpg`）。同一段畫面重測後的結果與解讀，以文章版為準 → [同一份課堂材料，用 TensorFlow 與 PyTorch 各跑一遍](https://kalpakjian.github.io/2026/11/03/ivdc-tf-pytorch-object-detection-cnn/)
+| 模型 | 延遲 | 速度 | 最高信心 | 檢出 | 猜成什麼 |
+|---|---|---|---|---|---|
+| `fasterrcnn_resnet50_fpn`（課程原版） | 731 ms | **1.4 FPS** | 0.584 | 1 | `toilet` |
+| `fasterrcnn_resnet50_fpn` ＋ `min_size=400` | 266 ms | 3.8 FPS | 0.494 | 0 | — |
+| `fasterrcnn_mobilenet_v3_large_fpn` | 137 ms | 7.3 FPS | **0.697** | 2 | `toilet`、`refrigerator` |
+| `fasterrcnn_mobilenet_v3_large_320_fpn` | 29 ms | 34.6 FPS | 0.464 | 0 | — |
+| `ssdlite320_mobilenet_v3_large` | 30 ms | 33.1 FPS | 0.561 | 1 | `refrigerator` |
+| `yolov8n` imgsz=640 | 28 ms | 35.8 FPS | 0.404 | 0 | `refrigerator` |
+| `yolov8n` imgsz=960 | 36 ms | 27.5 FPS | 0.253 | 0 | `refrigerator` |
+| `yolov8n` imgsz=1280 | 33 ms | 30.0 FPS | 0.394 | 0 | `toilet` |
 
-<strong>這裡有一個反直覺的結果</strong>：最快的 `mobilenet_320` 竟然什麼都沒偵測到。
-它把輸入縮到 320×320，小目標全部糊掉，加上場景光線偏暗，信心分數最高只有 0.19。
-所以快與有用是兩件事，預設值要選在平衡點上。
+三個反直覺的結果：
 
-YOLOv8n 的表現好很多，而且解析度可控：
+1. **最快的兩個模型一個東西都沒偵測到**：`..._320_fpn`（34.6 FPS）與 `yolov8n`（三種解析度都是 0）。
+   把輸入縮到 320×320 或整張圖縮到 640，小目標全部糊掉，信心最高只到 0.40–0.46。
+2. **這一幕沒有任何模型答對**，因為洗衣機不在 COCO 的 80 個類別裡，模型只能硬猜。
+   Faster R-CNN 猜 `toilet`，YOLO 猜 `refrigerator` 或 `toilet`。
+3. **快與有用是兩件事**：34.6 FPS 的模型不是看得很準，是很快地什麼都沒看到。
 
-| imgsz | 速度 | 準確度（官方測試圖） |
-|---|---|---|
-| 640 | 37.4 FPS | bus 0.87、person 0.87／0.85／0.83 |
-| 960 | 18.8 FPS | 中間檔 |
-| 1280 | 11.1 FPS | 同圖檢出 7 個，小目標更完整 |
+<strong>同一基準下的差距是 25.6 倍</strong>（1.4 → 35.8 FPS）。
+<strong>`min_size` 也真的有用</strong>：731 → 266 ms（2.7 倍），而這一幕本來就沒有真陽性可掉
+（最高信心 0.584 → 0.494），所以是純賺。
 
-YOLO 在 640 解析度下就有約 37 FPS，比課程示範的 Faster R-CNN 快約 34 倍，
-準確度也沒有犧牲。課程標註推薦方案，實測確實如此。
+換成有答案的官方測試圖 `bus.jpg`，YOLOv8n 就恢復正常：
+
+| imgsz | 延遲 | 速度 | 檢出 | 內容 |
+|---|---|---|---|---|
+| 640 | 27.6 ms | 36.2 FPS | 4 | bus 0.873、person 0.866／0.853／0.825 |
+| 960 | 29.6 ms | 33.8 FPS | 4 | 同樣四個 |
+| 1280 | 33 ms | 30.0 FPS | 更多 | 小目標更完整 |
 
 <strong>要注意的另一個陷阱</strong>：用昏暗的室內畫面測 YOLO 也會 0 檢出。
-不是所有東西都在 COCO 的 80 個類別裡，洗衣機不在其中，
-模型會硬猜成 toilet 或 truck，信心分數自然低。換成官方測試圖就完全正常。
+不是所有東西都在 COCO 的 80 個類別裡，換成官方測試圖就完全正常。
 
 ## 7. CNN 分類：TensorFlow 版
 
@@ -659,10 +667,10 @@ python 07_torch_cnn_mnist.py                             # CNN 訓練
 ## 12. 幾點檢討
 
 **課程標題的即時偵測需要打折看。** 標題寫的是即時偵測，但課程示範的
-Faster R-CNN + resnet50 在 CPU 上只有 1.1 FPS。這不是課程寫錯，
+Faster R-CNN + resnet50 在 CPU 上只有 1.4 FPS。這不是課程寫錯，
 而是它假設有 GPU。在 CPU 環境下必須換 backbone 或改用 YOLO 才真的即時。
 
-**推薦 YOLO 是有道理的。** 實測差距 34 倍，而且 YOLO 的程式碼只有四行。
+**推薦 YOLO 是有道理的。** 同一基準下差距 25.6 倍，而且 YOLO 的程式碼只有四行。
 如果只能記一個方案，記 YOLO。
 
 **還原截圖程式碼有風險。** 課程簡報有三處程式碼被滾動箭頭遮住，
