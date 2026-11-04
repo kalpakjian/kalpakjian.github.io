@@ -1,4 +1,5 @@
 ---
+archive: true   # 已歸入 /cnn/ 專題目錄，不列在首頁
 title: 同一份課堂材料，用 TensorFlow 與 PyTorch 各跑一遍：物件偵測與 CNN 實作筆記
 date: 2026-11-03 21:00:00
 categories:
@@ -25,6 +26,8 @@ toc: true
 index_img: /img/covers/ivdc-tf-pytorch-detection-cnn.png
 banner_img: /img/covers/ivdc-tf-pytorch-detection-cnn.png
 ---
+
+> 📚 這篇文章已歸入主題目錄：[CNN 專題](/cnn/)（九篇圖解系列、課程筆記與實驗都在那裡）。
 
 ![同一份課堂材料，用 TensorFlow 與 PyTorch 各跑一遍](/img/covers/ivdc-tf-pytorch-detection-cnn.png)
 
