@@ -222,7 +222,7 @@ CNN 分類：載入資料 → 前處理(reshape/255) → 建模型 → 訓練 �
 <tr><td>DETR</td><td>Transformer 架構，準確度好但吃資源</td></tr>
 </table>
 <h2 id="2-先把環境量清楚">2. 先把環境量清楚</h2>
-<p>在寫任何程式之前先確認機器上有什麼。這個動作後來證明很關鍵， 因為它直接揭露了第一個致命問題。</p>
+<p>在寫任何程式之前先確認機器上有什麼。這個動作後來證明很關鍵， 因為它直接揭露了第一個致命問題。 下表是原始開發機（Windows 11／Python 3.15.1）。§6 的速度數字是後來在另一台 Linux 機器上、用較新版本（torch 2.15.0）重測的，兩張表不要混著比較。</p>
 <table>
 <tr><th>套件</th><th>版本</th><th>狀態</th></tr>
 <tr><td>Python</td><td>3.15.1</td><td>可用</td></tr>
@@ -421,10 +421,10 @@ model.predict(source=0, show=True)</code></pre>
 <table>
 <tr><th>imgsz</th><th>延遲</th><th>速度</th><th>檢出</th><th>內容</th></tr>
 <tr><td>640</td><td>27.6 ms</td><td>36.2 FPS</td><td>4</td><td>bus 0.873、person 0.866／0.853／0.825</td></tr>
-<tr><td>960</td><td>29.6 ms</td><td>33.8 FPS</td><td>4</td><td>同樣四個</td></tr>
-<tr><td>1280</td><td>33 ms</td><td>30.0 FPS</td><td>更多</td><td>小目標更完整</td></tr>
+<tr><td>960</td><td>29.6 ms</td><td>33.8 FPS</td><td>4</td><td>同樣四個，person 0.886 最高</td></tr>
+<tr><td>1280</td><td>41.8 ms</td><td>23.9 FPS</td><td>6</td><td>多出 bus 0.690／0.634／0.542 <strong>三個重複框</strong></td></tr>
 </table>
-<p><strong>要注意的另一個陷阱</strong>：用昏暗的室內畫面測 YOLO 也會 0 檢出。 不是所有東西都在 COCO 的 80 個類別裡，換成官方測試圖就完全正常。</p>
+<p><strong>解析度拉高、檢出變多要打折看</strong>：1280 多出來的其實是同一台公車被框三次， 外加一個 0.289 的 skateboard。NMS 救不回這種重疊框，所以「檢出變多」不等於「變準」。 <strong>要注意的另一個陷阱</strong>：用昏暗的室內畫面測 YOLO 也會 0 檢出。 不是所有東西都在 COCO 的 80 個類別裡，換成官方測試圖就完全正常。</p>
 <h2 id="7-CNN-分類TensorFlow-版">7. CNN 分類：TensorFlow 版</h2>
 <p>用 MNIST 手寫數字做分類，五個階段。</p>
 <h3 id="71-載入資料">7.1 載入資料</h3>
@@ -533,7 +533,7 @@ for epoch in range(5):
         running_loss += loss.item()
     print(f&quot;Epoch {epoch + 1}/5, Loss: {running_loss / len(train_loader):.4f}&quot;)</code></pre>
 <h3 id="84-實測結果">8.4 實測結果</h3>
-<p>本機實際跑完的完整輸出：</p>
+<p>這是本機（Windows／Python 3.15／torch 2.14.1+cpu）實際跑完的完整輸出。 注意這裡的版本與 §6 那份速度表不同——§6 的數字是在 Linux 機器上重測的（見核對報告的環境矩陣）， 兩邊不能互相對照 FPS。</p>
 <pre><code>PyTorch Version: 2.14.1+cpu
 Training samples: 60000
 Test samples: 10000
@@ -585,7 +585,7 @@ print(&quot;Actual Class:&quot;, actual_label)</code></pre>
 <ol><li><strong>訓練迴圈</strong>：Keras 一行 <code>fit()</code>，PyTorch 要手寫</li></ol>
 <p><code>zero_grad → forward → loss → backward → step</code> 五步。</p>
 <h2 id="10-四個會讓程式當場掛掉的坑">10. 四個會讓程式當場掛掉的坑</h2>
-<p>這些是課程不會告訴你、但實測一定會遇到的。</p>
+<p>這一節只講「會直接讓程式停住」的四個。其他「不會掛掉但結果不對」的症狀 （例如框畫錯位置、loss 不下降）整理在<strong>附錄 B 的排查表</strong>。 這些是課程不會告訴你、但實測一定會遇到的。</p>
 <h3 id="101-攝影機不一定在-index-0">10.1 攝影機不一定在 index 0</h3>
 <p>這是最陰險的一個。<code>cv2.VideoCapture(0)</code> <strong>會成功開啟、不會報錯</strong>， 但畫面上是純黑。不會看到任何錯誤訊息，只會覺得怎麼都偵測不到東西。 實測列舉本機攝影機：</p>
 <table>
