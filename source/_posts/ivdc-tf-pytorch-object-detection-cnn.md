@@ -40,9 +40,6 @@ banner_img: /img/covers/ivdc-tf-pytorch-detection-cnn.png
 >
 > <strong>📚 課程筆記版</strong>：完整筆記（含目錄、名詞速查、常見陷阱、一頁精華與 40 題測驗）
 > → <a href="/ivdc-det-notes/">Lesson 8 物件偵測與 CNN 學習筆記</a>
->
-> <strong>📄 核對報告</strong>：把這 25 頁逐頁對過一次，列出 10 項勘誤（含我自己寫錯的 5 項）與同一段畫面的重測數據
-> → <a href="/2026/11/04/ivdc-det-report/">簡報只有標題是文字：逐頁還原與核對報告</a>
 
 
 ## 一、這份材料在教什麼
