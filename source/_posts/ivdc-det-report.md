@@ -25,7 +25,7 @@ banner_img: /img/covers/ivdc-det-report-banner.png
 
 > <strong>這篇是什麼</strong>：一份 25 頁課程簡報的<strong>逐頁核對報告</strong>。
 > 那份簡報只有大標題是文字層，所有程式碼都是截圖；我先把它還原成 9 支可執行腳本，
-> 再逐頁比對我自己寫的筆記，結果<strong>抓到 10 項錯誤</strong>（其中 5 項是我自己文章的錯）。
+> 再逐頁比對我自己寫的筆記，結果<strong>抓到 12 項錯誤</strong>（其中 7 項是我自己文章的錯）。
 >
 > <strong>為什麼值得公開</strong>：因為錯的都是「看起來很合理」的那種——模型名稱簡寫、
 > 學習率預設值、用 loss 曲線證明架構正確、把兩個不同場景的 FPS 相除。
@@ -39,7 +39,7 @@ banner_img: /img/covers/ivdc-det-report-banner.png
 ## 一、摘要
 
 - <strong>頁碼宣稱全部正確</strong>：第 2、3、5、7、8–17、18–25 頁都對得上。
-- <strong>修正 10 項</strong>事實或推論錯誤（見 §三）。
+- <strong>修正 12 項</strong>事實或推論錯誤（見 §三：簡報本身的 5 項 ＋ 我自己寫錯的 7 項）。
 - 被向下捲動箭頭遮住程式碼的是 <strong>7 頁</strong>，不是原本寫的「3 處」。
 - TensorFlow 那條線原本宣告「無法驗證」，後來證明可以（`uv run --python 3.11`），已補跑、test accuracy <strong>0.9872</strong>。
 - 速度表原本是<strong>跨基準線相除</strong>（webcam 的 FPS ÷ 別張圖的信心），改成同一張影格的單一基準重測後，差距從「34 倍」變成 <strong>25.6 倍</strong>。
@@ -88,7 +88,7 @@ banner_img: /img/covers/ivdc-det-report-banner.png
 | 4 | 「丟 10 幀暖機」在 30 fps 只有 0.33 秒，自動曝光要 1–2 秒 | 用時間判斷（`while time.time()-t0 < 1.5`） | 兩者差 4–6 倍 |
 | 5 | `tensorflow_hub` import 就死：`No module named 'pkg_resources'` | setuptools ≥ 81 已移除 `pkg_resources`；本機要 `pip install 'setuptools<81'` | setuptools 84.0.0 實測；<strong>Colab 是 80.10.2，不需要</strong> |
 
-### 3.2 我自己文章寫錯的（5 項，已全部更正）
+### 3.2 我自己文章寫錯的（7 項，已全部更正）
 
 | # | 原本寫 | 正確 | 怎麼發現 |
 |---|---|---|---|
@@ -98,15 +98,18 @@ banner_img: /img/covers/ivdc-det-report-banner.png
 | 9 | 「loss 幾乎逐位吻合，<strong>證明架構還原正確</strong>」 | loss 受初始化影響，不能當證據；硬證據是<strong>參數量 225,034</strong>（兩框架一致） | 兩邊 `count_params()`／`numel()` 實測 |
 | 10 | 「實測差距 <strong>34 倍</strong>」（`37.4 ÷ 1.1`） | <strong>25.6 倍</strong>（1.4 → 35.8 FPS，同一張影格）；34 是跨基準線相除 | 同場景重測（見 §四） |
 
-還有兩處說法要修：
+還有兩處說法要修（一樣列進編號，不另算）：
 
-- 「硬猜成 `toilet` 或 <strong>`truck`</strong>」→ 實測是 `toilet` 或 <strong>`refrigerator`</strong>，`truck` 從沒出現。
-- 「<strong>記 YOLO</strong>，因為速度與準確度天花板最好」→ 理由其實是<strong>四行程式碼</strong>。
-  `ssdlite320` 在 `bus.jpg` 上信心反而更高（`person 0.989`／`bus 0.985` vs `0.866`／`0.873`），
-  速度也幾乎相同（33.1 vs 35.8 FPS）。把「好用」講成「最準」是不誠實的。
+| # | 原本寫 | 正確 | 怎麼發現 |
+|---|---|---|---|
+| 11 | 「硬猜成 `toilet` 或 <strong>`truck`</strong>」 | 實測是 `toilet` 或 <strong>`refrigerator`</strong>；`truck` 從沒出現 | 同場景重測（§四） |
+| 12 | 「<strong>記 YOLO</strong>，因為速度與準確度天花板最好」 | 理由其實是<strong>四行程式碼</strong>。`ssdlite320` 在 `bus.jpg` 上信心反而更高（`person 0.989`／`bus 0.985` vs `0.866`／`0.873`），速度也幾乎相同（33.1 vs 35.8 FPS） | 換一張有答案的圖重測 |
 
-第 6 到第 9 項有一個共同點：<strong>它們都不是跑不動的錯，是不會被抓到的錯</strong>。
-`**` 那類排版錯 CI 會紅，但「兩個預設值其實一樣」不會有人幫你檢查。
+第 12 項的教訓是：把「好用」講成「最準」是不誠實的——兩種優點要分開講。
+
+第 6 到第 9 項有一個共同點：<strong>它們都不會讓程式掛掉，卻會讓結論偏掉</strong>。
+`**` 那類排版錯 CI 會紅；但「兩個預設值其實一樣」不會有人幫你檢查。
+（第 7 項是例外——類名寫錯會直接 `AttributeError`，一次就抓到。）
 
 ## 四、實測數據（同一張 1280×720 實機影格）
 
@@ -243,7 +246,7 @@ uv run --no-project --python 3.11 --with tensorflow-cpu \
 
 <strong>一句話總結</strong>：這次真正的收穫不是「把截圖變成程式碼」，
 而是發現<strong>「有跑」跟「有驗」是兩件事</strong>——9 支腳本都跑得動，
-但裡面有 5 個宣稱是我自己寫錯的，而且每一個看起來都很合理。
+但裡面有 7 個宣稱是我自己寫錯的，而且每一個看起來都很合理。
 把檢查方式一起寫出來，是唯一能讓下一個人不用重踩的方法。
 
 > 完整報告、腳本、兩本筆記本：[kalpakjian/ivdc_handout](https://github.com/kalpakjian/ivdc_handout)
