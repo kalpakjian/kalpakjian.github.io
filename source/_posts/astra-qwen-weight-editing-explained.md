@@ -68,46 +68,83 @@ banner_img: /img/covers/astra-qwen-weight-editing.png
 
 這是整件事最容易被模糊的地方。拆成兩半看：
 
-<!-- FIG1 -->
-<figure style="margin:24px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 560" role="img" aria-label="從配對樣本到秩一編輯的五步流程：配對、取方向、回溯通道、因果驗證、秩一編輯" style="width:100%;height:auto;display:block">
+<!-- FIG1 interactive -->
+<figure class="astra-fig1" style="margin:24px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+
+<style>
+.astra-fig1{box-sizing:border-box;max-width:100%;overflow:hidden}
+.astra-fig1 .acc{margin-top:3px;width:100%;box-sizing:border-box}
+.astra-fig1 details{text-align:left;margin:0 0 2px;width:100%;box-sizing:border-box;
+  font:13.5px/1.65 'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif}
+.astra-fig1 summary{cursor:pointer;color:#58a6ff;font-weight:600;padding:5px 10px;
+  border-radius:7px;background:#111820;border:1px solid #222b36;list-style:none;
+  transition:background .15s ease,border-color .15s ease,color .15s ease;
+  overflow-wrap:anywhere}
+.astra-fig1 summary::-webkit-details-marker{display:none}
+.astra-fig1 summary::before{content:"▸ ";color:#58a6ff}
+.astra-fig1 details[open] summary::before{content:"▾ "}
+.astra-fig1 summary:hover{background:#161b22;border-color:#30363d}
+.astra-fig1 details[open] summary{color:#fbbf24;border-color:#fbbf2455}
+.astra-fig1 details[open] summary::before{color:#fbbf24}
+.astra-fig1 summary:focus-visible{outline:2px solid #58a6ff;outline-offset:2px}
+.astra-fig1 .deep{margin:6px 4px 10px;padding:11px 14px;background:#111820;
+  border-left:3px solid #fbbf24;border-radius:0 8px 8px 0;color:#c9d1d9;
+  overflow-wrap:anywhere;word-break:normal}
+.astra-fig1 .deep b{color:#fbbf24}
+.astra-fig1 .deep code{background:#1c2230;padding:1px 5px;border-radius:4px;
+  font-family:'Cascadia Mono',Consolas,monospace;color:#2dd4bf}
+@media (prefers-reduced-motion:reduce){.astra-fig1 *{transition:none!important}}
+@media print{.astra-fig1 details{display:block}.astra-fig1 .deep{display:block}}
+</style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 566" role="img" aria-label="從配對樣本到秩一編輯的五步流程：配對、取方向、回溯通道、因果驗證、秩一編輯" style="width:100%;height:auto;display:block">
 <defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
-<rect x="0.75" y="0.75" width="938.5" height="558.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<rect x="0.75" y="0.75" width="938.5" height="564.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
 <text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">五步把「卡住的模型」變成「講得完的模型」</text>
 <text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 2 步的差值不是逐層掃描，而是殘差流上的方向；第 4 步才是「不是亂改」的證據</text>
+<g class="hot">
 <rect x="60" y="108" width="820" height="54" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
 <circle cx="92" cy="135.0" r="15" fill="#2dd4bf" opacity="0.92"/>
 <text x="92" y="140.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
 <text x="120" y="132.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">配對樣本：同一題跑兩次</text>
 <text x="120" y="153.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">A 正常講完答對（productive）　·　B 卡進復讀（repetitive）　各 4 組</text>
+</g>
+<g class="hot">
 <rect x="60" y="180" width="820" height="54" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
 <circle cx="92" cy="207.0" r="15" fill="#58a6ff" opacity="0.92"/>
 <text x="92" y="212.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
 <text x="120" y="204.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">取方向：在第 16 / 20 層殘差輸出，算 B 多出來的方向 u</text>
 <text x="120" y="225.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">不是比每一層的神經元差值 —— 那是「相關」，不是「因果」</text>
+</g>
+<g class="hot">
 <rect x="60" y="252" width="820" height="54" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
 <circle cx="92" cy="279.0" r="15" fill="#c084fc" opacity="0.92"/>
 <text x="92" y="284.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
 <text x="120" y="276.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">回溯：誰在往 u 這個方向寫？→ FFN 的 down_proj 輸出通道</text>
 <text x="120" y="297.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">候選＝第 15、19 層各 64 支筆（共 128 個通道）</text>
+</g>
+<g class="hot">
 <rect x="60" y="324" width="820" height="54" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
 <circle cx="92" cy="351.0" r="15" fill="#fbbf24" opacity="0.92"/>
 <text x="92" y="356.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
 <text x="120" y="348.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">因果驗證：劑量測試 ＋ 單層隔離 ＋ norm-matched 隨機正交</text>
 <text x="120" y="369.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">隨機正交只漲 +1.56 分（SE 3.52）；針對性干預漲 +49.8 分</text>
+</g>
+<g class="hot">
 <rect x="60" y="396" width="820" height="54" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
 <circle cx="92" cy="423.0" r="15" fill="#3fb950" opacity="0.92"/>
 <text x="92" y="428.32" font-size="14" fill="#08141a" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
 <text x="120" y="420.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">秩一編輯：沿 u 把那 64 支筆的分量減弱（係數 6）</text>
 <text x="120" y="441.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只碰兩個張量：131,072 個權重值　·　嵌入層 / 輸出層 / final norm 不動</text>
+</g>
 <path d="M 470.0 164 L 470.0 177" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
 <path d="M 470.0 236 L 470.0 249" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
 <path d="M 470.0 308 L 470.0 321" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
 <path d="M 470.0 380 L 470.0 393" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
-<rect x="60" y="476" width="820" height="42" rx="8" fill="#2a0f12" stroke="#7d2b33" stroke-width="1.5"/>
-<text x="78" y="503" font-size="13" fill="#f85149" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">若跳過第 4 步：你只知道「這幾層差值大」，不知道是真的病因，還是所有難題都會亮的同一盞燈。</text>
+<rect x="60" y="472" width="820" height="40" rx="8" fill="#2a0f12" stroke="#7d2b33" stroke-width="1.5"/>
+<text x="78" y="498" font-size="12.5" fill="#f85149" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">若跳過第 4 步：你只知道「這幾層差值大」，不知道是真的病因，還是所有難題都會亮的同一盞燈。</text>
 </svg>
-<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：五步流程。第 2 步是殘差流上的方向（不是逐層比神經元差值），第 4 步的因果驗證才是「不是亂改」的證據。</figcaption>
+<div class="acc"><details><summary>第 1 步 · 配對樣本要什麼條件？</summary><div class="deep">關鍵是<b>配對</b>：兩個答案必須是<em>同一題</em>、同一個模型、同樣的採樣參數，差別只在「講完」與「卡住」。這樣相減才不會混進題目難度的差異。</div></details><details><summary>第 2 步 · 為什麼只取 2 個站點？</summary><div class="deep">站點選在<b>第 16、20 層</b>（共 24 層）而不是每一層，是因為越靠後，基於重複的預測越明確、且答案還沒被輸出層綁死。</div></details><details><summary>第 3 步 · 為什麼兇手是 down_proj？</summary><div class="deep">為什麼是 down_proj：FFN 的輸出通道就是「往殘差流寫入一個特徵」的筆。把一批通道在 u 方向上的分量加起來，就知道誰在製造復讀。</div></details><details><summary>第 4 步 · 三種檢查各證明什麼？</summary><div class="deep">三種檢查各有分工：<b>劑量</b>證明可調、<b>隔離</b>證明位置對、<b>隨機正交</b>證明不是亂改也會好。少任何一個，結論都會被質疑。</div></details><details><summary>第 5 步 · 係數 6 是最優的嗎？</summary><div class="deep">係數 6 不是最優解，是這次搜索到的值；更關鍵的是<b>只減不增</b>——減法不會憑空造出模型沒有的特徵，這也解釋了為什麼 Gemma 拆不到東西。</div></details></div>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:12px;line-height:1.65;text-align:left">圖 1：五步流程。點開下方任一步可看為什麼要這樣做——第 2 步是殘差流上的方向（不是逐層比神經元差值），第 4 步的因果驗證才是「不是亂改」的證據。</figcaption>
 </figure>
 <!-- /FIG1 -->
 
@@ -205,6 +242,145 @@ W(新) = W(舊) − 6 · outer( u , mask64 · (u @ W(舊)) )
 ```
 
 翻成白話：**沿著復讀方向 `u`，把那 64 支筆沿 `u` 的分量減弱**。這是**秩一（rank-one）編輯**——只沿一個方向加減，最省、最不容易波及其他特徵。
+
+<!-- FIG4 -->
+<style>@media (min-width:1100px){.markdown-body figure.astra-wide{margin-left:-40px;margin-right:-40px;max-width:calc(100% + 80px)}}</style>
+<figure class="astra-wide" style="margin:24px 0;padding:14px 12px;max-width:100%;box-sizing:border-box;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 700" role="img" aria-label="資料流圖：24 層殘差流、第 15 與 19 層的 FFN down_proj 64 個通道，以及秩一寫回的位置" style="width:100%;height:auto;display:block">
+<defs><marker id="m2dd4bf" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bf"/></marker><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker></defs>
+<rect x="0.75" y="0.75" width="938.5" height="698.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">改動發生在哪裡：殘差流上的兩個寫回點</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">模型 24 層，只有第 15、19 層的 FFN 輸出通道被沿 u 方向減弱；注意力與嵌入完全沒動</text>
+<text x="60" y="236" font-size="12.5" fill="#8b949e" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">殘差流（每層都讀寫）</text>
+<path d="M 78 284 L 862 284" fill="none" stroke="#2dd4bf" stroke-width="4"/>
+<path d="M 836 284 L 870 284" fill="none" stroke="#2dd4bf" stroke-width="4" marker-end="url(#m2dd4bf)"/>
+<text x="866" y="310" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">→ 詞元機率</text>
+<path d="M 78.0 277 L 78.0 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 112.08695652173913 277 L 112.08695652173913 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 146.17391304347825 277 L 146.17391304347825 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 180.26086956521738 277 L 180.26086956521738 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 214.34782608695653 277 L 214.34782608695653 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 248.43478260869566 277 L 248.43478260869566 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 282.52173913043475 277 L 282.52173913043475 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 316.6086956521739 277 L 316.6086956521739 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 350.69565217391306 277 L 350.69565217391306 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 384.7826086956522 277 L 384.7826086956522 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 418.8695652173913 277 L 418.8695652173913 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 452.95652173913044 277 L 452.95652173913044 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 487.04347826086956 277 L 487.04347826086956 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 521.1304347826087 277 L 521.1304347826087 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 555.2173913043478 277 L 555.2173913043478 291" fill="none" stroke="#fbbf24" stroke-width="3"/>
+<path d="M 589.304347826087 277 L 589.304347826087 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 623.3913043478261 277 L 623.3913043478261 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 657.4782608695652 277 L 657.4782608695652 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 691.5652173913044 277 L 691.5652173913044 291" fill="none" stroke="#fbbf24" stroke-width="3"/>
+<path d="M 725.6521739130435 277 L 725.6521739130435 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 759.7391304347826 277 L 759.7391304347826 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 793.8260869565217 277 L 793.8260869565217 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 827.9130434782609 277 L 827.9130434782609 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<path d="M 862.0 277 L 862.0 291" fill="none" stroke="#30363d" stroke-width="1.5"/>
+<text x="60" y="318" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<text x="858" y="318" font-size="11" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">24</text>
+<text x="384.7826086956522" y="318" font-size="10.5" fill="#7d8590" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第 10 層</text>
+<rect x="180.34782608695653" y="108" width="68" height="74" rx="8" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="214.34782608695653" y="130" font-size="12.5" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FFN</text>
+<text x="214.34782608695653" y="148" font-size="11.5" fill="#7d8590" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">L5</text>
+<text x="214.34782608695653" y="166" font-size="10.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">未改動</text>
+<path d="M 214.34782608695653 186 L 214.34782608695653 274" fill="none" stroke="#7d8590" stroke-width="1.2" marker-end="url(#m7d8590)"/>
+<rect x="521.2173913043478" y="108" width="68" height="74" rx="8" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="555.2173913043478" y="130" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FFN</text>
+<text x="555.2173913043478" y="148" font-size="11.5" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">L15</text>
+<text x="555.2173913043478" y="166" font-size="10.5" fill="#fbbf24" font-weight="600" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">64 通道</text>
+<path d="M 555.2173913043478 186 L 555.2173913043478 274" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mfbbf24)"/>
+<rect x="657.5652173913044" y="108" width="68" height="74" rx="8" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="691.5652173913044" y="130" font-size="12.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FFN</text>
+<text x="691.5652173913044" y="148" font-size="11.5" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">L19</text>
+<text x="691.5652173913044" y="166" font-size="10.5" fill="#fbbf24" font-weight="600" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">64 通道</text>
+<path d="M 691.5652173913044 186 L 691.5652173913044 274" fill="none" stroke="#fbbf24" stroke-width="2" marker-end="url(#mfbbf24)"/>
+<text x="256.3478260869565" y="140" font-size="9.5" fill="#7d8590" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">其餘 21 層同結構</text>
+<text x="256.3478260869565" y="154" font-size="9.5" fill="#7d8590" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">未動</text>
+<rect x="150" y="372" width="640" height="258" rx="12" fill="#111820" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="172" y="402" font-size="14" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">放大第 15 層的 down_proj：128 支筆裡只動 64 支</text>
+<text x="172" y="424" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輸出通道 = 往殘差流寫一個特徵；被選中的 64 支沿同一方向 u</text>
+<rect x="172" y="442" width="16" height="12" rx="2.5" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"/>
+<rect x="193" y="442" width="16" height="12" rx="2.5" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"/>
+<rect x="214" y="442" width="16" height="12" rx="2.5" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"/>
+<rect x="235" y="442" width="16" height="12" rx="2.5" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"/>
+<rect x="256" y="442" width="16" height="12" rx="2.5" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"/>
+<rect x="277" y="442" width="16" height="12" rx="2.5" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"/>
+<rect x="298" y="442" width="16" height="12" rx="2.5" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"/>
+<rect x="319" y="442" width="16" height="12" rx="2.5" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"/>
+<rect x="340" y="442" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="361" y="442" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="382" y="442" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="403" y="442" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="424" y="442" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="445" y="442" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="466" y="442" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="487" y="442" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="172" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="193" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="214" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="235" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="256" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="277" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="298" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="319" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="340" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="361" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="382" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="403" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="424" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="445" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="466" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="487" y="460" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="172" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="193" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="214" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="235" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="256" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="277" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="298" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="319" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="340" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="361" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="382" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="403" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="424" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="445" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="466" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="487" y="478" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="172" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="193" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="214" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="235" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="256" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="277" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="298" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="319" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="340" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="361" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="382" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="403" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="424" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="445" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="466" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<rect x="487" y="496" width="16" height="12" rx="2.5" fill="#1c2230" stroke="#30363d" stroke-width="1"/>
+<text x="518" y="456" font-size="10.5" fill="#fbbf24" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 64 支被選中（示意）</text>
+<text x="172" y="526" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">共 128 個通道 → 131,072 個權重值 = 0.8B 的 0.016%</text>
+<text x="172" y="572" font-size="15" fill="#fbbf24" font-weight="700" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">W ← W − 6 · outer( u , mask<tspan dy="4" font-size="0.72em">64</tspan><tspan dy="-4"> · (u @ W) )</tspan></text>
+<text x="172" y="596" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">沿 u 減弱那 64 支的分量；u 由 4 組 productive / repetitive 對比算出</text>
+<text x="172" y="618" font-size="11" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">嵌入層、輸出層、final norm：完全未動（工具層面直接禁止）</text>
+<path d="M 555.2173913043478 296 L 555.2173913043478 368" fill="none" stroke="#fbbf2488" stroke-width="1.5"/>
+<path d="M 555.2173913043478 368 L 226 368" fill="none" stroke="#fbbf2488" stroke-width="1.5"/>
+<circle cx="67" cy="678" r="7" fill="#fbbf24"/>
+<text x="82" y="682" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">被編輯（第 15、19 層）</text>
+<circle cx="367" cy="678" r="7" fill="#7d8590"/>
+<text x="382" y="682" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">其餘 22 層未動</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 4：改動的落點。24 層裡只有第 15、19 層的 FFN 輸出通道被沿 u 方向減弱；注意力與嵌入完全沒動，這也是為什麼 MMLU-Pro 只漲 5 分而 MATH-500 漲 40 分。</figcaption>
+</figure>
+<!-- /FIG4 -->
 
 - 被改的權重值：**131,072 個**
 - 兩個矩陣的相對改動：**10.64% / 8.11%**
