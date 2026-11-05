@@ -33,7 +33,7 @@ banner_img: /img/covers/ainews-weight-space-programming-zh.png
 >
 > 這篇是<strong>中文導讀</strong>：先把當期頭條講清楚，再把同期其他重點（DeepSeek super-agent、GDPx 榜單、模型傳言、JEPA）壓成速覽，最後給我的判斷。
 >
-> 先講結論：**方向和訊號是真的，但標題的文法被吃掉了中間那句——它證明的是「拆牆」，不是「蓋樓」。** 這件事我在[另一篇](./astra-qwen-weight-editing-explained/)已經從原始 log 追過一次，這篇處理的是「新聞要怎麼讀」。
+> 先講結論：**方向和訊號是真的，但標題的文法被吃掉了中間那句——它證明的是「拆牆」，不是「蓋樓」。** 這件事我在[另一篇](/2026/11/05/astra-qwen-weight-editing-explained/)已經從原始 log 追過一次，這篇處理的是「新聞要怎麼讀」。
 >
 > 原文：[lspace.beehiiv.com/p/ainews-llms-can-read-write-neural-network-weights…](https://lspace.beehiiv.com/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out)。整理日期 2026-11-05。**第 1、3、4 節為原文內容整理，第 2、5 節為我的判讀**，兩種分開標註。
 
@@ -221,7 +221,7 @@ AINews 是**新聞**，它負責告訴你「有這件事、而且很多人震驚
 W(新) = W(舊) − 6 · outer( u , mask64 · (u @ W(舊)) )
 ```
 
-都放在[〈拆牆不是蓋樓〉](./astra-qwen-weight-editing-explained/)那篇，這裡不重複。
+都放在[〈拆牆不是蓋樓〉](/2026/11/05/astra-qwen-weight-editing-explained/)那篇，這裡不重複。
 
 ### 2.4 那 RSI 到底有沒有前進？
 
@@ -385,7 +385,7 @@ AINews 把 Reddit 摘要也放進來了，這一節反而是全期資訊密度�
 - 郵件主旨：`[AINews] LLMs can read & write neural network weights!?!?`（收件匣 2026-11-03）
 - 網頁版：[lspace.beehiiv.com/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out](https://lspace.beehiiv.com/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out)
 - 論文部落格：`rikiyat.github.io/blog/weight-space-programming/`
-- 站內延伸：[拆牆不是蓋樓：Astra 直接改 Qwen 權重的真相](./astra-qwen-weight-editing-explained/)
+- 站內延伸：[拆牆不是蓋樓：Astra 直接改 Qwen 權重的真相](/2026/11/05/astra-qwen-weight-editing-explained/)
 
 ---
 
