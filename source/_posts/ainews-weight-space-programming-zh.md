@@ -159,33 +159,29 @@ AINews 是**新聞**，它負責告訴你「有這件事、而且很多人震驚
 
 <!-- FIG2 -->
 <figure style="margin:24px 0;padding:14px 12px;overflow-x:auto;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 500" role="img" aria-label="MATH-500 分數變化與答案被截斷比例的對照" style="width:100%;max-width:940px;height:auto;display:block;margin:0 auto">
-<rect x="0.75" y="0.75" width="938.5" height="498.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
-<text x="48" y="48" font-size="21" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">分數漲了 40 點，同時「講不完」的比例掉了 60 點</text>
-<text x="48" y="76" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩邊幾乎同步移動 —— 更合理的解釋是「被擋住的分數被釋放」，不是「學會新數學」</text>
-
-<text x="60" y="120" font-size="13" fill="#c9d1d9" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">MATH-500 準確率</text>
-<line x1="90" y1="400" x2="440" y2="400" stroke="#30363d" stroke-width="1.5"/>
-<rect x="130" y="344" width="90" height="56" rx="6" fill="#7d8590" stroke="#7d859066"/>
-<text x="175" y="332" font-size="17" fill="#7d8590" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7.9%</text>
-<text x="175" y="426" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">編輯前</text>
-<rect x="290" y="57" width="90" height="343" rx="6" fill="#2dd4bf" stroke="#2dd4bf66"/>
-<text x="335" y="45" font-size="17" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">48.1%</text>
-<text x="335" y="426" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">編輯 0.016% 後</text>
-
-<line x1="470" y1="112" x2="470" y2="432" stroke="#222b36" stroke-width="1.5"/>
-
-<text x="500" y="120" font-size="13" fill="#c9d1d9" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">答案被 token 上限截斷的比例</text>
-<line x1="530" y1="400" x2="880" y2="400" stroke="#30363d" stroke-width="1.5"/>
-<rect x="570" y="84" width="90" height="316" rx="6" fill="#fbbf24" stroke="#fbbf2466"/>
-<text x="615" y="72" font-size="17" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">93%</text>
-<text x="615" y="426" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">編輯前</text>
-<rect x="730" y="288" width="90" height="112" rx="6" fill="#58a6ff" stroke="#58a6ff66"/>
-<text x="775" y="276" font-size="17" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">33%</text>
-<text x="775" y="426" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">編輯後</text>
-
-<rect x="48" y="450" width="844" height="34" rx="7" fill="#161b22" stroke="#30363d"/>
-<text x="64" y="472" font-size="12.5" fill="#c9d1d9" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個干預：拆掉「迴圈方向」→ 講得完的題目變多 → 本來就會的分數自然回來</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 520" role="img" aria-label="MATH-500 分數變化與答案被截斷比例的對照" style="width:100%;max-width:940px;height:auto;display:block;margin:0 auto">
+<rect x="0.75" y="0.75" width="938.5" height="518.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="46" font-size="21" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">分數漲了 40 點，同時「講不完」的比例掉了 60 點</text>
+<text x="48" y="72" font-size="13.5" fill="#8b949e" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">兩邊幾乎同步移動 —— 更合理的解釋是「被擋住的分數被釋放」</text>
+<text x="90" y="118" font-size="13" fill="#c9d1d9" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">MATH-500 準確率</text>
+<line x1="90" y1="430" x2="440" y2="430" stroke="#30363d" stroke-width="1.5"/>
+<rect x="130" y="374" width="90" height="56" rx="6" fill="#7d8590" stroke="#7d859066"/>
+<text x="175" y="362" font-size="17" fill="#7d8590" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7.9%</text>
+<text x="175" y="456" font-size="12" fill="#8b949e" font-weight="400" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">編輯前</text>
+<rect x="290" y="137" width="90" height="293" rx="6" fill="#2dd4bf" stroke="#2dd4bf66"/>
+<text x="335" y="125" font-size="17" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">48.1%</text>
+<text x="335" y="456" font-size="12" fill="#8b949e" font-weight="400" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">編輯 0.016% 後</text>
+<line x1="470" y1="100" x2="470" y2="462" stroke="#222b36" stroke-width="1.5"/>
+<text x="530" y="118" font-size="13" fill="#c9d1d9" font-weight="600" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">被 token 上限截斷的比例</text>
+<line x1="530" y1="430" x2="880" y2="430" stroke="#30363d" stroke-width="1.5"/>
+<rect x="570" y="154" width="90" height="276" rx="6" fill="#fbbf24" stroke="#fbbf2466"/>
+<text x="615" y="142" font-size="17" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">93%</text>
+<text x="615" y="456" font-size="12" fill="#8b949e" font-weight="400" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">編輯前</text>
+<rect x="730" y="332" width="90" height="98" rx="6" fill="#58a6ff" stroke="#58a6ff66"/>
+<text x="775" y="320" font-size="17" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">33%</text>
+<text x="775" y="456" font-size="12" fill="#8b949e" font-weight="400" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">編輯後</text>
+<rect x="48" y="478" width="844" height="32" rx="7" fill="#161b22" stroke="#30363d"/>
+<text x="64" y="499" font-size="12.5" fill="#c9d1d9" font-weight="400" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個干預：拆掉「迴圈方向」→ 講得完的題目變多 → 本來就會的分數自然回來</text>
 </svg>
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：左邊是新聞引用的數字，右邊是同一份實驗裡比較少被引用的數字。<strong>右邊那一欄才是「為什麼左邊會跳」的答案。</strong></figcaption>
 </figure>
