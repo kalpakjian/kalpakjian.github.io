@@ -59,7 +59,7 @@ def pending(ledger, root=None, only=None, force=False):
     return jobs
 
 
-def run_job(message_id, d, root=None):
+def run_job(message_id, d, root=None, with_brief=True):
     with open(os.path.join(d, "message.json"), "r", encoding="utf-8-sig") as f:
         raw = json.load(f)
     msg = extract._pick_message(raw)
@@ -67,7 +67,22 @@ def run_job(message_id, d, root=None):
         raise ValueError("message.json holds no message object")
     doc = extract.extract_message(msg)
     txt, js = extract.write_outputs(doc, d)
-    return doc, txt, js
+    brief_paths = ()
+    if with_brief:
+        # stage 3b runs here (not in a separate cron) because it costs
+        # milliseconds and a stale brief is worse than no brief: the writer
+        # would be working from the previous issue's numbers.
+        import brief as B
+        b = B.build_brief(doc)
+        jp = os.path.join(d, "brief.json")
+        mp = os.path.join(d, "brief.md")
+        with open(jp, "w", encoding="utf-8", newline="\n") as f:
+            json.dump(b, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+        with open(mp, "w", encoding="utf-8", newline="\n") as f:
+            f.write(B.render_markdown(b))
+        brief_paths = (jp, mp)
+    return doc, txt, js, brief_paths
 
 
 def main(argv=None) -> int:
@@ -75,6 +90,8 @@ def main(argv=None) -> int:
     ap.add_argument("--only", help="extract just this messageId")
     ap.add_argument("--force", action="store_true", help="re-extract even if source.txt exists")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--no-brief", action="store_true",
+                    help="skip stage 3b (brief.md/brief.json)")
     ap.add_argument("--root", help="repo root override")
     args = ap.parse_args(argv)
 
@@ -100,14 +117,15 @@ def main(argv=None) -> int:
             print("WOULD EXTRACT %s -> %s" % (mid, d))
             continue
         try:
-            doc, txt, js = run_job(mid, d, root)
+            doc, txt, js, briefs = run_job(mid, d, root, with_brief=not args.no_brief)
         except Exception as e:                      # noqa: BLE001 - report, keep going
             print("FAIL %s: %s: %s" % (mid, type(e).__name__, e))
             failures += 1
             continue
         st = doc["stats"]
-        print("OK   %s  sections=%d chars=%d -> %s"
-              % (mid, st["sections"], st["chars"], os.path.basename(txt)))
+        print("OK   %s  sections=%d chars=%d -> %s%s"
+              % (mid, st["sections"], st["chars"], os.path.basename(txt),
+                 " + brief" if briefs else ""))
         extracted += 1
         _mark(ledger, mid, "extracted", root)
 

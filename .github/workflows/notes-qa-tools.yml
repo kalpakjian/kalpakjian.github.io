@@ -61,3 +61,11 @@ jobs:
         run: |
           python3 tools/ainews/selftest_lint.py
           exit $LASTEXITCODE
+
+      # 階段 3b 寫稿大綱：17 項。每條測試都對應一個在真實資料上看到的 bug
+      # （日期被當量化指標、句首大寫被當實體、六個重複候選……）。
+      - name: Run AINews brief selftest
+        shell: pwsh
+        run: |
+          python3 tools/ainews/selftest_brief.py
+          exit $LASTEXITCODE

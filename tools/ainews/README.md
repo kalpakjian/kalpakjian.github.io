@@ -37,6 +37,9 @@ AINews 的到達時間**不固定**（UTC，實測）：
 | `extract_new.py` | 階段 2 driver：走 ledger，把 `detected` 的期數抽成 `source.txt` | ✅ |
 | `DIGEST_CONTRACT.md` | **階段 3 規格**：骨架、配額、語氣、SVG、該不該寫 | ✅ |
 | `digest_lint.py` | 階段 3 閘門：結構 + 數字溯源 | ✅ |
+| `brief.py` | **階段 3b**：抽成寫稿大綱（頭條候選／數字清單／未證實／不可寫） | ✅ |
+| `selftest_brief.py` | 17 項階段 3b 回歸測試 | ✅ |
+| `_check_brief_quality.py` | 品質檢查：機器排序 vs 已發布的頭條 | ✅ |
 | `check_bold_render.py` | 粗體**實際渲染**檢查（唯一可信） | ✅ |
 | `run_ainews_poll.ps1` | 呼叫 detect → 通知（toast／beep）→ 寫 log | ✅ |
 | `install_schedule.ps1` | 註冊／移除每 10 分鐘的 Windows 排程 | ✅ |
@@ -89,7 +92,44 @@ Gmail 的抓取需要 Composio 的 MCP 工具，**批次檔叫不到**。所以�
 
 ---
 
-## 階段 2：抽取正文
+## 階段 3b：寫稿大綱
+
+```powershell
+python tools/ainews/brief.py --extract tools/ainews/out/<id>/extract.json --out tools/ainews/out/<id>
+```
+
+`extract_new.py` 預設**自動**產生大綱（`--no-brief` 可關）。
+
+產出 `brief.md`（給人看）與 `brief.json`（給程式用），內容是**機器能做的那一半**：
+
+| 區塊 | 內容 | 為什麼有價值 |
+|---|---|---|
+| `verdict` | 判斷該寫長導讀還是短訊 | 防止把活動宣傳硬寫成 9k 字 |
+| `headline_candidates` | 前 6 名頭條，附**計分理由** | 挑頭條不再靠重讀 100KB |
+| `number_ledger` | 每區塊的硬數字清單 | 寫稿照抄，不用回頭找 |
+| `flagged_claims` | 原文自己標「據稱／未證實」的句子 | 避免把傳言寫成事實 |
+| `contradiction_watch` | 同單位多值 | 避免引用錯的那個數字 |
+| `do_not_write` | 贊助／活動字串 | 避免廣告文案混進來 |
+
+### 排序規則（可解釋，不靠模型）
+
+```
+分數 = 硬數字×3 + 具名實體×2 + 評測名詞×2 + 新穎性×2
+```
+
+**「硬數字」必須帶單位**（`594B`、`81.7%`、`96.32 tok/s`），因為裸數字幾乎都是噪音：
+日期 `2026-11-06`、表格列號、清單序號。這條是踩過的坑——第一版把日期算成量化指標。
+
+**實體抽取**排除句首大寫詞（`Reaching`、`Post`、`Activity`），只保留重複出現、
+含內部大寫、含數字，或在 `KNOWN` 白名單（`Tinker`、`Mythos`、`Anthropic`…）的詞。
+不做 NER，但足以把型號與實驗室名挑出來。
+
+### 為什麼大綱不寫任何一句正文
+
+因為「這期值不值得寫、我的主張是什麼」是判斷，不是整理。
+大綱只給**材料與提醒**，正文留給人（或留給後續要接的模型，但那是另一個決定）。
+
+---
 
 ```powershell
 # agent 抓一封完整信，存成 out/<messageId>/message.json
