@@ -1,49 +1,25 @@
 <#
-  run_ainews_poll.ps1 - poll Gmail for a new AINews issue and shout about it.
+  run_ainews_poll.ps1 - scheduled AINews job (detect -> fetch -> materials).
 
-  Scope (deliberately narrow): DETECT + RECORD + NOTIFY. This script does not
-  draft, does not call a model, and does not publish. It exists so the writing
-  pipeline can be added later without re-deciding any of this.
+  Two modes, because the cheap half and the expensive half have different needs:
 
-  Why a 10-minute timer instead of "once a day":
-    Observed arrival times (UTC) are 05:35, 19:18, 06:24, 10:36, 03:05 -- there
-    is no daily hour that is "soon after". Detection is cheap and, more
-    importantly, idempotent: detect.py keys the write on Gmail messageId, so
-    running this every 10 minutes can never produce a second alert or a second
-    ledger row for the same issue. Frequency therefore costs nothing but buys
-    up to 10 minutes of latency instead of up to 24 hours.
+    -PayloadFile given   : stage 1 only (ledger + notify), replaying a saved
+                           GMAIL_FETCH_EMAILS payload. No credentials needed.
+    (no -PayloadFile)    : full chain -- detect, then pipeline.py which IMAP-fetches
+                           any issue missing a message.json and produces
+                           source.txt / extract.json / brief / figures.
 
-  Two ways to run:
+  The full chain needs GMAIL_USER and GMAIL_APP_PASSWORD in the environment.
+  Without them it degrades to "nothing new" instead of failing the task, because a
+  missing credential must not look like a broken pipeline in the log.
 
-    1) Scheduled (recommended) -- the fetch step needs the Composio MCP tool,
-       which lives inside an agent session. Schedule the *agent* to run this
-       prompt every 10 minutes; it fetches, saves payload.json, then runs:
-           pwsh -File tools/ainews/run_ainews_poll.ps1 -PayloadFile out\payload.json
-
-    2) Standalone (no fetch) -- replay an already-saved payload:
-           pwsh -File tools/ainews/run_ainews_poll.ps1 -PayloadFile fixtures\sample-payload.json -DryRun
-
-  Exit codes:
-    0 = nothing new (the usual, quiet case)
-    2 = new issue(s) found; `-Once`-style callers should raise a toast/beep
-    1 = error
-
-  The notifier is intentionally dumb: toast via BurntToast if installed, else a
-  MessageBox-free console banner + beep, plus a JSONL file the future writer
-  stage can pick up. No network, no credentials.
+  Exit codes: 0 = nothing new, 2 = new issue(s) / materials produced, 1 = error.
 #>
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory = $true)]
     [string]$PayloadFile,
-
-    # Report but never touch the ledger.
     [switch]$DryRun,
-
-    # Where new-issues.jsonl is written (default: tools/ainews/out).
     [string]$NotifyDir,
-
-    # Suppress the Windows toast/beep (useful under Task Scheduler).
     [switch]$Quiet
 )
 
@@ -57,7 +33,55 @@ if (-not $NotifyDir) { $NotifyDir = Join-Path $here 'out' }
 
 function Write-Step([string]$msg) { Write-Host ("[ainews] " + $msg) }
 
-# --- 1. detect ---------------------------------------------------------------
+function Write-PollLog([string]$line) {
+    $log = Join-Path $NotifyDir 'poll.log'
+    $stamp = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
+    Add-Content -LiteralPath $log -Encoding UTF8 -Value ("$stamp  " + $line)
+}
+
+if (-not $PayloadFile) {
+    # ---- full chain: everything except writing and publishing ----------------
+    $hasCreds = $env:GMAIL_USER -and $env:GMAIL_APP_PASSWORD
+    Write-Step ("full chain (credentials: " + $(if ($hasCreds) { "present" } else { "MISSING" }) + ")")
+
+    # Missing credentials are a CONFIG state, not a fault: exit 0 with a clear
+    # log line so Task Scheduler does not show a red run every 10 minutes for a
+    # condition the user has not acted on yet. The real error still surfaces the
+    # moment the chain runs with credentials present.
+    if (-not $hasCreds) {
+        Write-Step 'no GMAIL_USER / GMAIL_APP_PASSWORD -> skipping fetch (stage 1 only)'
+        Write-PollLog 'chain=skipped (no credentials)'
+        exit 0
+    }
+
+    $args = @((Join-Path $here 'pipeline.py'), '--qa')
+    if ($DryRun) { $args += '--dry-run' }
+    $out = & python @args 2>&1
+    $code = $LASTEXITCODE
+    $out | ForEach-Object { Write-Host $_ }
+
+    if ($code -eq 1) {
+        Write-PollLog 'chain=error'
+        Write-Step 'FAILED'
+        exit 1
+    }
+    Write-PollLog ("chain=ok code=$code")
+    if ($code -eq 2) {
+        if (-not $Quiet) {
+            for ($i = 0; $i -lt 3; $i++) { [Console]::Beep(880, 180); Start-Sleep -Milliseconds 120 }
+            Write-Host ''
+            Write-Host ('=' * 68) -ForegroundColor Yellow
+            Write-Host '  NEW AINEWS MATERIALS -- 導讀待撰寫' -ForegroundColor Yellow
+            Write-Host ('  ' + (Join-Path $here 'out')) -ForegroundColor Yellow
+            Write-Host ('=' * 68) -ForegroundColor Yellow
+        }
+        exit 2
+    }
+    Write-Step 'nothing new'
+    exit 0
+}
+
+# ---- stage 1 only: replay a saved payload -----------------------------------
 $args = @((Join-Path $here 'detect.py'), '--input', $PayloadFile, '--notify-dir', $NotifyDir)
 if ($DryRun) { $args += '--dry-run' }
 
@@ -66,16 +90,14 @@ $output = & python @args 2>&1
 $code = $LASTEXITCODE
 $output | ForEach-Object { Write-Host $_ }
 
-# detect.py: 0 = nothing new, 2 = new, 1 = error
 if ($code -eq 1) {
+    Write-PollLog 'detect=error'
     Write-Step 'FAILED (detector error)'
     exit 1
 }
 if ($code -eq 0) {
     Write-Step 'nothing new'
-    $log0 = Join-Path $NotifyDir 'poll.log'
-    $stamp0 = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
-    Add-Content -LiteralPath $log0 -Encoding UTF8 -Value ("$stamp0  new=0  payload=" + (Split-Path -Leaf $PayloadFile))
+    Write-PollLog 'detect=0'
     exit 0
 }
 

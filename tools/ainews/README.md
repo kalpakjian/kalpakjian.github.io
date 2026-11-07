@@ -34,6 +34,11 @@ AINews 的到達時間**不固定**（UTC，實測）：
 | `detect.py` | 階段 1：判斷哪些訊息是「新的 AINews」；純標準函式庫 | ✅ |
 | `seen.json` | **ledger**：以 `messageId` 為 key 的記憶 | ✅（這是站台的記憶） |
 | `extract.py` | **階段 2**：mail body → 乾淨、分區的來源文字 | ✅ |
+| `imap_fetch.py` | **階段 2a**：IMAP 抓取（取代 MCP；大 payload 才能落地） | ✅ |
+| `fetch_new.py` | 走 ledger 抓所有缺 body 的期數，再串抽取 | ✅ |
+| `save_message.py` | 落地 message.json，並**拒絕**被截斷的內文 | ✅ |
+| `pipeline.py` | 一鍵串鏈：fetch → extract → brief → figures → 版面檢查 | ✅ |
+| `selftest_imap.py` | 12 項 IMAP 離線測試（MIME／編碼／HTML-only） | ✅ |
 | `extract_new.py` | 階段 2 driver：走 ledger，把 `detected` 的期數抽成 `source.txt` | ✅ |
 | `DIGEST_CONTRACT.md` | **階段 3 規格**：骨架、配額、語氣、SVG、該不該寫 | ✅ |
 | `digest_lint.py` | 階段 3 閘門：結構 + 數字溯源 | ✅ |
@@ -98,7 +103,42 @@ Gmail 的抓取需要 Composio 的 MCP 工具，**批次檔叫不到**。所以�
 
 ---
 
-## 階段 4：出圖
+## 抓取：IMAP（取代 MCP，可排程）
+
+```powershell
+# 憑證（一次）
+$env:GMAIL_USER = "you@gmail.com"
+$env:GMAIL_APP_PASSWORD = "abcdefghijklmnop"   # 16 碼應用程式密碼
+
+python tools/ainews/imap_fetch.py --list        # 看有哪些期
+python tools/ainews/imap_fetch.py --latest      # 抓最新一期
+python tools/ainews/fetch_new.py                # 抓所有 ledger 還沒有的，並接續抽取
+```
+
+### 為什麼要改用 IMAP
+
+原本用 MCP 的 `GMAIL_FETCH_MESSAGE_BY_MESSAGE_ID`。問題不是「需要 agent session」這麼簡單，
+而是**大 payload 落不了地**：
+
+| 路徑 | 結果 |
+|---|---|
+| 工具回應 inline | 被截斷（真實一期 173–216 KB） |
+| 工具快取 | `read_files` 可讀，但**不是檔案系統路徑**，排程程式讀不到 |
+| 分頁拼接 | 可行，但要用「對話上下文」搬 200 KB，不可自動化 |
+
+IMAP 直接把 RFC822 位元組交給程式，寫進磁碟——沒有截斷、沒有快取、沒有大小上限。
+
+> 這件事的教訓：**我原本以為瓶頸是「抓取需要 agent」，實際瓶頸是「大型資料無法落地」。**
+> 前者換個工具就好，後者會讓整條自動化在資料搬運那一步斷掉。
+
+### 憑證安全
+
+- 只從**環境變數**讀（`GMAIL_USER` / `GMAIL_APP_PASSWORD`），不寫進 repo。
+- 需要 Gmail **應用程式密碼**（需開啟兩步驟驗證）。一般帳號密碼會被 IMAP 拒絕。
+- 缺憑證時排程**不會報錯**，只記一行 `chain=skipped (no credentials)`——
+  那是設定狀態，不是管線故障；否則每 10 分鐘一次紅字，很快就沒人看了。
+
+---
 
 ```powershell
 # 內文圖（決定性：同一份資料 → 同一張圖）

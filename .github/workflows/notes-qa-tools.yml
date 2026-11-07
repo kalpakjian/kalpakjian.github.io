@@ -85,3 +85,12 @@ jobs:
         run: |
           python3 tools/ainews/_check_motifs.py
           exit $LASTEXITCODE
+
+      # IMAP 抓取器（離線部分）：12 項。CI 沒有信箱憑證，所以只驗
+      # 「一封 RFC822 → 乾淨內文」這半——bug 幾乎都在這半（MIME 結構、編碼、
+      # HTML-only），而不是在跟伺服器講話那一行。
+      - name: Run AINews IMAP selftest
+        shell: pwsh
+        run: |
+          python3 tools/ainews/selftest_imap.py
+          exit $LASTEXITCODE
