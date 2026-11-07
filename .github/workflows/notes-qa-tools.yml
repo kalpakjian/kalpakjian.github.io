@@ -41,3 +41,14 @@ jobs:
         run: |
           python3 tools/ainews/selftest.py
           exit $LASTEXITCODE
+
+      # AINews 抽取器（階段 2）：21 項行為測試 + 105 KB 規模壓力測試。
+      # 抽取漏掉 boilerplate 就會讓廣告文案混進文章，所以也是硬閘門。
+      - name: Run AINews extractor selftest
+        shell: pwsh
+        run: |
+          python3 tools/ainews/selftest_extract.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python3 tools/ainews/_make_large_fixture.py
+          python3 tools/ainews/stress_extract.py tools/ainews/fixtures/large-issue.json
+          exit $LASTEXITCODE

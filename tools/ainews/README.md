@@ -31,13 +31,21 @@ AINews 的到達時間**不固定**（UTC，實測）：
 
 | 檔案 | 作用 | 進版控 |
 |---|---|---|
-| `detect.py` | 判斷哪些訊息是「新的 AINews」；純標準函式庫、不做 I/O 以外的網路操作 | ✅ |
+| `detect.py` | 階段 1：判斷哪些訊息是「新的 AINews」；純標準函式庫 | ✅ |
 | `seen.json` | **ledger**：以 `messageId` 為 key 的記憶 | ✅（這是站台的記憶） |
+| `extract.py` | **階段 2**：mail body → 乾淨、分區的來源文字 | ✅ |
+| `extract_new.py` | 階段 2 driver：走 ledger，把 `detected` 的期數抽成 `source.txt` | ✅ |
 | `run_ainews_poll.ps1` | 呼叫 detect → 通知（toast／beep）→ 寫 log | ✅ |
 | `install_schedule.ps1` | 註冊／移除每 10 分鐘的 Windows 排程 | ✅ |
-| `selftest.py` | 13 項回歸測試（多數在驗「什麼**不該**觸發」） | ✅ |
-| `fixtures/sample-payload.json` | 真實的 5 期 payload，供離線測試 | ✅ |
-| `out/` | payload 快照、`new-issues.jsonl`、`poll.log` | ❌ gitignore |
+| `selftest.py` | 13 項階段 1 回歸測試（多數在驗「什麼**不該**觸發」） | ✅ |
+| `selftest_extract.py` | 21 項階段 2 回歸測試 | ✅ |
+| `stress_extract.py` | 規模壓力測試（105 KB body） | ✅ |
+| `_make_large_fixture.py` | 產生結構真實的大 fixture（CI 用） | ✅ |
+| `_make_real_fixture.py` | 從真實 Gmail 回應造 fixture（手動、可選） | ✅ |
+| `fixtures/sample-payload.json` | 真實的 5 期 metadata | ✅ |
+| `fixtures/full-message-sample.json` | 小型結構樣本 | ✅ |
+| `fixtures/large-issue.json` | 105 KB 結構壓力樣本（產生檔） | ✅ |
+| `out/` | payload 快照、每期 `message.json`／`source.txt`／`extract.json`、log | ❌ gitignore |
 
 ---
 
@@ -82,7 +90,59 @@ Gmail 的抓取需要 Composio 的 MCP 工具，**批次檔叫不到**。所以�
 
 ---
 
-## 判定規則
+## 階段 2：抽取正文
+
+```powershell
+# agent 抓一封完整信，存成 out/<messageId>/message.json
+#   GMAIL_FETCH_MESSAGE_BY_MESSAGE_ID(format="full")  ->  message.json
+
+# 然後（可與輪詢同一支排程一起跑）
+python tools/ainews/extract_new.py              # 所有 detected 且還沒抽的
+python tools/ainews/extract_new.py --only <id>  # 只做一期
+python tools/ainews/extract_new.py --dry-run    # 看看會做什麼
+```
+
+輸出（每期一個目錄）：
+
+```
+out/<messageId>/
+  message.json     ← agent 存的原件（gitignored）
+  source.txt       ← 人看的分區純文字（gitignored）
+  extract.json     ← 給階段 3 用的結構化資料（gitignored）
+```
+
+`extract.json` 的形狀：
+
+```json
+{
+  "messageId": "...", "subject": "...", "date": "...",
+  "lede": "主編導言全文",
+  "sections": [
+    {"index": 1, "key": "twitter", "title": "AI Twitter Recap",
+     "headings": [...], "text": "..."},
+    {"index": 2, "key": "reddit_container", "title": "AI Reddit Recap",
+     "subsections": [{"title": "/r/LocalLlama + /r/localLLM Recap", "key": "local", "text": "..."}]}
+  ],
+  "stats": {"sections": 5, "chars": 103902, "words": 11896,
+            "headings": 54, "quantities": 590, "chars_by_section": {...}}
+}
+```
+
+**為什麼要有 `stats`**：階段 5 的降級判斷要用它。「`quantities` 太少」代表這期沒什麼硬數字，寫成長文一定是灌水；「`chars` 暴增」代表可能是別的形式（例如純贊助或公告），不該套同一個模板。
+
+### 抽取器移除的東西（實測）
+
+| 雜訊 | 為什麼要移除 |
+|---|---|
+| 贊助商整段（`“...“ —`） | 否則 Neo4j / Backblaze 的文案會混進文章 |
+| `“AI News for MM/DD-…“` masthead | 那是每期都一樣的刊頭 |
+| `View image: (...)` / `Caption:` | 指向 beehiiv CDN 的圖，對導讀沒用 |
+| 頁尾「plain text version」 | 純樣板 |
+| 零寬字元、單獨 `\r` 行 | 會讓後續的空白行邏輯錯亂 |
+
+保留的：**lede**（主編的導言，那才是敘事）、**所有 recap 區塊**、**空 H2 摺疊後的粗體小標**（例如 `**What happened**`）。
+
+---
 
 一則訊息算「新 AINews」，必須同時滿足：
 
