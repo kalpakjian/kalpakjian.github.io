@@ -1,0 +1,45 @@
+{
+  "issues": {
+    "1a19fe7ff898cb7e": {
+      "date": "2026-11-03T05:35:42Z",
+      "detected_at": "2026-11-05T04:30:00Z",
+      "post": "source/_posts/ainews-weight-space-programming-zh.md",
+      "slug": "ainews-weight-space-programming-zh",
+      "status": "published",
+      "subject": "[AINews] LLMs can read & write neural network weights!?!?"
+    },
+    "1a1a7ff6cacc4697": {
+      "date": "2026-11-04T19:18:16Z",
+      "detected_at": "2026-11-07T18:32:33Z",
+      "slug": "ainews-behind-latent-space-kill-my-saas-jev-ai-in-2026-aiei-shangha-zh",
+      "status": "detected",
+      "subject": "[AINews] Behind Latent Space: Kill My SaaS, Jev & AI in 2026 | AIEi Shanghai"
+    },
+    "1a1aa61c9689973a": {
+      "date": "2026-11-05T06:24:55Z",
+      "detected_at": "2026-11-07T18:32:33Z",
+      "slug": "ainews-it-s-swapping-season-zh",
+      "status": "detected",
+      "subject": "[AINews] It's Swapping Season"
+    },
+    "1a1b06e0f230a991": {
+      "date": "2026-11-06T10:36:03Z",
+      "detected_at": "2026-11-07T18:32:33Z",
+      "slug": "ainews-inkling-2-small-17a-594b-trained-in-68-hours-on-12t-tokens-b-zh",
+      "status": "detected",
+      "subject": "[AINews] Inkling 2 Small: 17A-594B trained in 68 hours on 12T tokens, beating Muse Spark"
+    },
+    "1a1b3f849653d148": {
+      "date": "2026-11-07T03:05:54Z",
+      "detected_at": "2026-11-07T18:00:00Z",
+      "post": "source/_posts/ainews-anthropic-ipo-whither-now-zh.md",
+      "slug": "ainews-anthropic-ipo-whither-now-zh",
+      "status": "published",
+      "subject": "[AINews] Anthropic IPO: Whither Now?"
+    }
+  },
+  "note": "Idempotency key = Gmail messageId. A second sighting of the same issue is a no-op, which is why detection may run every N minutes without ever double-posting. status: detected | drafted | published | failed",
+  "sender": "lspace@mail.beehiiv.com",
+  "updated": "2026-11-07T18:32:33Z",
+  "version": 1
+}

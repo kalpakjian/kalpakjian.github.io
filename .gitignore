@@ -23,5 +23,9 @@ tools/diagrams/**/_m_*.html
 source/cnn-lab/code/_preview.png
 
 
+# AINews 偵測器的執行期產物：payload 快照、通知檔、輪詢 log。
+# 這三個都是「機器暫存」，seen.json 才是要進版控的記憶。
+tools/ainews/out/
+
 # reel-taste smoke test screenshots (generated)
 tools/reel-taste/*.png

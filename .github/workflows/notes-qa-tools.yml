@@ -15,6 +15,7 @@ on:
       - main
     paths:
       - 'tools/notes-qa/**'
+      - 'tools/ainews/**'
   workflow_dispatch:
 
 permissions:
@@ -31,4 +32,12 @@ jobs:
         shell: pwsh
         run: |
           python3 tools/notes-qa/selftest_tools.py
+          exit $LASTEXITCODE
+
+      # AINews 偵測器：13 項測試，多數在驗「什麼不該觸發」。
+      # ledger 一旦寫錯就會重複發文或漏發，所以這裡是硬閘門，不是 advisory。
+      - name: Run AINews detector selftest
+        shell: pwsh
+        run: |
+          python3 tools/ainews/selftest.py
           exit $LASTEXITCODE
