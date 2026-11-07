@@ -74,16 +74,26 @@ MOTIFS = {
 
 
 def pick_motif(brief):
-    """Choose a scene from keywords in the subject + top candidates.
+    """Choose a scene from keywords in the subject + the lead stories.
+
+    Reads the SECTION-GROUPED brief (brief["sections"][i]["items"]). An earlier
+    version read brief["headline_candidates"], which stopped existing when the
+    brief stopped ranking -- the symptom was every issue falling back to
+    `default`, easy to miss because the prompt still generated something.
 
     Order matters and was tuned against real issues: "open-weight model release"
     contains the word `weights`, so the generic `weights` rule used to steal the
-    Inkling story from `model_release`. Release/launch phrasing is checked first,
-    and the interpretability rule now needs a narrower vocabulary.
+    Inkling story from `model_release`. Release phrasing is checked first.
     """
-    text = " ".join([brief.get("subject") or ""] +
-                    [c.get("summary") or "" for c in
-                     (brief.get("headline_candidates") or [])[:3]]).lower()
+    parts = [brief.get("subject") or ""]
+    for g in (brief.get("sections") or [])[:2]:
+        for it in (g.get("items") or [])[:3]:
+            parts.append(it.get("summary") or "")
+    # backwards compatibility for older brief.json files still on disk
+    for c in (brief.get("headline_candidates") or [])[:3]:
+        parts.append(c.get("summary") or "")
+    text = " ".join(parts).lower()
+
     rules = [
         ("money", ("ipo", "valuation", "run rate", "raise", "funding", "revenue")),
         ("security", ("cyber", "jailbreak", "exploit", "attack", "vulnerab", "breach")),
