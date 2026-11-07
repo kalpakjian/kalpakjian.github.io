@@ -39,16 +39,21 @@ def main():
     check("f2 date is not a quantity", F._qty("2026-11-06") is None)
     check("f2b percent parses", F._qty("81.7%")[0] == 81.7)
 
-    # f3: two different units must not become one chart
-    brief_mixed = {"headline_candidates": [
-        {"summary": "A 594B model", "numbers": ["594B"], "score": 9},
-        {"summary": "runs at 96.32 tok/s", "numbers": ["96.32 tok/s"], "score": 8},
+    # f3: two different units must not become one chart.
+    #     Input is the section-grouped brief (items live under brief["sections"]).
+    brief_mixed = {"sections": [
+        {"section": "twitter", "items": [
+            {"summary": "A 594B model", "numbers": ["594B"]}]},
+        {"section": "reddit_container", "items": [
+            {"summary": "runs at 96.32 tok/s", "numbers": ["96.32 tok/s"]}]},
     ]}
     bars = F._pick_bars(brief_mixed)
     check("f3 mixed units -> no bar chart", bars == [], bars)
 
-    brief_same = {"headline_candidates": [
-        {"summary": "594B total and 17B active", "numbers": ["594B", "17B"], "score": 9}]}
+    brief_same = {"sections": [
+        {"section": "twitter", "items": [
+            {"summary": "594B total and 17B active", "numbers": ["594B", "17B"]}]},
+    ]}
     bars2 = F._pick_bars(brief_same)
     check("f3b same unit -> 2 bars", len(bars2) == 2, bars2)
 
@@ -66,10 +71,12 @@ def main():
                       "四個硬數字", "副標", "aria")
     if s:
         figs.append(("kpi", s.figure("說明", marker="FIG1")))
-    s = F.fig_ranking([{"summary": "Inkling 2 Small released with 594B params",
-                        "score": 14, "numbers": []},
-                       {"summary": "QWEN runs 96 tok/s", "score": 9, "numbers": []}],
-                      "頭條排序", "副標", "aria")
+    s = F.fig_ranking([
+        {"section": "twitter", "title": "AI Twitter Recap",
+         "items": [{"summary": "Inkling 2 Small released with 594B params"}]},
+        {"section": "reddit_container", "title": "AI Reddit Recap",
+         "items": [{"summary": "QWEN runs 96 tok/s"}]},
+    ], "各區塊頭條", "副標", "aria")
     if s:
         figs.append(("ranking", s.figure("說明", marker="FIG2")))
     s = F.fig_bar_compare([("594B total", 594, "teal", "594B"),
@@ -93,19 +100,22 @@ def main():
     check("f9 long value truncated", len(F._short("96.32 tokens per second", 12)) <= 12)
 
     # f10: Chinese labels
-    check("f10 twitter label is Chinese", F._zh_title("twitter") == "Twitter 摘要")
+    check("f10 twitter label is Chinese", F._zh_title("twitter") == "作者已篩選")
 
-    # f11: build_figures on a rich brief yields FIG1..FIGn markers
+    # f11: build_figures on a rich section-grouped brief yields unique markers
     rich = {
         "subject": "[AINews] Test issue with enough data",
-        "number_ledger": [{"section": "twitter", "title": "AI Twitter Recap",
-                           "quantities": ["594B", "81.7%"]},
-                          {"section": "local", "title": "AI Reddit Recap",
-                           "quantities": ["96.32 tok/s"]}],
-        "headline_candidates": [
-            {"summary": "Inkling 2 Small: 594B total and 17B active", "score": 14,
-             "numbers": ["594B", "17B"]},
-            {"summary": "QWEN reaches 96.32 tok/s", "score": 9, "numbers": ["96.32 tok/s"]},
+        "number_ledger": [
+            {"section": "twitter", "title": "AI Twitter Recap",
+             "quantities": ["594B", "17B", "81.7%"]},
+            {"section": "local", "title": "AI Reddit Recap",
+             "quantities": ["96.32 tok/s"]}],
+        "sections": [
+            {"section": "twitter", "title": "AI Twitter Recap", "items": [
+                {"summary": "Inkling 2 Small: 594B total and 17B active",
+                 "numbers": ["594B", "17B"]}]},
+            {"section": "reddit_container", "title": "AI Reddit Recap", "items": [
+                {"summary": "QWEN reaches 96.32 tok/s", "numbers": ["96.32 tok/s"]}]},
         ],
     }
     out = F.build_figures(rich)

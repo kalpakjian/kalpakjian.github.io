@@ -34,10 +34,16 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import detect  # noqa: E402
 import extract as X  # noqa: E402
 
-# A real issue's plain-text body is ~200 KB. Anything under this is almost
-# certainly a truncated tool response, and letting it through would produce a
-# digest built on a fragment -- the worst possible failure for this pipeline.
-MIN_BODY = 60_000
+# A real issue's plain-text body measures 55-70 KB depending on how heavy the
+# week was (verified over IMAP: IPO 58.5 KB, Inkling 67.0 KB). The first version
+# used 60 KB and would have rejected a perfectly complete IPO issue as
+# "truncated" -- the threshold has to sit below the lightest real issue, not at
+# the average, or it becomes a false alarm generator.
+#
+# The floor exists to catch a genuinely empty/severed fetch (a few hundred
+# bytes), not to police length. 40 KB leaves headroom for an unusually quiet week
+# while still failing loudly on a broken download.
+MIN_BODY = 40_000
 
 
 def out_dir(message_id, root=None):

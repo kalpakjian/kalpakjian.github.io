@@ -47,6 +47,18 @@ except ImportError:                               # pragma: no cover
 
 NUMU = re.compile(r"(?<![\d.\-])\d[\d.,]*\s?(?:%|x\b|B\b|T\b|M\b|K\b|k\b|tok/s|ms\b|hours?\b|days?\b|tokens?\b|GW\b)", re.I)
 
+# Mirrors brief.SECTION_LABEL. Duplicated on purpose: figures.py must stay
+# importable on its own (it is also used from the ComfyUI-side scripts), and a
+# cross-import would drag the whole brief module in for one dict.
+SECTION_LABEL = {
+    "lede": "主編導言",
+    "twitter": "作者已篩選",
+    "local": "本地模型圈",
+    "reddit_container": "社群討論",
+    "less_technical": "非技術討論",
+    "other": "其他",
+}
+
 
 def _qty(text):
     """Pull (value, unit, raw) out of '594B' / '81.7%' / '$1T'.
@@ -143,23 +155,28 @@ def fig_bar_compare(rows, title, subtitle, aria, unit_hint=""):
 # ---------------------------------------------------------------------------
 # Layout 3: ranked list (headline candidates)
 # ---------------------------------------------------------------------------
-def fig_ranking(cands, title, subtitle, aria):
-    """Ranked headline candidates with their score bar."""
-    cands = [c for c in cands if c.get("score")][:5]
-    if len(cands) < 2:
+def fig_ranking(groups, title, subtitle, aria):
+    """One row per section: its title, and the lead item the source put first.
+
+    Adapted from the old ranked-candidates chart. There is no score bar any more,
+    because there is no cross-section ranking; the bar is replaced by the
+    section's share of the issue, which is a fact rather than a judgement.
+    """
+    rows = [g for g in (groups or []) if g.get("items")]
+    if len(rows) < 2:
         return None
-    top = max(c["score"] for c in cands) or 1
-    h = 130 + 52 * len(cands) + 40
+    h = 130 + 56 * len(rows) + 40
     s = Svg(940, h, aria, title, subtitle)
-    for i, c in enumerate(cands):
-        y = 118 + i * 52
-        col = C["teal"] if i == 0 else C["gray"]
-        s.text(48, y + 20, "%d" % (i + 1), 15, col, "700")
-        s.text(72, y + 20, _short(c["summary"], 62), 12.5, TXT if i == 0 else MUT)
-        w = max(3.0, 300 * (c["score"] / float(top)))
-        s.rect(600, y + 6, w, 18, fill=col, stroke=col + "55", rx=4)
-        s.text(600 + w + 10, y + 20, "%d" % c["score"], 12, col, "700")
-    s.text(600, 104, "分數（數字×3＋實體×2＋評測×2＋新穎×2）", 11, MUT)
+    stages = ("teal", "blue", "amber", "violet", "gray")
+    for i, g in enumerate(rows):
+        y = 118 + i * 56
+        col = C[stages[i % 5]]
+        label = SECTION_LABEL.get(g["section"], g["title"] or g["section"])
+        s.text(48, y + 18, _short(label, 14), 12.5, col, "700")
+        s.text(48, y + 38, _short(g["items"][0]["summary"], 62), 12, TXT)
+        s.text(760, y + 28, "%d 則" % len(g["items"]), 12, MUT, "normal", "end")
+    s.line(48, h - 44, 892, h - 44, stroke="#30363d")
+    s.text(48, h - 22, "每一列＝一個區塊；第二行是第一則（原文順序，非重要性）", 11.5, MUT)
     return s
 
 def _short(s, n=52):
@@ -200,43 +217,49 @@ LAYOUTS = ("kpi_row", "ranking", "bar_compare", "delta")
 
 
 def _pick_kpi(brief):
-    """Up to 4 quantities that read as headline facts (one per section)."""
+    """Up to 4 quantities that read as headline facts.
+
+    One per section keeps the row meaningful; if a section's first quantity is
+    too long for a card (>12 chars) the next one is taken instead of dropping
+    the section. With only 2-3 sections an issue still yields 2-4 cards because
+    later quantities in the same section are fair game -- the earlier version
+    stopped at one per section and produced a single card on a 3-section issue.
+    """
     items, seen = [], set()
     for row in brief.get("number_ledger") or []:
-        key = row.get("section") or ""
-        label = _zh_title(key)
+        label = _zh_title(row.get("section") or "")
         for raw in row.get("quantities") or []:
+            if len(items) >= 4:
+                break
             q = _qty(raw)
-            if not q:
+            if not q or raw in seen or len(raw) > 12:
                 continue
-            if raw in seen or len(raw) > 12:
-                continue          # a value that needs 13+ chars breaks the card
             seen.add(raw)
             stage = ("teal", "blue", "amber", "violet")[len(items) % 4]
             items.append((q[2], label, "", stage))
-            break                 # one per section keeps the row meaningful
         if len(items) >= 4:
             break
     return items
 
 
 def _pick_bars(brief):
-    """Numbers from the top headline candidate -- ONLY within the same unit.
+    """Numbers from the lead item of each section -- ONLY within the same unit.
 
     A bar chart compares lengths; comparing 594B against 96.32 tok/s is
-    meaningless and was exactly what the first version did. So the rows are
-    grouped by unit and only the largest same-unit group is charted.
+    meaningless. Rows are grouped by unit and only the largest same-unit group is
+    charted. Input changed with the section-grouped brief: candidates now live
+    under brief["sections"][i]["items"], and the lead item is the one the source
+    itself put first -- which is the honest choice for a comparison chart.
     """
     buckets = {}
-    for c in (brief.get("headline_candidates") or [])[:4]:
-        for raw in c.get("numbers") or []:
-            q = _qty(raw)
-            if not q:
-                continue
-            # label each bar by WHAT the number measures, not by the section it
-            # came from -- two bars both labelled "AI Twitter Recap" are useless
-            label = _label_for(raw, c.get("summary") or "")
-            buckets.setdefault(q[1].lower(), []).append((label, q[0], raw))
+    for g in brief.get("sections") or []:
+        for it in (g.get("items") or [])[:3]:
+            for raw in it.get("numbers") or []:
+                q = _qty(raw)
+                if not q:
+                    continue
+                label = _label_for(raw, it.get("summary") or "")
+                buckets.setdefault(q[1].lower(), []).append((label, q[0], raw))
     if not buckets:
         return []
     unit, rows = max(buckets.items(), key=lambda kv: len(kv[1]))
@@ -270,9 +293,9 @@ def _zh_title(key):
     """Section titles are English in the source; the chart is Chinese."""
     return {
         "lede": "主編導言",
-        "twitter": "Twitter 摘要",
+        "twitter": "作者已篩選",
         "local": "本地模型圈",
-        "reddit_container": "Reddit 摘要",
+        "reddit_container": "社群討論",
         "less_technical": "非技術討論",
         "other": "其他",
     }.get(key, key)
@@ -293,11 +316,11 @@ def build_figures(brief, tag="FIG"):
         cap = "圖 1：本期各區塊最具體的四個數字。數字全部取自原文，未經換算。"
         out.append(("FIG1", s.figure(cap, marker="FIG1")))
 
-    s = fig_ranking(brief.get("headline_candidates") or [],
-                    "機器的頭條排序", "分數越高＝數字與具名實體越密集，不代表越重要",
-                    "頭條候選排序")
+    s = fig_ranking(brief.get("sections") or [],
+                    "各區塊的頭條（依原文順序）", "第一則＝該區塊頭條；不是跨區塊的重要性排序",
+                    "各區塊頭條")
     if s:
-        cap = "圖 2：大綱的排序結果（僅供參考；最終頭條由人決定）。"
+        cap = "圖 2：每個區塊的第一則。原文的排列順序就是作者的編輯判斷。"
         out.append(("FIG2", s.figure(cap, marker="FIG2")))
 
     bars = _pick_bars(brief)

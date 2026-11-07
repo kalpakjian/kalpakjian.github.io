@@ -177,6 +177,10 @@ def main(argv=None) -> int:
     ap.add_argument("--list", action="store_true", help="list matching issues and exit")
     ap.add_argument("--latest", action="store_true", help="fetch the newest issue")
     ap.add_argument("--id", help="IMAP uid or subject fragment")
+    ap.add_argument("--as-message-id",
+                    help="store under this id instead of the RFC822 Message-ID "
+                         "(the ledger keys issues by its own id, so a mismatch "
+                         "makes the pipeline unable to find the file)")
     ap.add_argument("--dry-run", action="store_true", help="show what would be written")
     args = ap.parse_args(argv)
 
@@ -202,11 +206,12 @@ def main(argv=None) -> int:
             return 1
 
         message_id, subject, iso, body = fetch_one(m, uid)
+        store_id = args.as_message_id or message_id
         print("uid %s | %s | %d chars body" % (uid, subject[:60], len(body)))
         if args.dry_run:
             print("(dry run: not saved)")
             return 0
-        path, n = save_message.save(message_id, body, subject, iso)
+        path, n = save_message.save(store_id, body, subject, iso)
         print("saved %s (%d chars)" % (path, n))
         return 2
     finally:

@@ -102,6 +102,9 @@ def main(argv=None) -> int:
                 continue
             message_id, subj, iso, body = imap_fetch.fetch_one(conn, uid)
             try:
+                # Store under the LEDGER's id, not the RFC822 Message-ID: the
+                # ledger is what every later stage looks up, and the two differ
+                # (beehiiv Message-IDs look like <i13DKK...@geopod-ismtpd-3>).
                 path, n = save_message.save(mid, body, subj or subject, iso)
             except ValueError as e:
                 print("FAIL  %s  %s" % (mid, e))

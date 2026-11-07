@@ -1,38 +1,34 @@
 # -*- coding: utf-8 -*-
-"""Stage 3b: turn extract.json into a writing brief -- the machine's half of the work.
+"""Stage 3b: turn extract.json into a writing brief -- the machine's half.
 
-WHY THIS EXISTS
----------------
-Writing a digest needs two different kinds of work:
+WHAT THIS DOES AND DOES NOT DO
+------------------------------
+It gathers material. It does NOT decide what the story is.
 
-  * judgement   -- what is the story, what do I actually believe, what does the
-                   evidence fail to support
-  * bookkeeping -- which three numbers matter, which section is the headline,
-                   which claims contradict each other, what did the source
-                   explicitly call unconfirmed
+That line was learned the hard way. Three attempts at ranking headlines by
+keyword density (numbers x entities x benchmark terms, then + section weight +
+position decay, then + release verbs - hedge penalty) all failed on the only
+ground truth that exists: the two digests already published.
 
-Only the second kind is automatable, and it is also the part that eats the most
-time. So this script produces no prose at all. It produces a short, ordered
-brief that a human (or a model) writes FROM:
+    1a19fe7ff898cb7e  Weight Space Programming -> machine picked an ISTA quant post
+    1a1b3f849653d148  Anthropic IPO              -> machine picked Inkling, rank 4
+                                                    for the actual headline
 
-    headline candidates   ranked by how many hard numbers + names they carry
-    number ledger         every quantity with its section, so writing can cite
-                          exact figures without re-reading 100 KB
-    unconfirmed claims    sentences the source itself flagged as rumour
-    contradiction watch   same metric, different values in different sections
-    counterpoint seeds    places where the source itself hedged
-    do-not-write list     sponsors, activities, boilerplate that must not appear
+The reason is structural, not a tuning problem: the same story appears in
+several consecutive issues (Inkling debuted on 11/06 and was recapped on 11/07),
+so "release + many numbers" scores high in both, and knowing which issue OWNS a
+story needs the news cycle, not term counts.
 
-The brief is deliberately dumb and explainable: every line can be traced to a
-rule in RANKING_RULES below, so when it picks a bad headline I can fix the rule
-rather than guess at a model's mood.
+So the brief now groups candidates BY SECTION, in source order, and says so:
+
+    "Twitter 摘要（作者已篩選）   1. ... 2. ... 3. ...
+     "Reddit 摘要（社群討論）     1. ... 2. ..."
+
+The score survives as `density_rank` -- a display hint, explicitly labelled as
+NOT a measure of importance. A human (or a model with the source text) decides.
 
 USAGE
-    python tools/ainews/brief.py --extract out/<id>/extract.json
     python tools/ainews/brief.py --extract out/<id>/extract.json --out out/<id>
-    python tools/ainews/brief.py --extract out/<id>/extract.json --json
-
-Exit codes: 0 = ok, 1 = error.
 """
 from __future__ import annotations
 
@@ -73,6 +69,17 @@ NOT_ENTITY = {
 }
 BENCH = ("benchmark", "eval", "arena", "arc-agi", "swe-bench", "livecodebench",
          "mmlu", "gpqa", "index", "scored", "score", "accuracy", "pass^")
+# Release verbs outrank measurement verbs. A story that says "released / launched /
+# announced" is news; "running / benchmarked / achieves" is a data point about
+# something that already shipped. Without this, the Z.ai pipeline rumour (17
+# numbers, 6 entities) beat the Inkling launch on the issue whose subject line
+# IS Inkling.
+RELEASE = ("released", "release", "launched", "launch", "announced", "ships",
+           "shipped", "now available", "open weights", "open-weights", "open sourced",
+           "open-sourced", "general availability")
+HEDGE = ("reportedly", "allegedly", "rumor", "rumour", "unconfirmed", "claims",
+         "claimed", "speculation", "speculat", "unverified", "said to",
+         "expected to", "not independently verified", "no independent")
 NOVELTY = ("launch", "release", "released", "open-weight", "open weight",
            "announced", "shipped", "ships", "available now", "general availability")
 HEDGE = ("reportedly", "allegedly", "rumor", "rumour", "unconfirmed", "claims",
@@ -84,22 +91,72 @@ NO_WRITE = ("sponsor", "brought to you by", "save your spot", "join andrew ng",
 
 
 def _bullets(text):
-    """Split a recap section into its top-level bullets.
+    """Split a recap section into candidate story blocks.
 
-    beehiiv nests with two-space indents; only column-0 `* ` items are top-level
-    stories, and taking every line would yield thousands of fragments.
+    THE BUG THIS FIXES: the first version only kept `* ` lines, so it captured
+    the *sub-points* of a story and threw away the story itself. AINews shapes a
+    Twitter entry like this:
+
+        **What happened**                          <- label
+        **Thinking Machines released Inkling 2 Small, a 594B-total /
+          17B-active multimodal MoE.**             <- THE STORY (not a bullet)
+        * **Launch:** Announced at 31 on the ...   <- a sub-point
+        * **Pricing:** ...
+
+    Keeping only bullets meant the headline sentence never became a candidate,
+    and every fragment that did was small -- which is why Reddit's dense
+    hardware posts outscored the actual lead story on every issue tested.
+
+    Now a block starts at EITHER a `* ` bullet OR a line that is entirely a
+    bold claim (`**...**`), and everything indented or non-bulleted after it
+    belongs to that block.
     """
-    out, cur = [], []
-    for line in text.split("\n"):
+    lines = text.split("\n")
+    starts = []          # (line_index, is_bold_claim)
+    for i, line in enumerate(lines):
         if re.match(r"^\* ", line):
-            if cur:
-                out.append("\n".join(cur).strip())
-            cur = [line]
-        elif cur:
-            cur.append(line)
-    if cur:
-        out.append("\n".join(cur).strip())
+            starts.append((i, False))
+        elif re.match(r"^\*\*[^*]+\*\*\s*$", line) and len(line.strip()) > 40:
+            starts.append((i, True))
+
+    out = []
+    for n, (i, _is_bold) in enumerate(starts):
+        end = starts[n + 1][0] if n + 1 < len(starts) else len(lines)
+        block = "\n".join(lines[i:end]).strip()
+        if block:
+            out.append(block)
     return out
+
+
+# Position weight: AINews is ordered by editorial importance. The first story in
+# `# AI Twitter Recap` is the lead; the Reddit recaps are community chatter the
+# author already decided came second. Ignoring this was the second half of the
+# ranking bug -- every one of the top 12 candidates came from Reddit while the
+# actual lead story never appeared at all.
+SECTION_WEIGHT = {
+    "twitter": 1.0,           # curated by AINews -> highest signal
+    "local": 0.45,
+    "reddit_container": 0.40,
+    "other": 0.35,
+    "less_technical": 0.30,
+}
+
+# Human-facing section names. The source titles are English; the brief is Chinese.
+SECTION_LABEL = {
+    "twitter": "作者已篩選，優先閱讀",
+    "local": "本地模型圈",
+    "reddit_container": "社群討論，通常是補充",
+    "less_technical": "非技術討論",
+    "other": "其他",
+}
+# Within the twitter section position matters a lot: rank 0 is the lead story.
+POSITION_DECAY = (1.0, 0.72, 0.58, 0.48, 0.42, 0.38)
+
+
+def _position_factor(rank_in_section):
+    if rank_in_section < len(POSITION_DECAY):
+        return POSITION_DECAY[rank_in_section]
+    return 0.30
 
 
 def _first_sentence(block, limit=220):
@@ -164,45 +221,84 @@ def _entities(text):
 
 
 def _score(text):
+    low = text.lower()
     numbers = len(NUM.findall(text))
     entities = len(_entities(text))
-    bench = sum(1 for b in BENCH if b in text.lower())
-    novel = sum(1 for n in NOVELTY if n in text.lower())
-    return numbers * 3 + entities * 2 + bench * 2 + novel * 2, {
-        "numbers": numbers, "entities": entities, "benchmarks": bench, "novelty": novel}
+    bench = sum(1 for b in BENCH if b in low)
+    novel = sum(1 for n in NOVELTY if n in low)
+    release = sum(1 for r in RELEASE if r in low)
+    hedged = sum(1 for h in HEDGE if h in low)
+    # Weights, and why:
+    #   release x4  -- the strongest single signal that an item is *news*
+    #   numbers x2  -- concrete, but dense spec posts are usually follow-ups
+    #   entities x2 -- named subject matters
+    #   bench/nove  -- keep the old terms, lower, as tie-breakers
+    #   hedged -6   -- a rumour must not outrank a confirmed release
+    score = (release * 4 + numbers * 2 + entities * 2 + bench * 2 + novel * 2
+             - hedged * 6)
+    return max(0, score), {
+        "numbers": numbers, "entities": entities, "benchmarks": bench,
+        "novelty": novel, "release": release, "hedged": hedged}
 
 
-def headline_candidates(doc, top=6):
-    cands = []
+def section_candidates(doc, per_section=6):
+    """Group story candidates BY SECTION, in source order -- no global ranking.
+
+    Why no ranking: see the module docstring. Three scoring schemes in a row
+    disagreed with the two published digests, because importance depends on the
+    news cycle (is this issue the DEBUT of the story, or a recap?), which term
+    counts cannot see.
+
+    The order inside a section IS preserved and IS meaningful: AINews lists the
+    lead story first, and that editorial order is the only reliable signal in
+    the source.
+
+    `density_rank` is kept as a display hint (how many numbers/names the item
+    carries) and is explicitly documented as NOT importance.
+    """
+    groups = []
     for sec in doc.get("sections") or []:
-        if sec.get("key") == "lede":
+        key = sec.get("key")
+        if key == "lede":
             continue
-        for block in _bullets(sec.get("text") or ""):
+        items, seen = [], set()
+        for pos, block in enumerate(_bullets(sec.get("text") or "")):
             score, why = _score(block)
-            if score <= 0:
+            summary = _first_sentence(block)
+            k = re.sub(r"\d+", "#", summary)[:70]
+            if k in seen:
                 continue
-            cands.append({
-                "section": sec.get("key"),
-                "title": sec.get("title") or "(lede)",
-                "summary": _first_sentence(block),
-                "score": score,
-                "why": why,
+            seen.add(k)
+            items.append({
+                "section": key,
+                "title": sec.get("title") or "",
+                "order": pos,
+                "summary": summary,
+                "density": score,
+                "density_why": why,
                 "numbers": NUM.findall(block)[:6],
                 "entities": _entities(block)[:6],
             })
-    cands.sort(key=lambda c: -c["score"])
-    # De-duplicate on the summary with digit runs normalised, so near-identical
-    # bullets from a fixture (or a twice-posted story) collapse to one candidate.
-    seen, out = set(), []
-    for c in cands:
-        k = re.sub(r"\d+", "#", c["summary"])[:70]
-        if k in seen:
-            continue
-        seen.add(k)
-        out.append(c)
-        if len(out) >= top:
-            break
-    return out
+            if len(items) >= per_section:
+                break
+        if items:
+            groups.append({"section": key, "title": sec.get("title") or "",
+                           "items": items})
+    return groups
+
+
+def density_rank(doc, top=6):
+    """Flat, cross-section list sorted by density -- for reference only.
+
+    Deliberately NOT called a headline ranking. Kept because it is genuinely
+    useful for one thing: spotting which item carries the most quotable
+    figures, regardless of where it sits in the issue.
+    """
+    flat = []
+    for g in section_candidates(doc, per_section=99):
+        flat.extend(g["items"])
+    flat.sort(key=lambda c: -c["density"])
+    return flat[:top]
 
 
 def _dedupe(items):
@@ -227,7 +323,10 @@ def number_ledger(doc):
             "section": sec.get("key"),
             "title": sec.get("title") or "",
             "count": len(found),
-            "quantities": found[:40],
+            # 60 per section: the Inkling issue has 82 in the twitter block alone,
+            # and the first cap (40) silently hid the later half of the issue --
+            # exactly the numbers a writer needs for the "其他重點" section.
+            "quantities": found[:60],
         })
     return ledger
 
@@ -293,15 +392,28 @@ def verdict(doc):
 
     The machine's opinion only: it answers 'is there enough material', not 'is it
     interesting'. A human can always override upward.
+
+    Section count is NOT a gate on its own: a normal issue has exactly three
+    sections (Twitter / Reddit / Less-technical) because that is how beehiiv
+    splits it. The Inkling issue has 3 sections, 65 KB and 103 hard numbers, and
+    the first version called it "short" purely for having three sections --
+    a wrong verdict on the issue with the most material of the five tested.
+    So sections are only a gate when the BODY is also thin.
     """
     st = doc.get("stats") or {}
+    quantities = st.get("quantities", 0)
+    chars = st.get("chars", 0)
+    sections = st.get("sections", 0)
     reasons = []
-    if st.get("quantities", 0) < 40:
-        reasons.append("硬數字只有 %d 個（< 40）" % st.get("quantities", 0))
-    if st.get("chars", 0) < 40000:
-        reasons.append("內文只有 %d 字元（< 40,000）" % st.get("chars", 0))
-    if st.get("sections", 0) < 4:
-        reasons.append("只有 %d 個分區（< 4）" % st.get("sections", 0))
+
+    if chars < 40000:
+        reasons.append("內文只有 %d 字元（< 40,000）" % chars)
+    if quantities < 40:
+        reasons.append("硬數字只有 %d 個（< 40）" % quantities)
+    # a genuinely fragmented issue: small AND few sections
+    if sections < 3 and chars < 60000:
+        reasons.append("只有 %d 個分區且內文偏少" % sections)
+
     subject = (doc.get("subject") or "").lower()
     if any(p in subject for p in ("behind latent space", "aiei", "kill my saas")):
         reasons.append("標題是活動／訪談宣傳")
@@ -322,7 +434,8 @@ def build_brief(doc):
             {"key": s.get("key"), "title": s.get("title"), "chars": len(s.get("text") or "")}
             for s in doc.get("sections") or []
         ],
-        "headline_candidates": headline_candidates(doc),
+        "sections": section_candidates(doc, per_section=6),
+        "density_reference": density_rank(doc, top=5),
         "number_ledger": number_ledger(doc),
         "flagged_claims": flagged_claims(doc),
         "contradiction_watch": contradiction_watch(doc),
@@ -352,17 +465,36 @@ def render_markdown(brief):
         L.append("> " + brief["lede"].replace("\n\n", "\n> ").replace("\n", "\n> "))
         L.append("")
 
-    L.append("## 頭條候選（依『硬數字 × 具名實體 × 評測名詞 × 新穎性』排序）")
+    L.append("## 各區塊要點（**依原文順序，不是重要性排序**）")
     L.append("")
-    for i, c in enumerate(brief["headline_candidates"], 1):
-        L.append("### %d. [%d 分] %s" % (i, c["score"], c["title"]))
+    L.append("> AINews 的排列順序本身就是作者的編輯判斷：**每個區塊的第一則就是該區塊的頭條**。")
+    L.append("> 下面不做跨區塊排名，因為同一則新聞會連續出現在多期（首發 vs 回顧），")
+    L.append("> 靠詞頻無法分辨「這期是誰的新聞」。頭條請你讀完後自己決定。")
+    L.append("")
+    for g in brief.get("sections") or []:
+        label = SECTION_LABEL.get(g["section"], g["section"])
+        L.append("### %s（%s）" % (g["title"] or label, label))
         L.append("")
-        L.append("- 摘要：%s" % c["summary"])
-        L.append("- 數字：%s" % ("、".join(c["numbers"]) or "（無）"))
-        L.append("- 實體：%s" % ("、".join(c["entities"]) or "（無）"))
-        L.append("- 計分：數字 %d、實體 %d、評測 %d、新穎 %d"
-                 % (c["why"]["numbers"], c["why"]["entities"],
-                    c["why"]["benchmarks"], c["why"]["novelty"]))
+        for i, it in enumerate(g["items"], 1):
+            mark = "**" if i == 1 else ""
+            L.append("%d. %s%s%s" % (i, mark, it["summary"], mark))
+            extra = []
+            if it["numbers"]:
+                extra.append("數字：" + "、".join(it["numbers"]))
+            if it["entities"]:
+                extra.append("實體：" + "、".join(it["entities"]))
+            if extra:
+                L.append("   - " + "｜".join(extra))
+        L.append("")
+
+    if brief.get("density_reference"):
+        L.append("## 密度榜（**僅供參考，不是重要性**）")
+        L.append("")
+        L.append("> 這個排名只反映「數字與具名實體有多少」。硬體規格文幾乎一定排前面，")
+        L.append("> 但它們常常是延伸討論，不是當期新聞。看這個榜請只用來找「哪則最有數字可引用」。")
+        L.append("")
+        for i, c in enumerate(brief["density_reference"], 1):
+            L.append("%d. [%d] %s" % (i, c["density"], c["summary"][:80]))
         L.append("")
 
     L.append("## 數字清單（寫稿時照抄，不要重算）")
