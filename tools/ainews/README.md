@@ -38,6 +38,12 @@ AINews 的到達時間**不固定**（UTC，實測）：
 | `DIGEST_CONTRACT.md` | **階段 3 規格**：骨架、配額、語氣、SVG、該不該寫 | ✅ |
 | `digest_lint.py` | 階段 3 閘門：結構 + 數字溯源 | ✅ |
 | `brief.py` | **階段 3b**：抽成寫稿大綱（頭條候選／數字清單／未證實／不可寫） | ✅ |
+| `figures.py` | **階段 4**：四種固定版型，從大綱生成 inline SVG | ✅ |
+| `cover.py` | **階段 4b**：依故事選 motif、產封面候選、安裝 | ✅ |
+| `selftest_figures.py` | 22 項階段 4 回歸測試 | ✅ |
+| `_check_fig_layout.py` | 用瀏覽器量測文字是否溢出（程式化取代肉眼） | ✅ |
+| `_preview_figures.py` | 把 SVG 渲成 PNG 供目視 | ✅ |
+| `_check_motifs.py` | 封面 motif 選擇的黃金案例檢查 | ✅ |
 | `selftest_brief.py` | 17 項階段 3b 回歸測試 | ✅ |
 | `_check_brief_quality.py` | 品質檢查：機器排序 vs 已發布的頭條 | ✅ |
 | `check_bold_render.py` | 粗體**實際渲染**檢查（唯一可信） | ✅ |
@@ -92,7 +98,64 @@ Gmail 的抓取需要 Composio 的 MCP 工具，**批次檔叫不到**。所以�
 
 ---
 
-## 階段 3b：寫稿大綱
+## 階段 4：出圖
+
+```powershell
+# 內文圖（決定性：同一份資料 → 同一張圖）
+python tools/ainews/figures.py --brief out/<id>/brief.json --out out/<id>
+
+# 版面檢查（用瀏覽器量測，比肉眼可靠）
+python tools/ainews/_check_fig_layout.py out/<id>/figures.html
+
+# 封面（需要 ComfyUI；`--no-render` 只產 prompt）
+python tools/ainews/cover.py --brief out/<id>/brief.json --slug ainews-x-zh
+python tools/ainews/cover.py --slug ainews-x-zh --pick 2
+```
+
+### 四種版型，只填資料不改版面
+
+| 版型 | 資料來源 | 什麼時候用 |
+|---|---|---|
+| `kpi_row` | `number_ledger`（每區塊取一個） | 開頭的四個硬數字 |
+| `ranking` | `headline_candidates` 分數 | 展示排序（自己就是一種「我怎麼挑」的說明） |
+| `bar_compare` | **同單位**的數字 | 同一則新聞內的量級對比 |
+| `delta` | 前後兩個值 | 「改之前 / 改之後」 |
+
+全部沿用 `tools/diagrams/svglib.py`，所以與站上其他內嵌圖同一套配色與字型。
+
+### 三條硬規則（都是踩過才寫下的）
+
+1. **不同單位的數字不進同一張長條圖。** 第一版拿 `594B`（參數）跟 `96.32 tok/s`（吞吐）比長度，
+   視覺上很漂亮，**語意上是錯的**。現在依單位分組，只畫最大的同單位那一組，不足 2 條就不畫。
+2. **資料不夠就不畫。** 一條長條不是圖表，一張 KPI 卡不是版面。版型回傳 `None`，由上層跳過。
+3. **`<svg>` 內不得有空行。** 這是第 2 篇的舊傷：marked 會把圖拆成 `<p>`，瀏覽器隨即丟掉所有
+   `<rect>`，整張圖只剩文字。`selftest_figures.py` 的 f6 直接把這條釘住。
+
+### 為什麼版面檢查要寫成程式
+
+我花了三輪「看截圖猜哪裡壞」。後來改成用瀏覽器的 `getBBox()` 量測：
+
+```
+fig1 (940x300): 1 text(s) overflow
+    [card] '96.32 tokens'  right=678  edge=677
+```
+
+**溢出 1px**——螢幕上根本看不出來，但那是真的錯。程式一量就講清楚。
+所以 `_check_fig_layout.py` 比 `_preview_figures.py`（截圖）更重要：前者是判準，後者只是給人看的。
+
+### 封面：唯一保留人工閘門的一步
+
+內文圖是決定性的，封面不是。同一個 prompt 跑三次會得到三張不同的圖，而**沒有任何 lint 能判斷
+「這張圖的隱喻對不對」**。所以 `cover.py` 只做到「產候選 + 基本檢查（尺寸、檔案大小）」，
+安裝（`--pick`）是刻意的第二個指令。
+
+motif 由標題與頭條決定（`money` / `weights` / `model_release` / `agent` / `benchmark` /
+`hardware` / `security` / `default`），用 `_check_motifs.py` 對已發布的期數做黃金驗證。
+
+> 這裡也踩過一次：Inkling 那期（開源權重**釋出**）被判成 `weights`（權重**解讀**），
+> 因為 `weights` 這個字兩邊都有。修法是檢查順序——「釋出」優先於「解讀」——並收窄後者的詞彙。
+
+---
 
 ```powershell
 python tools/ainews/brief.py --extract tools/ainews/out/<id>/extract.json --out tools/ainews/out/<id>

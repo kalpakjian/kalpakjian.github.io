@@ -69,3 +69,19 @@ jobs:
         run: |
           python3 tools/ainews/selftest_brief.py
           exit $LASTEXITCODE
+
+      # 階段 4 出圖：22 項。重點是「不該畫的時候不要畫」與 SVG 衛生
+      #（空行會讓 marked 把圖拆成 <p>，整張圖的 rect 全部消失）。
+      - name: Run AINews figures selftest
+        shell: pwsh
+        run: |
+          python3 tools/ainews/selftest_figures.py
+          exit $LASTEXITCODE
+
+      # 封面 motif 選擇：用兩篇已發布的期數當黃金案例。
+      # 不渲染圖片（CI 沒有 ComfyUI），只驗「選對場景」。
+      - name: Check AINews cover motifs
+        shell: pwsh
+        run: |
+          python3 tools/ainews/_check_motifs.py
+          exit $LASTEXITCODE
