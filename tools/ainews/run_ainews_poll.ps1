@@ -45,7 +45,7 @@ if (-not $PayloadFile) {
     Write-Step ("full chain (credentials: " + $(if ($hasCreds) { "present" } else { "MISSING" }) + ")")
 
     # Missing credentials are a CONFIG state, not a fault: exit 0 with a clear
-    # log line so Task Scheduler does not show a red run every 10 minutes for a
+    # log line so Task Scheduler does not show a red run every 2 hours for a
     # condition the user has not acted on yet. The real error still surfaces the
     # moment the chain runs with credentials present.
     if (-not $hasCreds) {

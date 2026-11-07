@@ -103,6 +103,39 @@ Gmail 的抓取需要 Composio 的 MCP 工具，**批次檔叫不到**。所以�
 
 ---
 
+## 排程：每 2 小時
+
+```powershell
+pwsh -File tools/ainews/install_schedule.ps1              # 安裝／更新（2h）
+pwsh -File tools/ainews/install_schedule.ps1 -EveryMinutes 60
+pwsh -File tools/ainews/install_schedule.ps1 -Remove       # 移除
+```
+
+### 為什麼是 2 小時，不是 10 分鐘
+
+**AINews 一天最多一期。** 每 10 分鐘跑一次 = 每期約 **143 次**執行，其中 **142 次是空跑**。
+改成 2 小時 → 約 **12 次**，而最壞延遲仍在「寫完一篇導讀」的時間之內。
+
+| 頻率 | 每期執行次數 | 最壞延遲 |
+|---|---|---|
+| 10 分鐘 | ~143 | 10 分 |
+| 60 分鐘 | ~24 | 1 小時 |
+| **120 分鐘** | **~12** | **2 小時** |
+| 每天一次 | 1 | 24 小時 |
+
+**頻率只影響延遲，不影響正確性**——因為 ledger 以 `messageId` 為鍵，跑得多快都不會重複發文或重複抽取。
+空跑的成本也只有一次 IMAP SEARCH（不到一秒）。
+
+### 一個踩過的坑
+
+`install_schedule.ps1` 原本把 `-PayloadFile out\payload.json` 寫進排程參數。
+那個參數會切換到「只偵測」模式，**於是排程從來沒真正抓過信**，只一直回報 `detect=0`。
+現在排程不帶該參數，走完整鏈（detect → IMAP → extract → brief → figures）。
+
+驗證方式：跑一次排程後看 `out/poll.log` 是否出現 `chain=ok`，而不是 `detect=0`。
+
+---
+
 ## 抓取：IMAP（取代 MCP，可排程）
 
 ```powershell
