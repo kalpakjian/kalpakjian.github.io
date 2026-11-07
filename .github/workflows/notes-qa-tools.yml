@@ -52,3 +52,12 @@ jobs:
           python3 tools/ainews/_make_large_fixture.py
           python3 tools/ainews/stress_extract.py tools/ainews/fixtures/large-issue.json
           exit $LASTEXITCODE
+
+      # AINews 導讀閘門（階段 3）：11 項測試。
+      # 其中 t1 拿「已發布的兩篇」當黃金樣本——閘門若連好文章都擋，就沒人會用
+      # 它，等於失去保護。所以這一步同時驗「抓得到錯」與「不誤報」。
+      - name: Run AINews digest lint selftest
+        shell: pwsh
+        run: |
+          python3 tools/ainews/selftest_lint.py
+          exit $LASTEXITCODE

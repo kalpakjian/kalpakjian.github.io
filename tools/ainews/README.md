@@ -35,17 +35,16 @@ AINews 的到達時間**不固定**（UTC，實測）：
 | `seen.json` | **ledger**：以 `messageId` 為 key 的記憶 | ✅（這是站台的記憶） |
 | `extract.py` | **階段 2**：mail body → 乾淨、分區的來源文字 | ✅ |
 | `extract_new.py` | 階段 2 driver：走 ledger，把 `detected` 的期數抽成 `source.txt` | ✅ |
+| `DIGEST_CONTRACT.md` | **階段 3 規格**：骨架、配額、語氣、SVG、該不該寫 | ✅ |
+| `digest_lint.py` | 階段 3 閘門：結構 + 數字溯源 | ✅ |
+| `check_bold_render.py` | 粗體**實際渲染**檢查（唯一可信） | ✅ |
 | `run_ainews_poll.ps1` | 呼叫 detect → 通知（toast／beep）→ 寫 log | ✅ |
 | `install_schedule.ps1` | 註冊／移除每 10 分鐘的 Windows 排程 | ✅ |
-| `selftest.py` | 13 項階段 1 回歸測試（多數在驗「什麼**不該**觸發」） | ✅ |
-| `selftest_extract.py` | 21 項階段 2 回歸測試 | ✅ |
+| `selftest.py` / `selftest_extract.py` / `selftest_lint.py` | 13 + 21 + 11 項回歸測試 | ✅ |
 | `stress_extract.py` | 規模壓力測試（105 KB body） | ✅ |
-| `_make_large_fixture.py` | 產生結構真實的大 fixture（CI 用） | ✅ |
-| `_make_real_fixture.py` | 從真實 Gmail 回應造 fixture（手動、可選） | ✅ |
-| `fixtures/sample-payload.json` | 真實的 5 期 metadata | ✅ |
-| `fixtures/full-message-sample.json` | 小型結構樣本 | ✅ |
-| `fixtures/large-issue.json` | 105 KB 結構壓力樣本（產生檔） | ✅ |
-| `out/` | payload 快照、每期 `message.json`／`source.txt`／`extract.json`、log | ❌ gitignore |
+| `_probe_bold.py` | 從渲染結果反推粗體規則（研究用） | ✅ |
+| `fixtures/*` | 樣本 payload／結構樣本／壓力樣本 | ✅ |
+| `out/` | 每期 `message.json`／`source.txt`／`extract.json`、log | ❌ gitignore |
 
 ---
 
