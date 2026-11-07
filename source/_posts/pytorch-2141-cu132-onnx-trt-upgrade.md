@@ -29,7 +29,7 @@ banner_img: /img/covers/pytorch-2141-cu132-onnx-trt-upgrade.png
 
 <!-- more -->
 
-> <strong>更新紀錄</strong>：2026-10-15 初版（升級路徑推演）；2026-10-16 補實測——舊 engine 相容性、cu132 重編（76.8 s）、864×480 與生產量級（1344×768／243 格／6 步）跑分，並修正初版「必須重編」與「−51.6%」兩處說法；2026-10-26 補 **Linux／Omarchy 對應安裝**——同一張卡的兩個 venv（cu132 stable／cu134 nightly）、cuDNN 三路驗證，以及「變快的是驅動、不是 wheel」的實測結論；同日再補——上游移除 torchaudio 的 263 個 commit 補齊、`comfy-aimdo` 等套件升版（不動 torch），以及 **TensorRT 資源檔裁切**（nightly 12 G → 8.4 G，回收 3.29 GiB，H3 TRT-VAE 仍可用）。
+> <strong>更新紀錄</strong>：2026-10-15 初版（升級路徑推演）；2026-10-16 補實測——舊 engine 相容性、cu132 重編（76.8 s）、864×480 與生產量級（1344×768／243 格／6 步）跑分，並修正初版「必須重編」與「−51.6%」兩處說法；2026-10-26 補 **Linux／Omarchy 對應安裝**——同一張卡的兩個 venv（cu132 stable／cu134 nightly）、cuDNN 三路驗證，以及「變快的是驅動、不是 wheel」的實測結論；同日再補——上游移除 torchaudio 的 263 個 commit 補齊、`comfy-aimdo` 等套件升版（不動 torch），以及 **TensorRT 資源檔裁切**（nightly 12 G → 8.4 G，回收 3.29 GiB，H3 TRT-VAE 仍可用）；**2026-11-07** 把 stable 移到 cu134 線（torch 2.15.0+cu134／cuDNN 9.26.0.51／cuda-toolkit 13.4.1.0），兩個 venv 共用 CUDA 13.4，並補上搬完後的 22 項稽核、TRT engine 反序列化與真實出圖（3.27 s）實測。
 
 ## 背景：這個 repo 在做什麼
 
@@ -189,10 +189,10 @@ D:\AI\ComfyUI\python_embeded_nightly\python.exe D:\AI\ComfyUI\main.py --listen 1
 
 | 項目 | 數值 |
 |---|---|
-| OS | Omarchy（Arch-based），核心 `7.2.8-9-omarchy` |
+| OS | Omarchy（Arch-based），核心 `7.2.15-1-omarchy` |
 | 驅動 | `nvidia-open-dkms` **615.78.08-1**（CUDA UMD **13.4**） |
 | Python | 3.12.14（兩個 venv） |
-| **stable** | `~/Projects/ComfyUI/.venv`：torch **2.14.1+cu132**、cuDNN **9.24.0.43**、NCCL 2.30.7、triton 3.8.0（6.8 G） |
+| **stable** | `~/Projects/ComfyUI/.venv`：torch **2.15.0+cu134**、cuDNN **9.26.0.51**、NCCL 2.30.7、triton 3.9.0（7.3 G） |
 | **nightly** | `~/Projects/ComfyUI/.venv-nightly`：torch **2.16.0.dev20261025+cu134**、cuDNN **9.26.0.51**、NCCL 2.32.3、triton 3.9.0（12 G → 裁切後 8.4 G，見下） |
 | TensorRT | nightly 另含 `tensorrt`／`tensorrt_libs` **11.3.0.99**（cu13 版）——**本機實際有在用**（H3 TRT-VAE） |
 
@@ -220,6 +220,28 @@ NVIDIA 把**所有** GPU 架構的 builder resource 連同 **Windows 專用**的
 搬走 14 個檔案＝回收 **3.29 GiB**（nightly 12 G → 8.4 G）。驗證三關全過：
 ONNX → engine 編譯 OK、兩個既有 `.engine` 反序列化 OK、ComfyUI 煙霧測試 `exit=0`
 且 `ComfyUI-H3VAE_TRT` 節點正常載入。
+
+> **2026-11-07 更新：stable 也搬到 cu134 線。** torch 2.14.1+cu132 → **2.15.0+cu134**、
+> cuDNN 9.24.0.43 → **9.26.0.51**、triton 3.8.0 → 3.9.0、`cuda-toolkit` 13.2.2 → **13.4.1.0**，
+> 一共 17 個套件被換掉、20 個裝上。兩個 venv 現在共用同一條 CUDA 13.4 執行期，
+> 差別只剩 torch 是 release（2.15.0）還是 dev（2.16.0.dev）。
+>
+> 搬家的原因不是「想升」，而是 **cu132 索引上沒有一組配得起來的 triple**
+> （torchvision 0.30 不存在、cu132 沒有 cp312 的 torchaudio）；配對過程的坑記在
+> <a href="/2026/10/21/ai-stack-auto-update-pipeline/">另一篇</a>的 §十〈坑 3 的實例〉。
+>
+> ⚠️ 下面〈cuDNN 要三路交叉驗證〉與〈效能〉兩節的數字，是 **2026-10-26（stable 還在 cu132）**
+> 的實測，保留作紀錄；引用前請以現況表為準。
+
+搬完之後的實測（新 stable，torch 2.15.0+cu134）：
+
+| 項目 | 結果 |
+|---|---|
+| `audit_venv.py` 22 項 | 0 failed / 0 warnings |
+| cuDNN 三方一致 | metadata ＝ runtime ＝ 磁碟 ＝ **9.26.0** |
+| torchaudio / torch CUDA | **13.4 vs 13.4** |
+| 兩個既有 TRT engine | encoder 0.1 s／decoder 1.9 s，皆可反序列化 |
+| 真實出圖（SD1.5、512×768、20 步） | **3.27 s** 成功 |
 
 ### 兩個 Linux 特有的坑
 
@@ -316,4 +338,4 @@ Linux 這邊更直接：**cuDNN 9 的 `.so` 裡沒有明文版本字串**，`str
 
 ---
 
-*本篇為實測紀錄整理，環境：RTX 4090 24GB｜ComfyUI 0.37.0（初版 0.34.0）｜torch 2.14.1+cu132／2.16.0.dev20261007+cu132 升級路徑；2026-10-16 補 cu132 重編與跑分實測；2026-10-26 補 Linux／Omarchy 對應安裝（Omarchy、核心 7.2.8-9-omarchy、驅動 615.78.08、兩個 venv）、上游 torchaudio 移除的落地，以及 TensorRT 資源檔裁切（回收 3.29 GiB）。*
+*本篇為實測紀錄整理，環境：RTX 4090 24GB｜ComfyUI 0.37.0（初版 0.34.0）｜torch 2.14.1+cu132／2.16.0.dev20261007+cu132 升級路徑；2026-10-16 補 cu132 重編與跑分實測；2026-10-26 補 Linux／Omarchy 對應安裝（Omarchy、核心 7.2.8-9-omarchy、驅動 615.78.08、兩個 venv）、上游 torchaudio 移除的落地，以及 TensorRT 資源檔裁切（回收 3.29 GiB）；2026-11-07 stable 移至 cu134 線（torch 2.15.0+cu134／cuDNN 9.26.0.51，核心已升至 7.2.15-1-omarchy）。*

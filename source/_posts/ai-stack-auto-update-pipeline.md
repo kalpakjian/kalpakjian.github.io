@@ -43,6 +43,10 @@ banner_img: /img/covers/ai-stack-auto-update-pipeline.jpg
 > ComfyUI 落後的 263 個 commit 也補齊了（上游移除 torchaudio 的坑根治）；
 > 至於「移除 nightly 的 `tensorrt_libs` 回收 4.4 G」——**實測後改成只裁掉用不到的資源檔**，
 > 因為 nightly 其實在跑 H3 TRT-VAE，整包移除會弄壞工作流。細節見 §十。
+>
+> **2026-11-07 更新**：把 stable venv 也從 cu132 搬到 **cu134** 線（torch 2.15.0+cu134、cuDNN 9.26.0.51），
+> 兩個 venv 現在共用同一條 CUDA 13.4 執行期。原因不是「想升」，而是
+> **cu132 那邊根本沒有一組配得起來的 triple** —— 這正好是〈坑 3〉講的索引陷阱的實例。
 
 <!-- more -->
 
@@ -78,15 +82,15 @@ python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
 
 | 元件 | 版本 |
 |---|---|
-| OS | **Omarchy**（Arch-based），核心 `7.2.8-9-omarchy` |
+| OS | **Omarchy**（Arch-based），核心 `7.2.15-1-omarchy` |
 | 驅動 | `nvidia-open-dkms` **615.78.08-1**（CUDA UMD **13.4**） |
 | Python | **3.12.14**（兩個 venv 都是 3.12） |
-| torch（stable） | **2.14.1+cu132** |
+| torch（stable） | **2.15.0+cu134** |
 | torch（nightly） | **2.16.0.dev20261025+cu134** |
-| cuDNN | stable **9.24.0.43**／nightly **9.26.0.51** |
-| 環境 | `~/Projects/ComfyUI/.venv`（6.9 G）、`~/Projects/ComfyUI/.venv-nightly`（12 G → 裁切後 8.4 G，見 §十） |
+| cuDNN | stable **9.26.0.51**／nightly **9.26.0.51** |
+| 環境 | `~/Projects/ComfyUI/.venv`（7.3 G）、`~/Projects/ComfyUI/.venv-nightly`（8.5 G） |
 
-Linux 版的安裝過程、踩坑、審計與實測見 **§十**。
+Linux 版的安裝過程、踩坑、審計與實測見 **§十**；stable 在 2026-11-07 從 cu132 線移到 cu134 線，來龍去脈見 §十的現況表。
 
 ## 二、為什麼是 3.14.8，不是最新的 3.15.0
 
@@ -434,6 +438,26 @@ Linux 上不需要「下載驅動安裝程式」：`nvidia-open-dkms` 會跟著�
 | 套件數 | 130 | 140 |
 | 磁碟 | 6.9 G | 12 G（裁切後 8.4 G） |
 
+> 上表是 **2026-10-26 安裝當時**的快照，保留作為紀錄。
+
+**2026-11-07 更新：stable 也移到 cu134 線。** 起因是 `check_stack.py` 回報 `torch 2.14.1+cu132 → 2.15.0`
+可以升，但實際查索引才發現 cu132 那邊的配對不完整——於是兩邊統一走 CUDA 13.4：
+
+| | stable | nightly |
+|---|---|---|
+| torch | **2.15.0+cu134** | 2.16.0.dev20261025+cu134 |
+| torchvision | 0.29.2+cu134 | 0.30.0.dev20261025+cu134 |
+| torchaudio | 2.11.1+cu134 | 2.11.1+cu134 |
+| triton | 3.9.0 | 3.9.0 |
+| cuDNN | **9.26.0.51** | **9.26.0.51** |
+| NCCL | 2.30.7 | 2.32.3 |
+| 套件數 | 134 | 141 |
+| 磁碟 | 7.3 G | 8.5 G |
+
+兩邊現在共用同一條 CUDA 13.4 執行期（`cuda-toolkit 13.4.1.0`），只差 torch 是 release（2.15.0）
+還是 dev（2.16.0.dev）。這次一共 17 個套件被換掉、20 個裝上，包含
+`nvidia-cublas 13.4.1.3 → 13.8.1.7`、`nvidia-cuda-nvrtc 13.2.86 → 13.4.59`。
+
 **為什麼要兩個？** nightly 是 dev 版，本來就會壞。把它跟 stable 放同一個 venv，
 一壞就是整天不能用；分成兩個之後，stable 永遠是已知可用的版本，
 nightly 壞掉只影響「試新功能」這件事。
@@ -559,6 +583,31 @@ pip 與 uv 的索引策略不同：uv 預設**第一個有該套件的索引就�
 - 用了 unsafe 之後 → **必須自己釘版本號**，因為保護已經沒了
 
 > 一句話：**uv 比較嚴格，pip 比較寬鬆；嚴格的那個要你手動補釘版本。**
+
+#### 坑 3 的實例（2026-11-07）
+
+`check_stack.py` 說 `torch 2.14.1+cu132 → 2.15.0` 可以升，但實際動手時連續踩到三層：
+
+```bash
+# ① 直接被 first-index-wins 擋掉
+$ uv pip install --dry-run --python .venv/bin/python 'torch==2.15.0+cu132' \
+    --index-url https://download.pytorch.org/whl/cu132 --extra-index-url https://pypi.org/simple
+error: No solution found when resolving dependencies
+  cause: Because there is no version of torch==2.15.0+cu132 and you require torch==2.15.0+cu132 ...
+  hint: `torch` was found on https://pypi.org/simple, but not at the requested version
+```
+
+PyPI 上也有 `torch`，所以 uv 把「第一個有這個套件的索引」判給 PyPI，而 PyPI 沒有 `+cu132` 這個本地版號
+→ 直接判無解。加上 `--index-strategy unsafe-best-match` 才看得到索引上的版本。
+
+**② 不能憑「版號 +1」猜配對。** 我原本以為 torch 2.15 要配 torchvision 0.30，查了才發現
+**0.30.x 根本不存在**（PyPI 與 cu134 發行索引都沒有，只有 nightly 的 `0.30.0.dev…`）；
+PyTorch 2.15.0 實際搭配的就是 **torchvision 0.29.2**。猜錯就會去找一個不存在的版本，然後誤判「無法升級」。
+
+**③ `check_stack.py` 的「最新版」來自 PyPI，但那不代表你的 CUDA 索引有對應的 build。**
+`torchaudio 2.11.1` 在 PyPI 是 `py3-none` 通用 wheel，`torchvision 0.29.2` 也是；
+但 cu132 索引上 cp312 的 torchaudio 已經沒有編譯版了。所以「有更新」之後還要多問一句：
+**「我這條 CUDA 線上有配得起來的 triple 嗎？」** 這次的答案是「cu132 沒有、cu134 有」，於是 stable 搬到 cu134。
 
 ### cuDNN 版本要三路交叉驗證
 
