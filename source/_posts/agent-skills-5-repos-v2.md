@@ -35,8 +35,10 @@ Agent Skill 就是一個資料夾：一份 `SKILL.md` 寫清楚「什麼時候�
 [5 Best GitHub Repositories for AI Agent Skills](https://www.kdnuggets.com/5-best-github-repositories-for-ai-agent-skills)，
 但<strong>每一個數字我都回到 GitHub API 重新數過</strong>——原文刊出後有幾個值和今天對不上，差異在 §4 逐一列出。
 
-> 這是重寫版。前一版漏掉了 `AgentShield`、`constraint-driven-development`
-> 與實際目錄計數，這版補齊並標明查證方式。
+> 這是<strong>合併版</strong>。原本分成兩篇（初版與查證版），內容重疊但各有缺漏——
+> 初版漏了 `AgentShield` 與 `constraint-driven-development`，
+> 查證版漏了 ECC 的分語言規則與 80% 覆蓋率規定。這版把兩邊補齊，
+> 舊網址會自動跳轉到這裡。
 <figure style="margin:24px 0;padding:14px 12px;overflow-x:auto;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 500" role="img" aria-label="五個 agent skills 資源庫在流程嚴謹度與隨附機械上的定位" style="width:100%;max-width:940px;height:auto;display:block;margin:0 auto"><rect x="0.75" y="0.75" width="938" height="498" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/><text x="40" y="44" font-size="21" fill="#e6edf3" font-weight="700" text-anchor="start" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">五個技能庫：流程嚴謹度 × 隨附機械</text><text x="40" y="70" font-size="13" fill="#8b949e" font-weight="400" text-anchor="start" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">橫軸往右＝流程越被框架綁住　縱軸往下＝除了 SKILL.md 還帶越多東西</text><rect x="150" y="96" width="730" height="304" rx="12" fill="#0f141b" stroke="#222b36"/><line x1="515" y1="96" x2="515" y2="400" stroke="#1d2733" stroke-dasharray="6 6"/><line x1="150" y1="250" x2="880" y2="250" stroke="#1d2733" stroke-dasharray="6 6"/><text x="158" y="426" font-size="12.5" fill="#8b949e" font-weight="400" text-anchor="start" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">← 自主組合</text><text x="872" y="426" font-size="12.5" fill="#8b949e" font-weight="400" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">完整方法論 →</text><text x="138" y="140" font-size="12.5" fill="#8b949e" font-weight="400" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只有技能</text><text x="138" y="380" font-size="12.5" fill="#8b949e" font-weight="400" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">平台級</text><text x="164" y="122" font-size="12" fill="#3d4b5c" font-weight="400" text-anchor="start" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">零件箱</text><text x="866" y="122" font-size="12" fill="#3d4b5c" font-weight="400" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">生產線＋關卡</text><text x="164" y="388" font-size="12" fill="#3d4b5c" font-weight="400" text-anchor="start" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">記憶＋生態</text><circle cx="300" cy="180" r="7" fill="#2dd4bf" opacity="0.9"/><circle cx="300" cy="180" r="13" fill="none" stroke="#2dd4bf" opacity="0.35"/><text x="300" y="158" font-size="14" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Superpowers</text><text x="300" y="214" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">完整方法論</text><circle cx="330" cy="310" r="7" fill="#bc8cff" opacity="0.9"/><circle cx="330" cy="310" r="13" fill="none" stroke="#bc8cff" opacity="0.35"/><text x="330" y="288" font-size="14" fill="#bc8cff" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">ECC</text><text x="330" y="344" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">314 技能 / 71 代理</text><circle cx="600" cy="195" r="7" fill="#58a6ff" opacity="0.9"/><circle cx="600" cy="195" r="13" fill="none" stroke="#58a6ff" opacity="0.35"/><text x="600" y="173" font-size="14" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Pocock</text><text x="600" y="229" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">小型可組合</text><circle cx="742" cy="165" r="7" fill="#fbbf24" opacity="0.9"/><circle cx="742" cy="165" r="13" fill="none" stroke="#fbbf24" opacity="0.35"/><text x="742" y="143" font-size="14" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Osmani</text><text x="742" y="199" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">25 技能 / 六階段</text><circle cx="452" cy="315" r="7" fill="#ff7b72" opacity="0.9"/><circle cx="452" cy="315" r="13" fill="none" stroke="#ff7b72" opacity="0.35"/><text x="452" y="293" font-size="14" fill="#ff7b72" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Awesome LLM Apps</text><text x="452" y="349" font-size="11.5" fill="#8b949e" font-weight="400" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">100+ 範例</text></svg>
 <figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：把五套放上兩個維度，就能看出它們不是同一種東西——<strong>Superpowers 是方法論、Pocock 是零件箱、Osmani 是生產線、ECC 是平台，Awesome LLM Apps 則是範例集。</strong></figcaption>
@@ -93,6 +95,7 @@ Agent Skill 就是一個資料夾：一份 `SKILL.md` 寫清楚「什麼時候�
 2. 專案<strong>原則上不收新技能投稿</strong>，也不接受代理代寫的 PR。
 3. 內建<strong>可關閉的遙測</strong>（只回報版本），用 `SUPERPOWERS_DISABLE_TELEMETRY` 關掉。
 
+
 ### 3.2 Skills for Real Engineers — 保持小、保持可拆
 
 `mattpocock/skills`，Matt Pocock，MIT，約 318K 星（目前星數最高）。
@@ -115,6 +118,8 @@ README 開頭就在批 GSD、BMAD、Spec-Kit：「它們想幫你，但同時拿
 - **記憶**：`unified-memory`、`context-and-decisions`、`context-budget`，跨 session 保留決策。
 - **持續學習**：`continuous-learning`、`continuous-learning-v2`，加上 `/instinct-status`、
   `/instinct-import`、`/instinct-export`、`/evolve`、`/prune`，把工作過程中的行為蒸餾成可重用的「本能」。
+- **分語言規則**：`rules/` 底下依語言分（TypeScript、Python、Go、Swift、PHP、ArkTS），
+  共通的 `common/` 裡寫死「測試覆蓋率 80%」、Git 提交格式、安全檢查等強制項。
 - **安全掃描**：<strong>AgentShield</strong>，掃 secrets、權限、hooks 與 MCP 設定。
   它有自己的 CLI（`agentshield scan`、`agentshield init`）、GitHub Action、SARIF／HTML／JSON 報告與政策包。
 
@@ -162,26 +167,49 @@ npx skills add https://github.com/Shubhamsaboo/awesome-llm-apps/tree/main/agent_
 ```
 
 
-## 4. 原文數字 vs 我實測（這節是重點）
+## 4. 原文沒說、我實測後更確定的事
 
-我用 GitHub API 直接數目錄，不靠 README 的自述。結果：
+原文刊出於 2026-10-21，幾天內就有幾項數字變動；而且它完全沒提授權。
+我用 GitHub API 直接數目錄，不靠 README 自述。
+
+### 4.1 目錄計數對不上
 
 | 項目 | 原文／常見說法 | 我實測（2026-11-08） | 差異原因 |
 |---|---|---|---|
 | ECC 技能 | 292 | **314** | 目錄持續增加 |
 | ECC 代理 | 68 | **71** | 同上 |
 | Osmani 技能 | 24 | **25** | 多一個 `using-agent-skills`（meta 技能） |
-| 星數第一 | Superpowers | **Pocock 317.8K** | 已超越 |
-| 授權 | 原文未提 | 4×MIT、**1×Apache-2.0** | Awesome LLM Apps 是 Apache-2.0 |
 
-三點實務提醒：
+<strong>目錄數 ≠ 可用技能數</strong>。ECC 的 `skills/` 有 314 個目錄，但裡面混了
+`plankton-code-quality`、`codehealth-mcp` 這種需要額外安裝的選項；
+Osmani 的 25 個裡也有一個是「怎麼用其他技能」的 meta 技能。
 
-1. <strong>目錄數 ≠ 可用技能數</strong>。ECC 的 `skills/` 有 314 個目錄，但裡面混了
-   `plankton-code-quality`、`codehealth-mcp` 這種需要額外安裝的選項。
-2. <strong>星數會騙人</strong>。這類專案的成長很大一部分來自「一鍵裝 plugin」的曝光紅利，
-   跟技能本身好不好用不是同一件事。
-3. <strong>授權要看</strong>。四套 MIT、一套 Apache-2.0；商用都在允許範圍，
-   但 Apache-2.0 多了專利授權條款與聲明保留義務。要在公司落地，這比星數重要。
+### 4.2 星數不能當品質指標
+
+| 專案 | 星數（2026-11-08） |
+|---|---|
+| Skills for Real Engineers | **317.8K**（第一） |
+| Superpowers | 314.2K |
+| ECC | 299.2K |
+| Awesome LLM Apps | 144.1K |
+| Agent Skills | 113.9K |
+
+原文刊出時 Superpowers 還是第一，現在已被 Pocock 超越。
+更重要的是：這類專案的星數成長有很大一部分來自「一鍵裝 plugin」的曝光紅利，
+跟技能本身好不好用不是同一件事。
+
+### 4.3 四套是 MIT，一套不是
+
+| 專案 | 授權 |
+|---|---|
+| Superpowers | MIT |
+| Skills for Real Engineers | MIT |
+| ECC | MIT |
+| Agent Skills | MIT |
+| **Awesome LLM Apps** | **Apache-2.0** |
+
+商用與 fork 都在允許範圍，差別在 Apache-2.0 多了<strong>專利授權條款</strong>與
+<strong>聲明保留義務</strong>。原文完全沒提授權；要在公司內部落地，這比星數重要。
 
 ## 5. 怎麼選：先挑一個，別全裝
 
@@ -189,6 +217,10 @@ npx skills add https://github.com/Shubhamsaboo/awesome-llm-apps/tree/main/agent_
 同時載入的結果不是「更嚴謹」，而是<strong>代理收到互相衝突的指示</strong>：
 一個要你先寫計畫、一個要你先訪談你、一個要你走 `/spec`。
 實際表現通常是卡住，或只挑最省事的那條路。
+
+這不是理論。三個套件都定義了「什麼時候該進入 planning」的觸發條件，
+但門檻不同：Superpowers 要求設計先被核准、Pocock 要求先把設計樹問完、
+Osmani 要求先產出 spec 檔。代理同時載入時無從判斷該聽誰的。
 
 
 我的順序建議：
