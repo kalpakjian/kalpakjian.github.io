@@ -9,6 +9,9 @@ _multiconfig.yml
 # 封面產線：腳本要版控，產出的圖（15 MB）不要
 _covergen/out/
 _covergen/**/__pycache__/
+# 封面候選圖（Qwen-Image 產出，一篇文章 3 張約 3 MB）；腳本要版控，產出的圖不要
+_covergen/candidates/
+_covergen/**/candidates/
 .DS_Store
 _work/
 
