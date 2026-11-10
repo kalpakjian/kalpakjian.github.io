@@ -13,8 +13,6 @@ index_img: /img/covers/minimax-h3-image-vs-qwen-image-21.png
 banner_img: /img/covers/minimax-h3-image-vs-qwen-image-21.png
 ---
 
-![MiniMax-H3-Image 與 Qwen-Image 2.1 的封面：一顆暖銅球與一顆冷藍球相對](/img/covers/minimax-h3-image-vs-qwen-image-21.png)
-
 ## 一句話總結
 
 兩邊都能中文寫字、都能文生圖加編輯，但<span> </span><strong>瓶頸完全不同</strong>：MiniMax-H3-Image 是「大圖＋複雜指令」的重型機，33.1B 的 DiT 蒸餾到 6 步，從 4 MP 到 16 MP 幾乎不變慢；Qwen-Image 2.1 是「小、快、迭代」的日常機，7B 的體積換來十秒一版的編輯速度與原生透明底。
