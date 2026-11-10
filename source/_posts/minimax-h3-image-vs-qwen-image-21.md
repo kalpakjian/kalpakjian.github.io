@@ -2,11 +2,15 @@
 title: MiniMax-H3-Image 對上 Qwen-Image 2.1：同一台 4090 把兩邊跑一遍
 date: 2026-11-11 20:00:00
 categories:
-  - 學習資源
+  - AI 研究札記
 tags:
-  - 人工智慧
-  - 機器學習
-  - 學習筆記
+  - MiniMax-H3-Image
+  - Qwen-Image 2.1
+  - ComfyUI
+  - 本地推論
+  - 實測
+index_img: /img/covers/minimax-h3-image-vs-qwen-image-21.png
+banner_img: /img/covers/minimax-h3-image-vs-qwen-image-21.png
 ---
 
 ![MiniMax-H3-Image 與 Qwen-Image 2.1 的封面：一顆暖銅球與一顆冷藍球相對](/img/covers/minimax-h3-image-vs-qwen-image-21.png)
