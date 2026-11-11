@@ -151,8 +151,7 @@ pytorch3d 的解法是寫一個純 torch 的替代套件：只實作 GVHMR 真�
 這些腳本已整理成獨立 repo（含讓 GVHMR 在 Windows 上跑起來的純 torch pytorch3d 替代品、SMPL-X 檔的自動安裝腳本、全片一鍵流程）：
 <a href="https://github.com/kalpakjian/taichi-mocap">kalpakjian/taichi-mocap</a>。
 
-目前設為 <strong>private</strong>：內容不含影片、模型與權重（SMPL-X 是非商用授權，不便轉散佈），但程式碼與踩坑筆記都在裡面。
-需要的話在 <a href="https://github.com/kalpakjian">GitHub</a> 找我，我可以把 repo 開放。
+目前是 <strong>public</strong>（MIT）：repo 裡只放程式碼與踩坑筆記，影片、模型與權重都不在裡面——SMPL-X 為非商用授權，請自行到 smpl-x.is.tue.mpg.de 註冊取得。
 
 > <strong>查證說明</strong>：本文所有數字都是 2026-11-11 在本機（RTX 4090、ComfyUI 同機）實測取得，
 > 不是引用排行榜。骨長、FK 誤差、投影誤差由同一套腳本量測；GPU／VRAM 以 nvidia-smi 1 秒採樣。
