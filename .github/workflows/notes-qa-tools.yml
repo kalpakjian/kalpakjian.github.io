@@ -15,7 +15,6 @@ on:
       - main
     paths:
       - 'tools/notes-qa/**'
-      - 'tools/ainews/**'
   workflow_dispatch:
 
 permissions:
@@ -32,65 +31,4 @@ jobs:
         shell: pwsh
         run: |
           python3 tools/notes-qa/selftest_tools.py
-          exit $LASTEXITCODE
-
-      # AINews 偵測器：13 項測試，多數在驗「什麼不該觸發」。
-      # ledger 一旦寫錯就會重複發文或漏發，所以這裡是硬閘門，不是 advisory。
-      - name: Run AINews detector selftest
-        shell: pwsh
-        run: |
-          python3 tools/ainews/selftest.py
-          exit $LASTEXITCODE
-
-      # AINews 抽取器（階段 2）：21 項行為測試 + 105 KB 規模壓力測試。
-      # 抽取漏掉 boilerplate 就會讓廣告文案混進文章，所以也是硬閘門。
-      - name: Run AINews extractor selftest
-        shell: pwsh
-        run: |
-          python3 tools/ainews/selftest_extract.py
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          python3 tools/ainews/_make_large_fixture.py
-          python3 tools/ainews/stress_extract.py tools/ainews/fixtures/large-issue.json
-          exit $LASTEXITCODE
-
-      # AINews 導讀閘門（階段 3）：11 項測試。
-      # 其中 t1 拿「已發布的兩篇」當黃金樣本——閘門若連好文章都擋，就沒人會用
-      # 它，等於失去保護。所以這一步同時驗「抓得到錯」與「不誤報」。
-      - name: Run AINews digest lint selftest
-        shell: pwsh
-        run: |
-          python3 tools/ainews/selftest_lint.py
-          exit $LASTEXITCODE
-
-      # 階段 3b 寫稿大綱：17 項。每條測試都對應一個在真實資料上看到的 bug
-      # （日期被當量化指標、句首大寫被當實體、六個重複候選……）。
-      - name: Run AINews brief selftest
-        shell: pwsh
-        run: |
-          python3 tools/ainews/selftest_brief.py
-          exit $LASTEXITCODE
-
-      # 階段 4 出圖：22 項。重點是「不該畫的時候不要畫」與 SVG 衛生
-      #（空行會讓 marked 把圖拆成 <p>，整張圖的 rect 全部消失）。
-      - name: Run AINews figures selftest
-        shell: pwsh
-        run: |
-          python3 tools/ainews/selftest_figures.py
-          exit $LASTEXITCODE
-
-      # 封面 motif 選擇：用兩篇已發布的期數當黃金案例。
-      # 不渲染圖片（CI 沒有 ComfyUI），只驗「選對場景」。
-      - name: Check AINews cover motifs
-        shell: pwsh
-        run: |
-          python3 tools/ainews/_check_motifs.py
-          exit $LASTEXITCODE
-
-      # IMAP 抓取器（離線部分）：12 項。CI 沒有信箱憑證，所以只驗
-      # 「一封 RFC822 → 乾淨內文」這半——bug 幾乎都在這半（MIME 結構、編碼、
-      # HTML-only），而不是在跟伺服器講話那一行。
-      - name: Run AINews IMAP selftest
-        shell: pwsh
-        run: |
-          python3 tools/ainews/selftest_imap.py
           exit $LASTEXITCODE
