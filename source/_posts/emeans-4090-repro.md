@@ -14,6 +14,7 @@ index_img: /img/covers/emeans-4090-repro.png
 banner_img: /img/covers/emeans-4090-repro.png
 ---
 
+
 ## 一句話總結
 
 Meta FAIR 的 e-means（FAISS 1.16 起內建的 `faiss.contrib.e_means`）可以在 24 GB 的 RTX 4090 上完整重現：70 個（資料集, 種子）組合全部在 <strong>1.4–2.8 輪</strong>追上 Flash-KMeans 跑 25 次迭代的誤差，wall-clock 加速 <strong>10.3–46.9 倍</strong>（七個資料集／規模的中位數 13.8–42.2 倍）。
@@ -23,6 +24,8 @@ Meta FAIR 的 e-means（FAISS 1.16 起內建的 `faiss.contrib.e_means`）可以
 ## 1. e-means 在做什麼
 
 Lloyd k-means 每一輪都要把全部資料重新指派到最近的中心，再依全部指派重算質心；資料一大，完整掃描就是瓶頸。e-means 改成 mini-batch：每批只取少量向量，用指數移動平均（EMA）把「群集收到的向量總和」與「樣本數」混進舊統計量，質心就是兩者相除。
+
+三個細節決定了它為什麼穩定。修正幅度 α 走 cosine 排程，從初始值收到十分之一（程式碼裡的 `_ALPHA_MIN_FACTOR = 0.1`），所以前期敢跳、後期收斂；閒置的群集中心會被拆開重生（`_revive_unused`），但 `d <= 2` 的二維資料預設關閉，因為那時重生反而傷誤差；批次大小與初始步長不是手調，而是由 n、k、輪數三個量代入規模規律自動算出（`_BATCH_LAWS` 與 `_step_law`）。
 
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" role="img" aria-label="圖 1：七個資料集與規模的中位數 wall-clock 加速倍率，虛線帶是論文宣稱的 10 到 45 倍" style="width:100%;height:auto;display:block">
@@ -126,7 +129,17 @@ Lloyd k-means 每一輪都要把全部資料重新指派到最近的中心，再
 - 要引用 45 倍，請連「H100 ＋ Flash-KMeans 0.3.1」一起寫，否則那個數字沒有意義。
 - 想自己重跑：1M 全表（4 資料集 × 10 種子）在 4090 上實測約 15 分鐘；真正的成本在 Faiss CPU 的 Figure 3（每個面板每個種子約 7 分鐘）。repo 內含 preflight、patch、報告產生器與完整原始 JSON。
 
-## 7. 來源與查證
+## 7. 一段可以直接分享的短版
+
+論文自己的頭號數字不在我上面那七格裡：DINO10B 是 100 億筆、1024 維的 DINO 向量，k = 2^24 約 1,600 萬個群集，2.5 輪完成。這三個數字我對過摘要與官方 `--k $((1<<24))`，是對的；常見的錯誤版本是把它寫成「10 億筆」。
+
+會掉前提的通常是另外兩句：「最高 45 倍」少了 Flash-KMeans 0.3.1 與 H100 就變成誇大；「1.4～2.6 輪」少了「相對 Lloyd 跑 25 輪的損失」就變成通用保證。下面是壓成社群貼文長度、但把前提留在句子裡的版本：
+
+> 用了數十年的 K-means，竟然還能快上一個數量級？Meta FAIR 的 e-means 把「每輪重掃全部資料」換成 mini-batch 加指數移動平均：群集中心一邊讀資料、一邊修正，修正幅度用 cosine 排程從大收到小（最後收到初始值的 1/10），閒置的中心會被拆開重生，批次大小與步長則由規模規律自動決定。達到 Lloyd 跑 25 輪的損失，e-means 只要 1.4～2.6 輪；在 100 億筆 DINO 向量上，2.5 輪就分出 1,600 萬個群集。換算成 GPU 實際時間，相對 Flash-KMeans（H100）是 10～45 倍。<strong>但要記得這是 preprint、數字由作者自報，而且倍率吃資料集與硬體</strong>：我自己在 RTX 4090 上重跑官方腳本，七個資料集的中位倍率從 13.8 倍到 42.2 倍。
+
+如果只能留一句，我會留這句：<strong>e-means 在大規模 embedding 分群上，用約十分之一的輪數換到 25 輪 Lloyd 的損失，代價是它不保證在小資料集上也贏。</strong>
+
+## 8. 來源與查證
 
 | 項目 | 網址 | 實查結果 |
 |---|---|---|
