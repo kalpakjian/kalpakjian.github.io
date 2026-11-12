@@ -48,7 +48,7 @@ Lloyd k-means 每一輪都要把全部資料重新指派到最近的中心，再
 <text x="435.9" y="135" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI',sans-serif">13.9×</text>
 <text x="240" y="175" font-size="13.5" fill="#c9d1d9" text-anchor="end" font-family="'Segoe UI',sans-serif">dino10b-1M</text>
 <rect x="250" y="161" width="540.2" height="18" rx="4" fill="#fbbf24" opacity="0.9"/>
-<text x="798.2" y="175" font-size="12.5" fill="#0d1117" font-weight="700" font-family="'Segoe UI',sans-serif">42.2×</text>
+<text x="782" y="175" font-size="12.5" fill="#0d1117" font-weight="700" text-anchor="end" font-family="'Segoe UI',sans-serif">42.2×</text>
 <text x="240" y="215" font-size="13.5" fill="#c9d1d9" text-anchor="end" font-family="'Segoe UI',sans-serif">spacev-1M</text>
 <rect x="250" y="201" width="252.2" height="18" rx="4" fill="#2dd4bf" opacity="0.85"/>
 <text x="510.2" y="215" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI',sans-serif">19.7×</text>
@@ -66,7 +66,7 @@ Lloyd k-means 每一輪都要把全部資料重新指派到最近的中心，再
 <text x="558.8" y="375" font-size="12.5" fill="#e6edf3" font-family="'Segoe UI',sans-serif">23.5×</text>
 <text x="48" y="428" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">DINOv3 1M 那格最高（42.2×），但同一張卡上 DEEP* 只有 13.9×——倍率是資料集與硬體共同決定的量。</text>
 </svg>
-<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：七個資料集／規模的中位數加速倍率（各 10 個種子）。灰綠色虛線帶是論文宣稱的 10–45 倍；七格全在帶內，但帶內分佈很寬，DINOv3 1M 幾乎頂到上限。</figcaption>
+<figcaption class="image-caption" style="margin:12px auto 0;line-height:1.6;text-align:left">圖 1：七個資料集／規模的中位數加速倍率（各 10 個種子）。灰綠色虛線帶是論文宣稱的 10–45 倍；七格全在帶內，但帶內分佈很寬，DINOv3 1M 幾乎頂到上限。</figcaption>
 </figure>
 
 
