@@ -49,6 +49,12 @@ V1.5 的權重檔內嵌 metadata 寫著 `h3-character-swap-v2`、`new_v2_optimiz
 
 所有候選都用同一組參數，只換要驗的變因：先跑 V1 與 V1.5 的同 seed A/B（5.167 秒），再跑 15 秒一次過的三個 seed，最後跑 3×5 秒分段版。
 
+<figure>
+<img src="/img/h3-character-swap-lora-v15/fig1-sbs.jpg" alt="左：原始 768×768 舞蹈影片；右：同一時間點的換人結果，舞者已被替換成參考圖中的角色" style="width:100%;max-width:1120px;border-radius:12px" />
+<figcaption>圖 1：左為原片、右為同一時間點（第 2.5 秒）的換人結果。場景、機位、燈光與舞步都留著，被換掉的只有人——這是這顆 LoRA 最擅長的一格。</figcaption>
+</figure>
+
+
 ## 3. V1 對 V1.5：在這顆鏡頭上幾乎打平
 
 同 seed、同參數、只換 LoRA，逐幀平均絕對差（0–255）：
@@ -61,6 +67,14 @@ V1.5 的權重檔內嵌 metadata 寫著 `h3-character-swap-v2`、`new_v2_optimiz
 
 兩版都把身分換過去了（長棕髮＋參考圖的臉），場景、鏡頭、燈光、地板全部保住，動作也跟得上。差別只有 2–4/255，肉眼在 5 秒版本上分不出來——這跟模型卡寫的「selected comparisons show improvements, not every shot improves」一致。<strong>我只有單 seed、單鏡頭，不足以宣稱 V1.5 更好，只能說在這顆鏡頭上打平。</strong>
 
+代價是服裝變成混合體：參考圖的黑色上衣進來了，原片的紅裙還留著。這是 prompt 寫「outfit 取 `<Picture 1>`」的合理結果，但視覺上就是一隻「上半身換人、下半身沒換」的舞者。
+
+<figure>
+<img src="/img/h3-character-swap-lora-v15/fig2-v1-vs-v15.jpg" alt="左：V1 的換人結果；右：V1.5 同 seed 的換人結果，兩者幾乎相同" style="width:100%;max-width:1120px;border-radius:12px" />
+<figcaption>圖 2：同 seed、同參數，左 V1、右 V1.5（第 2.5 秒）。兩張的差別只有 2–4/255，肉眼分不出來——這顆鏡頭上兩個版本打平。</figcaption>
+</figure>
+
+
 
 ## 4. 15 秒一次過：動作時序整組漂掉
 
@@ -71,6 +85,12 @@ V1.5 的權重檔內嵌 metadata 寫著 `h3-character-swap-v2`、`new_v2_optimiz
 | 1234567 | 344 s | 變粉裙、中段消失 | 5s／8s 都錯位 |
 | 777001 | 300 s | 整段消失 | 部分對位 |
 | 777002 | 300 s | 變成半透明粉紗 | 部分對位 |
+
+<figure>
+<img src="/img/h3-character-swap-lora-v15/fig3-seeds.jpg" alt="三個 seed 在第 7.5 秒的結果：左為粉裙、中為裙子消失只剩比基尼、右為半透明粉紗" style="width:100%;max-width:1120px;border-radius:12px" />
+<figcaption>圖 3：三個 seed 的第 7.5 秒（左 1234567、中 777001、右 777002）。同一句 prompt、同一張參考圖，紅裙分別變成粉裙、直接消失、變成半透明粉紗——15 秒一次過的服裝一致性守不住。</figcaption>
+</figure>
+
 
 我另外用「逐幀動作能量（相鄰幀差的平均值）與原片的相關係數」當粗指標，四個候選落在 +0.05 到 +0.23 之間。<strong>這個指標只反映節奏有多像，不能當動作正確率的證據</strong>——它跟肉眼看到的姿勢對位常常不一致，所以判斷一律以抽幀目視為準。
 
@@ -101,14 +121,17 @@ V1.5 的權重檔內嵌 metadata 寫著 `h3-character-swap-v2`、`new_v2_optimiz
 <rect x="330" y="238" width="91.9" height="22" rx="4" fill="#2dd4bf"/>
 <text x="429.9" y="254" font-size="13.5" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3.28</text>
 </svg>
-<figcaption style="font-size:13px;color:#8b949e;margin-top:10px;line-height:1.6;font-family:'Segoe UI','Microsoft JhengHei',sans-serif">在兩個接縫做 167ms 交叉溶接，幀差從 14.8／14.2 降到 4.2／3.3（落回 p95 以內）。</figcaption>
+<figcaption style="font-size:13px;color:#8b949e;margin-top:10px;line-height:1.6;font-family:'Segoe UI','Microsoft JhengHei',sans-serif">圖 4：在兩個接縫做 167ms 交叉溶接，幀差從 14.8／14.2 降到 4.2／3.3（落回 p95 以內）。</figcaption>
+</figure>
+
+<figure>
+<img src="/img/h3-character-swap-lora-v15/fig4-seam.jpg" alt="接縫前後三幀：第 4.6 秒站立、第 5.0 秒突然變成深蹲、第 5.4 秒繼續前傾" style="width:100%;max-width:1120px;border-radius:12px" />
+<figcaption>圖 5：第 4.6／5.0／5.4 秒連續三幀。第 5.0 秒那格就是接縫——上一段還站著，下一段直接從深蹲起手，這就是 14.8 的幀差長什麼樣子。</figcaption>
 </figure>
 
 溶接把數字壓下來了，但我目視檢查發現更醜的東西：<strong>兩段姿勢差太多時，交叉溶接會出現雙人影殘像</strong>——同一畫格裡兩個身體疊在一起。所以最終交付採硬切，把兩個跳接當剪輯點處理，而不是用溶接假裝連續。
 
 根因是每段生成都會自己「重新錨定」：餵它 5–10 秒的片段，它從自己的起手姿勢開始演，不會從原片第 5 秒那個姿勢接著演。<strong>段越短越準、段越多接縫越多</strong>，這是這條路線的固有限制，不是參數沒調好。
-
-代價是服裝變成混合體：參考圖的黑色上衣進來了，原片的紅裙還留著。這是 prompt 寫「outfit 取 `<Picture 1>`」的合理結果，但視覺上就是一隻「上半身換人、下半身沒換」的舞者。
 
 ## 6. 想保住原片服裝？換人直接失效
 
