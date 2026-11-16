@@ -119,8 +119,78 @@ banner_img: /img/covers/mythos-amd-mi355x-cuda-moat-zh.png
 
 人類的角色因此從「寫」變成「驗收」：確認數值在容許誤差內、看 profiler 找出誰在等資料、決定 VRAM 裏的張量要怎麼擺。影片裏那位講者提到的正是這一步——資料搬運與擺放往往比運算本身更決定效能。
 
+把這件事放回 Anthropic 的整體策略，才看得出他們為什麼肯花力氣搬：四種晶片是同一個池，不是四套互不相干的系統。
+
+<!-- FIG3 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 430" role="img" aria-label="四種晶片被當成同一個可替換的算力池" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="938.5" height="428.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">四種晶片，一個可替換的算力池</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Brown 的原話：早期押注多晶片，現在「incredibly good at it」</text>
+<rect x="48" y="120" width="252" height="56" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="66" y="144" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AWS Trainium</text>
+<text x="66" y="164" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">自研訓練晶片</text>
+<path d="M 300 148 L 420 148" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="48" y="186" width="252" height="56" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="66" y="210" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Google TPU</text>
+<text x="66" y="230" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">自研訓練／推論</text>
+<path d="M 300 214 L 420 214" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="48" y="252" width="252" height="56" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="66" y="276" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">NVIDIA GPU</text>
+<text x="66" y="296" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">CUDA 生態最成熟</text>
+<path d="M 300 280 L 420 280" fill="none" stroke="#7d8590" stroke-width="2"/>
+<rect x="48" y="318" width="252" height="56" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="66" y="342" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AMD GPU</text>
+<text x="66" y="362" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">MI355X 已在服役</text>
+<path d="M 300 346 L 420 346" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 420 148 L 420 346" fill="none" stroke="#7d8590" stroke-width="2"/>
+<path d="M 420 240 L 550 240" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="556" y="140" width="336" height="200" rx="10" fill="#1c2230" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="576" y="178" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">可替換的算力池</text>
+<text x="576" y="210" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">研究、訓練、推論都往池裡丟</text>
+<text x="576" y="236" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一份工作落在哪張卡</text>
+<text x="576" y="262" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">由價格、供給與成熟度決定</text>
+<text x="48" y="402" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">注意：這是路演中的自述，不是第三方審計過的容量分配。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 3：Anthropic 自述的算力分配方式——四種晶片進同一個池，工作按價格、供給與成熟度分派。這句話是「值得搬」的前提，但它同樣是路演中的自述。</figcaption>
+</figure>
+<!-- /FIG3 -->
 
 ## 四、影片沒說、但我覺得更重要的七件事
+
+先看一張圖，再讀下面七點——這七件事其實可以縮成一句：<strong>AI 吃掉的是最內圈那一格，不是外面那一圈</strong>。
+
+<!-- FIG4 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 430" role="img" aria-label="近 100% kernel 只吃掉最內層，外面四層還是人的工作" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="938.5" height="428.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「近 100% kernel」只吃掉最內層那一格</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">kernel 是最內圈；往外每一層，剛好是 ROCm 這幾年真正卡住的地方</text>
+<rect x="48" y="124" width="232" height="232" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="68" y="172" font-size="16" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">GPU kernel</text>
+<text x="68" y="202" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Claude 寫或移植</text>
+<text x="68" y="230" font-size="14" fill="#2dd4bf" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">近 100%</text>
+<text x="68" y="272" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">矩陣乘、attention、</text>
+<text x="68" y="294" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">softmax、layernorm</text>
+<text x="68" y="330" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">範圍小、有標準答案</text>
+<rect x="320" y="124" width="572" height="52" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+<text x="340" y="146" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">通訊與集體運算</text>
+<text x="340" y="165" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">NCCL（NVIDIA）對 RCCL（AMD）</text>
+<rect x="320" y="184" width="572" height="52" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+<text x="340" y="206" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">平行切分</text>
+<text x="340" y="225" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">TP／EP、資料擺放、topology</text>
+<rect x="320" y="244" width="572" height="52" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+<text x="340" y="266" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">KV cache 與 batching</text>
+<text x="340" y="285" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">paged attention、量化、連續批次</text>
+<rect x="320" y="304" width="572" height="52" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+<text x="340" y="326" font-size="14.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">驗證與 profiler</text>
+<text x="340" y="345" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">數值對帳、尾延遲回歸、瓶頸定位</text>
+<text x="48" y="398" font-size="13.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">所以「三天搬完」之後還有一整個 2027 要搬：右邊四格沒有一格是叫 AI 寫 kernel 就會自己好的。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 4：把「近 100% kernel」放回它真正的範圍。左邊那一格是 Claude 這次的成果，右邊四格是 2027 年還要人做的事——這也是我把「三天」讀成 bring-up 而不是 production parity 的理由。</figcaption>
+</figure>
+<!-- /FIG4 -->
 
 1. <strong>「近 100% 的 kernel」不等於 100% 的系統。</strong>kernel 只是最內層那一塊。往外一層是通訊（NVIDIA 用 NCCL，AMD 是 RCCL）、張量平行與專家平行的切分方式、KV cache 的擺放與 paged attention、量化 kernel、kernel 啟動開銷（CUDA Graph 那類）、以及最不起眼的數值一致性驗證與 profiler 工具鏈。這些沒有一項是「叫 AI 寫一支 kernel」能順手解決的，卻正好是 ROCm 這幾年真正卡住的地方。
 2. <strong>三天是 bring-up，不是 production parity。</strong>公開資料裏沒有每 token 成本、沒有尾延遲、沒有「搬完之後跑一個月」的效能回歸。bring-up 的意思是「跑得起來、數字看起來合理」；能不能拿它去服務客戶，是另一份試卷。
@@ -131,6 +201,33 @@ banner_img: /img/covers/mythos-amd-mi355x-cuda-moat-zh.png
 7. <strong>真正的難關是 decode。</strong>prefill 好搬，因為它就是一大堆大矩陣乘，數學形狀乾淨；decode 牽涉 KV cache 管理、跨卡 all-reduce、continuous batching 的排程，全是軟硬體耦合最深的縫。這也是為什麼「三天」的新聞價值很高，實務價值要等下一集。
 
 ## 五、我的實務結論
+
+在決定「現在搬不搬」之前，先把時間軸攤開——三天的新聞落在哪一格，會直接改變你該做的事。
+
+<!-- FIG5 -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" role="img" aria-label="把新聞放回時間軸：三天只是中間一站，2027 上半年才是硬指標" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="758.5" height="398.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">把新聞放回時間軸</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三天不是起點；真正要等的是 2027 上半年的第一 GW</text>
+<path d="M 196 140 L 196 320" fill="none" stroke="#30363d" stroke-width="2"/>
+<text x="176" y="145" font-size="13.5" fill="#7d8590" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2025-11</text>
+<circle cx="196" cy="140" r="6" fill="#7d8590"/>
+<text x="220" y="145" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">NVIDIA 承諾最多 100 億美元投資（450 億微軟交易的一部分）</text>
+<text x="176" y="205" font-size="13.5" fill="#fbbf24" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2026-07-22</text>
+<circle cx="196" cy="200" r="6" fill="#fbbf24"/>
+<text x="220" y="205" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">AMD 公告：最多 2 GW MI450／Helios、策略投資最多 50 億美元</text>
+<text x="176" y="265" font-size="13.5" fill="#2dd4bf" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2026-11-10</text>
+<circle cx="196" cy="260" r="6" fill="#2dd4bf"/>
+<text x="220" y="265" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">S-1/A 遞交；隔日路演：「三天把 Claude 搬上 MI355X」</text>
+<text x="176" y="325" font-size="13.5" fill="#58a6ff" font-weight="700" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2027 H1</text>
+<circle cx="196" cy="320" r="6" fill="#58a6ff"/>
+<text x="220" y="325" font-size="13.5" fill="#e6edf3" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">第一 GW MI450 才開始部署（Helios 機櫃）</text>
+<text x="48" y="372" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">來源：AMD 投資者關係新聞稿（2026-07-22）、S-1/A（2026-11-10）、The Decoder、llms.blog。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 5：把新聞放回時間軸。三天只是中間一站；硬指標是 2027 上半年第一 GW 才開始部署。</figcaption>
+</figure>
+<!-- /FIG5 -->
 
 | 情境 | 我會怎麼做 |
 |---|---|
