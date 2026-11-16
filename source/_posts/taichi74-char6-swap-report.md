@@ -43,6 +43,11 @@ banner_img: /img/covers/taichi74-char6-swap-report.png
 | 改白底＋提高解析度 | 白底 ×5 | **1536×864** | **0.823** |
 | 只用 2 張參考 | 白底 ×2 | 1536×864 | 0.763 |
 
+<figure>
+<img src="/img/taichi74-char6-swap-report/refs-process.jpg" alt="素材與白底角色表：左為自帶場景的參考圖，右為重拍成影棚背景的版本，下排為五個視角" loading="lazy" />
+<figcaption>圖 1：左邊是原本的參考圖——人物可用，但背景是廢棄工廠，直接餵給換人模型會把整個場景搬進影片。中間一步是用 Qwen-Image-Edit 重拍成無縫影棚背景，再從同一張臉派生 45°、側面、背面；臉部特寫直接從正面裁切，另外生成會變成另一個人。</figcaption>
+</figure>
+
 兩個結論：
 
 <strong>參考圖裡不能有原場景。</strong>模型會把參考圖的背景一起搬進影片。角色表要重拍成「乾淨白底、全身、無道具」——用 Qwen-Image-Edit 的多角度 LoRA 加一句「換成無縫白底攝影棚」就行，5 張約 5 分鐘。
@@ -113,7 +118,7 @@ banner_img: /img/covers/taichi74-char6-swap-report.png
 <text x="718" y="336" font-size="11.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">短於 5 秒或被併長的段，模型一律重畫</text>
 <text x="40" y="400" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">驗收：15195 幀對齊原片、126 個接縫幀差中位數 1.51、逐幀掃黑邊抓出重繪段</text>
 </svg>
-<figcaption>圖 1：長片換人的六個步驟，以及三個會讓成品報廢的參數。分段與色調匹配是為了「接得回去」，參考圖與解析度是為了「不要被模型重畫」。</figcaption>
+<figcaption>圖 2：長片換人的六個步驟，以及三個會讓成品報廢的參數。分段與色調匹配是為了「接得回去」，參考圖與解析度是為了「不要被模型重畫」。</figcaption>
 </figure>
 
 每段獨立生成完都要<strong>逐段做色調匹配</strong>（per-channel gain/bias，對原片最小平方擬合，強度 0.85）。少了這一步，127 段會一段偏亮一段偏暗，接起來像燈光在跳。
@@ -159,7 +164,7 @@ banner_img: /img/covers/taichi74-char6-swap-report.png
 <text x="960" y="164.5" font-size="11.5" fill="#fbbf24" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">判定門檻 0.15</text>
 <text x="40" y="348" font-size="12.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">修前那一段的白布是教練身上的白太極袖；修後改走重繪，白布消失但畫面放大 17%</text>
 </svg>
-<figcaption>圖 2：以原片為基準的白布洩漏分數。全片中位數 0.098，修前那一段 0.19；重繪後降到 0.034，代價是該 5 秒畫面被放大。</figcaption>
+<figcaption>圖 3：以原片為基準的白布洩漏分數。全片中位數 0.098，修前那一段 0.19；重繪後降到 0.034，代價是該 5 秒畫面被放大。</figcaption>
 </figure>
 
 127 段全掃（中位數 0.098），只有一段真的中：
