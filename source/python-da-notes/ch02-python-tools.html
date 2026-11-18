@@ -44,6 +44,9 @@ th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-alig
 blockquote{margin:14px 0;padding:.35em 1em;color:var(--mut);border-left:4px solid var(--line);background:#fafbfc}
 figure{margin:16px 0;text-align:center}
 figure img{max-width:100%;border:1px solid var(--line);border-radius:8px}
+.math{margin:14px 0;overflow-x:auto;text-align:center}
+.math math{font-size:1.15em}
+.math-inline math{font-size:1.02em}
 figcaption{font-size:12px;color:var(--mut);margin-top:5px}
 .runbox{background:#f0fff4;border-left:4px solid #2da44e;padding:.2em .9em;border-radius:0 6px 6px 0;margin:14px 0}
 .btns{display:flex;gap:6px;margin:-2px 0 8px}
@@ -411,9 +414,7 @@ a: -2, b:3.5, c:6.0
 <ul>
 <li>常量就像一個變數，其值在程序的整個生命週期中保持不變。在名稱中使用全部大寫字母。</li>
 </ul>
-<p>$$
-\text { MAX_RETRY_TIMES } = 1 0
-$$</p>
+<p><div class="math"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mtext>&#x000A0;MAX\_RETRY\_TIMES&#x000A0;</mtext><mo>&#x0003D;</mo><mn>10</mn></mrow></math></div></p>
 <h3 id="h-35-評論-Comment">評論 Comment</h3>
 
 <p>註解 在大多數程式設計語言中是一項非常有用的功能。</p>
@@ -684,7 +685,7 @@ Fanny 33339999
 <p>⚠️ 本頁有 1 段未能本地執行（#2: SyntaxError: invalid syntax (<unknown>, line 1)），原因見 OCR_run_report.md</p>
 </blockquote></section><section class="page" id="p42"><div class="pbadge">p.42</div><h4>集合 Set</h4>
 <p>集合是没有重複元素的無序集合。</p>
-<p>大括弧 {} 或  $ \underline{\text{set()}} $ 函数可用於創建集合。</p>
+<p>大括弧 {} 或  <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><munder><mrow><mtext>set()</mtext></mrow><mo accent="true">&#x02015;</mo></munder></mrow></math></span> 函数可用於創建集合。</p>
 <p>讓我們創建一個集合，看看 Python 如何處理它。</p>
 <p>基本用途包括成員資格測試和消除重複條目。</p>
 <pre><code class="language-python">1 fruits = {&quot;cherries&quot;, &quot;apple&quot;, &quot;banana&quot;, &quot;durian&quot;, &quot;banana&quot;}
@@ -1755,9 +1756,9 @@ Hong Kong Weather Report
 <h4>中間</h4>
 <p>Dive Into Python3, Mark Pilgrim, APRESS</p>
 <h4>進展</h4>
-<p>Python Cookbook, 3 $ ^{rd} $ E, David Beazley, O'Reilly</p>
-<p>High Performance Python, 2 $ ^{nd} $ E, Micha Gorelick, O'Reilly</p>
-<p>Effective Python, 90 Specific Ways to Write Better Python, 2 $ ^{nd} $ E, Brett Slatkin, ADDISON-WESLEY</p></section><section class="page" id="p74"><div class="pbadge">p.74</div><h3 id="h-74-Beautiful-is-better-than-Ugly">Beautiful is better than Ugly</h3>
+<p>Python Cookbook, 3 <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msup><mi /><mrow><mi>r</mi><mi>d</mi></mrow></msup></mrow></math></span> E, David Beazley, O'Reilly</p>
+<p>High Performance Python, 2 <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msup><mi /><mrow><mi>n</mi><mi>d</mi></mrow></msup></mrow></math></span> E, Micha Gorelick, O'Reilly</p>
+<p>Effective Python, 90 Specific Ways to Write Better Python, 2 <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msup><mi /><mrow><mi>n</mi><mi>d</mi></mrow></msup></mrow></math></span> E, Brett Slatkin, ADDISON-WESLEY</p></section><section class="page" id="p74"><div class="pbadge">p.74</div><h3 id="h-74-Beautiful-is-better-than-Ugly">Beautiful is better than Ugly</h3>
 
 <p>Special cases</p>
 <p>Readability</p>

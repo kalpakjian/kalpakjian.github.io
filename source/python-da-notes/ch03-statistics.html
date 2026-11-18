@@ -44,6 +44,9 @@ th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-alig
 blockquote{margin:14px 0;padding:.35em 1em;color:var(--mut);border-left:4px solid var(--line);background:#fafbfc}
 figure{margin:16px 0;text-align:center}
 figure img{max-width:100%;border:1px solid var(--line);border-radius:8px}
+.math{margin:14px 0;overflow-x:auto;text-align:center}
+.math math{font-size:1.15em}
+.math-inline math{font-size:1.02em}
 figcaption{font-size:12px;color:var(--mut);margin-top:5px}
 .runbox{background:#f0fff4;border-left:4px solid #2da44e;padding:.2em .9em;border-radius:0 6px 6px 0;margin:14px 0}
 .btns{display:flex;gap:6px;margin:-2px 0 8px}
@@ -262,18 +265,18 @@ figcaption{font-size:12px;color:var(--mut);margin-top:5px}
 </ul></section><section class="page" id="p79"><div class="pbadge">p.79</div><h3 id="h-79-算術平均值">算術平均值</h3>
 
 <p>一組數據的算術平均值（或簡稱平均值）是數據值的總和除以觀測值數。</p>
-<p>如果數據集是整個數據總體，則總體均值  $ \mu $ 是</p>
-<p>$$ \mu=\frac{\sum_{i=1}^{N}\chi_{i}}{N}=\frac{\chi_{1}+\chi_{2}+\chi_{3}\cdots\chi_{N}}{N} $$</p>
-<p>如果數據集來自樣本，則樣本均值， $ \bar{x} $是下式給出的統計量</p>
-<p>$$ \bar{\chi}=\frac{\sum_{i=1}^{n}\chi_{i}}{n}=\frac{\chi_{1}+\chi_{2}+\chi_{3}\cdots\chi_{n}}{n} $$</p>
+<p>如果數據集是整個數據總體，則總體均值  <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>&#x003BC;</mi></mrow></math></span> 是</p>
+<p><div class="math"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>&#x003BC;</mi><mo>&#x0003D;</mo><mfrac><mrow><msubsup><mo>&#x02211;</mo><mrow><mi>i</mi><mo>&#x0003D;</mo><mn>1</mn></mrow><mrow><mi>N</mi></mrow></msubsup><msub><mi>x</mi><mrow><mi>i</mi></mrow></msub></mrow><mrow><mi>N</mi></mrow></mfrac><mo>&#x0003D;</mo><mfrac><mrow><msub><mi>x</mi><mrow><mn>1</mn></mrow></msub><mo>&#x0002B;</mo><msub><mi>x</mi><mrow><mn>2</mn></mrow></msub><mo>&#x0002B;</mo><msub><mi>x</mi><mrow><mn>3</mn></mrow></msub><msub><mi>\cdotsx</mi><mrow><mi>N</mi></mrow></msub></mrow><mrow><mi>N</mi></mrow></mfrac></mrow></math></div></p>
+<p>如果數據集來自樣本，則樣本均值， <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mover><mrow><mi>x</mi></mrow><mo stretchy="true">&#x000AF;</mo></mover></mrow></math></span>是下式給出的統計量</p>
+<p><div class="math"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mover><mrow><mi>x</mi></mrow><mo stretchy="true">&#x000AF;</mo></mover><mo>&#x0003D;</mo><mfrac><mrow><msubsup><mo>&#x02211;</mo><mrow><mi>i</mi><mo>&#x0003D;</mo><mn>1</mn></mrow><mrow><mi>n</mi></mrow></msubsup><msub><mi>x</mi><mrow><mi>i</mi></mrow></msub></mrow><mrow><mi>n</mi></mrow></mfrac><mo>&#x0003D;</mo><mfrac><mrow><msub><mi>x</mi><mrow><mn>1</mn></mrow></msub><mo>&#x0002B;</mo><msub><mi>x</mi><mrow><mn>2</mn></mrow></msub><mo>&#x0002B;</mo><msub><mi>x</mi><mrow><mn>3</mn></mrow></msub><msub><mi>\cdotsx</mi><mrow><mi>n</mi></mrow></msub></mrow><mrow><mi>n</mi></mrow></mfrac></mrow></math></div></p>
 <h3 id="h-79-中位數">中位數</h3>
 
-<p>中位數是 $ \underline{\text{按順序排列（增加或減少）的集合}} $的中間觀測值。</p>
+<p>中位數是 <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><munder><mrow><mtext>按順序排列（增加或減少）的集合</mtext></mrow><mo accent="true">&#x02015;</mo></munder></mrow></math></span>的中間觀測值。</p>
 <p>如果樣本數量 n 為奇數，則中位數為中間觀測值。</p>
 <p>如果樣本數量 n 為偶數，則中位數是兩個中間觀測值的平均值。</p>
 <h3 id="h-79-模式">模式</h3>
 
-<p>模式（如果存在）是 $ \underline{\text{出现频率最高的值}} $。</p>
+<p>模式（如果存在）是 <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><munder><mrow><mtext>出现频率最高的值</mtext></mrow><mo accent="true">&#x02015;</mo></munder></mrow></math></span>。</p>
 <p>只有一種模式的分佈稱為單峰分佈。</p>
 <p>具有兩種模式的分佈稱為雙峰分佈。</p>
 <p>具有兩種以上模式的分佈稱為多模式分佈。</p></section><section class="page" id="p80"><div class="pbadge">p.80</div><p>参考：CSD 在報告中使用工資中位數。新聞連結</p>
@@ -306,7 +309,7 @@ figcaption{font-size:12px;color:var(--mut);margin-top:5px}
 <p><em>記錄值在變數上的分佈的度量。色散度的量度。</em></p>
 <p>方差越大，個別情況與均值的差距越大。</p>
 <p>方差越小，各個分數越接近平均值。</p>
-<p>n 必須&gt; 10</p></section><section class="page" id="p85"><div class="pbadge">p.85</div><table><tr><td colspan="2">Standard Deviation Formula</td></tr><tr><td>Population</td><td>Sample</td></tr><tr><td>\( \sigma = \sqrt{\frac{\sum (X - \mu)^2}{N}} \)</td><td>\( s = \sqrt{\frac{\sum (X - \bar{x})^2}{n - 1}} \)</td></tr><tr><td>X – The Value in the data distribution\( \mu \) – The population MeanN – Total Number of Observations</td><td>X – The Value in the data distribution\( \bar{x} \) – The Sample Meann - Total Number of Observations</td></tr></table>
+<p>n 必須&gt; 10</p></section><section class="page" id="p85"><div class="pbadge">p.85</div><table><tr><td colspan="2">Standard Deviation Formula</td></tr><tr><td>Population</td><td>Sample</td></tr><tr><td><span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>&#x003C3;</mi><mo>&#x0003D;</mo><msqrt><mrow><mfrac><mrow><mo>&#x02211;</mo><mo stretchy="false">&#x00028;</mo><mi>X</mi><mo>&#x02212;</mo><mi>&#x003BC;</mi><msup><mo stretchy="false">&#x00029;</mo><mn>2</mn></msup></mrow><mrow><mi>N</mi></mrow></mfrac></mrow></msqrt></mrow></math></span></td><td><span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>s</mi><mo>&#x0003D;</mo><msqrt><mrow><mfrac><mrow><mo>&#x02211;</mo><mo stretchy="false">&#x00028;</mo><mi>X</mi><mo>&#x02212;</mo><mover><mrow><mi>x</mi></mrow><mo stretchy="true">&#x000AF;</mo></mover><msup><mo stretchy="false">&#x00029;</mo><mn>2</mn></msup></mrow><mrow><mi>n</mi><mo>&#x02212;</mo><mn>1</mn></mrow></mfrac></mrow></msqrt></mrow></math></span></td></tr><tr><td>X – The Value in the data distribution<span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>&#x003BC;</mi></mrow></math></span> – The population MeanN – Total Number of Observations</td><td>X – The Value in the data distribution<span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mover><mrow><mi>x</mi></mrow><mo stretchy="true">&#x000AF;</mo></mover></mrow></math></span> – The Sample Meann - Total Number of Observations</td></tr></table>
 
 <p>那麼為什麼在方程中樣本方差的分母為（n - 1）？</p>
 <ul>
@@ -439,14 +442,12 @@ Name: Return, dtype: float64</p>
 <h3 id="h-90-標準化-Standardization">標準化 Standardization</h3>
 
 <p>標準化變數（有時稱為 z 分數或標準分數）是已重新調整為均值為零且標準差為 1 的變數。對於標準化變數，標準化變數上的每個事例值表示它與原始變數的標準差數（原始變數）的平均值不同。</p>
-<p>$$
-\mathcal {Z} = \frac {x _ {i} - \bar {x}}{\sigma}
-$$</p>
+<p><div class="math"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mi mathvariant="script">Z</mi></mrow><mo>&#x0003D;</mo><mfrac><mrow><msub><mi>x</mi><mrow><mi>i</mi></mrow></msub><mo>&#x02212;</mo><mover><mrow><mi>x</mi></mrow><mo stretchy="true">&#x000AF;</mo></mover></mrow><mrow><mi>&#x003C3;</mi></mrow></mfrac></mrow></math></div></p>
 <p>更輕鬆地解釋回歸或其他分析的結果</p></section><section class="page" id="p91"><div class="pbadge">p.91</div><h2 id="h-91-参考">参考</h2>
 
 <p>本章總結了基本統計數據。</p>
 <p>參考閱讀：</p>
-<p>Statistics for Business and Economics, 9 $ ^{th} $ E, Paul Newbold, Pearson</p>
+<p>Statistics for Business and Economics, 9 <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msup><mi /><mrow><mi>t</mi><mi>h</mi></mrow></msup></mrow></math></span> E, Paul Newbold, Pearson</p>
 <p>網站：</p>
 <p>• 香港政府統計處 https://www.censtatd.gov.hk/</p>
 <p>• 美國經濟數據 https://fred.stlouisfed.org/</p>

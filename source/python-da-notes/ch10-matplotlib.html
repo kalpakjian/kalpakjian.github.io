@@ -44,6 +44,9 @@ th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-alig
 blockquote{margin:14px 0;padding:.35em 1em;color:var(--mut);border-left:4px solid var(--line);background:#fafbfc}
 figure{margin:16px 0;text-align:center}
 figure img{max-width:100%;border:1px solid var(--line);border-radius:8px}
+.math{margin:14px 0;overflow-x:auto;text-align:center}
+.math math{font-size:1.15em}
+.math-inline math{font-size:1.02em}
 figcaption{font-size:12px;color:var(--mut);margin-top:5px}
 .runbox{background:#f0fff4;border-left:4px solid #2da44e;padding:.2em .9em;border-radius:0 6px 6px 0;margin:14px 0}
 .btns{display:flex;gap:6px;margin:-2px 0 8px}
@@ -693,7 +696,7 @@ ax.set_ylabel('ylabel')
 
 ax.text(3, 8, 'boxed italics text in data coords', style='italic', bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
 
-ax.text(2, 6, r'an equation: $E=mc^2$', fontsize=15)
+ax.text(2, 6, r'an equation: <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>E</mi><mo>&#x0003D;</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow></math></span>', fontsize=15)
 
 ax.text(3, 2, 'Unicode: Institut f\374r Festk\366rperphysik')
 

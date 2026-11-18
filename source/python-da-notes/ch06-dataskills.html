@@ -44,6 +44,9 @@ th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-alig
 blockquote{margin:14px 0;padding:.35em 1em;color:var(--mut);border-left:4px solid var(--line);background:#fafbfc}
 figure{margin:16px 0;text-align:center}
 figure img{max-width:100%;border:1px solid var(--line);border-radius:8px}
+.math{margin:14px 0;overflow-x:auto;text-align:center}
+.math math{font-size:1.15em}
+.math-inline math{font-size:1.02em}
 figcaption{font-size:12px;color:var(--mut);margin-top:5px}
 .runbox{background:#f0fff4;border-left:4px solid #2da44e;padding:.2em .9em;border-radius:0 6px 6px 0;margin:14px 0}
 .btns{display:flex;gap:6px;margin:-2px 0 8px}
@@ -528,7 +531,7 @@ B.bar
 <p>當您在命令列中運行 Python 模組時</p>
 <pre><code class="language-bash">python fibo.py &lt;arguments&gt;
 </code></pre>
-<p>模組中的代碼將被執行，就像您導入它一樣，但 $ \underline{\text{name}} $ 設置為“ $ \underline{\text{main}} $”。這意味著，通過在模組末尾添加以下代碼：</p>
+<p>模組中的代碼將被執行，就像您導入它一樣，但 <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><munder><mrow><mtext>name</mtext></mrow><mo accent="true">&#x02015;</mo></munder></mrow></math></span> 設置為“ <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><munder><mrow><mtext>main</mtext></mrow><mo accent="true">&#x02015;</mo></munder></mrow></math></span>”。這意味著，通過在模組末尾添加以下代碼：</p>
 <pre><code class="language-python">if __name__ == &quot;__main__&quot;:
     import sys
 fib(int(sys.argv[1]))
@@ -669,7 +672,7 @@ Sorry, the file t.txt does not exist.
 <pre><code class="language-text">Sorry, the file t.txt does not exist.
 </code></pre>
 <p>注意：記錄此類異常是一種很好的做法，在實際場景中，此異常警告應單獨發送到開發人員的錯誤日誌中以供進一步調試。</p>
-<p>完整的例外清單可以在  $ \underline{\text{https://docs.python.org/3/library/exceptions.html}} $ 上找到</p>
+<p>完整的例外清單可以在  <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><munder><mrow><mtext>https://docs.python.org/3/library/exceptions.html</mtext></mrow><mo accent="true">&#x02015;</mo></munder></mrow></math></span> 上找到</p>
 <blockquote>
 <p>⚠️ 本頁有 1 段未能本地執行（#1: ZeroDivisionError: division by zero），原因見 OCR_run_report.md</p>
 </blockquote></section><section class="page" id="p180"><div class="pbadge">p.180</div><h3 id="h-180-生成器-Generator">生成器 Generator</h3>
@@ -1118,7 +1121,7 @@ Total negative words 16 : ['warned', 'stubborn', 'slow', 'debt', 'revenge', 'war
 <ul>
 <li>進階</li>
 </ul>
-<p>Effective Python, 90 Specific Ways to Write Better Python, $2^{\text{nd}}$ E, Brett Slatkin, ADDISON-WESLEY</p>
+<p>Effective Python, 90 Specific Ways to Write Better Python, <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msup><mn>2</mn><mrow><mtext>nd</mtext></mrow></msup></mrow></math></span> E, Brett Slatkin, ADDISON-WESLEY</p>
 <h5>網站</h5>
 <p>• Object-Oriented Programming</p>
 <p>https://realpython.com/python3-object-oriented-programming/</p>

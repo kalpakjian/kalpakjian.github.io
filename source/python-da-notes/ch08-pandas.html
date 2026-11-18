@@ -44,6 +44,9 @@ th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-alig
 blockquote{margin:14px 0;padding:.35em 1em;color:var(--mut);border-left:4px solid var(--line);background:#fafbfc}
 figure{margin:16px 0;text-align:center}
 figure img{max-width:100%;border:1px solid var(--line);border-radius:8px}
+.math{margin:14px 0;overflow-x:auto;text-align:center}
+.math math{font-size:1.15em}
+.math-inline math{font-size:1.02em}
 figcaption{font-size:12px;color:var(--mut);margin-top:5px}
 .runbox{background:#f0fff4;border-left:4px solid #2da44e;padding:.2em .9em;border-radius:0 6px 6px 0;margin:14px 0}
 .btns{display:flex;gap:6px;margin:-2px 0 8px}
@@ -601,7 +604,7 @@ df = df.append(pd.DataFrame(
 <p>參考教材：</p>
 <ul>
 <li>
-<p>Python for Data Analysis, $2^{\text{nd}}$ edition, Wes McKinney, O'Reilly</p>
+<p>Python for Data Analysis, <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msup><mn>2</mn><mrow><mtext>nd</mtext></mrow></msup></mrow></math></span> edition, Wes McKinney, O'Reilly</p>
 </li>
 <li>
 <p>Python Data Science Handbook, Jake VanderPlas, O'Reilly</p>
@@ -694,9 +697,7 @@ Lag</p>
 <p>語法：</p>
 <p>Series.ewm (com=None, span=None, halflife=None, alpha=None, min_periods=0, adjust=True, ignore_na=False, axis=0, times=None, method='single')</p>
 <p>期初調整係數衰減</p>
-<p>$$
-y _ {t} = \frac {x _ {t} + (1 - \alpha) x _ {t - 1} + (1 - \alpha) ^ {2} x _ {t - 2} + \dots + (1 - \alpha) ^ {t} x _ {0}}{1 + (1 - \alpha) + (1 - \alpha) ^ {2} + \dots + (1 - \alpha) ^ {t}}
-$$</p>
+<p><div class="math"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>y</mi><mrow><mi>t</mi></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><msub><mi>x</mi><mrow><mi>t</mi></mrow></msub><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><mi>&#x003B1;</mi><mo stretchy="false">&#x00029;</mo><msub><mi>x</mi><mrow><mi>t</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><mi>&#x003B1;</mi><msup><mo stretchy="false">&#x00029;</mo><mrow><mn>2</mn></mrow></msup><msub><mi>x</mi><mrow><mi>t</mi><mo>&#x02212;</mo><mn>2</mn></mrow></msub><mo>&#x0002B;</mo><mo>&#x02026;</mo><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><mi>&#x003B1;</mi><msup><mo stretchy="false">&#x00029;</mo><mrow><mi>t</mi></mrow></msup><msub><mi>x</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow><mn>1</mn><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><mi>&#x003B1;</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><mi>&#x003B1;</mi><msup><mo stretchy="false">&#x00029;</mo><mrow><mn>2</mn></mrow></msup><mo>&#x0002B;</mo><mo>&#x02026;</mo><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><mi>&#x003B1;</mi><msup><mo stretchy="false">&#x00029;</mo><mrow><mi>t</mi></mrow></msup></mrow></mfrac></mrow></math></div></p>
 <pre><code class="language-python">1 hsi['EMA10'] = hsi['Adj Close'].ewm(span=10).mean()
 2 hsi.tail(5)
 </code></pre>
@@ -958,7 +959,7 @@ data[&quot;Case&quot;].corr(data[&quot;Amount_mil&quot;])
 <p>0 表示變數之間沒有線性依賴關係。</p>
 <h1 id="h-264-Df-T">Df.T</h1>
 
-<table><tr><td>DateTime</td><td>Case</td><td>Amount_mil</td><td>df.T or df.transpose</td><td>-</td><td>DataFrame 的轉置。</td></tr><tr><td>2002-6</td><td>7325</td><td>16940</td><td></td><td></td><td></td></tr><tr><td>2002-6</td><td>7195</td><td>16129</td><td>1</td><td>data.T</td><td></td></tr><tr><td>2002-7</td><td>4961</td><td>10272</td><td></td><td></td><td></td></tr><tr><td>2002-8</td><td>4881</td><td>9867</td><td>DateTime</td><td>2002-5</td><td>2002-6</td></tr><tr><td>2002-9</td><td>6278</td><td>12113</td><td>Case</td><td>7325</td><td>7195</td></tr><tr><td>...</td><td>...</td><td>...</td><td>Amount.mil</td><td>16940</td><td>16129</td></tr><tr><td>2018-6</td><td>6713</td><td>68023</td><td>2 rows  $ \times $ 198 columns</td><td></td><td></td></tr><tr><td>2018-7</td><td>6091</td><td>65237</td><td></td><td></td><td></td></tr><tr><td>2018-8</td><td>4822</td><td>46765</td><td></td><td></td><td></td></tr><tr><td>2018-9</td><td>3500</td><td>37083</td><td></td><td></td><td></td></tr><tr><td>2018-10</td><td>4243</td><td>38571</td><td></td><td></td><td></td></tr></table>
+<table><tr><td>DateTime</td><td>Case</td><td>Amount_mil</td><td>df.T or df.transpose</td><td>-</td><td>DataFrame 的轉置。</td></tr><tr><td>2002-6</td><td>7325</td><td>16940</td><td></td><td></td><td></td></tr><tr><td>2002-6</td><td>7195</td><td>16129</td><td>1</td><td>data.T</td><td></td></tr><tr><td>2002-7</td><td>4961</td><td>10272</td><td></td><td></td><td></td></tr><tr><td>2002-8</td><td>4881</td><td>9867</td><td>DateTime</td><td>2002-5</td><td>2002-6</td></tr><tr><td>2002-9</td><td>6278</td><td>12113</td><td>Case</td><td>7325</td><td>7195</td></tr><tr><td>...</td><td>...</td><td>...</td><td>Amount.mil</td><td>16940</td><td>16129</td></tr><tr><td>2018-6</td><td>6713</td><td>68023</td><td>2 rows  <span class="math-inline"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x000D7;</mo></mrow></math></span> 198 columns</td><td></td><td></td></tr><tr><td>2018-7</td><td>6091</td><td>65237</td><td></td><td></td><td></td></tr><tr><td>2018-8</td><td>4822</td><td>46765</td><td></td><td></td><td></td></tr><tr><td>2018-9</td><td>3500</td><td>37083</td><td></td><td></td><td></td></tr><tr><td>2018-10</td><td>4243</td><td>38571</td><td></td><td></td><td></td></tr></table>
 
 <p>198 rows × 2 columns</p></section><section class="page" id="p265"><div class="pbadge">p.265</div><pre><code class="language-python">&lt;h1 id=&quot;h-265-join-Year-and-Month-as-new-column&quot;&gt;join Year and Month as new column&lt;/h1&gt;
 data[&quot;DateTime&quot;] = data[&quot;Year&quot;].astype(str) + &quot;-&quot; + data[&quot;Month&quot;].astype(str)
