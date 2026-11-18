@@ -18,7 +18,8 @@ compose_cover*.py（或 gen_cover_report.py --bg）──PIL──▶  source/im
 | `compose_cover.py`、`compose_cover_cnn.py` | 把候選疊成 index_img＋banner_img（`SLUG` 寫在檔頭，換篇要改） |
 | `gen_cover_report_qwen.py` | 「25 頁教材核對報告」那篇的 4 張候選 |
 | `gen_cover_report.py` | 同篇的文字編排；`--bg` 吃 Qwen 圖、不給就畫程序化背景 |
-| `gen_cover_pyda.py` | 「Python 初級數據分析員證書」13 章課程頁封面（1344×768）：**純程序化**（光暈＋格線＋章節圖樣＋標題），不需 ComfyUI；字型自動挑 Noto CJK／微軟正黑。`python _covergen/gen_cover_pyda.py [--only 8]` |
+| `gen_cover_pyda.py` | 「Python 初級數據分析員證書」13 章課程頁封面（1344×768）：有 `_covergen/out/pyda/<slug>.png`（Qwen 底圖）就疊字合成，沒有就退回程序化背景；字型自動挑 Noto CJK／微軟正黑。`python _covergen/gen_cover_pyda.py [--only 8]` |
+| `plan_pyda_covers.json` | 上述 13 張的 Qwen-Image 計劃（seed 7101–7113、每章一條 motif）。`python <skills>\qwen-image-illustrations\scripts\batch_figures.py --plan _covergen\plan_pyda_covers.json` → 無文字底圖到 `_covergen/out/pyda/` |
 
 ## 前置
 
@@ -52,3 +53,4 @@ cd ~/Projects/ComfyUI && .venv/bin/python main.py --listen 127.0.0.1 --port 8188
   沒有這層的話，Qwen 圖右側的洋紅光會把標題吃掉（實測踩過一次）。
 - **檔案大小**：站上其他封面 0.8–0.9 MB，別壓到很低；`_covergen/out/` 產 10–15 MB 的原始圖，**不版控**。
 - **可換路徑**：`COMFYUI_DIR` 環境變數可覆寫 ComfyUI 位置（預設 `~/Projects/ComfyUI`）。
+- **Qwen 產圖掛掉先看 `comfy_aimdo`**：`ModelVBAR.__init__() got an unexpected keyword argument 'pageout_callback'` = `python_embeded` 的 comfy-aimdo 0.5.6 太舊；改用 `D:\AI\comfyUI\python_embeded_nightly\python.exe main.py --listen 127.0.0.1 --port 8188`（comfy-aimdo 0.6.0）即可（2026-11-19 實測）。

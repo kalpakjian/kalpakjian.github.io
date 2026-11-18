@@ -1,0 +1,77 @@
+{
+  "_comment": "Qwen-Image 2.1 草稿圖（無文字）→ gen_cover_pyda.py --bg-dir 疊字成課程封面。用法：python C:\\Users\\princ\\.agents\\skills\\qwen-image-illustrations\\scripts\\batch_figures.py --plan _covergen\\plan_pyda_covers.json",
+  "_notes": [
+    "out_dir 在 _covergen/out/ 底下（.gitignore 已排除），原始 PNG 不進版控。",
+    "seed 7101..7113 對應第 1..13 章；同一張不滿意就 +100 重跑，不要改 BASE。",
+    "motif 只寫主體與語意，風格（深藍、光暈、無文字）由 qwen_image.py 的 BASE_COVER 提供。"
+  ],
+  "out_dir": "C:\\Users\\princ\\kalpakjian.github.io\\_covergen\\out\\pyda",
+  "style": "cover",
+  "items": [
+    {
+      "slug": "ch01-industry",
+      "seed": 7101,
+      "motif": "A translucent pipeline of softly glowing geometric stages flowing left to right through dark space, thin filaments connecting each stage, tiny holographic gears inside the stages and a faint rising chart silhouette where the pipeline ends"
+    },
+    {
+      "slug": "ch02-python-tools",
+      "seed": 7102,
+      "motif": "A luminous ribbon of light coiling around a floating translucent terminal frame, thin streams of glowing characters-like particles pouring into it, faint geometric scaffolding behind"
+    },
+    {
+      "slug": "ch03-statistics",
+      "seed": 7103,
+      "motif": "A glowing bell curve of light rising from a dark measurement grid, scattered luminous sample points drifting beneath the curve, a softly lit histogram bar cluster at its base"
+    },
+    {
+      "slug": "ch04-linear-algebra",
+      "seed": 7104,
+      "motif": "A tilted translucent matrix of glowing cells floating in space, a few cells lit bright, thin bracket lines framing it, and beside it a diagonal regression line of light passing through scattered dots"
+    },
+    {
+      "slug": "ch05-viz-basics",
+      "seed": 7105,
+      "motif": "A cluster of glowing translucent bar columns of different heights rising from a dark reflective surface, thin luminous axis lines, one column highlighted in warm light"
+    },
+    {
+      "slug": "ch06-dataskills",
+      "seed": 7106,
+      "motif": "Layered translucent modules stacked like floating blueprint drawers in tiers, thin filament connections running between the tiers, one tier glowing brighter than the rest"
+    },
+    {
+      "slug": "ch07-numpy",
+      "seed": 7107,
+      "motif": "A glowing three-dimensional lattice of translucent cubes receding into fog, a bright slice plane of light cutting through it, small luminous vectors along its edges"
+    },
+    {
+      "slug": "ch08-pandas",
+      "seed": 7208,
+      "motif": "A translucent spreadsheet of glowing cells floating in dark space, clearly divided into rows and columns by thin luminous grid lines, one highlighted column of cells glowing brighter, small streams of light particles entering the sheet from the left and leaving to the right"
+    },
+    {
+      "slug": "ch09-viz-tools",
+      "seed": 7109,
+      "motif": "Five floating translucent panels of different shapes arranged in a loose arc, each glowing in a different hue, joined by thin filaments of light"
+    },
+    {
+      "slug": "ch10-matplotlib",
+      "seed": 7110,
+      "motif": "A seamless glowing line chart sweeping across a dark grid, the area beneath it filled with a soft gradient of light, a single bright point at the end of the line"
+    },
+    {
+      "slug": "ch11-seaborn",
+      "seed": 7111,
+      "motif": "A cloud of small glowing spheres of varied sizes scattered along a bright diagonal line of light, dark measuring grid beneath them, very shallow depth of field"
+    },
+    {
+      "slug": "ch12-plotly",
+      "seed": 7112,
+      "motif": "Floating glowing bubbles of different sizes arranged in dark three-dimensional space, thin luminous axis lines meeting at a corner, one large bubble brightest"
+    },
+    {
+      "slug": "ch13-storytelling",
+      "seed": 7113,
+      "motif": "An ascending path of glowing stepping stones rising toward a warm horizon in dark space, small luminous data points along the path, cool teal light meeting warm amber light at the far end"
+    }
+  ]
+}

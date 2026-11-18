@@ -1,4 +1,4 @@
-﻿"""產生「Python 初級數據分析員證書」13 章的課程頁封面（1344×768，與站上其他封面同尺寸）。
+"""產生「Python 初級數據分析員證書」13 章的課程頁封面（1344×768，與站上其他封面同尺寸）。
 
 與 gen_cover_report.py 同一條程序化路線：近黑底 + 細格線 + 兩團光暈 + 左側文字塊，
 右側依章節畫對應的圖樣（長條／曲線／矩陣／表格／散點）。不需要 ComfyUI。
@@ -14,6 +14,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+HERE = os.path.dirname(os.path.abspath(__file__))
 COVERS = os.path.join(REPO, "source", "img", "covers")
 
 # Noto（Linux CI／WSL）優先，其次 Windows 內建的微軟正黑體
@@ -213,6 +214,14 @@ CHAPTERS = [
 
 HOT = (235, 240, 246)  # 強調點一律近白，避免第二套色相打架
 
+# Qwen 底圖的檔名（= plan_pyda_covers.json 的 slug，也是章節頁檔名）
+ART_SLUGS = {
+    1: "ch01-industry", 2: "ch02-python-tools", 3: "ch03-statistics", 4: "ch04-linear-algebra",
+    5: "ch05-viz-basics", 6: "ch06-dataskills", 7: "ch07-numpy", 8: "ch08-pandas",
+    9: "ch09-viz-tools", 10: "ch10-matplotlib", 11: "ch11-seaborn", 12: "ch12-plotly",
+    13: "ch13-storytelling",
+}
+
 
 def wrap(d, text, fnt, max_w, max_lines=3):
     """把標題切成 1–3 行，行寬盡量平均（避免出現只有一兩個字的孤行）。"""
@@ -256,11 +265,35 @@ def wrap(d, text, fnt, max_w, max_lines=3):
     return [text]
 
 
-def make(num, title, blurb, pages, accent, motif):
+def load_bg(path, w, h):
+    """Qwen 產的無文字底圖：裁成目標比例，左側壓漸層暗幕讓標題讀得出來。"""
+    src = Image.open(path).convert("RGB")
+    sw, sh = src.size
+    scale = max(w / sw, h / sh)
+    src = src.resize((int(sw * scale + 0.5), int(sh * scale + 0.5)), Image.LANCZOS)
+    left, top = (src.width - w) // 2, (src.height - h) // 2
+    img = src.crop((left, top, left + w, top + h))
+
+    scrim = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(scrim)
+    stop = int(w * 0.74)
+    for x in range(stop):
+        a = int(242 * (1 - x / stop) ** 0.60)
+        d.line([(x, 0), (x, h)], fill=BG + (a,))
+    d.rectangle([(0, h - 64), (w, h)], fill=BG + (110,))
+    return Image.alpha_composite(img.convert("RGBA"), scrim).convert("RGB")
+
+
+def make(num, title, blurb, pages, accent, motif, bg_dir=None):
     w, h = 1344, 768
-    img = backdrop(w, h, accent)
-    d = ImageDraw.Draw(img, "RGBA")
-    motif(d, (742, 200, 1244, 630), accent, HOT)
+    art = os.path.join(bg_dir, ART_SLUGS[num] + ".png") if bg_dir else None
+    if art and os.path.exists(art):
+        img = load_bg(art, w, h)
+        d = ImageDraw.Draw(img, "RGBA")
+    else:
+        img = backdrop(w, h, accent)
+        d = ImageDraw.Draw(img, "RGBA")
+        motif(d, (742, 200, 1244, 630), accent, HOT)
 
     f_kick, f_title, f_sub, f_meta = font(REG_CANDIDATES, 27), font(BOLD_CANDIDATES, 54), \
         font(REG_CANDIDATES, 28), font(REG_CANDIDATES, 24)
@@ -290,9 +323,13 @@ def make(num, title, blurb, pages, accent, motif):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", type=int, default=0, help="只畫第 N 章")
+    ap.add_argument("--bg-dir", default=os.path.join(HERE, "out", "pyda"),
+                    help="Qwen-Image 底圖目錄（chNN.png）；沒有底圖就退回程序化背景")
     args = ap.parse_args()
     os.makedirs(COVERS, exist_ok=True)
+    bg_dir = args.bg_dir if os.path.isdir(args.bg_dir) else None
+    print("background:", bg_dir or "(procedural)")
     for row in CHAPTERS:
         if args.only and row[0] != args.only:
             continue
-        make(*row)
+        make(*row, bg_dir=bg_dir)
