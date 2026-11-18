@@ -851,7 +851,7 @@ timestamp('2023-04-09 11:05:43.433502912')</p>
 </blockquote></section><section class="page" id="p261"><div class="pbadge">p.261</div><h2 id="h-261-pd-to-datetime">pd.to_datetime</h2>
 
 <p>將 series 轉換為 datetime。此函數將標量、類似數位、Series 或 DataFrame/dict 轉換為 pandas datetime 物件。</p>
-<pre><code class="language-python">1 tnx['Date'] = pd.to_datetime(tnx['Date'],format=&quot;%Y-%m-%d&quot;)
+<pre><code class="language-text">1 tnx['Date'] = pd.to_datetime(tnx['Date'],format=&quot;%Y-%m-%d&quot;)
 2 tnx.Date
 0 2000-01-03
 1 2000-01-04
@@ -867,7 +867,7 @@ Name: Date, Length: 7062, dtype: datetime64[ns]
 </code></pre>
 <h2 id="h-261-設置日期時間索引">設置日期時間索引</h2>
 
-<pre><code class="language-python">1 tnx = tnx.set_index('Date')
+<pre><code class="language-text">1 tnx = tnx.set_index('Date')
 2 tnx.info()
 
 &lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -885,11 +885,7 @@ dtypes: float64(6)
 memory usage: 386.2 KB
 </code></pre>
 <p>1 tnx.tail(3)</p>
-<table><tr><td></td><td>Date</td><td>Open</td><td>High</td><td>Low</td><td>Close</td><td>Adj Close</td><td>Volume</td></tr><tr><td>2022-12-28</td><td>3.818</td><td>3.890</td><td>3.815</td><td>3.887</td><td>3.887</td><td>0.0</td><td></td></tr><tr><td>2022-12-29</td><td>3.868</td><td>3.886</td><td>3.818</td><td>3.835</td><td>3.835</td><td>0.0</td><td></td></tr><tr><td>2022-12-30</td><td>3.869</td><td>3.905</td><td>3.831</td><td>3.879</td><td>3.879</td><td>0.0</td><td></td></tr></table>
-
-<blockquote>
-<p>⚠️ 本頁有 2 段未能本地執行（#1: SyntaxError: leading zeros in decimal integer literals are not permitt; #2: SyntaxError: leading zeros in decimal integer literals are not permitt），原因見 OCR_run_report.md</p>
-</blockquote></section><section class="page" id="p262"><div class="pbadge">p.262</div><h2 id="h-262-時間序列-Time-Series">時間序列 Time Series</h2>
+<table><tr><td></td><td>Date</td><td>Open</td><td>High</td><td>Low</td><td>Close</td><td>Adj Close</td><td>Volume</td></tr><tr><td>2022-12-28</td><td>3.818</td><td>3.890</td><td>3.815</td><td>3.887</td><td>3.887</td><td>0.0</td><td></td></tr><tr><td>2022-12-29</td><td>3.868</td><td>3.886</td><td>3.818</td><td>3.835</td><td>3.835</td><td>0.0</td><td></td></tr><tr><td>2022-12-30</td><td>3.869</td><td>3.905</td><td>3.831</td><td>3.879</td><td>3.879</td><td>0.0</td><td></td></tr></table></section><section class="page" id="p262"><div class="pbadge">p.262</div><h2 id="h-262-時間序列-Time-Series">時間序列 Time Series</h2>
 
 <p>時間序列是在連續時間獲得的量的一系列值，它們之間的間隔通常相等。在數學中，時間序列是按時間順序索引（或列出或繪製）的一系列數據點。最常見的是，時間序列是在連續等距的時間點上拍攝的序列。</p>
 <p>幾個月的國內銷售物業數據、庫存數據、多年來的天氣數據、即時交通流量數據，都是很好的例子。</p>
@@ -946,7 +942,7 @@ array([ 7325, 7195, 4961, 4881, 6278, 5863, 4941, 5129, 6187, 3649, 4550, 5373, 
 
 <p>df.corr()，series.corr()</p>
 <p>計算列的成對相關性，不包括 NA/null 值。</p>
-<pre><code class="language-python">data.corr()
+<pre><code class="language-text">data.corr()
 
 Case Amount_mil
 
@@ -964,10 +960,7 @@ data[&quot;Case&quot;].corr(data[&quot;Amount_mil&quot;])
 
 <table><tr><td>DateTime</td><td>Case</td><td>Amount_mil</td><td>df.T or df.transpose</td><td>-</td><td>DataFrame 的轉置。</td></tr><tr><td>2002-6</td><td>7325</td><td>16940</td><td></td><td></td><td></td></tr><tr><td>2002-6</td><td>7195</td><td>16129</td><td>1</td><td>data.T</td><td></td></tr><tr><td>2002-7</td><td>4961</td><td>10272</td><td></td><td></td><td></td></tr><tr><td>2002-8</td><td>4881</td><td>9867</td><td>DateTime</td><td>2002-5</td><td>2002-6</td></tr><tr><td>2002-9</td><td>6278</td><td>12113</td><td>Case</td><td>7325</td><td>7195</td></tr><tr><td>...</td><td>...</td><td>...</td><td>Amount.mil</td><td>16940</td><td>16129</td></tr><tr><td>2018-6</td><td>6713</td><td>68023</td><td>2 rows  $ \times $ 198 columns</td><td></td><td></td></tr><tr><td>2018-7</td><td>6091</td><td>65237</td><td></td><td></td><td></td></tr><tr><td>2018-8</td><td>4822</td><td>46765</td><td></td><td></td><td></td></tr><tr><td>2018-9</td><td>3500</td><td>37083</td><td></td><td></td><td></td></tr><tr><td>2018-10</td><td>4243</td><td>38571</td><td></td><td></td><td></td></tr></table>
 
-<p>198 rows × 2 columns</p>
-<blockquote>
-<p>⚠️ 本頁有 1 段未能本地執行（#1: SyntaxError: invalid syntax (<unknown>, line 3)），原因見 OCR_run_report.md</p>
-</blockquote></section><section class="page" id="p265"><div class="pbadge">p.265</div><pre><code class="language-python">&lt;h1 id=&quot;h-265-join-Year-and-Month-as-new-column&quot;&gt;join Year and Month as new column&lt;/h1&gt;
+<p>198 rows × 2 columns</p></section><section class="page" id="p265"><div class="pbadge">p.265</div><pre><code class="language-python">&lt;h1 id=&quot;h-265-join-Year-and-Month-as-new-column&quot;&gt;join Year and Month as new column&lt;/h1&gt;
 data[&quot;DateTime&quot;] = data[&quot;Year&quot;].astype(str) + &quot;-&quot; + data[&quot;Month&quot;].astype(str)
 &lt;h1 id=&quot;h-265-drop-Year-and-Month&quot;&gt;drop Year and Month&lt;/h1&gt;
 data = data.drop(['Year', 'Month'], axis=1)
