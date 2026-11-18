@@ -55,7 +55,8 @@ const TOPICS_SORTED = TOPICS.map(function (item, i) { return { item: item, i: i 
 const NOTES = [
   { title: '電腦視覺課程', href: '/cv-course/' },
   { title: 'LLM 與生成式 AI 課程', href: '/llm-course/' },
-  { title: 'AutoML 應用證書課程', href: '/automl-course/' }
+  { title: 'AutoML 應用證書課程', href: '/automl-course/' },
+  { title: 'Python 初級數據分析員證書', href: '/python-da-course/' }
 ];
 
 // 左欄＝專題、右欄＝學習筆記；「文章」標題之後接主題產生的最新文章清單
