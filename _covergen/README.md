@@ -18,6 +18,7 @@ compose_cover*.py（或 gen_cover_report.py --bg）──PIL──▶  source/im
 | `compose_cover.py`、`compose_cover_cnn.py` | 把候選疊成 index_img＋banner_img（`SLUG` 寫在檔頭，換篇要改） |
 | `gen_cover_report_qwen.py` | 「25 頁教材核對報告」那篇的 4 張候選 |
 | `gen_cover_report.py` | 同篇的文字編排；`--bg` 吃 Qwen 圖、不給就畫程序化背景 |
+| `gen_cover_pyda.py` | 「Python 初級數據分析員證書」13 章課程頁封面（1344×768）：**純程序化**（光暈＋格線＋章節圖樣＋標題），不需 ComfyUI；字型自動挑 Noto CJK／微軟正黑。`python _covergen/gen_cover_pyda.py [--only 8]` |
 
 ## 前置
 
