@@ -398,5 +398,5 @@ harness 變成可 import 的 SDK，而框架廠商反過來開始出 harness；�
 
 ---
 
-> **版權聲明**：本篇文章為論文導讀之學習整理，所有技術內容版權屬論文原作者 Paul Barbaste、Tristan Darrigol、Germain Vu、Tom Wiltberger 及 Wavestone AI Lab 所有（CC BY 4.0）。表格與程式碼範例為根據論文內容重新整理之說明，非原圖原碼。如有錯誤或遺漏，歡迎來信指正。
+
 

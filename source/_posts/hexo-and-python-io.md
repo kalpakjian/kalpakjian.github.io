@@ -309,6 +309,6 @@ print(b.read(1))             # b'\x89'
 
 > <strong>圖片來源</strong>：封面與章節插圖由本機 ComfyUI 的 <strong>Qwen-Image 2.1</strong> 生成（本站 house style：暗色 cinematic、無文字）。
 >
-> 文中「原圖」為 Pooja Pawar 的資訊圖〈How to use Python for problem-solving〉，僅作引用與討論之用，版權歸原作者所有。
+
 >
 > Hexo 版本與連結為 <strong>2026-10-16</strong> 官方來源查證結果；GitHub Pages 網域、額度與部署方式為 <strong>2026-10-21</strong> 官方文件查證；<code>io</code> 範例為本機 Python 3.11.15 實測輸出。

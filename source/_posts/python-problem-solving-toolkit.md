@@ -663,6 +663,6 @@ pip install openpyxl plotly django djangorestframework schedule selenium scrapy 
 
 > <strong>圖片來源</strong>：封面由本機 ComfyUI 的 <strong>Qwen-Image 2.1</strong> 生成（暗色 cinematic 風格、無文字，與全站一致）。
 >
-> 文中「原圖」為 Pooja Pawar 的資訊圖〈How to use Python for problem-solving〉，僅作引用與逐項討論之用，版權歸原作者所有。
+
 >
 > 套件版本為 <strong>2026-10-20</strong> 本機實掃與官方來源查證結果（Hexo 版本查證於 2026-10-16）。
