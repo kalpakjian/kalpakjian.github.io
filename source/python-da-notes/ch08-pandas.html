@@ -47,6 +47,8 @@ figure img{max-width:100%;border:1px solid var(--line);border-radius:8px}
 .math{margin:14px 0;overflow-x:auto;text-align:center}
 .math math{font-size:1.15em}
 .math-inline math{font-size:1.02em}
+.slide{margin:20px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line)}
+.slide>.sno{font:600 11px/1.8 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mut);letter-spacing:.06em;text-transform:uppercase}
 figcaption{font-size:12px;color:var(--mut);margin-top:5px}
 .runbox{background:#f0fff4;border-left:4px solid #2da44e;padding:.2em .9em;border-radius:0 6px 6px 0;margin:14px 0}
 .btns{display:flex;gap:6px;margin:-2px 0 8px}
@@ -552,7 +554,7 @@ B 83.1
 </code></pre>
 <pre><code class="language-python">A 60.533333 3 6.115826
 B 67.125000 4 12.736921
-</code></pre></section><section class="page" id="p251"><div class="pbadge">p.251</div><h3 id="h-251-添加新的數據行">添加新的數據行</h3>
+</code></pre></section></section><section class="page" id="p251"><div class="pbadge">p.251</div><h3 id="h-251-添加新的數據行">添加新的數據行</h3>
 
 <p>使用 pd.concat([df, new_df], ignore_index=True) 添加新的數據行。</p>
 <p>許多網站使用 df.append(new_df)，但很快就會被停用 deprecated。</p>

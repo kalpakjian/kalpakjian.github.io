@@ -47,6 +47,8 @@ figure img{max-width:100%;border:1px solid var(--line);border-radius:8px}
 .math{margin:14px 0;overflow-x:auto;text-align:center}
 .math math{font-size:1.15em}
 .math-inline math{font-size:1.02em}
+.slide{margin:20px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line)}
+.slide>.sno{font:600 11px/1.8 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mut);letter-spacing:.06em;text-transform:uppercase}
 figcaption{font-size:12px;color:var(--mut);margin-top:5px}
 .runbox{background:#f0fff4;border-left:4px solid #2da44e;padding:.2em .9em;border-radius:0 6px 6px 0;margin:14px 0}
 .btns{display:flex;gap:6px;margin:-2px 0 8px}
@@ -563,7 +565,7 @@ dodge=True 將不同類的點分開。</p>
 <p>Nvidia</p>
 <p>AMD Radeon</p>
 <p>Nvidia</p>
-<p>AMD Radeon</p></section><section class="page" id="p351"><div class="pbadge">p.351</div><p>plt.subplots(figsize=(10, 7))
+<p>AMD Radeon</p></section></section><section class="page" id="p351"><div class="pbadge">p.351</div><p>plt.subplots(figsize=(10, 7))
 sns.despine(bottom=True, left=True)
 sns.stripplot(x="TDP", y="Class", hue="Manufacturer", data=df, dodge=.5, alpha=.55, zorder=1)
 sns.pointplot(x="TDP", y="Class", hue="Manufacturer", data=df, dodge=.5, join=False, markers="D", scale=.75, errorbar('ci', 95), palette=sns.color_palette(['green', 'red'])

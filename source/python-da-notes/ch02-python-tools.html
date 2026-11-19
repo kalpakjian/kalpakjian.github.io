@@ -47,6 +47,8 @@ figure img{max-width:100%;border:1px solid var(--line);border-radius:8px}
 .math{margin:14px 0;overflow-x:auto;text-align:center}
 .math math{font-size:1.15em}
 .math-inline math{font-size:1.02em}
+.slide{margin:20px 0;padding:2px 0 2px 12px;border-left:3px solid var(--line)}
+.slide>.sno{font:600 11px/1.8 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mut);letter-spacing:.06em;text-transform:uppercase}
 figcaption{font-size:12px;color:var(--mut);margin-top:5px}
 .runbox{background:#f0fff4;border-left:4px solid #2da44e;padding:.2em .9em;border-radius:0 6px 6px 0;margin:14px 0}
 .btns{display:flex;gap:6px;margin:-2px 0 8px}
@@ -907,7 +909,7 @@ in/python /Users/honcylee/myproj/PythonCode/loop.py
 <pre><code class="language-text">Hello Honda!
 </code></pre>
 <p>Hello Honda!</p>
-<p>您可以放置 docstring 來註釋參數。使用 help（say_hello）查看函數的使用方式。此外，一些文檔工具（如 Sphinx 或 IDE PyCharm）可以識別它以用於未來的文件工作。</p></section><section class="page" id="p51"><div class="pbadge">p.51</div><p>def say_hello(someone) -&gt; "input name" :
+<p>您可以放置 docstring 來註釋參數。使用 help（say_hello）查看函數的使用方式。此外，一些文檔工具（如 Sphinx 或 IDE PyCharm）可以識別它以用於未來的文件工作。</p></section></section><section class="page" id="p51"><div class="pbadge">p.51</div><p>def say_hello(someone) -&gt; "input name" :
     """Say Hello to someone"""
     print(f"Hello {someone}!")
     say_hello("Honda")
