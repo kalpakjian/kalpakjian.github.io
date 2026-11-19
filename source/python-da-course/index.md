@@ -34,7 +34,7 @@ date: 2026-11-19 10:00:00
 ![第 3 章 基礎統計學原理](/img/covers/python-da-ch03.png)
 
 - **範圍**：p.75–p.91（17 頁）
-- **涵蓋**：我們日常生活中的統計數據、統計數據幫助我們、總體和樣本、採樣、樣本偏差、參數和統計量
+- **涵蓋**：我們日常生活中的統計數據、統計數據幫助我們、總體和樣本、採樣、樣本偏差、什麼是樣本偏差？
 - **👉 [看筆記](/python-da-notes/ch03-statistics.html)**
 
 ---
@@ -54,7 +54,7 @@ date: 2026-11-19 10:00:00
 ![第 5 章 數據分析及可視化基礎](/img/covers/python-da-ch05.png)
 
 - **範圍**：p.123–p.160（38 頁）
-- **涵蓋**：數據庫、資料庫基本概念、SQL 簡介、架構 Schema、SQL 語句、SQL 查詢
+- **涵蓋**：數據庫、資料庫基本概念、SQL 簡介、SQL 是結構化查詢語言的縮寫。、資料庫管理系統（DBMS）、架構 Schema
 - **👉 [看筆記](/python-da-notes/ch05-viz-basics.html)**
 
 ---
@@ -64,7 +64,7 @@ date: 2026-11-19 10:00:00
 ![第 6 章 Python 數據分析技巧](/img/covers/python-da-ch06.png)
 
 - **範圍**：p.161–p.204（44 頁）
-- **涵蓋**：Object-oriented programming 物件化程式設計、更新屬性 & 刪除實例 Update、通過方法更新屬性 Update at、模組和封裝 Modules and Packages、模組的分層包 Hierarchical Package of Modules、將模組拆分為多個檔 Splitting a module into multiple files
+- **涵蓋**：Object-oriented programming 物件化程式設計、更新屬性 & 刪除實例 Update、通過方法更新屬性 Update at、如果超類和子類中都存在相同的方法怎麼辦？、super（）方法、多重繼承 Multiple Inheritance
 - **👉 [看筆記](/python-da-notes/ch06-dataskills.html)**
 
 ---
@@ -84,7 +84,7 @@ date: 2026-11-19 10:00:00
 ![第 8 章 Pandas 套件](/img/covers/python-da-ch08.png)
 
 - **範圍**：p.233–p.270（38 頁）
-- **涵蓋**：匯入和匯出數據、將.csv 文件導入 Pandas DataFrame、數據幀的過濾和選擇 Filtering & Selection of a DataFrame、添加新列、刪除列或行、缺少數據處理
+- **涵蓋**：檢查版本、通用術語翻譯、匯入和匯出數據、將.csv 文件導入 Pandas DataFrame、數據幀的過濾和選擇 Filtering & Selection of a DataFrame、添加新列
 - **👉 [看筆記](/python-da-notes/ch08-pandas.html)**
 
 ---
@@ -114,7 +114,7 @@ date: 2026-11-19 10:00:00
 ![第 11 章 Seaborn 套件](/img/covers/python-da-ch11.png)
 
 - **範圍**：p.323–p.358（36 頁）
-- **涵蓋**：繪製堆疊直方圖-sns.histplot、Relation Plot 關係圖 - sns.relplot、Discover the code 程式碼探究、風速 Heatmap and Covid-19 Hotspot、估計回歸擬合 Estimate regression fits- sns.regplot、Estimate regression fits 估計回歸擬合一 sns.Implot
+- **涵蓋**：概論、繪製堆疊直方圖-sns.histplot、Relation Plot 關係圖 - sns.relplot、Discover the code 程式碼探究、風速 Heatmap and Covid-19 Hotspot、估計回歸擬合 Estimate regression fits- sns.regplot
 - **👉 [看筆記](/python-da-notes/ch11-seaborn.html)**
 
 ---
@@ -124,7 +124,7 @@ date: 2026-11-19 10:00:00
 ![第 12 章 Plotly 套件](/img/covers/python-da-ch12.png)
 
 - **範圍**：p.359–p.396（38 頁）
-- **涵蓋**：Plotly套件、Plotly 將數據值分配、Plotly套件 Part 2、時間序列繪圖 - Plotly
+- **涵蓋**：Plotly套件、Plotly 將數據值分配、自定義地理、散點圖、在一個parallel coordinates、Plotly套件 Part 2
 - **👉 [看筆記](/python-da-notes/ch12-plotly.html)**
 
 ---
@@ -134,5 +134,5 @@ date: 2026-11-19 10:00:00
 ![第 13 章 數據分析專案：Storytelling](/img/covers/python-da-ch13.png)
 
 - **範圍**：p.397–p.404（8 頁）
-- **涵蓋**：數據分析專案 Storytelling for Data Analysis
+- **涵蓋**：數據分析專案 Storytelling for Data Analysis、數據分析專業 Storytelling for Data Analysis
 - **👉 [看筆記](/python-da-notes/ch13-storytelling.html)**
