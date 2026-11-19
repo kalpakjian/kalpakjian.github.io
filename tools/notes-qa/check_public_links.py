@@ -100,6 +100,8 @@ def main() -> int:
         page_rel = os.path.relpath(page, root)
         with open(page, encoding="utf-8", errors="replace") as fh:
             html = fh.read()
+        # 內嵌的 plotly.js 是一大坨 minified 程式碼，裡面有長得像 href/src 的字串 → 先剔除
+        html = re.sub(r"(?s)<script.*?</script>", "", html)
         seen = set()
         for m in ATTR.finditer(html):
             value = m.group(1) if m.group(1) is not None else m.group(2)
