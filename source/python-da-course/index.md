@@ -124,7 +124,7 @@ date: 2026-11-19 10:00:00
 ![第 12 章 Plotly 套件](/img/covers/python-da-ch12.png)
 
 - **範圍**：p.359–p.396（38 頁）
-- **涵蓋**：Plotly套件、Plotly 將數據值分配、Plotly套件 Part 2、時間序列繪圖 - Plotly、Plotly 套件 Part 2
+- **涵蓋**：Plotly套件、Plotly 將數據值分配、Plotly套件 Part 2、時間序列繪圖 - Plotly
 - **👉 [看筆記](/python-da-notes/ch12-plotly.html)**
 
 ---
