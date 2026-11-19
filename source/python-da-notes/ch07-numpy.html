@@ -78,7 +78,7 @@ figcaption{font-size:12px;color:var(--mut);margin-top:5px}
  <input id="q" placeholder="搜尋本章標題…">
  <div class="btns"><button id="expAll" type="button">全部展開</button><button id="colAll" type="button">全部收起</button></div>
  <label class="tog"><input type="checkbox" id="l3"> 顯示小節</label>
- <div class="tocwrap"><ul class='toc'><li class="l2"><a href="#h-205-7-Numpy套件">7. Numpy套件</a><i>p.205</i></li><li class="l3"><a href="#h-205-本章小結">本章小結</a><i>p.205</i></li><li class="l3"><a href="#h-206-什麼是-NumPy">什麼是 NumPy</a><i>p.206</i></li><li class="l3"><a href="#h-206-安装">安装</a><i>p.206</i></li><li class="l3"><a href="#h-206-檢查安裝的版本">檢查安裝的版本</a><i>p.206</i></li><li class="l3"><a href="#h-206-創建簡單的一維陣列">創建簡單的一維陣列</a><i>p.206</i></li><li class="l3"><a href="#h-207-Numpy-陣列物件">Numpy 陣列物件</a><i>p.207</i></li><li class="l3"><a href="#h-208-3D-array">3D array</a><i>p.208</i></li><li class="l3"><a href="#h-208-2D-array">2D array</a><i>p.208</i></li><li class="l3"><a href="#h-208-1D-array">1D array</a><i>p.208</i></li><li class="l3"><a href="#h-208-創建二維陣列">創建二維陣列</a><i>p.208</i></li><li class="l3"><a href="#h-208-訪問陣列值-Access-the-array-value">訪問陣列值 Access the array value</a><i>p.208</i></li><li class="l3"><a href="#h-211-一維陣列索引和切片">一維陣列索引和切片</a><i>p.211</i></li><li class="l1"><a href="#h-217-create-an-empty-array-with-settings">create an empty array with settings</a><i>p.217</i></li><li class="l1"><a href="#h-222-np-split-陣列分拆">np.split 陣列分拆</a><i>p.222</i></li><li class="l1"><a href="#h-222-np-append-陣列添加">np.append 陣列添加</a><i>p.222</i></li></ul></div>
+ <div class="tocwrap"><ul class='toc'><li class="l2"><a href="#h-205-7-Numpy套件">7. Numpy套件</a><i>p.205</i></li><li class="l3"><a href="#h-205-本章小結">本章小結</a><i>p.205</i></li><li class="l3"><a href="#h-206-什麼是-NumPy">什麼是 NumPy</a><i>p.206</i></li><li class="l3"><a href="#h-206-安装">安装</a><i>p.206</i></li><li class="l3"><a href="#h-206-檢查安裝的版本">檢查安裝的版本</a><i>p.206</i></li><li class="l3"><a href="#h-206-創建簡單的一維陣列">創建簡單的一維陣列</a><i>p.206</i></li><li class="l3"><a href="#h-207-Numpy-陣列物件">Numpy 陣列物件</a><i>p.207</i></li><li class="l3"><a href="#h-208-3D-array">3D array</a><i>p.208</i></li><li class="l3"><a href="#h-208-2D-array">2D array</a><i>p.208</i></li><li class="l3"><a href="#h-208-1D-array">1D array</a><i>p.208</i></li><li class="l3"><a href="#h-208-創建二維陣列">創建二維陣列</a><i>p.208</i></li><li class="l3"><a href="#h-208-訪問陣列值-Access-the-array-value">訪問陣列值 Access the array value</a><i>p.208</i></li><li class="l3"><a href="#h-211-一維陣列索引和切片">一維陣列索引和切片</a><i>p.211</i></li><li class="l2"><a href="#h-217-create-an-empty-array-with-settings">create an empty array with settings</a><i>p.217</i></li><li class="l2"><a href="#h-222-np-split-陣列分拆">np.split 陣列分拆</a><i>p.222</i></li><li class="l2"><a href="#h-222-np-append-陣列添加">np.append 陣列添加</a><i>p.222</i></li></ul></div>
  <h1 style="margin-top:18px">本章頁碼</h1>
  <div id="pages"><a href="#p205">205</a><a href="#p206">206</a><a href="#p207">207</a><a href="#p208">208</a><a href="#p209">209</a><a href="#p210">210</a><a href="#p211">211</a><a href="#p212">212</a><a href="#p213">213</a><a href="#p214">214</a><a href="#p215">215</a><a href="#p216">216</a><a href="#p217">217</a><a href="#p218">218</a><a href="#p219">219</a><a href="#p220">220</a><a href="#p221">221</a><a href="#p222">222</a><a href="#p223">223</a><a href="#p224">224</a><a href="#p225">225</a><a href="#p226">226</a><a href="#p227">227</a><a href="#p228">228</a><a href="#p229">229</a><a href="#p230">230</a><a href="#p231">231</a><a href="#p232">232</a></div>
  <a href="/python-da-notes/ch06-dataskills.html">← 第 6 章 Python 數據分析技巧</a><a class="course" href="/python-da-course/">課程總覽</a><a href="/python-da-notes/ch08-pandas.html">第 8 章 Pandas 套件 →</a>
@@ -457,7 +457,7 @@ Out[43]: 4.75
 <p>Out[44]: 2.883140648667699</p></section><section class="page" id="p217"><div class="pbadge">p.217</div><p>陣列中的數據類型結構</p>
 <table><tr><td>Character</td><td>Description</td><td>Example</td></tr><tr><td>&#x27;b&#x27;</td><td>Byte</td><td>np.dtype(&#x27;b&#x27;)</td></tr><tr><td>&#x27;i&#x27;</td><td>Signed integer</td><td>np.dtype(&#x27;i4&#x27;) == np.int32</td></tr><tr><td>&#x27;u&#x27;</td><td>Unsigned integer</td><td>np.dtype(&#x27;u1&#x27;) == np.uint8</td></tr><tr><td>&#x27;f&#x27;</td><td>Floating point</td><td>np.dtype(&#x27;f8&#x27;) == np.int64</td></tr><tr><td>&#x27;c&#x27;</td><td>Complex floating point</td><td>np.dtype(&#x27;c16&#x27;) == np.complex128</td></tr><tr><td>&#x27;S&#x27;, &#x27;a&#x27;</td><td>string</td><td>np.dtype(&#x27;S5&#x27;)</td></tr><tr><td>&#x27;U&#x27;</td><td>Unicode string</td><td>np.dtype(&#x27;U&#x27;) == np.str_</td></tr><tr><td>&#x27;V&#x27;</td><td>Raw data (void)</td><td>np.dtype(&#x27;V&#x27;) == np(void</td></tr></table>
 
-<h1 id="h-217-create-an-empty-array-with-settings">create an empty array with settings</h1>
+<h2 id="h-217-create-an-empty-array-with-settings">create an empty array with settings</h2>
 <p>client = np.array([[('Alice', 'F', 30, 3500.5),
     ('Ben', 'M', 35, 2800.3),], dtype=['name', 'U10'), ('gender', 'U1'), ('age', 'i4'), ('order_amount', 'f16')])
 client</p>
@@ -565,10 +565,10 @@ Out[72]: tuple
 </ul>
 <p>例如：位移、加速度、力、動量、重量、光速、引力場、電流</p>
 <pre><code class="language-python">import numpy as np
-&lt;h1 id=&quot;h-220-Scalar&quot;&gt;Scalar&lt;/h1&gt;
+&lt;h2 id=&quot;h-220-Scalar&quot;&gt;Scalar&lt;/h2&gt;
 s = 1
 
-&lt;h1 id=&quot;h-220-Vector&quot;&gt;Vector&lt;/h1&gt;
+&lt;h2 id=&quot;h-220-Vector&quot;&gt;Vector&lt;/h2&gt;
 v1 = np.array([1,4,5])  # horizontal
 v2 = np.array([[1],
     [-5]])  # vertical vector
@@ -633,7 +633,7 @@ array([1, 2, 3, 4, 5, 6])
 </code></pre>
 <blockquote>
 <p>⚠️ 本頁有 4 段未能本地執行（#1: NameError: name 'array' is not defined. Did you forget to import 'arra; #2: NameError: name 'array' is not defined. Did you forget to import 'arra; #3: NameError: name 'a' is not defined; #4: NameError: name 'a' is not defined），原因見 OCR_run_report.md</p>
-</blockquote></section><section class="page" id="p222"><div class="pbadge">p.222</div><h1 id="h-222-np-split-陣列分拆">np.split 陣列分拆</h1>
+</blockquote></section><section class="page" id="p222"><div class="pbadge">p.222</div><h2 id="h-222-np-split-陣列分拆">np.split 陣列分拆</h2>
 
 <pre><code class="language-python">np.split (ary, indices_or_sections, axis)
 列的檢視。
@@ -651,7 +651,7 @@ array([0, 1, 2, 3, 4, 5])
 1 np.split(x, [0, 6])[2]
 array([6, 7, 8])
 </code></pre>
-<h1 id="h-222-np-append-陣列添加">np.append 陣列添加</h1>
+<h2 id="h-222-np-append-陣列添加">np.append 陣列添加</h2>
 
 <pre><code class="language-python">np.append(arr, values, axis=None)
     x = np.arange(1,7).reshape(
@@ -768,7 +768,7 @@ array([0.3452997, 0.84728647, 0.85974315, 0.70047975, 0.69632204], [0.07339232, 
 <p>⚠️ 本頁有 1 段未能本地執行（#2: SyntaxError: closing parenthesis ']' does not match opening parenthesi），原因見 OCR_run_report.md</p>
 </blockquote></section><section class="page" id="p225"><div class="pbadge">p.225</div><p>random.choice</p>
 <p>random.choice(a, size=None, replace=True, p=None). 從給定的一維陣列生成隨機樣本</p>
-<pre><code class="language-python">&lt;h1 id=&quot;h-225-choice-of-1-29-pick-10-random-repeated-n&quot;&gt;choice of 1-29, pick 10 random, repeated number allowed&lt;/h1&gt;
+<pre><code class="language-python">&lt;h2 id=&quot;h-225-choice-of-1-29-pick-10-random-repeated-n&quot;&gt;choice of 1-29, pick 10 random, repeated number allowed&lt;/h2&gt;
 random.choice(np.arange(1,30), 10, replace=True)
 
 array([19, 5, 20, 11, 1, 26, 10, 5, 1, 25])
@@ -777,7 +777,7 @@ random.choice(['A', &quot;B&quot;, &quot;C&quot;, &quot;D&quot;], 2, replace=Fal
 
 array(['C', 'D'], dtype='&lt;U1')
 
-&lt;h1 id=&quot;h-225-pick-6-random-mark-6-number&quot;&gt;pick 6 random mark 6 number&lt;/h1&gt;
+&lt;h2 id=&quot;h-225-pick-6-random-mark-6-number&quot;&gt;pick 6 random mark 6 number&lt;/h2&gt;
 mark6 = random.choice(np.arange(1,50), 6, replace=False)
 sorted(mark6)
 </code></pre>
@@ -785,7 +785,7 @@ sorted(mark6)
 <p>random.uniform</p>
 <p>隨機。uniform（low=0.0，high=1.0，size=None）。從均勻分佈中抽取樣本。</p>
 <p>樣本均勻分佈在半開區間[低、高]（包括低，但不包括高）。</p>
-<pre><code class="language-python">&lt;h1 id=&quot;h-225-random-number-range-1-to-1-size-20&quot;&gt;random number range -1 to +1, size: 20&lt;/h1&gt;
+<pre><code class="language-python">&lt;h2 id=&quot;h-225-random-number-range-1-to-1-size-20&quot;&gt;random number range -1 to +1, size: 20&lt;/h2&gt;
 s = np.random.uniform(-1, 1, 20)
 s
 
@@ -1013,7 +1013,7 @@ array([[0., 0., 0., 0., 0., 0., 0., 0.],
 <pre><code class="language-python">def area_rect(x,y):
     return x*y
 
-&lt;h1 id=&quot;h-229-create-an-ufunc-with-2-input-1-output&quot;&gt;create an ufunc with 2 input 1 output&lt;/h1&gt;
+&lt;h2 id=&quot;h-229-create-an-ufunc-with-2-input-1-output&quot;&gt;create an ufunc with 2 input 1 output&lt;/h2&gt;
 funcarea = np.frompufunc(area_rect, 2, 1)
 
 arr1 = [1,2,3,4]
