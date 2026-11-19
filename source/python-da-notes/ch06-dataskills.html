@@ -310,16 +310,16 @@ sales_1.name = &quot;Gary Wong&quot;
 </code></pre>
 <pre><code class="language-text">通過子類物件調用超類方法
 </code></pre>
-<pre><code class="language-python">1 # call subclass method
-2 sales_1.display()
+<pre><code class="language-python">&lt;h1 id=&quot;h-168-call-subclass-method&quot;&gt;call subclass method&lt;/h1&gt;
+sales_1.display()
 </code></pre>
 <p><strong>▶ 本地執行結果</strong>（Python 3.12 / matplotlib 3.11）</p>
 <pre><code class="language-text">Sales staff name: Gary Wong
 </code></pre>
 <pre><code class="language-python">Sales staff name: Gary Wong
 </code></pre>
-<pre><code class="language-python">1 # call superclass method
-2 sales_1.verify()
+<pre><code class="language-python">&lt;h1 id=&quot;h-168-call-superclass-method&quot;&gt;call superclass method&lt;/h1&gt;
+sales_1.verify()
 </code></pre>
 <p><strong>▶ 本地執行結果</strong>（Python 3.12 / matplotlib 3.11）</p>
 <pre><code class="language-text">Registered staff
@@ -690,17 +690,17 @@ Sorry, the file t.txt does not exist.
 <p>創建產生器函數</p>
 <p>您將不得不增加收益</p>
 <p>關鍵詞。</p>
-<pre><code class="language-python">1 def yield_hello():
-2 yield &quot;Hello&quot;
+<pre><code class="language-python">def yield_hello():
+yield &quot;Hello&quot;
 3
-4 yield_hello()
+yield_hello()
 </code></pre>
 <p><generator object yield_hello at 0x12d20e200></p>
 <p>返回<expression></p>
-<pre><code class="language-python">1 def return_hello():
-2 return &quot;Hello&quot;
+<pre><code class="language-python">def return_hello():
+return &quot;Hello&quot;
 3
-4 return_hello()
+return_hello()
 </code></pre>
 <p>'Hello'</p>
 <h3 id="h-181-Yield-產出">Yield 產出：</h3>
@@ -912,12 +912,12 @@ else:
 </code></pre>
 <h3 id="h-187-輸出分析摘要">輸出分析摘要</h3>
 
-<pre><code class="language-python">55 # Output Analysis
-56 print(f&quot;The content is {readability}. The content is likely to be {sentiment} with ratio {sentiment_ratio} in posit
-57 print(f&quot;Reading time is approximately {read_minute} mins.&quot;)
-58 print(f&quot;The file {filename} has about {num_sentences} sentences, {num_words} words, average words per sentence is {
-59 print(f&quot;Total positive words {num_pos} : {pos_list}&quot;)
-60 print(f&quot;Total negative words {num_neg} : {neg_list}&quot;)
+<pre><code class="language-python">&lt;h1 id=&quot;h-187-Output-Analysis&quot;&gt;Output Analysis&lt;/h1&gt;
+print(f&quot;The content is {readability}. The content is likely to be {sentiment} with ratio {sentiment_ratio} in posit
+print(f&quot;Reading time is approximately {read_minute} mins.&quot;)
+print(f&quot;The file {filename} has about {num_sentences} sentences, {num_words} words, average words per sentence is {
+print(f&quot;Total positive words {num_pos} : {pos_list}&quot;)
+print(f&quot;Total negative words {num_neg} : {neg_list}&quot;)
 61
 </code></pre>
 <pre><code class="language-python">The content is comprehensible. The content is likely to be negative with ratio 0.2 in positive words.

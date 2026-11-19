@@ -135,11 +135,11 @@ pd.__version__
 <pre><code class="language-python">obj = pd.Series([3.4, 2.5, 6.8, 4.9, 5.8])
 obj
 
-0    3.4
-1    2.5
-2    6.8
-3    4.9
-4    5.8
+   3.4
+   2.5
+   6.8
+   4.9
+   5.8
 dtype: float64
 </code></pre>
 <p>DataFrame 是二維的、大小可變的、可能異構的表格數據。</p>
@@ -153,11 +153,13 @@ dtype: float64
 )
 df</p>
 <p>Out[2]:</p>
-<pre><code class="language-python">Name Gender Age Height
-0 Alice female 25 1.68
-1 Bobby male 30 1.72
-2 Charlie male 58 1.78
-3 Dorathy female 42 1.63
+<pre><code class="language-python">
+</code></pre>
+<pre><code class="language-text">Name Gender Age Height
+Alice female 25 1.68
+Bobby male 30 1.72
+Charlie male 58 1.78
+Dorathy female 42 1.63
 </code></pre>
 <blockquote>
 <p>⚠️ 本頁有 1 段未能本地執行（#1: SyntaxError: invalid syntax (<unknown>, line 4)），原因見 OCR_run_report.md</p>
@@ -416,9 +418,9 @@ df_hsi.tail(5)</p>
 <p>In [64]: df1 = pd.DataFrame({'Name': ['Alex', 'Bob', 'Chris'], 'ID': [1, 2, 3]}) df1</p>
 <p>Out[64]:</p>
 <pre><code class="language-python">Name ID
-0 Alex 1
-1 Bob 2
-2 Chris 3
+Alex 1
+Bob 2
+Chris 3
 </code></pre>
 <p>In [65]: df2 = pd.DataFrame({'ID': [1,3], 'Score': [65,60]}) df2</p>
 <p>Out[65]:</p>
@@ -429,9 +431,9 @@ df_hsi.tail(5)</p>
 <p>In [66]: df = pd.merge(df1, df2, how='left', on='ID') df</p>
 <p>Out[66]:</p>
 <pre><code class="language-python">Name ID Score
-0 Alex 1 65.0
-1 Bob 2 NaN
-2 Chris 3 60.0
+Alex 1 65.0
+Bob 2 NaN
+Chris 3 60.0
 </code></pre></section><section class="page" id="p246"><div class="pbadge">p.246</div><h2 id="h-246-繪製-DataFrame-直方分佈圖-Histogram">繪製 DataFrame-直方分佈圖 Histogram</h2>
 
 <p>Pandas 預設圖表庫是 Matplotlib。我們可以用簡單的代碼繪製一個快速圖表。</p>
@@ -503,10 +505,11 @@ In [88]: df_sales = pd.DataFrame(rows,
 df_sales
 
 Out[88]:
-firstname lastname age sales
-0 David Chan 35 68000.5
-1 Edgar Doe 45 79000.6
-2 Fion Elle 30 88650.3
+</code></pre>
+<pre><code class="language-text">firstname lastname age sales
+David Chan 35 68000.5
+Edgar Doe 45 79000.6
+Fion Elle 30 88650.3
 </code></pre>
 <blockquote>
 <p>⚠️ 本頁有 1 段未能本地執行（#1: SyntaxError: invalid syntax (<unknown>, line 21)），原因見 OCR_run_report.md</p>
@@ -539,8 +542,8 @@ firstname lastname age sales
 <p>df.groupby will NOT re-arrange the original sequence of rows. Whereas Pivoting will.</p>
 <p>您可以將 'mean'、'max'、'count'、'sum' 等傳遞給 agg（）函數。</p>
 <p>在指定軸上使用一個或多個操作進行聚合。</p>
-<pre><code class="language-python">1 # alternatively, you can pass 'max' to the agg() function
-2 df.groupby(['Company'])['MPG'].agg('max')
+<pre><code class="language-python">&lt;h1 id=&quot;h-250-alternatively-you-can-pass-max-to-the-ag&quot;&gt;alternatively, you can pass &amp;#x27;max&amp;#x27; to the agg() function&lt;/h1&gt;
+df.groupby(['Company'])['MPG'].agg('max')
 </code></pre>
 <pre><code class="language-python">Company
 </code></pre>
@@ -578,14 +581,14 @@ B 67.125000 4 12.736921
 </code></pre>
 <table><tr><td></td><td>Company</td><td>Model</td><td>Year</td><td>Transmission</td><td>EngineSize</td><td>MPG</td></tr><tr><td>0</td><td>A</td><td>A1</td><td>2019</td><td>Manual</td><td>1.4</td><td>55.4</td></tr><tr><td>1</td><td>A</td><td>A2</td><td>2020</td><td>Automatic</td><td>2.0</td><td>67.3</td></tr><tr><td>2</td><td>A</td><td>A3</td><td>2021</td><td>Automatic</td><td>1.4</td><td>58.9</td></tr><tr><td>3</td><td>B</td><td>B1</td><td>2018</td><td>Manual</td><td>1.5</td><td>52.3</td></tr><tr><td>4</td><td>B</td><td>B2</td><td>2019</td><td>Automatic</td><td>2.0</td><td>64.2</td></tr><tr><td>5</td><td>B</td><td>B3</td><td>2020</td><td>Automatic</td><td>1.5</td><td>68.9</td></tr><tr><td>6</td><td>B</td><td>B4</td><td>2021</td><td>Manual</td><td>1.5</td><td>83.1</td></tr><tr><td>7</td><td>C</td><td>C1</td><td>2023</td><td>Automatic</td><td>1.8</td><td>70.0</td></tr></table>
 
-<pre><code class="language-python">1 df = df.append(pd.DataFrame({
-2 &quot;Company&quot;: [&quot;C&quot;],
-3 &quot;Model&quot;: [&quot;C1&quot;],
-4 &quot;Year&quot;: [2023],
-5 &quot;Transmission&quot;: [&quot;Automatic&quot;],
-6 &quot;EngineSize&quot;: [1.8],
-7 &quot;MPG&quot;: [70],
-8 }))
+<pre><code class="language-python">df = df.append(pd.DataFrame({
+&quot;Company&quot;: [&quot;C&quot;],
+&quot;Model&quot;: [&quot;C1&quot;],
+&quot;Year&quot;: [2023],
+&quot;Transmission&quot;: [&quot;Automatic&quot;],
+&quot;EngineSize&quot;: [1.8],
+&quot;MPG&quot;: [70],
+}))
 /var/folders/cq/_ztw83fdf0vsg5vkyf8hn0zd40000gn/T/ipykernel_52155/842031746.py:1; FutureWarning: The frame.append method is deprecated and will be removed from pandas in a future version. Use pandas.concat instead.
 df = df.append(pd.DataFrame(
 </code></pre>
@@ -641,21 +644,21 @@ dtype: int64
 <pre><code class="language-python">&lt;h3 id=&quot;h-254-Replace-values-where-the-condition-is-Fa&quot;&gt;Replace values where the condition is False&lt;/h3&gt;
 p.where(p&lt;=3, 'where p&lt;=3 is false')
 
-0 1
-1 2
-2 3
-3 where p&lt;=3 is false
-4 where p&lt;=3 is false
+1
+2
+3
+where p&lt;=3 is false
+where p&lt;=3 is false
 dtype: object
 </code></pre>
 <pre><code class="language-python">&lt;h3 id=&quot;h-254-Replace-values-where-the-condition-is-Tr&quot;&gt;Replace values where the condition is True&lt;/h3&gt;
 p.mask(p&lt;=3, 'where p&lt;=3 is true')
 
-0 where p&lt;=3 is true
-1 where p&lt;=3 is true
-2 where p&lt;=3 is true
-3 4
-4 5
+where p&lt;=3 is true
+where p&lt;=3 is true
+where p&lt;=3 is true
+4
+5
 dtype: object
 </code></pre>
 <blockquote>
@@ -663,8 +666,8 @@ dtype: object
 </blockquote></section><section class="page" id="p255"><div class="pbadge">p.255</div><h2 id="h-255-捲動標準差-Rolling-Standard-Deviation-STD">捲動標準差 Rolling Standard Deviation (STD)</h2>
 
 <p>使用標準差衡量波動性和風險。讓使用 250 天性病</p>
-<pre><code class="language-python">1 hsi['250std'] = hsi['Adj Close'].rolling(250).std()
-2 hsi.tail(5)
+<pre><code class="language-python">hsi['250std'] = hsi['Adj Close'].rolling(250).std()
+hsi.tail(5)
 </code></pre>
 <p><strong>▶ 本地執行結果</strong>（Python 3.12 / matplotlib 3.11）</p>
 <pre><code class="language-text">Open          High  ...      Volume       250std
@@ -707,8 +710,8 @@ Lag</p>
 <p>Series.ewm (com=None, span=None, halflife=None, alpha=None, min_periods=0, adjust=True, ignore_na=False, axis=0, times=None, method='single')</p>
 <p>期初調整係數衰減</p>
 <p><div class="math"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>y</mi><mrow><mi>t</mi></mrow></msub><mo>&#x0003D;</mo><mfrac><mrow><msub><mi>x</mi><mrow><mi>t</mi></mrow></msub><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><mi>&#x003B1;</mi><mo stretchy="false">&#x00029;</mo><msub><mi>x</mi><mrow><mi>t</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><mi>&#x003B1;</mi><msup><mo stretchy="false">&#x00029;</mo><mrow><mn>2</mn></mrow></msup><msub><mi>x</mi><mrow><mi>t</mi><mo>&#x02212;</mo><mn>2</mn></mrow></msub><mo>&#x0002B;</mo><mo>&#x02026;</mo><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><mi>&#x003B1;</mi><msup><mo stretchy="false">&#x00029;</mo><mrow><mi>t</mi></mrow></msup><msub><mi>x</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow><mn>1</mn><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><mi>&#x003B1;</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><mi>&#x003B1;</mi><msup><mo stretchy="false">&#x00029;</mo><mrow><mn>2</mn></mrow></msup><mo>&#x0002B;</mo><mo>&#x02026;</mo><mo>&#x0002B;</mo><mo stretchy="false">&#x00028;</mo><mn>1</mn><mo>&#x02212;</mo><mi>&#x003B1;</mi><msup><mo stretchy="false">&#x00029;</mo><mrow><mi>t</mi></mrow></msup></mrow></mfrac></mrow></math></div></p>
-<pre><code class="language-python">1 hsi['EMA10'] = hsi['Adj Close'].ewm(span=10).mean()
-2 hsi.tail(5)
+<pre><code class="language-python">hsi['EMA10'] = hsi['Adj Close'].ewm(span=10).mean()
+hsi.tail(5)
 </code></pre>
 <p><strong>▶ 本地執行結果</strong>（Python 3.12 / matplotlib 3.11）</p>
 <pre><code class="language-text">Open          High  ...       250std         EMA10
@@ -757,8 +760,8 @@ Date
 </code></pre>
 <p>移動平均線 Moving Average (MA) - 滾動平均值 rolling mean</p>
 <p>準備新的列“MA10”，這是“調整后收盤價”的移動平均線 10 天平均值</p>
-<pre><code class="language-python">1 hsi['MA10'] = hsi['Adj Close'].rolling(10).mean()
-2 hsi.tail(5)
+<pre><code class="language-python">hsi['MA10'] = hsi['Adj Close'].rolling(10).mean()
+hsi.tail(5)
 </code></pre>
 <p><strong>▶ 本地執行結果</strong>（Python 3.12 / matplotlib 3.11）</p>
 <pre><code class="language-text">Open          High  ...         EMA10          MA10
@@ -818,12 +821,12 @@ df_exam = pd.DataFrame({'Score': np.random.randint(1, 101, size=40)})
 </code></pre>
 <p>1 df_exam.head(6)</p>
 <pre><code class="language-python">Score
-0 6
-1 8
-2 41
-3 60
-4 93
-5 35
+6
+8
+41
+60
+93
+35
 </code></pre></section><section class="page" id="p260"><div class="pbadge">p.260</div><h2 id="h-260-對日期時間的列進行分組-Grouping-columns-for-datetim">對日期時間的列進行分組 Grouping columns for datetime</h2>
 
 <p>在某些數據集中，年、月、日列在不同的列中是分開的。您可以將它們分組為pd.to_datetime（df_dt[['年', '月', '日']]）</p>
@@ -833,8 +836,8 @@ df_exam = pd.DataFrame({'Score': np.random.randint(1, 101, size=40)})
     'sales': [3750, 3900]})
 
 year month day sales
-0 2023 1 1 3750
-1 2023 1 2 3900
+2023 1 1 3750
+2023 1 2 3900
 
 df_dt['date'] = pd.to_datetime(df_dt[['year', 'month', 'day']])
 df_dt = df_dt.drop(['year', 'month', 'day'], axis=1)
@@ -907,8 +910,8 @@ memory usage: 386.2 KB
 <p>ICE Futures - ICE Futures Real Time Price. Currency in USD</p>
 <p>3.2880 +0.0010 (+0.03%)</p>
 <p>As of April 6 02:59PM EDT. Market open.</p>
-<pre><code class="language-python">1 tnx = pd.read_csv(&quot;^TNX.csv&quot;)
-2 tnx.tail(5)
+<pre><code class="language-python">tnx = pd.read_csv(&quot;^TNX.csv&quot;)
+tnx.tail(5)
 </code></pre>
 <table><tr><td></td><td>Date</td><td>Open</td><td>High</td><td>Low</td><td>Close</td><td>Adj Close</td><td>Volume</td></tr><tr><td>7057</td><td>2022-12-26</td><td>NaN</td><td>NaN</td><td>NaN</td><td>NaN</td><td>NaN</td><td>NaN</td></tr><tr><td>7058</td><td>2022-12-27</td><td>3.787</td><td>3.862</td><td>3.787</td><td>3.860</td><td>3.860</td><td>0.0</td></tr><tr><td>7059</td><td>2022-12-28</td><td>3.818</td><td>3.990</td><td>3.815</td><td>3.887</td><td>3.887</td><td>0.0</td></tr><tr><td>7060</td><td>2022-12-29</td><td>3.868</td><td>3.886</td><td>3.818</td><td>3.835</td><td>3.835</td><td>0.0</td></tr><tr><td>7061</td><td>2022-12-30</td><td>3.869</td><td>3.905</td><td>3.831</td><td>3.879</td><td>3.879</td><td>0.0</td></tr></table>
 
@@ -1084,8 +1087,8 @@ Length: 2, dtype: str
 <ul>
 <li>請注意，整數索引也已重新排序。我們可以重置索引值。</li>
 </ul>
-<pre><code class="language-python">1 df1 = df.sort_values(by=['Company', &quot;Year&quot;], ascending=[True, False])
-2 df1
+<pre><code class="language-python">df1 = df.sort_values(by=['Company', &quot;Year&quot;], ascending=[True, False])
+df1
 </code></pre>
 <p><strong>▶ 本地執行結果</strong>（Python 3.12 / matplotlib 3.11）</p>
 <pre><code class="language-text">Date     GoldSpot      zijin  ... Transmission  EngineSize   MPG

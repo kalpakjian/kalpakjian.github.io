@@ -636,9 +636,9 @@ array([0.04700012, 0.17993257, -0.001402731])
 <p>廣播是最有效的廣告媒體，其次是電視，報紙的影響或負面影響幾乎為零。然而，行銷活動在大眾推廣力量中所佔的比重仍然很小。</p>
 <p>某些產品可能在某些媒體上通常受到青睞，係數可能會有所不同。這取決於人口統計和客戶的需求。</p>
 <p>為了投入 300 美元的廣告費，我們可能會進行以下預算。</p>
-<pre><code class="language-python">1 #Place $300 into ads, we might follow this method
-2 print(&quot;TV: &quot;, (300-3.0298) * 0.0477 / (0.047+0.18))
-3 print(&quot;Radio: &quot;, (300-3.0298) * 0.18 / (0.047+0.18))
+<pre><code class="language-python">#Place $300 into ads, we might follow this method
+print(&quot;TV: &quot;, (300-3.0298) * 0.0477 / (0.047+0.18))
+print(&quot;Radio: &quot;, (300-3.0298) * 0.18 / (0.047+0.18))
 
 TV: 61.48722202643172
 Radio: 235.48297797356827
@@ -661,8 +661,8 @@ array([18.67186188])
 
 &lt;h3 id=&quot;h-120-If-you-don-t-want-to-see-the-warning-you&quot;&gt;If you don&amp;#x27;t want to see the warning, you can create a dataframe&lt;/h3&gt;
 df_test1[&quot;TV&quot;, &quot;Radio&quot;, &quot;Newspaper&quot;]].iloc[0:1]
-
-TV Radio Newspaper
+</code></pre>
+<pre><code class="language-text">TV Radio Newspaper
 191 280.7 13.9 37.0
 </code></pre>
 <blockquote>

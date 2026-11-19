@@ -258,14 +258,14 @@ Out[10]: array([[1, 2],
 <blockquote>
 <p>⚠️ 本頁有 1 段未能本地執行（#2: IndentationError: unexpected indent (<unknown>, line 2)），原因見 OCR_run_report.md</p>
 </blockquote></section><section class="page" id="p210"><div class="pbadge">p.210</div><p>創建 3D 陣列</p>
-<pre><code class="language-python">1 arr_3D = np.array([[ [1,2,3],
-2    [4,5,6]],
-3    [[7,8,9],
-4    [10,11,12]],
-5    [[1,2,3],
-6    [4,5,6]],
-7    1)
-8 arr_3D.shape
+<pre><code class="language-python">arr_3D = np.array([[ [1,2,3],
+   [4,5,6]],
+   [[7,8,9],
+   [10,11,12]],
+   [[1,2,3],
+   [4,5,6]],
+   1)
+arr_3D.shape
 </code></pre>
 <p>(3, 2, 3)</p>
 <p>arr_3D = np.array([[1,2,3],
@@ -619,9 +619,9 @@ array([1, 2, 3, 4, 5, 6])
 </code></pre>
 <p>np.concatenate numpy 陣列</p>
 <p>numpy.concatenate((a1, a2, ...), axis=0)。沿現有軸連接一系列陣列。</p>
-<pre><code class="language-python">1 a = np.array([[1, 2], [3, 4]])
-2 b = np.array([[5, 6]])
-3 np.concatenate((a, b), axis=0)
+<pre><code class="language-python">a = np.array([[1, 2], [3, 4]])
+b = np.array([[5, 6]])
+np.concatenate((a, b), axis=0)
 array([[1, 2],
     [3, 4],
     [5, 6]])
@@ -754,8 +754,8 @@ array([-2., -2., 0., 1., 2., 2., 3., 3.])
 <p>2 # Generate 10 ints between 0 and 99, inclusive</p>
 <p>3 random.randint(100, size=(10))</p>
 <p>array([44, 2, 49, 22, 32, 39, 58, 65, 33, 72])</p>
-<pre><code class="language-python">1 #Generate a 2 x 4 array of ints between 1 and 8, inclusive
-2 np.random.randint(1,9, size=(2, 4))
+<pre><code class="language-python">#Generate a 2 x 4 array of ints between 1 and 8, inclusive
+np.random.randint(1,9, size=(2, 4))
 </code></pre>
 <p><strong>▶ 本地執行結果</strong>（Python 3.12 / matplotlib 3.11）</p>
 <pre><code class="language-text">array([[6, 2, 3, 7],
@@ -799,9 +799,9 @@ array([-0.68894514, 0.08310177, -0.85816642, -0.41840843, 0.3839412, -0.88159189
 <p>ndenumerate 陣列</p>
 <p>麻木。ndenumerate（arr）。多維索引反覆運算器。</p>
 <p>返回一個反覆運算器，生成數位座標和值對。</p>
-<pre><code class="language-python">1 a = np.array([[1, 2], [3, 4]])
-2 for index, x in np.ndenumerate(a):
-3    print(index, x)
+<pre><code class="language-python">a = np.array([[1, 2], [3, 4]])
+for index, x in np.ndenumerate(a):
+   print(index, x)
 (0, 0) 1
 (0, 1) 2
 (1, 0) 3
