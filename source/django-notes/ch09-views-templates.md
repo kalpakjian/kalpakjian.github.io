@@ -77,6 +77,8 @@ def submit_form(request):
     return HttpResponse("請通過 POST 提交表單")
 ```
 
+<figure class="fig-svg"><svg viewBox="0 0 700 212" width="100%" role="img" aria-label="函數視圖 FBV 與類視圖 CBV 的對照" style="background:#0d1117;border-radius:10px"><g font-family="'Microsoft JhengHei','Segoe UI',sans-serif"><rect x="24" y="20" width="310" height="172" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="179" y="48" text-anchor="middle" font-size="14" fill="#e6edf3">函數視圖 FBV</text><text x="44" y="80" font-family="'Consolas','Menlo',monospace" font-size="12.5" fill="#39d0d8">def index(request):</text><text x="44" y="104" font-family="'Consolas','Menlo',monospace" font-size="12.5" fill="#39d0d8">    return HttpResponse(...)</text><text x="44" y="142" font-size="12" fill="#e6edf3">簡單直觀、適合小型專案</text><text x="44" y="164" font-size="12" fill="#e6edf3">以 request.method 判斷方法</text><rect x="366" y="20" width="310" height="172" rx="10" fill="#132030" stroke="#f0a04b" stroke-width="1.6"/><text x="521" y="48" text-anchor="middle" font-size="14" fill="#e6edf3">類視圖 CBV</text><text x="386" y="80" font-family="'Consolas','Menlo',monospace" font-size="12.5" fill="#39d0d8">class IndexView(View):</text><text x="386" y="104" font-family="'Consolas','Menlo',monospace" font-size="12.5" fill="#39d0d8">    def get(self, request): ...</text><text x="386" y="142" font-size="12" fill="#e6edf3">可繼承重用、結構化</text><text x="386" y="164" font-size="12" fill="#e6edf3">URL 以 .as_view() 掛載</text></g><figcaption>圖：函數視圖（FBV）與類視圖（CBV）。</figcaption></svg></figure>
+
 ## 3. 類視圖（CBV）
 
 ### 3.1 基本概念
