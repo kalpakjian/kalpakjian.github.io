@@ -123,30 +123,30 @@ date: 2026-11-21 20:00:00
 
 ---
 
-## 12 · 後端開發與 Git 基礎
+## 12 · 後端網站開發工作流程（單元三 · 第 1 章）
 
-![第 12 章 後端開發與 Git 基礎](/img/covers/django-ch12.png)
+![第 12 章 後端網站開發工作流程](/img/covers/django-ch12.png)
 
-- **範圍**：p.210–p.296（87 頁）
-- **涵蓋**：後端職責與 IDE、版本控制概念、Git 安裝與配置、基本操作、分支管理、遠程倉庫、stash 與 submodule、Git Flow、圖形化工具
-- **👉 [看筆記](/django-notes/ch12-git-basics.html)**
-
----
-
-## 13 · 協作、安全與 CI/CD
-
-![第 13 章 協作、安全與 CI/CD](/img/covers/django-ch13.png)
-
-- **範圍**：p.297–p.352（56 頁）
-- **涵蓋**：代碼託管與 PR／MR、Git Hooks、敏感信息與 .gitignore、分支保護與代碼審查、CI/CD（Travis／Jenkins／GitHub Actions）、大型專案策略與效能
-- **👉 [看筆記](/django-notes/ch13-collab-cicd.html)**
+- **範圍**：p.210–p.351（142 頁）
+- **涵蓋**：後端職責與 IDE、版本控制概念、Git 安裝與配置、基本操作、分支與遠程倉庫、stash／submodule、Git Flow、圖形化工具、代碼託管與 PR／MR、Git Hooks、安全（.gitignore／分支保護）、CI/CD（Travis／Jenkins／GitHub Actions）、大型專案與效能
+- **👉 [看筆記](/django-notes/ch12-backend-workflow.html)**
 
 ---
 
-## 14 · 雲端開發與 UML 系統分析
+## 13 · 遠端開發環境（單元三 · 第 2 章）
 
-![第 14 章 雲端開發與 UML 系統分析](/img/covers/django-ch14.png)
+![第 13 章 遠端開發環境](/img/covers/django-ch13.png)
 
-- **範圍**：p.353–p.405（53 頁）
-- **涵蓋**：IaaS／PaaS／SaaS、本地與雲端環境、AWS／GCP／Azure、GitOps 與容器編排、監控；UML 用例圖／類圖／對象圖／序列圖／活動圖／狀態圖／組件圖／部署圖與綜合案例
-- **👉 [看筆記](/django-notes/ch14-cloud-uml.html)**
+- **範圍**：p.352–p.370（19 頁）
+- **涵蓋**：從本地到雲端的環境轉移、雲端技術與遠端開發優勢、IaaS／PaaS／SaaS、本地架設與雲端比較（AWS／GCP／Azure）、效能與成本、雲原生與 DevOps、伺服器設置流程
+- **👉 [看筆記](/django-notes/ch13-remote-dev.html)**
+
+---
+
+## 14 · UML 系統分析與設計（獨立篇章）
+
+![第 14 章 UML 系統分析與設計](/img/covers/django-ch14.png)
+
+- **範圍**：p.371–p.405（35 頁）
+- **涵蓋**：UML 概論與歷史、應用範圍；用例圖、類圖、對象圖、序列圖、活動圖、狀態圖、組件圖、部署圖的基本元素與繪製步驟，以及綜合案例
+- **👉 [看筆記](/django-notes/ch14-uml.html)**
