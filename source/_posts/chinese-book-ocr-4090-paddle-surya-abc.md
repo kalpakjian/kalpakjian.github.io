@@ -1,6 +1,7 @@
 ---
 title: 用 RTX 4090 做正體中文書頁 OCR：Indra、RapidOCR、PaddleOCR、Surya 實測與 A+B+C 三層校對
 date: 2026-10-28 01:30:00
+updated: 2026-11-21 10:30:00
 categories:
   - OCR
 tags:
@@ -9,6 +10,11 @@ tags:
   - RapidOCR
   - Surya
   - Indra OCR
+  - Unlimited-OCR
+  - Tesseract
+  - OpenCC
+  - PyMuPDF
+  - Linux
   - 正體中文
   - 直排文字
   - RTX 4090
@@ -27,6 +33,8 @@ banner_img: /img/covers/chinese-book-ocr-4090-paddle-surya-abc.png
 ---
 
 手邊有一批手機翻拍的正體中文書頁（直排、雙欄、含印章與圖說），目標是把它變成可校對、可搜尋的文字稿。這篇記錄了完整過程：四個 OCR 引擎在同一批頁面上的實測、兩個一定會踩到的 Windows + CUDA 坑、以及最後用「Surya 骨架 + Paddle 補漏 + A/B/C 三層校對」把錯字壓下來的做法。
+
+> **2026-11-21 追加**：同一套骨架後來在 Linux 上重跑了一次，材料換成 **405 頁平板掃描的橫排講義（8 個 PDF）**，B 換成 Unlimited-OCR-2、A 從「直排全亂碼」變成堪用的第三票。數字、指令與新踩的坑都補在第十節之後。
 
 <!-- more -->
 
@@ -360,15 +368,193 @@ python llm_proofread.py --model qwen3.8:27b   # C
 python build_final.py            # 整合輸出
 ```
 
-## 十、小結
+## 十、Linux 版 A+B+C：405 頁橫排講義、UOCR v2 全量上場
 
-如果只記四件事：
+上面那批是 11 頁手機翻拍。2026-11-21 換了另一批材料重跑，順便驗證這套骨架到底能撐多大：**405 頁平板掃描的橫排課程講義（8 個 PDF，每份 50–55 頁）**，全程在 Linux 上跑。
+
+差別不只是頁數，連「哪個引擎該扮演什麼角色」都反過來了：
+
+| 項目 | 本篇（2026-10-28，Windows） | Linux 追加（2026-11-21） |
+|---|---|---|
+| 材料 | 11 頁手機翻拍、直排雙欄、含印章圖說 | 405 頁平板掃描、橫排單欄、含程式碼與表格 |
+| 系統 | Windows 11 | Linux（Arch/Omarchy，NVIDIA 615.78.08） |
+| A | Tesseract 5（`chi_tra_vert`, PSM 5）→ 直排 0/5 命中，不可用 | Tesseract 5.5.3（`chi_tra+eng`, PSM 3）→ 橫排印刷**可用** |
+| B | Surya 0.22（GGUF / llama.cpp） | Unlimited-OCR-2（3.34B, bf16, transformers 後端） |
+| C | PaddleOCR 3.7（PP-OCRv6 medium, `chinese_cht`） | 同款（paddlepaddle-gpu 3.3.1 + paddleocr 3.7.0） |
+| 校對 | A/B/C 三層 + 逐條人工 | 多數決 → LLM 裁決 → OpenCC s2t，全程式化 |
+
+一句話：**骨架可以搬，A 的命運不能搬。** 直排時 Tesseract 是廢的；橫排印刷時它是便宜、快、堪用的第三票。
+
+### 為什麼這次非 Linux 不可
+
+Unlimited-OCR v2 的官方加速路線要 triton／flash-attn／SGLang，Windows 只有 WSL2 勉強能碰。Linux 上原生就有 wheel，所以這次把 B 直接換成 v2 全量跑。
+
+實際採用的是最保守的組合：**transformers 後端（eager，不開 triton）、bf16、每批 6 頁**。代價是速度——每頁 17.6 秒；好處是零編譯、零相容性風險，而且 `page_count_guard` 這種「輸出頁標記數必須等於送出頁數」的守衛可以照用。
+
+### 三個引擎在 405 頁上的實測
+
+| 引擎 | 設定 | 405 頁實際耗時 | 吞吐 | VRAM |
+|---|---|---|---|---|
+| A Tesseract 5.5.3 | `chi_tra+eng` 與 `eng` 各跑一次擇優，`-P 20` | **2.5 分鐘** | ~2.7 頁/秒 | CPU |
+| B Unlimited-OCR-2 | chunk=6、`page_count_guard`、`max_page_tokens=4000` | **61 分鐘**（牆鐘，2 worker） | 17.6 s/頁/worker | 7.51 GiB/worker |
+| C PaddleOCR 3.7 | PP-OCRv6_medium、`chinese_cht`、關掉 unwarp / textline | **137 秒** | 0.3–0.5 秒/頁 | ~2 GiB |
+
+B 用兩個 worker 同時吃一張 4090：各佔 7.5 GiB（合計 18.6 GiB），而且**兩者並跑時每批時間幾乎沒變**——所以有效吞吐接近翻倍。這是消費級單卡跑 VLM 全量最實用的一招。
+
+### 一致性：這次 A 才是 outlier
+
+| 指標 | 數值 |
+|---|---|
+| 兩兩 4-gram Jaccard（A‑B / A‑C / B‑C） | 0.820 / 0.810 / **0.911** |
+| 三引擎兩兩皆 ≥0.45 的頁面 | **388 / 405（95.8%）** |
+| 每頁「最偏離的引擎」 | **A 336 頁**、C 46 頁、B 23 頁 |
+
+直排那批是「A 直接出局、B/C 各贏一半」；橫排這批則是 **B 與 C 互相印證，A 系統性偏差**（把「模」讀成「橫」、把 `list.append` 讀成 `listappend`、把 `Unicode` 讀成 `Unlcode`）。
+
+Token 級（A/B 分歧共 2,006 條）第三票的裁決：**C=A 510、C=B 597、C 第三讀法 284、C 也沒有 542**。所以第三票不是橡皮圖章——它在一半左右的分歧裡反而否決了底稿。
+
+### 校對層改了三個地方
+
+骨架沒變（A 異文 → B 規則 → C LLM），但改成可以無人值守跑完：
+
+**1）多數決一定要加閘門。** 4-gram 在不同位置會長得一模一樣：`完整的問題` 與 `相互影響的問題` 會被配成「錯字對」，照抄就把正文改爛。所以自動替換要求「上下文相似度 ≥0.6」或「token 屬程式碼／數字」：
+
+```python
+sim = SequenceMatcher(None, ctx_a, ctx_b).ratio()
+if kind in ("code", "num") or sim >= 0.6:
+    apply(wrong, right)      # 才敢動正文
+else:
+    queue_for_llm(...)       # 其餘全部留給裁決
+```
+
+這條閘門讓自動修正從「582 條（含大量誤配）」收斂到 **200 條**，全部可信。
+
+**2）LLM 只當裁判，不當編輯。** 一次把 25 條爭議批進去，要求輸出 JSON（只選 A/B/C/other、附信心與理由）。1,065 條全數解析成功、499 秒、0 次 JSON 失敗。但**它的答案不能照收**：實測它想把 `除法返回` 改成 `除法返還`（語意全變）、`開發者的` 改成 `開發者能`、`根據用戶` 改成 `根據應用`——這些都是從 4-gram 猜出來的「合理補字」，正是本篇第三節警告的那種錯。
+
+所以最終只接受兩種修正：
+
+| 接受條件 | 例子 |
+|---|---|
+| token 屬程式碼／數字 | `tup5`→`tuple`、`wsg.py`→`wsgi.py`、`tags_name`→`tags__name`、`form.passwordl1ladd_class`→`form.password.add_class` |
+| 恰等於 `opencc s2t(原)`，即只是簡→繁 | `整数除法`→`整數除法`、`用户可以`→`用戶可以` |
+
+結果 **8 條接受、13 條否決**。寧可少修，也不要讓模型改寫你的講義。
+
+**3）簡繁交給字典，不交給模型。** B（VLM）最大的副作用是把繁體講義讀出簡體字。用 OpenCC `s2t`（字級轉換、不做詞組改寫，保留港式用語）一次掃過：**197 頁、617 字元**修正，零語意風險。
+
+### 數字總表
+
+| 階段 | 數量 | 備註 |
+|---|---|---|
+| 多數決自動套用 | **200 處** | A+C 一致否決 B，且過閘門 |
+| 多數決保留原樣 | 4,189 處 | C 挺 B |
+| 進 LLM 裁決 | **1,065 條** | 323 頁 |
+| LLM 選擇分佈 | A 158 / B 181 / C 259 / **other 467** | 平均信心 0.848 |
+| 最終接受 / 否決 | **8 / 13** | 只收 code/num 與純簡→繁 |
+| B 漏字候選（留給人） | **790 條** | B 根本沒這個詞，屬插入不是錯字 |
+| 簡繁統一 | 197 頁 / 617 字元 | OpenCC s2t |
+| 可搜尋 PDF | 11,232 行不可見文字、0 略過 | 107 MB → 109 MB，<25 秒 |
+
+### 可搜尋 PDF 的文字層怎麼來的
+
+這批最後要的是「Ctrl+F 找得到」的掃描檔，不是純文字。做法是把文字**以不可見模式**疊回原圖（`render_mode=3`），外觀完全不變：
+
+- 幾何：用 **C 的 `rec_boxes`（行框）**——三引擎裡只有 Paddle 給行框，而且最準（行信心中位數 0.998）
+- 內容：C 的讀法再過一次 OpenCC `s2t`（`--no-s2t-layer` 可關）
+- 換算：`72/dpi`，字型用 PyMuPDF 內建 `china-t`
+
+驗收兩件事：`pdftotext -f 3 -l 3` 要吐得出中文；同一頁重新算圖的 md5 必須與原掃描**完全相同**（證明文字層真的看不見）。
+
+> 限制：搜到的是「Paddle 讀到的字」，不是最終稿的字。若某頁只有 B 被修過（例如 B 補回漏字），該字串在 PDF 裡仍可能搜不到——要引用請以最終 `.md` 為準。
+
+## 十一、Linux 上多出來的四個坑
+
+Windows 那兩個坑（中文路徑、paddle/torch 搶 DLL）在 Linux 不會遇到，但換了四個新的：
+
+### 坑 3（Linux）：Python 3.14 沒有 paddle wheel
+
+系統預設是 Python 3.14，`pip install paddlepaddle-gpu` 直接找不到 wheel。paddle 目前只到 3.12/3.13，所以另外開一個環境：
+
+```bash
+uv venv --python 3.12 ~/opt/paddle-venv
+```
+
+順帶好處：B（UOCR）與 C（Paddle）各自獨立 venv，就不會再有「誰的 cuDNN 蓋掉誰」的問題——CLI 直接用 subprocess 呼叫各自的 python。
+
+### 坑 4（Linux）：官方 index 只有 275 KB/s
+
+`paddlepaddle-gpu` 的 cu126 wheel 有 **1.9 GB**。從官方 `www.paddlepaddle.org.cn` index 抓，實測只有 ~275 KB/s，等於一小時。改成直接抓它背後的 CDN：
+
+```bash
+curl -O https://paddle-whl.cdn.bcebos.com/stable/cu126/paddlepaddle-gpu/paddlepaddle_gpu-3.3.1-cp312-cp312-linux_x86_64.whl
+# 實測 8 MB/s，4 分鐘完成；裝完 paddle.is_compiled_with_cuda() == True
+```
+
+### 坑 5（VLM 輸出）：`<BLOCK>title` 沒有 bbox
+
+Unlimited-OCR-2 的版面標記有兩種形式：`<BLOCK>text[1,2,3,4]`（帶框）和 `<BLOCK>title`（**不帶框**）。第一版只清了帶框的，結果 `title`／`header`／`text` 這些「區塊類型字」通通漏進純文字，把比對分數壓低：
+
+| | 修正前 | 修正後 |
+|---|---|---|
+| 一致（OK）／需抽查（REVIEW） | 362 / 43 | **389 / 16** |
+| 平均 4-gram Jaccard | 0.599 | **0.820** |
+
+清標籤時要把「`<BLOCK>` + 可選類型字 + 可選 bbox」整段吃掉，而不是只吃 bbox。
+
+### 坑 6（流程）：長跑任務與 30 秒命令上限
+
+VLM 全量要 61 分鐘，但終端工具每個指令上限 30 秒；連子代理／teammate 也在約 2 分鐘被中止。最後的解法是：
+
+```bash
+setsid nohup python3 .../abcocr.py uocr --work $W > $W/work/log/uocr.outer.log 2>&1 < /dev/null &
+```
+
+再做一個收尾腳本：等 worker 結束 → 重試失敗批（chunk 減半）→ 建 Markdown → 比對 → 寫完成標記。之後只輪詢 `status`，不要嘗試「等它跑完」。
+
+> 另外一個跟 OCR 無關但差點卡住的：Composio 上傳 OneDrive 時若帶 `description` 參數，Graph 會回 `400 Failed to create upload session: Invalid request`，跟檔案大小完全無關（478 KB 也掛）。拿掉就正常，111 MB 一次過。
+
+## 十二、封裝成 `abcocr` skill
+
+跑完 405 頁之後，把整條線收成一個 CLI（`init → render → tesseract → uocr → paddle → vote → llm → final → searchable`），每個階段都能續跑，狀態用 `status` 檢查：
+
+```bash
+S=~/.claude/skills/abcocr/scripts/abcocr.py
+W=~/scan/mycourse                      # 裡面放 raw/*.pdf
+
+python3 $S init --work $W              # 讀 PDF 頁數 → abcocr.json
+python3 $S render --work $W            # 300 dpi PNG(A) + JPEG(B/C)
+python3 $S tesseract --work $W         # A
+python3 $S uocr --work $W              # B（長跑，放背景）
+python3 $S paddle --work $W            # C
+python3 $S vote --work $W              # 多數決 + 錯字對照表 + LLM 任務
+python3 $S llm --work $W               # qwen3.8:27b 裁決（--limit 5 可先試）
+python3 $S final --work $W             # 保守接受 + OpenCC s2t
+python3 $S searchable --work $W        # 疊不可見文字層
+python3 $S status --work $W
+```
+
+驗收就三行：
+
+```bash
+grep -c '^### p\.' $W/out/Scan_OCR_final.md   # 必須等於總頁數
+python3 $S status --work $W                   # 各階段計數對齊
+ls $W/work/uocr_raw/*.FAILED.txt | wc -l      # 必須 0
+```
+
+用時拿 405 頁原封不動重跑 `vote` 與 `final`，結果與手動那輪**完全一致**（200 處 / 1,065 條 / 8 接受 / 13 否決 / 197 頁 617 字元），所以這不是另一套程式，是同一套收斂成介面。
+
+## 十三、小結
+
+兩條線（11 頁直排手機翻拍、405 頁橫排平板掃描）跑完，如果只記七件事：
 
 1. **同源引擎不要一起跑**（Paddle + RapidOCR 有 98.3% 重疊），要互補就選異質模型（Paddle + Surya）。
 2. **bbox 覆蓋不等於內容覆蓋**，判斷 OCR 是否漏讀要用文字 n-gram，不是框。
 3. **LLM 校對的關鍵是「錯字對照表」**：給範例、關思考、限制刪字；換更大的模型，不如補一張 20 行的本書錯字表。
 4. **最後幾條錯誤只有人能定**：人名、書名版本、成語出處，LLM 沒有查證依據，掃出來逐條問人最快。
+5. **異質組合要看頁型**：直排靠 VLM（Surya／UOCR v2），橫排印刷靠 CNN（Tesseract 就夠）。換材料之後引擎角色會反轉——405 頁那批 A 反而是 outlier（336/405 頁最偏離），B 與 C 的 Jaccard 是 0.911。
+6. **能規則化就別問 LLM**：多數決能定的 200 處不要進 LLM；簡繁能查字典的 617 字不要進 LLM；LLM 只裁決真正二選一的 1,065 條，而且答案還要過「只收程式碼／數字或純簡→繁」的閘——實測它會把 `除法返回` 改成 `除法返還`，照收就毀了。
+7. **可搜尋 PDF 的文字層＝「最準的引擎當內容、有框的引擎當幾何」**：Paddle 給行框與行信心，PyMuPDF `render_mode=3` 疊上去，外觀零變化、Ctrl+F 可用。
 
-這套流程目前能把一批手機翻拍的正體中文直排書頁，做到「可直接閱讀、少數專名需人工確認」的程度。要再往上，關鍵已經不在模型，而在拍攝品質與人工校對的最後一哩。
+兩批材料的結論其實一樣：**瓶頸不在模型，而在「哪些頁要人看」**。11 頁那批最後剩 11 個爭議點；405 頁這批自動化到只剩 8 條修正、13 條否決、790 條漏字候選要人核——需人工的頁數約 4%。要再往上，還是回到那句話：**重拍比後處理划算，人工校對的最後一哩無可替代**。
 
 
