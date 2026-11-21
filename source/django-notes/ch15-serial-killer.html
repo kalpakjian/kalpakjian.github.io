@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 15 章（附加）FBI 連環殺手：最簡 Django 範例 — Django 學習筆記</title>
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+
+</style>
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+</style>
+<style>
+/* ---- Django 學習筆記：章節封面 + 章節導覽（本站既有慣例） ---- */
+main .sub{font-size:13px;color:var(--muted);margin:-8px 0 16px}
+figure.hero{margin:0 0 26px}
+figure.hero img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);display:block}
+figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-align:center}
+figure.fig-svg{margin:22px 0 26px}
+figure.fig-svg svg{display:block;width:100%;height:auto;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;text-align:center}
+.chnav{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0 10px;font-size:13px}
+.chnav a{flex:1;min-width:150px;text-align:center;text-decoration:none;color:var(--accent2);
+  border:1px solid var(--border);border-radius:6px;padding:9px 10px;background:#fff}
+.chnav a:hover{background:#eaeef2}
+.chnav a.course{font-weight:700}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/django-course/">← 課程總覽</a>
+  <h1>Django 學習筆記</h1>
+<div class="sub">附加篇章 · 最簡 Django 範例</div>
+<figure class="hero"><img src="/img/covers/django-cover.png" alt="附加篇章封面"><figcaption>封面：Django 學習筆記</figcaption></figure>
+  <div class="sub">Django 網站框架開發 · 學習筆記<br>附加篇章 · FBI 連環殺手：最簡 Django 範例</div>
+  <div class="toc">
+<ul>
+<li><a href="#1-專案簡介">1. 專案簡介</a>
+</li>
+<li><a href="#2-專案結構">2. 專案結構</a>
+</li>
+<li><a href="#3-模型modelspy">3. 模型（models.py）</a>
+</li>
+<li><a href="#4-視圖與路由">4. 視圖與路由</a>
+</li>
+<li><a href="#5-模板capture_listhtml">5. 模板（capture_list.html）</a>
+</li>
+<li><a href="#6-產生示範資料seed_datapy">6. 產生示範資料（seed_data.py）</a>
+</li>
+<li><a href="#7-執行步驟">7. 執行步驟</a>
+</li>
+<li><a href="#8-重點整理">8. 重點整理</a>
+</li>
+</ul>
+</div>
+
+</nav>
+<main>
+<h1 id="第-15-章附加-fbi-連環殺手最簡-django-範例">第 15 章（附加）· FBI 連環殺手：最簡 Django 範例</h1>
+<p><strong>導讀</strong>：這是一個<strong>最小可運作</strong>的 Django 專案——只有 3 個模型、1 個視圖、1 個模板，完整走過 <strong>Model → View → Template</strong> 的流程，非常適合當作「第一個 Django 專案」的範本。</p>
+<h2 id="1-專案簡介">1. 專案簡介</h2>
+<ul>
+<li><strong>主題</strong>：FBI 探員捉拿連環殺手的記錄（純示範資料）。</li>
+<li><strong>功能</strong>：一個頁面列出所有「捉拿記錄」，含探員、殺手、日期、地點、詳情。</li>
+<li><strong>技術</strong>：Django 5.2 + SQLite + Bootstrap（CDN）。</li>
+<li><strong>重點</strong>：3 個模型之間用 <strong>ForeignKey</strong> 關聯；視圖用 <code>select_related()</code> 一次取回關聯資料。</li>
+</ul>
+<h2 id="2-專案結構">2. 專案結構</h2>
+<div class="codehilite"><pre><span></span><code>fbi_project/
+    manage.py
+    db.sqlite3
+    requirements.txt
+    fbi_project/              # 專案設定
+        settings.py
+        urls.py
+        wsgi.py / asgi.py
+    fbi_serial_killer/        # 應用（App）
+        models.py             # 3 個模型
+        views.py              # 1 個視圖
+        urls.py
+        admin.py
+        seed_data.py          # 產生示範資料
+        migrations/
+        templates/fbi_serial_killer/capture_list.html
+</code></pre></div>
+
+<p>這是典型的 <strong>Project（容器）+ App（功能模組）</strong> 結構：設定放在 <code>fbi_project/</code>，功能放在 <code>fbi_serial_killer/</code>。</p>
+<h2 id="3-模型modelspy">3. 模型（models.py）</h2>
+<p>三個模型：<code>FBI_Agent</code>（探員）、<code>Serial_Killer</code>（連環殺手）、<code>Capture</code>（捉拿記錄，用 FK 關聯前兩者）。</p>
+<figure class="fig-svg"><svg viewBox="0 0 760 232" width="100%" role="img" aria-label="FBI 範例的三個模型與外鍵關聯：FBI_Agent 與 Serial_Killer 透過 Capture 記錄關聯" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><g font-family="'Microsoft JhengHei','Segoe UI',sans-serif"><rect x="24" y="70" width="190" height="96" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="119" y="98" text-anchor="middle" font-size="14" fill="#e6edf3">FBI_Agent</text><text x="119" y="120" text-anchor="middle" font-size="11" fill="#39d0d8">name · badge_number</text><text x="119" y="138" text-anchor="middle" font-size="11" fill="#39d0d8">join_year · specialization</text><text x="119" y="158" text-anchor="middle" font-size="11" fill="#7ee787">探員</text><rect x="285" y="58" width="190" height="120" rx="10" fill="#132030" stroke="#f0a04b" stroke-width="1.8"/><text x="380" y="86" text-anchor="middle" font-size="14" fill="#e6edf3">Capture</text><text x="380" y="108" text-anchor="middle" font-size="11" fill="#39d0d8">capture_date</text><text x="380" y="126" text-anchor="middle" font-size="11" fill="#39d0d8">location · details</text><text x="380" y="148" text-anchor="middle" font-size="11" fill="#f0a04b">agent (FK)</text><text x="380" y="166" text-anchor="middle" font-size="11" fill="#f0a04b">serial_killer (FK)</text><rect x="546" y="70" width="190" height="96" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="641" y="98" text-anchor="middle" font-size="14" fill="#e6edf3">Serial_Killer</text><text x="641" y="120" text-anchor="middle" font-size="11" fill="#39d0d8">name · alias</text><text x="641" y="138" text-anchor="middle" font-size="11" fill="#39d0d8">victim_count · …</text><text x="641" y="158" text-anchor="middle" font-size="11" fill="#7ee787">連環殺手</text><line x1="214" y1="118" x2="283" y2="118" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="248" y="108" text-anchor="middle" font-size="11" fill="#e6edf3">1 : N</text><line x1="546" y1="118" x2="477" y2="118" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="512" y="108" text-anchor="middle" font-size="11" fill="#e6edf3">N : 1</text></g><figcaption>圖：三個模型與外鍵關聯。</figcaption></svg></figure>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># fbi_serial_killer/models.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">FBI_Agent</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s2">"探員姓名"</span><span class="p">)</span>
+    <span class="n">badge_number</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s2">"徽章編號"</span><span class="p">)</span>
+    <span class="n">join_year</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s2">"入職年份"</span><span class="p">)</span>
+    <span class="n">specialization</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s2">"專長領域"</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">verbose_name</span> <span class="o">=</span> <span class="s2">"FBI探員"</span>
+        <span class="n">verbose_name_plural</span> <span class="o">=</span> <span class="s2">"FBI探員"</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">badge_number</span><span class="si">}</span><span class="s2">)"</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Serial_Killer</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s2">"姓名"</span><span class="p">)</span>
+    <span class="n">alias</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s2">"別名"</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">crime_period_start</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s2">"犯罪開始年份"</span><span class="p">)</span>
+    <span class="n">crime_period_end</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s2">"犯罪結束年份"</span><span class="p">)</span>
+    <span class="n">victim_count</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s2">"受害人數量"</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s2">"犯罪描述"</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">verbose_name</span> <span class="o">=</span> <span class="s2">"連環殺手"</span>
+        <span class="n">verbose_name_plural</span> <span class="o">=</span> <span class="s2">"連環殺手"</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">alias</span><span class="si">}</span><span class="s2">)"</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alias</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Capture</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">FBI_Agent</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s2">"負責探員"</span><span class="p">)</span>
+    <span class="n">serial_killer</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Serial_Killer</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s2">"連環殺手"</span><span class="p">)</span>
+    <span class="n">capture_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s2">"捉拿日期"</span><span class="p">)</span>
+    <span class="n">location</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s2">"捉拿地點"</span><span class="p">)</span>
+    <span class="n">details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">verbose_name</span><span class="o">=</span><span class="s2">"捉拿詳情"</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">verbose_name</span> <span class="o">=</span> <span class="s2">"捉拿記錄"</span>
+        <span class="n">verbose_name_plural</span> <span class="o">=</span> <span class="s2">"捉拿記錄"</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">serial_killer</span><span class="si">}</span><span class="s2"> 於 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">capture_date</span><span class="si">}</span><span class="s2"> 在 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="si">}</span><span class="s2"> 被捕"</span>
+</code></pre></div>
+
+<p><strong>重點</strong></p>
+<ul>
+<li><code>verbose_name</code>：後台與表單顯示的中文名稱。</li>
+<li><code>blank=True</code>：表單可留空；<code>unique=True</code>：徽章編號不可重複。</li>
+<li><code>on_delete=models.CASCADE</code>：探員或殺手被刪除時，相關捉拿記錄一併刪除。</li>
+<li><code>__str__()</code>：讓物件在後台以可讀字串呈現。</li>
+</ul>
+<h2 id="4-視圖與路由">4. 視圖與路由</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># fbi_serial_killer/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Capture</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">capture_list</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">captures</span> <span class="o">=</span> <span class="n">Capture</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">select_related</span><span class="p">(</span><span class="s1">'agent'</span><span class="p">,</span> <span class="s1">'serial_killer'</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'fbi_serial_killer/capture_list.html'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'captures'</span><span class="p">:</span> <span class="n">captures</span><span class="p">})</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># fbi_serial_killer/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">app_name</span> <span class="o">=</span> <span class="s1">'fbi_serial_killer'</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">'captures/'</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">capture_list</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'capture_list'</span><span class="p">),</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># fbi_project/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib</span><span class="w"> </span><span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">'admin/'</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s1">'fbi_serial_killer.urls'</span><span class="p">)),</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<p><strong>重點</strong>：<code>select_related('agent','serial_killer')</code> 會用<strong>一次連表查詢</strong>把關聯物件一起撈回來，避免逐筆再查（N+1 問題）。</p>
+<h2 id="5-模板capture_listhtml">5. 模板（capture_list.html）</h2>
+<p>用 Bootstrap 表格 + <code>{% for %}</code>／<code>{% empty %}</code>：</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;table</span><span class="w"> </span><span class="na">class=</span><span class="s">"table table-striped table-bordered"</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;thead</span><span class="w"> </span><span class="na">class=</span><span class="s">"table-dark"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;tr&gt;</span>
+<span class="w">            </span><span class="nt">&lt;th&gt;</span>探員<span class="nt">&lt;/th&gt;&lt;th&gt;</span>連環殺手<span class="nt">&lt;/th&gt;&lt;th&gt;</span>捉拿日期<span class="nt">&lt;/th&gt;&lt;th&gt;</span>地點<span class="nt">&lt;/th&gt;&lt;th&gt;</span>詳情<span class="nt">&lt;/th&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/tr&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/thead&gt;</span>
+<span class="w">    </span><span class="nt">&lt;tbody&gt;</span>
+<span class="w">        </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">capture</span> <span class="k">in</span> <span class="nv">captures</span> <span class="cp">%}</span>
+<span class="w">        </span><span class="nt">&lt;tr&gt;</span>
+<span class="w">            </span><span class="nt">&lt;td&gt;</span><span class="cp">{{</span> <span class="nv">capture.agent.name</span> <span class="cp">}}</span><span class="nt">&lt;/td&gt;</span>
+<span class="w">            </span><span class="nt">&lt;td&gt;</span><span class="cp">{{</span> <span class="nv">capture.serial_killer.name</span> <span class="cp">}}</span><span class="nt">&lt;/td&gt;</span>
+<span class="w">            </span><span class="nt">&lt;td&gt;</span><span class="cp">{{</span> <span class="nv">capture.capture_date</span> <span class="cp">}}</span><span class="nt">&lt;/td&gt;</span>
+<span class="w">            </span><span class="nt">&lt;td&gt;</span><span class="cp">{{</span> <span class="nv">capture.location</span> <span class="cp">}}</span><span class="nt">&lt;/td&gt;</span>
+<span class="w">            </span><span class="nt">&lt;td&gt;</span><span class="cp">{{</span> <span class="nv">capture.details</span> <span class="cp">}}</span><span class="nt">&lt;/td&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/tr&gt;</span>
+<span class="w">        </span><span class="cp">{%</span> <span class="k">empty</span> <span class="cp">%}</span>
+<span class="w">        </span><span class="nt">&lt;tr&gt;&lt;td</span><span class="w"> </span><span class="na">colspan=</span><span class="s">"5"</span><span class="w"> </span><span class="na">class=</span><span class="s">"text-center"</span><span class="nt">&gt;</span>無捉拿記錄<span class="nt">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="w">        </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+<span class="w">    </span><span class="nt">&lt;/tbody&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+</code></pre></div>
+
+<ul>
+<li><code>capture.agent.name</code>：透過 FK 直接取關聯物件的欄位（Django 模板自動處理）。</li>
+<li><code>{% empty %}</code>：沒有資料時顯示的內容。</li>
+</ul>
+<h2 id="6-產生示範資料seed_datapy">6. 產生示範資料（seed_data.py）</h2>
+<p><code>seed_data.py</code> 會先清空資料表，再批次建立 21 位探員、連環殺手與捉拿記錄：</p>
+<div class="codehilite"><pre><span></span><code>FBI_Agent.objects.bulk_create(fbi_agent_objects)   # 批次建立
+Capture.objects.bulk_create(capture_objects)
+</code></pre></div>
+
+<p><strong>注意</strong>：檔案內有一行寫死的路徑（<code>sys.path.append('/Users/...')</code>），換到你的環境要改成自己的專案路徑。</p>
+<h2 id="7-執行步驟">7. 執行步驟</h2>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> 1. 建立並啟用虛擬環境
+python -m venv venv
+venv\Scripts\activate           # Windows
+source venv/bin/activate        # macOS / Linux
+
+<span class="gh">#</span> 2. 安裝套件
+pip install -r requirements.txt
+
+<span class="gh">#</span> 3. 建立資料表
+python manage.py migrate
+
+<span class="gh">#</span> 4. 產生示範資料
+python fbi_serial_killer/seed_data.py
+
+<span class="gh">#</span> 5. 啟動伺服器
+python manage.py runserver
+</code></pre></div>
+
+<p>打開 http://127.0.0.1:8000/captures/ 即可看到捉拿記錄表。</p>
+<h2 id="8-重點整理">8. 重點整理</h2>
+<ul>
+<li>這是 <strong>Model → View → Template</strong> 的最小完整範例。</li>
+<li>3 個模型用 <strong>ForeignKey</strong> 串起「探員－捉拿－殺手」。</li>
+<li>視圖只需一行 <code>select_related()</code> 就兼顧正確性與效能。</li>
+<li>模板用 <code>{% for %}</code> 走訪、<code>{% empty %}</code> 處理空資料。</li>
+</ul>
+<div class="chnav">
+<a href="/django-notes/ch14-uml.html">← 第 14 章 UML 系統分析與設計</a>
+<a class="course" href="/django-course/">課程總覽</a>
+<a href="/django-notes/ch16-iris-ml.html">第 16 章 Iris 分類：Django × 機器學習 →</a>
+</div>
+</main>
+</div>
+</body>
+</html>

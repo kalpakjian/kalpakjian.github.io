@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 16 章（附加）Iris 分類：Django × 機器學習 — Django 學習筆記</title>
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+
+</style>
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+</style>
+<style>
+/* ---- Django 學習筆記：章節封面 + 章節導覽（本站既有慣例） ---- */
+main .sub{font-size:13px;color:var(--muted);margin:-8px 0 16px}
+figure.hero{margin:0 0 26px}
+figure.hero img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);display:block}
+figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-align:center}
+figure.fig-svg{margin:22px 0 26px}
+figure.fig-svg svg{display:block;width:100%;height:auto;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;text-align:center}
+.chnav{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0 10px;font-size:13px}
+.chnav a{flex:1;min-width:150px;text-align:center;text-decoration:none;color:var(--accent2);
+  border:1px solid var(--border);border-radius:6px;padding:9px 10px;background:#fff}
+.chnav a:hover{background:#eaeef2}
+.chnav a.course{font-weight:700}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/django-course/">← 課程總覽</a>
+  <h1>Django 學習筆記</h1>
+<div class="sub">附加篇章 · Django × 機器學習</div>
+<figure class="hero"><img src="/img/covers/django-cover.png" alt="附加篇章封面"><figcaption>封面：Django 學習筆記</figcaption></figure>
+  <div class="sub">Django 網站框架開發 · 學習筆記<br>附加篇章 · Iris 分類：Django × 機器學習</div>
+  <div class="toc">
+<ul>
+<li><a href="#1-專案簡介">1. 專案簡介</a>
+</li>
+<li><a href="#2-專案結構">2. 專案結構</a>
+</li>
+<li><a href="#3-訓練模型trainpy">3. 訓練模型（train.py）</a>
+</li>
+<li><a href="#4-推論服務servicespy">4. 推論服務（services.py）</a>
+</li>
+<li><a href="#5-表單與視圖">5. 表單與視圖</a>
+</li>
+<li><a href="#6-路由與模板">6. 路由與模板</a>
+</li>
+<li><a href="#7-執行步驟">7. 執行步驟</a>
+</li>
+<li><a href="#8-重點整理">8. 重點整理</a>
+</li>
+</ul>
+</div>
+
+</nav>
+<main>
+<h1 id="第-16-章附加-iris-分類django--機器學習">第 16 章（附加）· Iris 分類：Django × 機器學習</h1>
+<p><strong>導讀</strong>：這個範例把<strong>機器學習模型接進 Django</strong>：先用 scikit-learn 訓練一個鳶尾花（Iris）分類器並存成檔案，再由 Django 提供<strong>網頁表單</strong>與 <strong>JSON API</strong> 兩種預測介面。是「把 ML 模型變成服務」的最小實作。</p>
+<h2 id="1-專案簡介">1. 專案簡介</h2>
+<ul>
+<li><strong>主題</strong>：輸入鳶尾花的 4 個尺寸特徵，預測品種（setosa／versicolor／virginica）。</li>
+<li><strong>模型</strong>：<code>RandomForestClassifier</code>（200 棵樹），以 scikit-learn 內建 Iris 資料集訓練。</li>
+<li><strong>兩種介面</strong>：網頁表單（<code>/predict/</code>）與 JSON API（<code>/api/predict/</code>）。</li>
+<li><strong>技術</strong>：Django 5.2 + scikit-learn + joblib。</li>
+</ul>
+<h2 id="2-專案結構">2. 專案結構</h2>
+<div class="codehilite"><pre><span></span><code>django-ml-app/
+    manage.py
+    train.py                    # 訓練並存出模型
+    db.sqlite3
+    requirements.txt
+    README.md
+    mlapp/                      # 專案設定
+        settings.py
+        urls.py
+        wsgi.py / asgi.py
+    predictor/                  # 應用（App）
+        forms.py                # IrisForm（4 個特徵欄位）
+        services.py             # 載入模型 + 預測
+        views.py                # 表單 / 表單預測 / API
+        urls.py
+        model/iris_rf.joblib    # 訓練好的模型
+    templates/predictor/predict_form.html
+</code></pre></div>
+
+<p>設計上把「<strong>訓練</strong>」（<code>train.py</code>）與「<strong>服務</strong>」（<code>predictor/</code>）分開：訓練只跑一次、產出模型檔；Django 只負責載入模型與推論。</p>
+<h2 id="3-訓練模型trainpy">3. 訓練模型（train.py）</h2>
+<figure class="fig-svg"><svg viewBox="0 0 820 192" width="100%" role="img" aria-label="Iris 範例流程：載入資料 → 切分 → 訓練隨機森林 → 存檔；Django 載入模型做預測" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><g font-family="'Microsoft JhengHei','Segoe UI',sans-serif"><rect x="16" y="58" width="150" height="60" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="91" y="84" text-anchor="middle" font-size="13" fill="#e6edf3">load_iris()</text><text x="91" y="104" text-anchor="middle" font-size="11" fill="#39d0d8">150 筆 · 4 特徵</text><line x1="168" y1="88" x2="204" y2="88" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><rect x="208" y="58" width="160" height="60" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="288" y="84" text-anchor="middle" font-size="12.5" fill="#e6edf3">train_test_split</text><text x="288" y="104" text-anchor="middle" font-size="11" fill="#39d0d8">80／20 分層切分</text><line x1="370" y1="88" x2="406" y2="88" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><rect x="410" y="58" width="180" height="60" rx="10" fill="#132030" stroke="#f0a04b" stroke-width="1.6"/><text x="500" y="84" text-anchor="middle" font-size="13" fill="#e6edf3">RandomForest</text><text x="500" y="104" text-anchor="middle" font-size="11" fill="#39d0d8">n_estimators=200</text><line x1="592" y1="88" x2="628" y2="88" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><rect x="632" y="58" width="172" height="60" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="718" y="84" text-anchor="middle" font-size="13" fill="#e6edf3">joblib 存檔</text><text x="718" y="104" text-anchor="middle" font-size="11" fill="#39d0d8">iris_rf.joblib</text><path d="M718 120 L718 156 L91 156 L91 122" fill="none" stroke="#39d0d8" stroke-width="1.5" stroke-dasharray="5 4"/></g><text x="410" y="182" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">Django 啟動時載入模型 → 表單／API 送入 4 個特徵 → predict_proba 回傳各類別機率</text><figcaption>圖：Iris 範例的訓練與服務流程。</figcaption></svg></figure>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># train.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">MODEL_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"predictor"</span><span class="p">)</span> <span class="o">/</span> <span class="s2">"model"</span>
+<span class="n">MODEL_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">MODEL_PATH</span> <span class="o">=</span> <span class="n">MODEL_DIR</span> <span class="o">/</span> <span class="s2">"iris_rf.joblib"</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span>
+
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+    <span class="p">)</span>
+
+    <span class="n">clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">"estimator"</span><span class="p">:</span> <span class="n">clf</span><span class="p">,</span>
+            <span class="s2">"target_names"</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">target_names</span><span class="p">,</span>
+            <span class="s2">"feature_names"</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">MODEL_PATH</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Saved model to </span><span class="si">{</span><span class="n">MODEL_PATH</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p><strong>重點</strong></p>
+<ul>
+<li><code>load_iris()</code>：scikit-learn 內建的鳶尾花資料集（150 筆、4 特徵、3 類）。</li>
+<li><code>train_test_split(..., stratify=y)</code>：依類別比例分層切分訓練／測試集。</li>
+<li><code>RandomForestClassifier(n_estimators=200)</code>：200 棵決策樹的隨機森林。</li>
+<li>把 <strong>estimator + 類別名稱 + 特徵名稱</strong> 一起 <code>joblib.dump</code> 存檔——推論時才知道欄位順序與標籤。</li>
+</ul>
+<h2 id="4-推論服務servicespy">4. 推論服務（services.py）</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># predictor/services.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">_MODEL_CACHE</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_model_bundle</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""載入並快取模型（estimator / target_names / feature_names）。"""</span>
+    <span class="k">global</span> <span class="n">_MODEL_CACHE</span>
+    <span class="k">if</span> <span class="s2">"bundle"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_MODEL_CACHE</span><span class="p">:</span>
+        <span class="n">model_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">"model"</span> <span class="o">/</span> <span class="s2">"iris_rf.joblib"</span>
+        <span class="n">_MODEL_CACHE</span><span class="p">[</span><span class="s2">"bundle"</span><span class="p">]</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="kp">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_MODEL_CACHE</span><span class="p">[</span><span class="s2">"bundle"</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">predict_iris</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""features: 4 個 float（sepal_length, sepal_width, petal_length, petal_width）"""</span>
+    <span class="n">bundle</span> <span class="o">=</span> <span class="n">get_model_bundle</span><span class="p">()</span>
+    <span class="n">clf</span> <span class="o">=</span> <span class="n">bundle</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]</span>
+    <span class="n">target_names</span> <span class="o">=</span> <span class="n">bundle</span><span class="p">[</span><span class="s2">"target_names"</span><span class="p">]</span>
+
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">array</span><span class="p">([</span><span class="n">features</span><span class="p">],</span> <span class="kp">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">proba</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="kp">argmax</span><span class="p">(</span><span class="n">proba</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">"class_index"</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span>
+        <span class="s2">"class_name"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">target_names</span><span class="p">[</span><span class="n">idx</span><span class="p">]),</span>
+        <span class="s2">"probabilities"</span><span class="p">:</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">):</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">target_names</span><span class="p">,</span> <span class="n">proba</span><span class="p">)},</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+<p><strong>重點</strong>：<code>_MODEL_CACHE</code> 讓模型<strong>只載入一次</strong>（避免每個請求都重讀檔案）；<code>predict_proba</code> 回傳各類別機率。</p>
+<h2 id="5-表單與視圖">5. 表單與視圖</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># predictor/forms.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django</span><span class="w"> </span><span class="kn">import</span> <span class="n">forms</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">IrisForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">sepal_length</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">min_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Sepal length (cm)"</span><span class="p">)</span>
+    <span class="n">sepal_width</span>  <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">min_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Sepal width (cm)"</span><span class="p">)</span>
+    <span class="n">petal_length</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">min_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Petal length (cm)"</span><span class="p">)</span>
+    <span class="n">petal_width</span>  <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">min_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Petal width (cm)"</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># predictor/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">JsonResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.views.decorators.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">require_http_methods</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.views.decorators.csrf</span><span class="w"> </span><span class="kn">import</span> <span class="n">csrf_exempt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.forms</span><span class="w"> </span><span class="kn">import</span> <span class="n">IrisForm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.services</span><span class="w"> </span><span class="kn">import</span> <span class="n">predict_iris</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">home</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">"predictor/predict_form.html"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"form"</span><span class="p">:</span> <span class="n">IrisForm</span><span class="p">()})</span>
+
+<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">"POST"</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">predict_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">IrisForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">"predictor/predict_form.html"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"form"</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">"sepal_length"</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">"sepal_width"</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">"petal_length"</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">"petal_width"</span><span class="p">]]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">predict_iris</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">"predictor/predict_form.html"</span><span class="p">,</span>
+                  <span class="p">{</span><span class="s2">"form"</span><span class="p">:</span> <span class="n">IrisForm</span><span class="p">(),</span> <span class="s2">"result"</span><span class="p">:</span> <span class="n">result</span><span class="p">,</span> <span class="s2">"submitted"</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+
+<span class="nd">@csrf_exempt</span>
+<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">"POST"</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">predict_api</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"CONTENT_TYPE"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"application/json"</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span> <span class="ow">or</span> <span class="s2">"</span><span class="si">{}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Invalid JSON."</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+
+    <span class="n">required</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"sepal_length"</span><span class="p">,</span> <span class="s2">"sepal_width"</span><span class="p">,</span> <span class="s2">"petal_length"</span><span class="p">,</span> <span class="s2">"petal_width"</span><span class="p">]</span>
+    <span class="n">missing</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">required</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">payload</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">"error"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Missing: </span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">required</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"All features must be numeric."</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">predict_iris</span><span class="p">(</span><span class="n">features</span><span class="p">))</span>
+</code></pre></div>
+
+<p><strong>重點</strong></p>
+<ul>
+<li><code>predict_view</code>：網頁表單走 POST，驗證後呼叫 <code>predict_iris</code>，再渲染結果。</li>
+<li><code>predict_api</code>：JSON API，接受 <code>application/json</code> 或表單編碼；缺欄位／非數字都回 400。</li>
+<li><code>@csrf_exempt</code>：API 端點的示範用法（正式環境建議改用 Token 驗證）。</li>
+</ul>
+<h2 id="6-路由與模板">6. 路由與模板</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># predictor/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">home</span><span class="p">,</span> <span class="n">predict_view</span><span class="p">,</span> <span class="n">predict_api</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="n">home</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"home"</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">"predict/"</span><span class="p">,</span> <span class="n">predict_view</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"predict"</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">"api/predict/"</span><span class="p">,</span> <span class="n">predict_api</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"predict_api"</span><span class="p">),</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<p>模板 <code>templates/predictor/predict_form.html</code>：一個 4 欄表單 + 結果區塊。</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;form</span><span class="w"> </span><span class="na">action=</span><span class="s">"/predict/"</span><span class="w"> </span><span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="cp">{%</span> <span class="k">csrf_token</span> <span class="cp">%}</span>
+<span class="w">    </span><span class="nt">&lt;label</span><span class="w"> </span><span class="na">for=</span><span class="s">"id_sepal_length"</span><span class="nt">&gt;</span>Sepal<span class="w"> </span>length<span class="w"> </span>(cm)<span class="nt">&lt;/label&gt;</span>
+<span class="w">    </span><span class="cp">{{</span> <span class="nv">form.sepal_length</span> <span class="cp">}}</span>
+<span class="w">    </span>...（其餘<span class="w"> </span>3<span class="w"> </span>個欄位同理）
+<span class="w">    </span><span class="nt">&lt;button</span><span class="w"> </span><span class="na">type=</span><span class="s">"submit"</span><span class="nt">&gt;</span>Predict<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">submitted</span> <span class="k">and</span> <span class="nv">result</span> <span class="cp">%}</span>
+<span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">"result"</span><span class="nt">&gt;</span>
+<span class="w">    </span>Predicted<span class="w"> </span>class:<span class="w"> </span><span class="cp">{{</span> <span class="nv">result.class_name</span> <span class="cp">}}</span>
+<span class="w">    </span><span class="nt">&lt;ul&gt;</span>
+<span class="w">    </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">name</span><span class="o">,</span> <span class="nv">p</span> <span class="k">in</span> <span class="nv">result.probabilities.items</span> <span class="cp">%}</span>
+<span class="w">        </span><span class="nt">&lt;li&gt;</span><span class="cp">{{</span> <span class="nv">name</span> <span class="cp">}}</span>:<span class="w"> </span><span class="cp">{{</span> <span class="nv">p</span><span class="o">|</span><span class="nf">floatformat</span><span class="o">:</span><span class="m">3</span> <span class="cp">}}</span><span class="nt">&lt;/li&gt;</span>
+<span class="w">    </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+<span class="w">    </span><span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+</code></pre></div>
+
+<h2 id="7-執行步驟">7. 執行步驟</h2>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> 1. 建立並啟用虛擬環境
+python -m venv venv
+venv\Scripts\activate           # Windows
+source venv/bin/activate        # macOS / Linux
+
+<span class="gh">#</span> 2. 安裝套件
+pip install -r requirements.txt
+
+<span class="gh">#</span> 3. 訓練並存出模型（產生 predictor/model/iris_rf.joblib）
+python train.py
+
+<span class="gh">#</span> 4. 遷移並啟動
+python manage.py migrate
+python manage.py runserver
+</code></pre></div>
+
+<ul>
+<li>網頁預測：http://127.0.0.1:8000/</li>
+<li>JSON API：</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>curl -X POST http://127.0.0.1:8000/api/predict/ \
+  -H "Content-Type: application/json" \
+  -d '{"sepal_length":5.1,"sepal_width":3.5,"petal_length":1.4,"petal_width":0.2}'
+</code></pre></div>
+
+<h2 id="8-重點整理">8. 重點整理</h2>
+<ul>
+<li><strong>訓練與服務分離</strong>：<code>train.py</code> 只管訓練存檔；Django 只負責載入模型與推論。</li>
+<li><strong>模型快取</strong>：模組層級的 <code>_MODEL_CACHE</code> 讓模型只載入一次。</li>
+<li><strong>雙介面</strong>：同一套 <code>predict_iris()</code> 同時服務網頁表單與 JSON API。</li>
+<li><strong>存檔要帶 metadata</strong>：類別名稱與特徵名稱一起存，才不會搞錯欄位順序與標籤。</li>
+</ul>
+<div class="chnav">
+<a href="/django-notes/ch15-serial-killer.html">← 第 15 章 FBI 連環殺手：最簡 Django 範例</a>
+<a class="course" href="/django-course/">課程總覽</a>
+</div>
+</main>
+</div>
+</body>
+</html>
