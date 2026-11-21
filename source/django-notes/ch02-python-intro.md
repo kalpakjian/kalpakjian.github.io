@@ -258,4 +258,3 @@ VSCode(全稱：Visual Studio Code)是一款由微軟開發的跨平臺免費源
 接著我們安裝 VS Code Python 擴展：
 
 Python 擴展將自動安裝 Pylance 和 Jupyter
-

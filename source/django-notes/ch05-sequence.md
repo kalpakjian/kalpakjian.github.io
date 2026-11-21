@@ -74,7 +74,19 @@ print(" : ", str1 + str2 + str3)
 ```
 ## 序列相關的內置函數
 
-函數</td> 功能</td></tr> len()</td> 計算序列的長度，即返回序列中包含多少個元素。</td></tr> max()</td> 找出序列中的最大元素。注意，對序列使用sum()函數時，做加和操作的必須都是數字，不能是字符或字符串，否則該函數將拋出異常，因爲解釋器無法判定是要做連接操作（+ 運算符可以連接兩個序列），這是做加和操作。</td></tr> min()</td> 找出序列中的最小元素。</td></tr> list()</td> 將序列轉換爲列表。</td></tr> str()</td> 將序列轉換爲字符串。</td></tr> sum()</td> 計算元素和。</td></tr> sorted()</td> 當元素進行排序。</td></tr> reversed()</td> 反向序列中的元素。</td></tr> enumerate()</td> 將序列組合爲一個索引序列，多用在for循環中。</td></tr></table>
+
+| 函數 | 功能 |
+| --- | --- |
+| len() | 計算序列的長度，即返回序列中包含多少個元素。 |
+| max() | 找出序列中的最大元素。注意，對序列使用sum()函數時，做加和操作的必須都是數字，不能是字符或字符串，否則該函數將拋出異常，因爲解釋器無法判定是要做連接操作（+ 運算符可以連接兩個序列），這是做加和操作。 |
+| min() | 找出序列中的最小元素。 |
+| list() | 將序列轉換爲列表。 |
+| str() | 將序列轉換爲字符串。 |
+| sum() | 計算元素和。 |
+| sorted() | 當元素進行排序。 |
+| reversed() | 反向序列中的元素。 |
+| enumerate() | 將序列組合爲一個索引序列，多用在for循環中。 |
+
 
 部分序列不能應用其中的部分函數，比如字典中不能直接使用list，詳細的函數介紹請參閱相應數類型的函數介紹。
 
@@ -223,7 +235,15 @@ print(tupn3)
 
 ## Python 元組包含了以下內置函數
 
-序號</td> 方法及描述</td> 範例</td></tr> 1</td> len(tuple)\n計算元組元素值數。</td> >>> tuple1 = (&#x27;google&#x27;, &#x27;W3CSchool&#x27;, &#x27;Taobao&#x27;)\n>>> len(tuple1)\n3\n&gt;&gt;&gt;</td></tr> 2</td> max(tuple)\n返回元組中元素最大值。</td> &gt;&gt;&gt; tuple2 = (&#x27;5&#x27;, &#x27;4&#x27;, &#x27;8&#x27;)\n&gt;&gt;&gt; max(tuple2)\n&#x27;8&#x27;\n&gt;&gt;&gt;</td></tr> 3</td> min(tuple)\n返回元組中元素最小值。</td> &gt;&gt;&gt; tuple2 = (&#x27;5&#x27;, &#x27;4&#x27;, &#x27;8&#x27;)\n&gt;&gt;&gt; min(tuple2)\n&#x27;4&#x27;\n&gt;&gt;&gt;</td></tr> 4</td> tuple(seq)\n將列表轉換爲元組。</td> &gt;&gt;&gt; list1 = [&#x27;google&#x27;, &#x27;Taobao&#x27;, &#x27;W3CSchool&#x27;, &#x27;Baidu&#x27;]\n&gt;&gt;&gt; tuple1-tuple(list1)\n&gt;&gt;&gt; tuple1\n(&#x27;google&#x27;, &#x27;Taobao&#x27;, &#x27;W3CSchool&#x27;, &#x27;Baidu&#x27;)\n&gt;&gt;&gt;</td></tr> 5</td> operator(tuple1, tuple 2)\n軟荷值元組元素</td> &gt;&gt;&gt; import operator\n&gt;&gt;&gt; dict1 = (1, 2, 3)\n&gt;&gt;&gt; dict2 = (&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;)\n&gt;&gt;&gt; operator.eq(dict1, dict2)\nFalse</td></tr></table>
+
+| 序號 | 方法及描述 | 範例 |
+| --- | --- | --- |
+| 1 | len(tuple)\n計算元組元素值數。 | >>> tuple1 = (&#x27;google&#x27;, &#x27;W3CSchool&#x27;, &#x27;Taobao&#x27;)\n>>> len(tuple1)\n3\n&gt;&gt;&gt; |
+| 2 | max(tuple)\n返回元組中元素最大值。 | &gt;&gt;&gt; tuple2 = (&#x27;5&#x27;, &#x27;4&#x27;, &#x27;8&#x27;)\n&gt;&gt;&gt; max(tuple2)\n&#x27;8&#x27;\n&gt;&gt;&gt; |
+| 3 | min(tuple)\n返回元組中元素最小值。 | &gt;&gt;&gt; tuple2 = (&#x27;5&#x27;, &#x27;4&#x27;, &#x27;8&#x27;)\n&gt;&gt;&gt; min(tuple2)\n&#x27;4&#x27;\n&gt;&gt;&gt; |
+| 4 | tuple(seq)\n將列表轉換爲元組。 | &gt;&gt;&gt; list1 = [&#x27;google&#x27;, &#x27;Taobao&#x27;, &#x27;W3CSchool&#x27;, &#x27;Baidu&#x27;]\n&gt;&gt;&gt; tuple1-tuple(list1)\n&gt;&gt;&gt; tuple1\n(&#x27;google&#x27;, &#x27;Taobao&#x27;, &#x27;W3CSchool&#x27;, &#x27;Baidu&#x27;)\n&gt;&gt;&gt; |
+| 5 | operator(tuple1, tuple 2)\n軟荷值元組元素 | &gt;&gt;&gt; import operator\n&gt;&gt;&gt; dict1 = (1, 2, 3)\n&gt;&gt;&gt; dict2 = (&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;)\n&gt;&gt;&gt; operator.eq(dict1, dict2)\nFalse |
+
 
 ## 關於元組是不可變的
 
@@ -492,4 +512,3 @@ set 集合的 pop 方法會對集合進行無序的排列，然後將這個無�
 thisset = set("s", "ss", "sss")
 print(len(thisset))
 ```
-

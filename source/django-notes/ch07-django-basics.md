@@ -385,4 +385,3 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 3: Django 中的 Project 與 App，配置 settings.py 和 manage.py 命令
 
 在 Django 框架中，Project（項目）和 App（應用）是兩個基本概念。理解這兩者之間的區別對於構建高效、可擴展的應用程序至關重要。此外，Django 提供了靈活的配置系統，通過 settings.py 文件來管理項目的全局設置，同時提供了 manage.py 命令來管理和運行開發相關的任務。本章將詳細介紹 Project 和 App 之間的區別，配置 settings.py，以及 常見的 manage.py 命令 和它們的使用場景。
-

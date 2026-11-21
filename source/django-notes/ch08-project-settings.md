@@ -159,10 +159,7 @@ INSTALLED_APPS = [
 'django.contrib.sessions',
 'django.contrib.messages',
 'django.contrib.staticfiles',
-```
 'myapp', # 自己的應用
-
-```
 ]
 # 中間件
 MIDDLEWARE = [
@@ -361,8 +358,9 @@ mycommand.py
 ```
 from django.core.management.base import BaseCommand
 class Command(BaseCommand):
-help = '這是一個自定義命令範例'
+    help = '這是一個自定義命令範例'
 def handle(self, *args, **kwargs):
+    pass  # 內容省略
 ```
 self.stdout.write("執行自定義命令")
 
@@ -395,20 +393,16 @@ urls.py 文件是 URLconf 的配置文件，通常放置在 Django 項目目錄�
 
 以下是一個典型的 urls.py 文件結構範例：
 
+path('admin/', admin.site.urls), # 管理站點的 URL 路徑
+path(", views.index, name='index'), # 根路徑映射到首頁視圖
+path('about/', views.about, name='about'), # 靜態 "關於我們" 頁面
+
 ```
 # myproject/urls.py
 from django.contrib import admin
 from django.urls import path
 from myapp import views
 urlpatterns = [
-```
-path('admin/', admin.site.urls), # 管理站點的 URL 路徑
-
-path(", views.index, name='index'), # 根路徑映射到首頁視圖
-
-path('about/', views.about, name='about'), # 靜態 "關於我們" 頁面
-
-```
 ]
 ```
 在這個範例中，我們定義了三個 URL 路徑：
@@ -433,17 +427,14 @@ path('about/', views.about, name='about'), # 靜態 "關於我們" 頁面
 
 範例：定義靜態和動態 URL
 
+path('about/', views.about, name='about'), # 靜態 URL
+path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL
+
 ```
 # myapp/urls.py
 from django.urls import path
 from . import views
 urlpatterns = [
-```
-path('about/', views.about, name='about'), # 靜態 URL
-
-path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL
-
-```
 ]
 ```
 在這裡，about/ 是靜態 URL，無論何時訪問，總是映射到同一個 "關於我們" 頁面。post/<int:id>/ 是動態 URL，其中 <int:id> 是一個變量，它表示動態部分，用於表示文章的 ID。
@@ -464,15 +455,12 @@ Django 提供了多種 路徑轉換器，用於定義 URL 中動態部分的數�
 
 範例：使用路徑轉換器
 
-```
-# 使用不同的路徑轉換器來匹配不同類型的動態 URL
-urlpatterns = [
-```
 path('post/<int:id>/, views.post_detail, name='post_detail'), # 匹配整數 ID
-
 path('category/<slug:slug>/, views.category_detail, name='category_detail'), # 匹配 slug
 
 ```
+# 使用不同的路徑轉換器來匹配不同類型的動態 URL
+urlpatterns = [
 ]
 ```
 在這裡，post/<int:id/> 只匹配數字 ID，而 category/<slug:slug/> 則匹配包含字母和數字的 slug。
@@ -496,19 +484,15 @@ path(route, view, kwargs=None, name=None)
 
 範例：使用 path() 定義 URL
 
+path("views.index, name='index'), # 定義根 URL
+path('contact/', views.contact, name='contact'), # 靜態 URL
+path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL
+
 ```
 # myapp/urls.py
 from django.urls import path
 from . import views
 urlpatterns = [
-```
-path("views.index, name='index'), # 定義根 URL
-
-path('contact/', views.contact, name='contact'), # 靜態 URL
-
-path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL
-
-```
 ]
 ```
 #### 4.3.2 URLconf 中的 include()
@@ -517,17 +501,14 @@ path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL
 
 範例：在主項目的 urls.py 中使用 include()
 
+path('admin/', admin.site.urls), # 管理後臺 URL
+path('blog/', include('blog.urls')), # 將 URL 分發到博客應用的 URLconf
+
 ```
 # myproject/urls.py
 from django.contrib import admin
 from django.urls import path, include
 urlpatterns = [
-```
-path('admin/', admin.site.urls), # 管理後臺 URL
-
-path('blog/', include('blog.urls')), # 將 URL 分發到博客應用的 URLconf
-
-```
 ]
 ```
 在這個例子中，當用戶訪問 /blog/ 開頭的 URL 時，Django 會將這些請求分發到 blog 應用的 urls.py 文件中處理。這種設計使得每個應用的 URLconf 可以獨立管理，從而提高了代碼的可維護性。
@@ -548,6 +529,7 @@ Django 的視圖（View）負責處理用戶的 HTTP 請求並返回響應。每
 # myapp/views.py
 from django.http import HttpResponse
 def index(request):
+    pass  # 內容省略
 ```
 return HttpResponse("歡迎來到我的網站！")
 
@@ -583,6 +565,7 @@ path('contact/', views.contact, name='contact'), # 將 contact/ URL 連接到 co
 # myapp/views.py
 from django.http import HttpResponse
 def post_detail(request, id):
+    pass  # 內容省略
 ```
 return HttpResponse(f"這是文章 {id} 的詳情頁面")
 
@@ -605,6 +588,7 @@ path('post/<int:id>/, views.post_detail, {'author': 'John'}, name='post_detail')
 ```
 # myapp/views.py
 def post_detail(request, id, author):
+    pass  # 內容省略
 ```
 return HttpResponse(f"文章 {id} 由 {author} 撰寫")
 
@@ -623,10 +607,7 @@ return HttpResponse(f"文章 {id} 由 {author} 撰寫")
 ```
 # myapp/urls.py
 urlpatterns = [
-```
 path('post/<slug:slug>/, views.post_detail, name='post_detail'), # 使用 slug 作為文章標識
-
-```
 ]
 # myapp/views.py
 def post_detail(request, slug):
@@ -650,7 +631,7 @@ path('product/<int:id>', views.product_detail, name='product_detail'),
 ]
 # shop/views.py
 def product_detail(request, id):
-product = get_object_or_404(Product, id=id)
+    product = get_object_or_404(Product, id=id)
 ```
 return HttpResponse(f"這是產品 {product.name} 的詳情頁面")
 
@@ -666,9 +647,9 @@ return HttpResponse(f"這是產品 {product.name} 的詳情頁面")
 # blog/views.py
 from django.shortcuts import redirect
 def submit_comment(request, post_id):
-if request.method == 'POST':
-# 保存評論邏輯
-return redirect('post_detail', id=post_id)
+    if request.method == 'POST':
+        # 保存評論邏輯
+        return redirect('post_detail', id=post_id)
 ```
 在這裡，我們使用動態 URL 和 redirect() 函數，將用戶重定向回評論所屬的文章詳情頁。
 
@@ -681,4 +662,3 @@ return redirect('post_detail', id=post_id)
 視圖（Views）是 Django 框架的核心組件之一，負責處理用戶的 HTTP 請求並生成相應的 HTTP 響應。在 Django 中，視圖的作用是將業務邏輯和數據處理集中在一個函數或類中，然後通過將結果返回給用戶。視圖還負責與模板進行交互，從而生成動態的 HTML 頁面。
 
 在本章中，我們將深入探討 Django 視圖的概念，並詳細介紹 函數視圖 和 類視圖的區別，學習如何處理 GET 和 POST 請求，以及如何將視圖與 URL 進行連接 和上下文與模板的交互。
-

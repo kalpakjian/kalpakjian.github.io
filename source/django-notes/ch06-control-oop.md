@@ -14,7 +14,7 @@ s.clear()
 實例：
 
 ```
-thisset = set("s", "ss", "sss"))
+thisset = set(("s", "ss", "sss"))
 thisset.clear()
 print(thisset)
 ```
@@ -28,7 +28,7 @@ set()
 判斷元素 x 是否在集合 s 中，存在則返回 True，不存在則返回 False。實例：
 
 ```
-thisset = set("s", "ss", "sss"))
+thisset = set(("s", "ss", "sss"))
 print("ss" in thisset)
 print("sssss" in thisset)
 ```
@@ -44,7 +44,7 @@ if 語句 Python 條件語句是通過一條或多條語句的執行結果(True 
 
 ```
 if condition_1:
-statement_block_1
+    statement_block_1
 ```
 流程圖如下所示：
 
@@ -52,9 +52,9 @@ statement_block_1
 
 ```
 if condition_1:
-statement_block_1
+    statement_block_1
 else:
-statement_block_2
+    statement_block_2
 ```
 流程圖如下所示：
 
@@ -66,11 +66,11 @@ Python 中用elif 代替了else if，所以if語句的關鍵字為：if - elif -
 
 ```
 if condition_1:
-statement_block_1
+    statement_block_1
 elif condition_2:
-statement_block_2
+    statement_block_2
 else:
-statement_block_3
+    statement_block_3
 ```
 流程圖如下所示：
 
@@ -94,32 +94,41 @@ match-case 語句(python3.10 新特性)
 
 ```
 def http_error(status):
-match status:
-case 400:
-return "Bad request"
-case 404:
-return "Not found"
-case 418:
-return "I'm a teapot"
-case _:
-return "Something's wrong with the Internet"
+    match status:
+        case 400:
+            return "Bad request"
+        case 404:
+            return "Not found"
+        case 418:
+            return "I'm a teapot"
+        case _:
+            return "Something's wrong with the Internet"
 ```
 上述代碼等價於：
 
 ```
 def http_error(status):
-if status == 400:
-return "Bad request"
-elif status == 404:
-return "Not found"
-elif status == 418:
-return "I'm a teapot"
-else:
-return "Something's wrong with the Internet"
+    if status == 400:
+        return "Bad request"
+    elif status == 404:
+        return "Not found"
+    elif status == 418:
+        return "I'm a teapot"
+    else:
+        return "Something's wrong with the Internet"
 ```
 以下為 if 中常用的操作運算符:
 
-操作符</td> 描述</td></tr> &lt;</td> 小於</td></tr> &lt;=</td> 小於或等於</td></tr> &gt;</td> 大於</td></tr> &gt;=</td> 大於或等於</td></tr> \*\*</td> 等於,比較對像是否相等</td></tr> !=</td> 不等於</td></tr></table>
+
+| 操作符 | 描述 |
+| --- | --- |
+| &lt; | 小於 |
+| &lt;= | 小於或等於 |
+| &gt; | 大於 |
+| &gt;= | 大於或等於 |
+| \*\* | 等於,比較對像是否相等 |
+| != | 不等於 |
+
 
 ## 實例
 
@@ -133,13 +142,13 @@ number = 7
 guess = -1
 print("猜數字！")
 while guess != number:
-guess = int(input("請輸入你要猜的數字"))
-if guess == number:
-print("你猜中了，真厲害！")
-elif guess < number:
-print("猜小了，再猜猜？")
-elif guess > number:
-print("猜大了，在猜猜？")
+    guess = int(input("請輸入你要猜的數字"))
+    if guess == number:
+        print("你猜中了，真厲害！")
+    elif guess < number:
+        print("猜小了，再猜猜？")
+    elif guess > number:
+        print("猜大了，在猜猜？")
 ```
 Python3 循環
 
@@ -165,9 +174,9 @@ n = 100
 sum = 0
 counter = 1
 while counter <= n:
-sum = sum + counter
-counter += 1
-print('Sum of 1 until %d: %d' % (n,sum))
+    sum = sum + counter
+    counter += 1
+    print('Sum of 1 until %d: %d' % (n,sum))
 ```
 執行結果如下：
 
@@ -183,13 +192,14 @@ for 循環的一般格式如下：
 ```
 for in :
 else:
+    pass  # 內容省略
 ```
 Python for 循環實例：
 
 ```
 DC = ['BvS', '水水俠', '神奇女俠', '大超回歸']
 for x in DC:
-print(x)
+    print(x)
 ```
 執行結果如下：
 
@@ -208,16 +218,16 @@ range()函數
 
 ```
 for i in range(10):
-print(i)
-# 你也可以使用range 指定區間的值：
-for i in range(5,9):
-print(i)
-#也可以使range 以指定數字開始並指定不同的增量
-for i in range(0, 10, 3):
-print(i)
-#負數：
-for i in range(-10, -100, -30):
-print(i)
+    print(i)
+    # 你也可以使用range 指定區間的值：
+    for i in range(5,9):
+        print(i)
+        #也可以使range 以指定數字開始並指定不同的增量
+        for i in range(0, 10, 3):
+            print(i)
+            #負數：
+            for i in range(-10, -100, -30):
+                print(i)
 ```
 您可以結合 range() 和 len() 函數以遍歷一個序列的索引，如下所示：
 
@@ -225,7 +235,7 @@ print(i)
 #--- range() + len()
 aa = ['a', 's', 'd', 'f', 'g']
 for i in range(len(aa)):
-print(i, aa[i])
+    print(i, aa[i])
 ```
 可以使用 range() 函數來創建一個列表：
 
@@ -243,13 +253,13 @@ continue 語句被用來告訴 Python 跳過當前循環中的當此循環，然
 
 ```
 for n in range(2, 10):
-for x in range(2, n):
-if n % x == 0:
-print(n, 'equals', x, '**', n//x)
-break
-else:
-# 循環中沒有找到元素
-print(n, 'is a prime number')
+    for x in range(2, n):
+        if n % x == 0:
+            print(n, 'equals', x, '**', n//x)
+            break
+        else:
+            # 循環中沒有找到元素
+            print(n, 'is a prime number')
 ```
 ## pass 語句
 
@@ -257,13 +267,13 @@ pass 語句什麼都不做。它只在語法上需要一條語句但程序不需
 
 ```
 while True:
-pass
+    pass
 ```
 最小的類：
 
 ```
 class MyEmptyClass:
-pass
+    pass
 ```
 Python3 迭代器與生成器 - 迭代器迭代是 Python 最強大的功能之一，是訪問集合元素的一種方式。
 
@@ -276,7 +286,7 @@ Python3 迭代器與生成器 - 迭代器迭代是 Python 最強大的功能之�
 字符串，列表或元組對像都可用於創建迭代器：
 
 ```
-list=
+list = [1, 2, 3, 4]
 it = iter(list)
 print(next(it))
 print(next(it))
@@ -284,10 +294,10 @@ print(next(it))
 迭代器對象可以使用常規 for 語句進行遍歷：
 
 ```
-list=
+list = [1, 2, 3, 4]
 it = iter(list) # 創建迭代器對象
 for x in it:
-print(x, end="")
+    print(x, end="")
 ```
 ## 生成器
 
@@ -303,17 +313,17 @@ def fibonacci(n): # 生成器函數 - 斐波那契
 ```
 a, b, counter = 0, 1, 0
 while True:
-if (counter > n):
-return
-yield a
-a, b = b, a + b
-counter += 1
-f = fibonacci(10) # f 是一個迭代器，由生成器返回生成
-while True:
-try:
-print (next(f), end="")
-except StopIteration:
-sys.exit()
+    if (counter > n):
+        return
+        yield a
+        a, b = b, a + b
+        counter += 1
+        f = fibonacci(10) # f 是一個迭代器，由生成器返回生成
+        while True:
+            try:
+                print (next(f), end="")
+            except StopIteration:
+                sys.exit()
 ```
 Python3 函數
 
@@ -327,20 +337,20 @@ def 函數名（參數列表）：
 
 ```
 def hello():
-print("hello World!")
-hello()
+    print("hello World!")
+    hello()
 ```
 更複雜點的應用，函數中帶上參數變量：
 
 ```
 def area(width, height):
-return width * height
+    return width * height
 def print_welcome(name):
-print("Welcome", name)
-print_welcome("Fred")
-w = 4
-h = 5
-print("width =", w, " height =", h, " area =", area(w, h))
+    print("Welcome", name)
+    print_welcome("Fred")
+    w = 4
+    h = 5
+    print("width =", w, " height =", h, " area =", area(w, h))
 ```
 輸出結果：
 
@@ -355,13 +365,13 @@ width = 4 height = 5 area = 20
 ```
 a = 4 # 全局變量
 def print_func1():
-a = 17 # 局部變量
-print("in print_func a = ", a)
+    a = 17 # 局部變量
+    print("in print_func a = ", a)
 def print_func2():
-print("in print_func a = ", a)
-print_func1()
-print_func2()
-print("a = ", a)
+    print("in print_func a = ", a)
+    print_func1()
+    print_func2()
+    print("a = ", a)
 ```
 運行結果：
 
@@ -376,10 +386,10 @@ a = 4
 
 ```
 def parrot(voltage, state='a stiff', action='voom', type='Norwegian Blue'):
-print("-- This parrot wouldn't", action, end='')
-print("if you put", voltage, "volts through it.")
-print("-- Lovely plumage, the", type)
-print("-- It's", state, "!")
+    print("-- This parrot wouldn't", action, end='')
+    print("if you put", voltage, "volts through it.")
+    print("-- Lovely plumage, the", type)
+    print("-- It's", state, "!")
 ```
 可以以下幾種方式被調用：
 
@@ -405,10 +415,10 @@ Python 函數使用 return 語句返回函數值，可以將函數作為一個�
 
 ```
 def return_sum(x,y):
-c = x + y
-return c
-res = return_sum(4,5)
-print(res)
+    c = x + y
+    return c
+    res = return_sum(4,5)
+    print(res)
 ```
 ## 可變參數列表
 
@@ -420,18 +430,18 @@ print(res)
 
 ```
 def arithmetic_mean(*args):
-if len(args) == 0:
-return 0
-else:
-sum = 0
-for x in args:
-sum += x
-return sum / len(args)
-print(arithmetic_mean(45,32,89,78))
-print(arithmetic_mean(8989.8,78787.78,3453,78778.73))
-print(arithmetic_mean(45,32))
-print(arithmetic_mean(45))
-print(arithmetic_mean())
+    if len(args) == 0:
+        return 0
+    else:
+        sum = 0
+        for x in args:
+            sum += x
+            return sum / len(args)
+            print(arithmetic_mean(45,32,89,78))
+            print(arithmetic_mean(8989.8,78787.78,3453,78778.73))
+            print(arithmetic_mean(45,32))
+            print(arithmetic_mean(45))
+            print(arithmetic_mean())
 ```
 ## Python3 數據結構
 
@@ -439,7 +449,22 @@ print(arithmetic_mean())
 
 Python 中列表是可變的，這是它區別於字符串和元組的最重要的特點，一句話概括即：列表可以修改，而字符串和元組不能修改。以下是 Python 中列表的方法：
 
-方法</td> 描述</td></tr> list.append(x)</td> 把一個元素添加到列表的結尾，相當於a[len(a):] = [x]。</td></tr> list.extend(L)</td> 通過添加指定列表的所有元素來擴充列表，相當於a[len(a):] = L。</td></tr> list.insert(i, x)</td> 在指定位置插入一個元素。第一個參數是準備插入到其前面的那個元素的索引，例如a.insert(0, x)會插入到整個列表之前，而a.insert(len(a), x)相當於a.append(x)。</td></tr> list.remove(x)</td> 刪除列表中值為x的第一個元素。如果沒有這樣的元素，就會返回一個錯誤。</td></tr> list.pop([i])</td> 從列表的指定位置刪除元素，並將其返回。如果沒有指定索引，a.pop()返回最後一個元素。元素隨即從列表中被刪除。（方法中i兩邊的方括號表示這個參數是可選的，而不是要求你輸入一對方括號，你會經常在Python庫參考手冊中遇到這樣的標記。）</td></tr> list.clear()</td> 移除列表中的所有項，等於del a[i]。</td></tr> list.index(x)</td> 返回列表中第一個值為x的元素的索引。如果沒有匹配的元素就會返回一個錯誤。</td></tr> list.count(x)</td> 返回x在列表中出現的次數。</td></tr> list.sort()</td> 對列表中的元素進行排序。</td></tr> list.reverse()</td> 倒排列表中的元素。</td></tr> list.copy()</td> 返回列表的滾複製，等於a[i]。</td></tr></table>下面示例演示了列表的大部分方法：
+
+| 方法 | 描述 |
+| --- | --- |
+| list.append(x) | 把一個元素添加到列表的結尾，相當於a[len(a):] = [x]。 |
+| list.extend(L) | 通過添加指定列表的所有元素來擴充列表，相當於a[len(a):] = L。 |
+| list.insert(i, x) | 在指定位置插入一個元素。第一個參數是準備插入到其前面的那個元素的索引，例如a.insert(0, x)會插入到整個列表之前，而a.insert(len(a), x)相當於a.append(x)。 |
+| list.remove(x) | 刪除列表中值為x的第一個元素。如果沒有這樣的元素，就會返回一個錯誤。 |
+| list.pop([i]) | 從列表的指定位置刪除元素，並將其返回。如果沒有指定索引，a.pop()返回最後一個元素。元素隨即從列表中被刪除。（方法中i兩邊的方括號表示這個參數是可選的，而不是要求你輸入一對方括號，你會經常在Python庫參考手冊中遇到這樣的標記。） |
+| list.clear() | 移除列表中的所有項，等於del a[i]。 |
+| list.index(x) | 返回列表中第一個值為x的元素的索引。如果沒有匹配的元素就會返回一個錯誤。 |
+| list.count(x) | 返回x在列表中出現的次數。 |
+| list.sort() | 對列表中的元素進行排序。 |
+| list.reverse() | 倒排列表中的元素。 |
+| list.copy() | 返回列表的滾複製，等於a[i]。 |
+| 下面示例演示了列表的大部分方法： |
+
 
 ```
 a = [66.25, 333, 333, 1, 1234.5]
@@ -520,8 +545,8 @@ list1 = [[row[i] for row in matrix] for i in range(4)]
 print(list1)
 transposed = []
 for i in range(4):
-transposed.append([row[i] for row in matrix])
-print(transposed)
+    transposed.append([row[i] for row in matrix])
+    print(transposed)
 ```
 元組和序列
 
@@ -601,8 +626,8 @@ Python3(模塊)
 import sys
 print('命令行參數如下：')
 for i in sys.argv:
-print(i)
-print('\\n\\nPython 路徑為：', sys.path, '\\n')
+    print(i)
+    print('\\n\\nPython 路徑為：', sys.path, '\\n')
 ```
 1、import sys 引入 Python 標準庫中的 sys.py 模塊；這是引入某一模塊的方法。
 
@@ -615,7 +640,7 @@ print('\\n\\nPython 路徑為：', sys.path, '\\n')
 如果要使用 Python 源文件，只需在另一個源文件裡執行 import 語句，import 語句語法如下：
 
 ```
-import module1[,module2[, ... moduleN]
+import module1, module2, module3
 ```
 當解釋器遇到 import 語句，如果模塊在當前的搜索路徑就會被導入。
 
@@ -624,8 +649,8 @@ import module1[,module2[, ... moduleN]
 ```
 # filename: support.py
 def print_func( par ):
-print("Hello : ", par)
-return
+    print("Hello : ", par)
+    return
 ```
 (support.py) index.py 引入 support 模塊：
 
@@ -648,9 +673,9 @@ def fib(n): # 定義到 n 的斐波那契數列
 ```
 a, b = 0, 1
 while b < n:
-print(b, end='')
-a, b = b, a + b
-print()
+    print(b, end='')
+    a, b = b, a + b
+    print()
 ```
 def fib2(n): # 返回到 n 的斐波那契數列
 
@@ -658,9 +683,9 @@ def fib2(n): # 返回到 n 的斐波那契數列
 result = []
 a, b = 0, 1
 while b < n:
-result.append(b)
-a, b = b, a + b
-return result
+    result.append(b)
+    a, b = b, a + b
+    return result
 ```
 導入這個 fibo 模塊：
 
@@ -675,7 +700,7 @@ print(fibo.__name__)
 Python 的 from 語句讓你從模塊中導入一個指定的部分到當前命名空間中，語法如下：
 
 ```
-from modname import name1[, name2[, ... nameN]
+from modname import name1, name2, name3
 ```
 例如，要導入模塊 fibo 的 fib 函數，使用如下語句：
 
@@ -699,9 +724,9 @@ from modname import *
 
 ```
 if __name__ == '__main__':
-print('程序自身在通行')
+    print('程序自身在通行')
 else:
-print('我來自另一模塊')
+    print('我來自另一模塊')
 ```
 每個模塊都有一個_name_屬性，當其值是'main'時，表明該模塊自身在運行，否則是被引入。
 
@@ -795,12 +820,13 @@ Python 從設計之初就是一門面向對象的語言，正因為如此，在 
 類定義
 
 ```
-class ClassName;
-<statement-1>
-.
-.
-.
-<statement-N>
+class ClassName:
+# <statement-1>
+# .
+# .
+# .
+# <statement-N>
+    pass  # 內容省略
 ```
 類實例化後，可以使用其屬性，實際上，創建一個類之後，可以通過類名訪問其屬性。
 
@@ -814,18 +840,19 @@ class ClassName;
 
 ```
 class MyClass:
+    pass  # 內容省略
 ```
 """一個簡單的類實例"""
 
 ```
 i = 12345
 def f(self):
-return 'hello world'
-# 實例化類
-x = MyClass()
-# 訪問類的屬性和方法
-print("MyClass 類的屬性 i 為：", x.i)
-print("MyClass 類的方法 f 輸出為：", x.f())
+    return 'hello world'
+    # 實例化類
+    x = MyClass()
+    # 訪問類的屬性和方法
+    print("MyClass 類的屬性 i 為：", x.i)
+    print("MyClass 類的方法 f 輸出為：", x.f())
 ```
 實例化類：
 
@@ -846,7 +873,7 @@ MyClass 類的方法 f 輸出為：hello world
 
 ```
 def _init_(self):
-self.data = []
+    self.data = []
 ```
 ## 繼承
 
@@ -854,11 +881,12 @@ Python 同樣支持類的繼承，如果一種語言不支持繼承，類就沒�
 
 ```
 class DerivedClassName(BaseClassName):
-<statement-1>
-.
-.
-.
-<statement-N>
+# <statement-1>
+# .
+# .
+# .
+# <statement-N>
+    pass  # 內容省略
 ```
 需要注意圓括號中基類的順序，若是基類中有相同的方法名，而在子類使用時未指定，Python 從左至右搜索即方法在子類中未找到時，從左到右查找基類中是否包含方法。
 
@@ -866,36 +894,37 @@ BaseClassName (示例中的基類名)必須與派生類定義在一個作用域�
 
 ```
 class DerivedClassName(modname.BaseClassName):
+    pass  # 內容省略
 ```
 實例
 
 ```
 # 類定義
 class people:
-# 定義基本屬性
-name = ''
-age = 0
-# 定義私有屬性，私有屬性在額外部無法直接進行訪問
-_weight = 0
-# 定義構造方法
+    # 定義基本屬性
+    name = ''
+    age = 0
+    # 定義私有屬性，私有屬性在額外部無法直接進行訪問
+    _weight = 0
+    # 定義構造方法
 def __init__(self, n, a, w):
-self.name = n
-self.age = a
-self._weight = w
+    self.name = n
+    self.age = a
+    self._weight = w
 def speak(self):
-print("%s 說：我 %d 處：" %(self.name, self.age))
-#單獨承示例
+    print("%s 說：我 %d 處：" %(self.name, self.age))
+    #單獨承示例
 class student(people):
-grade = ''
+    grade = ''
 def __init__(self, n, a, w, g):
-# 調用父類的構造
-people.__init__(self, n, a, w)
-self.grade = g
-# 覆為父類的方法
+    # 調用父類的構造
+    people.__init__(self, n, a, w)
+    self.grade = g
+    # 覆為父類的方法
 def speak(self):
-print("%s 說：我 %d 處了，我在讀 %d 年級"%(self.name, self.age, self.grade))
-s = student('ken', 10, 60, 3)
-s.speak()
+    print("%s 說：我 %d 處了，我在讀 %d 年級"%(self.name, self.age, self.grade))
+    s = student('ken', 10, 60, 3)
+    s.speak()
 ```
 多繼承
 
@@ -903,39 +932,40 @@ Python 同樣有限的支持多繼承形式。多繼承的類定義形如下例�
 
 ```
 class DerivedClassName(Base1, Base2, Base3):
-<statement-1>
-.
-.
-.
-<statement-N>
+# <statement-1>
+# .
+# .
+# .
+# <statement-N>
+    pass  # 內容省略
 ```
 需要注意圓括號中父類的順序，若是父類中有相同的方法名，而在子類使用時未指定，Python從左至右搜索即方法在子類中未找到時，從左到右查找父類中是否包含方法。
 
 ```
 # 鎖定義
 class people:
-#定義基本屬性
-name = ''
-age = 0
-#定義私有屬性，私有屬性在標外部無法直接進行訪問
-_weight = 0
-#定義構造方法
+    #定義基本屬性
+    name = ''
+    age = 0
+    #定義私有屬性，私有屬性在標外部無法直接進行訪問
+    _weight = 0
+    #定義構造方法
 def _init_(self, n, a, w):
-self.name = n
-self.age = a
-self._weight = w
+    self.name = n
+    self.age = a
+    self._weight = w
 def speak(self):
-print("%s 說：我 %d 處：" %(self.name, self.age))
-#單維承示例
+    print("%s 說：我 %d 處：" %(self.name, self.age))
+    #單維承示例
 class student(people):
-grade = ''
+    grade = ''
 def _init_(self, n, a, w, g):
-# 調用父類的構造
-people._init_(self, n, a, w)
-self.grade = g
-# 覆商父類的方法
+    # 調用父類的構造
+    people._init_(self, n, a, w)
+    self.grade = g
+    # 覆商父類的方法
 def speak(self):
-print("%s 說：我 %d 處了，我在讀 %d 年級" % (self.name, self.age, self.grade))
+    print("%s 說：我 %d 處了，我在讀 %d 年級" % (self.name, self.age, self.grade))
 ```
 ## 方法重寫
 
@@ -945,14 +975,14 @@ class Parent: # 定義父類
 
 ```
 def myMethod(self):
-print('調用父類方法')
+    print('調用父類方法')
 ```
 class Child(Parent): # 定義子類
 
 ```
 def myMethod(self):
-print('調用子類方法')
-c = Child() # 子類實例
+    print('調用子類方法')
+    c = Child() # 子類實例
 ```
 c.myMethod() # 子類調用重寫方法
 
@@ -1056,4 +1086,3 @@ FastAPI 則以極簡主義和靈活性著稱。它的核心功能簡潔，開發
 5). 結論
 
 FastAPI 和 Django 各自針對不同的使用場景進行了優化。FastAPI 更注重性能和靈活性，而 Django 提供了豐富的功能和較低的學習門檻。在選擇這兩個框架時，應根據項目的具體需求來決定。
-

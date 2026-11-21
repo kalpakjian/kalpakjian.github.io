@@ -2120,4 +2120,3 @@ cd kibana-7.13.2
 ```
 https://git-scm.com/doc
 ```
-

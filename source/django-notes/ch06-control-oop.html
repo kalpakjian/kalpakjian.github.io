@@ -302,7 +302,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 
 <p>清空集合 s。</p>
 <p>實例：</p>
-<div class="codehilite"><pre><span></span><code>thisset = set("s", "ss", "sss"))
+<div class="codehilite"><pre><span></span><code>thisset = set(("s", "ss", "sss"))
 thisset.clear()
 print(thisset)
 </code></pre></div>
@@ -313,7 +313,7 @@ print(thisset)
 
 <h2 id="判斷元素是否在集合中存在">判斷元素是否在集合中存在</h2>
 <p>判斷元素 x 是否在集合 s 中，存在則返回 True，不存在則返回 False。實例：</p>
-<div class="codehilite"><pre><span></span><code>thisset = set("s", "ss", "sss"))
+<div class="codehilite"><pre><span></span><code>thisset = set(("s", "ss", "sss"))
 print("ss" in thisset)
 print("sssss" in thisset)
 </code></pre></div>
@@ -326,15 +326,15 @@ False
 <h2 id="python3-條件控制">Python3 條件控制</h2>
 <p>if 語句 Python 條件語句是通過一條或多條語句的執行結果(True 或者 False)來決定執行的代碼塊Python 中 if 語句的一般形式如下所示：</p>
 <div class="codehilite"><pre><span></span><code>if condition_1:
-statement_block_1
+    statement_block_1
 </code></pre></div>
 
 <p>流程圖如下所示：</p>
 <p>這種 if 語句只有在符合條件的時候才會執行代碼塊內的代碼，是一種比較常見的用法。另一種常見的用法是：</p>
 <div class="codehilite"><pre><span></span><code>if condition_1:
-statement_block_1
+    statement_block_1
 else:
-statement_block_2
+    statement_block_2
 </code></pre></div>
 
 <p>流程圖如下所示：</p>
@@ -342,11 +342,11 @@ statement_block_2
 <p>在一些時候，我們可能需要多分支的條件語句代碼，可以在 if-else 語句中混合 elif 語句進行使用：</p>
 <p>Python 中用elif 代替了else if，所以if語句的關鍵字為：if - elif - else。</p>
 <div class="codehilite"><pre><span></span><code>if condition_1:
-statement_block_1
+    statement_block_1
 elif condition_2:
-statement_block_2
+    statement_block_2
 else:
-statement_block_3
+    statement_block_3
 </code></pre></div>
 
 <p>流程圖如下所示：</p>
@@ -360,31 +360,64 @@ statement_block_3
 <p>在其他語言(比如說經典的 C 語言)中有一種多分支條件判斷語句，可以進行模式匹配(通俗的講，就是將傳入的內容跟多個已存在的樣例進行比較，找到相同的案例並按照該案例的代碼進行處理，如果沒有相同案例就按默認案例進行處理，可以查看其他編程語言的條件語句的 Switch 相關部分內容進行比較參考)。在 python3.10 中也引入了這樣的新特性。</p>
 <p>一個 match 語句的使用示例：</p>
 <div class="codehilite"><pre><span></span><code>def http_error(status):
-match status:
-case 400:
-return "Bad request"
-case 404:
-return "Not found"
-case 418:
-return "I'm a teapot"
-case _:
-return "Something's wrong with the Internet"
+    match status:
+        case 400:
+            return "Bad request"
+        case 404:
+            return "Not found"
+        case 418:
+            return "I'm a teapot"
+        case _:
+            return "Something's wrong with the Internet"
 </code></pre></div>
 
 <p>上述代碼等價於：</p>
 <div class="codehilite"><pre><span></span><code>def http_error(status):
-if status == 400:
-return "Bad request"
-elif status == 404:
-return "Not found"
-elif status == 418:
-return "I'm a teapot"
-else:
-return "Something's wrong with the Internet"
+    if status == 400:
+        return "Bad request"
+    elif status == 404:
+        return "Not found"
+    elif status == 418:
+        return "I'm a teapot"
+    else:
+        return "Something's wrong with the Internet"
 </code></pre></div>
 
 <p>以下為 if 中常用的操作運算符:</p>
-<p>操作符</td> 描述</td></tr> &lt;</td> 小於</td></tr> &lt;=</td> 小於或等於</td></tr> &gt;</td> 大於</td></tr> &gt;=</td> 大於或等於</td></tr> **</td> 等於,比較對像是否相等</td></tr> !=</td> 不等於</td></tr></table></p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;</td>
+<td>小於</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>小於或等於</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大於</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>大於或等於</td>
+</tr>
+<tr>
+<td>**</td>
+<td>等於,比較對像是否相等</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>不等於</td>
+</tr>
+</tbody>
+</table>
 <h2 id="實例">實例</h2>
 <div class="codehilite"><pre><span></span><code><span class="nv">print</span><span class="ss">(</span><span class="mi">5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">6</span><span class="ss">)</span>
 #<span class="w"> </span>使用變量
@@ -395,13 +428,13 @@ return "Something's wrong with the Internet"
 <span class="nv">guess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
 <span class="nv">print</span><span class="ss">(</span><span class="s2">"猜數字！"</span><span class="ss">)</span>
 <span class="k">while</span><span class="w"> </span><span class="nv">guess</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nv">number</span>:
-<span class="nv">guess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">int</span><span class="ss">(</span><span class="nv">input</span><span class="ss">(</span><span class="s2">"請輸入你要猜的數字"</span><span class="ss">))</span>
-<span class="k">if</span><span class="w"> </span><span class="nv">guess</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">number</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"你猜中了，真厲害！"</span><span class="ss">)</span>
-<span class="nv">elif</span><span class="w"> </span><span class="nv">guess</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">number</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"猜小了，再猜猜？"</span><span class="ss">)</span>
-<span class="nv">elif</span><span class="w"> </span><span class="nv">guess</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nv">number</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"猜大了，在猜猜？"</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">guess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">int</span><span class="ss">(</span><span class="nv">input</span><span class="ss">(</span><span class="s2">"請輸入你要猜的數字"</span><span class="ss">))</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">guess</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">number</span>:
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"你猜中了，真厲害！"</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">elif</span><span class="w"> </span><span class="nv">guess</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">number</span>:
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"猜小了，再猜猜？"</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">elif</span><span class="w"> </span><span class="nv">guess</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nv">number</span>:
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"猜大了，在猜猜？"</span><span class="ss">)</span>
 </code></pre></div>
 
 <p>Python3 循環</p>
@@ -419,9 +452,9 @@ return "Something's wrong with the Internet"
 <span class="nv">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
 <span class="nv">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 <span class="k">while</span><span class="w"> </span><span class="nv">counter</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nv">n</span>:
-<span class="nv">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">sum</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">counter</span>
-<span class="nv">counter</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
-<span class="nv">print</span><span class="ss">(</span><span class="s1">'Sum of 1 until %d: %d'</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="ss">(</span><span class="nv">n</span>,<span class="nv">sum</span><span class="ss">))</span>
+<span class="w">    </span><span class="nv">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">sum</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">counter</span>
+<span class="w">    </span><span class="nv">counter</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="s1">'Sum of 1 until %d: %d'</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="ss">(</span><span class="nv">n</span>,<span class="nv">sum</span><span class="ss">))</span>
 </code></pre></div>
 
 <p>執行結果如下：</p>
@@ -433,12 +466,13 @@ return "Something's wrong with the Internet"
 <p>for 循環的一般格式如下：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span>:
 <span class="k">else</span>:
+<span class="w">    </span><span class="nv">pass</span><span class="w">  </span>#<span class="w"> </span>內容省略
 </code></pre></div>
 
 <p>Python for 循環實例：</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="s1">'BvS'</span>,<span class="w"> </span><span class="s1">'水水俠'</span>,<span class="w"> </span><span class="s1">'神奇女俠'</span>,<span class="w"> </span><span class="s1">'大超回歸'</span>]
 <span class="k">for</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">DC</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)</span>
 </code></pre></div>
 
 <p>執行結果如下：</p>
@@ -451,23 +485,23 @@ return "Something's wrong with the Internet"
 <p>range()函數</p>
 <p>如果你需要遍歷數字序列，可以使用內置 range() 函數。它會生成數列，例如：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="mi">10</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
-#<span class="w"> </span>你也可以使用<span class="nv">range</span><span class="w"> </span>指定區間的值：
-<span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="mi">5</span>,<span class="mi">9</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
-#也可以使<span class="nv">range</span><span class="w"> </span>以指定數字開始並指定不同的增量
-<span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="mi">0</span>,<span class="w"> </span><span class="mi">10</span>,<span class="w"> </span><span class="mi">3</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
-#負數：
-<span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="o">-</span><span class="mi">10</span>,<span class="w"> </span><span class="o">-</span><span class="mi">100</span>,<span class="w"> </span><span class="o">-</span><span class="mi">30</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
+<span class="w">    </span>#<span class="w"> </span>你也可以使用<span class="nv">range</span><span class="w"> </span>指定區間的值：
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="mi">5</span>,<span class="mi">9</span><span class="ss">)</span>:
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
+<span class="w">        </span>#也可以使<span class="nv">range</span><span class="w"> </span>以指定數字開始並指定不同的增量
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="mi">0</span>,<span class="w"> </span><span class="mi">10</span>,<span class="w"> </span><span class="mi">3</span><span class="ss">)</span>:
+<span class="w">            </span><span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
+<span class="w">            </span>#負數：
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="o">-</span><span class="mi">10</span>,<span class="w"> </span><span class="o">-</span><span class="mi">100</span>,<span class="w"> </span><span class="o">-</span><span class="mi">30</span><span class="ss">)</span>:
+<span class="w">                </span><span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
 </code></pre></div>
 
 <p>您可以結合 range() 和 len() 函數以遍歷一個序列的索引，如下所示：</p>
 <div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="c1">--- range() + len()</span>
 <span class="n">aa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="n">'a', 's', 'd', 'f', 'g'</span><span class="o">]</span>
 <span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">aa</span><span class="p">))</span><span class="err">:</span>
-<span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">aa</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">)</span>
+<span class="w">    </span><span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">aa</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">)</span>
 </code></pre></div>
 
 <p>可以使用 range() 函數來創建一個列表：</p>
@@ -480,24 +514,24 @@ print(pp)
 <p>continue 語句被用來告訴 Python 跳過當前循環中的當此循環，然後繼續進行下一輪循環。</p>
 <p>循環語句可以有 else 子句；它在窮盡列表(以 for 循環)或條件變為假(以 while 循環)循環終止時被執行，但循環被 break 終止時不執行，如下查尋質數的循環例子：</p>
 <div class="codehilite"><pre><span></span><code>for n in range(2, 10):
-for x in range(2, n):
-if n % x == 0:
-print(n, 'equals', x, '**', n//x)
-break
-else:
-<span class="gh">#</span> 循環中沒有找到元素
-print(n, 'is a prime number')
+    for x in range(2, n):
+        if n % x == 0:
+            print(n, 'equals', x, '**', n//x)
+            break
+        else:
+            # 循環中沒有找到元素
+            print(n, 'is a prime number')
 </code></pre></div>
 
 <h2 id="pass-語句">pass 語句</h2>
 <p>pass 語句什麼都不做。它只在語法上需要一條語句但程序不需要任何操作時使用。例如：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">while</span><span class="w"> </span><span class="nv">True</span>:
-<span class="nv">pass</span>
+<span class="w">    </span><span class="nv">pass</span>
 </code></pre></div>
 
 <p>最小的類：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">MyEmptyClass:</span>
-<span class="nb">pass</span>
+    <span class="nb">pass</span>
 </code></pre></div>
 
 <p>Python3 迭代器與生成器 - 迭代器迭代是 Python 最強大的功能之一，是訪問集合元素的一種方式。</p>
@@ -505,17 +539,17 @@ print(n, 'is a prime number')
 <p>迭代器對像從集合的第一個元素開始訪問，直到所有的元素被訪問完結束。迭代器只能往前不會後退。</p>
 <p>迭代器有兩個基本的方法：iter()和next()。</p>
 <p>字符串，列表或元組對像都可用於創建迭代器：</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">list</span><span class="o">=</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="mi">1</span>,<span class="w"> </span><span class="mi">2</span>,<span class="w"> </span><span class="mi">3</span>,<span class="w"> </span><span class="mi">4</span>]
 <span class="nv">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">iter</span><span class="ss">(</span><span class="nv">list</span><span class="ss">)</span>
 <span class="nv">print</span><span class="ss">(</span><span class="k">next</span><span class="ss">(</span><span class="nv">it</span><span class="ss">))</span>
 <span class="nv">print</span><span class="ss">(</span><span class="k">next</span><span class="ss">(</span><span class="nv">it</span><span class="ss">))</span>
 </code></pre></div>
 
 <p>迭代器對象可以使用常規 for 語句進行遍歷：</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">list</span><span class="o">=</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="mi">1</span>,<span class="w"> </span><span class="mi">2</span>,<span class="w"> </span><span class="mi">3</span>,<span class="w"> </span><span class="mi">4</span>]
 <span class="nv">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">iter</span><span class="ss">(</span><span class="nv">list</span><span class="ss">)</span><span class="w"> </span>#<span class="w"> </span>創建迭代器對象
 <span class="k">for</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">it</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="nv">x</span>,<span class="w"> </span><span class="k">end</span><span class="o">=</span><span class="s2">""</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">x</span>,<span class="w"> </span><span class="k">end</span><span class="o">=</span><span class="s2">""</span><span class="ss">)</span>
 </code></pre></div>
 
 <h2 id="生成器">生成器</h2>
@@ -527,17 +561,17 @@ print(n, 'is a prime number')
 <p>def fibonacci(n): # 生成器函數 - 斐波那契</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>,<span class="w"> </span><span class="mi">1</span>,<span class="w"> </span><span class="mi">0</span>
 <span class="k">while</span><span class="w"> </span><span class="nv">True</span>:
-<span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">counter</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nv">n</span><span class="ss">)</span>:
-<span class="k">return</span>
-<span class="nv">yield</span><span class="w"> </span><span class="nv">a</span>
-<span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
-<span class="nv">counter</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
-<span class="nv">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">fibonacci</span><span class="ss">(</span><span class="mi">10</span><span class="ss">)</span><span class="w"> </span>#<span class="w"> </span><span class="nv">f</span><span class="w"> </span>是一個迭代器，由生成器返回生成
-<span class="k">while</span><span class="w"> </span><span class="nv">True</span>:
-<span class="nv">try</span>:
-<span class="nv">print</span><span class="w"> </span><span class="ss">(</span><span class="k">next</span><span class="ss">(</span><span class="nv">f</span><span class="ss">)</span>,<span class="w"> </span><span class="k">end</span><span class="o">=</span><span class="s2">""</span><span class="ss">)</span>
-<span class="nv">except</span><span class="w"> </span><span class="nv">StopIteration</span>:
-<span class="nv">sys</span>.<span class="k">exit</span><span class="ss">()</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">counter</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nv">n</span><span class="ss">)</span>:
+<span class="w">        </span><span class="k">return</span>
+<span class="w">        </span><span class="nv">yield</span><span class="w"> </span><span class="nv">a</span>
+<span class="w">        </span><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
+<span class="w">        </span><span class="nv">counter</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="nv">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">fibonacci</span><span class="ss">(</span><span class="mi">10</span><span class="ss">)</span><span class="w"> </span>#<span class="w"> </span><span class="nv">f</span><span class="w"> </span>是一個迭代器，由生成器返回生成
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="nv">True</span>:
+<span class="w">            </span><span class="nv">try</span>:
+<span class="w">                </span><span class="nv">print</span><span class="w"> </span><span class="ss">(</span><span class="k">next</span><span class="ss">(</span><span class="nv">f</span><span class="ss">)</span>,<span class="w"> </span><span class="k">end</span><span class="o">=</span><span class="s2">""</span><span class="ss">)</span>
+<span class="w">            </span><span class="nv">except</span><span class="w"> </span><span class="nv">StopIteration</span>:
+<span class="w">                </span><span class="nv">sys</span>.<span class="k">exit</span><span class="ss">()</span>
 </code></pre></div>
 
 <p>Python3 函數</p>
@@ -546,19 +580,19 @@ print(n, 'is a prime number')
 <p>def 函數名（參數列表）：</p>
 <p>函數體讓我們使用函數來輸出"Hello World!"：</p>
 <div class="codehilite"><pre><span></span><code>def hello():
-print("hello World!")
-hello()
+    print("hello World!")
+    hello()
 </code></pre></div>
 
 <p>更複雜點的應用，函數中帶上參數變量：</p>
 <div class="codehilite"><pre><span></span><code>def area(width, height):
-return width * height
+    return width * height
 def print_welcome(name):
-print("Welcome", name)
-print_welcome("Fred")
-w = 4
-h = 5
-print("width =", w, " height =", h, " area =", area(w, h))
+    print("Welcome", name)
+    print_welcome("Fred")
+    w = 4
+    h = 5
+    print("width =", w, " height =", h, " area =", area(w, h))
 </code></pre></div>
 
 <p>輸出結果：</p>
@@ -570,13 +604,13 @@ width = 4 height = 5 area = 20
 <p>定義在函數內部的變量擁有一個局部作用域，定義在函數外的擁有全局作用域。通過以下實例，你可以清楚瞭解 Python 函數變量的作用域：</p>
 <div class="codehilite"><pre><span></span><code><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="c1"># 全局變量</span>
 <span class="n">def</span><span class="w"> </span><span class="n">print_func1</span><span class="p">():</span>
-<span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">17</span><span class="w"> </span><span class="c1"># 局部變量</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"in print_func a = "</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">17</span><span class="w"> </span><span class="c1"># 局部變量</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">"in print_func a = "</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
 <span class="n">def</span><span class="w"> </span><span class="n">print_func2</span><span class="p">():</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"in print_func a = "</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
-<span class="n">print_func1</span><span class="p">()</span>
-<span class="n">print_func2</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"a = "</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">"in print_func a = "</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
+<span class="w">    </span><span class="n">print_func1</span><span class="p">()</span>
+<span class="w">    </span><span class="n">print_func2</span><span class="p">()</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">"a = "</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
 </code></pre></div>
 
 <p>運行結果：</p>
@@ -588,10 +622,10 @@ width = 4 height = 5 area = 20
 <h2 id="關鍵字參數">關鍵字參數</h2>
 <p>函數也可以使用 kwarg = value 的關鍵字參數形式被調用。例如，以下函數：</p>
 <div class="codehilite"><pre><span></span><code><span class="nx">def</span><span class="w"> </span><span class="nx">parrot</span><span class="p">(</span><span class="nx">voltage</span><span class="p">,</span><span class="w"> </span><span class="nx">state</span><span class="p">=</span><span class="err">'</span><span class="nx">a</span><span class="w"> </span><span class="nx">stiff</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="nx">action</span><span class="p">=</span><span class="err">'</span><span class="nx">voom</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">=</span><span class="err">'</span><span class="nx">Norwegian</span><span class="w"> </span><span class="nx">Blue</span><span class="err">'</span><span class="p">):</span>
-<span class="nx">print</span><span class="p">(</span><span class="s">"-- This parrot wouldn't"</span><span class="p">,</span><span class="w"> </span><span class="nx">action</span><span class="p">,</span><span class="w"> </span><span class="nx">end</span><span class="p">=</span><span class="err">''</span><span class="p">)</span>
-<span class="nx">print</span><span class="p">(</span><span class="s">"if you put"</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="p">,</span><span class="w"> </span><span class="s">"volts through it."</span><span class="p">)</span>
-<span class="nx">print</span><span class="p">(</span><span class="s">"-- Lovely plumage, the"</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">)</span>
-<span class="nx">print</span><span class="p">(</span><span class="s">"-- It's"</span><span class="p">,</span><span class="w"> </span><span class="nx">state</span><span class="p">,</span><span class="w"> </span><span class="s">"!"</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="s">"-- This parrot wouldn't"</span><span class="p">,</span><span class="w"> </span><span class="nx">action</span><span class="p">,</span><span class="w"> </span><span class="nx">end</span><span class="p">=</span><span class="err">''</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="s">"if you put"</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="p">,</span><span class="w"> </span><span class="s">"volts through it."</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="s">"-- Lovely plumage, the"</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="s">"-- It's"</span><span class="p">,</span><span class="w"> </span><span class="nx">state</span><span class="p">,</span><span class="w"> </span><span class="s">"!"</span><span class="p">)</span>
 </code></pre></div>
 
 <p>可以以下幾種方式被調用：</p>
@@ -613,10 +647,10 @@ parrot('a thousand', state='pushing up the daisies') # 1 positional, 1 keyword
 <h2 id="返回值">返回值</h2>
 <p>Python 函數使用 return 語句返回函數值，可以將函數作為一個值賦值給指定變量：</p>
 <div class="codehilite"><pre><span></span><code>def return_sum(x,y):
-c = x + y
-return c
-res = return_sum(4,5)
-print(res)
+    c = x + y
+    return c
+    res = return_sum(4,5)
+    print(res)
 </code></pre></div>
 
 <h2 id="可變參數列表">可變參數列表</h2>
@@ -624,24 +658,81 @@ print(res)
 <p>這些參數被包裝進一個元組(查看元組和序列)。</p>
 <p>在這些可變個數的參數之前，可以有零到多個普通的參數：</p>
 <div class="codehilite"><pre><span></span><code>def arithmetic_mean(*args):
-if len(args) == 0:
-return 0
-else:
-sum = 0
-for x in args:
-sum += x
-return sum / len(args)
-print(arithmetic_mean(45,32,89,78))
-print(arithmetic_mean(8989.8,78787.78,3453,78778.73))
-print(arithmetic_mean(45,32))
-print(arithmetic_mean(45))
-print(arithmetic_mean())
+    if len(args) == 0:
+        return 0
+    else:
+        sum = 0
+        for x in args:
+            sum += x
+            return sum / len(args)
+            print(arithmetic_mean(45,32,89,78))
+            print(arithmetic_mean(8989.8,78787.78,3453,78778.73))
+            print(arithmetic_mean(45,32))
+            print(arithmetic_mean(45))
+            print(arithmetic_mean())
 </code></pre></div>
 
 <h2 id="python3-數據結構">Python3 數據結構</h2>
 <h2 id="列表">列表</h2>
 <p>Python 中列表是可變的，這是它區別於字符串和元組的最重要的特點，一句話概括即：列表可以修改，而字符串和元組不能修改。以下是 Python 中列表的方法：</p>
-<p>方法</td> 描述</td></tr> list.append(x)</td> 把一個元素添加到列表的結尾，相當於a[len(a):] = [x]。</td></tr> list.extend(L)</td> 通過添加指定列表的所有元素來擴充列表，相當於a[len(a):] = L。</td></tr> list.insert(i, x)</td> 在指定位置插入一個元素。第一個參數是準備插入到其前面的那個元素的索引，例如a.insert(0, x)會插入到整個列表之前，而a.insert(len(a), x)相當於a.append(x)。</td></tr> list.remove(x)</td> 刪除列表中值為x的第一個元素。如果沒有這樣的元素，就會返回一個錯誤。</td></tr> list.pop([i])</td> 從列表的指定位置刪除元素，並將其返回。如果沒有指定索引，a.pop()返回最後一個元素。元素隨即從列表中被刪除。（方法中i兩邊的方括號表示這個參數是可選的，而不是要求你輸入一對方括號，你會經常在Python庫參考手冊中遇到這樣的標記。）</td></tr> list.clear()</td> 移除列表中的所有項，等於del a[i]。</td></tr> list.index(x)</td> 返回列表中第一個值為x的元素的索引。如果沒有匹配的元素就會返回一個錯誤。</td></tr> list.count(x)</td> 返回x在列表中出現的次數。</td></tr> list.sort()</td> 對列表中的元素進行排序。</td></tr> list.reverse()</td> 倒排列表中的元素。</td></tr> list.copy()</td> 返回列表的滾複製，等於a[i]。</td></tr></table>下面示例演示了列表的大部分方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list.append(x)</td>
+<td>把一個元素添加到列表的結尾，相當於a[len(a):] = [x]。</td>
+</tr>
+<tr>
+<td>list.extend(L)</td>
+<td>通過添加指定列表的所有元素來擴充列表，相當於a[len(a):] = L。</td>
+</tr>
+<tr>
+<td>list.insert(i, x)</td>
+<td>在指定位置插入一個元素。第一個參數是準備插入到其前面的那個元素的索引，例如a.insert(0, x)會插入到整個列表之前，而a.insert(len(a), x)相當於a.append(x)。</td>
+</tr>
+<tr>
+<td>list.remove(x)</td>
+<td>刪除列表中值為x的第一個元素。如果沒有這樣的元素，就會返回一個錯誤。</td>
+</tr>
+<tr>
+<td>list.pop([i])</td>
+<td>從列表的指定位置刪除元素，並將其返回。如果沒有指定索引，a.pop()返回最後一個元素。元素隨即從列表中被刪除。（方法中i兩邊的方括號表示這個參數是可選的，而不是要求你輸入一對方括號，你會經常在Python庫參考手冊中遇到這樣的標記。）</td>
+</tr>
+<tr>
+<td>list.clear()</td>
+<td>移除列表中的所有項，等於del a[i]。</td>
+</tr>
+<tr>
+<td>list.index(x)</td>
+<td>返回列表中第一個值為x的元素的索引。如果沒有匹配的元素就會返回一個錯誤。</td>
+</tr>
+<tr>
+<td>list.count(x)</td>
+<td>返回x在列表中出現的次數。</td>
+</tr>
+<tr>
+<td>list.sort()</td>
+<td>對列表中的元素進行排序。</td>
+</tr>
+<tr>
+<td>list.reverse()</td>
+<td>倒排列表中的元素。</td>
+</tr>
+<tr>
+<td>list.copy()</td>
+<td>返回列表的滾複製，等於a[i]。</td>
+</tr>
+<tr>
+<td>下面示例演示了列表的大部分方法：</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <div class="codehilite"><pre><span></span><code>a = [66.25, 333, 333, 1, 1234.5]
 print(a.count(333), a.count(66.25), a.count('x'))
 a.insert(2, -1)
@@ -707,8 +798,8 @@ print(vec2)
 <span class="k">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
 <span class="n">transposed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
 <span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="err">:</span>
-<span class="n">transposed</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="o">[</span><span class="n">row[i</span><span class="o">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">row</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">matrix</span><span class="err">]</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">transposed</span><span class="p">)</span>
+<span class="w">    </span><span class="n">transposed</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="o">[</span><span class="n">row[i</span><span class="o">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">row</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">matrix</span><span class="err">]</span><span class="p">)</span>
+<span class="w">    </span><span class="k">print</span><span class="p">(</span><span class="n">transposed</span><span class="p">)</span>
 </code></pre></div>
 
 <p>元組和序列</p>
@@ -773,8 +864,8 @@ aaa = dict(sape=4139, guido=4127, jack=4098)
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">'命令行參數如下：'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">:</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\\</span><span class="s1">n</span><span class="se">\\</span><span class="s1">nPython 路徑為：'</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">'</span><span class="se">\\</span><span class="s1">n'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\\</span><span class="s1">n</span><span class="se">\\</span><span class="s1">nPython 路徑為：'</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">'</span><span class="se">\\</span><span class="s1">n'</span><span class="p">)</span>
 </code></pre></div>
 
 <p>1、import sys 引入 Python 標準庫中的 sys.py 模塊；這是引入某一模塊的方法。</p>
@@ -782,15 +873,15 @@ aaa = dict(sape=4139, guido=4127, jack=4098)
 <p>3、sys.path 包含了一個 Python 解釋器自動查找所需模塊的路徑的列表。</p>
 <h2 id="import-語句">import 語句</h2>
 <p>如果要使用 Python 源文件，只需在另一個源文件裡執行 import 語句，import 語句語法如下：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">module1</span><span class="p">[,</span><span class="n">module2</span><span class="p">[,</span> <span class="o">...</span> <span class="n">moduleN</span><span class="p">]</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">module1</span><span class="o">,</span><span class="w"> </span><span class="nn">module2</span><span class="o">,</span><span class="w"> </span><span class="nn">module3</span>
 </code></pre></div>
 
 <p>當解釋器遇到 import 語句，如果模塊在當前的搜索路徑就會被導入。</p>
 <p>搜索路徑是一個解釋器會先進行搜索的所有目錄的列表。如果想要導入模塊 support，需要把命令放在腳本的頂端：</p>
 <div class="codehilite"><pre><span></span><code><span class="gh">#</span> filename: support.py
 def print_func( par ):
-print("Hello : ", par)
-return
+    print("Hello : ", par)
+    return
 </code></pre></div>
 
 <p>(support.py) index.py 引入 support 模塊：</p>
@@ -806,18 +897,18 @@ return
 <p>def fib(n): # 定義到 n 的斐波那契數列</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>,<span class="w"> </span><span class="mi">1</span>
 <span class="k">while</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">n</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="nv">b</span>,<span class="w"> </span><span class="k">end</span><span class="o">=</span><span class="s1">''</span><span class="ss">)</span>
-<span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
-<span class="nv">print</span><span class="ss">()</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">b</span>,<span class="w"> </span><span class="k">end</span><span class="o">=</span><span class="s1">''</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">()</span>
 </code></pre></div>
 
 <p>def fib2(n): # 返回到 n 的斐波那契數列</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[]
 <span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>,<span class="w"> </span><span class="mi">1</span>
 <span class="k">while</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">n</span>:
-<span class="nb">result</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">b</span><span class="ss">)</span>
-<span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
-<span class="k">return</span><span class="w"> </span><span class="nb">result</span>
+<span class="w">    </span><span class="nb">result</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">b</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">result</span>
 </code></pre></div>
 
 <p>導入這個 fibo 模塊：</p>
@@ -829,7 +920,7 @@ return
 
 <h2 id="from--import-語句">from ... import 語句</h2>
 <p>Python 的 from 語句讓你從模塊中導入一個指定的部分到當前命名空間中，語法如下：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">modname</span><span class="w"> </span><span class="kn">import</span> <span class="n">name1</span><span class="p">[,</span> <span class="n">name2</span><span class="p">[,</span> <span class="o">...</span> <span class="n">nameN</span><span class="p">]</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">modname</span><span class="w"> </span><span class="kn">import</span> <span class="n">name1</span><span class="p">,</span> <span class="n">name2</span><span class="p">,</span> <span class="n">name3</span>
 </code></pre></div>
 
 <p>例如，要導入模塊 fibo 的 fib 函數，使用如下語句：</p>
@@ -846,9 +937,9 @@ return
 <h2 id="_name_屬性">_name_屬性</h2>
 <p>一個模塊被另一個程序第一次引入時，其主程序將運行。如果我們想在模塊被引入時，模塊中的某一程序塊不執行，我們可以用_name_屬性來使該程序塊僅在該模塊自身運行時執行。</p>
 <div class="codehilite"><pre><span></span><code>if __name__ == '__main__':
-print('程序自身在通行')
+    print('程序自身在通行')
 else:
-print('我來自另一模塊')
+    print('我來自另一模塊')
 </code></pre></div>
 
 <p>每個模塊都有一個_name_屬性，當其值是'main'時，表明該模塊自身在運行，否則是被引入。</p>
@@ -929,12 +1020,13 @@ NameError: name 'spam' is not defined
 <p>方法：類中定義的函數。</p>
 <p>對象：通過類定義的數據結構實例。對象包括兩個數據成員(類變量和實例變量)和方法。</p>
 <p>類定義</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">ClassName</span>;
-<span class="s">&lt;statement-1&gt;</span>
-.
-.
-.
-<span class="s">&lt;statement-N&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">ClassName:</span>
+<span class="c1"># &lt;statement-1&gt;</span>
+<span class="c1"># .</span>
+<span class="c1"># .</span>
+<span class="c1"># .</span>
+<span class="c1"># &lt;statement-N&gt;</span>
+    <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
 <p>類實例化後，可以使用其屬性，實際上，創建一個類之後，可以通過類名訪問其屬性。</p>
@@ -943,17 +1035,18 @@ NameError: name 'spam' is not defined
 <p>屬性引用使用和 Python 中所有的屬性引用一樣的標準語法：obj.name。</p>
 <p>類對象創建後，類命名空間中所有的命名都是有效屬性名。所以如果類定義是這樣：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">MyClass:</span>
+    <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
 <p>"""一個簡單的類實例"""</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12345</span>
 <span class="nv">def</span><span class="w"> </span><span class="nv">f</span><span class="ss">(</span><span class="nv">self</span><span class="ss">)</span>:
-<span class="k">return</span><span class="w"> </span><span class="s1">'hello world'</span>
-#<span class="w"> </span>實例化類
-<span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">MyClass</span><span class="ss">()</span>
-#<span class="w"> </span>訪問類的屬性和方法
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"MyClass 類的屬性 i 為："</span>,<span class="w"> </span><span class="nv">x</span>.<span class="nv">i</span><span class="ss">)</span>
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"MyClass 類的方法 f 輸出為："</span>,<span class="w"> </span><span class="nv">x</span>.<span class="nv">f</span><span class="ss">())</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s1">'hello world'</span>
+<span class="w">    </span>#<span class="w"> </span>實例化類
+<span class="w">    </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">MyClass</span><span class="ss">()</span>
+<span class="w">    </span>#<span class="w"> </span>訪問類的屬性和方法
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"MyClass 類的屬性 i 為："</span>,<span class="w"> </span><span class="nv">x</span>.<span class="nv">i</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"MyClass 類的方法 f 輸出為："</span>,<span class="w"> </span><span class="nv">x</span>.<span class="nv">f</span><span class="ss">())</span>
 </code></pre></div>
 
 <p>實例化類：</p>
@@ -968,101 +1061,104 @@ x = MyClass()
 <p>MyClass 類的方法 f 輸出為：hello world</p>
 <p>很多類都傾向於將對象創建為有初始狀態的。因此類可能會定義一個名為_init_()的特殊方法（構造方法），像下面這樣：</p>
 <div class="codehilite"><pre><span></span><code>def <span class="ge">_init_</span>(self):
-self.data = []
+    self.data = []
 </code></pre></div>
 
 <h2 id="繼承">繼承</h2>
 <p>Python 同樣支持類的繼承，如果一種語言不支持繼承，類就沒有什麼意義。派生類的定義如下所示：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">DerivedClassName</span>(<span class="n">BaseClassName</span>):
-<span class="s">&lt;statement-1&gt;</span>
-.
-.
-.
-<span class="s">&lt;statement-N&gt;</span>
+<span class="c1"># &lt;statement-1&gt;</span>
+<span class="c1"># .</span>
+<span class="c1"># .</span>
+<span class="c1"># .</span>
+<span class="c1"># &lt;statement-N&gt;</span>
+    <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
 <p>需要注意圓括號中基類的順序，若是基類中有相同的方法名，而在子類使用時未指定，Python 從左至右搜索即方法在子類中未找到時，從左到右查找基類中是否包含方法。</p>
 <p>BaseClassName (示例中的基類名)必須與派生類定義在一個作用域內。除了類，還可以用表達式，基類定義在另一個模塊中時這一點非常有用：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">DerivedClassName</span>(<span class="n">modname</span>.<span class="n">BaseClassName</span>):
+    <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
 <p>實例</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># 類定義</span>
 <span class="k">class</span> <span class="n">people:</span>
-<span class="c1"># 定義基本屬性</span>
-<span class="nb">name</span> = <span class="s">''</span>
-<span class="n">age</span> = <span class="mi">0</span>
-<span class="c1"># 定義私有屬性，私有屬性在額外部無法直接進行訪問</span>
-<span class="n">_weight</span> = <span class="mi">0</span>
-<span class="c1"># 定義構造方法</span>
+    <span class="c1"># 定義基本屬性</span>
+    <span class="nb">name</span> = <span class="s">''</span>
+    <span class="n">age</span> = <span class="mi">0</span>
+    <span class="c1"># 定義私有屬性，私有屬性在額外部無法直接進行訪問</span>
+    <span class="n">_weight</span> = <span class="mi">0</span>
+    <span class="c1"># 定義構造方法</span>
 <span class="n">def</span> <span class="n">__init__</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>):
-<span class="nb">self</span>.<span class="nb">name</span> = <span class="n">n</span>
-<span class="nb">self</span>.<span class="n">age</span> = <span class="n">a</span>
-<span class="nb">self</span>.<span class="n">_weight</span> = <span class="nb">w</span>
+    <span class="nb">self</span>.<span class="nb">name</span> = <span class="n">n</span>
+    <span class="nb">self</span>.<span class="n">age</span> = <span class="n">a</span>
+    <span class="nb">self</span>.<span class="n">_weight</span> = <span class="nb">w</span>
 <span class="n">def</span> <span class="n">speak</span>(<span class="nb">self</span>):
-<span class="nb">print</span>(<span class="s">"%s 說：我 %d 處："</span> %(<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>))
-<span class="c1">#單獨承示例</span>
+    <span class="nb">print</span>(<span class="s">"%s 說：我 %d 處："</span> %(<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>))
+    <span class="c1">#單獨承示例</span>
 <span class="k">class</span> <span class="n">student</span>(<span class="n">people</span>):
-<span class="n">grade</span> = <span class="s">''</span>
+    <span class="n">grade</span> = <span class="s">''</span>
 <span class="n">def</span> <span class="n">__init__</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>, <span class="n">g</span>):
-<span class="c1"># 調用父類的構造</span>
-<span class="n">people</span>.<span class="n">__init__</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>)
-<span class="nb">self</span>.<span class="n">grade</span> = <span class="n">g</span>
-<span class="c1"># 覆為父類的方法</span>
+    <span class="c1"># 調用父類的構造</span>
+    <span class="n">people</span>.<span class="n">__init__</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>)
+    <span class="nb">self</span>.<span class="n">grade</span> = <span class="n">g</span>
+    <span class="c1"># 覆為父類的方法</span>
 <span class="n">def</span> <span class="n">speak</span>(<span class="nb">self</span>):
-<span class="nb">print</span>(<span class="s">"%s 說：我 %d 處了，我在讀 %d 年級"</span>%(<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>, <span class="nb">self</span>.<span class="n">grade</span>))
-<span class="nb">s</span> = <span class="n">student</span>(<span class="s">'ken'</span>, <span class="mi">10</span>, <span class="mi">60</span>, <span class="mi">3</span>)
-<span class="nb">s</span>.<span class="n">speak</span>()
+    <span class="nb">print</span>(<span class="s">"%s 說：我 %d 處了，我在讀 %d 年級"</span>%(<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>, <span class="nb">self</span>.<span class="n">grade</span>))
+    <span class="nb">s</span> = <span class="n">student</span>(<span class="s">'ken'</span>, <span class="mi">10</span>, <span class="mi">60</span>, <span class="mi">3</span>)
+    <span class="nb">s</span>.<span class="n">speak</span>()
 </code></pre></div>
 
 <p>多繼承</p>
 <p>Python 同樣有限的支持多繼承形式。多繼承的類定義形如下例：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">DerivedClassName</span>(<span class="n">Base1</span>, <span class="n">Base2</span>, <span class="n">Base3</span>):
-<span class="s">&lt;statement-1&gt;</span>
-.
-.
-.
-<span class="s">&lt;statement-N&gt;</span>
+<span class="c1"># &lt;statement-1&gt;</span>
+<span class="c1"># .</span>
+<span class="c1"># .</span>
+<span class="c1"># .</span>
+<span class="c1"># &lt;statement-N&gt;</span>
+    <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
 <p>需要注意圓括號中父類的順序，若是父類中有相同的方法名，而在子類使用時未指定，Python從左至右搜索即方法在子類中未找到時，從左到右查找父類中是否包含方法。</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># 鎖定義</span>
 <span class="k">class</span> <span class="n">people:</span>
-<span class="c1">#定義基本屬性</span>
-<span class="nb">name</span> = <span class="s">''</span>
-<span class="n">age</span> = <span class="mi">0</span>
-<span class="c1">#定義私有屬性，私有屬性在標外部無法直接進行訪問</span>
-<span class="n">_weight</span> = <span class="mi">0</span>
-<span class="c1">#定義構造方法</span>
+    <span class="c1">#定義基本屬性</span>
+    <span class="nb">name</span> = <span class="s">''</span>
+    <span class="n">age</span> = <span class="mi">0</span>
+    <span class="c1">#定義私有屬性，私有屬性在標外部無法直接進行訪問</span>
+    <span class="n">_weight</span> = <span class="mi">0</span>
+    <span class="c1">#定義構造方法</span>
 <span class="n">def</span> <span class="n">_init_</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>):
-<span class="nb">self</span>.<span class="nb">name</span> = <span class="n">n</span>
-<span class="nb">self</span>.<span class="n">age</span> = <span class="n">a</span>
-<span class="nb">self</span>.<span class="n">_weight</span> = <span class="nb">w</span>
+    <span class="nb">self</span>.<span class="nb">name</span> = <span class="n">n</span>
+    <span class="nb">self</span>.<span class="n">age</span> = <span class="n">a</span>
+    <span class="nb">self</span>.<span class="n">_weight</span> = <span class="nb">w</span>
 <span class="n">def</span> <span class="n">speak</span>(<span class="nb">self</span>):
-<span class="nb">print</span>(<span class="s">"%s 說：我 %d 處："</span> %(<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>))
-<span class="c1">#單維承示例</span>
+    <span class="nb">print</span>(<span class="s">"%s 說：我 %d 處："</span> %(<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>))
+    <span class="c1">#單維承示例</span>
 <span class="k">class</span> <span class="n">student</span>(<span class="n">people</span>):
-<span class="n">grade</span> = <span class="s">''</span>
+    <span class="n">grade</span> = <span class="s">''</span>
 <span class="n">def</span> <span class="n">_init_</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>, <span class="n">g</span>):
-<span class="c1"># 調用父類的構造</span>
-<span class="n">people</span>.<span class="n">_init_</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>)
-<span class="nb">self</span>.<span class="n">grade</span> = <span class="n">g</span>
-<span class="c1"># 覆商父類的方法</span>
+    <span class="c1"># 調用父類的構造</span>
+    <span class="n">people</span>.<span class="n">_init_</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>)
+    <span class="nb">self</span>.<span class="n">grade</span> = <span class="n">g</span>
+    <span class="c1"># 覆商父類的方法</span>
 <span class="n">def</span> <span class="n">speak</span>(<span class="nb">self</span>):
-<span class="nb">print</span>(<span class="s">"%s 說：我 %d 處了，我在讀 %d 年級"</span> % (<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>, <span class="nb">self</span>.<span class="n">grade</span>))
+    <span class="nb">print</span>(<span class="s">"%s 說：我 %d 處了，我在讀 %d 年級"</span> % (<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>, <span class="nb">self</span>.<span class="n">grade</span>))
 </code></pre></div>
 
 <h2 id="方法重寫">方法重寫</h2>
 <p>如果你的父類方法的功能不能滿足你的需求，你可以在子類重寫你父類的方法，實例如下：</p>
 <p>class Parent: # 定義父類</p>
 <div class="codehilite"><pre><span></span><code>def myMethod(self):
-print('調用父類方法')
+    print('調用父類方法')
 </code></pre></div>
 
 <p>class Child(Parent): # 定義子類</p>
 <div class="codehilite"><pre><span></span><code>def myMethod(self):
-print('調用子類方法')
-c = Child() # 子類實例
+    print('調用子類方法')
+    c = Child() # 子類實例
 </code></pre></div>
 
 <p>c.myMethod() # 子類調用重寫方法</p>

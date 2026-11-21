@@ -89,13 +89,14 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from .models import Article
 def article_list(request):
-article_list = Article.objects.all()
-paginator = Paginator(article_list, 10)
-page_number = request.GET.get('page')
-page_obj = paginator.get_page(page_number)
-# 獲取其他查詢參數
-query_params = request.GET.copy()
-if 'page' in query_params:
+    article_list = Article.objects.all()
+    paginator = Paginator(article_list, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    # 獲取其他查詢參數
+    query_params = request.GET.copy()
+    if 'page' in query_params:
+        pass  # 內容省略
 ```
 del query_params['page'] # 刪除分頁參數，避免重複
 
@@ -136,12 +137,12 @@ return render(request, 'article_list.html', {'page_obj': page_obj, 'query_string
 ```
 # myapp/views.py
 def article_list(request):
-article_list = Article.objects.all()
-per_page = request.GET.get('per_page', 10) # 默認每頁顯示 10 條記錄
-paginator = Paginator(article_list, per_page)
-page_number = request.GET.get('page')
-page_obj = paginator.get_page(page_number)
-return render(request, 'article_list.html', {'page_obj': page_obj})
+    article_list = Article.objects.all()
+    per_page = request.GET.get('per_page', 10) # 默認每頁顯示 10 條記錄
+    paginator = Paginator(article_list, per_page)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'article_list.html', {'page_obj': page_obj})
 ```
 在模板中，使用一個下拉框讓用戶選擇每頁顯示的數量：
 
@@ -206,14 +207,14 @@ return render(request, 'article_list.html', {'page_obj': page_obj})
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 def article_list(request):
-article_list = Article.objects.all()
-paginator = Paginator(article_list, 10)
-page_number = request.GET.get('page')
-page_obj = paginator.get_page(page_number)
-if request.is/ajax():
-html = render_to_string('partials/article_list.html', {'page_obj': page_obj})
-return JsonResponse({'html': html})
-return render(request, 'article_list.html', {'page_obj': page_obj})
+    article_list = Article.objects.all()
+    paginator = Paginator(article_list, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        html = render_to_string('partials/article_list.html', {'page_obj': page_obj})
+        return JsonResponse({'html': html})
+        return render(request, 'article_list.html', {'page_obj': page_obj})
 ```
 2. 創建一個 partials/article_list.html 模板來渲染數據。
 
@@ -267,7 +268,7 @@ Bootstrap 是由 Twitter 開發的一個開源前端框架，旨在幫助開發�
 <html lang="en">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-{% block title %}My Django Site{% endblock %}</td>
+{% block title %}My Django Site{% endblock %}
 ```
 <!-- 引入 Bootstrap CSS -->
 
@@ -626,25 +627,22 @@ Django 提供了 UserCreationForm，這是一個用來註冊新用戶的表單�
 
 在 accounts/views.py 中創建註冊視圖，該視圖會處理用戶的註冊請求並保存新用戶。
 
+login(request, user) # 自動登錄
+return redirect('home') # 重定向到主頁面
+
 ```
 # accounts/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 def register(request):
-if request.method == 'POST':
-form = UserCreationForm(request.POST)
-if form.is_valid():
-user = form.save()
-```
-login(request, user) # 自動登錄
-
-return redirect('home') # 重定向到主頁面
-
-```
-else:
-form = UserCreationForm()
-return render(request, 'accounts/register.html', {'form': form})
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+        else:
+            form = UserCreationForm()
+            return render(request, 'accounts/register.html', {'form': form})
 ```
 ## 配置 URL 路由
 
@@ -666,10 +664,7 @@ from django.contrib import admin
 from django.urls import path, include
 urlpatterns = [
 path('admin/', admin.site.urls),
-```
 path('accounts/', include('accounts.urls')), # 包含用戶路由
-
-```
 ]
 ```
 ## 創建註冊模板
@@ -866,10 +861,7 @@ MIDDLEWARE = [
 'django.middleware.common.CommonMiddleware',
 'django.middleware.csrf.CsrfViewMiddleware',
 'django.contrib.auth.middleware.AuthenticationMiddleware',
-```
 'django.contrib.messages.middleware.MessageMiddleware', # 確保這一行存在
-
-```
 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 ```
@@ -889,10 +881,7 @@ TEMPLATES = [
 'django.template.context_processors.debug',
 'django.template.context_processors.request',
 'django.contrib.auth.context_processors.auth',
-```
 'django.contrib.messages.context_processors.messages', # 確保這一行存在
-
-```
 ],
 },
 ]
@@ -911,26 +900,22 @@ Django 提供了幾個內置的消息類型（如 success, error, warning 等）
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+
+
 def register(request):
-if request.method == 'POST':
-form = UserCreationForm(request.POST)
-if form.is_valid():
-form.save()
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '註冊成功！歡迎使用本網站。')
+            return redirect('login')  # 註冊成功後跳轉到登錄頁面
+        else:
+            messages.error(request, '註冊失敗，請檢查表單內容。')
+    else:
+        form = UserCreationForm()
+    return render(request, 'accounts/register.html', {'form': form})
 ```
-messages.success(request, '註冊成功！歡迎使用本網站。')
 
-return redirect('login') # 註冊成功後跳轉到登錄頁面
-
-```
-else:
-```
-messages.error(request, '註冊失敗，請檢查表單內容。')
-
-```
-else:
-form = UserCreationForm()
-return render(request, 'accounts/register.html', {'form': form})
-```
 在這個例子中，我們在表單提交成功後使用了 messages.success 來設置一個成功消息，而當表單提交失敗時，則使用 messages.error 來設置錯誤消息。
 
 #### 14.2.2 messages 的其他類型
@@ -957,7 +942,7 @@ messages.warning(request, "這是一條警告消息"): 用於顯示警告信息�
 <html lang="en">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-{% block title %}My Django Site{% endblock %}</td>
+{% block title %}My Django Site{% endblock %}
 <link
 href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css"
 rel="stylesheet"
@@ -1136,10 +1121,7 @@ from django.contrib import admin
 from django.urls import path, include
 urlpatterns = [
 path('admin/', admin.site.urls),
-```
 path('events/', include('events.urls')), # 包含事件應用的路由
-
-```
 ]
 ```
 接下來，創建一個 $ \underline{\text{urls.py}} $ 文件來處理事件應用中的路由：
@@ -1211,22 +1193,22 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Event
 from .forms import EventForm
 def event_list(request):
-events = Event.objects.all()
-return render(request, 'events/event_list.html', {'events': events})
+    events = Event.objects.all()
+    return render(request, 'events/event_list.html', {'events': events})
 def event_create(request):
-if request.method == 'POST':
-form = EventForm(request.POST)
-if form.is_valid():
-event = form.save(commit=False)
-event.created_by = request.user # 將當前用戶設為創建者
-event.save()
-return redirect('event_list')
-else:
-form = EventForm()
-return render(request, 'events/event_form.html', {'form': form})
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.created_by = request.user # 將當前用戶設為創建者
+            event.save()
+            return redirect('event_list')
+        else:
+            form = EventForm()
+            return render(request, 'events/event_form.html', {'form': form})
 def event_detail(request, id):
-event = get_object_or_404(Event, id=id)
-return render(request, 'events/event_detail.html', {'event': event})
+    event = get_object_or_404(Event, id=id)
+    return render(request, 'events/event_detail.html', {'event': event})
 ```
 在這裡，我們創建了三個視圖：
 
@@ -1242,21 +1224,21 @@ return render(request, 'events/event_detail.html', {'event': event})
 
 ```
 def event_edit(request, id):
-event = get_object_or_404(Event, id=id)
-if request.method == 'POST':
-form = EventForm(request.POST, instance=event)
-if form.is_valid():
-form.save()
-return redirect('event_detail', id=event.id)
-else:
-form = EventForm(instance=event)
-return render(request, 'events/event_form.html', {'form': form})
-def event_delete(request.id):
-event = get_object_or_404(Event, id=id)
-if request.method == 'POST':
-event.delete()
-return redirect('event_list')
-return render(request, 'events/event_confirm_delete.html', {'event': event})
+    event = get_object_or_404(Event, id=id)
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect('event_detail', id=event.id)
+        else:
+            form = EventForm(instance=event)
+            return render(request, 'events/event_form.html', {'form': form})
+def event_delete(request, id):
+    event = get_object_or_404(Event, id=id)
+    if request.method == 'POST':
+        event.delete()
+        return redirect('event_list')
+        return render(request, 'events/event_confirm_delete.html', {'event': event})
 ```
 ### 15.5. 使用 Django 表單處理用戶輸入
 
@@ -1267,9 +1249,9 @@ return render(request, 'events/event_confirm_delete.html', {'event': event})
 from Django import forms
 from .models import Event
 class EventForm(forms.ModelForm):
-class Meta:
-model = Event
-fields = ['title', 'description', 'location', 'event_date', 'max_attendees']
+    class Meta:
+        model = Event
+        fields = ['title', 'description', 'location', 'event_date', 'max_attendees']
 ```
 這個表單將生成一個事件的輸入表單，包含事件的標題、描述、地點等信息。
 
@@ -1284,19 +1266,18 @@ fields = ['title', 'description', 'location', 'event_date', 'max_attendees']
 ```
 from .models import Registration
 def event_register(request, id):
-event = get_object_or_404(Event, id=id)
-if Registration.objects.filter(event=event, user=request.user).exists():
-# 如果用戶已經報名，則提示錯誤
+    event = get_object_or_404(Event, id=id)
+    if Registration.objects.filter(event=event, user=request.user).exists():
+        # 如果用戶已經報名，則提示錯誤
+        messages.error(request, '你已經報名過此活動。')
+    elif event.registrations.count() >= event.max_attendees:
+        # 如果報名已滿
+        pass  # 內容省略
 ```
-messages.error(request, '你已經報名過此活動。')
-
 ```
 elif event.registrations.count() >= event.max_attendees:
 # 如果報名已滿
-```
 messages.error(request, '報名已滿。')
-
-```
 else:
 # 添加報名
 Registration.objects.create(event=event, user=request.user)
@@ -1339,4 +1320,3 @@ href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css" r
 ```
 https://docs.djangoproject.com/en/5.2/
 ```
-

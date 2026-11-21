@@ -36,6 +36,7 @@
 # myapp/views.py
 from django.http import HttpResponse
 def index(request):
+    pass  # 內容省略
 ```
 return HttpResponse("歡迎來到我的網站！")
 
@@ -52,15 +53,12 @@ return HttpResponse("歡迎來到我的網站！")
 from django.shortcuts import render
 from django.http import HttpResponse
 def contact(request):
-if request.method == 'POST':
-# 處理表單提交邏輯
-```
-return HttpResponse("表單已成功提交！")
-
-```
-else:
-# 返回空的表單頁面
-return render(request, 'contact.html')
+    if request.method == 'POST':
+        # 處理表單提交邏輯
+        return HttpResponse("表單已成功提交！")
+    else:
+        # 返回空的表單頁面
+        return render(request, 'contact.html')
 ```
 在這個例子中，當用戶通過 GET 請求訪問 /contact/ 時，Django 會返回一個帶有表單的頁面（contact.html）；當用戶提交表單後，POST 請求被發送到同一個視圖，視圖將處理表單數據並返回成功消息。
 
@@ -70,19 +68,16 @@ return render(request, 'contact.html')
 
 範例：將上下文數據傳遞給模板
 
+'title': '我的首頁',
+'welcome_message': '歡迎來到我的網站！'
+
 ```
 # myapp/views.py
 from django.shortcuts import render
 def index(request):
-context = {
-```
-'title': '我的首頁',
-
-'welcome_message': '歡迎來到我的網站！'
-
-```
-}
-return render(request, 'index.html', context)
+    context = {
+    }
+    return render(request, 'index.html', context)
 ```
 在這個例子中，我們將上下文數據（title 和 welcome_message）傳遞給 index.html 模板，模板可以使用這些數據來生成最終的 HTML 頁面。
 
@@ -96,9 +91,9 @@ return render(request, 'index.html', context)
 # myapp/views.py
 from django.http import HttpResponse
 def submit_form(request):
-if request.method == 'POST':
-name = request.POST.get('name')
-email = request.POST.get('email')
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
 ```
 return HttpResponse(f"姓名: {name}, 電子郵件: {email}")
 
@@ -121,7 +116,8 @@ return HttpResponse("請通過 POST 提交表單")
 from django.http import HttpResponse
 from django.views import View
 class IndexView(View):
-def get(self, request):
+    def get(self, request):
+        pass  # 內容省略
 ```
 return HttpResponse("歡迎來到我的網站！")在這個例子中，IndexView 是一個類視圖，我們使用 get() 方法來處理 GET 請求，並返回一個簡單的文本響應。
 
@@ -140,7 +136,7 @@ TemplateView 是一個常用的類視圖，用來渲染靜態模板並返回 HTM
 # myapp/views.py
 from django.views.generic import TemplateView
 class AboutView(TemplateView):
-template_name = 'about.html'
+    template_name = 'about.html'
 ```
 這個視圖將渲染 about.html 模板，並返回其內容作為響應。template_name 屬性指定了模板的路徑。
 
@@ -155,7 +151,7 @@ RedirectView 用於將用戶重定向到另一個 URL。它非常適合處理頁
 # myapp/views.py
 from django.views.generic import RedirectView
 class HomeRedirectView(RedirectView):
-url = '/home/'
+    url = '/home/'
 ```
 這個視圖會將所有對 HomeRedirectView 的請求重定向到 /home/ URL。
 
@@ -171,11 +167,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
 class ContactView(View):
-def get(self, request):
-return render(request, 'contact.html')
+    def get(self, request):
+        return render(request, 'contact.html')
 def post(self, request):
-name = request.POST.get('name')
-message = request.POST.get('message')
+    name = request.POST.get('name')
+    message = request.POST.get('message')
 ```
 return HttpResponse(f"收到來自 {name} 的信息: {message}")
 
@@ -190,14 +186,15 @@ return HttpResponse(f"收到來自 {name} 的信息: {message}")
 ```
 # myapp/views.py
 class BaseView(View):
-def get(self, request):
+    def get(self, request):
+        pass  # 內容省略
 ```
 return HttpResponse("這是基礎視圖")
 
 ```
 class CustomView(BaseView):
-def get(self, request):
-response = super().get(request)
+    def get(self, request):
+        response = super().get(request)
 ```
 return HttpResponse(response.content + b" 並且這是自定義的內容")
 
@@ -216,10 +213,7 @@ return HttpResponse(response.content + b" 並且這是自定義的內容")
 from django.urls import path
 from .import views
 urlpatterns = [
-```
 path("views.index, name='index'), # 連接函數視圖
-
-```
 ]
 ```
 這裡，我們將 index 函數視圖與根 URL (/) 進行了連接。
@@ -235,10 +229,7 @@ path("views.index, name='index'), # 連接函數視圖
 from django.urls import path
 from .views import IndexView
 urlpatterns = [
-```
 path("IndexView.as_view(), name='index'), # 連接類視圖
-
-```
 ]
 ```
 在這裡，我們使用 IndexView.as_view() 來將類視圖與 URL 進行連接。
@@ -251,17 +242,14 @@ path("IndexView.as_view(), name='index'), # 連接類視圖
 
 範例：傳遞上下文數據到模板
 
+'title': '我的首頁',
+'welcome_message': '歡迎來到我的網站！'
+
 ```
 # myapp/views.py
 from django.shortcuts import render
 def index(request):
 context = {
-```
-'title': '我的首頁',
-
-'welcome_message': '歡迎來到我的網站！'
-
-```
 }
 }
 }
@@ -279,9 +267,9 @@ return render(request, 'index.html', context)
 # myapp/views.py
 from django.views.generic import TemplateView
 class IndexView(TemplateView):
-template_name = 'index.html'
+    template_name = 'index.html'
 def get_context_data(self, **kwargs):
-context = super().get_context_data(**kwargs)
+    context = super().get_context_data(**kwargs)
 ```
 context['title'] = '我的首頁'
 
@@ -362,10 +350,7 @@ Django 的模板通常存儲在應用的 templates/ 目錄中，並以 .html 為
 
 ```
 context = {
-```
 'site_name': '我的網站',
-
-```
 'num_posts': 42
 }
 ```
@@ -425,20 +410,18 @@ for 標籤用於遍歷列表或查詢集，從而渲染多個數據項。
 ```
 # myapp/views.py
 from django.shortcuts import render
+
+
 def index(request):
-context = {
+    context = {
+        'title': '我的首頁',
+        'welcome_message': '歡迎來到我的網站！',
+        'site_name': '我的網站',
+        'num_posts': 42,
+    }
+    return render(request, 'index.html', context)
 ```
-'title': '我的首頁',
 
-'welcome_message': '歡迎來到我的網站！',
-
-'site_name': '我的網站',
-
-```
-'num_posts': 42
-}
-return render(request, 'index.html', context)
-```
 在這裡，我們將上下文數據傳遞給 index.html 模板，模板可以使用這些數據來渲染頁面。
 
 #### 6.3.2 上下文處理器
@@ -449,17 +432,14 @@ return render(request, 'index.html', context)
 
 你可以創建自定義上下文處理器來提供全局變量，這些變量將在所有模板中可用。
 
-```
-# myapp/context_processors.py
-def site_info(request):
-return {
-```
 'site_name': '我的網站',
-
 'site_description': '這是一個示例網站'
 
 ```
-}
+# myapp/context_processors.py
+def site_info(request):
+    return {
+    }
 ```
 然後，在 settings.py 中將上下文處理器添加到 TEMPLATES 設置中：
 
@@ -473,10 +453,7 @@ TEMPLATES = [
 'OPTIONS': {
 'context_processors': [
 'django.template.context_processors.request',
-```
 'myapp.context_processors.site_info', # 添加自定義上下文處理器
-
-```
 ],
 },
 ]
@@ -577,13 +554,13 @@ from django import template
 register = template.Library()
 @register.filter(name='add_exclamation')
 def add_exclamation(value):
-return f"{value}!"
+    return f"{value}!"
 ```
 然後在模板中使用自定義過濾器：
 
 ```
 <!-- templates/index.html -->
-{{ welcome_messageladd_exclamation }}</p>
+{{ welcome_messageladd_exclamation }}
 ```
 #### 6.5.3 自定義模板標籤
 
@@ -597,7 +574,7 @@ from django import template
 register = template.Library()
 @register.simple_tag
 def multiply(a, b):
-return a * b
+    return a * b
 ```
 然後在模板中使用自定義標籤：
 
@@ -616,4 +593,3 @@ return a * b
 在 Django 中，模型（Models）是數據庫與應用之間的橋樑，它們負責定義數據的結構並與數據庫進行交互。Django 提供了強大的 ORM（Object-Relational Mapping），使開發者可以通過 Python 代碼來執行對數據庫的操作，而不需要直接編寫 SQL 查詢。CRUD 操作是 Web 應用中常見的操作模式，它包括創建（Create）、讀取（Read）、更新（Update）和刪除（Delete）數據。
 
 本章將詳細介紹 Django 的模型系統與 CRUD 操作，並講解如何使用 Django 提供的查詢集 API 來查詢和操作數據。
-

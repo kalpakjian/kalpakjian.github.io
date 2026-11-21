@@ -24,14 +24,14 @@
 # myapp/models.py
 from django.db import models
 class Article(models.Model):
-title = models.CharField(max_length=200) # 標題
-content = models.TextField() # 內容
-author = models.CharField(max_length=100) # 作者
-published_at = models.DateTimeField() # 發布時間
-created_at = models.DateTimeField(auto_now_add=True) # 創建時間
-updated_at = models.DateTimeField(auto_now=True) # 更新時間
+    title = models.CharField(max_length=200) # 標題
+    content = models.TextField() # 內容
+    author = models.CharField(max_length=100) # 作者
+    published_at = models.DateTimeField() # 發布時間
+    created_at = models.DateTimeField(auto_now_add=True) # 創建時間
+    updated_at = models.DateTimeField(auto_now=True) # 更新時間
 def __str__(self):
-return self.title
+    return self.title
 ```
 在這裡，我們定義了一個 Article 模型，包含文章的標題、內容、作者、發布時間等字段。__str__() 方法用於定義模型的字符串表示，方便在 Django 的管理後臺中顯示。
 
@@ -248,16 +248,16 @@ article_count = Article.objects.aggregate(Count('id'))
 # myapp/models.py
 from django.db import models
 class Category(models.Model):
-name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 def __str__(self):
-return self.name
+    return self.name
 class Article(models.Model):
-title = models.CharField(max_length=200)
-content = models.TextField()
-category = models.ForeignKey(Category, on_delete=models.CASCADE) # 一篇文章對應一個分類
-published_at = models.DateTimeField()
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE) # 一篇文章對應一個分類
+    published_at = models.DateTimeField()
 def __str__(self):
-return self.title
+    return self.title
 ```
 在這個例子中，我們通過 ForeignKey 字段將文章（Article）與分類（Category）關聯起來。on_delete=models.CASCADE 表示當某個分類被刪除時，該分類下的所有文章也會被自動刪除。
 
@@ -270,15 +270,15 @@ return self.title
 ```
 # myapp/models.py
 class Tag(models.Model):
-name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 def __str__(self):
-return self.name
+    return self.name
 class Article(models.Model):
-title = models.CharField(max_length=200)
-content = models.TextField()
-tags = models.CharField(Tag) # 一篇文章可以有多個標籤
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    tags = models.CharField(Tag) # 一篇文章可以有多個標籤
 def __str__(self):
-return self.title
+    return self.title
 ```
 在這裡，一篇文章可以擁有多個標籤，而一個標籤也可以屬於多篇文章。Django 自動處理多對多關係背後的數據庫表，不需要手動創建中間表。
 
@@ -292,10 +292,10 @@ return self.title
 # myapp/models.py
 from django.contrib.auth.models import User
 class Profile(models.Model):
-user = models.OneToOneField(User, on_delete=models.CASCADE) # 每個用戶對應一個資料
-bio = models.TextField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE) # 每個用戶對應一個資料
+    bio = models.TextField()
 def __str__(self):
-return self.user.username
+    return self.user.username
 ```
 在這個例子中，我們使用 OneToOneField 將 Profile 模型與 User 模型關聯起來，這表示每個用戶只能有一個對應的資料。
 
@@ -431,7 +431,7 @@ Django 的 humanize 模塊是一個模板過濾器模塊，專門用來將數字
 範例：加載 humanize 模塊
 
 ```
-{ % load humanize % }
+{% load humanize %}
 ```
 ## 9.2 數字格式化過濾器
 
@@ -445,7 +445,7 @@ intcomma 過濾器會將數字進行逗號分隔，使得長數字更易於閱�
 
 ```
 {% load humanize %}
-{ 1000000intcomma }</p>
+{ 1000000intcomma }
 ```
 <!-- 輸出：1,000,000 -->
 
@@ -459,7 +459,7 @@ intword 過濾器可以將大數字轉換為更簡單的詞語表示。這在需
 
 ```
 {% load humanize %}
-{ 1200000lintword }</p>
+{ 1200000lintword }
 ```
 <!-- 輸出：1.2 million -->
 
@@ -473,7 +473,7 @@ apnumber 過濾器將數字 1 到 9 轉換為對應的英文單詞。這在需�
 
 ```
 {% load humanize %}
-{{7lapnumber }}</p>
+{{7lapnumber }}
 ```
 <!-- 輸出：seven -->
 
@@ -491,7 +491,7 @@ naturaltime 過濾器可以將時間轉換為相對於當前時間的自然表�
 
 ```
 {% load humanize %}
-{ { article.published_atlnaturaltime }</p>
+{ { article.published_atlnaturaltime }
 ```
 如果 published_at 是 10 分鐘前的時間，這段模板會輸出 “10 minutes ago”。
 
@@ -502,8 +502,8 @@ naturalday 過濾器用來將日期顯示為自然語言形式。如果日期是
 範例：使用 naturalday 顯示日期
 
 ```
-{ % load humanize % }
-{ { article.published_atlnaturalday } }</p>
+{% load humanize %}
+{ { article.published_atlnaturalday } }
 ```
 這裡，如果 published_at 是昨天的日期，模板將輸出 “yesterday”。
 
@@ -515,9 +515,9 @@ naturalday 過濾器用來將日期顯示為自然語言形式。如果日期是
 
 ```
 {% load humanize %} {% if article.published_atlnaturaltime %}
-{ { article.published_atlnaturaltime } }</p>
+{ { article.published_atlnaturaltime } }
 {% else %}
-{ { article.published_atlnaturalday } }</p>
+{ { article.published_atlnaturalday } }
 {% endif %}
 ```
 這樣可以靈活顯示最近的時間和過去的日期。
@@ -567,29 +567,25 @@ Django 的 humanize 模塊可以應用於多種場景，特別是需要展示大
 範例：自定義數字格式化過濾器
 
 ```
-# myapp/template tags/custom_humanize.py
+# myapp/templatetags/custom_humanize.py
 from django import template
+
 register = template.Library()
+
+
 @register.filter
 def chinese_number(value):
-try:
-value = int
-(value)
-if value >= 10000 and value < 100000000:
+    try:
+        value = int(value)
+    except (ValueError, TypeError):
+        return value
+    if 10000 <= value < 100000000:
+        return f'{value // 10000}萬'
+    elif value >= 100000000:
+        return f'{value // 100000000}億'
+    return str(value)
 ```
-return f{'value // 10000}萬'
 
-```
-elif value >= 100000000:
-```
-return f{'value // 100000000}億'
-
-```
-else:
-return str(value)
-except (ValueError, TypeError):
-return value
-```
 這個自定義過濾器會將數字轉換為中文單位，如 15000 會顯示為 1 萬。
 
 ### 9.5.2 在模板中使用自定義過濾器
@@ -679,10 +675,10 @@ filtered_products = Product.objects.filter(price__range=(100, 500))
 # myapp/forms.py
 from Django import forms
 class ArticleFilterForm(forms.Form):
-author = forms.CharField(required=False, label='作者')
-status = forms.ChoiceField(choices=[('draft', '草稿'), ('published', '已發布')], required=False)
-start_date = forms.DateField(required=False, label='開始日期')
-end_date = forms.DateField(required=False, label='結束日期')
+    author = forms.CharField(required=False, label='作者')
+    status = forms.ChoiceField(choices=[('draft', '草稿'), ('published', '已發布')], required=False)
+    start_date = forms.DateField(required=False, label='開始日期')
+    end_date = forms.DateField(required=False, label='結束日期')
 ```
 接下來，我們需要在視圖中處理表單數據並進行過濾：
 
@@ -691,16 +687,16 @@ end_date = forms.DateField(required=False, label='結束日期')
 from .forms import ArticleFilterForm
 from .models import Article
 def article_list(request):
-form = ArticleFilterForm(request.GET or None)
-articles = Article.objects.all()
-if form.is_valid():
-if form.cleaned_data.get('author'):
-articles = articles.filter(author__icontains=form.cleaned_data['author'])
-if form.cleaned_data.get('status'):
-articles = articles.filter(status=form.cleaned_data['status'])
-if form.cleaned_data.get('start_date') and form.cleaned_data.get('end_date'):
-articles = articles.filter(published_at__range=(form.cleaned_data['start_date'], form.cleaned_data['end_date']))
-return render(request, 'article_list.html', {'form': form, 'articles': articles})
+    form = ArticleFilterForm(request.GET or None)
+    articles = Article.objects.all()
+    if form.is_valid():
+        if form.cleaned_data.get('author'):
+            articles = articles.filter(author__icontains=form.cleaned_data['author'])
+            if form.cleaned_data.get('status'):
+                articles = articles.filter(status=form.cleaned_data['status'])
+                if form.cleaned_data.get('start_date') and form.cleaned_data.get('end_date'):
+                    articles = articles.filter(published_at__range=(form.cleaned_data['start_date'], form.cleaned_data['end_date']))
+                    return render(request, 'article_list.html', {'form': form, 'articles': articles})
 ```
 在模板中，我們可以渲染這個過濾表單，並顯示過濾後的結果：
 
@@ -739,15 +735,15 @@ return render(request, 'article_list.html', {'form': form, 'articles': articles}
 ```
 # myapp/views.py
 def product_list(request):
-products = Product.objects.all()
-# 根據 URL 中的價格範圍進行過濾
-min_price = request.GET.get('min_price')
-max_price = request.GET.get('max_price')
-if min_price:
-products = products.filter(price__gte=min_price)
-if max_price:
-products = products.filter(price__lte=max_price)
-return render(request, 'product_list.html', {'products': products})
+    products = Product.objects.all()
+    # 根據 URL 中的價格範圍進行過濾
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    if min_price:
+        products = products.filter(price__gte=min_price)
+        if max_price:
+            products = products.filter(price__lte=max_price)
+            return render(request, 'product_list.html', {'products': products})
 ```
 這樣，我們可以通過以下 URL 來篩選商品：
 
@@ -824,12 +820,12 @@ articles_with_tag = Article.objects.filter(tags__name='技術').distinct()
 
 ```
 def product_list(request):
-products = Product.objects.all()
-# 設置預設價格篩選條件
-min_price = request.GET.get('min_price', 50)
-max_price = request.GET.get('max_price', 500)
-products = products.filter(price__gte=min_price, price__lte=max_price)
-return render(request, 'product_list.html', {'products': products})
+    products = Product.objects.all()
+    # 設置預設價格篩選條件
+    min_price = request.GET.get('min_price', 50)
+    max_price = request.GET.get('max_price', 500)
+    products = products.filter(price__gte=min_price, price__lte=max_price)
+    return render(request, 'product_list.html', {'products': products})
 ```
 ### 10.5.2 使用異步加載提升體驗
 
@@ -847,4 +843,3 @@ return render(request, 'product_list.html', {'products': products})
 在現代 Web 應用中，數據量往往非常龐大，當數據過多時，將所有數據一次性展示給用戶不僅會降低性能，還會對用戶體驗造成負面影響。此時，我們可以通過分頁（Pagination），將數據按頁顯示，每頁顯示一定數量的記錄。Django 提供了一個強大的內建分頁系統，讓開發者可以輕鬆實現數據的分頁顯示。
 
 本章將介紹如何使用 Django 的分頁工具進行數據分頁，如何在模板中顯示分頁導航，並探討一些高級的分頁技術，如自定義分頁控制和查詢參數的處理。
-

@@ -432,48 +432,46 @@ views.py
 <span class="s1">'django.contrib.sessions'</span><span class="p">,</span>
 <span class="s1">'django.contrib.messages'</span><span class="p">,</span>
 <span class="s1">'django.contrib.staticfiles'</span><span class="p">,</span>
-</code></pre></div>
-
-<p>'myapp', # 自己的應用</p>
-<div class="codehilite"><pre><span></span><code><span class="p">]</span>
-<span class="o">#</span> <span class="err">中間件</span>
-<span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
-<span class="s">'django.middleware.security.SecurityMiddleware'</span><span class="p">,</span>
-<span class="s">'django.contrib.sessions.middleware.SessionMiddleware'</span><span class="p">,</span>
-<span class="s">'django.middleware.common.CommonMiddleware'</span><span class="p">,</span>
-<span class="s">'django.middleware.csrf.CsrfViewMiddleware'</span><span class="p">,</span>
-<span class="s">'django.contrib.auth.middleware.AuthenticationMiddleware'</span><span class="p">,</span>
-<span class="s">'django.contrib.messages.middleware.MessageMiddleware'</span><span class="p">,</span>
-<span class="s">'django.middleware.clickjacking.XFrameOptionsMiddleware'</span><span class="p">,</span>
+<span class="s1">'myapp'</span><span class="p">,</span> <span class="c1"># 自己的應用</span>
 <span class="p">]</span>
-<span class="o">#</span> <span class="n">URL</span> <span class="err">設置</span>
-<span class="n">ROOT_URLCONF</span> <span class="o">=</span> <span class="s">'myproject.urls'</span>
-<span class="o">#</span> <span class="err">模板設置</span>
+<span class="c1"># 中間件</span>
+<span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
+<span class="s1">'django.middleware.security.SecurityMiddleware'</span><span class="p">,</span>
+<span class="s1">'django.contrib.sessions.middleware.SessionMiddleware'</span><span class="p">,</span>
+<span class="s1">'django.middleware.common.CommonMiddleware'</span><span class="p">,</span>
+<span class="s1">'django.middleware.csrf.CsrfViewMiddleware'</span><span class="p">,</span>
+<span class="s1">'django.contrib.auth.middleware.AuthenticationMiddleware'</span><span class="p">,</span>
+<span class="s1">'django.contrib.messages.middleware.MessageMiddleware'</span><span class="p">,</span>
+<span class="s1">'django.middleware.clickjacking.XFrameOptionsMiddleware'</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="c1"># URL 設置</span>
+<span class="n">ROOT_URLCONF</span> <span class="o">=</span> <span class="s1">'myproject.urls'</span>
+<span class="c1"># 模板設置</span>
 <span class="n">TEMPLATES</span> <span class="o">=</span> <span class="p">[</span>
 <span class="p">{</span>
-<span class="s">'BACKEND'</span><span class="p">:</span> <span class="s">'django.template.backends.django.DjangoTemplates'</span><span class="p">,</span>
-<span class="s">'DIRS'</span><span class="p">:</span> <span class="p">[],</span>
-<span class="s">'APP_DIRS'</span><span class="p">:</span> <span class="n">True</span><span class="p">,</span>
-<span class="s">'OPTIONS'</span><span class="p">:</span> <span class="p">{</span>
-<span class="s">'context_processors'</span><span class="p">:</span> <span class="p">[</span>
-<span class="s">'django.template.context_processors.debug'</span><span class="p">,</span>
-<span class="s">'django.template.context_processors.request'</span><span class="p">,</span>
-<span class="s">'django.contrib.auth.context_processors.auth'</span><span class="p">,</span>
-<span class="s">'django.contrib.messages.context_processors.messages'</span><span class="p">,</span>
+<span class="s1">'BACKEND'</span><span class="p">:</span> <span class="s1">'django.template.backends.django.DjangoTemplates'</span><span class="p">,</span>
+<span class="s1">'DIRS'</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">'APP_DIRS'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="s1">'OPTIONS'</span><span class="p">:</span> <span class="p">{</span>
+<span class="s1">'context_processors'</span><span class="p">:</span> <span class="p">[</span>
+<span class="s1">'django.template.context_processors.debug'</span><span class="p">,</span>
+<span class="s1">'django.template.context_processors.request'</span><span class="p">,</span>
+<span class="s1">'django.contrib.auth.context_processors.auth'</span><span class="p">,</span>
+<span class="s1">'django.contrib.messages.context_processors.messages'</span><span class="p">,</span>
 <span class="p">],</span>
 <span class="p">},</span>
 <span class="p">],</span>
-<span class="o">#</span> <span class="err">數據庫設置</span>
+<span class="c1"># 數據庫設置</span>
 <span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
-<span class="s">'default'</span><span class="p">:</span> <span class="p">{</span>
-<span class="s">'ENGINE'</span><span class="p">:</span> <span class="s">'django.db.backends.sqlite3'</span><span class="p">,</span>
-<span class="s">'NAME'</span><span class="p">:</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s">'db.sqlite3'</span><span class="p">,</span>
+<span class="s1">'default'</span><span class="p">:</span> <span class="p">{</span>
+<span class="s1">'ENGINE'</span><span class="p">:</span> <span class="s1">'django.db.backends.sqlite3'</span><span class="p">,</span>
+<span class="s1">'NAME'</span><span class="p">:</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s1">'db.sqlite3'</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="p">}</span>
-<span class="o">#</span> <span class="err">靜態文件設置</span>
-<span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s">'/static/'</span>
-<span class="o">#</span> <span class="err">預設主鍵型別（</span><span class="n">Django</span> <span class="mf">3.2</span> <span class="err">起</span> <span class="n">startproject</span> <span class="err">會產生；未設定時</span> <span class="n">migrate</span> <span class="err">會出現</span> <span class="n">W042</span> <span class="err">警告）</span>
-<span class="n">DEFAULT_AUTO_FIELD</span> <span class="o">=</span> <span class="s">'django.db.models.BigAutoField'</span>
+<span class="c1"># 靜態文件設置</span>
+<span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s1">'/static/'</span>
+<span class="c1"># 預設主鍵型別（Django 3.2 起 startproject 會產生；未設定時 migrate 會出現 W042 警告）</span>
+<span class="n">DEFAULT_AUTO_FIELD</span> <span class="o">=</span> <span class="s1">'django.db.models.BigAutoField'</span>
 </code></pre></div>
 
 <h4 id="322-常見配置項目解析">3.2.2 常見配置項目解析</h4>
@@ -601,8 +599,9 @@ mycommand.py
 </ol>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.core.management.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseCommand</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
-<span class="n">help</span> <span class="o">=</span> <span class="s1">'這是一個自定義命令範例'</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s1">'這是一個自定義命令範例'</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
 <p>self.stdout.write("執行自定義命令")</p>
@@ -624,17 +623,15 @@ mycommand.py
 <h4 id="412-urlspy-文件的結構">4.1.2 urls.py 文件的結構</h4>
 <p>urls.py 文件是 URLconf 的配置文件，通常放置在 Django 項目目錄下的根目錄以及每個應用內部。項目根目錄的 urls.py 文件負責處理全局的 URL 路徑，而每個應用內的 urls.py 則管理該應用的特定路徑。</p>
 <p>以下是一個典型的 urls.py 文件結構範例：</p>
+<p>path('admin/', admin.site.urls), # 管理站點的 URL 路徑
+path(", views.index, name='index'), # 根路徑映射到首頁視圖
+path('about/', views.about, name='about'), # 靜態 "關於我們" 頁面</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myproject/urls.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib</span><span class="w"> </span><span class="kn">import</span> <span class="n">admin</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">myapp</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
 <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
-</code></pre></div>
-
-<p>path('admin/', admin.site.urls), # 管理站點的 URL 路徑</p>
-<p>path(", views.index, name='index'), # 根路徑映射到首頁視圖</p>
-<p>path('about/', views.about, name='about'), # 靜態 "關於我們" 頁面</p>
-<div class="codehilite"><pre><span></span><code>]
+<span class="p">]</span>
 </code></pre></div>
 
 <p>在這個範例中，我們定義了三個 URL 路徑：</p>
@@ -662,15 +659,13 @@ mycommand.py
 </li>
 </ul>
 <p>範例：定義靜態和動態 URL</p>
+<p>path('about/', views.about, name='about'), # 靜態 URL
+path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/urls.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
 <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
-</code></pre></div>
-
-<p>path('about/', views.about, name='about'), # 靜態 URL</p>
-<p>path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL</p>
-<div class="codehilite"><pre><span></span><code>]
+<span class="p">]</span>
 </code></pre></div>
 
 <p>在這裡，about/ 是靜態 URL，無論何時訪問，總是映射到同一個 "關於我們" 頁面。post/<int:id>/ 是動態 URL，其中 <int:id> 是一個變量，它表示動態部分，用於表示文章的 ID。</p>
@@ -694,13 +689,11 @@ mycommand.py
 </li>
 </ul>
 <p>範例：使用路徑轉換器</p>
+<p>path('post/<int:id>/, views.post_detail, name='post_detail'), # 匹配整數 ID
+path('category/<slug:slug>/, views.category_detail, name='category_detail'), # 匹配 slug</p>
 <div class="codehilite"><pre><span></span><code># 使用不同的路徑轉換器來匹配不同類型的動態 URL
 urlpatterns = [
-</code></pre></div>
-
-<p>path('post/<int:id>/, views.post_detail, name='post_detail'), # 匹配整數 ID</p>
-<p>path('category/<slug:slug>/, views.category_detail, name='category_detail'), # 匹配 slug</p>
-<div class="codehilite"><pre><span></span><code>]
+]
 </code></pre></div>
 
 <p>在這裡，post/<int:id/> 只匹配數字 ID，而 category/<slug:slug/> 則匹配包含字母和數字的 slug。</p>
@@ -725,30 +718,26 @@ urlpatterns = [
 </li>
 </ul>
 <p>範例：使用 path() 定義 URL</p>
+<p>path("views.index, name='index'), # 定義根 URL
+path('contact/', views.contact, name='contact'), # 靜態 URL
+path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/urls.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
 <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
-</code></pre></div>
-
-<p>path("views.index, name='index'), # 定義根 URL</p>
-<p>path('contact/', views.contact, name='contact'), # 靜態 URL</p>
-<p>path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL</p>
-<div class="codehilite"><pre><span></span><code>]
+<span class="p">]</span>
 </code></pre></div>
 
 <h4 id="432-urlconf-中的-include">4.3.2 URLconf 中的 include()</h4>
 <p>隨著應用的增長，將所有 URL 都放在一個文件中會導致代碼難以維護。Django 提供了 include() 函數來將 URLconf 分割到不同的應用中。這樣，主 URLconf 文件可以將請求分發到不同的應用，而每個應用內的 URLconf 文件負責處理具體的路徑。</p>
 <p>範例：在主項目的 urls.py 中使用 include()</p>
+<p>path('admin/', admin.site.urls), # 管理後臺 URL
+path('blog/', include('blog.urls')), # 將 URL 分發到博客應用的 URLconf</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myproject/urls.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib</span><span class="w"> </span><span class="kn">import</span> <span class="n">admin</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
 <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
-</code></pre></div>
-
-<p>path('admin/', admin.site.urls), # 管理後臺 URL</p>
-<p>path('blog/', include('blog.urls')), # 將 URL 分發到博客應用的 URLconf</p>
-<div class="codehilite"><pre><span></span><code>]
+<span class="p">]</span>
 </code></pre></div>
 
 <p>在這個例子中，當用戶訪問 /blog/ 開頭的 URL 時，Django 會將這些請求分發到 blog 應用的 urls.py 文件中處理。這種設計使得每個應用的 URLconf 可以獨立管理，從而提高了代碼的可維護性。</p>
@@ -761,6 +750,7 @@ urlpatterns = [
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
 <p>return HttpResponse("歡迎來到我的網站！")</p>
@@ -784,6 +774,7 @@ urlpatterns = [
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">post_detail</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="k">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
 <p>return HttpResponse(f"這是文章 {id} 的詳情頁面")</p>
@@ -800,6 +791,7 @@ path('post/&lt;int:id&gt;/, views.post_detail, {'author': 'John'}, name='post_de
 <p>在這裡，我們將一個 author 參數通過 kwargs 傳遞給視圖。</p>
 <div class="codehilite"><pre><span></span><code><span class="gh">#</span> myapp/views.py
 def post_detail(request, id, author):
+    pass  # 內容省略
 </code></pre></div>
 
 <p>return HttpResponse(f"文章 {id} 由 {author} 撰寫")</p>
@@ -809,12 +801,10 @@ def post_detail(request, id, author):
 <p>4.5.1 應用場景 1：博客系統中的動態文章 URL</p>
 <p>在博客系統中，通常會有許多文章，每篇文章都有一個唯一的 ID 或 slug。你可以使用動態 URL 來顯示不同文章的內容。</p>
 <p>範例：博客文章的動態 URL</p>
-<div class="codehilite"><pre><span></span><code># myapp/urls.py
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> myapp/urls.py
 urlpatterns = [
-</code></pre></div>
-
-<p>path('post/<slug:slug>/, views.post_detail, name='post_detail'), # 使用 slug 作為文章標識</p>
-<div class="codehilite"><pre><span></span><code>]
+path('post/&lt;slug:slug&gt;/, views.post_detail, name='post_detail'), # 使用 slug 作為文章標識
+]
 <span class="gh">#</span> myapp/views.py
 def post_detail(request, slug):
 <span class="gh">#</span> 根據 slug 從資料庫中查找文章
@@ -832,7 +822,7 @@ path('product/&lt;int:id&gt;', views.product_detail, name='product_detail'),
 ]
 <span class="gh">#</span> shop/views.py
 def product_detail(request, id):
-product = get_object_or_404(Product, id=id)
+    product = get_object_or_404(Product, id=id)
 </code></pre></div>
 
 <p>return HttpResponse(f"這是產品 {product.name} 的詳情頁面")</p>
@@ -843,9 +833,9 @@ product = get_object_or_404(Product, id=id)
 <div class="codehilite"><pre><span></span><code><span class="c1"># blog/views.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">redirect</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">submit_comment</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">post_id</span><span class="p">):</span>
-<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
-<span class="c1"># 保存評論邏輯</span>
-<span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">'post_detail'</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">post_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
+        <span class="c1"># 保存評論邏輯</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">'post_detail'</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">post_id</span><span class="p">)</span>
 </code></pre></div>
 
 <p>在這裡，我們使用動態 URL 和 redirect() 函數，將用戶重定向回評論所屬的文章詳情頁。</p>

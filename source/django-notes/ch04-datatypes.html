@@ -281,16 +281,16 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <div class="codehilite"><pre><span></span><code>age = int(input("請輸入你家狗狗的年齡："))
 print("")
 if age &lt; 0:
-print("請輸入正確的年齡：")
+    print("請輸入正確的年齡：")
 elif age == 1:
-print("相當於 14 歲的人：")
+    print("相當於 14 歲的人：")
 elif age == 2:
-print("相當於 22 歲的人：")
+    print("相當於 22 歲的人：")
 elif age &gt; 2:
-human = 22 + (age -2)*5
-print("對應人類年齡：", human)
-<span class="gu">##</span># 退出提示，本地環境下可以使用這樣的退出提示使代碼更易用
-input('點擊 enter 鍵退出')
+    human = 22 + (age -2)*5
+    print("對應人類年齡：", human)
+    ### 退出提示，本地環境下可以使用這樣的退出提示使代碼更易用
+    input('點擊 enter 鍵退出')
 </code></pre></div>
 
 <p>(在 index1.py)</p>
@@ -306,7 +306,7 @@ input('點擊 enter 鍵退出')
 <p>數值類型的賦值和計算都是很直觀的，就像大多數語言一樣。內置的 type() 函數可以用來查詢 變量所指的對像類型。</p>
 <div class="codehilite"><pre><span></span><code><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">,</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="m m-Double">5.5</span><span class="p">,</span><span class="w"> </span><span class="nx">True</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="o">+</span><span class="mi">3</span><span class="nx">j</span>
 <span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">a</span><span class="p">),</span><span class="w"> </span><span class="k">type</span><span class="p">(</span><span class="nx">b</span><span class="p">),</span><span class="w"> </span><span class="k">type</span><span class="p">(</span><span class="nx">c</span><span class="p">),</span><span class="w"> </span><span class="k">type</span><span class="p">(</span><span class="nx">d</span><span class="p">))</span>
-<span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="nx">int</span><span class="err">'</span><span class="p">&gt;</span><span class="w"> </span><span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="nx">float</span><span class="err">'</span><span class="p">&gt;</span><span class="w"> </span><span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="kt">bool</span><span class="err">'</span><span class="p">&gt;</span><span class="w"> </span><span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="nx">complex</span><span class="err">'</span><span class="p">&gt;</span>
+<span class="err">#</span><span class="w"> </span><span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="nx">int</span><span class="err">'</span><span class="p">&gt;</span><span class="w"> </span><span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="nx">float</span><span class="err">'</span><span class="p">&gt;</span><span class="w"> </span><span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="kt">bool</span><span class="err">'</span><span class="p">&gt;</span><span class="w"> </span><span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="nx">complex</span><span class="err">'</span><span class="p">&gt;</span>
 </code></pre></div>
 
 <p>還可以用 isinstance 來判斷：</p>
@@ -318,13 +318,13 @@ print(isinstance(aa, int))
 <p>type ()不會認為子類是一種父類類型。</p>
 <p>isinstance ()會認為子類是一種父類類型。</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">A</span><span class="p">:</span>
-<span class="nx">pass</span>
+<span class="w">    </span><span class="nx">pass</span>
 <span class="kd">class</span><span class="w"> </span><span class="nx">B</span><span class="p">(</span><span class="nx">A</span><span class="p">):</span>
-<span class="nx">pass</span>
-<span class="nx">print</span><span class="p">(</span><span class="nx">isinstance</span><span class="p">(</span><span class="nx">A</span><span class="p">(),</span><span class="w"> </span><span class="nx">A</span><span class="p">))</span>
-<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">A</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">A</span><span class="p">)</span>
-<span class="nx">print</span><span class="p">(</span><span class="nx">isinstance</span><span class="p">(</span><span class="nx">B</span><span class="p">(),</span><span class="w"> </span><span class="nx">A</span><span class="p">))</span>
-<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">B</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">A</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">pass</span>
+<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="nx">isinstance</span><span class="p">(</span><span class="nx">A</span><span class="p">(),</span><span class="w"> </span><span class="nx">A</span><span class="p">))</span>
+<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">A</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">A</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="nx">isinstance</span><span class="p">(</span><span class="nx">B</span><span class="p">(),</span><span class="w"> </span><span class="nx">A</span><span class="p">))</span>
+<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">B</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">A</span><span class="p">)</span>
 </code></pre></div>
 
 <p>當你指定一個值時，Number 對象就會被創建：</p>
@@ -347,7 +347,7 @@ print(isinstance(aa, int))
 </li>
 </ol>
 <p>Python 中的字符串 str 用單引號('')或雙引號("") 括起來，同時使用反斜槓() 轉義特殊字符。</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">s</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">'</span><span class="nx">Yes</span><span class="p">,</span><span class="w"> </span><span class="nx">he</span><span class="w"> </span><span class="nx">doesn</span><span class="sc">'t'</span>
+<div class="codehilite"><pre><span></span><code><span class="nx">s</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">'</span><span class="nx">Yes</span><span class="p">,</span><span class="w"> </span><span class="nx">he</span><span class="w"> </span><span class="nx">doesn</span><span class="err">\</span><span class="sc">'t'</span>
 <span class="nx">print</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">(</span><span class="nx">s</span><span class="p">),</span><span class="w"> </span><span class="nx">len</span><span class="p">(</span><span class="nx">s</span><span class="p">))</span>
 </code></pre></div>
 
@@ -357,7 +357,7 @@ print(r'C:\some\name')
 </code></pre></div>
 
 <p>字符串可以使用+ 運算符串連接在一起，或者用* 運算符重複：</p>
-<div class="codehilite"><pre><span></span><code>print('str+'ing', 'my'*3)
+<div class="codehilite"><pre><span></span><code>print('str' + 'ing', 'my'*3)
 </code></pre></div>
 
 <p>Python 中的字符串有兩種索引方式，</p>
@@ -567,7 +567,52 @@ print("Hello, World")
 <p>運算符優先級</p>
 <h2 id="python-算術運算符">Python 算術運算符</h2>
 <p>下面假設變量 a 爲 21，變量 b 爲 10：</p>
-<p>運算符</td> 描述</td> 類別</td></tr> +</td> 加 - 兩個對像加</td> a + b 輸出結果 31</td></tr> -</td> 減 - 得到負數或者是一個數減去另一個數</td> a - b 輸出結果 11</td></tr> *</td> 乘 - 兩個數相乘或者是返回一個被重新恢復若干次的字符串</td> a * b 輸出結果 210</td></tr> /</td> 除 - x 除以 y</td> a / b 輸出結果 2.1</td></tr> %</td> 取模 - 返回剛除法的餘數</td> a % b 輸出結果 1</td></tr> **</td> 模 - 返回 x 的 y 次模</td> a ** b 為 21 的 10 次方</td></tr> //</td> 取整除 - 返回商的整數部分</td> 9//2 輸出結果 4, 9.0//2.0 輸出結果 4.0</td></tr></table></p>
+<table>
+<thead>
+<tr>
+<th>運算符</th>
+<th>描述</th>
+<th>類別</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>加 - 兩個對像加</td>
+<td>a + b 輸出結果 31</td>
+</tr>
+<tr>
+<td>-</td>
+<td>減 - 得到負數或者是一個數減去另一個數</td>
+<td>a - b 輸出結果 11</td>
+</tr>
+<tr>
+<td>*</td>
+<td>乘 - 兩個數相乘或者是返回一個被重新恢復若干次的字符串</td>
+<td>a * b 輸出結果 210</td>
+</tr>
+<tr>
+<td>/</td>
+<td>除 - x 除以 y</td>
+<td>a / b 輸出結果 2.1</td>
+</tr>
+<tr>
+<td>%</td>
+<td>取模 - 返回剛除法的餘數</td>
+<td>a % b 輸出結果 1</td>
+</tr>
+<tr>
+<td>**</td>
+<td>模 - 返回 x 的 y 次模</td>
+<td>a ** b 為 21 的 10 次方</td>
+</tr>
+<tr>
+<td>//</td>
+<td>取整除 - 返回商的整數部分</td>
+<td>9//2 輸出結果 4, 9.0//2.0 輸出結果 4.0</td>
+</tr>
+</tbody>
+</table>
 <p>下面實例演示了 Python 所有運算符的操作：</p>
 <div class="codehilite"><pre><span></span><code>a = 21
 b = 10
@@ -601,7 +646,57 @@ print("aaa//bbb 的值爲：", ccc)
 <p>aa 小於 bb</p>
 <p>Python 比較運算符</p>
 <p>下面假設變量 a 為 10，變量 b 為 20：</p>
-<p>運算符</td> 描述</td> 實例</td></tr> =</td> 簡單的資產運算符</td> c = a + b 將 a + b 的計算結果賦值為 c</td></tr> +=</td> 加法賦值運算符</td> c += a 等效於 c = c + a</td></tr> -=</td> 減法賦值運算符</td> c -= a 等效於 c = c - a</td></tr> *=</td> 乘法賦值運算符</td> c *= a 等效於 c = c * a</td></tr> /=</td> 除法賦值運算符</td> c /= a 等效於 c = c / a</td></tr> %=</td> 取模值運算符</td> c %= a 等效於 c = c % a</td></tr> **=</td> 賦值運算符</td> c **= a 等效於 c = c ** a</td></tr> //=</td> 取整除賦值運算符</td> c //= a 等效於 c = c // a</td></tr></table></p>
+<table>
+<thead>
+<tr>
+<th>運算符</th>
+<th>描述</th>
+<th>實例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>=</td>
+<td>簡單的資產運算符</td>
+<td>c = a + b 將 a + b 的計算結果賦值為 c</td>
+</tr>
+<tr>
+<td>+=</td>
+<td>加法賦值運算符</td>
+<td>c += a 等效於 c = c + a</td>
+</tr>
+<tr>
+<td>-=</td>
+<td>減法賦值運算符</td>
+<td>c -= a 等效於 c = c - a</td>
+</tr>
+<tr>
+<td>*=</td>
+<td>乘法賦值運算符</td>
+<td>c *= a 等效於 c = c * a</td>
+</tr>
+<tr>
+<td>/=</td>
+<td>除法賦值運算符</td>
+<td>c /= a 等效於 c = c / a</td>
+</tr>
+<tr>
+<td>%=</td>
+<td>取模值運算符</td>
+<td>c %= a 等效於 c = c % a</td>
+</tr>
+<tr>
+<td>**=</td>
+<td>賦值運算符</td>
+<td>c **= a 等效於 c = c ** a</td>
+</tr>
+<tr>
+<td>//=</td>
+<td>取整除賦值運算符</td>
+<td>c //= a 等效於 c = c // a</td>
+</tr>
+</tbody>
+</table>
 <p>所有比較運算符返回 1 表示真，返回 0 表示假。這個分別與特殊的變化量 True 和 False 等價。</p>
 <p>注意：True 和 False 的首字母為大寫。</p>
 <p>下面實例演示了 Python 所有比較運符的操作：</p>
@@ -609,31 +704,31 @@ print("aaa//bbb 的值爲：", ccc)
 <span class="nt">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">10</span>
 <span class="nt">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">0</span>
 <span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">a</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nt">b</span><span class="o">):</span>
-<span class="nt">print</span><span class="o">(</span><span class="s2">"a 等於 b"</span><span class="o">)</span>
+<span class="w">    </span><span class="nt">print</span><span class="o">(</span><span class="s2">"a 等於 b"</span><span class="o">)</span>
 <span class="nt">else</span><span class="o">:</span>
-<span class="nt">print</span><span class="o">(</span><span class="s2">"a 不等於 b"</span><span class="o">)</span>
-<span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">a</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nt">b</span><span class="o">):</span>
-<span class="nt">print</span><span class="o">(</span><span class="s2">"a 不等於 b"</span><span class="o">)</span>
-<span class="nt">else</span><span class="o">:</span>
-<span class="nt">print</span><span class="o">(</span><span class="s2">"a 等於 b"</span><span class="o">)</span>
-<span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">a</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nt">b</span><span class="o">):</span>
-<span class="nt">print</span><span class="o">(</span><span class="s2">"a 小於 b"</span><span class="o">)</span>
-<span class="nt">else</span><span class="o">:</span>
-<span class="nt">print</span><span class="o">(</span><span class="s2">"a 大於等於 b"</span><span class="o">)</span>
-<span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">a</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">b</span><span class="o">):</span>
-<span class="nt">print</span><span class="o">(</span><span class="s2">"a 大於 b"</span><span class="o">)</span>
-<span class="nt">else</span><span class="o">:</span>
-<span class="nt">print</span><span class="o">(</span><span class="s2">"a 小於等於 b"</span><span class="o">)</span>
-<span class="nt">aa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">5</span><span class="o">;</span>
-<span class="nt">ba</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">20</span><span class="o">;</span>
-<span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">aa</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nt">bb</span><span class="o">):</span>
-<span class="nt">print</span><span class="o">(</span><span class="s2">"aa 小於等於 bb"</span><span class="o">)</span>
-<span class="nt">else</span><span class="o">:</span>
-<span class="nt">print</span><span class="o">(</span><span class="s2">"aa 大於 bb"</span><span class="o">)</span>
-<span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">aa</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nt">bb</span><span class="o">):</span>
-<span class="nt">print</span><span class="o">(</span><span class="s2">"aa 大於等於 bb"</span><span class="o">)</span>
-<span class="nt">else</span><span class="o">:</span>
-<span class="nt">print</span><span class="o">(</span><span class="s2">"aa 小於 bb"</span><span class="o">)</span>
+<span class="w">    </span><span class="nt">print</span><span class="o">(</span><span class="s2">"a 不等於 b"</span><span class="o">)</span>
+<span class="w">    </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">a</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nt">b</span><span class="o">):</span>
+<span class="w">        </span><span class="nt">print</span><span class="o">(</span><span class="s2">"a 不等於 b"</span><span class="o">)</span>
+<span class="w">    </span><span class="nt">else</span><span class="o">:</span>
+<span class="w">        </span><span class="nt">print</span><span class="o">(</span><span class="s2">"a 等於 b"</span><span class="o">)</span>
+<span class="w">        </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">a</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nt">b</span><span class="o">):</span>
+<span class="w">            </span><span class="nt">print</span><span class="o">(</span><span class="s2">"a 小於 b"</span><span class="o">)</span>
+<span class="w">        </span><span class="nt">else</span><span class="o">:</span>
+<span class="w">            </span><span class="nt">print</span><span class="o">(</span><span class="s2">"a 大於等於 b"</span><span class="o">)</span>
+<span class="w">            </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">a</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">b</span><span class="o">):</span>
+<span class="w">                </span><span class="nt">print</span><span class="o">(</span><span class="s2">"a 大於 b"</span><span class="o">)</span>
+<span class="w">            </span><span class="nt">else</span><span class="o">:</span>
+<span class="w">                </span><span class="nt">print</span><span class="o">(</span><span class="s2">"a 小於等於 b"</span><span class="o">)</span>
+<span class="w">                </span><span class="nt">aa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">5</span><span class="o">;</span>
+<span class="w">                </span><span class="nt">ba</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">20</span><span class="o">;</span>
+<span class="w">                </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">aa</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nt">bb</span><span class="o">):</span>
+<span class="w">                    </span><span class="nt">print</span><span class="o">(</span><span class="s2">"aa 小於等於 bb"</span><span class="o">)</span>
+<span class="w">                </span><span class="nt">else</span><span class="o">:</span>
+<span class="w">                    </span><span class="nt">print</span><span class="o">(</span><span class="s2">"aa 大於 bb"</span><span class="o">)</span>
+<span class="w">                    </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">aa</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nt">bb</span><span class="o">):</span>
+<span class="w">                        </span><span class="nt">print</span><span class="o">(</span><span class="s2">"aa 大於等於 bb"</span><span class="o">)</span>
+<span class="w">                    </span><span class="nt">else</span><span class="o">:</span>
+<span class="w">                        </span><span class="nt">print</span><span class="o">(</span><span class="s2">"aa 小於 bb"</span><span class="o">)</span>
 </code></pre></div>
 
 <p>以上實例輸出結果：</p>
@@ -648,7 +743,57 @@ print("aaa//bbb 的值爲：", ccc)
 
 <h2 id="python-賦值運算符">Python 賦值運算符</h2>
 <p>下面假設變量 a 為 10，變量 b 為 20：</p>
-<p>運算符</td> 描述</td> 實例</td></tr> =</td> 簡單的資產運算符</td> c = a + b 將 a + b 的計算結果賦值為 c</td></tr> +=</td> 加法賦值運算符</td> c += a 等效於 c = c + a</td></tr> -=</td> 減法賦值運算符</td> c -= a 等效於 c = c - a</td></tr> *=</td> 乘法賦值運算符</td> c *= a 等效於 c = c * a</td></tr> /=</td> 除法賦值運算符</td> c /= a 等效於 c = c / a</td></tr> %=</td> 取模值運算符</td> c %= a 等效於 c = c % a</td></tr> **=</td> 賦值運算符</td> c **= a 等效於 c = c ** a</td></tr> //=</td> 取整除賦值運算符</td> c //= a 等效於 c = c // a</td></tr></table></p>
+<table>
+<thead>
+<tr>
+<th>運算符</th>
+<th>描述</th>
+<th>實例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>=</td>
+<td>簡單的資產運算符</td>
+<td>c = a + b 將 a + b 的計算結果賦值為 c</td>
+</tr>
+<tr>
+<td>+=</td>
+<td>加法賦值運算符</td>
+<td>c += a 等效於 c = c + a</td>
+</tr>
+<tr>
+<td>-=</td>
+<td>減法賦值運算符</td>
+<td>c -= a 等效於 c = c - a</td>
+</tr>
+<tr>
+<td>*=</td>
+<td>乘法賦值運算符</td>
+<td>c *= a 等效於 c = c * a</td>
+</tr>
+<tr>
+<td>/=</td>
+<td>除法賦值運算符</td>
+<td>c /= a 等效於 c = c / a</td>
+</tr>
+<tr>
+<td>%=</td>
+<td>取模值運算符</td>
+<td>c %= a 等效於 c = c % a</td>
+</tr>
+<tr>
+<td>**=</td>
+<td>賦值運算符</td>
+<td>c **= a 等效於 c = c ** a</td>
+</tr>
+<tr>
+<td>//=</td>
+<td>取整除賦值運算符</td>
+<td>c //= a 等效於 c = c // a</td>
+</tr>
+</tbody>
+</table>
 <p>以下實例演示了 Python 所有賦值運算符的操作：</p>
 <div class="codehilite"><pre><span></span><code>a = 21
 b = 10
@@ -683,31 +828,66 @@ print("7 - c 的值爲：", c)
 
 <p>Python 總編輯算符</p>
 <p>Python 語言支持總編輯運算符，以下假設置量 a 為 10，b 為 20：</p>
-<p>運算符</td> 總編輯表達式</td> 描述</td> 實例</td></tr> and</td> x and y</td> 布爾“與”-如果 x 為 False, x 和 y 返回 False, 否則它返回 y 的計算值。</td> (a and b) 返回 20.</td></tr> or</td> x or y</td> 布爾“或”-如果 x 是 True, 它返回 x 的值, 否則它返回 y 的計算值。</td> (a or b) 返回 10.</td></tr> not</td> not x</td> 布爾“非”-如果 x 為 True, 返回 False, 如果 x 為 False, 則返回 True。</td> not(a and b) 返回 False</td></tr></table>以上實例輸出結果：</p>
+<table>
+<thead>
+<tr>
+<th>運算符</th>
+<th>總編輯表達式</th>
+<th>描述</th>
+<th>實例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>and</td>
+<td>x and y</td>
+<td>布爾“與”-如果 x 為 False, x 和 y 返回 False, 否則它返回 y 的計算值。</td>
+<td>(a and b) 返回 20.</td>
+</tr>
+<tr>
+<td>or</td>
+<td>x or y</td>
+<td>布爾“或”-如果 x 是 True, 它返回 x 的值, 否則它返回 y 的計算值。</td>
+<td>(a or b) 返回 10.</td>
+</tr>
+<tr>
+<td>not</td>
+<td>not x</td>
+<td>布爾“非”-如果 x 為 True, 返回 False, 如果 x 為 False, 則返回 True。</td>
+<td>not(a and b) 返回 False</td>
+</tr>
+<tr>
+<td>以上實例輸出結果：</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <div class="codehilite"><pre><span></span><code><span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span>
 <span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span>
 <span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"1 - 變量 a 和 b 都為 true"</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"1 - 變量 a 和 b 都為 true"</span><span class="ss">)</span>
 <span class="k">else</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"1 - 變量 a 和 b 有一個不為 true"</span><span class="ss">)</span>
-<span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"2 - 變量 a 和 b 都為 true，或其中一個變量為 true"</span><span class="ss">)</span>
-<span class="k">else</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"2 - 變量 a 和 b 都不為 true"</span><span class="ss">)</span>
-#<span class="w"> </span>修改變量<span class="w"> </span><span class="nv">a</span><span class="w"> </span>的值
-<span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - 變量 a 和 b 都為 true"</span><span class="ss">)</span>
-<span class="k">else</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - 變量 a 和 b 有一個不為 true"</span><span class="ss">)</span>
-<span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"4 - 變量 a 和 b 都為 true，或其中一個變量為 true"</span><span class="ss">)</span>
-<span class="k">else</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"4 - 變量 a 和 b 都不為 true"</span><span class="ss">)</span>
-<span class="k">if</span><span class="w"> </span><span class="nv">not</span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"5 - 變量 a 和 b 都為 false，或其中一個變量為 false"</span><span class="ss">)</span>
-<span class="k">else</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"5 - 變量 a 和 b 都為 true"</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"1 - 變量 a 和 b 有一個不為 true"</span><span class="ss">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"2 - 變量 a 和 b 都為 true，或其中一個變量為 true"</span><span class="ss">)</span>
+<span class="w">    </span><span class="k">else</span>:
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"2 - 變量 a 和 b 都不為 true"</span><span class="ss">)</span>
+<span class="w">        </span>#<span class="w"> </span>修改變量<span class="w"> </span><span class="nv">a</span><span class="w"> </span>的值
+<span class="w">        </span><span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
+<span class="w">            </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - 變量 a 和 b 都為 true"</span><span class="ss">)</span>
+<span class="w">        </span><span class="k">else</span>:
+<span class="w">            </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - 變量 a 和 b 有一個不為 true"</span><span class="ss">)</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
+<span class="w">                </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"4 - 變量 a 和 b 都為 true，或其中一個變量為 true"</span><span class="ss">)</span>
+<span class="w">            </span><span class="k">else</span>:
+<span class="w">                </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"4 - 變量 a 和 b 都不為 true"</span><span class="ss">)</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="nv">not</span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
+<span class="w">                    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"5 - 變量 a 和 b 都為 false，或其中一個變量為 false"</span><span class="ss">)</span>
+<span class="w">                </span><span class="k">else</span>:
+<span class="w">                    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"5 - 變量 a 和 b 都為 true"</span><span class="ss">)</span>
 </code></pre></div>
 
 <p>以上實例輸出結果：</p>
@@ -721,25 +901,45 @@ print("7 - c 的值爲：", c)
 
 <h2 id="python-成員運算符">Python 成員運算符</h2>
 <p>除了以上的一些運算符之外，Python 還支持成員運算符，測試實例中包含了一系列的成員，包含字符串，列表或元組。</p>
-<p>運算符</td> 描述</td> 實例</td></tr> in</td> 如果在指定的順序中找到值返回True,否則返回 False。</td> x 在 y 順序中,如果 x 在 y 順序中返回 True。</td></tr> not in</td> 如果在指定的順序中沒有找到值返回 True,否則返回 False。</td> x 不在 y 順序中,如果 x 不在 y 順序中返回 True。</td></tr></table></p>
+<table>
+<thead>
+<tr>
+<th>運算符</th>
+<th>描述</th>
+<th>實例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>in</td>
+<td>如果在指定的順序中找到值返回True,否則返回 False。</td>
+<td>x 在 y 順序中,如果 x 在 y 順序中返回 True。</td>
+</tr>
+<tr>
+<td>not in</td>
+<td>如果在指定的順序中沒有找到值返回 True,否則返回 False。</td>
+<td>x 不在 y 順序中,如果 x 不在 y 順序中返回 True。</td>
+</tr>
+</tbody>
+</table>
 <p>下面實例演示了 Python 所有成員運算符的操作：</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span>
 <span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span>
 <span class="nv">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="mi">1</span>,<span class="w"> </span><span class="mi">2</span>,<span class="w"> </span><span class="mi">3</span>,<span class="w"> </span><span class="mi">4</span>,<span class="w"> </span><span class="mi">5</span>]<span class="c1">;</span>
 <span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">list</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"1 - 變量 a 在給定的列表中 list 中"</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"1 - 變量 a 在給定的列表中 list 中"</span><span class="ss">)</span>
 <span class="k">else</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"1 - 變量 a 不在給定的列表中 list 中"</span><span class="ss">)</span>
-<span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">b</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">list</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"2 - 變量 b 不在給定的列表中 list 中"</span><span class="ss">)</span>
-<span class="k">else</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"2 - 變量 b 在給定的列表中 list 中"</span><span class="ss">)</span>
-#<span class="w"> </span>修改變量<span class="w"> </span><span class="nv">a</span><span class="w"> </span>的值
-<span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
-<span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">list</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - 變量 a 在給定的列表中 list 中"</span><span class="ss">)</span>
-<span class="k">else</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - 變量 a 不在給定的列表中 list 中"</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"1 - 變量 a 不在給定的列表中 list 中"</span><span class="ss">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">b</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">list</span><span class="ss">)</span>:
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"2 - 變量 b 不在給定的列表中 list 中"</span><span class="ss">)</span>
+<span class="w">    </span><span class="k">else</span>:
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"2 - 變量 b 在給定的列表中 list 中"</span><span class="ss">)</span>
+<span class="w">        </span>#<span class="w"> </span>修改變量<span class="w"> </span><span class="nv">a</span><span class="w"> </span>的值
+<span class="w">        </span><span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">list</span><span class="ss">)</span>:
+<span class="w">            </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - 變量 a 在給定的列表中 list 中"</span><span class="ss">)</span>
+<span class="w">        </span><span class="k">else</span>:
+<span class="w">            </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - 變量 a 不在給定的列表中 list 中"</span><span class="ss">)</span>
 </code></pre></div>
 
 <p>以上實例輸出結果：</p>
@@ -751,28 +951,48 @@ print("7 - c 的值爲：", c)
 
 <h2 id="python-身分運算符">Python 身分運算符</h2>
 <h2 id="身體運算符用於比較兩個對象的存貯單位">身體運算符用於比較兩個對象的存貯單位</h2>
-<p>運算符</td> 描述</td> 實例</td></tr> is</td> 是判斷兩個標誌符是不是引用自己一個對象</td> x is y, 如果 id(x) 等於 id(y), is返回結果 True</td></tr> is not</td> is not is not is not is 判斷兩個標誌符是不是引用自不同對照象</td> x 不是 y, 如果 id(x) 不等於 id(y),不是返回結果 True</td></tr></table></p>
+<table>
+<thead>
+<tr>
+<th>運算符</th>
+<th>描述</th>
+<th>實例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>is</td>
+<td>是判斷兩個標誌符是不是引用自己一個對象</td>
+<td>x is y, 如果 id(x) 等於 id(y), is返回結果 True</td>
+</tr>
+<tr>
+<td>is not</td>
+<td>is not is not is not is 判斷兩個標誌符是不是引用自不同對照象</td>
+<td>x 不是 y, 如果 id(x) 不等於 id(y),不是返回結果 True</td>
+</tr>
+</tbody>
+</table>
 <p>示了 Python 的所有運算符的操作：</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span>
 <span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span>
 <span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"1 - a 和 b 有相同的標識"</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"1 - a 和 b 有相同的標識"</span><span class="ss">)</span>
 <span class="k">else</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"1 - a 和 b 沒有相同的標識"</span><span class="ss">)</span>
-<span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">id</span><span class="ss">(</span><span class="nv">a</span><span class="ss">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">id</span><span class="ss">(</span><span class="nv">b</span><span class="ss">))</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"2 - a 和 b 有相同的標識"</span><span class="ss">)</span>
-<span class="k">else</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"2 - a 和 b 沒有相同的標識"</span><span class="ss">)</span>
-#<span class="w"> </span>修改變量<span class="w"> </span><span class="nv">b</span><span class="w"> </span>的值
-<span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span>
-<span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - a 和 b 有相同的標識"</span><span class="ss">)</span>
-<span class="k">else</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - a 和 b 沒有相同的標識"</span><span class="ss">)</span>
-<span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"4 - a 和 b 沒有相同的標識"</span><span class="ss">)</span>
-<span class="k">else</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"4 - a 和 b 有相同的標識"</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"1 - a 和 b 沒有相同的標識"</span><span class="ss">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">id</span><span class="ss">(</span><span class="nv">a</span><span class="ss">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">id</span><span class="ss">(</span><span class="nv">b</span><span class="ss">))</span>:
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"2 - a 和 b 有相同的標識"</span><span class="ss">)</span>
+<span class="w">    </span><span class="k">else</span>:
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"2 - a 和 b 沒有相同的標識"</span><span class="ss">)</span>
+<span class="w">        </span>#<span class="w"> </span>修改變量<span class="w"> </span><span class="nv">b</span><span class="w"> </span>的值
+<span class="w">        </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
+<span class="w">            </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - a 和 b 有相同的標識"</span><span class="ss">)</span>
+<span class="w">        </span><span class="k">else</span>:
+<span class="w">            </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - a 和 b 沒有相同的標識"</span><span class="ss">)</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>:
+<span class="w">                </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"4 - a 和 b 沒有相同的標識"</span><span class="ss">)</span>
+<span class="w">            </span><span class="k">else</span>:
+<span class="w">                </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"4 - a 和 b 有相同的標識"</span><span class="ss">)</span>
 </code></pre></div>
 
 <p>以上實例輸出結果：</p>
@@ -785,7 +1005,92 @@ print("7 - c 的值爲：", c)
 
 <h2 id="python-運算符優先級">Python 運算符優先級</h2>
 <p>以下表格列出了從最高到最低優先級的所有運算符：</p>
-<p>運算符</td> 描述</td></tr> (expressions...), [expressions...], {key: value...}, {expressions...}</td> 因括號的表達式</td></tr> x[index], x[index:index], x(arguments...), x.attribute</td> 讀取，切片，調用，屬性引用</td></tr> await x</td> await 表達式</td></tr> **</td> 乘方(指數)</td></tr> +x, -x, -x</td> 正，負，按位非 NOT</td></tr> *, @, /, //, %</td> 乘，矩陣乘，除，整除，取餘</td></tr> +,-</td> 加和減</td></tr> &lt;&lt;, &gt;&gt;</td> 移位</td></tr> &amp;</td> 按位與 AND</td></tr> ^</td> 按位異或 XOR</td></tr> |</td> 按位或 OR</td></tr> in, not in, is, is not, &lt;, &lt;=, &gt;, &gt;=, !=, ==</td> 比較運算，包括成員檢測和標識號檢測</td></tr> not x</td> 邏輯非 NOT</td></tr> and</td> 邏輯與 AND</td></tr> or</td> 邏輯或 OR</td></tr> if -- else</td> 條件表達式</td></tr> lambda</td> lambda 表達式</td></tr> :=</td> 賦值表達式</td></tr></table>下面實例演示了 Python 所有運算符高級的操作：</p>
+<table>
+<thead>
+<tr>
+<th>運算符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(expressions...), [expressions...], {key: value...}, {expressions...}</td>
+<td>因括號的表達式</td>
+</tr>
+<tr>
+<td>x[index], x[index:index], x(arguments...), x.attribute</td>
+<td>讀取，切片，調用，屬性引用</td>
+</tr>
+<tr>
+<td>await x</td>
+<td>await 表達式</td>
+</tr>
+<tr>
+<td>**</td>
+<td>乘方(指數)</td>
+</tr>
+<tr>
+<td>+x, -x, -x</td>
+<td>正，負，按位非 NOT</td>
+</tr>
+<tr>
+<td>*, @, /, //, %</td>
+<td>乘，矩陣乘，除，整除，取餘</td>
+</tr>
+<tr>
+<td>+,-</td>
+<td>加和減</td>
+</tr>
+<tr>
+<td>&lt;&lt;, &gt;&gt;</td>
+<td>移位</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>按位與 AND</td>
+</tr>
+<tr>
+<td>^</td>
+<td>按位異或 XOR</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>in, not in, is, is not, &lt;, &lt;=, &gt;, &gt;=, !=, ==</td>
+<td>比較運算，包括成員檢測和標識號檢測</td>
+</tr>
+<tr>
+<td>not x</td>
+<td>邏輯非 NOT</td>
+</tr>
+<tr>
+<td>and</td>
+<td>邏輯與 AND</td>
+</tr>
+<tr>
+<td>or</td>
+<td>邏輯或 OR</td>
+</tr>
+<tr>
+<td>if -- else</td>
+<td>條件表達式</td>
+</tr>
+<tr>
+<td>lambda</td>
+<td>lambda 表達式</td>
+</tr>
+<tr>
+<td>:=</td>
+<td>賦值表達式</td>
+</tr>
+<tr>
+<td>下面實例演示了 Python 所有運算符高級的操作：</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <div class="codehilite"><pre><span></span><code>a = 20
 b = 10
 c = 15

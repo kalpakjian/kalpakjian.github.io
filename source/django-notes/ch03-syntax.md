@@ -58,8 +58,8 @@ Python 中單行註釋以#開頭，多行註釋採用三對單引號("")或者�
 Python 最具特色的就是使用縮進來表示代碼塊。縮進的空格數是可變的，但是同一個代碼塊的語句必須包含相同的縮進空格數。
 
 ```
-def hi:
-print('hi') //縮進了
+def hi():
+    print('hi')  # 縮進
 ```
 標準數據類型
 
@@ -193,11 +193,11 @@ from somemodule import *
 
 ```
 if expression :
-suite
+    suite
 elif expression :
-suite
+    suite
 else :
-suite
+    suite
 ```
 ## print 輸出
 
@@ -215,8 +215,8 @@ Python3 編程第一步
 ```
 a, b = 0, 1
 while b < 10:
-print(b)
-a, b = b, a + b
+    print(b)
+    a, b = b, a + b
 ```
 其中代碼 a, b = b, a + b 的計算方式為先計算右邊的表達式，然後同時賦值給左邊，等價於：
 
@@ -226,4 +226,3 @@ m = a + b
 a = n
 b = m
 ```
-

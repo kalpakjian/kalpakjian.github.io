@@ -24,16 +24,16 @@
 age = int(input("請輸入你家狗狗的年齡："))
 print("")
 if age < 0:
-print("請輸入正確的年齡：")
+    print("請輸入正確的年齡：")
 elif age == 1:
-print("相當於 14 歲的人：")
+    print("相當於 14 歲的人：")
 elif age == 2:
-print("相當於 22 歲的人：")
+    print("相當於 22 歲的人：")
 elif age > 2:
-human = 22 + (age -2)*5
-print("對應人類年齡：", human)
-### 退出提示，本地環境下可以使用這樣的退出提示使代碼更易用
-input('點擊 enter 鍵退出')
+    human = 22 + (age -2)*5
+    print("對應人類年齡：", human)
+    ### 退出提示，本地環境下可以使用這樣的退出提示使代碼更易用
+    input('點擊 enter 鍵退出')
 ```
 (在 index1.py)
 
@@ -60,7 +60,7 @@ Python 3 支持 int （整型）、float （浮點型）、bool （布爾型）�
 ```
 a, b, c, d = 20, 5.5, True, 4+3j
 print(type(a), type(b), type(c), type(d))
-<class 'int'> <class 'float'> <class 'bool'> <class 'complex'>
+# <class 'int'> <class 'float'> <class 'bool'> <class 'complex'>
 ```
 還可以用 isinstance 來判斷：
 
@@ -76,13 +76,13 @@ isinstance ()會認為子類是一種父類類型。
 
 ```
 class A:
-pass
+    pass
 class B(A):
-pass
-print(isinstance(A(), A))
-print(type(A)) == A)
-print(isinstance(B(), A))
-print(type(B)) == A)
+    pass
+    print(isinstance(A(), A))
+    print(type(A) == A)
+    print(isinstance(B(), A))
+    print(type(B) == A)
 ```
 當你指定一個值時，Number 對象就會被創建：
 
@@ -101,7 +101,7 @@ var2 = 10
 Python 中的字符串 str 用單引號('')或雙引號("") 括起來，同時使用反斜槓() 轉義特殊字符。
 
 ```
-s = 'Yes, he doesn't'
+s = 'Yes, he doesn\'t'
 print(s, type(s), len(s))
 ```
 如果你不想讓反斜槓發生轉義，可以在字符串前面添加一個 r，表示原始字符串：
@@ -113,7 +113,7 @@ print(r'C:\some\name')
 字符串可以使用+ 運算符串連接在一起，或者用* 運算符重複：
 
 ```
-print('str+'ing', 'my'*3)
+print('str' + 'ing', 'my'*3)
 ```
 Python 中的字符串有兩種索引方式，
 
@@ -363,7 +363,17 @@ Python 的運算符。舉個簡單的例子 $ 4+5=9 $。例子中，4 和 5 被�
 
 下面假設變量 a 爲 21，變量 b 爲 10：
 
-運算符</td> 描述</td> 類別</td></tr> +</td> 加 - 兩個對像加</td> a + b 輸出結果 31</td></tr> -</td> 減 - 得到負數或者是一個數減去另一個數</td> a - b 輸出結果 11</td></tr> *</td> 乘 - 兩個數相乘或者是返回一個被重新恢復若干次的字符串</td> a * b 輸出結果 210</td></tr> /</td> 除 - x 除以 y</td> a / b 輸出結果 2.1</td></tr> %</td> 取模 - 返回剛除法的餘數</td> a % b 輸出結果 1</td></tr> \*\*</td> 模 - 返回 x 的 y 次模</td> a \*\* b 為 21 的 10 次方</td></tr> //</td> 取整除 - 返回商的整數部分</td> 9//2 輸出結果 4, 9.0//2.0 輸出結果 4.0</td></tr></table>
+
+| 運算符 | 描述 | 類別 |
+| --- | --- | --- |
+| + | 加 - 兩個對像加 | a + b 輸出結果 31 |
+| - | 減 - 得到負數或者是一個數減去另一個數 | a - b 輸出結果 11 |
+| * | 乘 - 兩個數相乘或者是返回一個被重新恢復若干次的字符串 | a * b 輸出結果 210 |
+| / | 除 - x 除以 y | a / b 輸出結果 2.1 |
+| % | 取模 - 返回剛除法的餘數 | a % b 輸出結果 1 |
+| \*\* | 模 - 返回 x 的 y 次模 | a \*\* b 為 21 的 10 次方 |
+| // | 取整除 - 返回商的整數部分 | 9//2 輸出結果 4, 9.0//2.0 輸出結果 4.0 |
+
 
 下面實例演示了 Python 所有運算符的操作：
 
@@ -408,7 +418,18 @@ Python 比較運算符
 
 下面假設變量 a 為 10，變量 b 為 20：
 
-運算符</td> 描述</td> 實例</td></tr> =</td> 簡單的資產運算符</td> c = a + b 將 a + b 的計算結果賦值為 c</td></tr> +=</td> 加法賦值運算符</td> c += a 等效於 c = c + a</td></tr> -=</td> 減法賦值運算符</td> c -= a 等效於 c = c - a</td></tr> *=</td> 乘法賦值運算符</td> c *= a 等效於 c = c * a</td></tr> /=</td> 除法賦值運算符</td> c /= a 等效於 c = c / a</td></tr> %=</td> 取模值運算符</td> c %= a 等效於 c = c % a</td></tr> \*\*=</td> 賦值運算符</td> c \*\*= a 等效於 c = c \*\* a</td></tr> //=</td> 取整除賦值運算符</td> c //= a 等效於 c = c // a</td></tr></table>
+
+| 運算符 | 描述 | 實例 |
+| --- | --- | --- |
+| = | 簡單的資產運算符 | c = a + b 將 a + b 的計算結果賦值為 c |
+| += | 加法賦值運算符 | c += a 等效於 c = c + a |
+| -= | 減法賦值運算符 | c -= a 等效於 c = c - a |
+| *= | 乘法賦值運算符 | c *= a 等效於 c = c * a |
+| /= | 除法賦值運算符 | c /= a 等效於 c = c / a |
+| %= | 取模值運算符 | c %= a 等效於 c = c % a |
+| \*\*= | 賦值運算符 | c \*\*= a 等效於 c = c \*\* a |
+| //= | 取整除賦值運算符 | c //= a 等效於 c = c // a |
+
 
 所有比較運算符返回 1 表示真，返回 0 表示假。這個分別與特殊的變化量 True 和 False 等價。
 
@@ -421,31 +442,31 @@ a = 21
 b = 10
 c = 0
 if (a == b):
-print("a 等於 b")
+    print("a 等於 b")
 else:
-print("a 不等於 b")
-if (a != b):
-print("a 不等於 b")
-else:
-print("a 等於 b")
-if (a < b):
-print("a 小於 b")
-else:
-print("a 大於等於 b")
-if (a > b):
-print("a 大於 b")
-else:
-print("a 小於等於 b")
-aa = 5;
-ba = 20;
-if (aa <= bb):
-print("aa 小於等於 bb")
-else:
-print("aa 大於 bb")
-if (aa >= bb):
-print("aa 大於等於 bb")
-else:
-print("aa 小於 bb")
+    print("a 不等於 b")
+    if (a != b):
+        print("a 不等於 b")
+    else:
+        print("a 等於 b")
+        if (a < b):
+            print("a 小於 b")
+        else:
+            print("a 大於等於 b")
+            if (a > b):
+                print("a 大於 b")
+            else:
+                print("a 小於等於 b")
+                aa = 5;
+                ba = 20;
+                if (aa <= bb):
+                    print("aa 小於等於 bb")
+                else:
+                    print("aa 大於 bb")
+                    if (aa >= bb):
+                        print("aa 大於等於 bb")
+                    else:
+                        print("aa 小於 bb")
 ```
 以上實例輸出結果：
 
@@ -468,7 +489,18 @@ aa 小於 bb
 
 下面假設變量 a 為 10，變量 b 為 20：
 
-運算符</td> 描述</td> 實例</td></tr> =</td> 簡單的資產運算符</td> c = a + b 將 a + b 的計算結果賦值為 c</td></tr> +=</td> 加法賦值運算符</td> c += a 等效於 c = c + a</td></tr> -=</td> 減法賦值運算符</td> c -= a 等效於 c = c - a</td></tr> *=</td> 乘法賦值運算符</td> c *= a 等效於 c = c * a</td></tr> /=</td> 除法賦值運算符</td> c /= a 等效於 c = c / a</td></tr> %=</td> 取模值運算符</td> c %= a 等效於 c = c % a</td></tr> \*\*=</td> 賦值運算符</td> c \*\*= a 等效於 c = c \*\* a</td></tr> //=</td> 取整除賦值運算符</td> c //= a 等效於 c = c // a</td></tr></table>
+
+| 運算符 | 描述 | 實例 |
+| --- | --- | --- |
+| = | 簡單的資產運算符 | c = a + b 將 a + b 的計算結果賦值為 c |
+| += | 加法賦值運算符 | c += a 等效於 c = c + a |
+| -= | 減法賦值運算符 | c -= a 等效於 c = c - a |
+| *= | 乘法賦值運算符 | c *= a 等效於 c = c * a |
+| /= | 除法賦值運算符 | c /= a 等效於 c = c / a |
+| %= | 取模值運算符 | c %= a 等效於 c = c % a |
+| \*\*= | 賦值運算符 | c \*\*= a 等效於 c = c \*\* a |
+| //= | 取整除賦值運算符 | c //= a 等效於 c = c // a |
+
 
 以下實例演示了 Python 所有賦值運算符的操作：
 
@@ -515,33 +547,40 @@ Python 總編輯算符
 
 Python 語言支持總編輯運算符，以下假設置量 a 為 10，b 為 20：
 
-運算符</td> 總編輯表達式</td> 描述</td> 實例</td></tr> and</td> x and y</td> 布爾“與”-如果 x 為 False, x 和 y 返回 False, 否則它返回 y 的計算值。</td> (a and b) 返回 20.</td></tr> or</td> x or y</td> 布爾“或”-如果 x 是 True, 它返回 x 的值, 否則它返回 y 的計算值。</td> (a or b) 返回 10.</td></tr> not</td> not x</td> 布爾“非”-如果 x 為 True, 返回 False, 如果 x 為 False, 則返回 True。</td> not(a and b) 返回 False</td></tr></table>以上實例輸出結果：
+
+| 運算符 | 總編輯表達式 | 描述 | 實例 |
+| --- | --- | --- | --- |
+| and | x and y | 布爾“與”-如果 x 為 False, x 和 y 返回 False, 否則它返回 y 的計算值。 | (a and b) 返回 20. |
+| or | x or y | 布爾“或”-如果 x 是 True, 它返回 x 的值, 否則它返回 y 的計算值。 | (a or b) 返回 10. |
+| not | not x | 布爾“非”-如果 x 為 True, 返回 False, 如果 x 為 False, 則返回 True。 | not(a and b) 返回 False |
+| 以上實例輸出結果： |
+
 
 ```
 a = 10
 b = 20
 if (a and b):
-print("1 - 變量 a 和 b 都為 true")
+    print("1 - 變量 a 和 b 都為 true")
 else:
-print("1 - 變量 a 和 b 有一個不為 true")
-if (a or b):
-print("2 - 變量 a 和 b 都為 true，或其中一個變量為 true")
-else:
-print("2 - 變量 a 和 b 都不為 true")
-# 修改變量 a 的值
-a = 0
-if (a and b):
-print("3 - 變量 a 和 b 都為 true")
-else:
-print("3 - 變量 a 和 b 有一個不為 true")
-if (a or b):
-print("4 - 變量 a 和 b 都為 true，或其中一個變量為 true")
-else:
-print("4 - 變量 a 和 b 都不為 true")
-if not(a and b):
-print("5 - 變量 a 和 b 都為 false，或其中一個變量為 false")
-else:
-print("5 - 變量 a 和 b 都為 true")
+    print("1 - 變量 a 和 b 有一個不為 true")
+    if (a or b):
+        print("2 - 變量 a 和 b 都為 true，或其中一個變量為 true")
+    else:
+        print("2 - 變量 a 和 b 都不為 true")
+        # 修改變量 a 的值
+        a = 0
+        if (a and b):
+            print("3 - 變量 a 和 b 都為 true")
+        else:
+            print("3 - 變量 a 和 b 有一個不為 true")
+            if (a or b):
+                print("4 - 變量 a 和 b 都為 true，或其中一個變量為 true")
+            else:
+                print("4 - 變量 a 和 b 都不為 true")
+                if not(a and b):
+                    print("5 - 變量 a 和 b 都為 false，或其中一個變量為 false")
+                else:
+                    print("5 - 變量 a 和 b 都為 true")
 ```
 以上實例輸出結果：
 
@@ -562,7 +601,12 @@ print("5 - 變量 a 和 b 都為 true")
 
 除了以上的一些運算符之外，Python 還支持成員運算符，測試實例中包含了一系列的成員，包含字符串，列表或元組。
 
-運算符</td> 描述</td> 實例</td></tr> in</td> 如果在指定的順序中找到值返回True,否則返回 False。</td> x 在 y 順序中,如果 x 在 y 順序中返回 True。</td></tr> not in</td> 如果在指定的順序中沒有找到值返回 True,否則返回 False。</td> x 不在 y 順序中,如果 x 不在 y 順序中返回 True。</td></tr></table>
+
+| 運算符 | 描述 | 實例 |
+| --- | --- | --- |
+| in | 如果在指定的順序中找到值返回True,否則返回 False。 | x 在 y 順序中,如果 x 在 y 順序中返回 True。 |
+| not in | 如果在指定的順序中沒有找到值返回 True,否則返回 False。 | x 不在 y 順序中,如果 x 不在 y 順序中返回 True。 |
+
 
 下面實例演示了 Python 所有成員運算符的操作：
 
@@ -571,19 +615,19 @@ a = 10
 b = 20
 list = [1, 2, 3, 4, 5];
 if (a in list):
-print("1 - 變量 a 在給定的列表中 list 中")
+    print("1 - 變量 a 在給定的列表中 list 中")
 else:
-print("1 - 變量 a 不在給定的列表中 list 中")
-if (b not in list):
-print("2 - 變量 b 不在給定的列表中 list 中")
-else:
-print("2 - 變量 b 在給定的列表中 list 中")
-# 修改變量 a 的值
-a = 2
-if (a in list):
-print("3 - 變量 a 在給定的列表中 list 中")
-else:
-print("3 - 變量 a 不在給定的列表中 list 中")
+    print("1 - 變量 a 不在給定的列表中 list 中")
+    if (b not in list):
+        print("2 - 變量 b 不在給定的列表中 list 中")
+    else:
+        print("2 - 變量 b 在給定的列表中 list 中")
+        # 修改變量 a 的值
+        a = 2
+        if (a in list):
+            print("3 - 變量 a 在給定的列表中 list 中")
+        else:
+            print("3 - 變量 a 不在給定的列表中 list 中")
 ```
 以上實例輸出結果：
 
@@ -600,7 +644,12 @@ print("3 - 變量 a 不在給定的列表中 list 中")
 
 ## 身體運算符用於比較兩個對象的存貯單位
 
-運算符</td> 描述</td> 實例</td></tr> is</td> 是判斷兩個標誌符是不是引用自己一個對象</td> x is y, 如果 id(x) 等於 id(y), is返回結果 True</td></tr> is not</td> is not is not is not is 判斷兩個標誌符是不是引用自不同對照象</td> x 不是 y, 如果 id(x) 不等於 id(y),不是返回結果 True</td></tr></table>
+
+| 運算符 | 描述 | 實例 |
+| --- | --- | --- |
+| is | 是判斷兩個標誌符是不是引用自己一個對象 | x is y, 如果 id(x) 等於 id(y), is返回結果 True |
+| is not | is not is not is not is 判斷兩個標誌符是不是引用自不同對照象 | x 不是 y, 如果 id(x) 不等於 id(y),不是返回結果 True |
+
 
 示了 Python 的所有運算符的操作：
 
@@ -608,23 +657,23 @@ print("3 - 變量 a 不在給定的列表中 list 中")
 a = 20
 b = 20
 if (a is b):
-print("1 - a 和 b 有相同的標識")
+    print("1 - a 和 b 有相同的標識")
 else:
-print("1 - a 和 b 沒有相同的標識")
-if (id(a) == id(b)):
-print("2 - a 和 b 有相同的標識")
-else:
-print("2 - a 和 b 沒有相同的標識")
-# 修改變量 b 的值
-b = 30
-if (a is b):
-print("3 - a 和 b 有相同的標識")
-else:
-print("3 - a 和 b 沒有相同的標識")
-if (a is not b):
-print("4 - a 和 b 沒有相同的標識")
-else:
-print("4 - a 和 b 有相同的標識")
+    print("1 - a 和 b 沒有相同的標識")
+    if (id(a) == id(b)):
+        print("2 - a 和 b 有相同的標識")
+    else:
+        print("2 - a 和 b 沒有相同的標識")
+        # 修改變量 b 的值
+        b = 30
+        if (a is b):
+            print("3 - a 和 b 有相同的標識")
+        else:
+            print("3 - a 和 b 沒有相同的標識")
+            if (a is not b):
+                print("4 - a 和 b 沒有相同的標識")
+            else:
+                print("4 - a 和 b 有相同的標識")
 ```
 以上實例輸出結果：
 
@@ -643,7 +692,29 @@ print("4 - a 和 b 有相同的標識")
 
 以下表格列出了從最高到最低優先級的所有運算符：
 
-運算符</td> 描述</td></tr> (expressions...), [expressions...], {key: value...}, {expressions...}</td> 因括號的表達式</td></tr> x[index], x[index:index], x(arguments...), x.attribute</td> 讀取，切片，調用，屬性引用</td></tr> await x</td> await 表達式</td></tr> \*\*</td> 乘方(指數)</td></tr> +x, -x, -x</td> 正，負，按位非 NOT</td></tr> *, @, /, //, %</td> 乘，矩陣乘，除，整除，取餘</td></tr> +,-</td> 加和減</td></tr> &lt;&lt;, &gt;&gt;</td> 移位</td></tr> &amp;</td> 按位與 AND</td></tr> ^</td> 按位異或 XOR</td></tr> |</td> 按位或 OR</td></tr> in, not in, is, is not, &lt;, &lt;=, &gt;, &gt;=, !=, ==</td> 比較運算，包括成員檢測和標識號檢測</td></tr> not x</td> 邏輯非 NOT</td></tr> and</td> 邏輯與 AND</td></tr> or</td> 邏輯或 OR</td></tr> if -- else</td> 條件表達式</td></tr> lambda</td> lambda 表達式</td></tr> :=</td> 賦值表達式</td></tr></table>下面實例演示了 Python 所有運算符高級的操作：
+
+| 運算符 | 描述 |
+| --- | --- |
+| (expressions...), [expressions...], {key: value...}, {expressions...} | 因括號的表達式 |
+| x[index], x[index:index], x(arguments...), x.attribute | 讀取，切片，調用，屬性引用 |
+| await x | await 表達式 |
+| \*\* | 乘方(指數) |
+| +x, -x, -x | 正，負，按位非 NOT |
+| *, @, /, //, % | 乘，矩陣乘，除，整除，取餘 |
+| +,- | 加和減 |
+| &lt;&lt;, &gt;&gt; | 移位 |
+| &amp; | 按位與 AND |
+| ^ | 按位異或 XOR |
+| | | 按位或 OR |
+| in, not in, is, is not, &lt;, &lt;=, &gt;, &gt;=, !=, == | 比較運算，包括成員檢測和標識號檢測 |
+| not x | 邏輯非 NOT |
+| and | 邏輯與 AND |
+| or | 邏輯或 OR |
+| if -- else | 條件表達式 |
+| lambda | lambda 表達式 |
+| := | 賦值表達式 |
+| 下面實例演示了 Python 所有運算符高級的操作： |
+
 
 ```
 a = 20
@@ -783,4 +854,3 @@ print(e)
 e1 = 7.0 / 2
 print(e1)
 ```
-

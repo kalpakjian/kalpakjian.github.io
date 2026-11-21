@@ -405,14 +405,14 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/models.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-<span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span> <span class="c1"># 標題</span>
-<span class="n">content</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span> <span class="c1"># 內容</span>
-<span class="n">author</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># 作者</span>
-<span class="n">published_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span> <span class="c1"># 發布時間</span>
-<span class="n">created_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 創建時間</span>
-<span class="n">updated_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 更新時間</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span> <span class="c1"># 標題</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span> <span class="c1"># 內容</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># 作者</span>
+    <span class="n">published_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span> <span class="c1"># 發布時間</span>
+    <span class="n">created_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 創建時間</span>
+    <span class="n">updated_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 更新時間</span>
 <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
 </code></pre></div>
 
 <p>在這裡，我們定義了一個 Article 模型，包含文章的標題、內容、作者、發布時間等字段。<strong>str</strong>() 方法用於定義模型的字符串表示，方便在 Django 的管理後臺中顯示。</p>
@@ -569,16 +569,16 @@ article.delete()
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/models.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Category</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-<span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-<span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-<span class="n">content</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
-<span class="n">category</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span> <span class="c1"># 一篇文章對應一個分類</span>
-<span class="n">published_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span> <span class="c1"># 一篇文章對應一個分類</span>
+    <span class="n">published_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span>
 <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
 </code></pre></div>
 
 <p>在這個例子中，我們通過 ForeignKey 字段將文章（Article）與分類（Category）關聯起來。on_delete=models.CASCADE 表示當某個分類被刪除時，該分類下的所有文章也會被自動刪除。</p>
@@ -587,15 +587,15 @@ article.delete()
 <p>範例：文章與標籤的多對多關係</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/models.py</span>
 <span class="k">class</span> <span class="n">Tag</span>(<span class="n">models</span>.<span class="n">Model</span>):
-<span class="nb">name</span> = <span class="n">models</span>.<span class="n">CharField</span>(<span class="n">max_length</span>=<span class="mi">100</span>)
+    <span class="nb">name</span> = <span class="n">models</span>.<span class="n">CharField</span>(<span class="n">max_length</span>=<span class="mi">100</span>)
 <span class="n">def</span> <span class="n">__str__</span>(<span class="nb">self</span>):
-<span class="k">return</span> <span class="nb">self</span>.<span class="nb">name</span>
+    <span class="k">return</span> <span class="nb">self</span>.<span class="nb">name</span>
 <span class="k">class</span> <span class="n">Article</span>(<span class="n">models</span>.<span class="n">Model</span>):
-<span class="n">title</span> = <span class="n">models</span>.<span class="n">CharField</span>(<span class="n">max_length</span>=<span class="mi">200</span>)
-<span class="n">content</span> = <span class="n">models</span>.<span class="n">TextField</span>()
-<span class="n">tags</span> = <span class="n">models</span>.<span class="n">CharField</span>(<span class="n">Tag</span>) <span class="c1"># 一篇文章可以有多個標籤</span>
+    <span class="n">title</span> = <span class="n">models</span>.<span class="n">CharField</span>(<span class="n">max_length</span>=<span class="mi">200</span>)
+    <span class="n">content</span> = <span class="n">models</span>.<span class="n">TextField</span>()
+    <span class="n">tags</span> = <span class="n">models</span>.<span class="n">CharField</span>(<span class="n">Tag</span>) <span class="c1"># 一篇文章可以有多個標籤</span>
 <span class="n">def</span> <span class="n">__str__</span>(<span class="nb">self</span>):
-<span class="k">return</span> <span class="nb">self</span>.<span class="n">title</span>
+    <span class="k">return</span> <span class="nb">self</span>.<span class="n">title</span>
 </code></pre></div>
 
 <p>在這裡，一篇文章可以擁有多個標籤，而一個標籤也可以屬於多篇文章。Django 自動處理多對多關係背後的數據庫表，不需要手動創建中間表。</p>
@@ -605,10 +605,10 @@ article.delete()
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/models.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Profile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-<span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span> <span class="c1"># 每個用戶對應一個資料</span>
-<span class="n">bio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span> <span class="c1"># 每個用戶對應一個資料</span>
+    <span class="n">bio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
 <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">username</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">username</span>
 </code></pre></div>
 
 <p>在這個例子中，我們使用 OneToOneField 將 Profile 模型與 User 模型關聯起來，這表示每個用戶只能有一個對應的資料。</p>
@@ -695,7 +695,7 @@ combined_queryset = queryset1.union(queryset2)
 <h3 id="911-啟用-humanize-模塊">9.1.1 啟用 Humanize 模塊</h3>
 <p>要在模板中使用 humanize 模塊，需要首先在模板中加載它。你可以在模板的開頭使用 {% load humanize %} 來加載這個模塊。</p>
 <p>範例：加載 humanize 模塊</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">}</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
 </code></pre></div>
 
 <h2 id="92-數字格式化過濾器">9.2 數字格式化過濾器</h2>
@@ -704,7 +704,7 @@ combined_queryset = queryset1.union(queryset2)
 <p>intcomma 過濾器會將數字進行逗號分隔，使得長數字更易於閱讀。這在顯示貨幣或大型數字時非常有用。</p>
 <p>範例：使用 intcomma 添加逗號</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
-<span class="p">{</span><span class="w"> </span><span class="mi">1000000</span><span class="n">intcomma</span><span class="w"> </span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="w"> </span><span class="mi">1000000</span><span class="n">intcomma</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
 
 <!-- 輸出：1,000,000 -->
@@ -714,7 +714,7 @@ combined_queryset = queryset1.union(queryset2)
 <p>intword 過濾器可以將大數字轉換為更簡單的詞語表示。這在需要以簡潔的方式顯示數據時非常有用，例如在顯示用戶數或點擊次數時。</p>
 <p>範例：使用 intword 將數字轉換為詞語</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
-<span class="p">{</span><span class="w"> </span><span class="mi">1200000</span><span class="n">lintword</span><span class="w"> </span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="w"> </span><span class="mi">1200000</span><span class="n">lintword</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
 
 <!-- 輸出：1.2 million -->
@@ -724,7 +724,7 @@ combined_queryset = queryset1.union(queryset2)
 <p>apnumber 過濾器將數字 1 到 9 轉換為對應的英文單詞。這在需要遵循 AP 標準格式的文章或內容中很常用。</p>
 <p>範例：使用 apnumber 將數字轉換為單詞</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
-<span class="p">{{</span><span class="mi">7</span><span class="n">lapnumber</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="p">{{</span><span class="mi">7</span><span class="n">lapnumber</span><span class="w"> </span><span class="p">}}</span>
 </code></pre></div>
 
 <!-- 輸出：seven -->
@@ -736,15 +736,15 @@ combined_queryset = queryset1.union(queryset2)
 <p>naturaltime 過濾器可以將時間轉換為相對於當前時間的自然表達方式，例如 “10 minutes ago” （10 分鐘前）、“3 days ago” （3 天前）。</p>
 <p>範例：使用 naturaltime 顯示相對時間</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
-<span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturaltime</span><span class="w"> </span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturaltime</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
 
 <p>如果 published_at 是 10 分鐘前的時間，這段模板會輸出 “10 minutes ago”。</p>
 <p>9.3.2 naturalday：自然語言顯示日期</p>
 <p>naturalday 過濾器用來將日期顯示為自然語言形式。如果日期是今天，會顯示“today”，如果是昨天，則顯示“yesterday”，否則顯示具體的日期。</p>
 <p>範例：使用 naturalday 顯示日期</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">}</span>
-<span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturalday</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturalday</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
 
 <p>這裡，如果 published_at 是昨天的日期，模板將輸出 “yesterday”。</p>
@@ -752,9 +752,9 @@ combined_queryset = queryset1.union(queryset2)
 <p>我們還可以將 naturaltime 和 naturalday 過濾器結合使用，讓時間顯示更加靈活。當時間距離現在較短時，顯示“幾分鐘前”，如果時間較遠，則顯示具體的日期。</p>
 <p>範例：組合使用時間過濾器</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturaltime</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
-<span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturaltime</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturaltime</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
 <span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
-<span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturalday</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturalday</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
 <span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="n">endif</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
 </code></pre></div>
 
@@ -784,26 +784,23 @@ combined_queryset = queryset1.union(queryset2)
 <h3 id="951-創建自定義過濾器">9.5.1 創建自定義過濾器</h3>
 <p>假設我們需要一個新的過濾器，將數字格式化為中文單位（如萬、億）。我們可以通過 Django 的模板標籤系統來實現。</p>
 <p>範例：自定義數字格式化過濾器</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/template tags/custom_humanize.py</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/templatetags/custom_humanize.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django</span><span class="w"> </span><span class="kn">import</span> <span class="n">template</span>
+
 <span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+
+
 <span class="nd">@register</span><span class="o">.</span><span class="n">filter</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">chinese_number</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-<span class="k">try</span><span class="p">:</span>
-<span class="n">value</span> <span class="o">=</span> <span class="nb">int</span>
-<span class="p">(</span><span class="n">value</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">10000</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">100000000</span><span class="p">:</span>
-</code></pre></div>
-
-<p>return f{'value // 10000}萬'</p>
-<div class="codehilite"><pre><span></span><code>elif value &gt;= 100000000:
-</code></pre></div>
-
-<p>return f{'value // 100000000}億'</p>
-<div class="codehilite"><pre><span></span><code><span class="k">else</span>:
-<span class="k">return</span><span class="w"> </span><span class="nv">str</span><span class="ss">(</span><span class="nv">value</span><span class="ss">)</span>
-<span class="nv">except</span><span class="w"> </span><span class="ss">(</span><span class="nv">ValueError</span>,<span class="w"> </span><span class="nv">TypeError</span><span class="ss">)</span>:
-<span class="k">return</span><span class="w"> </span><span class="nv">value</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">if</span> <span class="mi">10000</span> <span class="o">&lt;=</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">100000000</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">value</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="mi">10000</span><span class="si">}</span><span class="s1">萬'</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">100000000</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">value</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="mi">100000000</span><span class="si">}</span><span class="s1">億'</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
 
 <p>這個自定義過濾器會將數字轉換為中文單位，如 15000 會顯示為 1 萬。</p>
@@ -872,10 +869,10 @@ filtered_products = Product.objects.filter(price__range=(100, 500))
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/forms.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">Django</span><span class="w"> </span><span class="kn">import</span> <span class="n">forms</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ArticleFilterForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
-<span class="n">author</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'作者'</span><span class="p">)</span>
-<span class="n">status</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="p">[(</span><span class="s1">'draft'</span><span class="p">,</span> <span class="s1">'草稿'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'published'</span><span class="p">,</span> <span class="s1">'已發布'</span><span class="p">)],</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">start_date</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'開始日期'</span><span class="p">)</span>
-<span class="n">end_date</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'結束日期'</span><span class="p">)</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'作者'</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="p">[(</span><span class="s1">'draft'</span><span class="p">,</span> <span class="s1">'草稿'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'published'</span><span class="p">,</span> <span class="s1">'已發布'</span><span class="p">)],</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">start_date</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'開始日期'</span><span class="p">)</span>
+    <span class="n">end_date</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'結束日期'</span><span class="p">)</span>
 </code></pre></div>
 
 <p>接下來，我們需要在視圖中處理表單數據並進行過濾：</p>
@@ -883,16 +880,16 @@ filtered_products = Product.objects.filter(price__range=(100, 500))
 <span class="kn">from</span><span class="w"> </span><span class="nn">.forms</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArticleFilterForm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Article</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">article_list</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-<span class="n">form</span> <span class="o">=</span> <span class="n">ArticleFilterForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
-<span class="n">articles</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-<span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
-<span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'author'</span><span class="p">):</span>
-<span class="n">articles</span> <span class="o">=</span> <span class="n">articles</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">author__icontains</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">'author'</span><span class="p">])</span>
-<span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'status'</span><span class="p">):</span>
-<span class="n">articles</span> <span class="o">=</span> <span class="n">articles</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">'status'</span><span class="p">])</span>
-<span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'start_date'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'end_date'</span><span class="p">):</span>
-<span class="n">articles</span> <span class="o">=</span> <span class="n">articles</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">published_at__range</span><span class="o">=</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">'start_date'</span><span class="p">],</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">'end_date'</span><span class="p">]))</span>
-<span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'article_list.html'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'form'</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s1">'articles'</span><span class="p">:</span> <span class="n">articles</span><span class="p">})</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">ArticleFilterForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">articles</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'author'</span><span class="p">):</span>
+            <span class="n">articles</span> <span class="o">=</span> <span class="n">articles</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">author__icontains</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">'author'</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'status'</span><span class="p">):</span>
+                <span class="n">articles</span> <span class="o">=</span> <span class="n">articles</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">'status'</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'start_date'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'end_date'</span><span class="p">):</span>
+                    <span class="n">articles</span> <span class="o">=</span> <span class="n">articles</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">published_at__range</span><span class="o">=</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">'start_date'</span><span class="p">],</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">'end_date'</span><span class="p">]))</span>
+                    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'article_list.html'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'form'</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s1">'articles'</span><span class="p">:</span> <span class="n">articles</span><span class="p">})</span>
 </code></pre></div>
 
 <p>在模板中，我們可以渲染這個過濾表單，並顯示過濾後的結果：</p>
@@ -922,15 +919,15 @@ filtered_products = Product.objects.filter(price__range=(100, 500))
 <p>範例：根據 URL 參數進行過濾</p>
 <div class="codehilite"><pre><span></span><code><span class="gh">#</span> myapp/views.py
 def product_list(request):
-products = Product.objects.all()
-<span class="gh">#</span> 根據 URL 中的價格範圍進行過濾
-min_price = request.GET.get('min_price')
-max_price = request.GET.get('max_price')
-if min_price:
-products = products.filter(price__gte=min_price)
-if max_price:
-products = products.filter(price__lte=max_price)
-return render(request, 'product_list.html', {'products': products})
+    products = Product.objects.all()
+    # 根據 URL 中的價格範圍進行過濾
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    if min_price:
+        products = products.filter(price__gte=min_price)
+        if max_price:
+            products = products.filter(price__lte=max_price)
+            return render(request, 'product_list.html', {'products': products})
 </code></pre></div>
 
 <p>這樣，我們可以通過以下 URL 來篩選商品：</p>
@@ -984,12 +981,12 @@ articles_with_tag = Article.objects.filter(tags__name='技術').distinct()
 <p>在進行數據過濾時，可以為用戶提供預設的過濾條件，這樣用戶不必每次都手動輸入篩選條件。例如，電商網站可以提供熱門篩選條件如“價格區間”或“品牌”。</p>
 <p>範例：使用預設過濾條件</p>
 <div class="codehilite"><pre><span></span><code>def product_list(request):
-products = Product.objects.all()
-<span class="gh">#</span> 設置預設價格篩選條件
-min_price = request.GET.get('min_price', 50)
-max_price = request.GET.get('max_price', 500)
-products = products.filter(price__gte=min_price, price__lte=max_price)
-return render(request, 'product_list.html', {'products': products})
+    products = Product.objects.all()
+    # 設置預設價格篩選條件
+    min_price = request.GET.get('min_price', 50)
+    max_price = request.GET.get('max_price', 500)
+    products = products.filter(price__gte=min_price, price__lte=max_price)
+    return render(request, 'product_list.html', {'products': products})
 </code></pre></div>
 
 <h3 id="1052-使用異步加載提升體驗">10.5.2 使用異步加載提升體驗</h3>

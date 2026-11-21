@@ -303,8 +303,8 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>實際上 python 註釋只有一種，就是單行註釋，多行註釋的這種使用方法類似於 java 的 javadoc，三引號的這種使用方法實際上是用來聲明多行長字符串的。</p>
 <h2 id="縮進">縮進</h2>
 <p>Python 最具特色的就是使用縮進來表示代碼塊。縮進的空格數是可變的，但是同一個代碼塊的語句必須包含相同的縮進空格數。</p>
-<div class="codehilite"><pre><span></span><code>def hi:
-print('hi') //縮進了
+<div class="codehilite"><pre><span></span><code>def hi():
+    print('hi')  # 縮進
 </code></pre></div>
 
 <p>標準數據類型</p>
@@ -390,11 +390,11 @@ print('hi') //縮進了
 <p>我們將首行及後面的代碼組稱為一個子句(clause)。</p>
 <p>實例：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nv">expression</span><span class="w"> </span>:
-<span class="nv">suite</span>
+<span class="w">    </span><span class="nv">suite</span>
 <span class="nv">elif</span><span class="w"> </span><span class="nv">expression</span><span class="w"> </span>:
-<span class="nv">suite</span>
+<span class="w">    </span><span class="nv">suite</span>
 <span class="k">else</span><span class="w"> </span>:
-<span class="nv">suite</span>
+<span class="w">    </span><span class="nv">suite</span>
 </code></pre></div>
 
 <h2 id="print-輸出">print 輸出</h2>
@@ -408,8 +408,8 @@ print(str)
 <p>在下例裡，我們能寫出一個初步的斐波納契數列如下：</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>,<span class="w"> </span><span class="mi">1</span>
 <span class="k">while</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span>:
-<span class="nv">print</span><span class="ss">(</span><span class="nv">b</span><span class="ss">)</span>
-<span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">b</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
 </code></pre></div>
 
 <p>其中代碼 a, b = b, a + b 的計算方式為先計算右邊的表達式，然後同時賦值給左邊，等價於：</p>

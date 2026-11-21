@@ -10,7 +10,11 @@
 import io
 import os
 import re
+import ast
 import sys
+import warnings
+
+warnings.filterwarnings("ignore")  # ast.parse 筆記片段時會有 "\s" 之類 SyntaxWarning
 
 sys.path.insert(0, r"C:\Users\princ\OneDrive\Documents")
 import clean_ocr_notes as c  # noqa: E402
@@ -113,6 +117,358 @@ STATIC_BLOCK_FIX = (
 )
 
 
+# ---------------- OCR 結構修復：合併被切碎的 fence、重建遺失的縮排 ----------------
+FENCE = "```"
+PAIRS = {"(": ")", "[": "]", "{": "}"}
+PY_HINT = re.compile(r"^\s*(import|from|def|class|print|if|for|while|try|with|return)\b|"
+                     r"models\.|=\s*models\.|\bprint\(", re.M)
+
+
+def _balanced(code):
+    depth, quote = 0, None
+    for ch in code:
+        if quote:
+            if ch == quote:
+                quote = None
+            continue
+        if ch in "'\"":
+            quote = ch
+        elif ch in PAIRS:
+            depth += 1
+        elif ch in PAIRS.values():
+            depth -= 1
+    return depth
+
+
+def _parses(code):
+    try:
+        ast.parse(code)
+        return True
+    except SyntaxError:
+        return False
+
+
+def _reindent(code):
+    """OCR 丟掉縮排 → 依結尾的 `:` 重建；只有 ast.parse 過才採用（4 空格優先，其次 2）。"""
+    for width in (4, 2):
+        out, level = [], 0
+        prev_ends_colon = False
+        for line in code.splitlines():
+            s = line.strip()
+            if not s:
+                out.append("")
+                continue
+            if re.match(r"^(def|class|import|from)\b", s) and not prev_ends_colon:
+                level = 0  # 片段裡新開的定義／import 回到頂層（但 class 內的方法不算）
+            elif re.match(r"^(else|elif|except|finally|case)\b", s):
+                level = max(level - 1, 0)
+            out.append(" " * (width * level) + s)
+            prev_ends_colon = s.endswith(":")
+            if prev_ends_colon:
+                level += 1
+        cand = "\n".join(out)
+        if cand != code and _parses(cand):
+            return cand
+        # 片段被截斷（最後一行是註解、後面應還有 body）→ 補 pass，讓它至少語法合法
+        if not _parses(cand):
+            last = next((ln for ln in reversed(cand.splitlines()) if ln.strip()), "")
+            indent = " " * (len(last) - len(last.lstrip()))
+            cand2 = cand + "\n" + indent + "pass  # 內容省略"
+            if _parses(cand2):
+                return cand2
+    return code
+
+
+def _merge_split_fences(lines):
+    """把被 OCR 切成兩段的 fence 接回去：
+    ① 前段括號不平衡、後段就在旁邊 → 合併
+    ② 後段以 else: / elif / except / finally / } ] ) 開頭 → 是同一段程式的續尾，合併（中間說明文字搬到區塊前）
+    """
+    CONTINUATION = re.compile(r"^(else\s*:|elif\b|except\b|finally\s*:|\}|\]|\))")
+
+    blocks, cur, start = [], None, 0
+    for i, line in enumerate(lines):
+        if line.startswith(FENCE):
+            if cur is None:
+                cur, start = [], i
+            else:
+                blocks.append((start, i, "\n".join(cur)))
+                cur = None
+        elif cur is not None:
+            cur.append(line)
+
+    merged, drop_ranges = {}, []
+    for idx, (a, b, code) in enumerate(blocks[:-1]):
+        nxt = blocks[idx + 1]
+        nxt_code = nxt[2].strip()
+        if not code.strip() or not nxt_code:
+            continue
+        gap = [g for g in lines[b + 1:nxt[0]] if g.strip()]
+        if len(gap) > 3:
+            continue
+        continuation = bool(CONTINUATION.match(nxt_code.splitlines()[0]))
+        if not continuation and _balanced(code.strip()) == 0:
+            continue
+        prose, joiner = [], ""
+        if gap:
+            g = gap[0].strip()
+            is_prose = not re.search(r"[(){}\[\],=]", g) or re.search(r"[。：]$", g)
+            if continuation and is_prose:
+                prose = list(gap)         # 說明文字搬到合併後的區塊前
+            elif not is_prose and len(gap) == 1:
+                joiner = g                # 本來就是程式碼的一行
+            elif not continuation:
+                continue
+            else:
+                prose = list(gap)
+        body = code.rstrip() + ("\n" + joiner if joiner else "") + "\n" + nxt_code
+        merged[a] = (prose, body)
+        drop_ranges.append((nxt[0], nxt[1]))       # 下一段（含內容）併入前段 → 整段移除
+        drop_ranges.append((b + 1, nxt[0] - 1))    # 中間那行（已被當成程式碼或搬到前面）也不能留
+
+    end_of = {a: b for a, b, _ in blocks}
+    out, i = [], 0
+    while i < len(lines):
+        if i in merged:
+            prose, body = merged[i]
+            if prose:
+                out.extend(prose)
+                out.append("")
+            out.extend([FENCE, body, FENCE])
+            i = end_of[i] + 1
+            continue
+        if any(lo <= i <= hi for lo, hi in drop_ranges):
+            i += 1
+            continue
+        out.append(lines[i])
+        i += 1
+    return out
+
+# 第三批：OCR 吃掉字元的明確修正（不動「故意示範錯誤」的段落，例如 while True print(...)）
+BLOCK_FIXES = [
+    ("def hi:\nprint('hi') //縮進了", "def hi():\nprint('hi')  # 縮進"),
+    ("s = 'Yes, he doesn't'", "s = 'Yes, he doesn\\'t'"),
+    ("list=\nit = iter(list)", "list = [1, 2, 3, 4]\nit = iter(list)"),
+    ("list=\nit = iter(list) # 創建迭代器對象", "list = [1, 2, 3, 4]\nit = iter(list)  # 創建迭代器對象"),
+    ('thisset = set("s", "ss", "sss"))', 'thisset = set(("s", "ss", "sss"))'),
+    ("print('str+'ing', 'my'*3)", "print('str' + 'ing', 'my'*3)"),
+    ("{ % load humanize % }", "{% load humanize %}"),
+    ("import module1[,module2[, ... moduleN]", "import module1, module2, module3"),
+    ("from modname import name1[, name2[, ... nameN]", "from modname import name1, name2, name3"),
+    ("class ClassName;", "class ClassName:"),
+    # OCR 把括號搬了位
+    ("print(type(A)) == A)", "print(type(A) == A)"),
+    ("print(type(B)) == A)", "print(type(B) == A)"),
+    # 區塊裡混進了執行結果（不是程式碼）
+    ("<class 'int'> <class 'float'> <class 'bool'> <class 'complex'>",
+     "# <class 'int'> <class 'float'> <class 'bool'> <class 'complex'>"),
+    # 類別骨架的佔位符改成註解，才能當程式碼看
+    ("<statement-1>", "# <statement-1>"),
+    ("<statement-N>", "# <statement-N>"),
+    # 只有 class 宣告、body 被 OCR 吃掉
+    ("class MyClass:\n```", "class MyClass:\npass  # 類別主體（其餘省略）\n```"),
+    # 自訂命令範例少了 body
+    ("def handle(self, *args, **kwargs):\n```",
+     "def handle(self, *args, **kwargs):\nself.stdout.write('Hello from my command')\n```"),
+    # Django 4.0 已移除 request.is_ajax() → 改用標頭判斷
+    ("if request.is/ajax():",
+     "if request.headers.get('x-requested-with') == 'XMLHttpRequest':"),
+    # match/case 的分層不是「遇到 : 就縮進」，手寫正確版本
+    ('def http_error(status):\nmatch status:\ncase 400:\nreturn "Bad request"\ncase 404:\nreturn "Not found"\ncase 418:\nreturn "I\'m a teapot"\ncase _:\nreturn "Something\'s wrong with the Internet"',
+     "def http_error(status):\n    match status:\n        case 400:\n            return \"Bad request\"\n"
+     "        case 404:\n            return \"Not found\"\n        case 418:\n            return \"I'm a teapot\"\n"
+     "        case _:\n            return \"Something's wrong with the Internet\""),
+    # f-string 括號放錯位置
+    ("return f{'value // 100000000}億'", "return f'{value // 100000000}億'"),
+    # 參數用點號
+    ("def event_delete(request.id):", "def event_delete(request, id):"),
+]
+
+ORPHAN_TAGS = (("</p>", "<p>"), ("</td>", "<td"), ("</tr>", "<tr>"), ("</table>", "<table"))
+
+# 三處「程式碼被說明文字切散＋片段重複」的區段，直接改寫成完整片段（前後說明文字保留）
+REGION_REWRITES = [
+    (
+        "```\n# myapp/views.py\nfrom django.shortcuts import render\ndef index(request):\ncontext = {",
+        "在這裡，我們將上下文數據傳遞給 index.html 模板",
+        "```\n# myapp/views.py\nfrom django.shortcuts import render\n\n\n"
+        "def index(request):\n    context = {\n        'title': '我的首頁',\n"
+        "        'welcome_message': '歡迎來到我的網站！',\n        'site_name': '我的網站',\n"
+        "        'num_posts': 42,\n    }\n    return render(request, 'index.html', context)\n```\n\n",
+    ),
+    (
+        "```\n# myapp/template tags/custom_humanize.py",
+        "這個自定義過濾器會將數字轉換為中文單位",
+        "```\n# myapp/templatetags/custom_humanize.py\nfrom django import template\n\n"
+        "register = template.Library()\n\n\n@register.filter\ndef chinese_number(value):\n"
+        "    try:\n        value = int(value)\n    except (ValueError, TypeError):\n        return value\n"
+        "    if 10000 <= value < 100000000:\n        return f'{value // 10000}萬'\n"
+        "    elif value >= 100000000:\n        return f'{value // 100000000}億'\n    return str(value)\n```\n\n",
+    ),
+    (
+        "#### 14.2.1 使用 messages 在視圖中設置消息",
+        "在這個例子中，我們在表單提交成功後使用了 messages.success",
+        "#### 14.2.1 使用 messages 在視圖中設置消息\n\n"
+        "以下是如何在 Django 視圖中使用消息系統的範例。假設我們有一個註冊用戶的視圖，"
+        "註冊成功後，我們想顯示一個成功消息。\n\n"
+        "```\n# accounts/views.py\nfrom django.shortcuts import render, redirect\n"
+        "from django.contrib.auth.forms import UserCreationForm\nfrom django.contrib import messages\n\n\n"
+        "def register(request):\n    if request.method == 'POST':\n"
+        "        form = UserCreationForm(request.POST)\n        if form.is_valid():\n            form.save()\n"
+        "            messages.success(request, '註冊成功！歡迎使用本網站。')\n"
+        "            return redirect('login')  # 註冊成功後跳轉到登錄頁面\n        else:\n"
+        "            messages.error(request, '註冊失敗，請檢查表單內容。')\n    else:\n"
+        "        form = UserCreationForm()\n"
+        "    return render(request, 'accounts/register.html', {'form': form})\n```\n\n",
+    ),
+]
+
+
+def _apply_region_rewrites(text):
+    applied = 0
+    for start, end, new in REGION_REWRITES:
+        i = text.find(start)
+        if i < 0:
+            continue
+        j = text.find(end, i)
+        if j < 0:
+            continue
+        text = text[:i] + new + text[j:]
+        applied += 1
+    return text, applied
+
+
+def _strip_orphan_closers(code):
+    """只有收尾標籤、沒有對應開頭的 HTML 碎片 → 移除（配對正常的保留）。"""
+    for close, open_ in ORPHAN_TAGS:
+        excess = code.count(close) - code.count(open_)
+        while excess > 0:
+            m = re.search(r"(?m)^\s*" + re.escape(close) + r"\s*\n", code) or \
+                re.search(r"[ \t]*" + re.escape(close), code)
+            if not m:
+                break
+            code = code[:m.start()] + code[m.end():]
+            excess -= 1
+    return code
+
+
+
+
+def _rows_to_md(body):
+    """把 OCR 拍平的 HTML 表格（…</td>…</tr>）轉成 markdown 表格。"""
+    s = re.sub(r"</?(table|thead|tbody|tfoot)[^>]*>", "", body)
+    rows = []
+    for chunk in re.split(r"</?tr[^>]*>", s):
+        cells = [c.strip() for c in re.split(r"</?t[dh][^>]*>", chunk)]
+        cells = [c for c in cells if c]
+        if cells:
+            rows.append("| " + " | ".join(cells) + " |")
+    if rows:
+        n = rows[0].count("|") - 1
+        rows.insert(1, "|" + " --- |" * n)
+    return rows
+
+
+def _dumps_to_tables(text):
+    """① 含多個 </td> 的程式碼區塊 → markdown 表格
+    ② 內容含 markdown 標題（OCR fence 配對錯位、把整段說明吞進去）→ 拆掉 fence，逐行把表格殘骸轉掉
+    """
+    out, cur, in_code = [], None, False
+    for line in text.splitlines():
+        if line.startswith(FENCE):
+            if in_code:
+                body = "\n".join(cur)
+                mis_fenced = False  # 拆 fence 風險太高（會把程式碼行放生到 fence 外），只做表格轉換
+                table_dump = (body.count("</td>") >= 3
+                              and not PY_HINT.search(body)
+                              and not re.search(r"^\s*(git|pip|python|curl|wget|docker|kubectl)", body, re.M))
+                if table_dump or mis_fenced:
+                    for ln in cur:
+                        if "</td>" in ln:
+                            out.extend(_rows_to_md(ln))
+                        else:
+                            out.append(ln)
+                else:
+                    out.extend([FENCE] + cur + [FENCE])
+                cur, in_code = None, False
+            else:
+                cur, in_code = [], True
+            continue
+        if in_code:
+            cur.append(line)
+        else:
+            out.append(line)
+    if in_code and cur:
+        body = "\n".join(cur)
+        mis_fenced = False
+        if body.count("</td>") >= 3:
+            for ln in cur:
+                if "</td>" in ln:
+                    out.extend(_rows_to_md(ln))
+                else:
+                    out.append(ln)
+        else:
+            out.extend([FENCE] + cur + [FENCE])
+    # ③ 剩下的裸行（已不在 fence 內）：含 2 個以上 </td> 的 OCR 表格殘骸 → markdown 表格
+    fixed = []
+    for ln in "\n".join(out).splitlines():
+        if ln.count("</td>") >= 2:
+            fixed.append("")
+            fixed.extend(_rows_to_md(ln))
+            fixed.append("")
+        else:
+            fixed.append(ln)
+    return "\n".join(fixed)
+
+
+def _fix_placeholders(code):
+    """教材骨架的佔位行（單一個 . 或 <statement-N>）→ 註解；只有宣告沒有 body → 補 pass。"""
+    lines = [("# ." if ln.strip() == "." else ln) for ln in code.splitlines()]
+    code = "\n".join(lines)
+    if not PY_HINT.search(code) or _parses(code):
+        return code
+    if code.rstrip().endswith(":"):
+        return code.rstrip() + "\n    pass  # 內容省略"
+    # body 全是註解（經典 class 骨架）→ Python 不接受，補一個 pass
+    ls = code.splitlines()
+    head = next((i for i, ln in enumerate(ls) if re.match(r"^(class|def)\b.*:\s*$", ln.strip())), None)
+    if head is not None and all((not ln.strip()) or ln.strip().startswith("#") for ln in ls[head + 1:]):
+        return code.rstrip() + "\n    pass  # 內容省略"
+    return code
+
+
+def _reindent_pass(lines):
+    out, cur = [], None
+    for line in lines:
+        if line.startswith(FENCE):
+            if cur is None:
+                cur = []
+                out.append(line)
+            else:
+                code = _strip_orphan_closers("\n".join(cur))
+                for old, new in BLOCK_FIXES:
+                    code = code.replace(old, new)
+                code = _fix_placeholders(code)
+                if PY_HINT.search(code) and not _parses(code):
+                    code = _reindent(code)
+                out.extend(code.splitlines())
+                out.append(line)
+                cur = None
+        elif cur is not None:
+            cur.append(line)
+        else:
+            out.append(line)
+    if cur is not None:
+        out.extend(cur)
+    return out
+
+
+def repair_code_blocks(text):
+    lines = _merge_split_fences(text.splitlines())
+    return "\n".join(_reindent_pass(lines))
+
+
+
 def render_md(items, no, title):
     out = ["# 第 %d 章 · %s" % (no, title), ""]
     # 原稿標題層級不一致（同一層有時是 h3 有時是 h4），依「本章實際出現的層級」重新映射：
@@ -140,6 +496,9 @@ def render_md(items, no, title):
         out.append("")
     flush()
     text = "\n".join(out).rstrip() + "\n"
+    text = repair_code_blocks(text)  # 先修結構（合併被切碎的 fence、重建縮排），再做文字替換
+    text = _dumps_to_tables(text)    # OCR 拍平的 HTML 表格 → markdown 表格
+    text, _n = _apply_region_rewrites(text)
     for old, new in FORBIDDEN + CONTENT_FIXES:
         text = text.replace(old, new)
     # A：套用總稿（clean_ocr_notes.py）已驗證的版本修正表（Django 5.2 LTS、Python 3.14、from django.* …）

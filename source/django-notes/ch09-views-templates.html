@@ -295,6 +295,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
 <p>return HttpResponse("歡迎來到我的網站！")</p>
@@ -306,30 +307,26 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">contact</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
-<span class="c1"># 處理表單提交邏輯</span>
-</code></pre></div>
-
-<p>return HttpResponse("表單已成功提交！")</p>
-<div class="codehilite"><pre><span></span><code><span class="k">else</span>:
-#<span class="w"> </span>返回空的表單頁面
-<span class="k">return</span><span class="w"> </span><span class="nv">render</span><span class="ss">(</span><span class="nv">request</span>,<span class="w"> </span><span class="s1">'contact.html'</span><span class="ss">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
+        <span class="c1"># 處理表單提交邏輯</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">"表單已成功提交！"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># 返回空的表單頁面</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'contact.html'</span><span class="p">)</span>
 </code></pre></div>
 
 <p>在這個例子中，當用戶通過 GET 請求訪問 /contact/ 時，Django 會返回一個帶有表單的頁面（contact.html）；當用戶提交表單後，POST 請求被發送到同一個視圖，視圖將處理表單數據並返回成功消息。</p>
 <h4 id="523-使用上下文數據渲染模板">5.2.3 使用上下文數據渲染模板</h4>
 <p>函數視圖通常需要將數據傳遞給模板來生成動態內容。Django 提供了 render() 函數來將視圖中的上下文數據與模板結合，從而生成 HTML 響應。</p>
 <p>範例：將上下文數據傳遞給模板</p>
+<p>'title': '我的首頁',
+'welcome_message': '歡迎來到我的網站！'</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-<span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
-</code></pre></div>
-
-<p>'title': '我的首頁',</p>
-<p>'welcome_message': '歡迎來到我的網站！'</p>
-<div class="codehilite"><pre><span></span><code>}
-<span class="k">return</span><span class="w"> </span><span class="nv">render</span><span class="ss">(</span><span class="nv">request</span>,<span class="w"> </span><span class="s1">'index.html'</span>,<span class="w"> </span><span class="nv">context</span><span class="ss">)</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'index.html'</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
 </code></pre></div>
 
 <p>在這個例子中，我們將上下文數據（title 和 welcome_message）傳遞給 index.html 模板，模板可以使用這些數據來生成最終的 HTML 頁面。</p>
@@ -339,9 +336,9 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">submit_form</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
-<span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span>
-<span class="n">email</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'email'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'email'</span><span class="p">)</span>
 </code></pre></div>
 
 <p>return HttpResponse(f"姓名: {name}, 電子郵件: {email}")</p>
@@ -356,7 +353,8 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">View</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">IndexView</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
 <p>return HttpResponse("歡迎來到我的網站！")在這個例子中，IndexView 是一個類視圖，我們使用 get() 方法來處理 GET 請求，並返回一個簡單的文本響應。</p>
@@ -370,7 +368,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.views.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateView</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">AboutView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
-<span class="n">template_name</span> <span class="o">=</span> <span class="s1">'about.html'</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'about.html'</span>
 </code></pre></div>
 
 <p>這個視圖將渲染 about.html 模板，並返回其內容作為響應。template_name 屬性指定了模板的路徑。</p>
@@ -382,7 +380,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.views.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">RedirectView</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">HomeRedirectView</span><span class="p">(</span><span class="n">RedirectView</span><span class="p">):</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s1">'/home/'</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">'/home/'</span>
 </code></pre></div>
 
 <p>這個視圖會將所有對 HomeRedirectView 的請求重定向到 /home/ URL。</p>
@@ -394,11 +392,11 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">View</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ContactView</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-<span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'contact.html'</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'contact.html'</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-<span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span>
-<span class="n">message</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'message'</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'message'</span><span class="p">)</span>
 </code></pre></div>
 
 <p>return HttpResponse(f"收到來自 {name} 的信息: {message}")</p>
@@ -408,13 +406,14 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>範例：使用繼承擴展類視圖</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
 <span class="k">class</span> <span class="n">BaseView</span>(<span class="n">View</span>):
-<span class="n">def</span> <span class="nb">get</span>(<span class="nb">self</span>, <span class="n">request</span>):
+    <span class="n">def</span> <span class="nb">get</span>(<span class="nb">self</span>, <span class="n">request</span>):
+        <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
 <p>return HttpResponse("這是基礎視圖")</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">CustomView</span>(<span class="n">BaseView</span>):
-<span class="n">def</span> <span class="nb">get</span>(<span class="nb">self</span>, <span class="n">request</span>):
-<span class="n">response</span> = <span class="n">super</span>().<span class="nb">get</span>(<span class="n">request</span>)
+    <span class="n">def</span> <span class="nb">get</span>(<span class="nb">self</span>, <span class="n">request</span>):
+        <span class="n">response</span> = <span class="n">super</span>().<span class="nb">get</span>(<span class="n">request</span>)
 </code></pre></div>
 
 <p>return HttpResponse(response.content + b" 並且這是自定義的內容")</p>
@@ -427,10 +426,8 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.import</span> <span class="n">views</span>
 <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
-</code></pre></div>
-
-<p>path("views.index, name='index'), # 連接函數視圖</p>
-<div class="codehilite"><pre><span></span><code>]
+<span class="n">path</span><span class="p">(</span><span class="s2">"views.index, name='index'), # 連接函數視圖</span>
+<span class="p">]</span>
 </code></pre></div>
 
 <p>這裡，我們將 index 函數視圖與根 URL (/) 進行了連接。</p>
@@ -441,10 +438,8 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">IndexView</span>
 <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
-</code></pre></div>
-
-<p>path("IndexView.as_view(), name='index'), # 連接類視圖</p>
-<div class="codehilite"><pre><span></span><code>]
+<span class="n">path</span><span class="p">(</span><span class="s2">"IndexView.as_view(), name='index'), # 連接類視圖</span>
+<span class="p">]</span>
 </code></pre></div>
 
 <p>在這裡，我們使用 IndexView.as_view() 來將類視圖與 URL 進行連接。</p>
@@ -452,18 +447,16 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <h4 id="551-使用上下文數據渲染模板">5.5.1 使用上下文數據渲染模板</h4>
 <p>視圖通常需要與模板進行交互，從而生成動態的 HTML 頁面。在視圖中，我們可以將數據放入上下文（Context）中，然後將這些數據傳遞給模板進行渲染。</p>
 <p>範例：傳遞上下文數據到模板</p>
+<p>'title': '我的首頁',
+'welcome_message': '歡迎來到我的網站！'</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
 <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
-</code></pre></div>
-
-<p>'title': '我的首頁',</p>
-<p>'welcome_message': '歡迎來到我的網站！'</p>
-<div class="codehilite"><pre><span></span><code>}
-}
-}
-<span class="k">return</span><span class="w"> </span><span class="nv">render</span><span class="ss">(</span><span class="nv">request</span>,<span class="w"> </span><span class="s1">'index.html'</span>,<span class="w"> </span><span class="nv">context</span><span class="ss">)</span>
+<span class="p">}</span>
+<span class="p">}</span>
+<span class="p">}</span>
+<span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'index.html'</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
 </code></pre></div>
 
 <p>在這個範例中，我們將上下文數據（title 和 welcome_message）傳遞給 index.html 模板。模板可以使用這些數據來生成最終的 HTML 頁面。</p>
@@ -473,9 +466,9 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.views.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateView</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">IndexView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
-<span class="n">template_name</span> <span class="o">=</span> <span class="s1">'index.html'</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'index.html'</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div>
 
 <p>context['title'] = '我的首頁'</p>
@@ -532,10 +525,8 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>我們有 {{ num_posts }} 篇博客文章。</p></p>
 <p>假設視圖函數提供瞭如下上下文：</p>
 <div class="codehilite"><pre><span></span><code>context = {
-</code></pre></div>
-
-<p>'site_name': '我的網站',</p>
-<div class="codehilite"><pre><span></span><code>'num_posts': 42
+'site_name': '我的網站',
+'num_posts': 42
 }
 </code></pre></div>
 
@@ -576,16 +567,16 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>範例：在視圖中傳遞上下文</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-<span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
-</code></pre></div>
 
-<p>'title': '我的首頁',</p>
-<p>'welcome_message': '歡迎來到我的網站！',</p>
-<p>'site_name': '我的網站',</p>
-<div class="codehilite"><pre><span></span><code>'num_posts': 42
-}
-return render(request, 'index.html', context)
+
+<span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'title'</span><span class="p">:</span> <span class="s1">'我的首頁'</span><span class="p">,</span>
+        <span class="s1">'welcome_message'</span><span class="p">:</span> <span class="s1">'歡迎來到我的網站！'</span><span class="p">,</span>
+        <span class="s1">'site_name'</span><span class="p">:</span> <span class="s1">'我的網站'</span><span class="p">,</span>
+        <span class="s1">'num_posts'</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'index.html'</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
 </code></pre></div>
 
 <p>在這裡，我們將上下文數據傳遞給 index.html 模板，模板可以使用這些數據來渲染頁面。</p>
@@ -593,14 +584,12 @@ return render(request, 'index.html', context)
 <p>上下文處理器（Context Processors）是一組函數，它們可以在每個模板中自動提供一些全局可用的上下文數據。Django 提供了一些內建的上下文處理器，例如用來提供當前用戶信息、請求對象和網站設置等。</p>
 <p>範例：自定義上下文處理器</p>
 <p>你可以創建自定義上下文處理器來提供全局變量，這些變量將在所有模板中可用。</p>
+<p>'site_name': '我的網站',
+'site_description': '這是一個示例網站'</p>
 <div class="codehilite"><pre><span></span><code><span class="gh">#</span> myapp/context_processors.py
 def site_info(request):
-return {
-</code></pre></div>
-
-<p>'site_name': '我的網站',</p>
-<p>'site_description': '這是一個示例網站'</p>
-<div class="codehilite"><pre><span></span><code>}
+    return {
+    }
 </code></pre></div>
 
 <p>然後，在 settings.py 中將上下文處理器添加到 TEMPLATES 設置中：</p>
@@ -613,12 +602,10 @@ return {
 <span class="s">'OPTIONS'</span><span class="p">:</span> <span class="p">{</span>
 <span class="s">'context_processors'</span><span class="p">:</span> <span class="p">[</span>
 <span class="s">'django.template.context_processors.request'</span><span class="p">,</span>
-</code></pre></div>
-
-<p>'myapp.context_processors.site_info', # 添加自定義上下文處理器</p>
-<div class="codehilite"><pre><span></span><code>],
-},
-]
+<span class="s">'myapp.context_processors.site_info'</span><span class="p">,</span> <span class="o">#</span> <span class="err">添加自定義上下文處理器</span>
+<span class="p">],</span>
+<span class="p">},</span>
+<span class="p">]</span>
 </code></pre></div>
 
 <p>現在，site_name 和 site_description 變量將在所有模板中可用。</p>
@@ -691,12 +678,12 @@ return {
 <span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
 <span class="nd">@register</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'add_exclamation'</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">add_exclamation</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-<span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">!"</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">!"</span>
 </code></pre></div>
 
 <p>然後在模板中使用自定義過濾器：</p>
 <div class="codehilite"><pre><span></span><code><span class="x">&lt;!-- templates/index.html --&gt;</span>
-<span class="cp">{{</span> <span class="nv">welcome_messageladd_exclamation</span> <span class="cp">}}</span><span class="x">&lt;/p&gt;</span>
+<span class="cp">{{</span> <span class="nv">welcome_messageladd_exclamation</span> <span class="cp">}}</span>
 </code></pre></div>
 
 <h4 id="653-自定義模板標籤">6.5.3 自定義模板標籤</h4>
@@ -707,7 +694,7 @@ return {
 <span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
 <span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">multiply</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-<span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
 </code></pre></div>
 
 <p>然後在模板中使用自定義標籤：</p>
