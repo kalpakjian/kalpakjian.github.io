@@ -247,6 +247,96 @@ def template_inherit():
                  "共用導覽列與頁尾。")
 
 
+def activity():
+    b = '<circle cx="60" cy="60" r="14" fill="%s"/>' % ACC
+    b += _box(20, 100, 160, 56, "瀏覽活動")
+    b += '<text x="300" y="76" font-family="%s" font-size="12" fill="%s">名額足夠？</text>' % (FONT, TEXT)
+    b += ('<polygon points="300,90 380,124 300,158 220,124" fill="%s" stroke="%s" stroke-width="1.6"/>'
+          % (BOX, STROKE))
+    b += _box(430, 96, 150, 56, "填表報名")
+    b += _box(430, 186, 150, 56, "顯示已滿", stroke=WARM)
+    b += _box(700, 96, 130, 56, "送出報名")
+    b += '<circle cx="790" cy="200" r="16" fill="none" stroke="%s" stroke-width="2"/><circle cx="790" cy="200" r="10" fill="%s"/>' % (STROKE, ACC)
+    b += _arrow(60, 74, 60, 96)
+    b += _arrow(100, 156, 216, 132)
+    b += _arrow(380, 124, 426, 124)
+    b += '<text x="392" y="116" font-family="%s" font-size="11" fill="%s">是</text>' % (FONT, "#7ee787")
+    b += _arrow(300, 158, 300, 214)
+    b += _arrow(300, 214, 426, 214)
+    b += '<text x="310" y="206" font-family="%s" font-size="11" fill="%s">否</text>' % (FONT, WARM)
+    b += _arrow(580, 124, 696, 124)
+    b += _arrow(765, 152, 788, 182)
+    b += _arrow(580, 214, 772, 206)
+    return _wrap(b, 860, 240, "UML 活動圖：瀏覽活動、判斷名額、填表報名或顯示已滿",
+                 "圖　活動圖：實心圓是起點、同心圓是終點；菱形是判斷節點，兩條分支各自走到結束。")
+
+
+def state():
+    b = _box(40, 96, 170, 62, "草稿", "draft")
+    b += _box(330, 96, 170, 62, "已發佈", "published", stroke=WARM)
+    b += _box(620, 96, 170, 62, "已下架", "archived")
+    b += '<circle cx="20" cy="127" r="10" fill="%s"/>' % ACC
+    b += _arrow(30, 127, 36, 127)
+    b += _arrow(210, 127, 326, 127)
+    b += ('<text x="222" y="118" font-family="%s" font-size="11" fill="%s">發佈</text>' % (FONT, "#7ee787"))
+    b += _arrow(500, 127, 616, 127)
+    b += ('<text x="512" y="118" font-family="%s" font-size="11" fill="%s">下架</text>' % (FONT, WARM))
+    b += '<path d="M415 158 Q415 196 300 196 Q120 196 120 162" fill="none" stroke="%s" stroke-width="1.5" marker-end="url(#a)"/>' % ACC
+    b += ('<text x="250" y="214" font-family="%s" font-size="11" fill="%s">編輯（回到草稿）</text>' % (FONT, ACC))
+    return _wrap(b, 830, 240, "UML 狀態圖：草稿、已發佈、已下架三個狀態與轉換",
+                 "圖　狀態圖：圓角框是狀態、箭頭是轉換；「編輯」會讓已發佈的文章回到草稿狀態。")
+
+
+def deployment():
+    b = '<rect x="20" y="26" width="220" height="180" rx="12" fill="none" stroke="%s" stroke-width="1.4"/>' % STROKE
+    b += ('<text x="130" y="48" text-anchor="middle" font-family="%s" font-size="11.5" fill="%s">使用者端</text>'
+          % (FONT, ACC))
+    b += _box(50, 70, 160, 100, "瀏覽器", "HTML／CSS／JS")
+    b += '<rect x="270" y="26" width="300" height="190" rx="12" fill="none" stroke="%s" stroke-width="1.4"/>' % STROKE
+    b += ('<text x="420" y="48" text-anchor="middle" font-family="%s" font-size="11.5" fill="%s">伺服器節點</text>'
+          % (FONT, ACC))
+    b += _box(292, 66, 120, 60, "Nginx", "靜態／代理")
+    b += _box(432, 66, 122, 60, "Gunicorn", "WSGI")
+    b += _box(292, 158, 120, 52, "Django", "應用程式")
+    b += _box(432, 158, 122, 52, "PostgreSQL", "資料庫")
+    b += _box(630, 66, 180, 126, "物件儲存", "媒體檔案／備份")
+    b += _arrow(210, 120, 288, 96)
+    b += _arrow(412, 96, 428, 96)
+    b += _arrow(352, 128, 352, 154)
+    b += _arrow(493, 128, 493, 154)
+    b += '<line x1="554" y1="100" x2="626" y2="100" stroke="%s" stroke-width="1.5" stroke-dasharray="4 3"/>' % ACC
+    return _wrap(b, 860, 228, "UML 部署圖：使用者端瀏覽器、伺服器節點的 Nginx／Gunicorn／Django／PostgreSQL",
+                 "圖　部署圖：外框是節點（node），裡面的方框是執行的元件；Nginx 轉給 Gunicorn，Django 連 PostgreSQL 與物件儲存。")
+
+
+def rebase_merge():
+    G = "#7ee787"
+    # 左：merge（分支出去再合併回來，留下菱形合併 commit）
+    b = '<line x1="40" y1="110" x2="380" y2="110" stroke="%s" stroke-width="2"/>' % STROKE
+    for x in (60, 120, 300, 360):
+        b += '<circle cx="%d" cy="110" r="6" fill="%s"/>' % (x, ACC)
+    b += '<path d="M120 110 Q150 170 210 170 Q260 170 300 116" fill="none" stroke="%s" stroke-width="2"/>' % G
+    for x in (170, 240):
+        b += '<circle cx="%d" cy="170" r="6" fill="%s"/>' % (x, G)
+    b += ('<polygon points="300,96 312,110 300,124 288,110" fill="%s" stroke="%s" stroke-width="1.4"/>'
+          % (CARD, WARM))
+    b += ('<text x="40" y="44" font-family="%s" font-size="12.5" fill="%s">merge：留下一個合併 commit（菱形）</text>'
+          % (FONT, TEXT))
+    b += ('<text x="176" y="196" font-family="%s" font-size="11" fill="%s">feature 分支</text>' % (FONT, G))
+    # 右：rebase（歷史攤平，原 commit 被重寫）
+    b += '<line x1="470" y1="110" x2="820" y2="110" stroke="%s" stroke-width="2"/>' % STROKE
+    for x in (500, 560, 620, 680, 760):
+        b += '<circle cx="%d" cy="110" r="6" fill="%s"/>' % (x, ACC)
+    b += '<path d="M680 104 Q700 60 742 52" fill="none" stroke="%s" stroke-width="1.6" stroke-dasharray="5 4"/>' % WARM
+    b += '<circle cx="748" cy="52" r="5" fill="none" stroke="%s" stroke-width="1.6"/>' % WARM
+    b += ('<text x="470" y="44" font-family="%s" font-size="12.5" fill="%s">rebase：歷史攤平成一直線</text>'
+          % (FONT, TEXT))
+    b += ('<text x="590" y="196" font-family="%s" font-size="11" fill="%s">原 commit 被重寫（虛線）</text>'
+          % (FONT, WARM))
+    return _wrap(b, 860, 220, "Git merge 與 rebase 的歷史差異：合併 commit 對比線性歷史",
+                 "圖　merge 會在兩條歷史交會處留下一個合併 commit（菱形）；rebase 則把分支 commit 重寫到目標分支之後，歷史變成一直線。")
+
+
 FIGURES = [
     (7, "#### 1.2.2 MVT 架構", mvt()),
     (8, "### 4.1 Django 的 URL 配置", url_flow()),
@@ -254,9 +344,13 @@ FIGURES = [
     (10, "## 7.3 使用 Django 的查詢集 API", orm_chain()),
     (11, "### 13.4. 用戶登錄與登出功能", auth_flow()),
     (12, "#### 6.2.2 Git Flow 的分支模型", gitflow()),
+    (12, "#### 5.1.2 變基與合併的區別", rebase_merge()),
     (13, "### 9.3 持續集成與持續部署 (CI/CD)", cicd()),
     (9, "### 6.4 模板繼承", template_inherit()),
     (14, "### 2.1 用例圖概述", use_case()),
     (14, "### 3.1 類圖概述", class_diagram()),
     (14, "### 5.1 序列圖概述", sequence()),
+    (14, "### 6.1 活動圖概述", activity()),
+    (14, "### 7.1 狀態圖概述", state()),
+    (14, "### 9.1 部署圖概述", deployment()),
 ]
