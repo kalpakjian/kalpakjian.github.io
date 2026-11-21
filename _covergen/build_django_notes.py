@@ -322,6 +322,20 @@ REGION_REWRITES = [
         "        form = UserCreationForm()\n"
         "    return render(request, 'accounts/register.html', {'form': form})\n```\n\n",
     ),
+    (
+        "#### 15.6.1 報名邏輯",
+        "15.7. 美化前端：使用 Bootstrap",
+        "#### 15.6.1 報名邏輯\n\n在 views.py 中添加報名功能：\n\n"
+        "```\nfrom .models import Registration\n\n\n"
+        "def event_register(request, id):\n    event = get_object_or_404(Event, id=id)\n"
+        "    if Registration.objects.filter(event=event, user=request.user).exists():\n"
+        "        messages.error(request, '你已經報名過此活動。')\n"
+        "    elif event.registrations.count() >= event.max_attendees:\n"
+        "        messages.error(request, '報名已滿。')\n    else:\n"
+        "        Registration.objects.create(event=event, user=request.user)\n"
+        "        messages.success(request, '成功報名活動！')\n"
+        "    return redirect('event_detail', id=event.id)\n```\n\n",
+    ),
 ]
 
 
@@ -444,22 +458,34 @@ JUNK_TOKEN = re.compile(
 
 
 def _strip_ocr_junk(text):
-    """去掉簡報頁尾殘留：單獨一行的日期／來源檔名，以及 (index.py) 這類檔案標記（不動程式碼）。"""
+    """去掉簡報頁尾殘留：單獨一行的日期／來源檔名（程式碼區塊內也刪），以及 (index.py) 這類標記。"""
     out, in_code = [], False
     for line in text.splitlines():
         if line.startswith(FENCE):
             in_code = not in_code
             out.append(line)
             continue
+        if JUNK_LINE.match(line.strip()):
+            continue  # 整行只有日期或檔名 → 一定是頁尾殘留，程式碼區塊內也一樣
         if in_code:
             out.append(line)
-            continue
-        if JUNK_LINE.match(line.strip()):
-            continue
-        cleaned = JUNK_TOKEN.sub("", line).rstrip()
-        if cleaned.strip():
-            out.append(cleaned)
-    return "\n".join(out) + "\n"
+        else:
+            cleaned = JUNK_TOKEN.sub("", line).rstrip()
+            if cleaned.strip():
+                out.append(cleaned)
+    # 清空後留下來的空程式碼區塊一起收掉
+    fixed, i = [], 0
+    while i < len(out):
+        if out[i].startswith(FENCE):
+            if i + 1 < len(out) and out[i + 1].startswith(FENCE):
+                i += 2
+                continue
+            if i + 2 < len(out) and not out[i + 1].strip() and out[i + 2].startswith(FENCE):
+                i += 3
+                continue
+        fixed.append(out[i])
+        i += 1
+    return "\n".join(fixed) + "\n"
 
 
 def _fix_placeholders(code):

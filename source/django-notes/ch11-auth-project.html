@@ -1311,26 +1311,18 @@ def event_delete(request, id):
 <h4 id="1561-報名邏輯">15.6.1 報名邏輯</h4>
 <p>在 views.py 中添加報名功能：</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registration</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">event_register</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
     <span class="n">event</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Event</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">Registration</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="c1"># 如果用戶已經報名，則提示錯誤</span>
         <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'你已經報名過此活動。'</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">registrations</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">event</span><span class="o">.</span><span class="n">max_attendees</span><span class="p">:</span>
-        <span class="c1"># 如果報名已滿</span>
-        <span class="k">pass</span>  <span class="c1"># 內容省略</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="n">elif</span><span class="w"> </span><span class="k">event</span><span class="p">.</span><span class="n">registrations</span><span class="p">.</span><span class="n">count</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="k">event</span><span class="p">.</span><span class="nl">max_attendees:</span>
-<span class="p">#</span><span class="w"> </span><span class="err">如果報名已滿</span>
-<span class="n">messages</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="p">'</span><span class="err">報名已滿。</span><span class="p">')</span>
-<span class="k">else</span><span class="o">:</span>
-<span class="p">#</span><span class="w"> </span><span class="err">添加報名</span>
-<span class="n">Registration</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="k">event</span><span class="o">=</span><span class="k">event</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="o">=</span><span class="n">request</span><span class="p">.</span><span class="n">user</span><span class="p">)</span>
-</code></pre></div>
-
-<p>messages.success(request, '成功報名活動！')</p>
-<div class="codehilite"><pre><span></span><code>return redirect('event_detail', id=event.id)
+        <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'報名已滿。'</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">Registration</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'成功報名活動！'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">'event_detail'</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">event</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 </code></pre></div>
 
 <p>15.7. 美化前端：使用 Bootstrap

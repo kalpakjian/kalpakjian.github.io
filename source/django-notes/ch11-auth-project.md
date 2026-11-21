@@ -964,30 +964,25 @@ class EventForm(forms.ModelForm):
 ### 15.6. 報名系統
 除了事件管理，我們還需要為用戶提供報名參加事件的功能。
 #### 15.6.1 報名邏輯
+
 在 views.py 中添加報名功能：
+
 ```
 from .models import Registration
+
+
 def event_register(request, id):
     event = get_object_or_404(Event, id=id)
     if Registration.objects.filter(event=event, user=request.user).exists():
-        # 如果用戶已經報名，則提示錯誤
         messages.error(request, '你已經報名過此活動。')
     elif event.registrations.count() >= event.max_attendees:
-        # 如果報名已滿
-        pass  # 內容省略
+        messages.error(request, '報名已滿。')
+    else:
+        Registration.objects.create(event=event, user=request.user)
+        messages.success(request, '成功報名活動！')
+    return redirect('event_detail', id=event.id)
 ```
-```
-elif event.registrations.count() >= event.max_attendees:
-# 如果報名已滿
-messages.error(request, '報名已滿。')
-else:
-# 添加報名
-Registration.objects.create(event=event, user=request.user)
-```
-messages.success(request, '成功報名活動！')
-```
-return redirect('event_detail', id=event.id)
-```
+
 15.7. 美化前端：使用 Bootstrap
 為了讓頁面更加美觀，我們可以使用 Bootstrap 來美化前端。這部分我們在模板文件中引入 Bootstrap，並將表單和按鈕進行樣式化。
 範例模板：
