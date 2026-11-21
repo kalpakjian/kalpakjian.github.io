@@ -336,6 +336,42 @@ REGION_REWRITES = [
         "        messages.success(request, '成功報名活動！')\n"
         "    return redirect('event_detail', id=event.id)\n```\n\n",
     ),
+    (
+        "UML 課程大綱",
+        "### 1.1 統一建模語言（UML）簡介",
+        "## 課程大綱\n\n"
+        "### 課程介紹\n\n"
+        "本課程旨在介紹統一建模語言（UML）的基本概念和實踐，幫助學員掌握用 UML 來建模和設計軟件系統的技能。"
+        "課程將涵蓋 UML 的各種圖表及其應用。\n\n"
+        "### 課程目標\n\n"
+        "- 理解 UML 的基本概念和歷史背景\n"
+        "- 掌握各種 UML 圖表的繪製和應用\n"
+        "- 能夠使用 UML 進行軟件需求分析、設計和文檔編寫\n"
+        "- 提升建模和設計軟件系統的能力\n\n"
+        "### 課程安排\n\n"
+        "- <strong>第一週</strong>：UML 概述\n"
+        "  - UML 的起源和發展\n  - UML 的基本概念和用途\n  - UML 的優勢和應用範圍\n"
+        "- <strong>第二週</strong>：用例圖 (Use Case Diagram)\n"
+        "  - 用例圖的基本構成\n  - 參與者 (Actors) 和用例 (Use Cases)\n  - 用例圖的繪製和應用\n"
+        "- <strong>第三週</strong>：類圖 (Class Diagram)\n"
+        "  - 類圖的基本構成\n  - 類圖的繪製和應用\n"
+        "- <strong>第四週</strong>：對象圖 (Object Diagram)\n"
+        "  - 對象圖的基本構成\n  - 對象 (Objects) 和鏈接 (Links)\n  - 對象圖的繪製和應用\n"
+        "- <strong>第五週</strong>：序列圖 (Sequence Diagram)\n"
+        "  - 序列圖的基本構成\n  - 生命線 (Lifelines) 和消息 (Messages)\n  - 序列圖的繪製和應用\n"
+        "- <strong>第六週</strong>：活動圖 (Activity Diagram)\n"
+        "  - 活動圖的基本構成\n  - 活動 (Activities)、決策點 (Decision Points) 和併發 (Concurrency)\n"
+        "  - 活動圖的繪製和應用\n"
+        "- <strong>第七週</strong>：狀態圖 (State Diagram)\n"
+        "  - 狀態圖的基本構成\n  - 狀態 (States)、過渡 (Transitions) 和事件 (Events)\n  - 狀態圖的繪製和應用\n"
+        "- <strong>第八週</strong>：組件圖 (Component Diagram)\n"
+        "  - 組件圖的基本構成\n  - 組件 (Components) 和界面 (Interfaces)\n  - 組件圖的繪製和應用\n"
+        "- <strong>第九週</strong>：部署圖 (Deployment Diagram)\n"
+        "  - 部署圖的基本構成\n  - 節點 (Nodes) 和工件 (Artifacts)\n  - 部署圖的繪製和應用\n"
+        "- <strong>第十週</strong>：實踐應用\n"
+        "  - 綜合案例分析\n  - UML 在軟件開發中的實踐應用\n  - 學員專案展示和評估\n\n"
+        "## 第 1 章：UML 概述\n\n",
+    ),
 ]
 
 

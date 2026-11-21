@@ -1,54 +1,61 @@
 # 第 14 章 · UML 系統分析與設計
-UML 課程大綱
-## 課程介紹
+## 課程大綱
+
+### 課程介紹
+
 本課程旨在介紹統一建模語言（UML）的基本概念和實踐，幫助學員掌握用 UML 來建模和設計軟件系統的技能。課程將涵蓋 UML 的各種圖表及其應用。
-課程目標
-理解 UML 的基本概念和歷史背景
-掌握各種 UML 圖表的繪製和應用
-能夠使用 UML 進行軟件需求分析、設計和文檔編寫
-提升建模和設計軟件系統的能力
-課程安排
-第一週：UML 概述
-UML 的起源和發展
-UML 的基本概念和用途
-UML 的優勢和應用範圍
-第二週：用例圖 (Use Case Diagram)
-用例圖的基本構成
-參與者 (Actors) 和用例 (Use Cases)
-用例圖的繪製和應用
-第三週：類圖 (Class Diagram)
-## 類圖的基本構成
-- 類 (Classes)、屬性 (Attributes) 和操作 (Operations)
-- 類之間的關係：繼承 (Inheritance)、關聯 (Association)、聚合 (Aggregation) 和組合 (Composition)
-第四週：對象圖 (Object Diagram)
-對象圖的基本構成
-- 對象 (Objects) 和鏈接 (Links)
-對象圖的繪製和應用
-第五週：序列圖 (Sequence Diagram)
-序列圖的基本構成
-- 生命線 (Lifelines) 和消息 (Messages)
-序列圖的繪製和應用
-第六週：活動圖 (Activity Diagram)
-## 活動圖的基本構成
-- 活動 (Activities)、決策點 (Decision Points) 和併發 (Concurrency)
-活動圖的繪製和應用
-第七週：狀態圖 (State Diagram)
-## 狀態圖的基本構成
-狀態 (States)、過渡 (Transitions) 和事件 (Events)
-狀態圖的繪製和應用
-第八週：組件圖 (Component Diagram)
-組件圖的基本構成
-組件 (Components) 和界面 (Interfaces)
-組件圖的繪製和應用
-第九週：部署圖 (Deployment Diagram)
-部署圖的基本構成
-節點 (Nodes) 和工件 (Artifacts)
-部署圖的繪製和應用
-第十週：實踐應用
-綜合案例分析
-UML 在軟件開發中的實踐應用
-學員專案展示和評估
-第1章：UML 概述
+
+### 課程目標
+
+- 理解 UML 的基本概念和歷史背景
+- 掌握各種 UML 圖表的繪製和應用
+- 能夠使用 UML 進行軟件需求分析、設計和文檔編寫
+- 提升建模和設計軟件系統的能力
+
+### 課程安排
+
+- <strong>第一週</strong>：UML 概述
+  - UML 的起源和發展
+  - UML 的基本概念和用途
+  - UML 的優勢和應用範圍
+- <strong>第二週</strong>：用例圖 (Use Case Diagram)
+  - 用例圖的基本構成
+  - 參與者 (Actors) 和用例 (Use Cases)
+  - 用例圖的繪製和應用
+- <strong>第三週</strong>：類圖 (Class Diagram)
+  - 類圖的基本構成
+  - 類圖的繪製和應用
+- <strong>第四週</strong>：對象圖 (Object Diagram)
+  - 對象圖的基本構成
+  - 對象 (Objects) 和鏈接 (Links)
+  - 對象圖的繪製和應用
+- <strong>第五週</strong>：序列圖 (Sequence Diagram)
+  - 序列圖的基本構成
+  - 生命線 (Lifelines) 和消息 (Messages)
+  - 序列圖的繪製和應用
+- <strong>第六週</strong>：活動圖 (Activity Diagram)
+  - 活動圖的基本構成
+  - 活動 (Activities)、決策點 (Decision Points) 和併發 (Concurrency)
+  - 活動圖的繪製和應用
+- <strong>第七週</strong>：狀態圖 (State Diagram)
+  - 狀態圖的基本構成
+  - 狀態 (States)、過渡 (Transitions) 和事件 (Events)
+  - 狀態圖的繪製和應用
+- <strong>第八週</strong>：組件圖 (Component Diagram)
+  - 組件圖的基本構成
+  - 組件 (Components) 和界面 (Interfaces)
+  - 組件圖的繪製和應用
+- <strong>第九週</strong>：部署圖 (Deployment Diagram)
+  - 部署圖的基本構成
+  - 節點 (Nodes) 和工件 (Artifacts)
+  - 部署圖的繪製和應用
+- <strong>第十週</strong>：實踐應用
+  - 綜合案例分析
+  - UML 在軟件開發中的實踐應用
+  - 學員專案展示和評估
+
+## 第 1 章：UML 概述
+
 ### 1.1 統一建模語言（UML）簡介
 統一建模語言（Unified Modeling Language，簡稱 UML）是一種標準化的建模語言，用於指定、可視化、構建和記錄軟件系統的各種工件。UML 由 OMG（Object Management Group）於 1997 年提出，目的是統一和標準化當時流行的多種建模語言，以提高軟件開發過程的效率和質量。
 ### 1.2 UML 的歷史背景
