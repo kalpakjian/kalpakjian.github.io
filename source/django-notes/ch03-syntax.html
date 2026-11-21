@@ -237,27 +237,51 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
   <div class="sub">Django 網站框架開發 · 學習筆記<br>第 3 章 · Python3 基礎語法</div>
   <div class="toc">
 <ul>
-<li><a href="#python3-基礎語法">Python3 基礎語法</a>
+<li><a href="#1-基礎規則">1. 基礎規則</a>
+<ul>
+<li><a href="#11-編碼">1.1 編碼</a>
 </li>
-<li><a href="#編碼">編碼</a>
+<li><a href="#12-標識符識別字">1.2 標識符（識別字）</a>
 </li>
-<li><a href="#python-保留字">Python 保留字</a>
+<li><a href="#13-保留字關鍵字">1.3 保留字（關鍵字）</a>
 </li>
-<li><a href="#註釋">註釋</a>
+<li><a href="#14-註釋">1.4 註釋</a>
 </li>
-<li><a href="#縮進">縮進</a>
+<li><a href="#15-縮進">1.5 縮進</a>
 </li>
-<li><a href="#類型判斷">類型判斷</a>
+</ul>
 </li>
-<li><a href="#輸入等待用戶輸入">輸入&amp;等待用戶輸入</a>
+<li><a href="#2-數據類型">2. 數據類型</a>
+<ul>
+<li><a href="#21-六種標準類型">2.1 六種標準類型</a>
 </li>
-<li><a href="#例子">例子</a>
+<li><a href="#22-可變-vs-不可變">2.2 可變 vs 不可變</a>
 </li>
-<li><a href="#同一行顯示多條語句">同一行顯示多條語句</a>
+<li><a href="#23-類型判斷">2.3 類型判斷</a>
 </li>
-<li><a href="#import-與-fromimport">import 與 from...import</a>
+<li><a href="#24-字串string重點">2.4 字串（String）重點</a>
 </li>
-<li><a href="#print-輸出">print 輸出</a>
+</ul>
+</li>
+<li><a href="#3-輸入與輸出">3. 輸入與輸出</a>
+<ul>
+<li><a href="#31-輸入-input">3.1 輸入 input()</a>
+</li>
+<li><a href="#32-輸出-print">3.2 輸出 print()</a>
+</li>
+<li><a href="#33-同一行寫多條語句">3.3 同一行寫多條語句</a>
+</li>
+</ul>
+</li>
+<li><a href="#4-模組與程式區塊">4. 模組與程式區塊</a>
+<ul>
+<li><a href="#41-import-與-fromimport">4.1 import 與 from…import</a>
+</li>
+<li><a href="#42-程式區塊suite">4.2 程式區塊（suite）</a>
+</li>
+</ul>
+</li>
+<li><a href="#5-第一個程式fibonacci-數列">5. 第一個程式：Fibonacci 數列</a>
 </li>
 </ul>
 </div>
@@ -265,155 +289,118 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 </nav>
 <main>
 <h1 id="第-3-章--python3-基礎語法">第 3 章 · Python3 基礎語法</h1>
-<h2 id="python3-基礎語法">Python3 基礎語法</h2>
-<h2 id="編碼">編碼</h2>
-<p>默認情況下，Python 3 源碼文件以 UTF-8 編碼，所有字符串都是 unicode 字符串。當然你也可以為源碼文件指定不同的編碼：</p>
+<h2 id="1-基礎規則">1. 基礎規則</h2>
+<h3 id="11-編碼">1.1 編碼</h3>
+<p>Python 3 原始碼預設為 <strong>UTF-8</strong>，字串皆為 Unicode。若要指定其他編碼：</p>
 <div class="codehilite"><pre><span></span><code><span class="gh">#</span> -*- coding: cp-1252 -*-
 </code></pre></div>
 
-<p>標識符
-第一個字符必須是字母表中字母或下劃線'。
-標識符的其他的部分有字母、數字和下劃線組成。
-標識符對大小寫敏感。
-在 Python 3 中，非 ASCII 編碼的標識符也是允許的了。</p>
-<h2 id="python-保留字">Python 保留字</h2>
-<p>保留字即關鍵字，我們不能把它們用作任何標識符名稱。Python 的標準庫提供了一個關鍵詞模塊，我們可以使用它來查看當前版本的所有保留字：</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>import keyword
-keyword.kwlist</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="codehilite"><pre><span></span><code>['False', 'None', 'True', '__peg_parser__', 'and', 'as', 'assert', 'async', 'await', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
+<h3 id="12-標識符識別字">1.2 標識符（識別字）</h3>
+<p>命名規則：</p>
+<ul>
+<li>第一個字元必須是字母或底線 <code>_</code>。</li>
+<li>其餘可為字母、數字、底線。</li>
+<li>區分大小寫。</li>
+<li>Python 3 允許非 ASCII 標識符。</li>
+</ul>
+<h3 id="13-保留字關鍵字">1.3 保留字（關鍵字）</h3>
+<p>保留字不可作為標識符。可用 <code>keyword</code> 模組查詢：</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">keyword</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">keyword</span><span class="o">.</span><span class="n">kwlist</span><span class="p">)</span>
 </code></pre></div>
 
-<h2 id="註釋">註釋</h2>
-<p>Python 中單行註釋以#開頭，多行註釋採用三對單引號("")或者三對雙引號("")將註釋括起來。</p>
-<div class="codehilite"><pre><span></span><code>#這是單行註釋
-0000
+<h3 id="14-註釋">1.4 註釋</h3>
+<ul>
+<li><strong>單行</strong>：以 <code>#</code> 開頭。</li>
+</ul>
+<div class="codehilite"><pre><span></span><code># 這是單行註釋
 </code></pre></div>
 
-<p>這是多行註釋
-這是多行註釋</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">0000</span>
-</code></pre></div>
-
-<p>*****
-也可以用三個單引號來進行多行註釋
-*****
-實際上 python 註釋只有一種，就是單行註釋，多行註釋的這種使用方法類似於 java 的 javadoc，三引號的這種使用方法實際上是用來聲明多行長字符串的。</p>
-<h2 id="縮進">縮進</h2>
-<p>Python 最具特色的就是使用縮進來表示代碼塊。縮進的空格數是可變的，但是同一個代碼塊的語句必須包含相同的縮進空格數。</p>
+<ul>
+<li><strong>多行</strong>：用三個單引號或三個雙引號包住。嚴格說 Python 只有單行註釋，三引號其實是「多行字串」。</li>
+</ul>
+<h3 id="15-縮進">1.5 縮進</h3>
+<p>Python 用<strong>縮排</strong>表示程式區塊；同一區塊的縮排空格數必須一致。</p>
 <div class="codehilite"><pre><span></span><code>def hi():
-    print('hi')  # 縮進
+    print('hi')  # 縮排
 </code></pre></div>
 
-<p>標準數據類型
-Python 中有六個標準的數據類型：
-Number (數字)
-String (字符串)
-List (列表)
-Tuple (元組)
-Set (集合)
-Dictionary (字典)
-Python3 的六個標準數據類型：
-不可變數據(3個)：Number (數字)、String(字符串)、Tuple (元組)
-可變數據(3 個)：List (列表)、Dictionary(字典)、Set(集合)
-可變數據和不可變數據是相對於引用地址來說的，不可變數據類型不允許變量的值發生變化，如果改變了的變量的值，相當於新建了一個對象，而對於相同的值的對象，內部會有一個引用計數來記錄有多少個變量引用了這個對象。可變數據類型允許變量的值發生變化。對變量進行修改操作只會改變變量的值，不會新建對象，變量引用的地址也不會發生變化，不過對於相同的值的不同對象，在內存中則會存在不同的對象，即每個對像都有自己的地址，相當於內存中對於同值的對象保存了多份，這裡不存在引用計數，是實實在在的對象。
-簡單地講，可變數據和不可變數據的“變”是相對於引用地址來說的，不是不能改變其數據，而是改變數據的時候會不會改變變量的引用地址。</p>
-<h2 id="類型判斷">類型判斷</h2>
-<p>例子</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">isStr</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">"餅瑞瑪"</span>
-<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">isStr</span><span class="p">))</span>
-<span class="nx">isInt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span>
-<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">isInt</span><span class="p">))</span>
-<span class="nx">isTuple</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="err">'</span><span class="nx">德瑪</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="mi">20</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="sc">'x'</span><span class="p">)</span>
-<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">isTuple</span><span class="p">))</span>
-<span class="nx">isList</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="sc">'d'</span><span class="p">,</span><span class="w"> </span><span class="sc">'4'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">垃圾</span><span class="err">'</span><span class="p">]</span>
-<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">isList</span><span class="p">))</span>
+<h2 id="2-數據類型">2. 數據類型</h2>
+<h3 id="21-六種標準類型">2.1 六種標準類型</h3>
+<ul>
+<li><strong>不可變（3 種）</strong>：Number（數字）、String（字串）、Tuple（元組）。</li>
+<li><strong>可變（3 種）</strong>：List（列表）、Dictionary（字典）、Set（集合）。</li>
+</ul>
+<h3 id="22-可變-vs-不可變">2.2 可變 vs 不可變</h3>
+<p>「可變」指的是<strong>修改資料時會不會改變變數的引用位址</strong>：</p>
+<ul>
+<li><strong>不可變</strong>：改變值等於新建物件；相同值的物件以引用計數共用。</li>
+<li><strong>可變</strong>：修改只改變值、不改引用位址；同值的不同物件各自佔一份記憶體。</li>
+</ul>
+<h3 id="23-類型判斷">2.3 類型判斷</h3>
+<p>用 <code>type()</code> 查看型別：</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">isStr</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">"餅瑞瑪"</span><span class="p">;</span><span class="w"> </span><span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">isStr</span><span class="p">))</span>
+<span class="nx">isInt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w">      </span><span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">isInt</span><span class="p">))</span>
+<span class="nx">isTuple</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="err">'</span><span class="nx">德瑪</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="mi">20</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="sc">'x'</span><span class="p">);</span><span class="w"> </span><span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">isTuple</span><span class="p">))</span>
+<span class="nx">isList</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="sc">'d'</span><span class="p">,</span><span class="w"> </span><span class="sc">'4'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">垃圾</span><span class="err">'</span><span class="p">];</span><span class="w">   </span><span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">isList</span><span class="p">))</span>
 </code></pre></div>
 
-<p>字符串
-Python 中單引號和雙引號使用完全相同，但單引號和雙引號不能匹配。
-使用三對引號("或")可以囊括一個多行字符串。
-與其他語言相似，python 也使用"作為轉義字符
-自然字符串，通過在字符串前加 r 或 R。如 r"this is a line with \n" 則\n 會顯示，並不是換行。
-Python 允許處理 unicode 字符串，加前綴 u 或 U，如 u"this is an unicode string"。
-字符串是不可變的。
-按字面意義級聯字符串，如"this " "is " "string"會被自動轉換為 this is string。
-字符串可以用+運算符連接在一起，用*運算符重複。
-Python 中的字符串有兩種索引方式，從左往右以 0 開始，從右往左以-1 開始。
-Python 中的字符串不能改變(詳見上一小點的引用)。
-Python 沒有單獨的字符類型，一個字符就是長度為 1 的字符串。
-字符串的截取的語法格式如下：變量[頭下標：尾下標：步長]</p>
-<h2 id="輸入等待用戶輸入">輸入&amp;等待用戶輸入</h2>
-<p>input 函數可以用來接受輸入，它可以傳入一個字符串，當 input 函數調用的時候，會在控制台打印這個字符串(所以這個字符串通常被用來做輸入的提示信息)
-input函數會讀取輸入內容直到讀到回車，也就是說，內容輸入完畢後要按回車鍵才能執行。</p>
-<h2 id="例子">例子</h2>
-<div class="codehilite"><pre><span></span><code><span class="nx">input</span><span class="p">(</span><span class="s">"記得接Enter："</span><span class="p">)</span>
-<span class="nx">x</span><span class="p">=</span><span class="nx">input</span><span class="p">(</span><span class="s">"輸入把少年："</span><span class="p">)</span>
+<h3 id="24-字串string重點">2.4 字串（String）重點</h3>
+<ul>
+<li>單引號與雙引號等價，但不可混用。</li>
+<li>三引號可包多行字串。</li>
+<li><code>\</code> 為轉義字元；前綴 <code>r</code>/<code>R</code> 表示自然字串（<code>\n</code> 不換行）。</li>
+<li>前綴 <code>u</code>/<code>U</code> 表示 Unicode 字串。</li>
+<li>字串<strong>不可變</strong>；沒有獨立字元型別（一個字元＝長度 1 的字串）。</li>
+<li>相鄰字串字面值會自動串接；用 <code>+</code> 連接、<code>*</code> 重複。</li>
+<li>索引：左起 <code>0</code>、右起 <code>-1</code>；切片語法 <code>變數[頭:尾:步長]</code>。</li>
+</ul>
+<h2 id="3-輸入與輸出">3. 輸入與輸出</h2>
+<h3 id="31-輸入-input">3.1 輸入 input()</h3>
+<p><code>input([提示字串])</code> 會印出提示並讀取輸入，按 Enter 後才繼續；輸入結果一律是字串。</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">input</span><span class="p">(</span><span class="s">"輸入吧，少年："</span><span class="p">)</span>
 <span class="nx">print</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
 <span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">x</span><span class="p">))</span>
 </code></pre></div>
 
-<h2 id="同一行顯示多條語句">同一行顯示多條語句</h2>
-<p>Python 可以在同一行中使用多條語句，語句之間使用分號(;) 分割，以下是一個簡單的實例：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="p">;</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">'nothing'</span><span class="p">;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
-</code></pre></div>
-
-<p>輸出結果為：</p>
-<div class="codehilite"><pre><span></span><code>nothing
-</code></pre></div>
-
-<h2 id="import-與-fromimport">import 與 from...import</h2>
-<p>在 Python 用 import 或者 from...import 來導入相應的模塊。
-將整個模塊(somemodule)導入，格式為：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">somemodule</span>
-</code></pre></div>
-
-<p>從某個模塊中導入某個函數，格式為：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">somemodule</span><span class="w"> </span><span class="kn">import</span> <span class="n">somefunction</span>
-</code></pre></div>
-
-<p>從某個模塊中導入多個函數，格式為：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">somemodule</span><span class="w"> </span><span class="kn">import</span> <span class="n">firstfunc</span><span class="p">,</span> <span class="n">secondfunc</span><span class="p">,</span> <span class="n">thirdfunc</span>
-</code></pre></div>
-
-<p>將某個模塊中的全部函數導入，格式為：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">somemodule</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
-</code></pre></div>
-
-<p>多個語句構成代碼組
-縮進相同的一組語句構成一個代碼塊，我們稱之代碼組。
-像 if、while、def 和 class 這樣的複合語句，首行以關鍵字開始，以冒號(:) 結束，該行之後的一行或多行代碼構成代碼組。
-我們將首行及後面的代碼組稱為一個子句(clause)。
-實例：</p>
-<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nv">expression</span><span class="w"> </span>:
-<span class="w">    </span><span class="nv">suite</span>
-<span class="nv">elif</span><span class="w"> </span><span class="nv">expression</span><span class="w"> </span>:
-<span class="w">    </span><span class="nv">suite</span>
-<span class="k">else</span><span class="w"> </span>:
-<span class="w">    </span><span class="nv">suite</span>
-</code></pre></div>
-
-<h2 id="print-輸出">print 輸出</h2>
-<p>print 函數是 python 的基本輸出函數，他可以將變量輸出(或者說，打印)到控制台。在第一個 python 程序中，我們就用到了 print 函數：</p>
+<h3 id="32-輸出-print">3.2 輸出 print()</h3>
+<p><code>print()</code> 是基本輸出函式：</p>
 <div class="codehilite"><pre><span></span><code>print("Hello, World!")
 str = "Hello, World!"
 print(str)
 </code></pre></div>
 
-<p>Python3 編程第一步
-在下例裡，我們能寫出一個初步的斐波納契數列如下：</p>
+<h3 id="33-同一行寫多條語句">3.3 同一行寫多條語句</h3>
+<p>語句之間用分號 <code>;</code> 分隔：</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="p">;</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">'nothing'</span><span class="p">;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="4-模組與程式區塊">4. 模組與程式區塊</h2>
+<h3 id="41-import-與-fromimport">4.1 import 與 from…import</h3>
+<ul>
+<li>匯入整個模組：<code>import somemodule</code></li>
+<li>匯入單一函式：<code>from somemodule import somefunction</code></li>
+<li>匯入多個函式：<code>from somemodule import firstfunc, secondfunc, thirdfunc</code></li>
+<li>匯入全部：<code>from somemodule import *</code></li>
+</ul>
+<h3 id="42-程式區塊suite">4.2 程式區塊（suite）</h3>
+<p>縮排相同的一組語句構成「程式區塊」。<code>if</code>、<code>while</code>、<code>def</code>、<code>class</code> 等複合語句以關鍵字開頭、以冒號 <code>:</code> 結尾，其後縮排的程式碼即為該區塊：</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nv">expression</span>:
+<span class="w">    </span><span class="nv">suite</span>
+<span class="nv">elif</span><span class="w"> </span><span class="nv">expression</span>:
+<span class="w">    </span><span class="nv">suite</span>
+<span class="k">else</span>:
+<span class="w">    </span><span class="nv">suite</span>
+</code></pre></div>
+
+<h2 id="5-第一個程式fibonacci-數列">5. 第一個程式：Fibonacci 數列</h2>
 <div class="codehilite"><pre><span></span><code><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>,<span class="w"> </span><span class="mi">1</span>
 <span class="k">while</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span>:
 <span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">b</span><span class="ss">)</span>
 <span class="w">    </span><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
 </code></pre></div>
 
-<p>其中代碼 a, b = b, a + b 的計算方式為先計算右邊的表達式，然後同時賦值給左邊，等價於：</p>
+<p><code>a, b = b, a + b</code> 會<strong>先算右邊、再同時賦值</strong>，等價於：</p>
 <div class="codehilite"><pre><span></span><code>n = b
 m = a + b
 a = n

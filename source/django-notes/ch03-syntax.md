@@ -1,151 +1,153 @@
 # 第 3 章 · Python3 基礎語法
-## Python3 基礎語法
-## 編碼
-默認情況下，Python 3 源碼文件以 UTF-8 編碼，所有字符串都是 unicode 字符串。當然你也可以為源碼文件指定不同的編碼：
+
+## 1. 基礎規則
+
+### 1.1 編碼
+
+Python 3 原始碼預設為 **UTF-8**，字串皆為 Unicode。若要指定其他編碼：
+
 ```
 # -*- coding: cp-1252 -*-
 ```
-標識符
-第一個字符必須是字母表中字母或下劃線'。
-標識符的其他的部分有字母、數字和下劃線組成。
-標識符對大小寫敏感。
-在 Python 3 中，非 ASCII 編碼的標識符也是允許的了。
-## Python 保留字
-保留字即關鍵字，我們不能把它們用作任何標識符名稱。Python 的標準庫提供了一個關鍵詞模塊，我們可以使用它來查看當前版本的所有保留字：
->>> import keyword
->>> keyword.kwlist
+
+### 1.2 標識符（識別字）
+
+命名規則：
+
+- 第一個字元必須是字母或底線 `_`。
+- 其餘可為字母、數字、底線。
+- 區分大小寫。
+- Python 3 允許非 ASCII 標識符。
+
+### 1.3 保留字（關鍵字）
+
+保留字不可作為標識符。可用 `keyword` 模組查詢：
+
 ```
-['False', 'None', 'True', '__peg_parser__', 'and', 'as', 'assert', 'async', 'await', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
+import keyword
+print(keyword.kwlist)
 ```
-## 註釋
-Python 中單行註釋以#開頭，多行註釋採用三對單引號("")或者三對雙引號("")將註釋括起來。
+
+### 1.4 註釋
+
+- **單行**：以 `#` 開頭。
+
 ```
-#這是單行註釋
-0000
+# 這是單行註釋
 ```
-這是多行註釋
-這是多行註釋
-```
-0000
-```
-\*\*\*\**
-也可以用三個單引號來進行多行註釋
-\*\*\*\**
-實際上 python 註釋只有一種，就是單行註釋，多行註釋的這種使用方法類似於 java 的 javadoc，三引號的這種使用方法實際上是用來聲明多行長字符串的。
-## 縮進
-Python 最具特色的就是使用縮進來表示代碼塊。縮進的空格數是可變的，但是同一個代碼塊的語句必須包含相同的縮進空格數。
+
+- **多行**：用三個單引號或三個雙引號包住。嚴格說 Python 只有單行註釋，三引號其實是「多行字串」。
+
+### 1.5 縮進
+
+Python 用**縮排**表示程式區塊；同一區塊的縮排空格數必須一致。
+
 ```
 def hi():
-    print('hi')  # 縮進
+    print('hi')  # 縮排
 ```
-標準數據類型
-Python 中有六個標準的數據類型：
-Number (數字)
-String (字符串)
-List (列表)
-Tuple (元組)
-Set (集合)
-Dictionary (字典)
-Python3 的六個標準數據類型：
-不可變數據(3個)：Number (數字)、String(字符串)、Tuple (元組)
-可變數據(3 個)：List (列表)、Dictionary(字典)、Set(集合)
-可變數據和不可變數據是相對於引用地址來說的，不可變數據類型不允許變量的值發生變化，如果改變了的變量的值，相當於新建了一個對象，而對於相同的值的對象，內部會有一個引用計數來記錄有多少個變量引用了這個對象。可變數據類型允許變量的值發生變化。對變量進行修改操作只會改變變量的值，不會新建對象，變量引用的地址也不會發生變化，不過對於相同的值的不同對象，在內存中則會存在不同的對象，即每個對像都有自己的地址，相當於內存中對於同值的對象保存了多份，這裡不存在引用計數，是實實在在的對象。
-簡單地講，可變數據和不可變數據的“變”是相對於引用地址來說的，不是不能改變其數據，而是改變數據的時候會不會改變變量的引用地址。
-## 類型判斷
-例子
+
+## 2. 數據類型
+
+### 2.1 六種標準類型
+
+- **不可變（3 種）**：Number（數字）、String（字串）、Tuple（元組）。
+- **可變（3 種）**：List（列表）、Dictionary（字典）、Set（集合）。
+
+### 2.2 可變 vs 不可變
+
+「可變」指的是**修改資料時會不會改變變數的引用位址**：
+
+- **不可變**：改變值等於新建物件；相同值的物件以引用計數共用。
+- **可變**：修改只改變值、不改引用位址；同值的不同物件各自佔一份記憶體。
+
+### 2.3 類型判斷
+
+用 `type()` 查看型別：
+
 ```
-isStr = "餅瑞瑪"
-print(type(isStr))
-isInt = 1000
-print(type(isInt))
-isTuple = ('德瑪', '20', 'x')
-print(type(isTuple))
-isList = ['d', '4', '垃圾']
-print(type(isList))
+isStr = "餅瑞瑪"; print(type(isStr))
+isInt = 1000;      print(type(isInt))
+isTuple = ('德瑪', '20', 'x'); print(type(isTuple))
+isList = ['d', '4', '垃圾'];   print(type(isList))
 ```
-字符串
-Python 中單引號和雙引號使用完全相同，但單引號和雙引號不能匹配。
-使用三對引號("或")可以囊括一個多行字符串。
-與其他語言相似，python 也使用"作為轉義字符
-自然字符串，通過在字符串前加 r 或 R。如 r"this is a line with \n" 則\n 會顯示，並不是換行。
-Python 允許處理 unicode 字符串，加前綴 u 或 U，如 u"this is an unicode string"。
-字符串是不可變的。
-按字面意義級聯字符串，如"this " "is " "string"會被自動轉換為 this is string。
-字符串可以用+運算符連接在一起，用*運算符重複。
-Python 中的字符串有兩種索引方式，從左往右以 0 開始，從右往左以-1 開始。
-Python 中的字符串不能改變(詳見上一小點的引用)。
-Python 沒有單獨的字符類型，一個字符就是長度為 1 的字符串。
-字符串的截取的語法格式如下：變量[頭下標：尾下標：步長]
-## 輸入&等待用戶輸入
-input 函數可以用來接受輸入，它可以傳入一個字符串，當 input 函數調用的時候，會在控制台打印這個字符串(所以這個字符串通常被用來做輸入的提示信息)
-input函數會讀取輸入內容直到讀到回車，也就是說，內容輸入完畢後要按回車鍵才能執行。
-## 例子
+
+### 2.4 字串（String）重點
+
+- 單引號與雙引號等價，但不可混用。
+- 三引號可包多行字串。
+- `\` 為轉義字元；前綴 `r`/`R` 表示自然字串（`\n` 不換行）。
+- 前綴 `u`/`U` 表示 Unicode 字串。
+- 字串**不可變**；沒有獨立字元型別（一個字元＝長度 1 的字串）。
+- 相鄰字串字面值會自動串接；用 `+` 連接、`*` 重複。
+- 索引：左起 `0`、右起 `-1`；切片語法 `變數[頭:尾:步長]`。
+
+## 3. 輸入與輸出
+
+### 3.1 輸入 input()
+
+`input([提示字串])` 會印出提示並讀取輸入，按 Enter 後才繼續；輸入結果一律是字串。
+
 ```
-input("記得接Enter：")
-x=input("輸入把少年：")
+x = input("輸入吧，少年：")
 print(x)
 print(type(x))
 ```
-## 同一行顯示多條語句
-Python 可以在同一行中使用多條語句，語句之間使用分號(;) 分割，以下是一個簡單的實例：
-```
-import sys; x = 'nothing'; sys.stdout.write(x + '\n')
-```
-輸出結果為：
-```
-nothing
-```
-## import 與 from...import
-在 Python 用 import 或者 from...import 來導入相應的模塊。
-將整個模塊(somemodule)導入，格式為：
-```
-import somemodule
-```
-從某個模塊中導入某個函數，格式為：
-```
-from somemodule import somefunction
-```
-從某個模塊中導入多個函數，格式為：
-```
-from somemodule import firstfunc, secondfunc, thirdfunc
-```
-將某個模塊中的全部函數導入，格式為：
-```
-from somemodule import *
-```
-多個語句構成代碼組
-縮進相同的一組語句構成一個代碼塊，我們稱之代碼組。
-像 if、while、def 和 class 這樣的複合語句，首行以關鍵字開始，以冒號(:) 結束，該行之後的一行或多行代碼構成代碼組。
-我們將首行及後面的代碼組稱為一個子句(clause)。
-實例：
-```
-if expression :
-    suite
-elif expression :
-    suite
-else :
-    suite
-```
-## print 輸出
-print 函數是 python 的基本輸出函數，他可以將變量輸出(或者說，打印)到控制台。在第一個 python 程序中，我們就用到了 print 函數：
+
+### 3.2 輸出 print()
+
+`print()` 是基本輸出函式：
+
 ```
 print("Hello, World!")
 str = "Hello, World!"
 print(str)
 ```
-Python3 編程第一步
-在下例裡，我們能寫出一個初步的斐波納契數列如下：
+
+### 3.3 同一行寫多條語句
+
+語句之間用分號 `;` 分隔：
+
+```
+import sys; x = 'nothing'; sys.stdout.write(x + '\n')
+```
+
+## 4. 模組與程式區塊
+
+### 4.1 import 與 from…import
+
+- 匯入整個模組：`import somemodule`
+- 匯入單一函式：`from somemodule import somefunction`
+- 匯入多個函式：`from somemodule import firstfunc, secondfunc, thirdfunc`
+- 匯入全部：`from somemodule import *`
+
+### 4.2 程式區塊（suite）
+
+縮排相同的一組語句構成「程式區塊」。`if`、`while`、`def`、`class` 等複合語句以關鍵字開頭、以冒號 `:` 結尾，其後縮排的程式碼即為該區塊：
+
+```
+if expression:
+    suite
+elif expression:
+    suite
+else:
+    suite
+```
+
+## 5. 第一個程式：Fibonacci 數列
+
 ```
 a, b = 0, 1
 while b < 10:
     print(b)
     a, b = b, a + b
 ```
-其中代碼 a, b = b, a + b 的計算方式為先計算右邊的表達式，然後同時賦值給左邊，等價於：
+
+`a, b = b, a + b` 會**先算右邊、再同時賦值**，等價於：
+
 ```
 n = b
 m = a + b
 a = n
 b = m
 ```
-
