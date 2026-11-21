@@ -50,25 +50,6 @@ CONTENT_FIXES = [
         '請先 <a href="/login/" >登入</a> 。 </p>',
         '需要登入才能看內容時，模板用 `{% url \'login\' %}` 產生登入連結（`<a>` 連結文字寫「登入」）。',
     ),
-    # UML 1.3：編號清單改成縮排小點
-    (
-        "1. 用例圖（Use Case Diagram）：描述系統與外部使用者之間的互動。\n"
-        "2. 類圖（Class Diagram）：描述系統中的類及其關係。\n"
-        "3. 對象圖（Object Diagram）：描述系統在某一時刻的對象及其關係。\n"
-        "4. 序列圖（Sequence Diagram）：描述對象之間的交互順序。\n"
-        "5. 活動圖（Activity Diagram）：描述系統中的活動流程。\n"
-        "6. 狀態圖（State Diagram）：描述對象在不同狀態下的行為。\n"
-        "7. 組件圖（Component Diagram）：描述系統的物理組件及其依賴關係。\n"
-        "8. 部署圖（Deployment Diagram）：描述系統的物理佈署結構。",
-        "- 用例圖（Use Case Diagram）：描述系統與外部使用者之間的互動。\n"
-        "- 類圖（Class Diagram）：描述系統中的類及其關係。\n"
-        "- 對象圖（Object Diagram）：描述系統在某一時刻的對象及其關係。\n"
-        "- 序列圖（Sequence Diagram）：描述對象之間的交互順序。\n"
-        "- 活動圖（Activity Diagram）：描述系統中的活動流程。\n"
-        "- 狀態圖（State Diagram）：描述對象在不同狀態下的行為。\n"
-        "- 組件圖（Component Diagram）：描述系統的物理組件及其依賴關係。\n"
-        "- 部署圖（Deployment Diagram）：描述系統的物理佈署結構。",
-    ),
 ]
 
 # 2026-11 覆核：前端／Actions 版本 + 教材年份留下的工具（只加一句時代註記，不改寫教材結構）

@@ -82,14 +82,14 @@
 ### 1.3 UML 的基本概念
 UML 的核心在於提供了一套標準化的符號和圖表，用於描述軟件系統的靜態結構和動態行為。UML 包括以下幾種主要的圖表：
 
-- 用例圖（Use Case Diagram）：描述系統與外部使用者之間的互動。
-- 類圖（Class Diagram）：描述系統中的類及其關係。
-- 對象圖（Object Diagram）：描述系統在某一時刻的對象及其關係。
-- 序列圖（Sequence Diagram）：描述對象之間的交互順序。
-- 活動圖（Activity Diagram）：描述系統中的活動流程。
-- 狀態圖（State Diagram）：描述對象在不同狀態下的行為。
-- 組件圖（Component Diagram）：描述系統的物理組件及其依賴關係。
-- 部署圖（Deployment Diagram）：描述系統的物理佈署結構。
+1. 用例圖（Use Case Diagram）：描述系統與外部使用者之間的互動。
+2. 類圖（Class Diagram）：描述系統中的類及其關係。
+3. 對象圖（Object Diagram）：描述系統在某一時刻的對象及其關係。
+4. 序列圖（Sequence Diagram）：描述對象之間的交互順序。
+5. 活動圖（Activity Diagram）：描述系統中的活動流程。
+6. 狀態圖（State Diagram）：描述對象在不同狀態下的行為。
+7. 組件圖（Component Diagram）：描述系統的物理組件及其依賴關係。
+8. 部署圖（Deployment Diagram）：描述系統的物理佈署結構。
 
 ### 1.4 UML 的應用範圍
 UML 廣泛應用於軟件開發的各個階段，包括需求分析、系統設計、編碼、測試和維護。通過 UML，開發團隊可以更好地理解和溝通系統的需求和設計，從而提高軟件開發的效率和質量。具體來說，UML 的應用範圍包括但不限於以下幾個方面：
