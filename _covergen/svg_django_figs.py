@@ -337,6 +337,51 @@ def rebase_merge():
                  "圖　merge 會在兩條歷史交會處留下一個合併 commit（菱形）；rebase 則把分支 commit 重寫到目標分支之後，歷史變成一直線。")
 
 
+def object_diagram():
+    def obj(x, y, w, name, attrs, stroke=STROKE):
+        h = 30 + 22 * len(attrs)
+        t = '<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="%s" stroke="%s" stroke-width="1.6"/>' % (
+            x, y, w, h, BOX, stroke)
+        t += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.2"/>' % (x, y + 26, x + w, y + 26, stroke)
+        t += ('<text x="%d" y="%d" text-anchor="middle" font-family="%s" font-size="12.5" fill="%s" '
+              'text-decoration="underline">%s</text>' % (x + w // 2, y + 18, FONT, TEXT, name))
+        for i, a in enumerate(attrs):
+            t += ('<text x="%d" y="%d" font-family="%s" font-size="11" fill="%s">%s</text>'
+                  % (x + 10, y + 46 + 22 * i, FONT, ACC, a))
+        return t
+    b = obj(30, 60, 210, "cat1 : Category", ["name = \"Python\"", "slug = \"python\""])
+    b += obj(360, 60, 250, "article1 : Article",
+             ["title = \"Django 入門\"", "published = True", "category = cat1"], stroke=WARM)
+    b += '<line x1="240" y1="96" x2="356" y2="96" stroke="%s" stroke-width="1.6"/>' % ACC
+    b += ('<text x="248" y="88" font-family="%s" font-size="11" fill="%s">category</text>' % (FONT, ACC))
+    b += ('<text x="30" y="24" font-family="%s" font-size="12" fill="%s">物件圖＝某一刻的實例快照（名稱加底線）</text>'
+          % (FONT, TEXT))
+    return _wrap(b, 660, 210, "UML 物件圖：cat1 與 article1 兩個實例以及 category 連結",
+                 "圖　物件圖：cat1 : Category 與 article1 : Article 是實際存在的資料，"
+                 "名稱加底線代表實例；兩個物件之間的連線對應類圖的關聯。")
+
+
+def component_diagram():
+    def comp(x, y, w, h, label, sub=""):
+        t = _box(x, y, w, h, label, sub)
+        t += ('<rect x="%d" y="%d" width="14" height="22" rx="2" fill="%s" stroke="%s" stroke-width="1.2"/>'
+              % (x + w - 22, y + 8, CARD, ACC))
+        t += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.2"/>' % (
+            x + w - 18, y + 15, x + w - 12, y + 15, ACC)
+        return t
+    b = comp(30, 90, 170, 66, "模板層", "templates／block")
+    b += comp(250, 90, 180, 66, "視圖層", "views.py")
+    b += comp(480, 90, 180, 66, "模型層", "models.py／ORM")
+    b += comp(700, 90, 130, 66, "資料庫", "PostgreSQL")
+    for x1, x2 in ((200, 246), (430, 476), (660, 696)):
+        b += _arrow(x1, 123, x2, 123)
+    b += ('<text x="30" y="60" font-family="%s" font-size="12" fill="%s">方框右上角是 UML 的 component 標記</text>'
+          % (FONT, TEXT))
+    b += ('<text x="30" y="196" font-family="%s" font-size="11" fill="%s">箭頭由左往右：上層依賴下層</text>' % (FONT, ACC))
+    return _wrap(b, 860, 210, "UML 組件圖：模板層、視圖層、模型層與資料庫的依賴關係",
+                 "圖　組件圖：每個方框是一個可替換的元件，箭頭代表依賴；視圖層依賴模型層，模型層依賴資料庫。")
+
+
 FIGURES = [
     (7, "#### 1.2.2 MVT 架構", mvt()),
     (8, "### 4.1 Django 的 URL 配置", url_flow()),
@@ -349,8 +394,10 @@ FIGURES = [
     (9, "### 6.4 模板繼承", template_inherit()),
     (14, "### 2.1 用例圖概述", use_case()),
     (14, "### 3.1 類圖概述", class_diagram()),
+    (14, "### 4.1 對象圖概述", object_diagram()),
     (14, "### 5.1 序列圖概述", sequence()),
     (14, "### 6.1 活動圖概述", activity()),
     (14, "### 7.1 狀態圖概述", state()),
+    (14, "### 8.1 組件圖概述", component_diagram()),
     (14, "### 9.1 部署圖概述", deployment()),
 ]
