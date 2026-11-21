@@ -157,6 +157,96 @@ def orm_chain():
                  "圖　ORM 查詢鏈：鏈式呼叫只是組裝條件，QuerySet 延遲求值，真正迭代時才產生 SQL 並回傳 Model 實例。")
 
 
+def use_case():
+    # 系統邊界 + 參與者框 + 橢圓用例
+    b = '<rect x="210" y="24" width="360" height="244" rx="12" fill="none" stroke="%s" stroke-width="1.6"/>' % STROKE
+    b += ('<text x="390" y="48" text-anchor="middle" font-family="%s" font-size="13" fill="%s">活動報名系統</text>'
+          % (FONT, ACC))
+    def oval(cx, cy, label):
+        return ('<ellipse cx="%d" cy="%d" rx="96" ry="30" fill="%s" stroke="%s" stroke-width="1.5"/>'
+                '<text x="%d" y="%d" text-anchor="middle" font-family="%s" font-size="13" fill="%s">%s</text>'
+                % (cx, cy, BOX, STROKE, cx, cy + 5, FONT, TEXT, label))
+    b += oval(390, 96, "瀏覽活動")
+    b += oval(390, 176, "報名活動")
+    b += oval(390, 246, "審核報名")
+    b += _box(20, 76, 110, 50, "訪客")
+    b += _box(20, 151, 110, 50, "會員")
+    b += _box(640, 221, 110, 50, "管理員")
+    b += '<line x1="130" y1="101" x2="292" y2="96" stroke="%s" stroke-width="1.4"/>' % ACC
+    b += '<line x1="130" y1="176" x2="292" y2="176" stroke="%s" stroke-width="1.4"/>' % ACC
+    b += '<line x1="640" y1="246" x2="488" y2="246" stroke="%s" stroke-width="1.4"/>' % ACC
+    return _wrap(b, 770, 292, "UML 用例圖：訪客、會員、管理員與活動報名系統的用例關係",
+                 "圖　用例圖：左邊兩位參與者（訪客、會員）與右邊的管理員，各自連到系統邊界內對應的用例。")
+
+
+def class_diagram():
+    def cls(x, y, w, name, attrs, ops):
+        h = 78
+        t = '<rect x="%d" y="%d" width="%d" height="%d" rx="8" fill="%s" stroke="%s" stroke-width="1.6"/>' % (
+            x, y, w, h, BOX, STROKE)
+        t += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.2"/>' % (x, y + 26, x + w, y + 26, STROKE)
+        t += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.2"/>' % (x, y + 52, x + w, y + 52, STROKE)
+        t += ('<text x="%d" y="%d" text-anchor="middle" font-family="%s" font-size="13" fill="%s">%s</text>'
+              % (x + w // 2, y + 18, FONT, TEXT, name))
+        t += ('<text x="%d" y="%d" font-family="%s" font-size="11" fill="%s">%s</text>'
+              % (x + 8, y + 42, FONT, ACC, attrs))
+        t += ('<text x="%d" y="%d" font-family="%s" font-size="11" fill="%s">%s</text>'
+              % (x + 8, y + 68, FONT, ACC, ops))
+        return t
+    b = cls(20, 90, 170, "Category", "+ name: CharField", "+ slug: SlugField")
+    b += cls(260, 90, 190, "Article", "+ title: CharField", "+ published: Boolean")
+    b += cls(520, 20, 160, "Tag", "+ name: CharField", "")
+    b += cls(520, 170, 170, "Comment", "+ body: TextField", "+ created: DateTime")
+    b += _arrow(190, 129, 256, 129)
+    b += ('<text x="200" y="120" font-family="%s" font-size="11" fill="%s">1 : N</text>' % (FONT, ACC))
+    b += '<line x1="450" y1="105" x2="516" y2="60" stroke="%s" stroke-width="1.5"/>' % ACC
+    b += ('<text x="462" y="76" font-family="%s" font-size="11" fill="%s">N : N</text>' % (FONT, ACC))
+    b += _arrow(450, 150, 516, 200)
+    b += ('<text x="452" y="196" font-family="%s" font-size="11" fill="%s">1 : N</text>' % (FONT, ACC))
+    return _wrap(b, 720, 280, "UML 類圖：Category、Article、Tag、Comment 四個類別與關聯",
+                 "圖　類圖：每個類別分三格（類名／屬性／方法）；<code>Category 1:N Article</code>、"
+                 "<code>Article N:N Tag</code>、<code>Article 1:N Comment</code>。")
+
+
+def sequence():
+    lanes = [("瀏覽器", 90), ("視圖", 310), ("模型", 530), ("模板", 730)]
+    b = ""
+    for name, x in lanes:
+        b += _box(x - 60, 12, 120, 46, name)
+        b += '<line x1="%d" y1="58" x2="%d" y2="270" stroke="%s" stroke-width="1.2" stroke-dasharray="5 4"/>' % (
+            x, x, STROKE)
+    msgs = [(90, 310, 96, "GET /post/42"), (310, 530, 132, "query(id=42)"),
+            (530, 310, 168, "Article 物件"), (310, 730, 204, "render(context)"),
+            (730, 90, 240, "HTML 回應")]
+    for x1, x2, y, label in msgs:
+        arrow = "marker-end"
+        if x2 < x1:
+            b += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.6" %s="url(#a)"/>' % (
+                x1, y, x2 + 6, y, ACC, arrow)
+        else:
+            b += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.6" %s="url(#a)"/>' % (
+                x1, y, x2 - 6, y, ACC, arrow)
+        b += ('<text x="%d" y="%d" text-anchor="middle" font-family="%s" font-size="11" fill="%s">%s</text>'
+              % ((x1 + x2) // 2, y - 7, FONT, TEXT, label))
+    return _wrap(b, 860, 292, "UML 序列圖：瀏覽器、視圖、模型、模板之間的訊息往來",
+                 "圖　序列圖：由上往下代表時間順序，實線箭頭是訊息；視圖先向模型取資料，再把 context 交給模板。")
+
+
+def template_inherit():
+    b = _box(300, 20, 260, 62, "base.html", "{% block content %}", stroke=WARM)
+    b += _box(30, 170, 210, 62, "index.html", "extends base.html")
+    b += _box(320, 170, 210, 62, "article.html", "extends base.html")
+    b += _box(610, 170, 210, 62, "about.html", "extends base.html")
+    for x in (135, 425, 715):
+        b += '<line x1="%d" y1="170" x2="%d" y2="86" stroke="%s" stroke-width="1.6" marker-start="url(#a)"/>' % (
+            x, 430, ACC)
+    b += ('<text x="430" y="256" text-anchor="middle" font-family="%s" font-size="11" fill="%s">'
+          '{%% block content %%} 由子模板覆寫，其餘沿用 base.html</text>' % (FONT, WARM))
+    return _wrap(b, 860, 272, "Django 模板繼承：base.html 被三個子模板 extends",
+                 "圖　模板繼承：子模板 <code>{% extends \"base.html\" %}</code>，只覆寫自己需要的 block，"
+                 "共用導覽列與頁尾。")
+
+
 FIGURES = [
     (7, "#### 1.2.2 MVT 架構", mvt()),
     (8, "### 4.1 Django 的 URL 配置", url_flow()),
@@ -165,4 +255,8 @@ FIGURES = [
     (11, "### 13.4. 用戶登錄與登出功能", auth_flow()),
     (12, "#### 6.2.2 Git Flow 的分支模型", gitflow()),
     (13, "### 9.3 持續集成與持續部署 (CI/CD)", cicd()),
+    (9, "### 6.4 模板繼承", template_inherit()),
+    (14, "### 2.1 用例圖概述", use_case()),
+    (14, "### 3.1 類圖概述", class_diagram()),
+    (14, "### 5.1 序列圖概述", sequence()),
 ]
