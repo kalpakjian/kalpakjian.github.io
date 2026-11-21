@@ -259,7 +259,7 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 </li>
 <li><a href="#23-前端開發">2.3 前端開發</a>
 </li>
-<li><a href="#24-伺服器後端網絡應用基礎">2.4 伺服器後端網絡應用基礎</a>
+<li><a href="#24-伺服器後端">2.4 伺服器後端</a>
 </li>
 <li><a href="#25-瀏覽器">2.5 瀏覽器</a>
 </li>
@@ -273,227 +273,128 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 </nav>
 <main>
 <h1 id="第-1-章--計算思維與網頁框架基礎">第 1 章 · 計算思維與網頁框架基礎</h1>
-<p><strong>本章導讀</strong></p>
-<ul>
-<li><strong>上半章｜計算思維</strong>：認識解決問題的五個核心能力——分解、模式識別、抽象、算法，以及如何判斷問題的困難度與可解性。</li>
-<li><strong>下半章｜網頁框架開發</strong>：搞懂網站是怎麼運作的，以及前端、後端、瀏覽器各自負責什麼，最後看 UML 如何用來分析與設計網站系統。</li>
-</ul>
+<p>本章分兩部分：先認識計算思維的五個核心能力，再理解網站的運作與前後端、瀏覽器、UML 的角色。</p>
 <h2 id="1-計算思維特徵">1. 計算思維特徵</h2>
-<p>計算思維（Computational Thinking）就是「用電腦的方式思考」：把複雜問題拆開、找出規律、化繁為簡，再設計出可執行的步驟。它由五個互相搭配的特徵組成，以下逐一說明。</p>
+<p>計算思維＝用電腦的方式思考：拆解問題、找規律、化繁為簡，再設計可執行的步驟。共有五個核心能力。</p>
 <h3 id="11-分解decomposition">1.1 分解（Decomposition）</h3>
-<p><strong>一句話</strong>：把大問題拆成小問題。</p>
-<p><strong>做法</strong></p>
-<ul>
-<li><strong>由上而下</strong>：先切成主要子問題，再逐層往下細分，直到小到可以直接解決。</li>
-<li><strong>依角度切</strong>：可以按「關鍵因素」、「子任務功能」或「不同層次」來拆。</li>
-<li><strong>保持獨立</strong>：子問題之間盡量互不依賴，才能各自處理、互不干擾。</li>
-<li><strong>大小適中</strong>：太大會難以處理，太小又失去意義。</li>
-</ul>
-<p><strong>好處</strong>：拆小之後，每個子問題都能選用最合適的方法（如資料分析、建模、演算法）；最後把各子問題的解法拼起來，就是整體解答。</p>
-<p><strong>重點</strong>：分解的關鍵是「層次化、獨立性、適量性」。</p>
+<p><strong>把大問題拆成小問題。</strong> 由上而下逐層細分到可直接解決；可按關鍵因素、子任務功能或層次來拆。子問題要互相獨立、大小適中；拆小後可分別處理，再組合成整體解答。</p>
 <h3 id="12-模式識別pattern-recognition">1.2 模式識別（Pattern Recognition）</h3>
-<p><strong>一句話</strong>：在問題或資料中看出重複出現的模式、趨勢與規律。</p>
-<p><strong>用途</strong>：從大量資料中抓出關鍵特徵，用來推測、預測或解釋現象。常見於機器學習、人工智慧、資料分析、影像處理等領域。以下從五個角度說明主要方法。</p>
+<p><strong>在資料中看出模式、趨勢與規律，用來推測、預測或解釋現象。</strong> 常用於機器學習、資料分析、影像處理。</p>
 <h4 id="121-特徵提取">1.2.1 特徵提取</h4>
-<p>先從資料中找出「有代表性、能描述現象」的特徵。特徵可以是數字、文字或圖像，通常靠統計、訊號處理或機器學習來提取。</p>
+<p>挑出有代表性的特徵（數字、文字、圖像）。</p>
 <h4 id="122-分類與識別">1.2.2 分類與識別</h4>
-<ul>
-<li><strong>分類</strong>：把資料分到不同類別。</li>
-<li><strong>識別</strong>：判斷一筆資料屬於哪個類別。</li>
-</ul>
-<p>常用統計模型、機器學習或神經網路來完成。</p>
+<p>把資料分到不同類別，並判斷新資料屬於哪一類。</p>
 <h4 id="123-聚類分析">1.2.3 聚類分析</h4>
-<p>在沒有事先分類的情況下，把相似的資料自動歸成一組。同一群內相似度高、不同群之間相似度低，可用來發現資料的關聯與潛在結構。</p>
+<p>把相似資料自動歸群，發現潛在結構。</p>
 <h4 id="124-模型建立與預測">1.2.4 模型建立與預測</h4>
-<p>建立模型（數學、統計或機器學習模型）來描述資料中的規律，再用它預測未來、模擬或最佳化，並據此做出決策。</p>
+<p>建立模型描述規律，用來預測與決策。</p>
 <h4 id="125-特徵選擇與維度降低">1.2.5 特徵選擇與維度降低</h4>
-<p>資料維度太高會造成「維度災難」與運算困難。</p>
-<ul>
-<li><strong>特徵選擇</strong>：只留下最具代表性的特徵。</li>
-<li><strong>維度降低</strong>：把高維資料轉成低維表示。</li>
-</ul>
-<p>兩者都能提升分析效率、降低計算成本。</p>
-<p><strong>重點</strong>：模式識別的成效取決於資料品質、特徵選擇與模型設計，也需要不斷回饋與調整。</p>
+<p>只留關鍵特徵、降低維度，避免「維度災難」與運算負擔。</p>
 <h3 id="13-抽象abstraction">1.3 抽象（Abstraction）</h3>
-<p><strong>一句話</strong>：只留重要的，忽略不重要的細節。</p>
-<p>把問題的核心概念抽出來、把不相關的細節拿掉，讓問題更容易理解和處理。它能將複雜現象簡化成模型或表示形式，幫助我們從更高的層次思考。</p>
+<p><strong>只留重點、忽略細節，把問題簡化成模型。</strong></p>
 <h4 id="131-目的">1.3.1 目的</h4>
-<p>聚焦在問題的本質與關鍵關係，剝離次要細節，以便做更系統、更高階的分析。</p>
+<p>聚焦問題本質與關鍵關係。</p>
 <h4 id="132-層次">1.3.2 層次</h4>
-<p>抽象可以分層進行：</p>
-<ul>
-<li><strong>高層次</strong>：看整體系統的結構與功能。</li>
-<li><strong>低層次</strong>：往下細分成更小的模組或單元，考慮其特性與互動。</li>
-</ul>
-<p>層次化能建立清晰的結構，把複雜問題拆成好處理的部分。</p>
+<p>高層看整體結構，低層細分成模組。</p>
 <h4 id="133-方法">1.3.3 方法</h4>
-<p>常見做法是挑出關鍵特徵與重要概念，抽象成更通用的符號或表示形式，例如數學公式、圖形、統計模型、邏輯符號；也可以把問題建模成簡化系統，抓住它的基本行為。</p>
+<p>用公式、圖形、模型等更通用的形式表示。</p>
 <h4 id="134-優點">1.3.4 優點</h4>
-<ul>
-<li>能快速掌握問題的核心。</li>
-<li>同一套思維與解法可套用到不同情境（通用性高）。</li>
-<li>有助於設計更易理解、維護與擴充的模組化結構。</li>
-</ul>
+<p>好理解、可跨情境通用、易於模組化。</p>
 <h4 id="135-挑戰">1.3.5 挑戰</h4>
-<ul>
-<li>要判斷「哪些細節可以省略」。</li>
-<li>要拿捏簡化與遺漏的平衡：過度簡化會漏掉重點，過度詳細又會變得難懂。</li>
-</ul>
-<p>因此，選對抽象層次與方法本身就是一項挑戰。</p>
-<p><strong>重點</strong>：抽象能幫我們看清問題本質、提供更通用的模型，但要小心簡化與遺漏之間的取捨。</p>
+<p>要拿捏「簡化」與「遺漏」之間的平衡。</p>
 <h3 id="14-算法algorithm">1.4 算法（Algorithm）</h3>
-<p><strong>一句話</strong>：把「怎麼做」寫成一組明確、可依序執行的步驟。</p>
-<p>算法是計算思維的核心，讓人能有系統地分析問題、設計解法並完成任務。以下說明它的幾個重要面向。</p>
+<p><strong>把「怎麼做」寫成明確、可依序執行的步驟</strong>，是計算思維的核心。</p>
 <h4 id="141-步驟與指令">1.4.1 步驟與指令</h4>
-<p>算法由一個或多個步驟組成，每個步驟是一條明確指令，描述如何從一個狀態走到下一個狀態。指令可以是基本計算、邏輯判斷、條件或迴圈，也可以是更複雜的操作。</p>
-<h4 id="142-問題解決能力">1.4.2 問題解決能力</h4>
-<p>算法的目標就是解決問題。它提供一套系統性做法：定義問題 → 分析問題 → 設計解法 → 完成解決。好的算法能更有效率地處理各種問題。</p>
+<p>由一連串明確指令組成，逐步推進。</p>
+<h4 id="142-問題解決">1.4.2 問題解決</h4>
+<p>定義問題 → 分析 → 設計解法 → 完成。</p>
 <h4 id="143-效率與最佳化">1.4.3 效率與最佳化</h4>
-<p>好的算法要在合理時間內完成任務。效率通常看兩件事：</p>
-<ul>
-<li><strong>時間複雜度</strong>：執行所需時間。</li>
-<li><strong>空間複雜度</strong>：執行所需記憶體。</li>
-</ul>
-<p>最佳化就是透過分析與改良，提升效率。</p>
+<p>看時間複雜度（耗時）與空間複雜度（耗記憶體）。</p>
 <h4 id="144-問題分解與抽象">1.4.4 問題分解與抽象</h4>
-<p>設計算法時，通常先把問題分解成子問題、逐一設計解法；同時用抽象把關鍵概念與變數化成更一般的形式，讓算法適用範圍更廣。</p>
+<p>把問題拆小，並抽象成通用形式，擴大適用範圍。</p>
 <h4 id="145-結構與設計">1.4.5 結構與設計</h4>
-<p>常見的算法結構有三種：</p>
-<ul>
-<li><strong>順序結構</strong>：依序執行步驟。</li>
-<li><strong>循環結構</strong>：重複執行步驟。</li>
-<li><strong>分支結構</strong>：依條件選擇不同步驟。</li>
-</ul>
-<p>選對資料結構與算法模型，是設計高效算法的關鍵。</p>
-<p><strong>重點</strong>：好的算法要「高效、可行、設計良好」，這是計算思維中最核心的技巧。</p>
+<p>常見順序、循環、分支三種結構；選對資料結構是關鍵。</p>
 <h3 id="15-問題的困難度與可解性">1.5 問題的困難度與可解性</h3>
-<p>算法有一個重要特性：它只能解決「可解」的問題。</p>
-<ul>
-<li>有些問題在計算上<strong>無法解決</strong>（不可解問題）。</li>
-<li>但對大多數問題而言，只要存在有效算法，就能找到解法。</li>
-<li>問題的<strong>困難度</strong>會影響算法的選擇、可行性與效率。</li>
-</ul>
-<p><strong>本章小結</strong>：計算思維的五個特徵彼此交織、互相支持。用「計算的方式」思考，能幫助我們更有條理地處理各種問題。</p>
-<p><strong>延伸閱讀</strong></p>
-<ul>
-<li>Craig Larman, <em>Applying UML and Patterns</em></li>
-<li>Grady Booch, James Rumbaugh, Ivar Jacobson, <em>The Unified Modeling Language User Guide</em></li>
-</ul>
+<p>有些問題計算上無解；可解的問題也有難易之別，會影響算法的選擇與效率。</p>
+<p><strong>延伸閱讀</strong>：Craig Larman《Applying UML and Patterns》；Booch 等《The Unified Modeling Language User Guide》。</p>
 <h2 id="2-網頁框架開發基礎">2. 網頁框架開發基礎</h2>
-<p>網站本質上就是一群存在伺服器上的檔案，透過網際網路讓使用者存取。以下先拆解「網站是怎麼運作的」，再分別看前端、後端、瀏覽器與 UML 扮演的角色。</p>
+<p>網站本質上是一群放在伺服器上的檔案，透過網路讓使用者存取。</p>
 <h3 id="21-網站運作的基本要素">2.1 網站運作的基本要素</h3>
-<h4 id="211-域名domain-name">2.1.1 域名（Domain Name）</h4>
-<p>網站在網路上的唯一地址（例如 www.example.com）。使用者在瀏覽器輸入域名即可存取；域名需向註冊商註冊，並指向網站所在伺服器的 IP 位址。</p>
-<h4 id="212-web-託管web-hosting">2.1.2 Web 託管（Web Hosting）</h4>
-<p>把網站檔案放在伺服器上、讓網路使用者可以存取的服務。託管商提供儲存空間與確保網站可用的技術；伺服器則是負責處理 HTTP 請求、回傳內容的電腦。</p>
-<h4 id="213-前端開發front-end">2.1.3 前端開發（Front-End）</h4>
-<p>前端是使用者看得到、能互動的部分，涵蓋版面設計與介面（UI）。</p>
-<ul>
-<li><strong>HTML</strong>：內容與結構。</li>
-<li><strong>CSS</strong>：外觀與排版。</li>
-<li><strong>JavaScript</strong>：互動與動態行為。</li>
-<li><strong>前端框架／函式庫</strong>（如 React、AngularJS）：提供現成元件，加快開發。</li>
-</ul>
-<h4 id="214-後端開發back-end">2.1.4 後端開發（Back-End）</h4>
-<p>後端負責伺服器端的運算：處理資料、產生前端要顯示的動態內容。常用語言有 PHP、Python、Ruby、Java 等；資料庫（如 MySQL、PostgreSQL、MongoDB）則負責儲存與管理資料。</p>
+<h4 id="211-域名">2.1.1 域名</h4>
+<p>網站的唯一地址（如 www.example.com）；需註冊並指向伺服器 IP。</p>
+<h4 id="212-web-託管">2.1.2 Web 託管</h4>
+<p>把網站檔案放上伺服器、供網路存取的服務；伺服器負責處理 HTTP 請求。</p>
+<h4 id="213-前端開發">2.1.3 前端開發</h4>
+<p>使用者看到、可互動的部分：HTML（結構）、CSS（外觀）、JavaScript（互動）、前端框架（現成元件）。</p>
+<h4 id="214-後端開發">2.1.4 後端開發</h4>
+<p>伺服器端運算與資料處理；常用 PHP、Python、Ruby、Java，搭配資料庫（MySQL、PostgreSQL、MongoDB 等）。</p>
 <h4 id="215-內容管理cms">2.1.5 內容管理（CMS）</h4>
-<p>內容管理系統讓非工程師也能建立與管理網站內容。常見平台有 WordPress、Drupal、Joomla；它們提供範本與主題，不需大量寫程式就能調整外觀。</p>
-<h4 id="216-客戶端與伺服器之間的通信">2.1.6 客戶端與伺服器之間的通信</h4>
-<p>使用者造訪網站時，瀏覽器（客戶端）送出 HTTP 請求，伺服器回傳對應檔案（HTML、CSS、JavaScript、圖片等）。這種通信可以：</p>
-<ul>
-<li><strong>無狀態</strong>：每個請求各自獨立。</li>
-<li><strong>有狀態</strong>：用 cookie 或 token 記住會話資訊。</li>
-</ul>
+<p>讓非工程師也能建置與管理內容，如 WordPress、Drupal、Joomla，靠範本與主題調整外觀。</p>
+<h4 id="216-客戶端與伺服器通信">2.1.6 客戶端與伺服器通信</h4>
+<p>瀏覽器送 HTTP 請求、伺服器回傳檔案；可為無狀態，或用 cookie／token 維持狀態。</p>
 <h4 id="217-網站安全">2.1.7 網站安全</h4>
-<p>安全是防止威脅、保護使用者隱私的關鍵。常見措施：</p>
-<ul>
-<li><strong>加密</strong>：用 HTTPS 等協定保護傳輸中的資料。</li>
-<li><strong>身分認證</strong>：用登入、密碼與角色控管存取權限。</li>
-<li><strong>輸入驗證</strong>：檢查使用者輸入，避免惡意資料或程式碼。</li>
-<li><strong>防護措施</strong>：防範 XSS、SQL 注入、DDoS 等攻擊。</li>
-</ul>
+<p>常見措施：加密（HTTPS）、身分認證、輸入驗證、防範 XSS／SQL 注入／DDoS。</p>
 <h3 id="22-維護與更新">2.2 維護與更新</h3>
-<p>網站需要定期維護，才能保持正常、快速且安全：</p>
-<ul>
-<li><strong>故障修復</strong>：處理影響運作或體驗的錯誤。</li>
-<li><strong>效能優化</strong>：用快取、CDN、程式碼優化等提升速度。</li>
-<li><strong>相容性</strong>：確保在各種裝置與瀏覽器都能正常運作。</li>
-<li><strong>內容管理</strong>：定期更新內容，維持新鮮度與吸引力。</li>
-</ul>
-<p><strong>重點</strong>：網站的運作，靠的是域名、託管、前後端開發、內容管理、前後端通信、安全與定期維護這些環節共同配合。</p>
+<p>定期維護才能保持正常、快速、安全：故障修復、效能優化、相容性、內容更新。</p>
 <h3 id="23-前端開發">2.3 前端開發</h3>
-<p>前端就是「使用者在瀏覽器裡看到、能互動的部分」，重點在打造順暢、好用的體驗。主要組成如下：</p>
+<p>使用者在瀏覽器看到、可互動的部分。主要技術：</p>
 <ol>
-<li><strong>HTML（超文本標記語言）</strong>：網頁的骨架，用標籤定義標題、段落、清單、圖片、連結等元素。</li>
-<li><strong>CSS（層疊樣式表）</strong>：控制外觀與排版——顏色、字體、間距、版面；把樣式與結構分離，讓全站風格一致又好維護。</li>
-<li><strong>JavaScript</strong>：讓網頁能互動，例如表單驗證、輪播、下拉選單；也能用 AJAX 向伺服器非同步要資料。</li>
-<li><strong>前端框架與函式庫</strong>：提供現成元件與標準做法（如 React、Angular、Vue.js；jQuery、Bootstrap），加快開發。</li>
-<li><strong>響應式網頁設計</strong>：用 CSS 媒體查詢與彈性版面，讓網站在桌機、筆電、平板、手機都正確顯示。</li>
-<li><strong>瀏覽器相容性</strong>：確保在 Chrome、Firefox、Safari、Edge 等瀏覽器表現一致，必要時做修正與回退。</li>
-<li><strong>可用性與使用者體驗（UX）</strong>：追求直覺好用的介面，考量資訊架構、視覺層次、導覽與無障礙。</li>
-<li><strong>效能優化</strong>：透過壓縮程式碼、壓縮檔案、優化圖片、快取與延遲載入，縮短載入時間（也影響 SEO）。</li>
-<li><strong>建置工具與任務管理器</strong>：用 npm／Yarn、Webpack／Gulp、Grunt 等自動處理重複工作、管理相依、打包與優化。</li>
-<li><strong>版本控制</strong>：用 Git 追蹤變更、協作與管理程式碼，能同時作業、還原版本、合併修改。</li>
-<li><strong>除錯與測試</strong>：用瀏覽器開發者工具找問題；用 Jest、Selenium 等框架自動化測試，確保品質。</li>
-<li><strong>前端安全</strong>：做好輸入驗證、資料清理、防範 XSS，並遵循安全最佳實務。</li>
+<li><strong>HTML</strong>：網頁結構（用標籤定義元素）。</li>
+<li><strong>CSS</strong>：外觀與排版；樣式與結構分離，全站風格一致。</li>
+<li><strong>JavaScript</strong>：互動與動態，並以 AJAX 非同步取資料。</li>
+<li><strong>前端框架／函式庫</strong>：React、Angular、Vue.js、jQuery、Bootstrap。</li>
+<li><strong>響應式設計</strong>：用媒體查詢與彈性版面適配各種裝置。</li>
+<li><strong>瀏覽器相容性</strong>：在 Chrome、Firefox、Safari、Edge 表現一致。</li>
+<li><strong>可用性與 UX</strong>：介面直覺、好用。</li>
+<li><strong>效能優化</strong>：壓縮、快取、延遲載入等。</li>
+<li><strong>建置工具</strong>：npm／Yarn、Webpack／Gulp、Grunt。</li>
+<li><strong>版本控制</strong>：用 Git 追蹤與協作。</li>
+<li><strong>除錯與測試</strong>：開發者工具＋Jest／Selenium。</li>
+<li><strong>前端安全</strong>：輸入驗證、資料清理、防 XSS。</li>
 </ol>
-<h3 id="24-伺服器後端網絡應用基礎">2.4 伺服器後端網絡應用基礎</h3>
-<p>後端是網站的「伺服器端」，負責處理邏輯、儲存資料、與前端交換資料。主要組件如下：</p>
+<h3 id="24-伺服器後端">2.4 伺服器後端</h3>
+<p>處理邏輯、資料與前後端交換。主要組件：</p>
 <ol>
-<li><strong>伺服器端程式語言</strong>：處理業務邏輯，常見有 Python、Ruby、PHP、Java、C#、Node.js、Go 等。</li>
-<li><strong>後端框架</strong>：提供路由、請求處理、資料庫存取、認證等現成工具，例如 Django、Ruby on Rails、Express、Laravel。</li>
-<li><strong>資料庫管理系統（DBMS）</strong>：負責資料的儲存、檢索與管理，如 MySQL、PostgreSQL、Oracle、SQL Server、MongoDB；開發者以 SQL 等查詢語言操作。</li>
-<li><strong>RESTful API</strong>：定義前後端溝通的規範，讓資料交換可靠、可預測。</li>
-<li><strong>身分驗證與授權</strong>：確認使用者身分、決定其存取權限，常見機制有 RBAC、Token-based 驗證、OAuth。</li>
-<li><strong>快取</strong>：把常用資料暫存以加快回應，如 Redis、Memcached、Varnish。</li>
-<li><strong>伺服器管理與部署</strong>：選擇架構、設定環境、效能調校、負載平衡與容錯，並做好備份、監控與日誌。</li>
-<li><strong>安全性</strong>：防範 XSS、CSRF、SQL 注入等攻擊，並對資料做驗證與過濾。</li>
-<li><strong>Web 服務與第三方整合</strong>：串接金流、郵件、地圖等外部服務，並確保介面與規範一致。</li>
+<li><strong>程式語言</strong>：Python、Ruby、PHP、Java、C#、Node.js、Go。</li>
+<li><strong>後端框架</strong>：Django、Rails、Express、Laravel。</li>
+<li><strong>資料庫（DBMS）</strong>：MySQL、PostgreSQL、Oracle、SQL Server、MongoDB。</li>
+<li><strong>RESTful API</strong>：前後端溝通規範。</li>
+<li><strong>身分驗證與授權</strong>：RBAC、Token-based、OAuth。</li>
+<li><strong>快取</strong>：Redis、Memcached、Varnish。</li>
+<li><strong>伺服器管理與部署</strong>：架構、環境、負載平衡、備份監控。</li>
+<li><strong>安全性</strong>：防 XSS、CSRF、SQL 注入。</li>
+<li><strong>第三方整合</strong>：金流、郵件、地圖等。</li>
 </ol>
-<p><strong>重點</strong>：後端是網站能否「動起來」的關鍵，負責把資料、邏輯與安全都處理好。</p>
 <h3 id="25-瀏覽器">2.5 瀏覽器</h3>
-<p>瀏覽器負責把網頁內容解析並顯示給使用者。它的主要組件與流程如下：</p>
+<p>把網頁解析並顯示。主要組件與流程：</p>
 <ol>
-<li><strong>使用者介面（UI）</strong>：網址列、導覽按鈕、書籤列等，讓使用者操作瀏覽器。</li>
-<li><strong>渲染引擎</strong>：解析網頁內容並顯示，如 WebKit（Chrome、Safari）、Blink（Chrome、Opera）、Gecko（Firefox）。</li>
-<li><strong>HTML 解析器</strong>：把 HTML 解析成 DOM，描述網頁的結構。</li>
-<li><strong>CSS 解析器</strong>：把 CSS 解析成 CSSOM，決定元素的樣式。</li>
-<li><strong>JavaScript 解釋器</strong>：解析並執行 JavaScript，如 V8（Chrome、Opera）、SpiderMonkey（Firefox）。</li>
-<li><strong>DOM 構建與渲染樹</strong>：結合 DOM 與 CSSOM 建立渲染樹，決定要顯示哪些可見元素。</li>
-<li><strong>佈局與繪製</strong>：計算每個元素的位置與大小，再把它們畫到畫面上。</li>
-<li><strong>顯示網頁</strong>：把結果送到螢幕、行動裝置或印表機等輸出裝置。</li>
-<li><strong>網路與資源載入</strong>：送出請求、下載 HTML／CSS／JavaScript／圖片等資源後，再交給渲染引擎處理。</li>
-<li><strong>快取</strong>：把造訪過的資源暫存，減少重複請求、加快載入。</li>
-<li><strong>非同步請求與 AJAX</strong>：在不重整整頁的情況下向後端取資料、更新部分畫面，提升體驗。</li>
+<li><strong>使用者介面</strong>：網址列、按鈕、書籤。</li>
+<li><strong>渲染引擎</strong>：WebKit、Blink、Gecko。</li>
+<li><strong>HTML 解析器</strong>：轉成 DOM。</li>
+<li><strong>CSS 解析器</strong>：轉成 CSSOM。</li>
+<li><strong>JavaScript 引擎</strong>：V8、SpiderMonkey。</li>
+<li><strong>渲染樹</strong>：結合 DOM 與 CSSOM。</li>
+<li><strong>佈局與繪製</strong>：計算位置大小並畫出。</li>
+<li><strong>顯示</strong>：輸出到螢幕等裝置。</li>
+<li><strong>資源載入</strong>：下載 HTML／CSS／JS／圖片。</li>
+<li><strong>快取</strong>：暫存資源、加快載入。</li>
+<li><strong>AJAX</strong>：非同步更新部分畫面。</li>
 </ol>
-<p><strong>重點</strong>：瀏覽器是 UI、渲染引擎、各解析器與 JavaScript 引擎協同工作的成果；了解它，有助於優化網頁效能與體驗。</p>
 <h3 id="26-使用-uml-作網站系統分析與設計">2.6 使用 UML 作網站系統分析與設計</h3>
-<p><strong>UML（統一建模語言）</strong> 是一種用圖形化符號描述系統結構、行為與互動的工具。它原本用於軟體工程，也同樣適用於網站開發。</p>
+<p><strong>UML（統一建模語言）</strong> 用圖形符號描述系統的結構、行為與互動；原用於軟體工程，也適用網站開發。</p>
 <h4 id="261-uml-對網頁開發的幫助">2.6.1 UML 對網頁開發的幫助</h4>
-<p>UML 提供一套標準符號，讓團隊能以圖形描述、設計與溝通系統，主要幫助包括：</p>
 <ul>
-<li><strong>需求分析</strong>：把需求、功能與使用者互動視覺化，釐清目標。</li>
-<li><strong>系統架構與設計</strong>：用類圖、組件圖描述組件與關係；用行為圖描述功能與流程。</li>
-<li><strong>介面設計</strong>：用交互圖（序列圖、協作圖）呈現使用者的操作流程。</li>
-<li><strong>資料庫設計</strong>：用類圖描述實體、屬性、關係與資料表的對應。</li>
-<li><strong>系統集成</strong>：描述不同組件之間的訊息傳遞與資料交換。</li>
-<li><strong>文件生成</strong>：自動產生設計、需求與架構等文件，方便溝通與參考。</li>
+<li><strong>需求分析</strong>：把需求與互動視覺化。</li>
+<li><strong>架構與設計</strong>：類圖／組件圖描述結構，行為圖描述流程。</li>
+<li><strong>介面設計</strong>：用交互圖呈現操作流程。</li>
+<li><strong>資料庫設計</strong>：用類圖對應實體與資料表。</li>
+<li><strong>系統集成</strong>：描述組件間訊息傳遞。</li>
+<li><strong>文件生成</strong>：產生設計與架構文件。</li>
 </ul>
 <h4 id="262-uml-圖表類型">2.6.2 UML 圖表類型</h4>
-<p>UML 的圖表分為「結構圖（靜態）」與「行為圖（動態）」兩大類。</p>
-<p><strong>結構圖</strong></p>
 <ul>
-<li><strong>類圖（Class Diagram）</strong>：描述類別、物件、屬性與彼此的關係（最常用）。</li>
-<li><strong>物件圖（Object Diagram）</strong>：表示類別的實例與其關係。</li>
-<li><strong>組件圖（Component Diagram）</strong>：描述系統的組成部分，如模組、組件與介面。</li>
-<li><strong>部署圖（Deployment Diagram）</strong>：顯示系統的實體部署，如伺服器與網路設備。</li>
-</ul>
-<p><strong>行為圖</strong></p>
-<ul>
-<li><strong>用例圖（Use Case Diagram）</strong>：表示功能需求與參與者之間的互動。</li>
-<li><strong>交互圖（Interaction Diagram）</strong>：含序列圖與通信圖，描述物件之間的互動。</li>
-<li><strong>狀態機圖（State Machine Diagram）</strong>：表示物件狀態與狀態轉換。</li>
-<li><strong>活動圖（Activity Diagram）</strong>：描述業務流程、操作與工作流。</li>
+<li><strong>結構圖（靜態）</strong>：類圖、物件圖、組件圖、部署圖。</li>
+<li><strong>行為圖（動態）</strong>：用例圖、交互圖、狀態機圖、活動圖。</li>
 </ul>
 <div class="chnav">
 <a href="/django-course/">← 課程總覽</a>
