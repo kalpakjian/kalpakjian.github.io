@@ -406,11 +406,11 @@ deactivate                       # 停用
 <tbody>
 <tr>
 <td><code>manage.py</code></td>
-<td>命令列工具（runserver、migrate、createsuperuser、startapp 等）</td>
+<td>命令列工具</td>
 </tr>
 <tr>
 <td><code>settings.py</code></td>
-<td>全域設定（資料庫、App 清單、中介軟體、模板、靜態檔…）</td>
+<td>專案全域設定</td>
 </tr>
 <tr>
 <td><code>urls.py</code></td>
@@ -418,21 +418,37 @@ deactivate                       # 停用
 </tr>
 <tr>
 <td><code>asgi.py</code> / <code>wsgi.py</code></td>
-<td>伺服器入口：wsgi 同步、asgi 支援非同步（如 WebSocket）</td>
+<td>伺服器入口</td>
 </tr>
 </tbody>
 </table>
-<p><strong>settings.py 關鍵配置項目</strong></p>
+<h4 id="251-managepy">2.5.1 manage.py</h4>
+<p>Django 的命令列工具，用來執行各種管理命令。常用：</p>
 <ul>
-<li><strong>DEBUG</strong>：設為 <code>True</code> 表示開發模式，會顯示詳細錯誤訊息；發布到生產環境時應設為 <code>False</code>。</li>
-<li><strong>ALLOWED_HOSTS</strong>：允許訪問本 Django 應用的域名列表。開發環境通常為空；生產環境必須指定具體域名。</li>
-<li><strong>INSTALLED_APPS</strong>：已安裝並啟用的 App 清單，自訂應用或第三方擴充套件都加在這裡。</li>
-<li><strong>MIDDLEWARE</strong>：啟用的中介軟體清單，用於處理請求和回應（如會話管理、CSRF 保護）。</li>
-<li><strong>TEMPLATES</strong>：模板引擎設定，告訴 Django 去哪裡找 HTML 模板檔。</li>
-<li><strong>DATABASES</strong>：資料庫設定，預設為 SQLite，可切換成 MySQL、PostgreSQL 等。</li>
+<li><code>runserver</code>：啟動開發伺服器</li>
+<li><code>migrate</code>：執行資料庫遷移</li>
+<li><code>createsuperuser</code>：建立管理員帳號</li>
+<li><code>startapp</code>：建立新的 App</li>
 </ul>
-<p><strong>urls.py</strong>：負責 URL 路由配置，定義 URL 與視圖的對應關係；每個請求都由它決定該呼叫哪個視圖。</p>
-<p><strong>asgi.py / wsgi.py</strong>：專案的伺服器入口，大多數情況不需修改。<code>wsgi.py</code> 供標準同步應用；<code>asgi.py</code> 支援非同步功能（如 WebSocket）。</p>
+<h4 id="252-settingspy">2.5.2 settings.py</h4>
+<p>專案的全域設定檔，開發時最常修改。關鍵項目：</p>
+<ul>
+<li><strong>DEBUG</strong>：<code>True</code> 為開發模式（顯示詳細錯誤）；上線應設為 <code>False</code>。</li>
+<li><strong>ALLOWED_HOSTS</strong>：允許存取的域名清單；開發可留空，上線必須指定。</li>
+<li><strong>INSTALLED_APPS</strong>：已啟用的 App 清單（自訂 App、第三方套件都加這裡）。</li>
+<li><strong>MIDDLEWARE</strong>：中介軟體清單，處理請求與回應（會話管理、CSRF 保護等）。</li>
+<li><strong>TEMPLATES</strong>：模板引擎設定（HTML 模板的存放位置）。</li>
+<li><strong>DATABASES</strong>：資料庫設定，預設 SQLite，可改用 MySQL／PostgreSQL。</li>
+</ul>
+<p><strong>提醒</strong>：上線時 <code>DEBUG = False</code> 務必同時設定 <code>ALLOWED_HOSTS</code>，否則會拒絕所有請求。</p>
+<h4 id="253-urlspy">2.5.3 urls.py</h4>
+<p>URL 路由設定檔：定義「哪個 URL 交給哪個視圖」處理。當使用者請求某個 URL，Django 依這裡的規則（URLConf）決定要呼叫哪個 View。</p>
+<h4 id="254-asgipy--wsgipy">2.5.4 asgi.py / wsgi.py</h4>
+<p>兩者都是專案的<strong>伺服器入口</strong>，通常不需修改：</p>
+<ul>
+<li><code>wsgi.py</code>：WSGI（Web Server Gateway Interface），標準<strong>同步</strong>部署入口。</li>
+<li><code>asgi.py</code>：ASGI（Asynchronous Server Gateway Interface），支援<strong>非同步</strong>功能（如 WebSocket）。</li>
+</ul>
 <h3 id="26-常見問題排查">2.6 常見問題排查</h3>
 <ul>
 <li><strong>伺服器無法啟動</strong></li>

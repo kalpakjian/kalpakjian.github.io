@@ -136,23 +136,43 @@ python manage.py runserver
 
 | 檔案 | 用途 |
 | --- | --- |
-| `manage.py` | 命令列工具（runserver、migrate、createsuperuser、startapp 等） |
-| `settings.py` | 全域設定（資料庫、App 清單、中介軟體、模板、靜態檔…） |
+| `manage.py` | 命令列工具 |
+| `settings.py` | 專案全域設定 |
 | `urls.py` | URL 路由與視圖的對應 |
-| `asgi.py` / `wsgi.py` | 伺服器入口：wsgi 同步、asgi 支援非同步（如 WebSocket） |
+| `asgi.py` / `wsgi.py` | 伺服器入口 |
 
-**settings.py 關鍵配置項目**
+#### 2.5.1 manage.py
 
-- **DEBUG**：設為 `True` 表示開發模式，會顯示詳細錯誤訊息；發布到生產環境時應設為 `False`。
-- **ALLOWED_HOSTS**：允許訪問本 Django 應用的域名列表。開發環境通常為空；生產環境必須指定具體域名。
-- **INSTALLED_APPS**：已安裝並啟用的 App 清單，自訂應用或第三方擴充套件都加在這裡。
-- **MIDDLEWARE**：啟用的中介軟體清單，用於處理請求和回應（如會話管理、CSRF 保護）。
-- **TEMPLATES**：模板引擎設定，告訴 Django 去哪裡找 HTML 模板檔。
-- **DATABASES**：資料庫設定，預設為 SQLite，可切換成 MySQL、PostgreSQL 等。
+Django 的命令列工具，用來執行各種管理命令。常用：
 
-**urls.py**：負責 URL 路由配置，定義 URL 與視圖的對應關係；每個請求都由它決定該呼叫哪個視圖。
+- `runserver`：啟動開發伺服器
+- `migrate`：執行資料庫遷移
+- `createsuperuser`：建立管理員帳號
+- `startapp`：建立新的 App
 
-**asgi.py / wsgi.py**：專案的伺服器入口，大多數情況不需修改。`wsgi.py` 供標準同步應用；`asgi.py` 支援非同步功能（如 WebSocket）。
+#### 2.5.2 settings.py
+
+專案的全域設定檔，開發時最常修改。關鍵項目：
+
+- **DEBUG**：`True` 為開發模式（顯示詳細錯誤）；上線應設為 `False`。
+- **ALLOWED_HOSTS**：允許存取的域名清單；開發可留空，上線必須指定。
+- **INSTALLED_APPS**：已啟用的 App 清單（自訂 App、第三方套件都加這裡）。
+- **MIDDLEWARE**：中介軟體清單，處理請求與回應（會話管理、CSRF 保護等）。
+- **TEMPLATES**：模板引擎設定（HTML 模板的存放位置）。
+- **DATABASES**：資料庫設定，預設 SQLite，可改用 MySQL／PostgreSQL。
+
+**提醒**：上線時 `DEBUG = False` 務必同時設定 `ALLOWED_HOSTS`，否則會拒絕所有請求。
+
+#### 2.5.3 urls.py
+
+URL 路由設定檔：定義「哪個 URL 交給哪個視圖」處理。當使用者請求某個 URL，Django 依這裡的規則（URLConf）決定要呼叫哪個 View。
+
+#### 2.5.4 asgi.py / wsgi.py
+
+兩者都是專案的**伺服器入口**，通常不需修改：
+
+- `wsgi.py`：WSGI（Web Server Gateway Interface），標準**同步**部署入口。
+- `asgi.py`：ASGI（Asynchronous Server Gateway Interface），支援**非同步**功能（如 WebSocket）。
 
 ### 2.6 常見問題排查
 
