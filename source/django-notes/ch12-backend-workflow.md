@@ -1,883 +1,279 @@
 # 第 12 章 · 後端網站開發工作流程
-1 後端網站開發工作流程：
-### 1.1 後端開發概述 $ ^{*} $
-在現代軟體開發中，後端開發扮演著關鍵的角色，負責管理應用程式的核心邏輯、資料庫互動及伺服器的維護。隨著軟體技術的不斷進步，開發者擁有了更多工具來提升開發效率，其中，整合開發環境（IDE，Integrated Development Environment）是最為重要的一種工具。不同的IDE為開發者提供了不同的功能和優勢，從代碼編輯到除錯再到專案管理，皆可涵蓋。本筆記將深入探討各種IDE在後端開發中的應用，並比較其優缺點，幫助開發者根據需求選擇最適合的IDE。
-### 1.2 IDE 在後端開發中的作用
-IDE 是開發人員進行代碼編寫、調試和測試的重要工具，特別是在後端開發中，它能夠簡化代碼管理和專案結構。透過自動補全、語法高亮、內建版本控制系統等功能，開發者可以更專注於業務邏輯的實現，而非繁瑣的基礎設置。此外，現代的 IDE 往往還支持多種語言和框架，使得開發者能夠在同一工具內進行跨語言開發。
-\*\*3. 熱門後端開發 IDE 比較 \*\*
-3.1 Visual Studio Code (VS Code)
-介紹與背景：
-Visual Studio Code（VS Code）是微軟於 2015 年推出的輕量級、跨平臺的開源編輯器，迅速成為許多後端開發者的首選。它支援多種語言和框架，並且擁有數千個社羣開發的擴展插件，涵蓋了從 JavaScript 到 Python 及 PHP 等各種後端語言。
-主要功能：
 
-- 擴展性強：VS Code 具有豐富的擴展庫，無論是語法高亮、代碼自動完成、還是測試框架整合，都可以透過插件來實現。
-- 內建 Git 支援：無需切換至其他終端，開發者可以在 VS Code 中直接使用 Git 進行版本控制，這大大提升了工作流程的效率。
-- 強大的除錯功能：VS Code 的 Debugger 支援多種後端語言，並且能夠與 Docker 容器集成，實現容器化應用程式的調試。
-- 整合終端：VS Code 內置終端，開發者可以在同一個界面中管理系統命令，無需切換視窗，節省了時間。
+## 1. 後端開發與 IDE
 
-使用案例：VS Code 在後端開發中適用於多種語言，尤其是 JavaScript 與 Node.js。許多大型開源項目如 Express.js 和 Meteor.js 都是使用 VS Code 進行開發的。此外，Facebook、Google 等大型科技公司中的開發團隊也廣泛使用 VS Code 來開發微服務及 API。
-優點：
+### 1.1 後端開發概述
 
-- 輕量級且快速，適合初學者與資深開發者。
-- 支援廣泛的擴展插件，靈活定製工作流程。
-- 跨平臺支援（Windows、macOS、Linux）。
+後端負責應用程式的核心邏輯、資料庫互動與伺服器維護。要提升開發效率，**整合開發環境（IDE）** 是最重要的工具之一：它涵蓋程式編輯、除錯與專案管理。
 
-缺點：
+### 1.2 IDE 的作用
 
-- 雖然是輕量級編輯器，但隨著插件數量的增加，可能會影響性能。
-- 對於大型項目或複雜的 Java 專案，可能不如 IntelliJ IDEA 那樣強大。
+IDE 用於撰寫、除錯與測試程式，提供自動補全、語法高亮、內建版本控制等功能，讓開發者專注於業務邏輯；現代 IDE 多半還支援多語言與框架。
 
-3.2 \*\*IntelliJ IDEA \*\*
-介紹與背景：
-IntelliJ IDEA 是由 JetBrains 開發的一款 IDE，特別針對 Java 和 Kotlin 開發而設計。自推出以來，IntelliJ IDEA 被許多專業開發者認為是市場上最強大的 Java 開發工具之一。它以出色的智能代碼完成、自動化工具和框架支援著稱，特別適合於企業級應用和大型專案的開發。
-主要功能：
+### 1.3 熱門後端 IDE 比較
 
-- 智能代碼補全：IntelliJ IDEA 可以基於代碼上下文，為開發者提供極為精準的代碼補全建議，減少了代碼錯誤並加快開發速度。
-- 框架支援：它內建對 Spring、Hibernate、Maven 等流行框架的支援，使得 Java 開發者可以更快地建立複雜的後端應用程式。
-- 內建版本控制系統：不僅支援 Git，還支援 CVS、Subversion 等其他版本控制工具，對於大型企業專案的協作至關重要。
-- 強大的重構工具：IntelliJ 的代碼重構功能使得開發者能夠輕鬆、安全地修改代碼，這對於大型專案的維護和升級特別重要。
+| IDE | 定位 | 主要特點 | 適合場景 |
+| --- | --- | --- | --- |
+| **VS Code** | 微軟 2015 推出的輕量、跨平台開源編輯器 | 擴展豐富、內建 Git 與終端、除錯強大 | JS／Node.js 等；初學到資深皆宜 |
+| **IntelliJ IDEA** | JetBrains，主打 Java／Kotlin | 智能補全、Spring 等框架支援、重構強 | 企業級 Java、大型專案 |
+| **PyCharm** | JetBrains，主打 Python | Python 專屬支援、Django／Flask 整合、資料庫工具、科學運算 | Python 後端、資料分析 |
+| **Eclipse** | 老牌開源（IBM 起家） | 多語言、插件生態大、大型專案穩定 | 企業／傳統 Java 專案 |
+| **NetBeans** | Oracle 支持、開源 | Java 支援完整、介面簡潔、跨平台 | 教學與中小型 Java 專案 |
 
-使用案例：IntelliJ IDEA 被廣泛應用於企業級 Java 開發項目中，如金融科技公司、電子商務平臺及各種微服務架構中。Airbnb、Netflix 和 Uber 等技術公司在其核心服務的開發過程中大量使用 IntelliJ IDEA。
-優點：
+- **VS Code**：優點是輕量、快、擴展多、跨平台；缺點是插件多時較慢、大型 Java 專案不如 IntelliJ。
+- **IntelliJ IDEA**：優點是 Java 支援強、重構出色；缺點是耗資源、免費版缺企業功能。
+- **PyCharm**：優點是緊密整合 Python 框架與資料庫；缺點是免費版功能少、大型專案可能有瓶頸。
+- **Eclipse**：優點是免費、多語言、穩定；缺點是介面較舊、學習曲線陡。
+- **NetBeans**：優點是介面簡潔、適合新手；缺點是生態不如前兩者、大型專案效能較差。
 
-- 極其強大的 Java 框架支援，對於企業應用尤為理想。
-- 出色的代碼自動完成和重構功能，幫助開發者高效編寫和維護代碼。
-- 支援廣泛的插件，能夠擴展到多種語言開發，如 Python、PHP 等。
+**雲端 IDE**：如 GitHub Codespaces、AWS Cloud9，直接在瀏覽器開發，免本地設定、利於團隊協作。
 
-缺點：
+### 1.4 選擇 IDE 的考量
 
-- 資源佔用較大，對於低配備電腦可能運行較慢。
-- 免費版（Community Edition）不支援企業功能，如 Java EE 和數據庫工具等，需要購買商業版。
+語言／框架支援、編譯與除錯功能、插件擴展性、效能與資源佔用、社群支援。全端開發者常選 VS Code；專注 Java 的團隊多選 IntelliJ IDEA。
 
-3.3 \*\*PyCharm \*\*
-介紹與背景：
-PyCharm 是 JetBrains 的另一款 IDE，專注於 Python 開發。由於 Python 在後端開發中廣泛應用於數據分析、人工智慧、網絡應用開發等領域，PyCharm 成為了許多 Python 開發者的首選工具。
-主要功能：
+### 1.5 未來趨勢
 
-- 專為 Python 設計：PyCharm 提供了對 Python 特有的語法自動完成、代碼檢查、以及虛擬環境的內建支援，特別適合開發 Python 後端應用。
-- Web 框架整合：對於使用 Django、Flask 等框架的後端開發者來說，PyCharm 提供了強大的整合工具，使得建立、管理及除錯這些應用更加輕鬆。
-- 數據庫工具：PyCharm 提供了內建的 SQL 整合工具，使得開發者能夠在 IDE 內管理數據庫，並進行數據查詢與編輯。
-- 科學運算支援：內建對 Jupyter Notebook、NumPy、Pandas 等科學運算工具的支援，適合同時進行後端開發與數據分析的開發者。
+IDE 朝 **自動化、雲端化、協作化** 發展；開發者宜持續關注新工具與技術。
+## 2. Git 版本控制
 
-使用案例：PyCharm 被許多使用 Python 開發後端服務的公司採用，包括 Pinterest、Dropbox 和 Instacart。特別是在數據驅動的後端應用中，PyCharm 的科學運算功能提供了極大的便利。
-優點：
+### 2.1 版本控制概念
 
-- 專為 Python 設計，無縫整合流行的 Python 框架。
-- 出色的數據庫管理和除錯工具。
-- 強大的測試支持，內建單元測試框架和測試驅動開發工具。
+- **是什麼**：記錄檔案的變更歷史，可回溯、比較與協作。
+- **重要性**：保存歷史、支援多人協作、可分支實驗、能安全回退。
+- **類型**：本地、集中式（如 SVN）、分散式（如 Git）。
 
-缺點：
+### 2.2 Git 簡介
 
-- 免費版功能較少，商業版才支援 Django 等框架。
-- 對於處理大型專案，可能會有性能瓶頸。
+Git 是 **分散式** 版本控制系統（由 Linus Torvalds 於 2005 年開發）。每個克隆都是一份完整倉庫，離線也能操作；相較集中式（SVN）更快、分支更輕量。
 
-3.4 Eclipse
-介紹與背景：
-Eclipse 是歷史悠久的開源 IDE，最早由 IBM 開發，後來成為 Eclipse Foundation 的旗艦產品。Eclipse 最初主要針對 Java 開發，現在支援多種編程語言。它擁有龐大的插件庫，可以定製化以支持不同語言、框架和工具。
-主要功能：
+### 2.3 安裝 Git
 
-- 多語言支援：儘管 Eclipse 最初設計用於 Java 開發，但它支援眾多其他語言，如 C/C++、PHP、Python 等，這使其成為多語言開發的強大工具。
-- 插件生態系統：Eclipse 擁有豐富的插件生態系統，開發者可以通過 Marketplace 添加需要的功能，如代碼檢查、版本控制及測試框架整合等。
-- 大規模專案支持：Eclipse 是一款高度可擴展的 IDE，特別適合用於企業級大型專案的開發和維護。
+依作業系統從官網安裝（Windows／macOS／Linux），安裝後檢查：
 
-使用案例：Eclipse 在企業應用開發中廣泛應用，如銀行系統、醫療軟件及大型電子商務平臺開發。許多公司在早期的 Java 專案中採用了 Eclipse，至今仍然是一些傳統企業的重要工具。
-優點：
+```
+git --version
+```
 
-- 支援多種語言和框架，靈活性強。
-- 完全免費，對於需要開源解決方案的企業來說是理想選擇。
-- 大型專案的穩定性和兼容性高。
+### 2.4 Git 配置
 
-缺點：
-
-- 介面相對過時，學習曲線較陡。
-- 相比其他現代 IDE（如 IntelliJ），性能稍顯遲緩。
-
-3.5 NetBeans
-介紹與背景：
-NetBeans 是 Oracle 支持的開源 IDE，最早設
-計用於 Java 開發，但也支援 PHP、HTML5 和 C/C++ 等多種語言。它的界面相對簡潔，適合初學者使用，同時對於專業開發者也提供了強大的功能。
-主要功能：
-
-- Java 開發支援：NetBeans 內建支援 Java EE、Java SE 以及各種 Java 框架，對於 Java 開發者來說非常方便。
-- 自動化工具：NetBeans 提供了強大的代碼重構、代碼生成和語法檢查工具，使得代碼維護更加輕鬆。
-- 跨平臺支援：與 VS Code 一樣，NetBeans 支援多種作業系統（Windows、macOS、Linux），使其成為跨平臺開發的理想選擇。
-
-使用案例：NetBeans 主要用於教育環境和企業內部的 Java 應用開發，如政府機構的行政系統、學校的教務系統及中小型企業的業務應用。它的簡單易用性使其在初學者中也有一定的市場。
-優點：
-
-- 簡潔的界面，適合新手使用。
-- 支援多語言且擴展性強。
-- 與 Oracle 產品（如 GlassFish 伺服器）集成度高。
-
-缺點：
-
-- 插件和生態系統不如其他 IDE（如 Eclipse 和 IntelliJ）豐富。
-- 在大型專案中，性能表現較差。
-
-補充小節：雲端 IDE 的崛起
-隨著開發工具的進步，雲端 IDE 逐漸成為一種趨勢。像 GitHub Codespaces、AWS Cloud9 這樣的雲端 IDE 提供了完整的開發環境，開發者可以直接在瀏覽器中進行代碼編寫和調試，這些工具不僅免去了繁瑣的本地設置，還提高了團隊協作的便利性。隨著企業雲端化進程的加快，這類工具在後端開發中的應用必將越來越廣泛。
-\*\*4. 選擇 IDE 時的考量因素 \*\*
-在選擇後端開發的 IDE 時，開發者應根據以下幾個方面進行綜合考量：
-
-- 語言及框架支援
-- 編譯與調試功能
-- 插件及擴展性
-- 性能及資源佔用
-- 社羣及支援
-
-不同的開發需求會對 IDE 的選擇產生不同影響。例如，對於需要使用多種語言和框架的全端開發者，VS Code 可能更具吸引力；而對於專注於 Java 開發的專業團隊，IntelliJ IDEA 無疑是更合適的選擇。
-
-5. IDE 及後端開發的未來趨勢
-
-隨著技術的進步，未來的 IDE 很可能會朝著自動化、雲端化和協作化的方向發展。自動補全技術將進一步提高代碼編寫的效率，而雲端 IDE 使得開發不再受限於本地硬體資源。此外，遠端協作工具的整合，將使得團隊開發更加流暢。開發者需要隨時關注這些趨勢，以保持在後端開發中的競爭力。
-
-6. 結論
-
-在後端開發中，選擇合適的 IDE 是提升工作效率的關鍵。本筆記比較了 Visual Studio Code、IntelliJ IDEA、PyCharm、Eclipse 及 NetBeans 等主流 IDE，探討了各自的優勢和適用場景。無論是針對初學者還是資深開發者，不同的 IDE 都能根據需求提供適合的工具和功能。隨著技術的發展，開發者應持續探索新的開發工具與技術，以應對不斷變化的軟體開發環境。
-Git 工具
-1：版本控制基礎
-### 1.1 版本控制概念
-1.1.1 什麼是版本控制？
-版本控制是一種管理計算機文件變化的系統。它允許用戶在不同時間點對文件進行修改、保存和恢復。版本控制系統（VCS）能夠記錄每一次的變更，並且能夠回溯到任意一次變更的歷史版本。
-#### 1.1.2 版本控制的重要性
-版本控制在軟件開發中非常重要，它能夠帶來以下好處：
-
-1. 歷史記錄：保存所有變更歷史，可以隨時查看或恢復到之前的版本。
-2. 協作開發：允許多名開發人員同時對項目進行修改，並且能夠有效管理和合併這些修改。
-3. 錯誤修復：在發生錯誤時，可以快速回退到穩定版本。
-4. 分支與合併：支持分支開發，讓不同功能可以並行開發，最後合併回主線。
-
-#### 1.1.3 版本控制的類型
-版本控制系統主要分為三類：本地版本控制系統、集中式版本控制系統和分散式版本控制系統。
-## 本地版本控制系統
-本地版本控制系統在本地計算機上管理文件的變更。這種方法簡單，但容易出現版本衝突和數據丟失的問題。
-## 集中式版本控制系統
-集中式版本控制系統（如 Subversion，SVN）使用單一的中央服務器來保存所有版本的文件，客戶端通過連接到中央服務器進行文件的檢出和提交。這種方法能夠更好地協同工作，但如果中央服務器崩潰，所有歷史數據可能都會丟失。
-## 分散式版本控制系統
-分散式版本控制系統（如 Git）每個開發者的工作目錄都是一個完整的代碼倉庫，包含所有歷史數據。這種方法提供了更高的靈活性和容錯性，即使某一個倉庫崩潰，也能從其他倉庫恢復數據。
-### 1.2 Git 簡介
-#### 1.2.1 Git 的歷史和背景
-Git 是由 Linus Torvalds 為 Linux 內核開發而創建的分散式版本控制系統。自 2005 年發布以來，Git 已經成為世界上最流行的版本控制系統之一，被廣泛應用於開源和商業項目中。
-#### 1.2.2 Git 與其他版本控制系統的比較
-Git 與其他版本控制系統相比，具有以下幾個顯著優勢：
-
-1. 速度快：Git 的本地操作速度非常快，因為它在本地倉庫中進行大多數操作，而不是與遠程服務器通信。
-2. 分散式：每個開發者都有一個完整的倉庫，這使得 Git 更加靈活和可靠。
-3. 高效分支與合併：Git 提供了強大的分支管理功能，能夠輕鬆創建、切換和合併分支。
-4. 數據完整性：Git 使用 SHA-1 哈希算法保證數據的完整性，所有數據在存儲時都經過校驗，確保數據不會被意外修改。
-
-#### 1.2.3 安裝 Git
-在 Windows 上安裝 Git
-
-1. 下載 Git for Windows 安裝包：Git 官網下載
-2. 運行安裝程序，按照提示進行安裝。
-3. 打開命令提示符，輸入 git --version 確認安裝成功。
-
-在 macOS 上安裝 Git
-
-1. 打開終端。
-2. 使用 Homebrew 安裝 Git :
-3. brew install git
-4. 輸入 git --version 確認安裝成功。
-
-在 Linux 上安裝 Git
-
-1. 打開終端。
-2. 根據不同的 Linux 發行版，使用以下命令安裝 Git：
-
-。在 Debian/Ubuntu 上：
-
-- sudo apt-get update
-- sudo apt-get install git
-
-。在 CentOS Stream／Rocky Linux／Fedora 上（CentOS 7 於 2024-06、CentOS 8 於 2021-12 已停止維護）：
-
-- sudo yum install git
-3. 輸入 git --version 確認安裝成功。
-
-### 1.3 Git 配置
-#### 1.3.1 配置用戶信息
-在使用 Git 之前，需要配置用戶信息，這些信息會被記錄在每次提交中。
 ```
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
-```
-#### 1.3.2 設置文本編輯器
-Git 允許用戶設置默認的文本編輯器，當需要編輯提交信息或進行交互式操作時會使用這個編輯器。
-```
 git config --global core.editor "vim"
 ```
-#### 1.3.3 配置文件 .gitconfig
-Git 的配置文件 .gitconfig 位於用戶主目錄下，可以通過編輯這個文件來進行更高級的配置。
-常見配置示例
+
+`~/.gitconfig` 常見內容：
+
 ```
 [user]
-name = Your Name
-email = your.email@example.com
+    name = Your Name
+    email = your.email@example.com
 [core]
-editor = vim
-autocrlf = input
+    editor = vim
+    autocrlf = input
 [alias]
-st = status
-co = checkout
-ci = commit
-br = branch
+    st = status
+    co = checkout
+    ci = commit
+    br = branch
 ```
-### 1.4 Git 基本操作
-#### 1.4.1 初始化 Git 倉庫
-創建新倉庫
-在本地創建一個新的 Git 倉庫：
-```
-mkdir myproject
-cd myproject
-git init
-```
-克隆現有倉庫
-從遠程倉庫克隆一個新的倉庫到本地：
-```
-git clone https://github.com/username/repository.git
-```
-#### 1.4.2 添加文件到暫存區
-將文件添加到暫存區，以便在下一次提交中包括這些更改：
-```
-git add filename
-```
-可以使用通配符添加多個文件：
-```
-git add *.txt
-```
-#### 1.4.3 提交更改
-提交暫存區中的更改，並添加提交信息：
-git commit -m "提交信息"
-如果希望在提交時編輯提交信息，可以省略 -m 選項：
-```
-git commit
-```
-#### 1.4.4 查看狀態
-使用 git status 命令可以查看當前工作目錄的狀態，包括已修改但未提交的文件、未跟蹤的文件等：
-```
-git status
-```
-#### 1.4.5 檢查日誌
-使用 git log 命令可以查看提交歷史：
-```
-git log
-```
-可以使用 --oneline 選項簡化輸出：
-```
-git log --oneline
-```
-### 1.5 分支管理
-#### 1.5.1 分支概念
-為什麼使用分支？
-分支允許開發者在同一個代碼庫中同時開發多個功能或修復多個問題，而不會互相干擾。每個分支都是代碼庫的一個獨立副本，可以自由地進行修改，最後再合併到主分支中。
-分支的優勢
 
-1. 並行開發：多個開發者可以在不同分支上同時工作，提高開發效率。
-2. 隔離風險：新功能和修復在獨立的分支上開發，不會影響穩定的主分支。
-3. 版本控制：可以輕鬆回溯到某一特定分支的狀態，方便進行版本管理。
+### 2.5 初始化與克隆
 
-#### 1.5.2 分支操作
-創建分支
-創建新分支並切換到該分支：
 ```
-git checkout -b new-branch
+mkdir myproject && cd myproject
+git init                                     # 建立新倉庫（產生 .git）
+git clone https://github.com/user/repo.git   # 克隆遠端倉庫
 ```
-切換分支
-切換到已存在的分支：
+
+### 2.6 基本操作
+
 ```
-git checkout branch-name
+git add filename            # 加入暫存區（git add . 加入全部）
+git commit -m "提交信息"     # 提交
+git status                  # 查看狀態
+git log                     # 查看日誌（--oneline 簡化）
+git diff                    # 比較工作目錄與暫存區
+git diff --staged           # 比較暫存區與上次提交
 ```
-## 合併分支
-將另一個分支的更改合併到當前分支：
+
+### 2.7 分支管理
+
+分支讓多人／多功能**並行開發**、隔離風險、便於版本回溯。
+
 ```
-git merge branch-name
+git checkout -b new-branch      # 建立並切換（= git branch + git checkout）
+git checkout branch-name        # 切換分支
+git merge branch-name           # 合併到當前分支
+git merge --no-ff branch-name   # 保留分支歷史（不快進合併）
 ```
-## 解決合併衝突
-在合併過程中，可能會遇到衝突，需要手動解決。解決衝突後，使用 git add 添加解決衝突的文件，然後提交：
+
+合併衝突時手動解決，再：
+
 ```
 git add resolved-file
-```
 git commit -m "解決合併衝突"
-### 1.6 遠程倉庫
-#### 1.6.1 遠程倉庫概念
-什麼是遠程倉庫？
-遠程倉庫是託管在服務器上的 Git 倉庫，允許多名開發者通過網絡進行協作開發。遠程倉庫通常託管在平臺如 GitHub、GitLab 或 Bitbucket 上。
-## 本地倉庫與遠程倉庫的區別
-本地倉庫僅存儲在開發者的計算機上，遠程倉庫則存儲在服務器上，並且可以被多名開發者訪問。本地倉庫的操作不會影響遠程倉庫，只有在推送更改時，遠程倉庫才會更新。
-#### 1.6.2 遠程操作
-添加遠程倉庫
-將遠程倉庫添加到本地倉庫：
 ```
-git remote add origin https://github.com/username/repository.git
+
+### 2.8 遠端倉庫
+
 ```
-推送更改到遠程倉庫
-將本地倉庫的更改推送到遠程倉庫：
-```
+git remote add origin https://github.com/user/repo.git
 git push origin branch-name
-```
-拉取遠程倉庫的更新
-從遠程倉庫拉取最新的更改到本地倉庫：
-```
 git pull origin branch-name
-```
-同步遠程分支
-同步本地和遠程分支列表：
-```
 git fetch
 ```
-### 1.7 Git 的常見工作流程
-#### 1.7.1 Feature 分支工作流程
-Feature 分支工作流程是一種常見的 Git 工作流程，用於開發新功能。
 
-1. 從主分支創建一個新功能分支。
-2. 在新功能分支上開發功能。
-3. 完成功能後，將新功能分支合併回主分支。
-4. 刪除新功能分支。
-```
-git checkout main
-git checkout -b new-feature
-# 開發新功能
-git add.
-```
-git commit -m "添加新功能"
-```
-git checkout main
-git merge new-feature
-git branch -d new-feature
-```
-#### 1.7.2 Git Flow 工作流程
-Git Flow 是一種複雜的工作流程，適用於大型項目，具有嚴格的分支管理策略。
+- **本地 vs 遠端**：本地只存在你的電腦；遠端存在伺服器、多人可存取。本地操作不影響遠端，只有 push 時才更新遠端。
+### 2.9 標籤管理
 
-1. 使用主分支（master）和開發分支（develop）。（時代註記：GitHub 自 2020 年起新倉庫預設分支名為 `main`，原理相同。）
-2. 每個新功能在 develop 分支上創建一個 feature 分支。
-3. 完成功能後，將 feature 分支合併回 develop 分支。
-4. 釋出新版本時，從 develop 分支創建一個 release 分支，進行最後的測試和修復。
-5. 確認 release 分支穩定後，合併到 master 分支，並創建一個標籤。
-6. 如果發現重大錯誤，從 master 分支創建 hotfix 分支，修復後合併回 master 和 develop 分支。
+```
+git tag tag-name                 # 輕量標籤
+git tag -a tag-name -m "描述"     # 附註標籤
+git tag                          # 列出所有標籤
+git push origin tag-name         # 推送單一標籤
+git push origin --tags           # 推送全部標籤
+git tag -d tag-name              # 刪除本地標籤
+git push origin :refs/tags/tag-name   # 刪除遠端標籤
+```
 
-### 1.8 Git 的常見命令和技巧
-#### 1.8.1 刪除文件
-從工作目錄和暫存區中刪除文件：
-```
-git rm filename
-```
-git commit -m "刪除文件"只從暫存區中刪除文件，保留工作目錄中的文件：
-```
-git rm --cached filename
-```
-git commit -m "從暫存區中刪除文件"
-#### 1.8.2 移動或重命名文件
-移動或重命名文件，並提交更改：
-```
-git mv old-filename new-filename
-```
-git commit -m "重命名文件"
-#### 1.8.3 查看分支
-查看本地和遠程分支：
-```
-git branch -a
-```
-1.8.4 合併沒有快進 (No Fast-Forward) 的分支
-在合併時使用 --no-ff 選項，強制創建一個新的提交，保留分支歷史：
-```
-git merge --no-ff branch-name
-```
-#### 1.8.5 生成補丁文件
-生成一個包含更改的補丁文件：
-```
-git diff > patch-file.patch
-```
-應用補丁文件：
-```
-git apply patch-file.patch
-```
-#### 1.8.6 忽略文件
-在倉庫根目錄創建 .gitignore 文件，指定要忽略的文件和目錄：
+### 2.10 忽略文件（.gitignore）
+
+在倉庫根目錄建立 `.gitignore`：
+
 ```
 # 忽略所有 .log 文件
-```
 *.log
-```
-# 忽略 node_modules 目錄
-node_modules/
-```
-### 1.9 GitHub 和 GitLab 簡介
-1.9.1 GitHub
-GitHub 是世界上最大的代碼託管平臺，提供基於 Git 的版本控制服務。GitHub 還提供許多協作功能，如 Pull Request、Issues 和 Actions 等，幫助開發者更好地協同工作。
-創建 GitHub 倉庫
-
-1. 登錄 GitHub 帳戶。
-2. 點擊 “New repository” 按鈕。
-3. 輸入倉庫名稱和描述，選擇公開或私有。
-4. 點擊 “Create repository” 按鈕創建倉庫。
-
-克隆 GitHub 倉庫
-從 GitHub 克隆倉庫到本地：
-```
-git clone https://github.com/username/repository.git
-```
-1.9.2 GitLab
-GitLab 是另一個流行的代碼託管平臺，提供類似 GitHub 的功能。GitLab 還具有內置的持續集成和持續部署（CI/CD）功能，使得開發、測試和部署流程更加自動化和高效。
-創建 GitLab 倉庫
-
-1. 登錄 GitLab 帳戶。
-2. 點擊 “New project” 按鈕。
-3. 輸入項目名稱和描述，選擇公開或私有。
-4. 點擊 “Create project” 按鈕創建項目。
-
-克隆 GitLab 倉庫
-從 GitLab 克隆倉庫到本地：
-```
-git clone https://gitlab.com/username/repository.git
-```
-### 1.10 Git 的常見問題和解決方案
-#### 1.10.1 回滾提交
-撤銷最近一次提交，但保留更改
-使用 git reset 命令撤銷最近一次提交，但保留更改在工作目錄中：
-```
-git reset --soft HEAD~1
-```
-## 完全撤銷最近一次提交和更改
-使用 git reset 命令撤銷最近一次提交和更改：
-```
-git reset --hard HEAD~1
-```
-#### 1.10.2 撤銷已提交的文件
-如果錯誤地提交了一些文件，可以使用 git reset 將這些文件從提交中移除：
-```
-git reset HEAD^
-git add files-to-keep
-```
-git commit -m "撤銷錯誤提交"
-#### 1.10.3 修復錯誤的提交信息
-如果提交信息有誤，可以使用 git commit --amend 來修改最近一次提交的信息：
-git commit --amend -m "新的提交信息"
-#### 1.10.4 回溯歷史版本
-如果需要回溯到某個歷史版本，可以使用 git checkout 命令：
-```
-git checkout commit-hash
-```
-回到最新版本：
-```
-git checkout main
-```
-#### 1.10.5 解決合併衝突
-合併過程中，如果出現衝突，需要手動解決。解決衝突後，使用 git add 添加解決衝突的文件，然後提交：
-```
-git add resolved-file
-```
-git commit -m "解決合併衝突"
-### 1.11 Git 的進階技巧
-#### 1.11.1 使用 Git Alias
-Git Alias 是 Git 的別名功能，可以用來簡化命令。
-配置 Alias
-在 .gitconfig 文件中添加以下內容：
-```
-[alias]
-st = status
-co = checkout
-ci = commit
-br = branch
-lg = log --oneline --graph --decorate --all
-```
-使用別名命令：
-```
-git st
-git co branch-name
-```
-git ci -m "提交信息"
-#### 1.11.2 使用 Git Hooks
-## Git Hooks 是在
-特定事件發生時自動執行的腳本。常見的 hooks 包括 pre-commit、pre-push 和 post-commit 等。
-## 配置 Hook
-在倉庫的 .git/hooks 目錄中創建 hook 腳本，例如 pre-commit：
-```
-#!/bin/sh
-# pre-commit hook example
-echo "Running pre-commit hook"
-./run-tests.sh
-```
-啟用 Hook
-給腳本添加可執行權限：
-```
-chmod +x .git/hooks/pre-commit
-```
-#### 1.11.3 使用 Git Submodules
-Git Submodules 是 Git 倉庫中的子倉庫，適用於包含外部依賴的情況。
-添加子模組
-在主倉庫中添加子模組：
-```
-git submodule add https://github.com/username/submodule-repo.git path/to/submodule
-```
-初始化和更新子模組
-克隆倉庫後，初始化和更新子模組：
-```
-git submodule init
-git submodule update
-```
-## 小結
-本章介紹了版本控制的基本概念，Git 的簡介和安裝，Git 的基本操作，分支管理，遠程倉庫操作，以及一些常見的工作流程和命令。這些知識為後續深入學習 Git 打下了堅實的基礎。
-2: Git 基本操作
-### 2.1 Git 配置
-#### 2.1.1 配置用戶信息
-在使用 Git 之前，首先需要配置用戶信息。這些信息會被記錄在每次提交中，幫助你和其他協作者瞭解每次更改的來源。
-```
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
-```
-#### 2.1.2 設置文本編輯器
-Git 允許用戶設置默認的文本編輯器，當需要編輯提交信息或進行交互式操作時會使用這個編輯器。
-```
-git config --global core.editor "vim"
-```
-#### 2.1.3 配置文件 .gitconfig
-Git 的配置文件 .gitconfig 位於用戶主目錄下，可以通過編輯這個文件來進行更高級的配置。
-## 常見配置示例
-```
-[user]
-name = Your Name
-email = your.email@example.com
-[core]
-editor = vim
-autocrlf = input
-[alias]
-st = status
-co = checkout
-ci = commit
-br = branch
-```
-### 2.2 初始操作
-#### 2.2.1 初始化 Git 倉庫
-在本地創建一個新的 Git 倉庫：
-```
-mkdir myproject
-cd myproject
-git init
-```
-此命令會在當前目錄下創建一個名為 .git 的隱藏目錄，這個目錄包含了所有 Git 所需的倉庫文件。
-#### 2.2.2 克隆現有倉庫
-從遠程倉庫克隆一個新的倉庫到本地：
-```
-git clone https://github.com/username/repository.git
-```
-此命令會在當前目錄下創建一個名為 repository 的目錄，並將遠程倉庫中的所有內容下載到該目錄中。
-### 2.3 基本命令
-#### 2.3.1 添加文件到暫存區
-將文件添加到暫存區，以便在下一次提交中包括這些更改：
-```
-git add filename
-```
-可以使用通配符添加多個文件：
-```
-git add *.txt
-```
-#### 2.3.2 提交更改
-提交暫存區中的更改，並添加提交信息：
-git commit -m "提交信息"
-如果希望在提交時編輯提交信息，可以省略 -m 選項：
-```
-git commit
-```
-#### 2.3.3 查看狀態
-使用 git status 命令可以查看當前工作目錄的狀態，包括已修改但未提交的文件、未跟蹤的文件等：
-```
-git status
-```
-#### 2.3.4 檢查日誌
-使用 git log 命令可以查看提交歷史：
-```
-git log
-```
-可以使用 --oneline 選項簡化輸出：
-```
-git log --oneline
-```
-#### 2.3.5 比較文件差異
-使用 git diff 命令可以比較文件的不同版本之間的差異：
-```
-git diff
-```
-比較工作目錄和暫存區之間的差異：
-```
-git diff --staged
-```
-### 2.4 分支管理
-#### 2.4.1 創建分支
-創建新分支並切換到該分支：
-```
-git checkout -b new-branch
-```
-這個命令等同於以下兩個命令的組合：
-```
-git branch new-branch
-git checkout new-branch
-```
-#### 2.4.2 切換分支
-切換到已存在的分支：
-```
-git checkout branch-name
-```
-#### 2.4.3 合併分支
-將另一個分支的更改合併到當前分支：
-```
-git merge branch-name
-```
-#### 2.4.4 解決合併衝突
-在合併過程中，可能會遇到衝突，需要手動解決。解決衝突後，使用 git add 添加解決衝突的文件，然後提交：
-```
-git add resolved-file
-```
-git commit -m "解決合併衝突"
-### 2.5 遠程倉庫
-#### 2.5.1 添加遠程倉庫
-將遠程倉庫添加到本地倉庫：
-```
-git remote add origin https://github.com/username/repository.git
-```
-#### 2.5.2 推送更改到遠程倉庫
-將本地倉庫的更改推送到遠程倉庫：
-```
-git push origin branch-name
-```
-#### 2.5.3 拉取遠程倉庫的更新
-從遠程倉庫拉取最新的更改到本地倉庫：
-```
-git pull origin branch-name
-```
-#### 2.5.4 同步遠程分支
-同步本地和遠程分支列表：
-```
-git fetch
-```
-### 2.6 標籤管理
-#### 2.6.1 創建標籤
-創建輕量標籤：
-```
-git tag tag-name
-```
-創建帶有註釋的標籤：
-git tag -a tag-name -m "標籤描述"
-#### 2.6.2 查看標籤
-查看所有標籤：
-```
-git tag
-```
-#### 2.6.3 刪除標籤
-刪除本地標籤：
-```
-git tag -d tag-name
-```
-刪除遠程標籤：
-```
-git push origin :refs/tags/tag-name
-```
-#### 2.6.4 推送標籤到遠程倉庫
-將標籤推送到遠程倉庫：
-```
-git push origin tag-name
-```
-一次性推送所有標籤：
-```
-git push origin --tags
-```
-### 2.7 Git 忽略文件
-#### 2.7.1 使用 .gitignore 文件
-在倉庫根目錄創建 .gitignore 文件，指定要忽略的文件和目錄：
-```
-# 忽略所有 .log 文件
-```
-*.log
-```
 # 忽略 node_modules 目錄
 node_modules/
 # 忽略特定文件
 secret.txt
 ```
-#### 2.7.2 檢查忽略文件
-檢查 .gitignore 文件是否生效：
+
+檢查：`git status` 應看不到被忽略的檔案。
+
+### 2.11 撤銷與回滾
+
 ```
-git status
+git checkout -- filename         # 撤銷工作目錄中的修改
+git reset HEAD filename          # 撤銷暫存（保留工作目錄修改）
+git reset --soft HEAD~1          # 撤銷最近一次提交、保留變更
+git reset --hard HEAD~1          # 完全撤銷最近一次提交與變更
+git revert commit-hash           # 以新提交回滾特定提交
+git commit --amend -m "新訊息"    # 修改最近一次提交訊息
+git checkout commit-hash         # 回到某歷史版本（git checkout main 回最新）
 ```
-如果文件仍然出現在 git status 的輸出中，確保這些文件沒有被添加到暫存區或已被提交。
-### 2.8 撤銷和回滾操作
-#### 2.8.1 撤銷修改
-撤銷工作目錄中的修改：
+
+### 2.12 Stash（暫存工作進度）
+
 ```
-git checkout -- filename
+git stash                 # 保存當前工作進度
+git stash list            # 查看列表
+git stash apply           # 恢復（保留 stash）
+git stash pop             # 恢復並刪除
+git stash drop stash@{0}  # 刪除指定
+git stash clear           # 刪除全部
 ```
-#### 2.8.2 撤銷已添加到暫存區的文件
-撤銷暫存區中的文件，但保留工作目錄中的修改：
+
+### 2.13 比較與分析
+
 ```
-git reset HEAD filename
+git diff commit1 commit2   # 比較兩個提交
+git log -p                 # 顯示每個提交的差異
+git blame filename         # 逐行顯示最後修改者
 ```
-#### 2.8.3 回滾提交
-撤銷最近一次提交，但保留更改在工作目錄中：
-```
-git reset --soft HEAD~1
-```
-完全撤銷最近一次提交和更改：
-```
-git reset --hard HEAD~1
-```
-#### 2.8.4 使用 revert 命令回滾提交
-回滾特定提交，並創建一個新的提交來記錄這一操作：
-```
-git revert commit-hash
-```
-### 2.9 使用 Stash
-#### 2.9.1 保存工作進度
-使用 git stash 保存當前的工作進度，以便稍後恢復：
-```
-git stash
-```
-#### 2.9.2 查看 Stash 列表
-查看已保存的工作進度列表：
-```
-git stash list
-```
-#### 2.9.3 恢復工作進度
-恢復最近一次保存的工作進度：
-```
-git stash apply
-```
-恢復並刪除最近一次保存的工作進度：
-```
-git stash pop
-```
-#### 2.9.4 刪除 Stash
-刪除指定的工作進度：
-```
-git stash drop stash@{0}
-```
-刪除所有保存的工作進度：
-```
-git stash clear
-```
-### 2.10 比較和分析
-#### 2.10.1 比較提交之間的差異
-使用 git diff 比較兩個提交之間的差異：
-```
-git diff commit1 commit2
-```
-#### 2.10.2 查看提交歷史
-使用 git log 查看提交歷史：
-```
-git log
-```
-顯示每個提交的差異：
-```
-git log -p
-```
-#### 2.10.3 查看文件的變更歷史
-使用 git blame 查看文件的變更歷史，顯示每一行代碼的最後修改者：
-```
-git blame filename
-```
-#### 2.10.4 使用 git bisect 查找問題提交
-使用 git bisect 查找引入問題的提交：
+
+二分搜尋問題提交：
+
 ```
 git bisect start
 git bisect bad HEAD
 git bisect good commit-hash
-```
-然後，Git 會自動切換到不同的提交，直到找到引入問題的提交。當找到問題提交時，結束二分查找：
-```
+# ...Git 自動切換提交，找到後：
 git bisect reset
 ```
-### 2.11 Git 的日常工作流程
-#### 2.11.1 克隆遠程倉庫
-從遠程倉庫克隆項目到本地：
+
+### 2.14 其他常用命令
+
 ```
-git clone https://github.com/username/repository.git
+git rm filename            # 刪除文件並提交
+git rm --cached filename   # 只從暫存區移除（保留工作目錄）
+git mv old-filename new-filename   # 移動／重命名
+git branch -a              # 列出本地與遠端分支
+git diff > patch.patch     # 產生補丁
+git apply patch.patch      # 套用補丁
 ```
-#### 2.11.2 創建和切換分支
-創建一個新分支並切換到該分支：
-```
-git checkout -b new-branch
-```
-#### 2.11.3 提交更改
-添加修改到暫存區並提交：
-```
-git add.
-```
-git commit -m "描述你的更改"
-#### 2.11.4 推送和拉取
-將本地分支推送到遠程倉庫：
-```
-git push origin new-branch
-```
-從遠程倉庫拉取最新的更改：
-```
-git pull origin main
-```
-#### 2.11.5 合併分支
-將新分支合併到主分支：
+
+### 2.15 常見工作流程
+
+- **Feature 分支**：從主分支切出功能分支 → 開發 → 合併回主分支 → 刪除。
+
 ```
 git checkout main
-git merge new-branch
+git checkout -b new-feature
+git add .
+git commit -m "添加新功能"
+git checkout main
+git merge new-feature
+git branch -d new-feature
 ```
-### 2.12 Git 的高級功能
-#### 2.12.1 使用子模組
-Git 子模組允許你將一個 Git 倉庫作爲另一個 Git 倉庫的子目錄。
-添加子模組
+
+- **Git Flow**：使用 `master` 與 `develop`；新功能在 feature 分支開發後併回 develop；發布走 release 分支；緊急修復走 hotfix 分支。
+  - 註：GitHub 自 2020 年起新倉庫預設分支名為 `main`，原理相同。
+
+### 2.16 進階技巧
+
+**Git Alias**（寫在 `.gitconfig` 的 `[alias]`）：
+
 ```
-git submodule add https://github.com/username/submodule-repo.git path/to/submodule
+[alias]
+    st = status
+    co = checkout
+    lg = log --oneline --graph --decorate --all
 ```
-初始化和更新子模組
-克隆倉庫後，初始化和更新子模組：
-```
-git submodule init
-git submodule update
-```
-#### 2.12.2 使用鉤子 (Hooks)
-Git 鉤子是腳本，在特定事件發生時自動執行。
-配置鉤子
-在 .git/hooks 目錄中創建鉤子腳本，例如 pre-commit：
+
+**Git Hooks**：在 `.git/hooks/` 放腳本，於特定事件自動執行（如 `pre-commit`）：
+
 ```
 #!/bin/sh
 # pre-commit hook example
 echo "Running pre-commit hook"
 ./run-tests.sh
 ```
-啟用鉤子
-給腳本添加可執行權限：
+
 ```
 chmod +x .git/hooks/pre-commit
 ```
-### 2.13 Git 的最佳實踐
-#### 2.13.1 撰寫良好的提交信息
-良好的提交信息有助於協作者理解更改的原因和內容。
-提交信息格式
-提交信息應該包括以下幾部分：
 
-1. 標題：簡要描述更改，不超過 50 個字符。
-2. 正文：詳細描述更改，解釋原因和實施方法。
+**Git Submodules**：把另一個倉庫放進子目錄：
 
-提交信息示例
-## 修復登錄頁面崩潰問題
-當用戶輸入錯誤的憑據時，登錄頁面會崩潰。這是由於一個未捕獲的異常引起的。添加了異常處理邏輯，確保頁面不會崩潰，並顯示適當的錯誤信息。
-#### 2.13.2 保持提交歷史簡潔
-保持提交歷史簡潔，避免無意義的提交信息，有助於理解項目的演變過程。
-使用 rebase 清理歷史
-使用 rebase 命令清理提交歷史：
 ```
-git rebase -i HEAD~n
+git submodule add https://github.com/user/submodule-repo.git path/to/submodule
+git submodule init
+git submodule update
 ```
-然後，在交互式界面中選擇要修改或合併的提交。
-#### 2.13.3 使用標籤管理版本
-使用標籤來標記項目的重要里程碑，如發布新版本。
-創建標籤
+
+### 2.17 GitHub 與 GitLab
+
+- **GitHub**：全球最大的代碼託管平台，提供 Pull Request、Issues、Actions。
+- **GitLab**：功能類似，並內建 CI/CD。
+
 ```
-git tag v1.0.0
+git clone https://github.com/username/repository.git
+git clone https://gitlab.com/username/repository.git
 ```
-推送標籤到遠程倉庫
-```
-git push origin v1.0.0
-```
-## 小結
-本章介紹了 Git 的基本操作，包括配置、初始操作、基本命令、分支管理、遠程倉庫、標籤管理、忽略文件、撤銷和回滾操作、使用 Stash、比較和分析、日常工作流程、高級功能和最佳實踐。這些內容幫助你掌握了 Git 的基本使用方法和常見操作，為進一步深入學習和使用 Git 打下了堅實的基礎。
-3：分支管理
+
+### 2.18 最佳實踐
+
+- **撰寫良好的提交訊息**：標題簡明（不超過 50 字）＋正文說明原因與做法。
+- **保持提交歷史簡潔**：用 `git rebase -i HEAD~n` 整理提交。
+- **用標籤管理版本**：`git tag v1.0.0` → `git push origin v1.0.0`。
+
+### 2.19 小結
+
+本章介紹後端開發與 IDE 選擇，以及 Git 的完整基礎：配置、初始化、基本操作、分支、遠端、標籤、忽略文件、撤銷與回滾、Stash、比較分析、工作流程、進階技巧與最佳實踐。
+
 ### 3.1 分支概念
 3.1.1 為什麼使用分支？
 分支允許開發者在同一個代碼庫中同時開發多個功能或修復多個問題，而不會互相干擾。每個分支都是代碼庫的一個獨立副本，可以自由地進行修改，最後再合併到主分支中。
