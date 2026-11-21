@@ -238,6 +238,7 @@ dict[code]: 852
 ## 字典鍵的特性
 字典值可以沒有限制地取任何 Python 對象，既可以是標準的對象，也可以是用戶定義的，但鍵不行。
 兩個重要的點需要記住：
+
 1. 不允許同一個鍵出現兩次。創建時如果同一個鍵被賦值兩次，後一個值會被記住，如下實例：
 ```
 dict = {'Country': 'China', 'abbreviation': 'CN', 'code': '86', 'Country': 'Taiwan'}
@@ -247,6 +248,7 @@ print("dict[Country]:", dict['Country'])
 ```
 dict[Country]: Taiwan
 ```
+
 2. 鍵必須不可變，所以可以用數字，字符串或元組充當，而用列表就不行，如下實例：
 ```
 dict = {['Country']: 'China', 'abbreviation': 'CN', 'code': 86}
@@ -394,3 +396,4 @@ set 集合的 pop 方法會對集合進行無序的排列，然後將這個無�
 thisset = set("s", "ss", "sss")
 print(len(thisset))
 ```
+

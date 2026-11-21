@@ -8,8 +8,10 @@ Django 提供了一個內建的 Paginator 類，用來處理數據的分頁邏�
 ### 11.2 使用 Paginator 進行分頁
 #### 11.2.1 創建分頁器
 要實現分頁，首先需要使用 Django 的 Paginator 類來創建分頁器。Paginator 類接受兩個參數：
+
 1. 要分頁的對象列表：通常是一個查詢集。
 2. 每頁顯示的記錄數：定義每頁需要顯示的記錄數量。
+
 範例：使用 Paginator 創建分頁器
 ```
 # myapp/views.py
@@ -150,6 +152,7 @@ def article_list(request):
 傳統的分頁需要刷新整個頁面，但在現代 Web 應用中，使用 Ajax 可以實現更好的用戶體驗，讓分頁過程在不刷新整個頁面的情況下完成。
 #### 11.5.1 基本的 Ajax 分頁實現
 範例：使用 Ajax 請求分頁數據
+
 1. 在視圖中返回分頁的 HTML：
 ```
 from django.template.loader import render_to_string
@@ -164,6 +167,7 @@ def article_list(request):
         return JsonResponse({'html': html})
         return render(request, 'article_list.html', {'page_obj': page_obj})
 ```
+
 2. 創建一個 partials/article_list.html 模板來渲染數據。
 ```
 {% for article in page_obj %}
@@ -179,13 +183,17 @@ def article_list(request):
 使用 Bootstrap 美化 Django 頁面
 在 Django 項目中，美化前端界面是提升用戶體驗的重要部分。儘管 Django 提供了強大的後端開發功能，但在前端方面，使用框架如 Bootstrap 能夠迅速提升頁面的外觀和響應式設計。Bootstrap 是一個非常流行的 HTML、CSS 和 JavaScript 框架，它使得構建漂亮且響應式的網站變得簡單且高效。
 在本章中，我們將介紹如何將 Bootstrap 集成到 Django 項目中，並使用 Bootstrap 的組件來設計和美化 Django 頁面。
+
 12. Bootstrap 簡介
+
 Bootstrap 是由 Twitter 開發的一個開源前端框架，旨在幫助開發者快速構建現代化、響應式的網頁。Bootstrap 提供了大量的預設樣式、佈局和組件，如導航欄、按鈕、表單、卡片和模式框等，並且內建了響應式網格系統，使得頁面能夠自適應不同尺寸的設備。
 ### 12.1 為什麼使用 Bootstrap?
+
 - 快速開發：Bootstrap 提供了許多預設樣式和組件，開發者無需從頭設計每個元素。
 - 響應式設計：Bootstrap 內建了響應式佈局系統，可以讓網站自動適應不同設備的屏幕尺寸。
 - 一致的設計：通過使用 Bootstrap，你可以保證網站各個部分的設計風格保持一致。
 - 擴展性：開發者可以自定義 Bootstrap，並根據需求擴展樣式。
+
 ### 12.2. 在 Django 項目中引入 Bootstrap
 #### 12.2.1 通過 CDN 引入 Bootstrap
 在 Django 頁面中使用 Bootstrap 最簡單的方法是通過 CDN（內容分發網絡）直接加載 Bootstrap 的 CSS 和 JavaScript 文件。你只需要在模板文件的 標籤中加入 Bootstrap 的 CDN 連結。
@@ -441,11 +449,13 @@ aria-label="Close"
 在本章中，我們將學習如何構建一個完整的 Django 用戶註冊與登錄系統，包括註冊、登錄、登出、密碼重設等功能。這些功能將為我們的應用提供一個穩定且安全的用戶認證系統。
 ### 13.1. Django 認證框架介紹
 Django 的內建認證系統處理了常見的用戶相關功能，包括：
+
 - 用戶註冊和登錄
 - 密碼加密存儲
 - 用戶身份驗證
 - 權限控制（管理員與普通用戶）
 - 登出和密碼重設功能
+
 我們可以使用 Django 自帶的視圖和表單快速實現這些功能，同時也能靈活地定製這些視圖來滿足具體需求。
 ### 13.2. 創建 Django 項目與應用
 首先，我們將創建一個新的 Django 項目並添加應用來處理用戶認證。
@@ -552,10 +562,12 @@ path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html')
 path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
 ```
+
 - LoginView 使用自定義模板 login.html 顯示登錄表單。
 - LogoutView 則處理用戶登出的邏輯，並且登出後自動重定向到主頁。
 
 - 注意：Django 5.0 起 LogoutView 只接受 POST 請求（以 GET 登出已被移除），模板要用表單提交（`<form method="post">{% csrf_token %}<button type="submit">登出</button></form>`），不能用 `<a href>` 連結。
+
 創建登錄模板
 我們需要創建一個 login.html 文件來顯示登錄表單：
 ```
@@ -585,10 +597,12 @@ path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 Django 還提供了內建的密碼重設功能，允許用戶重設他們的密碼。
 #### 13.5.1 密碼重設流程
 Django 內建的密碼重設功能包括四個步驟：
+
 1. 重設密碼請求：用戶輸入他們的電子郵件，系統會發送一封重設密碼的郵件。
 2. 郵件發送確認：顯示確認郵件已發送的頁面。
 3. 設置新密碼：用戶通過郵件中的鏈接設置新密碼。
 4. 完成密碼重設：顯示密碼重設成功的頁面。
+
 #### 13.5.2 配置密碼重設的 URL
 我們可以使用 Django 內建的密碼重設視圖來處理這一流程。首先，配置對應的 URL 路徑：
 ```
@@ -640,9 +654,11 @@ EMAIL_HOST_PASSWORD = 'yourpassword'
 Django 的 messages 框架內置了多種類型的消息，例如：
 messages.debug: 調試信息
 messages.info: 一般信息
+
 - messages.success: 成功信息
 - messages.warning: 警告信息
 - messages.error: 錯誤信息
+
 接下來，我們將展示如何在 Django 項目中使用 messages 框架，包括設置、顯示消息以及處理不同的消息類型。
 ### 14.1. 設置 Django messages 框架
 messages 框架是 Django 的內建功能，通常默認已經啟用。我們只需要確保在項目的 settings.py 文件中，MIDDLEWARE 和 TEMPLATES 配置包含相關設置。
@@ -813,9 +829,11 @@ Django 是一個強大且靈活的 Web 框架，允許開發者快速構建高�
 管理員可以管理事件，包括編輯和刪除事件。
 #### 15.1.2 設計項目結構
 根據需求，我們將系統劃分為以下模塊：
+
 1. 用戶系統：註冊、登錄、登出、密碼重置。
 2. 事件管理系統：事件的創建、查看、編輯和刪除。
 3. 報名系統：用戶能夠報名參加事件。
+
 #### 15.1.3 數據庫模型設計
 每個功能模塊的核心是數據庫模型，我們需要為事件和報名系統設計數據庫模型。
 ### 15.2. 建立 Django 項目
@@ -891,8 +909,10 @@ def __str__(self):
 return f{'self.user.username} registered for {self.event.title}
 ```
 這裡我們定義了兩個模型：
+
 - Event 模型包含事件的所有信息。
 - Registration 模型記錄了用戶報名的事件。
+
 運行遷移命令以將模型應用到數據庫中：
 ```
 python manage.py makemigrations
@@ -926,9 +946,11 @@ def event_detail(request, id):
     return render(request, 'events/event_detail.html', {'event': event})
 ```
 在這裡，我們創建了三個視圖：
+
 1. event_list：顯示所有事件列表。
 2. event_create：處理創建新事件的邏輯。
 3. event_detail：顯示事件的詳細信息。
+
 #### 15.4.2 編輯與刪除事件
 管理員應能夠編輯和刪除事件，我們也需要編寫這些操作的視圖：
 ```
@@ -1008,3 +1030,4 @@ href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css" r
 ```
 https://docs.djangoproject.com/en/5.2/
 ```
+

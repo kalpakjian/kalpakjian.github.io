@@ -390,10 +390,12 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 <h2 id="71-django-的模型系統">7.1 Django 的模型系統</h2>
 <h3 id="711-模型的概念">7.1.1 模型的概念</h3>
 <p>在 Django 中，模型是對應於數據庫表的 Python 類。每個模型類對應數據庫中的一個表，每個模型的字段對應表中的列。通過模型，開發者可以使用 Python 代碼來進行數據庫操作，而無需直接編寫 SQL 語句。
-模型的主要功能包括：
-- 定義數據結構：描述數據的字段及其屬性。
-- 操作數據：創建、查詢、更新和刪除數據。
-- 數據驗證：定義字段的數據類型和驗證規則。</p>
+模型的主要功能包括：</p>
+<ul>
+<li>定義數據結構：描述數據的字段及其屬性。</li>
+<li>操作數據：創建、查詢、更新和刪除數據。</li>
+<li>數據驗證：定義字段的數據類型和驗證規則。</li>
+</ul>
 <h3 id="712-創建模型">7.1.2 創建模型</h3>
 <p>模型是 Django 應用的基礎，我們可以通過定義模型類來描述數據表的結構。每個模型都是 django.db.models.Model 的子類，並包含若干字段，每個字段對應數據表中的一列。
 範例：定義一個簡單的文章模型</p>
@@ -414,16 +416,20 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 7.2 Django 的 ORM (Object-Relational Mapping)</p>
 <h3 id="721-orm-的作用">7.2.1 ORM 的作用</h3>
 <p>ORM（Object-Relational Mapping）是 Django 用來將 Python 對象映射到數據庫表的工具。ORM 允許開發者以對象的方式來操作數據庫，而無需編寫 SQL 查詢語句。這使得數據庫操作更加簡單和直觀，且數據庫的具體實現對開發者透明。
-ORM 的主要功能包括：
-- 數據庫表與模型對象的映射：每個模型對象代表數據庫中的一行數據。
-- 字段與數據類型的映射：每個模型字段對應數據表中的一列。
-- 查詢集 API：提供查詢、過濾、排序、更新和刪除數據的 API。</p>
+ORM 的主要功能包括：</p>
+<ul>
+<li>數據庫表與模型對象的映射：每個模型對象代表數據庫中的一行數據。</li>
+<li>字段與數據類型的映射：每個模型字段對應數據表中的一列。</li>
+<li>查詢集 API：提供查詢、過濾、排序、更新和刪除數據的 API。</li>
+</ul>
 <h3 id="722-創建數據庫表">7.2.2 創建數據庫表</h3>
 <p>當我們定義好模型後，Django 提供了遷移工具來創建或更新數據庫中的表結構。遷移工具會根據模型定義生成對應的 SQL 語句，並執行這些語句來更新數據庫。
-創建或更新數據庫表的步驟如下：
-1. 生成遷移文件：根據模型定義生成 SQL 語句。
-2. 應用遷移：執行遷移，將模型變更應用到數據庫。
-範例：創建數據庫表</p>
+創建或更新數據庫表的步驟如下：</p>
+<ol>
+<li>生成遷移文件：根據模型定義生成 SQL 語句。</li>
+<li>應用遷移：執行遷移，將模型變更應用到數據庫。</li>
+</ol>
+<p>範例：創建數據庫表</p>
 <div class="codehilite"><pre><span></span><code># 1. 生成遷移文件
 python manage.py makemigrations
 # 2. 應用遷移
@@ -816,12 +822,14 @@ non_draft_articles = Article.objects.exclude(status='draft')
 </code></pre></div>
 
 <h3 id="1012-常見的查詢查找器">10.1.2 常見的查詢查找器</h3>
-<p>Django 提供了一組查找器，用來對不同類型的數據進行過濾查詢。常見的查找器包括：
-- 精確匹配：field_name=value
-- 模糊匹配：name__icontains='keyword'（不區分大小寫）
-- 範圍查詢：field_name_range=(start, end)
-- 大於/小於查詢：field_name_gte=value（大於或等於）和 field_name_lte=value（小於或等於）
-範例：使用查找器進行數據過濾</p>
+<p>Django 提供了一組查找器，用來對不同類型的數據進行過濾查詢。常見的查找器包括：</p>
+<ul>
+<li>精確匹配：field_name=value</li>
+<li>模糊匹配：name__icontains='keyword'（不區分大小寫）</li>
+<li>範圍查詢：field_name_range=(start, end)</li>
+<li>大於/小於查詢：field_name_gte=value（大於或等於）和 field_name_lte=value（小於或等於）</li>
+</ul>
+<p>範例：使用查找器進行數據過濾</p>
 <div class="codehilite"><pre><span></span><code><span class="gh">#</span> 查詢標題中包含 "Django" 的文章
 django_articles = Article.objects.filter(title__icontains='Django')
 <span class="gh">#</span> 查詢發布時間在 2024 年的文章

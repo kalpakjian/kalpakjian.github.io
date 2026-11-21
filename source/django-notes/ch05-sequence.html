@@ -573,8 +573,10 @@ dict2 = {'Hong Kong': 22.30858031775129, 114.16673551288073}
 
 <h2 id="字典鍵的特性">字典鍵的特性</h2>
 <p>字典值可以沒有限制地取任何 Python 對象，既可以是標準的對象，也可以是用戶定義的，但鍵不行。
-兩個重要的點需要記住：
-1. 不允許同一個鍵出現兩次。創建時如果同一個鍵被賦值兩次，後一個值會被記住，如下實例：</p>
+兩個重要的點需要記住：</p>
+<ol>
+<li>不允許同一個鍵出現兩次。創建時如果同一個鍵被賦值兩次，後一個值會被記住，如下實例：</li>
+</ol>
 <div class="codehilite"><pre><span></span><code><span class="n">dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="s1">'Country'</span><span class="err">:</span><span class="w"> </span><span class="s1">'China'</span><span class="p">,</span><span class="w"> </span><span class="s1">'abbreviation'</span><span class="err">:</span><span class="w"> </span><span class="s1">'CN'</span><span class="p">,</span><span class="w"> </span><span class="s1">'code'</span><span class="err">:</span><span class="w"> </span><span class="s1">'86'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Country'</span><span class="err">:</span><span class="w"> </span><span class="s1">'Taiwan'</span><span class="err">}</span>
 <span class="k">print</span><span class="p">(</span><span class="ss">"dict[Country]:"</span><span class="p">,</span><span class="w"> </span><span class="n">dict</span><span class="o">[</span><span class="n">'Country'</span><span class="o">]</span><span class="p">)</span>
 </code></pre></div>

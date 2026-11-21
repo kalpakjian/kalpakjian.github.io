@@ -4,57 +4,91 @@
 Django 是一個開源的 Python Web 框架，旨在讓開發過程變得更快捷且更方便維護。Django 強調重用性、低耦合、快速開發，以及 "Don't Repeat Yourself" (DRY) 的開發理念。這使得開發者能夠專注於應用邏輯，而不是解決低層次的細節問題，如 SQL 查詢的編寫或表單驗證。
 Django 最初由新聞網站的開發團隊設計，針對的是需要快速部署、修改頻繁且穩定性要求高的新聞內容管理系統。隨著時間推移，Django 被廣泛應用於不同類型的 Web 應用開發，如社交網絡、電子商務平臺、內容管理系統等。
 #### 1.1.1 Django 的主要特點
+
 1. 快速開發
+
 Django 的高層次抽象使得 Web 開發變得非常迅速。無論是處理表單、驗證數據，還是設計後臺管理系統，Django 提供了一整套高效工具來處理這些常見的需求。
+
 2. 完全功能的管理介面
+
 Django 內建了一個強大且可擴展的管理介面，使得網站管理員可以輕鬆管理網站內容。開發者只需定義模型，Django 就會自動生成對應的管理界面，這在開發 CMS （內容管理系統）時特別有用。
+
 3. 豐富的庫與模組
+
 Django 內建了眾多強大的工具和功能模組，如 ORM（對象關聯映射）、模板引擎、表單處理、URL 路由、驗證系統等等。此外，Django 社羣也非常活躍，提供了大量擴展和第三方模組來補充 Django 的原生功能。
+
 4. 安全性
+
 Django 提供了防範常見 Web 安全威脅的內建功能，如防止 SQL 注入、跨站腳本攻擊 (XSS)、跨站請求偽造 (CSRF) 等，保護網站免受攻擊。
+
 5. 可擴展性
+
 Django 的模組化設計使得它易於擴展和修改。無論是增加新的功能模塊，還是自定義框架的行為，Django 都能夠靈活適應。
 ### 1.2 使用 Django 進行基本開發 (MVT 框架)
 在學習 Django 之前，我們需要了解其架構模式。許多 Web 框架使用 MVC（Model-View-Controller）架構，Django 則使用一種叫做 MVT（Model-View-Template）的變體架構。
 #### 1.2.1 MVC 架構
 MVC 是一種軟體設計模式，用來將應用程序分成三個主要部分：
+
 - Model（模型）：負責數據邏輯和資料庫的互動。
 - View（視圖）：處理顯示邏輯，呈現數據給用戶。
 - Controller（控制器）：負責接受輸入並將其轉發給相應的模型和視圖。
+
 #### 1.2.2 MVT 架構
 
 <figure class="fig-svg"><svg viewBox="0 0 860 250" width="100%" role="img" aria-label="Django MVT 架構：瀏覽器、URL 路由、視圖、模型、模板與資料庫的關係" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><rect x="20" y="90" width="130" height="62" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="85" y="115" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="15" fill="#e6edf3">瀏覽器</text><text x="85" y="135" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#39d0d8">發送請求</text><rect x="190" y="90" width="130" height="62" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="255" y="115" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="15" fill="#e6edf3">urls.py</text><text x="255" y="135" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#39d0d8">URL 路由</text><rect x="360" y="20" width="130" height="62" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="425" y="45" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="15" fill="#e6edf3">View 視圖</text><text x="425" y="65" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#39d0d8">業務邏輯</text><rect x="360" y="160" width="130" height="62" rx="10" fill="#132030" stroke="#f0a04b" stroke-width="1.6"/><text x="425" y="185" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="15" fill="#e6edf3">Template</text><text x="425" y="205" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#39d0d8">模板渲染</text><rect x="540" y="20" width="130" height="62" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="605" y="45" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="15" fill="#e6edf3">Model 模型</text><text x="605" y="65" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#39d0d8">ORM</text><rect x="720" y="20" width="120" height="62" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="780" y="45" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="15" fill="#e6edf3">資料庫</text><text x="780" y="65" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#39d0d8">SQLite／PG</text><line x1="150" y1="121" x2="186" y2="121" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><line x1="320" y1="105" x2="356" y2="62" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><line x1="490" y1="51" x2="536" y2="51" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><line x1="670" y1="51" x2="716" y2="51" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><line x1="720" y1="70" x2="490" y2="70" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><line x1="425" y1="82" x2="425" y2="156" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><line x1="360" y1="191" x2="154" y2="155" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="700" y="118" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#39d0d8">查詢結果</text><text x="440" y="122" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#f0a04b">HTML</text></svg><figcaption>圖 1　Django 的 MVT 架構：請求經 URL 路由進入視圖，視圖透過模型存取資料庫，再把資料交給模板渲染成 HTML。</figcaption></figure>
 在 Django 中，MVT 架構替代了傳統的 MVC 架構：
+
 - Model（模型）：同樣負責數據邏輯和與資料庫的互動。Django 的 ORM（對象關聯映射）允許開發者使用 Python 對象來進行數據庫操作，而無需直接編寫 SQL。
 - View（視圖）：處理業務邏輯，從模型中獲取數據並將其傳遞給模板渲染。
 - Template（模板）：負責數據的顯示邏輯，將動態內容呈現在靜態 HTML 頁面中。
+
 ## Django 中 MVT 的具體角色
+
 1. Model：定義了應用的數據結構，並與資料庫直接互動。你可以在模型中定義字段和方法，來確保數據的完整性。
 2. View：處理應用邏輯，根據用戶的請求，從模型中獲取數據並將其傳遞給模板。視圖是控制應用業務流程的核心。
 3. Template：負責將視圖傳遞過來的數據渲染成 HTML，並發送給用戶的瀏覽器。
+
 ## Django 中的 URL 路由器
 在傳統的 MVC 架構中，控制器負責接受用戶的輸入並選擇相應的視圖。在 Django 中，這一功能被 URLConf（URL 配置）取代。Django 使用 URLConf 來定義 URL 模式，並將不同的 URL 分派給相應的視圖函數。
 ### 1.3 Django 的優勢與應用場景
 Django 的設計目標是簡化 Web 應用開發，無論是個人網站還是大型企業應用，它都能勝任。以下列出 Django 的一些應用場景以及其在不同領域的優勢。
 #### 1.3.1 Django 的優勢
+
 1. 高效開發
+
 Django 將開發中常見的任務，如數據庫操作、表單驗證、用戶認證等，進行高度封裝，開發者無需從零開始實現這些功能。這極大地提升了開發效率，讓開發者能在短時間內構建穩定的應用。
+
 2. 全面的文檔
+
 Django 擁有非常詳細且完整的官方文檔，涵蓋了從安裝、配置到高級功能的所有方面，這對於新手來說非常友好，也有助於解決開發中遇到的問題。
+
 3. 大規模社羣支持
+
 Django 擁有一個龐大且活躍的開發者社羣，社羣成員會定期分享擴展功能、解決常見問題，並開發許多第三方包以增強 Django 的功能。這意味著開發者能輕鬆找到解決方案，並可利用社羣資源來加速開發進度。
+
 4. 高安全性
+
 Django 默認集成了多種安全功能，避免開發者犯下常見的安全錯誤，這讓 Django 特別適合於對安全性要求高的項目，如銀行、電子商務等。
 #### 1.3.2 Django 的應用場景
+
 1. 內容管理系統 (CMS)
+
 許多內容驅動型網站，如新聞網站或博客系統，都使用 Django 來處理大規模的內容創建、管理與發布。Django 的管理介面能快速搭建出一個功能齊全的後臺管理系統，便於管理文章、標籤、分類等內容。
+
 2. 電子商務平臺
+
 Django 的 ORM 和強大的資料庫處理功能，使得它成為構建電子商務平臺的理想選擇。從管理產品、訂單、付款到處理用戶帳戶和物流，Django 能夠快速應對電子商務開發中的多種需求。
+
 3. 社交網絡
+
 Django 可以用來開發複雜的社交網絡，處理大量用戶生成的內容、消息推送、實時通信等。其擴展性使得開發者能輕鬆實現用戶關係、動態、消息系統等功能。
+
 4. 學術與研究網站
+
 許多教育機構、研究組織選擇使用 Django 來開發學術資源平臺。Django 的靈活性和高效開發特性，讓開發者可以迅速構建功能完善的學術系統，並處理大規模數據。
+
 5. 數據分析與視覺化
+
 由於 Django 與 Python 完美整合，開發者可以使用 Django 作為數據分析應用的後端框架，並結合 Python 的數據科學庫如 Pandas、NumPy 來進行數據處理與分析，實現強大的數據可視化功能。
 ### 1.4 Django 的社羣與資源
 作為一個成熟且受歡迎的框架，Django 擁有豐富的資源和社羣支持。無論是初學者還是經驗豐富的開發者，都可以從這些資源中受益，進一步提升開發技能。
@@ -63,8 +97,10 @@ Django 的官方文檔是學習框架最重要的資源之一。官方文檔提�
 官方文檔網址： $ \underline{\text{https://docs.djangoproject.com/zh-hans/stable/}} $
 #### 1.4.2 社羣論壇與線上資源
 Django 擁有活躍的社羣論壇，開發者可以在這些論壇上提出問題、分享經驗，並參與到社羣的討論中。以下是幾個受歡迎的 Django 社羣資源：
+
 - StackOverflow : Django 相關的提問和回答是 StackOverflow 上最活躍的 Python 相關話題之一。
 - Django 社羣論壇：提供了專門的 Django 討論區，讓開發者能相互交流和學習。
+
 #### 1.4.3 第三方擴展包
 Django 的第三方擴展包極為豐富，幾乎可以滿足所有的開發需求。從用戶驗證到 API 開發，這些包都經過社羣驗證，能快速集成到你的應用中。
 #### 1.4.4 Django 的版本更新
@@ -85,9 +121,11 @@ python --version
 ```
 若顯示的 Python 版本為 3.x.x，即表示已安裝正確版本。如果沒有安裝，請前往 Python 官方網站 下載並安裝最新的 Python 3.x 版本。
 ## 安裝 Python
+
 1. 進入 Python 官方下載頁面。
 2. 根據你的作業系統選擇相應的版本。
 3. 安裝時，請勾選 "Add Python to PATH" 選項，以確保可以在命令行中直接調用 python 命令。
+
 #### 2.1.2 安裝 pip
 pip 是 Python 的包管理工具，用來安裝、更新和管理 Python 軟件包。通常，Python 3.x 自帶 pip。你可以通過以下命令檢查 pip 是否已安裝：
 ```
@@ -188,14 +226,18 @@ manage.py 是 Django 的命令行工具，用於執行各種管理命令，如�
 python manage.py --help
 ```
 常用命令包括：
+
 - runserver：啟動開發伺服器。
 - migrate：執行資料庫遷移。
 - createsuperuser：創建超級用戶（管理員帳戶）。
 - startapp：創建一個新的 Django 應用。
+
 2.5.2 settings.py
 settings.py 是 Django 專案的配置文件，定義了數據庫配置、應用列表、中間件、模板路徑等。在開發過程中，你將頻繁修改這個文件來配置你的專案。
 ## 關鍵配置項目
+
 - DEBUG：設置為 True，表示處於開發模式，將顯示詳細的錯誤信息。發布到生產環境時應設置為 False。
+
 \*\*ALLOWED
 HOSTS\*\*：定義允許訪問 Django 應用的域名列表。在開發環境下通常設置為空列表，但在生產環境中必須指定具體的域名。
 INSTALLED_APPS：列出所有已安裝並啟用的 Django 應用。你將會在此處添加自定義應用或第三方擴展包。
@@ -229,3 +271,4 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 ```
 3: Django 中的 Project 與 App，配置 settings.py 和 manage.py 命令
 在 Django 框架中，Project（項目）和 App（應用）是兩個基本概念。理解這兩者之間的區別對於構建高效、可擴展的應用程序至關重要。此外，Django 提供了靈活的配置系統，通過 settings.py 文件來管理項目的全局設置，同時提供了 manage.py 命令來管理和運行開發相關的任務。本章將詳細介紹 Project 和 App 之間的區別，配置 settings.py，以及 常見的 manage.py 命令 和它們的使用場景。
+

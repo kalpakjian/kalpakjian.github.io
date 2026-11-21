@@ -50,6 +50,25 @@ CONTENT_FIXES = [
         '請先 <a href="/login/" >登入</a> 。 </p>',
         '需要登入才能看內容時，模板用 `{% url \'login\' %}` 產生登入連結（`<a>` 連結文字寫「登入」）。',
     ),
+    # UML 1.3：編號清單改成縮排小點
+    (
+        "1. 用例圖（Use Case Diagram）：描述系統與外部使用者之間的互動。\n"
+        "2. 類圖（Class Diagram）：描述系統中的類及其關係。\n"
+        "3. 對象圖（Object Diagram）：描述系統在某一時刻的對象及其關係。\n"
+        "4. 序列圖（Sequence Diagram）：描述對象之間的交互順序。\n"
+        "5. 活動圖（Activity Diagram）：描述系統中的活動流程。\n"
+        "6. 狀態圖（State Diagram）：描述對象在不同狀態下的行為。\n"
+        "7. 組件圖（Component Diagram）：描述系統的物理組件及其依賴關係。\n"
+        "8. 部署圖（Deployment Diagram）：描述系統的物理佈署結構。",
+        "- 用例圖（Use Case Diagram）：描述系統與外部使用者之間的互動。\n"
+        "- 類圖（Class Diagram）：描述系統中的類及其關係。\n"
+        "- 對象圖（Object Diagram）：描述系統在某一時刻的對象及其關係。\n"
+        "- 序列圖（Sequence Diagram）：描述對象之間的交互順序。\n"
+        "- 活動圖（Activity Diagram）：描述系統中的活動流程。\n"
+        "- 狀態圖（State Diagram）：描述對象在不同狀態下的行為。\n"
+        "- 組件圖（Component Diagram）：描述系統的物理組件及其依賴關係。\n"
+        "- 部署圖（Deployment Diagram）：描述系統的物理佈署結構。",
+    ),
 ]
 
 # 2026-11 覆核：前端／Actions 版本 + 教材年份留下的工具（只加一句時代註記，不改寫教材結構）
@@ -523,6 +542,32 @@ def _strip_ocr_junk(text):
     return "\n".join(fixed) + "\n"
 
 
+def _space_lists(text):
+    """清單前後補空行：Markdown 的清單緊貼段落時，整段會被當成普通文字（或吃掉編號）。"""
+    out, prev, in_code = [], "", False
+    for line in text.splitlines():
+        if line.startswith(FENCE):
+            in_code = not in_code
+            out.append(line)
+            prev = line
+            continue
+        if in_code:
+            out.append(line)
+            prev = line
+            continue
+        s = line.strip()
+        is_item = bool(re.match(r"^(- |\d+\. )", s))
+        prev_s = prev.strip()
+        prev_item = bool(re.match(r"^(- |\d+\. )", prev_s))
+        if s and is_item and prev_s and not prev_item:
+            out.append("")                      # 清單前補空行
+        if prev_s and prev_item and s and not is_item:
+            out.append("")                      # 清單後接標題或內文也補（否則標題會被吸進最後一項）
+        out.append(line)
+        prev = line
+    return "\n".join(out) + "\n"
+
+
 def _fix_placeholders(code):
     """教材骨架的佔位行（單一個 . 或 <statement-N>）→ 註解；只有宣告沒有 body → 補 pass。"""
     lines = [("# ." if ln.strip() == "." else ln) for ln in code.splitlines()]
@@ -616,6 +661,7 @@ def render_md(items, no, title):
         text = text.replace(old, new)
     text = STATIC_BLOCK_RE.sub(STATIC_BLOCK_FIX, text)
     text = INTEGRITY_RE.sub("", text)
+    text = _space_lists(text)  # 清單前後補空行（全站 495 處緊貼段落）
     # 正文的 ** 是冪運算符或 OCR 裝飾線，留在正文會被當成粗體配對 → 轉義（程式碼區塊內不動）
     lines, in_code = [], False
     for ln in text.split("\n"):

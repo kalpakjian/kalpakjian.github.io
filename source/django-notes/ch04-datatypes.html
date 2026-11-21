@@ -338,9 +338,9 @@ isinstance ()會認為子類是一種父類類型。</p>
 <li>Python 可以同時為多個變量賦值，如 a, b = 1, 2。</li>
 <li>一個變量可以通過賦值指向不同類型的對象。</li>
 <li>數值的除法（/）總是返回一個浮點數，要獲取整數使用//操作符。</li>
-<li>在混合計算時，Python 會把整型轉換成為浮點數 String（字符串）
-Python 中的字符串 str 用單引號('')或雙引號("") 括起來，同時使用反斜槓() 轉義特殊字符。</li>
+<li>在混合計算時，Python 會把整型轉換成為浮點數 String（字符串）</li>
 </ol>
+<p>Python 中的字符串 str 用單引號('')或雙引號("") 括起來，同時使用反斜槓() 轉義特殊字符。</p>
 <div class="codehilite"><pre><span></span><code><span class="nx">s</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">'</span><span class="nx">Yes</span><span class="p">,</span><span class="w"> </span><span class="nx">he</span><span class="w"> </span><span class="nx">doesn</span><span class="err">\</span><span class="sc">'t'</span>
 <span class="nx">print</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">(</span><span class="nx">s</span><span class="p">),</span><span class="w"> </span><span class="nx">len</span><span class="p">(</span><span class="nx">s</span><span class="p">))</span>
 </code></pre></div>
@@ -373,11 +373,13 @@ print(word[-1], word[-6])
 </code></pre></div>
 
 <p>與 C 字符串不同的是，Python 字符串不能被改變。向一個索引位置賦值，比如 word[0] = 'm' 會導致錯誤。
-注意：
-1. 反斜槓可以用來轉義，使用 r 可以讓反斜槓不發生轉義。
-2. 字符串可以用+ 運算符連接在一起，用* 運算符重複。
-3. Python 中的字符串有兩種索引方式，從左往右以 0 開始，從右往左以 -1 開始。
-4. Python 中的字符串不能改變。</p>
+注意：</p>
+<ol>
+<li>反斜槓可以用來轉義，使用 r 可以讓反斜槓不發生轉義。</li>
+<li>字符串可以用+ 運算符連接在一起，用* 運算符重複。</li>
+<li>Python 中的字符串有兩種索引方式，從左往右以 0 開始，從右往左以 -1 開始。</li>
+<li>Python 中的字符串不能改變。</li>
+</ol>
 <div class="codehilite"><pre><span></span><code>(index1.py)
 </code></pre></div>
 
@@ -406,11 +408,13 @@ a
 </code></pre></div>
 
 <p>List 內置了很多方法，例如 append()、pop() 等等，這在後面會講到。
-注意：
-1. List 寫在方括號之間，元素用逗號隔開。
-2. 和字符串一樣，List 可以被索引和切片。
-3. List 可以使用+ 操作符進行拼接。
-4. List 中的元素是可以改變的。</p>
+注意：</p>
+<ol>
+<li>List 寫在方括號之間，元素用逗號隔開。</li>
+<li>和字符串一樣，List 可以被索引和切片。</li>
+<li>List 可以使用+ 操作符進行拼接。</li>
+<li>List 中的元素是可以改變的。</li>
+</ol>
 <div class="codehilite"><pre><span></span><code>(index2.py)
 </code></pre></div>
 
@@ -440,11 +444,13 @@ print(tup1 + tup2)
 </code></pre></div>
 
 <p>string、list 和 tuple 都屬於 sequence （序列）。
-注意：
-1. 與字符串一樣，元組的元素不能修改。
-2. 元組也可以被索引和切片，方法都是一樣的。
-3. 注意構造包含 0 或 1 個元素的元組的特殊語法規則。
-4. 元組也可以使用+ 操作符進行拼接。</p>
+注意：</p>
+<ol>
+<li>與字符串一樣，元組的元素不能修改。</li>
+<li>元組也可以被索引和切片，方法都是一樣的。</li>
+<li>注意構造包含 0 或 1 個元素的元組的特殊語法規則。</li>
+<li>元組也可以使用+ 操作符進行拼接。</li>
+</ol>
 <div class="codehilite"><pre><span></span><code>(index3.py)
 </code></pre></div>
 
@@ -483,10 +489,12 @@ tel['Mary'] = 4127 # 添加一個鍵值對</p>
 <p>list(tel.keys()) # 返回所有key組成的list
 sorted(tel.keys()) # 按key排序
 另外，字典類型也有一些內置的函數，例如 clear()、keys()、values() 等。
-注意：
-1. 字典是一種映射類型，它的元素是鍵值對。
-2. 字典的關鍵字必須為不可變類型，且不能重複。
-3. 創建空字典使用{}。</p>
+注意：</p>
+<ol>
+<li>字典是一種映射類型，它的元素是鍵值對。</li>
+<li>字典的關鍵字必須為不可變類型，且不能重複。</li>
+<li>創建空字典使用{}。</li>
+</ol>
 <div class="codehilite"><pre><span></span><code>(index5.py)
 </code></pre></div>
 
@@ -1088,12 +1096,14 @@ a + (b * c) / d 運算結果為：50.0</p>
 浮點型(float) - 浮點型由整數部分與小數部分組成，浮點型也可以使用科學計數法表示 $ (2.5e2 = 2.5 \times 10^{2} = 250) $
 複數( (complex)) - 複數由實數部分和虛數部分構成，可以用 a + bj,或者 complex(a,b)表示，複數的實部 a 和虛部 b 都是浮點型。</p>
 <h2 id="python-數字類型轉換">Python 數字類型轉換</h2>
-<p>我們需要對數據內置的類型進行轉換，數據類型的轉換，你只需要將數據類型作為函數名即可。
-- nt(x)將 x 轉換為一個整數。
-- $ \text{loat}(x) $ 將 x 轉換到一個浮點數。
-- complex(x)將 x 轉換到一個複數，實數部分為 x ，虛數部分為 0 。
-- complex(x, y)將 x 和 y 轉換到一個複數，實數部分為 x ，虛數部分為 y 。 x 和 y 是數字表達式。
-以下實例將浮點數變量 a 轉換為整數：</p>
+<p>我們需要對數據內置的類型進行轉換，數據類型的轉換，你只需要將數據類型作為函數名即可。</p>
+<ul>
+<li>nt(x)將 x 轉換為一個整數。</li>
+<li>$ \text{loat}(x) $ 將 x 轉換到一個浮點數。</li>
+<li>complex(x)將 x 轉換到一個複數，實數部分為 x ，虛數部分為 0 。</li>
+<li>complex(x, y)將 x 和 y 轉換到一個複數，實數部分為 x ，虛數部分為 y 。 x 和 y 是數字表達式。</li>
+</ul>
+<p>以下實例將浮點數變量 a 轉換為整數：</p>
 <div class="codehilite"><pre><span></span><code>a = 1.0
 int(a)
 1

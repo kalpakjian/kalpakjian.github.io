@@ -2,8 +2,10 @@
 ### 3.1 Django 的 Project 與 App
 #### 3.1.1 概述
 在 Django 框架中，Project（項目）是一個整體的 Web 應用，包含所有配置和設置，而 App（應用）是 Project 中的一個功能模塊。Django 鼓勵將應用劃分為多個功能模塊，以便更好地管理代碼、實現重用和分離關注點。
+
 - Project：是 Django 應用的最外層容器，包含了所有設置、URL 配置和應用列表。
 - App：是一個功能具體的模塊，例如博客應用、用戶認證應用等。每個應用應該專注於一個特定功能，並能夠被多個項目重用。
+
 #### 3.1.2 Django Project 的結構
 當你使用 django-admin startproject 命令創建一個 Django 項目時，Django 會自動生成一個項目目錄，並為你配置好一個基礎結構。以下是典型的 Django Project 結構：
 ```
@@ -16,13 +18,17 @@ urls.py
 asgi.py
 wsgi.py
 ```
+
 - manage.py：這是一個命令行工具，用來管理 Django 項目的運行和調試。通過這個文件，你可以執行各種與項目相關的操作，例如遷移數據庫、運行開發伺服器等。
 - myproject/：內部文件夾，與項目同名，包含項目的核心設置和配置。
+
 。__init__.py：一個空文件，用於將目錄標記為 Python 包。
+
 - settings.py：項目的配置文件，管理項目的全局設置（如數據庫配置、靜態文件路徑等）。
 - urls.py：項目的 URL 配置文件，管理 URL 和視圖之間的映射。
 - asgi.py：ASGI 配置文件，用於異步服務的部署。
 - wsgi.py：WSGI 配置文件，用於傳統服務的部署。
+
 #### 3.1.3 Django App 的結構
 Django 的每個應用都是一個獨立的模塊，可以被不同的項目共享和重用。當你創建一個應用時（使用 python manage.py startapp），Django 會為你生成一個應用的基本結構：
 ```
@@ -36,6 +42,7 @@ models.py
 views.py
 tests.py
 ```
+
 - migrations/：這個目錄存放應用的數據庫遷移文件。每當你修改模型時，Django會生成相應的遷移文件。
 - __init__.py：這是一個空文件，標記目錄為 Python 包。
 - admin.py：用於定義應用在 Django 管理站點中的配置，這裡可以註冊模型並定義其在管理後臺的呈現方式。
@@ -43,13 +50,16 @@ tests.py
 - models.py：應用的模型定義文件，管理與資料庫表相關的代碼。
 - views.py：應用的視圖文件，處理用戶請求並返回響應。
 - tests.py：應用的測試文件，用於編寫單元測試和集成測試，確保應用的功能正常。
+
 #### 3.1.4 Project 和 App 之間的關係
 Project 和 App 之間的關係是一種 容器與組件的關係。Project 是一個更高層次的容器，管理應用的配置和統一入口，而 App 是具體的功能模塊，Project 可以包含多個 App。
 ## Project 是全局配置的核心
 Project 包含了整個 Django 應用的全局配置，管理應用的生命週期。這裡是 Project 負責的幾個重要方面：
+
 - 全局設置：如數據庫連接、靜態文件、語言和時區等。
 - URL 路由：定義應用的 URL 結構，將不同的 URL 路由到對應的 App 和視圖。
 - 應用的註冊：Project 通過 settings.py 中的 INSTALLED_APPS 註冊所有的 App，確保 Django 認識到它們的存在。
+
 ## App 是功能模塊的組成部分
 App 專注於具體的功能開發，專為某個功能（如博客、認證等）設計和構建。每個 App 之間可以相對獨立運行和開發，這為重用性提供了便利。
 ## Project 可以包含多個 App
@@ -84,9 +94,11 @@ views.py
 #### 3.1.5 什麼時候應該創建新的 App
 決定是否創建一個新 App 取決於你所開發的功能是否可以被視為一個獨立的模塊。如果這個功能將來可能會被重用或有單獨的責任範圍，那麼創建一個新 App 是更好的選擇。
 以下情況下應考慮創建新 App：
+
 - 功能劃分明確：當功能與現有應用邏輯無關時，應考慮創建新 App。例如，用戶認證系統和博客系統應該是兩個獨立的 App。
 - 邏輯隔離：當一個功能模塊的邏輯過於複雜且無法與現有應用進行良好的集成時，應創建新 App。
 - 未來重用：如果這個功能模塊將來可能會被其他項目重用，那麼將其封裝為一個獨立的 App 可以更容易進行遷移和整合。
+
 ### 3.2 配置 settings.py
 settings.py 是 Django 項目中最重要的配置文件之一，負責管理項目的全局設置。這個文件中包含了與數據庫、靜態文件、應用程序等相關的設置。
 #### 3.2.1 settings.py 文件的結構
@@ -262,6 +274,7 @@ python manage.py test
 #### 3.3.2 自定義 manage.py 命令
 Django 允許你創建自定義的 manage.py 命令來處理一些特定的操作。這對於需要自動化任務或管理工具的項目特別有用。
 範例：創建自定義命令
+
 1. 在應用的 management/commands/ 目錄下創建一個新的 Python 文件。結構如下：
 ```
 myapp/
@@ -269,6 +282,7 @@ management/
 commands/
 mycommand.py
 ```
+
 2. 編寫自定義命令邏輯：
 ```
 from django.core.management.base import BaseCommand
@@ -278,6 +292,7 @@ def handle(self, *args, **kwargs):
     pass  # 內容省略
 ```
 self.stdout.write("執行自定義命令")
+
 3. 執行自定義命令：
 ```
 python manage.py mycommand
@@ -308,15 +323,19 @@ urlpatterns = [
 ]
 ```
 在這個範例中，我們定義了三個 URL 路徑：
+
 1. /admin/：對應 Django 自帶的管理後臺。
 2. /：對應網站的首頁，當用戶訪問根 URL（即 http://127.0.0.1:8000/）時，views.index 函數將被調用。
 3. /about/：對應 "關於我們" 頁面，該頁面的處理邏輯位於 views.about 中。
+
 每個 URL 路徑都與具體的視圖函數關聯，並且可以為其命名（通過 name 參數），以便在模板或其他視圖中進行 URL 反向解析。
 ### 4.2 URL 路由的基礎
 #### 4.2.1 靜態 URL 與動態 URL
 在 Django 中，URL 可以分為 靜態 URL 和 動態 URL：
+
 - 靜態 URL 是不變的路徑，用於訪問固定的頁面。例如，/about/ 是一個靜態 URL，它永遠指向 "關於我們" 頁面。
 - 動態 URL 是可以變化的 URL，它包含動態變量，允許根據不同的參數生成不同的頁面內容。例如，博客文章的 URL 可以包含文章的 ID，從而動態生成不同的文章頁面。
+
 範例：定義靜態和動態 URL
 path('about/', views.about, name='about'), # 靜態 URL
 path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL
@@ -330,11 +349,13 @@ urlpatterns = [
 在這裡，about/ 是靜態 URL，無論何時訪問，總是映射到同一個 "關於我們" 頁面。post/<int:id>/ 是動態 URL，其中 <int:id> 是一個變量，它表示動態部分，用於表示文章的 ID。
 #### 4.2.2 URL 路徑轉換器
 Django 提供了多種 路徑轉換器，用於定義 URL 中動態部分的數據類型。常見的路徑轉換器包括：
+
 - <int:variable>：匹配一個整數。
 - <str:variable>：匹配一個字符串。
 - <slug:variable>：匹配一個 slug（短標題，由字母、數字、連字符和下劃線組成）。
 - <uuid:variable>：匹配一個 UUID。
 - <path:variable>：匹配完整的路徑，包括斜線。
+
 範例：使用路徑轉換器
 path('post/<int:id>/, views.post_detail, name='post_detail'), # 匹配整數 ID
 path('category/<slug:slug>/, views.category_detail, name='category_detail'), # 匹配 slug
@@ -350,10 +371,12 @@ Django 使用 path() 函數來定義 URL 模式並將其映射到視圖。path()
 ```
 path(route, view, kwargs=None, name=None)
 ```
+
 - route：定義 URL 模式，是用戶請求的 URL 路徑（如 'about/' 或 'post/<int:id>/'）。
 - view：指定當 URL 匹配時調用的視圖函數。
 - kwargs：一個可選的關鍵字參數字典，將會傳遞給視圖。
 - name：URL 模式的名稱，允許你在其他地方（如模板）使用這個名稱來引用該 URL。
+
 範例：使用 path() 定義 URL
 path("views.index, name='index'), # 定義根 URL
 path('contact/', views.contact, name='contact'), # 靜態 URL
@@ -481,3 +504,4 @@ def submit_comment(request, post_id):
 5: Django 視圖系統
 視圖（Views）是 Django 框架的核心組件之一，負責處理用戶的 HTTP 請求並生成相應的 HTTP 響應。在 Django 中，視圖的作用是將業務邏輯和數據處理集中在一個函數或類中，然後通過將結果返回給用戶。視圖還負責與模板進行交互，從而生成動態的 HTML 頁面。
 在本章中，我們將深入探討 Django 視圖的概念，並詳細介紹 函數視圖 和 類視圖的區別，學習如何處理 GET 和 POST 請求，以及如何將視圖與 URL 進行連接 和上下文與模板的交互。
+

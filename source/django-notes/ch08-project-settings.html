@@ -273,9 +273,11 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 <h1 id="第-8-章--projectapp-與-settings-配置">第 8 章 · Project、App 與 settings 配置</h1>
 <h3 id="31-django-的-project-與-app">3.1 Django 的 Project 與 App</h3>
 <h4 id="311-概述">3.1.1 概述</h4>
-<p>在 Django 框架中，Project（項目）是一個整體的 Web 應用，包含所有配置和設置，而 App（應用）是 Project 中的一個功能模塊。Django 鼓勵將應用劃分為多個功能模塊，以便更好地管理代碼、實現重用和分離關注點。
-- Project：是 Django 應用的最外層容器，包含了所有設置、URL 配置和應用列表。
-- App：是一個功能具體的模塊，例如博客應用、用戶認證應用等。每個應用應該專注於一個特定功能，並能夠被多個項目重用。</p>
+<p>在 Django 框架中，Project（項目）是一個整體的 Web 應用，包含所有配置和設置，而 App（應用）是 Project 中的一個功能模塊。Django 鼓勵將應用劃分為多個功能模塊，以便更好地管理代碼、實現重用和分離關注點。</p>
+<ul>
+<li>Project：是 Django 應用的最外層容器，包含了所有設置、URL 配置和應用列表。</li>
+<li>App：是一個功能具體的模塊，例如博客應用、用戶認證應用等。每個應用應該專注於一個特定功能，並能夠被多個項目重用。</li>
+</ul>
 <h4 id="312-django-project-的結構">3.1.2 Django Project 的結構</h4>
 <p>當你使用 django-admin startproject 命令創建一個 Django 項目時，Django 會自動生成一個項目目錄，並為你配置好一個基礎結構。以下是典型的 Django Project 結構：</p>
 <div class="codehilite"><pre><span></span><code>myproject/
@@ -290,8 +292,10 @@ wsgi.py
 
 <ul>
 <li>manage.py：這是一個命令行工具，用來管理 Django 項目的運行和調試。通過這個文件，你可以執行各種與項目相關的操作，例如遷移數據庫、運行開發伺服器等。</li>
-<li>myproject/：內部文件夾，與項目同名，包含項目的核心設置和配置。
-。<strong>init</strong>.py：一個空文件，用於將目錄標記為 Python 包。</li>
+<li>myproject/：內部文件夾，與項目同名，包含項目的核心設置和配置。</li>
+</ul>
+<p>。<strong>init</strong>.py：一個空文件，用於將目錄標記為 Python 包。</p>
+<ul>
 <li>settings.py：項目的配置文件，管理項目的全局設置（如數據庫配置、靜態文件路徑等）。</li>
 <li>urls.py：項目的 URL 配置文件，管理 URL 和視圖之間的映射。</li>
 <li>asgi.py：ASGI 配置文件，用於異步服務的部署。</li>
@@ -322,10 +326,12 @@ tests.py
 <h4 id="314-project-和-app-之間的關係">3.1.4 Project 和 App 之間的關係</h4>
 <p>Project 和 App 之間的關係是一種 容器與組件的關係。Project 是一個更高層次的容器，管理應用的配置和統一入口，而 App 是具體的功能模塊，Project 可以包含多個 App。</p>
 <h2 id="project-是全局配置的核心">Project 是全局配置的核心</h2>
-<p>Project 包含了整個 Django 應用的全局配置，管理應用的生命週期。這裡是 Project 負責的幾個重要方面：
-- 全局設置：如數據庫連接、靜態文件、語言和時區等。
-- URL 路由：定義應用的 URL 結構，將不同的 URL 路由到對應的 App 和視圖。
-- 應用的註冊：Project 通過 settings.py 中的 INSTALLED_APPS 註冊所有的 App，確保 Django 認識到它們的存在。</p>
+<p>Project 包含了整個 Django 應用的全局配置，管理應用的生命週期。這裡是 Project 負責的幾個重要方面：</p>
+<ul>
+<li>全局設置：如數據庫連接、靜態文件、語言和時區等。</li>
+<li>URL 路由：定義應用的 URL 結構，將不同的 URL 路由到對應的 App 和視圖。</li>
+<li>應用的註冊：Project 通過 settings.py 中的 INSTALLED_APPS 註冊所有的 App，確保 Django 認識到它們的存在。</li>
+</ul>
 <h2 id="app-是功能模塊的組成部分">App 是功能模塊的組成部分</h2>
 <p>App 專注於具體的功能開發，專為某個功能（如博客、認證等）設計和構建。每個 App 之間可以相對獨立運行和開發，這為重用性提供了便利。</p>
 <h2 id="project-可以包含多個-app">Project 可以包含多個 App</h2>
@@ -359,10 +365,12 @@ views.py
 <p>在這個例子中，blog 是一個博客應用，負責處理與文章、評論相關的邏輯，而 accounts 則負責用戶帳戶管理。這兩個應用都屬於同一個 Project，它們之間可以共存並互相配合工作。</p>
 <h4 id="315-什麼時候應該創建新的-app">3.1.5 什麼時候應該創建新的 App</h4>
 <p>決定是否創建一個新 App 取決於你所開發的功能是否可以被視為一個獨立的模塊。如果這個功能將來可能會被重用或有單獨的責任範圍，那麼創建一個新 App 是更好的選擇。
-以下情況下應考慮創建新 App：
-- 功能劃分明確：當功能與現有應用邏輯無關時，應考慮創建新 App。例如，用戶認證系統和博客系統應該是兩個獨立的 App。
-- 邏輯隔離：當一個功能模塊的邏輯過於複雜且無法與現有應用進行良好的集成時，應創建新 App。
-- 未來重用：如果這個功能模塊將來可能會被其他項目重用，那麼將其封裝為一個獨立的 App 可以更容易進行遷移和整合。</p>
+以下情況下應考慮創建新 App：</p>
+<ul>
+<li>功能劃分明確：當功能與現有應用邏輯無關時，應考慮創建新 App。例如，用戶認證系統和博客系統應該是兩個獨立的 App。</li>
+<li>邏輯隔離：當一個功能模塊的邏輯過於複雜且無法與現有應用進行良好的集成時，應創建新 App。</li>
+<li>未來重用：如果這個功能模塊將來可能會被其他項目重用，那麼將其封裝為一個獨立的 App 可以更容易進行遷移和整合。</li>
+</ul>
 <h3 id="32-配置-settingspy">3.2 配置 settings.py</h3>
 <p>settings.py 是 Django 項目中最重要的配置文件之一，負責管理項目的全局設置。這個文件中包含了與數據庫、靜態文件、應用程序等相關的設置。</p>
 <h4 id="321-settingspy-文件的結構">3.2.1 settings.py 文件的結構</h4>
@@ -537,8 +545,10 @@ createsuperuser
 <p>這會運行所有已經定義的測試用例。</p>
 <h4 id="332-自定義-managepy-命令">3.3.2 自定義 manage.py 命令</h4>
 <p>Django 允許你創建自定義的 manage.py 命令來處理一些特定的操作。這對於需要自動化任務或管理工具的項目特別有用。
-範例：創建自定義命令
-1. 在應用的 management/commands/ 目錄下創建一個新的 Python 文件。結構如下：</p>
+範例：創建自定義命令</p>
+<ol>
+<li>在應用的 management/commands/ 目錄下創建一個新的 Python 文件。結構如下：</li>
+</ol>
 <div class="codehilite"><pre><span></span><code>myapp/
 management/
 commands/
@@ -555,8 +565,10 @@ mycommand.py
     <span class="k">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
-<p>self.stdout.write("執行自定義命令")
-3. 執行自定義命令：</p>
+<p>self.stdout.write("執行自定義命令")</p>
+<ol start="3">
+<li>執行自定義命令：</li>
+</ol>
 <div class="codehilite"><pre><span></span><code>python manage.py mycommand
 </code></pre></div>
 
@@ -584,17 +596,21 @@ path('about/', views.about, name='about'), # 靜態 "關於我們" 頁面</p>
 <span class="p">]</span>
 </code></pre></div>
 
-<p>在這個範例中，我們定義了三個 URL 路徑：
-1. /admin/：對應 Django 自帶的管理後臺。
-2. /：對應網站的首頁，當用戶訪問根 URL（即 http://127.0.0.1:8000/）時，views.index 函數將被調用。
-3. /about/：對應 "關於我們" 頁面，該頁面的處理邏輯位於 views.about 中。
-每個 URL 路徑都與具體的視圖函數關聯，並且可以為其命名（通過 name 參數），以便在模板或其他視圖中進行 URL 反向解析。</p>
+<p>在這個範例中，我們定義了三個 URL 路徑：</p>
+<ol>
+<li>/admin/：對應 Django 自帶的管理後臺。</li>
+<li>/：對應網站的首頁，當用戶訪問根 URL（即 http://127.0.0.1:8000/）時，views.index 函數將被調用。</li>
+<li>/about/：對應 "關於我們" 頁面，該頁面的處理邏輯位於 views.about 中。</li>
+</ol>
+<p>每個 URL 路徑都與具體的視圖函數關聯，並且可以為其命名（通過 name 參數），以便在模板或其他視圖中進行 URL 反向解析。</p>
 <h3 id="42-url-路由的基礎">4.2 URL 路由的基礎</h3>
 <h4 id="421-靜態-url-與動態-url">4.2.1 靜態 URL 與動態 URL</h4>
-<p>在 Django 中，URL 可以分為 靜態 URL 和 動態 URL：
-- 靜態 URL 是不變的路徑，用於訪問固定的頁面。例如，/about/ 是一個靜態 URL，它永遠指向 "關於我們" 頁面。
-- 動態 URL 是可以變化的 URL，它包含動態變量，允許根據不同的參數生成不同的頁面內容。例如，博客文章的 URL 可以包含文章的 ID，從而動態生成不同的文章頁面。
-範例：定義靜態和動態 URL
+<p>在 Django 中，URL 可以分為 靜態 URL 和 動態 URL：</p>
+<ul>
+<li>靜態 URL 是不變的路徑，用於訪問固定的頁面。例如，/about/ 是一個靜態 URL，它永遠指向 "關於我們" 頁面。</li>
+<li>動態 URL 是可以變化的 URL，它包含動態變量，允許根據不同的參數生成不同的頁面內容。例如，博客文章的 URL 可以包含文章的 ID，從而動態生成不同的文章頁面。</li>
+</ul>
+<p>範例：定義靜態和動態 URL
 path('about/', views.about, name='about'), # 靜態 URL
 path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/urls.py</span>
@@ -606,13 +622,15 @@ path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL</p>
 
 <p>在這裡，about/ 是靜態 URL，無論何時訪問，總是映射到同一個 "關於我們" 頁面。post/<int:id>/ 是動態 URL，其中 <int:id> 是一個變量，它表示動態部分，用於表示文章的 ID。</p>
 <h4 id="422-url-路徑轉換器">4.2.2 URL 路徑轉換器</h4>
-<p>Django 提供了多種 路徑轉換器，用於定義 URL 中動態部分的數據類型。常見的路徑轉換器包括：
-- <int:variable>：匹配一個整數。
-- <str:variable>：匹配一個字符串。
-- <slug:variable>：匹配一個 slug（短標題，由字母、數字、連字符和下劃線組成）。
-- <uuid:variable>：匹配一個 UUID。
-- <path:variable>：匹配完整的路徑，包括斜線。
-範例：使用路徑轉換器
+<p>Django 提供了多種 路徑轉換器，用於定義 URL 中動態部分的數據類型。常見的路徑轉換器包括：</p>
+<ul>
+<li><int:variable>：匹配一個整數。</li>
+<li><str:variable>：匹配一個字符串。</li>
+<li><slug:variable>：匹配一個 slug（短標題，由字母、數字、連字符和下劃線組成）。</li>
+<li><uuid:variable>：匹配一個 UUID。</li>
+<li><path:variable>：匹配完整的路徑，包括斜線。</li>
+</ul>
+<p>範例：使用路徑轉換器
 path('post/<int:id>/, views.post_detail, name='post_detail'), # 匹配整數 ID
 path('category/<slug:slug>/, views.category_detail, name='category_detail'), # 匹配 slug</p>
 <div class="codehilite"><pre><span></span><code># 使用不同的路徑轉換器來匹配不同類型的動態 URL
@@ -631,12 +649,12 @@ urlpatterns = [
 <li>route：定義 URL 模式，是用戶請求的 URL 路徑（如 'about/' 或 'post/<int:id>/'）。</li>
 <li>view：指定當 URL 匹配時調用的視圖函數。</li>
 <li>kwargs：一個可選的關鍵字參數字典，將會傳遞給視圖。</li>
-<li>name：URL 模式的名稱，允許你在其他地方（如模板）使用這個名稱來引用該 URL。
-範例：使用 path() 定義 URL
+<li>name：URL 模式的名稱，允許你在其他地方（如模板）使用這個名稱來引用該 URL。</li>
+</ul>
+<p>範例：使用 path() 定義 URL
 path("views.index, name='index'), # 定義根 URL
 path('contact/', views.contact, name='contact'), # 靜態 URL
-path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL</li>
-</ul>
+path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/urls.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
