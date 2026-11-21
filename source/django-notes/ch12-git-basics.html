@@ -217,6 +217,9 @@ main .sub{font-size:13px;color:var(--muted);margin:-8px 0 16px}
 figure.hero{margin:0 0 26px}
 figure.hero img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);display:block}
 figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-align:center}
+figure.fig-svg{margin:22px 0 26px}
+figure.fig-svg svg{display:block;width:100%;height:auto;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;text-align:center}
 .chnav{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0 10px;font-size:13px}
 .chnav a{flex:1;min-width:150px;text-align:center;text-decoration:none;color:var(--accent2);
   border:1px solid var(--border);border-radius:6px;padding:9px 10px;background:#fff}
@@ -2443,6 +2446,8 @@ git co branch-name
 <h4 id="621-git-flow-概述">6.2.1 Git Flow 概述</h4>
 <p>Git Flow 是由 Vincent Driessen 提出的工作流程，適用於大型項目，具有嚴格的分支管理策略。它使用了多個長期分支和短期分支來管理代碼。</p>
 <h4 id="622-git-flow-的分支模型">6.2.2 Git Flow 的分支模型</h4>
+<figure class="fig-svg"><svg viewBox="0 0 860 250" width="100%" role="img" aria-label="Git Flow 分支模型：main、develop、feature、release、hotfix" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><line x1="150" y1="170" x2="820" y2="170" stroke="#2c6fb1" stroke-width="2"/><line x1="150" y1="120" x2="820" y2="120" stroke="#39d0d8" stroke-width="2"/><line x1="200" y1="120" x2="330" y2="70" stroke="#f0a04b" stroke-width="1.8"/><line x1="330" y1="70" x2="420" y2="120" stroke="#f0a04b" stroke-width="1.8"/><line x1="450" y1="120" x2="560" y2="30" stroke="#f0a04b" stroke-width="1.8"/><line x1="560" y1="30" x2="640" y2="170" stroke="#f0a04b" stroke-width="1.8"/><line x1="640" y1="170" x2="760" y2="210" stroke="#f0a04b" stroke-width="1.8"/><line x1="760" y1="210" x2="800" y2="170" stroke="#f0a04b" stroke-width="1.8"/><circle cx="120" cy="170" r="5" fill="#39d0d8"/><circle cx="200" cy="170" r="5" fill="#39d0d8"/><circle cx="420" cy="170" r="5" fill="#39d0d8"/><circle cx="640" cy="170" r="5" fill="#39d0d8"/><circle cx="800" cy="170" r="5" fill="#39d0d8"/><circle cx="120" cy="120" r="5" fill="#7ee787"/><circle cx="200" cy="120" r="5" fill="#7ee787"/><circle cx="420" cy="120" r="5" fill="#7ee787"/><circle cx="560" cy="120" r="5" fill="#7ee787"/><text x="20" y="175" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12" fill="#e6edf3">master／main</text><text x="20" y="125" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12" fill="#7ee787">develop</text><text x="212" y="64" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12" fill="#f0a04b">feature 分支</text><text x="470" y="24" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12" fill="#f0a04b">release</text><text x="668" y="204" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12" fill="#f0a04b">hotfix</text></svg><figcaption>圖 3　Git Flow：長期分支 main／develop，短期分支 feature、release、hotfix 各自合併回對應的長期分支。</figcaption></figure>
+
 <ol>
 <li>
 <p>主分支 (master)：存儲穩定的發布版本，每次發布新版本都會在主分支上創建一個標籤。</p>

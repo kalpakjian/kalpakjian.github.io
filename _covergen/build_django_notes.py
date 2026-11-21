@@ -18,6 +18,7 @@ warnings.filterwarnings("ignore")  # ast.parse 筆記片段時會有 "\s" 之類
 
 sys.path.insert(0, r"C:\Users\princ\OneDrive\Documents")
 import clean_ocr_notes as c  # noqa: E402
+import svg_django_figs as figs  # noqa: E402
 
 BLOG = r"C:\Users\princ\kalpakjian.github.io"
 OUTDIR = os.path.join(BLOG, "source", "django-notes")
@@ -421,6 +422,19 @@ def _dumps_to_tables(text):
     return "\n".join(fixed)
 
 
+def _insert_figures(text, no):
+    """把本章對應的 SVG 圖插在指定標題之後。"""
+    for ch, anchor, svg in figs.FIGURES:
+        if ch != no:
+            continue
+        i = text.find(anchor)
+        if i < 0:
+            continue
+        end = text.find("\n", i)
+        text = text[:end + 1] + "\n" + svg + "\n" + text[end + 1:]
+    return text
+
+
 def _fix_placeholders(code):
     """教材骨架的佔位行（單一個 . 或 <statement-N>）→ 註解；只有宣告沒有 body → 補 pass。"""
     lines = [("# ." if ln.strip() == "." else ln) for ln in code.splitlines()]
@@ -497,6 +511,7 @@ def render_md(items, no, title):
     flush()
     text = "\n".join(out).rstrip() + "\n"
     text = repair_code_blocks(text)  # 先修結構（合併被切碎的 fence、重建縮排），再做文字替換
+    text = _insert_figures(text, no)  # 手繪 SVG 圖（MVT／模型關聯／Git Flow）
     text = _dumps_to_tables(text)    # OCR 拍平的 HTML 表格 → markdown 表格
     text, _n = _apply_region_rewrites(text)
     for old, new in FORBIDDEN + CONTENT_FIXES:
