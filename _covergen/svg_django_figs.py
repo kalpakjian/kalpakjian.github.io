@@ -99,8 +99,70 @@ def gitflow():
     return _wrap(b, 860, 250, "Git Flow 分支模型：main、develop、feature、release、hotfix",
                  "圖 3　Git Flow：長期分支 main／develop，短期分支 feature、release、hotfix 各自合併回對應的長期分支。")
 
+def url_flow():
+    b = _box(20, 90, 150, 62, "請求", "GET /post/42")
+    b += _box(210, 90, 190, 62, "urlpatterns", "path() 由上而下比對")
+    b += _box(450, 20, 200, 62, "視圖", "post_detail(request, id=42)")
+    b += _box(450, 165, 200, 62, "404", "沒有規則匹配", stroke=WARM)
+    b += _box(700, 20, 140, 62, "回應", "HttpResponse")
+    b += _arrow(170, 121, 206, 121)
+    b += _arrow(400, 108, 446, 62)
+    b += _arrow(400, 134, 446, 190)
+    b += _arrow(650, 51, 696, 51)
+    return _wrap(b, 860, 250, "Django URL 路由解析：請求依 urlpatterns 逐條比對，命中就呼叫視圖，否則回 404",
+                 "圖　URL 路由解析：請求進來後由 urlpatterns 逐條比對，<code>path('post/&lt;int:id&gt;/')</code> 命中就把 id 傳給視圖，沒有命中則回 404。")
+
+
+def auth_flow():
+    b = _box(20, 95, 150, 62, "登入表單", "POST 帳號密碼")
+    b += _box(210, 95, 160, 62, "authenticate()", "驗證帳密")
+    b += _box(410, 95, 150, 62, "login()", "寫入 session")
+    b += _box(600, 95, 150, 62, "登入後頁面", "redirect")
+    b += _box(210, 12, 160, 58, "驗證失敗", "回表單顯示錯誤", stroke=WARM)
+    b += _box(395, 190, 180, 58, "登出", "LogoutView（只收 POST）", stroke=WARM)
+    b += _arrow(170, 126, 206, 126)
+    b += _arrow(290, 95, 290, 74)
+    b += _arrow(370, 126, 406, 126)
+    b += _arrow(560, 126, 596, 126)
+    b += _arrow(485, 157, 485, 186)
+    b += _arrow(560, 219, 690, 160)
+    return _wrap(b, 800, 262, "Django 認證流程：表單、authenticate、login 寫入 session、登出需用 POST",
+                 "圖　認證流程：<code>authenticate()</code> 驗證帳密，成功才呼叫 <code>login()</code> 寫入 session；"
+                 "登出走 <code>LogoutView</code>，Django 5.0 起只接受 POST。")
+
+
+def cicd():
+    b = _box(20, 95, 130, 62, "git push", "推送程式碼")
+    b += _box(180, 95, 150, 62, "CI：安裝", "pip install -r")
+    b += _box(360, 95, 150, 62, "CI：測試", "manage.py test")
+    b += _box(540, 95, 130, 62, "建置", "hexo／容器映像")
+    b += _box(700, 95, 140, 62, "部署與監控", "Pages／K8s")
+    for x1, x2 in ((150, 176), (330, 356), (510, 536), (670, 696)):
+        b += _arrow(x1, 126, x2, 126)
+    b += ('<text x="182" y="86" font-family="%s" font-size="11" fill="%s">失敗即中斷</text>' % (FONT, WARM))
+    return _wrap(b, 860, 200, "CI/CD 管線：push、安裝依賴、測試、建置、部署與監控",
+                 "圖　CI/CD 管線：push 之後自動安裝依賴、跑測試（失敗即中斷），再建置與部署，最後由監控與日誌接手。")
+
+
+def orm_chain():
+    b = _box(20, 95, 190, 62, "QuerySet 鏈式呼叫", "filter()／order_by()／切片")
+    b += _box(240, 95, 170, 62, "延遲求值", "真正用到才查詢")
+    b += _box(440, 95, 120, 62, "SQL", "SELECT …")
+    b += _box(590, 95, 120, 62, "資料庫", "SQLite／PG")
+    b += _box(740, 95, 100, 62, "物件", "Model 實例")
+    for x1, x2 in ((210, 236), (410, 436), (560, 586), (710, 736)):
+        b += _arrow(x1, 126, x2, 126)
+    b += ('<text x="245" y="86" font-family="%s" font-size="11" fill="%s">不快取、可再串接</text>' % (FONT, ACC))
+    return _wrap(b, 860, 200, "ORM 查詢鏈：QuerySet 鏈式呼叫、延遲求值、生成 SQL 到資料庫取回物件",
+                 "圖　ORM 查詢鏈：鏈式呼叫只是組裝條件，QuerySet 延遲求值，真正迭代時才產生 SQL 並回傳 Model 實例。")
+
+
 FIGURES = [
     (7, "#### 1.2.2 MVT 架構", mvt()),
+    (8, "### 4.1 Django 的 URL 配置", url_flow()),
     (10, "## 8.1 模型中的關聯關係", relations()),
+    (10, "## 7.3 使用 Django 的查詢集 API", orm_chain()),
+    (11, "### 13.4. 用戶登錄與登出功能", auth_flow()),
     (12, "#### 6.2.2 Git Flow 的分支模型", gitflow()),
+    (13, "### 9.3 持續集成與持續部署 (CI/CD)", cicd()),
 ]
