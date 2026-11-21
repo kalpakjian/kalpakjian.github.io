@@ -141,7 +141,18 @@ python manage.py runserver
 | `urls.py` | URL 路由與視圖的對應 |
 | `asgi.py` / `wsgi.py` | 伺服器入口：wsgi 同步、asgi 支援非同步（如 WebSocket） |
 
-**settings.py 常見設定**：`DEBUG`（開發 True、上線 False）、`ALLOWED_HOSTS`、`INSTALLED_APPS`、`MIDDLEWARE`、`TEMPLATES`、`DATABASES`。
+**settings.py 關鍵配置項目**
+
+- **DEBUG**：設為 `True` 表示開發模式，會顯示詳細錯誤訊息；發布到生產環境時應設為 `False`。
+- **ALLOWED_HOSTS**：允許訪問本 Django 應用的域名列表。開發環境通常為空；生產環境必須指定具體域名。
+- **INSTALLED_APPS**：已安裝並啟用的 App 清單，自訂應用或第三方擴充套件都加在這裡。
+- **MIDDLEWARE**：啟用的中介軟體清單，用於處理請求和回應（如會話管理、CSRF 保護）。
+- **TEMPLATES**：模板引擎設定，告訴 Django 去哪裡找 HTML 模板檔。
+- **DATABASES**：資料庫設定，預設為 SQLite，可切換成 MySQL、PostgreSQL 等。
+
+**urls.py**：負責 URL 路由配置，定義 URL 與視圖的對應關係；每個請求都由它決定該呼叫哪個視圖。
+
+**asgi.py / wsgi.py**：專案的伺服器入口，大多數情況不需修改。`wsgi.py` 供標準同步應用；`asgi.py` 支援非同步功能（如 WebSocket）。
 
 ### 2.6 常見問題排查
 

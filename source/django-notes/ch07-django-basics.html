@@ -422,7 +422,17 @@ deactivate                       # 停用
 </tr>
 </tbody>
 </table>
-<p><strong>settings.py 常見設定</strong>：<code>DEBUG</code>（開發 True、上線 False）、<code>ALLOWED_HOSTS</code>、<code>INSTALLED_APPS</code>、<code>MIDDLEWARE</code>、<code>TEMPLATES</code>、<code>DATABASES</code>。</p>
+<p><strong>settings.py 關鍵配置項目</strong></p>
+<ul>
+<li><strong>DEBUG</strong>：設為 <code>True</code> 表示開發模式，會顯示詳細錯誤訊息；發布到生產環境時應設為 <code>False</code>。</li>
+<li><strong>ALLOWED_HOSTS</strong>：允許訪問本 Django 應用的域名列表。開發環境通常為空；生產環境必須指定具體域名。</li>
+<li><strong>INSTALLED_APPS</strong>：已安裝並啟用的 App 清單，自訂應用或第三方擴充套件都加在這裡。</li>
+<li><strong>MIDDLEWARE</strong>：啟用的中介軟體清單，用於處理請求和回應（如會話管理、CSRF 保護）。</li>
+<li><strong>TEMPLATES</strong>：模板引擎設定，告訴 Django 去哪裡找 HTML 模板檔。</li>
+<li><strong>DATABASES</strong>：資料庫設定，預設為 SQLite，可切換成 MySQL、PostgreSQL 等。</li>
+</ul>
+<p><strong>urls.py</strong>：負責 URL 路由配置，定義 URL 與視圖的對應關係；每個請求都由它決定該呼叫哪個視圖。</p>
+<p><strong>asgi.py / wsgi.py</strong>：專案的伺服器入口，大多數情況不需修改。<code>wsgi.py</code> 供標準同步應用；<code>asgi.py</code> 支援非同步功能（如 WebSocket）。</p>
 <h3 id="26-常見問題排查">2.6 常見問題排查</h3>
 <ul>
 <li><strong>伺服器無法啟動</strong></li>
