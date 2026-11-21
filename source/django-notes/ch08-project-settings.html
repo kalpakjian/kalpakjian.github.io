@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 8 章 Project、App 與 settings 配置 — Django 學習筆記</title>
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+
+</style>
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+</style>
+<style>
+/* ---- Django 學習筆記：章節封面 + 章節導覽（本站既有慣例） ---- */
+main .sub{font-size:13px;color:var(--muted);margin:-8px 0 16px}
+figure.hero{margin:0 0 26px}
+figure.hero img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);display:block}
+figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-align:center}
+.chnav{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0 10px;font-size:13px}
+.chnav a{flex:1;min-width:150px;text-align:center;text-decoration:none;color:var(--accent2);
+  border:1px solid var(--border);border-radius:6px;padding:9px 10px;background:#fff}
+.chnav a:hover{background:#eaeef2}
+.chnav a.course{font-weight:700}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/django-course/">← 課程總覽</a>
+  <h1>Django 學習筆記</h1>
+<div class="sub">p.109–p.128　20 頁　第 8/14 章</div>
+<figure class="hero"><img src="/img/covers/django-ch08.png" alt="第 8 章 封面"><figcaption>封面插圖：Qwen-Image 2.1 生成</figcaption></figure>
+  <div class="sub">Django 網站框架開發 · 學習筆記<br>第 8 章 · Project、App 與 settings 配置</div>
+  <div class="toc">
+<ul>
+<li><a href="#31-django-的-project-與-app">3.1 Django 的 Project 與 App</a>
+</li>
+<li><a href="#project-是全局配置的核心">Project 是全局配置的核心</a>
+</li>
+<li><a href="#app-是功能模塊的組成部分">App 是功能模塊的組成部分</a>
+</li>
+<li><a href="#project-可以包含多個-app">Project 可以包含多個 App</a>
+<ul>
+<li><a href="#32-配置-settingspy">3.2 配置 settings.py</a>
+</li>
+<li><a href="#33-managepy-命令">3.3 manage.py 命令</a>
+</li>
+<li><a href="#34-總結">3.4 總結</a>
+</li>
+<li><a href="#41-django-的-url-配置">4.1 Django 的 URL 配置</a>
+</li>
+<li><a href="#42-url-路由的基礎">4.2 URL 路由的基礎</a>
+</li>
+<li><a href="#43-ur1spy-配置詳解">4.3 ur1s.py 配置詳解</a>
+</li>
+<li><a href="#44-視圖與-url-的連接">4.4 視圖與 URL 的連接</a>
+</li>
+<li><a href="#45-動態-url-的應用">4.5 動態 URL 的應用</a>
+</li>
+<li><a href="#46-總結">4.6 總結</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</nav>
+<main>
+<h1 id="第-8-章--projectapp-與-settings-配置">第 8 章 · Project、App 與 settings 配置</h1>
+<h3 id="31-django-的-project-與-app">3.1 Django 的 Project 與 App</h3>
+<h4 id="311-概述">3.1.1 概述</h4>
+<p>在 Django 框架中，Project（項目）是一個整體的 Web 應用，包含所有配置和設置，而 App（應用）是 Project 中的一個功能模塊。Django 鼓勵將應用劃分為多個功能模塊，以便更好地管理代碼、實現重用和分離關注點。</p>
+<ul>
+<li>
+<p>Project：是 Django 應用的最外層容器，包含了所有設置、URL 配置和應用列表。</p>
+</li>
+<li>
+<p>App：是一個功能具體的模塊，例如博客應用、用戶認證應用等。每個應用應該專注於一個特定功能，並能夠被多個項目重用。</p>
+</li>
+</ul>
+<h4 id="312-django-project-的結構">3.1.2 Django Project 的結構</h4>
+<p>當你使用 django-admin startproject 命令創建一個 Django 項目時，Django 會自動生成一個項目目錄，並為你配置好一個基礎結構。以下是典型的 Django Project 結構：</p>
+<div class="codehilite"><pre><span></span><code>myproject/
+manage.py
+myproject/
+__init__.py
+settings.py
+urls.py
+asgi.py
+wsgi.py
+</code></pre></div>
+
+<ul>
+<li>
+<p>manage.py：這是一個命令行工具，用來管理 Django 項目的運行和調試。通過這個文件，你可以執行各種與項目相關的操作，例如遷移數據庫、運行開發伺服器等。</p>
+</li>
+<li>
+<p>myproject/：內部文件夾，與項目同名，包含項目的核心設置和配置。</p>
+</li>
+</ul>
+<p>。<strong>init</strong>.py：一個空文件，用於將目錄標記為 Python 包。</p>
+<ul>
+<li>
+<p>settings.py：項目的配置文件，管理項目的全局設置（如數據庫配置、靜態文件路徑等）。</p>
+</li>
+<li>
+<p>urls.py：項目的 URL 配置文件，管理 URL 和視圖之間的映射。</p>
+</li>
+<li>
+<p>asgi.py：ASGI 配置文件，用於異步服務的部署。</p>
+</li>
+<li>
+<p>wsgi.py：WSGI 配置文件，用於傳統服務的部署。</p>
+</li>
+</ul>
+<h4 id="313-django-app-的結構">3.1.3 Django App 的結構</h4>
+<p>Django 的每個應用都是一個獨立的模塊，可以被不同的項目共享和重用。當你創建一個應用時（使用 python manage.py startapp），Django 會為你生成一個應用的基本結構：</p>
+<div class="codehilite"><pre><span></span><code>myapp/
+migrations/
+__init__.py
+__init__.py
+admin.py
+apps.py
+models.py
+views.py
+tests.py
+</code></pre></div>
+
+<ul>
+<li>
+<p>migrations/：這個目錄存放應用的數據庫遷移文件。每當你修改模型時，Django會生成相應的遷移文件。</p>
+</li>
+<li>
+<p><strong>init</strong>.py：這是一個空文件，標記目錄為 Python 包。</p>
+</li>
+<li>
+<p>admin.py：用於定義應用在 Django 管理站點中的配置，這裡可以註冊模型並定義其在管理後臺的呈現方式。</p>
+</li>
+<li>
+<p>apps.py：用於應用的配置，Django 通過這個文件來管理應用的初始化。</p>
+</li>
+<li>
+<p>models.py：應用的模型定義文件，管理與資料庫表相關的代碼。</p>
+</li>
+<li>
+<p>views.py：應用的視圖文件，處理用戶請求並返回響應。</p>
+</li>
+<li>
+<p>tests.py：應用的測試文件，用於編寫單元測試和集成測試，確保應用的功能正常。</p>
+</li>
+</ul>
+<h4 id="314-project-和-app-之間的關係">3.1.4 Project 和 App 之間的關係</h4>
+<p>Project 和 App 之間的關係是一種 容器與組件的關係。Project 是一個更高層次的容器，管理應用的配置和統一入口，而 App 是具體的功能模塊，Project 可以包含多個 App。</p>
+<h2 id="project-是全局配置的核心">Project 是全局配置的核心</h2>
+<p>Project 包含了整個 Django 應用的全局配置，管理應用的生命週期。這裡是 Project 負責的幾個重要方面：</p>
+<ul>
+<li>
+<p>全局設置：如數據庫連接、靜態文件、語言和時區等。</p>
+</li>
+<li>
+<p>URL 路由：定義應用的 URL 結構，將不同的 URL 路由到對應的 App 和視圖。</p>
+</li>
+<li>
+<p>應用的註冊：Project 通過 settings.py 中的 INSTALLED_APPS 註冊所有的 App，確保 Django 認識到它們的存在。</p>
+</li>
+</ul>
+<h2 id="app-是功能模塊的組成部分">App 是功能模塊的組成部分</h2>
+<p>App 專注於具體的功能開發，專為某個功能（如博客、認證等）設計和構建。每個 App 之間可以相對獨立運行和開發，這為重用性提供了便利。</p>
+<h2 id="project-可以包含多個-app">Project 可以包含多個 App</h2>
+<p>一個 Project 通常會包含多個 App，每個 App 都專注於處理某一類具體的功能。以下是一個典型的例子：</p>
+<div class="codehilite"><pre><span></span><code>myproject/
+manage.py
+myproject/
+__init__.py
+settings.py
+urls.py
+asgi.py
+wsgi.py
+</code></pre></div>
+
+<p>blog/ # 博客應用</p>
+<div class="codehilite"><pre><span></span><code>migrations/
+admin.py
+apps.py
+models.py
+views.py
+</code></pre></div>
+
+<p>accounts/ # 用戶帳戶管理應用</p>
+<div class="codehilite"><pre><span></span><code>migrations/
+admin.py
+apps.py
+models.py
+views.py
+</code></pre></div>
+
+<p>在這個例子中，blog 是一個博客應用，負責處理與文章、評論相關的邏輯，而 accounts 則負責用戶帳戶管理。這兩個應用都屬於同一個 Project，它們之間可以共存並互相配合工作。</p>
+<h4 id="315-什麼時候應該創建新的-app">3.1.5 什麼時候應該創建新的 App</h4>
+<p>決定是否創建一個新 App 取決於你所開發的功能是否可以被視為一個獨立的模塊。如果這個功能將來可能會被重用或有單獨的責任範圍，那麼創建一個新 App 是更好的選擇。</p>
+<p>以下情況下應考慮創建新 App：</p>
+<ul>
+<li>
+<p>功能劃分明確：當功能與現有應用邏輯無關時，應考慮創建新 App。例如，用戶認證系統和博客系統應該是兩個獨立的 App。</p>
+</li>
+<li>
+<p>邏輯隔離：當一個功能模塊的邏輯過於複雜且無法與現有應用進行良好的集成時，應創建新 App。</p>
+</li>
+<li>
+<p>未來重用：如果這個功能模塊將來可能會被其他項目重用，那麼將其封裝為一個獨立的 App 可以更容易進行遷移和整合。</p>
+</li>
+</ul>
+<h3 id="32-配置-settingspy">3.2 配置 settings.py</h3>
+<p>settings.py 是 Django 項目中最重要的配置文件之一，負責管理項目的全局設置。這個文件中包含了與數據庫、靜態文件、應用程序等相關的設置。</p>
+<h4 id="321-settingspy-文件的結構">3.2.1 settings.py 文件的結構</h4>
+<p>典型的 settings.py 文件由多個設置參數組</p>
+<p>成，每個參數控制 Django 項目的不同方面。以下是一些常見的設置項：</p>
+<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="nx">settings</span><span class="p">.</span><span class="nx">py</span>
+<span class="err">#</span><span class="w"> </span><span class="nx">基本設置</span>
+<span class="nx">DEBUG</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">True</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">是否處於調試模式</span>
+<span class="nx">ALLOWED_HOSTS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">設定允許訪問的主機</span>
+<span class="err">#</span><span class="w"> </span><span class="nx">應用程式註冊</span>
+<span class="nx">INSTALLED_APPS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">admin</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">auth</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">contenttypes</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">sessions</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">messages</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">staticfiles</span><span class="err">'</span><span class="p">,</span>
+</code></pre></div>
+
+<p>'myapp', # 自己的應用</p>
+<div class="codehilite"><pre><span></span><code><span class="p">]</span>
+<span class="o">#</span> <span class="err">中間件</span>
+<span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
+<span class="s">'django.middleware.security.SecurityMiddleware'</span><span class="p">,</span>
+<span class="s">'django.contrib.sessions.middleware.SessionMiddleware'</span><span class="p">,</span>
+<span class="s">'django.middleware.common.CommonMiddleware'</span><span class="p">,</span>
+<span class="s">'django.middleware.csrf.CsrfViewMiddleware'</span><span class="p">,</span>
+<span class="s">'django.contrib.auth.middleware.AuthenticationMiddleware'</span><span class="p">,</span>
+<span class="s">'django.contrib.messages.middleware.MessageMiddleware'</span><span class="p">,</span>
+<span class="s">'django.middleware.clickjacking.XFrameOptionsMiddleware'</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="o">#</span> <span class="n">URL</span> <span class="err">設置</span>
+<span class="n">ROOT_URLCONF</span> <span class="o">=</span> <span class="s">'myproject.urls'</span>
+<span class="o">#</span> <span class="err">模板設置</span>
+<span class="n">TEMPLATES</span> <span class="o">=</span> <span class="p">[</span>
+<span class="p">{</span>
+<span class="s">'BACKEND'</span><span class="p">:</span> <span class="s">'django.template.backends.django.DjangoTemplates'</span><span class="p">,</span>
+<span class="s">'DIRS'</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s">'APP_DIRS'</span><span class="p">:</span> <span class="n">True</span><span class="p">,</span>
+<span class="s">'OPTIONS'</span><span class="p">:</span> <span class="p">{</span>
+<span class="s">'context_processors'</span><span class="p">:</span> <span class="p">[</span>
+<span class="s">'django.template.context_processors.debug'</span><span class="p">,</span>
+<span class="s">'django.template.context_processors.request'</span><span class="p">,</span>
+<span class="s">'django.contrib.auth.context_processors.auth'</span><span class="p">,</span>
+<span class="s">'django.contrib.messages.context_processors.messages'</span><span class="p">,</span>
+<span class="p">],</span>
+<span class="p">},</span>
+<span class="p">],</span>
+<span class="o">#</span> <span class="err">數據庫設置</span>
+<span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+<span class="s">'default'</span><span class="p">:</span> <span class="p">{</span>
+<span class="s">'ENGINE'</span><span class="p">:</span> <span class="s">'django.db.backends.sqlite3'</span><span class="p">,</span>
+<span class="s">'NAME'</span><span class="p">:</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s">'db.sqlite3'</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="p">}</span>
+<span class="o">#</span> <span class="err">靜態文件設置</span>
+<span class="n">STATIC_URL</span> <span class="o">=</span> <span class="err">'</span><span class="o">/</span><span class="n">static</span><span class="o">/</span>
+</code></pre></div>
+
+<h4 id="322-常見配置項目解析">3.2.2 常見配置項目解析</h4>
+<div class="codehilite"><pre><span></span><code>DEBUG
+</code></pre></div>
+
+<p>DEBUG 是控制項目是否處於調試模式的設置。當 DEBUG=True 時，Django 會顯示詳細的錯誤信息，這在開發階段非常有用。但在生產環境中，必須將 DEBUG 設置為 False，以避免泄露敏感信息。</p>
+<div class="codehilite"><pre><span></span><code>ALLOWED_HOSTS
+</code></pre></div>
+
+<p>ALLOWED_HOSTS 用來控制哪些主機可以訪問 Django 項目。這是一個安全設置，當 DEBUG=False 時，必須指定允許訪問的域名或 IP 地址。</p>
+<p>範例：</p>
+<div class="codehilite"><pre><span></span><code>ALLOWED_HOSTS = ['example.com', 'www.example.com']
+INSTALLED_APPS
+</code></pre></div>
+
+<p>INSTALLED_APPS 是一個包含所有應用的列表，Django 會根據這個列表來加載應用。這裡既包括 Django 內建應用（如 auth 和 admin），也包括你自己開發的應用（如 myapp）。</p>
+<div class="codehilite"><pre><span></span><code>MIDDLEWARE
+</code></pre></div>
+
+<p>MIDDLEWARE 是一組在處理請求和響應時會被調用的中間件。每個中間件都負責處理某一個方面的邏輯，比如安全性、會話管理、認證等。</p>
+<div class="codehilite"><pre><span></span><code>DATABASES
+</code></pre></div>
+
+<p>DATABASES 配置項用來設置項目使用的數據庫。Django 支持多種數據庫，包括 SQLite、PostgreSQL、MySQL 和 Oracle。以下是使用 SQLite 的基本配置：</p>
+<div class="codehilite"><pre><span></span><code>DATABASES = {
+'default': {
+'ENGINE': 'django.db.backends.sqlite3',
+'NAME': BASE_DIR / 'db.sqlite3',
+}
+}
+</code></pre></div>
+
+<p>如果你使用的是 PostgreSQL，可以這樣配置：</p>
+<div class="codehilite"><pre><span></span><code>DATABASES = {
+'default': {
+'ENGINE': 'django.db.backends.postgresql',
+'NAME': 'mydatabase',
+'USER': 'mydatabaseuser',
+'PASSWORD': 'mypassword',
+'HOST': 'localhost',
+'PORT': '5432',
+}
+}
+</code></pre></div>
+
+<p>STATIC_URL 和 STATICFILES_DIRS</p>
+<p>STATIC_URL 是用來設置靜態文件的訪問路徑。開發階段的靜態文件通常存放在應用內的 static 文件夾中。你可以通過 STATICFILES_DIRS 來指定靜態文件的搜索目錄。</p>
+<p>範例：</p>
+<div class="codehilite"><pre><span></span><code>STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+BASE_DIR / "static",
+]
+</code></pre></div>
+
+<h3 id="33-managepy-命令">3.3 manage.py 命令</h3>
+<p>manage.py 是 Django 項目中的命令行工具，它使得管理 Django 項目變得更加簡單。通過 manage.py，你可以執行各種與項目開發、測試和運行相關的操作，如運行開發伺服器、創建遷移、執行測試等。</p>
+<h4 id="331-常見的-managepy-命令">3.3.1 常見的 manage.py 命令</h4>
+<div class="codehilite"><pre><span></span><code>runserver
+</code></pre></div>
+
+<p>runserver 是最常用的命令之一，它啟動 Django 的開發伺服器，讓你可以在本地測試應用。</p>
+<p>範例：</p>
+<div class="codehilite"><pre><span></span><code>python manage.py runserver
+</code></pre></div>
+
+<p>你還可以指定伺服器運行的端口號：</p>
+<div class="codehilite"><pre><span></span><code>python manage.py runserver 8080
+</code></pre></div>
+
+<p>這樣伺服器將運行在 http://127.0.0.1:8080。</p>
+<div class="codehilite"><pre><span></span><code>migrate
+</code></pre></div>
+
+<p>migrate 命令用來將數據庫遷移應用到實際的資料庫中。當你修改模型後，必須先創建遷移文件，再運行 migrate 命令來更新資料庫。</p>
+<p>範例：</p>
+<div class="codehilite"><pre><span></span><code>python manage.py migrate
+makemigrations
+</code></pre></div>
+
+<p>makemigrations 命令用來生成數據庫遷移文件。當你對模型進行修改後，必須先運行 makemigrations 來生成相應的遷移文件。</p>
+<p>範例：</p>
+<div class="codehilite"><pre><span></span><code>python manage.py makemigrations
+createsuperuser
+</code></pre></div>
+
+<p>createsuperuser 命令用來創建一個具有管理權限的超級用戶。這個用戶可以登錄 Django 的管理後臺，並進行數據管理。</p>
+<p>範例：</p>
+<div class="codehilite"><pre><span></span><code>python manage.py createsuperuser
+</code></pre></div>
+
+<p>按照提示輸入用戶名、電子郵件和密碼後，即可創建一個超級用戶。</p>
+<div class="codehilite"><pre><span></span><code>shell
+</code></pre></div>
+
+<p>shell 命令啟動 Django 的互動式 Python Shell，允許你在命令行中直接與 Django 的模型和數據進行交互。</p>
+<p>範例：</p>
+<div class="codehilite"><pre><span></span><code>python manage.py shell
+</code></pre></div>
+
+<p>你可以在 Shell 中進行即時的數據庫查詢和測試。</p>
+<div class="codehilite"><pre><span></span><code>test
+</code></pre></div>
+
+<p>test 命令用來運行項目的測試。Django 提供了一個內建的測試框架，允許你編寫和運行單元測試和集成測試。</p>
+<p>範例：</p>
+<div class="codehilite"><pre><span></span><code>python manage.py test
+</code></pre></div>
+
+<p>這會運行所有已經定義的測試用例。</p>
+<h4 id="332-自定義-managepy-命令">3.3.2 自定義 manage.py 命令</h4>
+<p>Django 允許你創建自定義的 manage.py 命令來處理一些特定的操作。這對於需要自動化任務或管理工具的項目特別有用。</p>
+<p>範例：創建自定義命令</p>
+<ol>
+<li>在應用的 management/commands/ 目錄下創建一個新的 Python 文件。結構如下：</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>myapp/
+management/
+commands/
+mycommand.py
+</code></pre></div>
+
+<ol start="2">
+<li>編寫自定義命令邏輯：</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">Django.core.management.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseCommand</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
+<span class="n">help</span> <span class="o">=</span> <span class="s1">'這是一個自定義命令範例'</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</code></pre></div>
+
+<p>self.stdout.write("執行自定義命令")</p>
+<ol start="3">
+<li>執行自定義命令：</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>python manage.py mycommand
+</code></pre></div>
+
+<p>這將輸出 執行自定義命令。</p>
+<h3 id="34-總結">3.4 總結</h3>
+<p>在本章中，我們詳細介紹了 Django 的 Project 和 App 的區別，學習瞭如何設置和配置項目以及應用，並深入探討了 settings.py 文件中的常見設置項目。此外，我們還介紹了 manage.py 命令的使用，並學習瞭如何創建自定義命令來進行項目管理。這些概念和工具是 Django 開發過程中不可或缺的一部分，掌握它們將有助於開發和管理高效、可擴展的 Django 應用。</p>
+<p>4: Django 的 URL 配置與路由系統</p>
+<p>Django 框架的 URL 路由系統 是一個關鍵的組成部分，負責將用戶的 URL 請求映射到相應的視圖函數。它的作用是將瀏覽器發送的 URL 與應用內的處理邏輯（即視圖）進行匹配。掌握 URL 配置和路由系統對於 Django 應用的開發至關重要。本章將詳細介紹如何設置 URL 配置、實現 URL 路由、配置 urls.py 文件，以及如何將視圖函數與 URL 連接，並深入探討動態 URL 的應用。</p>
+<h3 id="41-django-的-url-配置">4.1 Django 的 URL 配置</h3>
+<h4 id="411-url-配置的概念">4.1.1 URL 配置的概念</h4>
+<p>在 Django 中，URL 配置（URLconf）是一個將 URL 模式映射到視圖的系統。它的作用是根據用戶輸入的 URL 路徑來定位對應的處理邏輯（即視圖）。Django 使用 urls.py 文件來管理 URLconf，其中包含了所有 URL 模式及其對應的視圖。</p>
+<p>Django 通過 path() 函數來定義 URL 模式，該函數允許將 URL 路徑和處理該路徑的視圖函數關聯起來。每當用戶訪問網站時，Django 會根據 URLconf 來匹配用戶輸入的 URL，並調用對應的視圖函數來生成響應。</p>
+<h4 id="412-urlspy-文件的結構">4.1.2 urls.py 文件的結構</h4>
+<p>urls.py 文件是 URLconf 的配置文件，通常放置在 Django 項目目錄下的根目錄以及每個應用內部。項目根目錄的 urls.py 文件負責處理全局的 URL 路徑，而每個應用內的 urls.py 則管理該應用的特定路徑。</p>
+<p>以下是一個典型的 urls.py 文件結構範例：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myproject/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.contrib</span><span class="w"> </span><span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">myapp</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+</code></pre></div>
+
+<p>path('admin/', admin.site.urls), # 管理站點的 URL 路徑</p>
+<p>path(", views.index, name='index'), # 根路徑映射到首頁視圖</p>
+<p>path('about/', views.about, name='about'), # 靜態 "關於我們" 頁面</p>
+<div class="codehilite"><pre><span></span><code>]
+</code></pre></div>
+
+<p>在這個範例中，我們定義了三個 URL 路徑：</p>
+<ol>
+<li>
+<p>/admin/：對應 Django 自帶的管理後臺。</p>
+</li>
+<li>
+<p>/：對應網站的首頁，當用戶訪問根 URL（即 http://127.0.0.1:8000/）時，views.index 函數將被調用。</p>
+</li>
+<li>
+<p>/about/：對應 "關於我們" 頁面，該頁面的處理邏輯位於 views.about 中。</p>
+</li>
+</ol>
+<p>每個 URL 路徑都與具體的視圖函數關聯，並且可以為其命名（通過 name 參數），以便在模板或其他視圖中進行 URL 反向解析。</p>
+<h3 id="42-url-路由的基礎">4.2 URL 路由的基礎</h3>
+<h4 id="421-靜態-url-與動態-url">4.2.1 靜態 URL 與動態 URL</h4>
+<p>在 Django 中，URL 可以分為 靜態 URL 和 動態 URL：</p>
+<ul>
+<li>
+<p>靜態 URL 是不變的路徑，用於訪問固定的頁面。例如，/about/ 是一個靜態 URL，它永遠指向 "關於我們" 頁面。</p>
+</li>
+<li>
+<p>動態 URL 是可以變化的 URL，它包含動態變量，允許根據不同的參數生成不同的頁面內容。例如，博客文章的 URL 可以包含文章的 ID，從而動態生成不同的文章頁面。</p>
+</li>
+</ul>
+<p>範例：定義靜態和動態 URL</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+</code></pre></div>
+
+<p>path('about/', views.about, name='about'), # 靜態 URL</p>
+<p>path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL</p>
+<div class="codehilite"><pre><span></span><code>]
+</code></pre></div>
+
+<p>在這裡，about/ 是靜態 URL，無論何時訪問，總是映射到同一個 "關於我們" 頁面。post/<int:id>/ 是動態 URL，其中 <int:id> 是一個變量，它表示動態部分，用於表示文章的 ID。</p>
+<h4 id="422-url-路徑轉換器">4.2.2 URL 路徑轉換器</h4>
+<p>Django 提供了多種 路徑轉換器，用於定義 URL 中動態部分的數據類型。常見的路徑轉換器包括：</p>
+<ul>
+<li>
+<p><int:variable>：匹配一個整數。</p>
+</li>
+<li>
+<p><str:variable>：匹配一個字符串。</p>
+</li>
+<li>
+<p><slug:variable>：匹配一個 slug（短標題，由字母、數字、連字符和下劃線組成）。</p>
+</li>
+<li>
+<p><uuid:variable>：匹配一個 UUID。</p>
+</li>
+<li>
+<p><path:variable>：匹配完整的路徑，包括斜線。</p>
+</li>
+</ul>
+<p>範例：使用路徑轉換器</p>
+<div class="codehilite"><pre><span></span><code># 使用不同的路徑轉換器來匹配不同類型的動態 URL
+urlpatterns = [
+</code></pre></div>
+
+<p>path('post/<int:id>/, views.post_detail, name='post_detail'), # 匹配整數 ID</p>
+<p>path('category/<slug:slug>/, views.category_detail, name='category_detail'), # 匹配 slug</p>
+<div class="codehilite"><pre><span></span><code>]
+</code></pre></div>
+
+<p>在這裡，post/<int:id/> 只匹配數字 ID，而 category/<slug:slug/> 則匹配包含字母和數字的 slug。</p>
+<h3 id="43-ur1spy-配置詳解">4.3 ur1s.py 配置詳解</h3>
+<h4 id="431-使用-path-函數定義-url">4.3.1 使用 path() 函數定義 URL</h4>
+<p>Django 使用 path() 函數來定義 URL 模式並將其映射到視圖。path() 函數的基本格式如下：</p>
+<div class="codehilite"><pre><span></span><code>path(route, view, kwargs=None, name=None)
+</code></pre></div>
+
+<ul>
+<li>
+<p>route：定義 URL 模式，是用戶請求的 URL 路徑（如 'about/' 或 'post/<int:id>/'）。</p>
+</li>
+<li>
+<p>view：指定當 URL 匹配時調用的視圖函數。</p>
+</li>
+<li>
+<p>kwargs：一個可選的關鍵字參數字典，將會傳遞給視圖。</p>
+</li>
+<li>
+<p>name：URL 模式的名稱，允許你在其他地方（如模板）使用這個名稱來引用該 URL。</p>
+</li>
+</ul>
+<p>範例：使用 path() 定義 URL</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+</code></pre></div>
+
+<p>path("views.index, name='index'), # 定義根 URL</p>
+<p>path('contact/', views.contact, name='contact'), # 靜態 URL</p>
+<p>path('post/<int:id>/, views.post_detail, name='post_detail'), # 動態 URL</p>
+<div class="codehilite"><pre><span></span><code>]
+</code></pre></div>
+
+<h4 id="432-urlconf-中的-include">4.3.2 URLconf 中的 include()</h4>
+<p>隨著應用的增長，將所有 URL 都放在一個文件中會導致代碼難以維護。Django 提供了 include() 函數來將 URLconf 分割到不同的應用中。這樣，主 URLconf 文件可以將請求分發到不同的應用，而每個應用內的 URLconf 文件負責處理具體的路徑。</p>
+<p>範例：在主項目的 urls.py 中使用 include()</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myproject/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib</span><span class="w"> </span><span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+</code></pre></div>
+
+<p>path('admin/', admin.site.urls), # 管理後臺 URL</p>
+<p>path('blog/', include('blog.urls')), # 將 URL 分發到博客應用的 URLconf</p>
+<div class="codehilite"><pre><span></span><code>]
+</code></pre></div>
+
+<p>在這個例子中，當用戶訪問 /blog/ 開頭的 URL 時，Django 會將這些請求分發到 blog 應用的 urls.py 文件中處理。這種設計使得每個應用的 URLconf 可以獨立管理，從而提高了代碼的可維護性。</p>
+<h3 id="44-視圖與-url-的連接">4.4 視圖與 URL 的連接</h3>
+<h4 id="441-視圖的基本概念">4.4.1 視圖的基本概念</h4>
+<p>Django 的視圖（View）負責處理用戶的 HTTP 請求並返回響應。每個 URL 模式都需要映射到一個具體的視圖函數，該函數的作用是根據請求來生成並返回一個合適的響應（如 HTML 頁面、JSON 數據等）。</p>
+<p>視圖可以是普通的 函數視圖 或 類視圖。在這一節中，我們將首先介紹函數視圖，後續章節將討論類視圖。</p>
+<h4 id="442-定義函數視圖">4.4.2 定義函數視圖</h4>
+<p>函數視圖是一個接受 HTTP 請求對象並返回 HTTP 響應對象的 Python 函數。以下是一個簡單的視圖函數範例：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+</code></pre></div>
+
+<p>return HttpResponse("歡迎來到我的網站！")</p>
+<p>在這個例子中，index 視圖函數接受一個 request 對象，並返回一個簡單的 HttpResponse，即一個包含純文本 "歡迎來到我的網站！" 的響應。</p>
+<h4 id="443-視圖與-url-的連接">4.4.3 視圖與 URL 的連接</h4>
+<p>一旦視圖定義好，我們需要將它們與 URL 進行連接，這是通過 urls.py 文件中的 path() 函數來完成的。</p>
+<p>範例：將視圖與 URL 連接</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+</code></pre></div>
+
+<p>path(", views.index, name='index'), # 將根 URL 連接到 index 視圖</p>
+<p>path('contact/', views.contact, name='contact'), # 將 contact/ URL 連接到 contact 視圖</p>
+<p>這樣，當用戶訪問 http://127.0.0.1:8000/ 時，index 視圖將被調用並返回對應的響應；</p>
+<p>當用戶訪問 http://127.0.0.1:8000/contact/ 時，contact 視圖將處理該請求。</p>
+<h4 id="444-處理動態-url">4.4.4 處理動態 URL</h4>
+<p>在動態 URL 中，我們需要從 URL 中提取變量，並將這些變量傳遞給視圖函數。視圖函數可以使用這些變量來生成不同的內容或查詢資料庫。</p>
+<p>範例：處理動態 URL 的視圖</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">post_detail</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+</code></pre></div>
+
+<p>return HttpResponse(f"這是文章 {id} 的詳情頁面")</p>
+<p>在這個範例中，post_detail 視圖函數接受一個 id 參數，該參數來自 URL 中的動態部分。當用戶訪問 /post/5/ 時，id 將是 5，視圖會返回 "這是文章 5 的詳情頁面"。</p>
+<h4 id="445-使用-kwargs-來傳遞附加參數">4.4.5 使用 kwargs 來傳遞附加參數</h4>
+<p>除了通過 URL 提取變量外，你還可以使用 kwargs 來將附加的參數傳遞給視圖函數。這對於需要靜態傳遞一些特定數據的場景很有用。</p>
+<p>範例：使用 kwargs 傳遞參數</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> myapp/urls.py
+urlpatterns = [
+path('post/&lt;int:id&gt;/, views.post_detail, {'author': 'John'}, name='post_detail'),
+]
+</code></pre></div>
+
+<p>在這裡，我們將一個 author 參數通過 kwargs 傳遞給視圖。</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> myapp/views.py
+def post_detail(request, id, author):
+</code></pre></div>
+
+<p>return HttpResponse(f"文章 {id} 由 {author} 撰寫")</p>
+<p>這樣，當訪問 /post/5/ 時，除了 id=5 之外，還會有 author='John' 的附加參數被傳遞給 post_detail 視圖。</p>
+<h3 id="45-動態-url-的應用">4.5 動態 URL 的應用</h3>
+<p>動態 URL 在構建 Web 應用中至關重要，特別是在構建多頁面應用或 RESTful API 時，動態 URL 可以讓你輕鬆處理不同的資源和頁面。</p>
+<p>4.5.1 應用場景 1：博客系統中的動態文章 URL</p>
+<p>在博客系統中，通常會有許多文章，每篇文章都有一個唯一的 ID 或 slug。你可以使用動態 URL 來顯示不同文章的內容。</p>
+<p>範例：博客文章的動態 URL</p>
+<div class="codehilite"><pre><span></span><code># myapp/urls.py
+urlpatterns = [
+</code></pre></div>
+
+<p>path('post/<slug:slug>/, views.post_detail, name='post_detail'), # 使用 slug 作為文章標識</p>
+<div class="codehilite"><pre><span></span><code>]
+<span class="gh">#</span> myapp/views.py
+def post_detail(request, slug):
+<span class="gh">#</span> 根據 slug 從資料庫中查找文章
+post = get_object_or_404(Post, slug=slug)
+</code></pre></div>
+
+<p>return HttpResponse(f"這是文章 {post.title} 的詳情頁面")</p>
+<p>在這個範例中，我們使用 slug 作為文章的唯一標識，並動態生成不同文章的詳情頁面。</p>
+<p>4.5.2 應用場景 2：電商網站中的產品頁面</p>
+<p>在電商網站中，動態 URL 可以用來顯示不同產品的詳情頁面。例如，每個產品都有一個唯一的 ID，通過動態 URL 可以查詢對應的產品並顯示其信息。</p>
+<p>範例：產品詳情的動態 URL</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> shop/urls.py
+urlpatterns = [
+path('product/&lt;int:id&gt;', views.product_detail, name='product_detail'),
+]
+<span class="gh">#</span> shop/views.py
+def product_detail(request, id):
+product = get_object_or_404(Product, id=id)
+</code></pre></div>
+
+<p>return HttpResponse(f"這是產品 {product.name} 的詳情頁面")</p>
+<p>這樣，當用戶訪問 /product/42/ 時，會加載 ID 為 42 的產品詳情頁面。</p>
+<h4 id="453-動態-url-與表單提交">4.5.3 動態 URL 與表單提交</h4>
+<p>動態 URL 也可以用於處理表單提交。例如，用戶提交評論後，你可以重定向他們到該評論所屬的文章頁面。</p>
+<p>範例：處理評論提交並重定向</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># blog/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">redirect</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">submit_comment</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">post_id</span><span class="p">):</span>
+<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
+<span class="c1"># 保存評論邏輯</span>
+<span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">'post_detail'</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">post_id</span><span class="p">)</span>
+</code></pre></div>
+
+<p>在這裡，我們使用動態 URL 和 redirect() 函數，將用戶重定向回評論所屬的文章詳情頁。</p>
+<h3 id="46-總結">4.6 總結</h3>
+<p>在本章中，我們詳細介紹了 Django 的 URL 路由系統，學習瞭如何設置 靜態與動態 URL、配置 urls.py 文件，以及如何將 視圖與 URL 進行連接。我們還探討了動態 URL 的實際應用場景，包括博客文章詳情頁和電商網站的產品頁面。在掌握這些基本技術之後，你將能夠靈活地設計和構建各種動態 Web 應用。</p>
+<p>5: Django 視圖系統</p>
+<p>視圖（Views）是 Django 框架的核心組件之一，負責處理用戶的 HTTP 請求並生成相應的 HTTP 響應。在 Django 中，視圖的作用是將業務邏輯和數據處理集中在一個函數或類中，然後通過將結果返回給用戶。視圖還負責與模板進行交互，從而生成動態的 HTML 頁面。</p>
+<p>在本章中，我們將深入探討 Django 視圖的概念，並詳細介紹 函數視圖 和 類視圖的區別，學習如何處理 GET 和 POST 請求，以及如何將視圖與 URL 進行連接 和上下文與模板的交互。</p>
+<div class="chnav">
+<a href="/django-notes/ch07-django-basics.html">← 第 7 章 Django 基礎與環境建置</a>
+<a class="course" href="/django-course/">課程總覽</a>
+<a href="/django-notes/ch09-views-templates.html">第 9 章 URL 路由、視圖與模板 →</a>
+</div>
+</main>
+</div>
+</body>
+</html>

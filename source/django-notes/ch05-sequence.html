@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 5 章 序列與容器類型 — Django 學習筆記</title>
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+
+</style>
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+</style>
+<style>
+/* ---- Django 學習筆記：章節封面 + 章節導覽（本站既有慣例） ---- */
+main .sub{font-size:13px;color:var(--muted);margin:-8px 0 16px}
+figure.hero{margin:0 0 26px}
+figure.hero img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);display:block}
+figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-align:center}
+.chnav{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0 10px;font-size:13px}
+.chnav a{flex:1;min-width:150px;text-align:center;text-decoration:none;color:var(--accent2);
+  border:1px solid var(--border);border-radius:6px;padding:9px 10px;background:#fff}
+.chnav a:hover{background:#eaeef2}
+.chnav a.course{font-weight:700}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/django-course/">← 課程總覽</a>
+  <h1>Django 學習筆記</h1>
+<div class="sub">p.48–p.60　13 頁　第 5/14 章</div>
+<figure class="hero"><img src="/img/covers/django-ch05.png" alt="第 5 章 封面"><figcaption>封面插圖：Qwen-Image 2.1 生成</figcaption></figure>
+  <div class="sub">Django 網站框架開發 · 學習筆記<br>第 5 章 · 序列與容器類型</div>
+  <div class="toc">
+<ul>
+<li><a href="#python3-序列">Python3 序列</a>
+</li>
+<li><a href="#序列索引">序列索引</a>
+</li>
+<li><a href="#序列切片">序列切片</a>
+</li>
+<li><a href="#序列相加">序列相加</a>
+</li>
+<li><a href="#序列相關的內置函數">序列相關的內置函數</a>
+</li>
+<li><a href="#python3-列表">Python3 列表</a>
+</li>
+<li><a href="#訪問列表中的值">訪問列表中的值</a>
+</li>
+<li><a href="#更新列表">更新列表</a>
+</li>
+<li><a href="#python3-元組">Python3 元組</a>
+</li>
+<li><a href="#python-元組包含了以下內置函數">Python 元組包含了以下內置函數</a>
+</li>
+<li><a href="#關於元組是不可變的">關於元組是不可變的</a>
+</li>
+<li><a href="#python3-字典">Python3 字典</a>
+</li>
+<li><a href="#字典鍵的特性">字典鍵的特性</a>
+</li>
+<li><a href="#python3-集合">Python3 集合</a>
+</li>
+<li><a href="#集合的基本操作">集合的基本操作</a>
+</li>
+<li><a href="#結果每次都不同">結果每次都不同</a>
+</li>
+</ul>
+</div>
+
+</nav>
+<main>
+<h1 id="第-5-章--序列與容器類型">第 5 章 · 序列與容器類型</h1>
+<h2 id="python3-序列">Python3 序列</h2>
+<p>在編程語言中，將以某種方式(比如通過編號)組合起來的數據元素(如數字，字符串乃至其他數據結構)集合稱為數據結構。在 python 中，最基本的數據結構為序列(sequence，簡寫為 seq)。</p>
+<p>所謂序列，指的是一塊可存放多個值的連續內存空間，這些值按一定順序排列，可通過每個值所在位置的編號(稱為索引)訪問它們。</p>
+<p>為了更形象的認識序列，可以將它看做是一家旅店，那麼店中的每個房間就如同序列存儲數據的一個個內存空間，每個房間所特有的房間號就相當於索引值。也就是說，通過房間號(索引)我們可以找到這家旅店(序列)中的每個房間(內存空間)。</p>
+<p>在 Python 中，序列類型包括字符串、列表、元組、集合和字典，這些序列支持以下幾種通用的操作，但比較特殊的是，集合和字典不支持索引、切片、相加和相乘操作。</p>
+<p>字符串也是一種常見的序列(所以以下的例子以字符串作為)，它也可以直接通過索引訪問字符串內的字符。</p>
+<h2 id="序列索引">序列索引</h2>
+<p>序列中，每個元素都有屬於自己的編號(索引)。從起始元素開始，索引值從0開始遞增，如圖1所示。</p>
+<p>除此之外，Python 還支持索引值是負數，此類索引是從右向左計數，換句話說，從最後一個元素開始計數，從索引值-1開始，如圖2所示。</p>
+<p>無論是採用正索引值，還是負索引值，都可以訪問序列中的任何元素。以字符串為例</p>
+<div class="codehilite"><pre><span></span><code>str = "python"
+print(str[0], "=", str[-6])
+print(str[5], "=", str[-1])
+</code></pre></div>
+
+<h2 id="序列切片">序列切片</h2>
+<p>切片操作是訪問序列中元素的另一種方法，它可以訪問一定範圍內的元素，通過切片操作，可以生成一個新的序列。序列實現切片操作的語法格式如下：</p>
+<div class="codehilite"><pre><span></span><code><span class="n">sname</span><span class="p">[</span><span class="n">start</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">step</span><span class="p">]</span>
+</code></pre></div>
+
+<p>其中，各個參數的含義分別是：</p>
+<p>sname：表示序列的名稱；</p>
+<p>start：表示切片的開始索引位置(包括該位置)，此參數也可以不指定，會默認為0，也就是從序列的開頭進行切片；</p>
+<p>end：表示切片的結束索引位置(不包括該位置)，如果不指定，則默認為序列的長度；</p>
+<p>step：表示在切片過程中，隔幾個存儲位置(包含當前位置)取一次元素，也就是說，如果 step 的值大於 1，則在進行切片去序列元素時，會“跳躍式”的取元素。如果省略設置 step 的值，則最後一個冒號就可以省略。</p>
+<p>例如，對字符串 “python” 進行切片：</p>
+<div class="codehilite"><pre><span></span><code>str = "python"
+# 取索引區間為[0,2]之間（不包括索引2處的字符）的字符串
+print(str[:2])
+# 隔1個字符取一個字符，區間是整個字符串
+print(str[:2])
+# 取整個字符串，此時[]中只需一個冒號即可
+print(str[:])
+</code></pre></div>
+
+<p>運行結果為：</p>
+<div class="codehilite"><pre><span></span><code>py
+pto
+python
+</code></pre></div>
+
+<h2 id="序列相加">序列相加</h2>
+<p>Python 中，支持兩種類型相同的序列使用 “+” 運算符做相加操作，它會將兩個序列進行連接，但不會去除重複的元素。這裡所說的 “類型相同”，指的是 “+” 運算符的兩側序列要麼都是列表類型，要麼都是元組類型，要麼都是字符串。</p>
+<p>例如，前面章節中我們已經實現用“+”運算符連接2個(甚至多個)字符串，如下所示：</p>
+<div class="codehilite"><pre><span></span><code>str1 = "py"
+str2 = "th"
+str3 = "on"
+print(" : ", str1 + str2 + str3)
+</code></pre></div>
+
+<h2 id="序列相關的內置函數">序列相關的內置函數</h2>
+<p>函數</td> 功能</td></tr> len()</td> 計算序列的長度，即返回序列中包含多少個元素。</td></tr> max()</td> 找出序列中的最大元素。注意，對序列使用sum()函數時，做加和操作的必須都是數字，不能是字符或字符串，否則該函數將拋出異常，因爲解釋器無法判定是要做連接操作（+ 運算符可以連接兩個序列），這是做加和操作。</td></tr> min()</td> 找出序列中的最小元素。</td></tr> list()</td> 將序列轉換爲列表。</td></tr> str()</td> 將序列轉換爲字符串。</td></tr> sum()</td> 計算元素和。</td></tr> sorted()</td> 當元素進行排序。</td></tr> reversed()</td> 反向序列中的元素。</td></tr> enumerate()</td> 將序列組合爲一個索引序列，多用在for循環中。</td></tr></table></p>
+<p>部分序列不能應用其中的部分函數，比如字典中不能直接使用list，詳細的函數介紹請參閱相應數類型的函數介紹。</p>
+<p>這裡給大家給幾個例子：</p>
+<div class="codehilite"><pre><span></span><code>str4 = "python-django"
+#找出最大的字符
+print(max(str4))
+#找出最小的字符
+print(min(str4))
+#對字符串中的元素進行排序
+print(sorted(str4))
+</code></pre></div>
+
+<p>輸出結果為：</p>
+<div class="codehilite"><pre><span></span><code>y
+a
+['a', 'd', 'g', 'h', 'j', 'n', 'n', 'o', 'o', 'p', 't', 'y']
+</code></pre></div>
+
+<h2 id="python3-列表">Python3 列表</h2>
+<p>列表(list)也是最常用的 Python 數據類型之一，它以一個方括號內包含多個其他數據項(字符串，數字等甚至是另一個列表)，數據項間以逗號作為分隔的數據類型。列表的數據項不需要具有相同的類型。(這點是與其他語言的數組的一個區別)創建一個列表，只要把逗號分隔的不同的數據項使用方括號括起來即可。如下所示：</p>
+<div class="codehilite"><pre><span></span><code>list1 = ['js', 'py', 'css', 'html']
+list2 = ['15', '26', '50']
+print("list1 : ", list1)
+print("list2 : ", list2)
+</code></pre></div>
+
+<h2 id="訪問列表中的值">訪問列表中的值</h2>
+<p>與字符串的索引一樣，列表索引從 0 開始，第二個索引是 1，依此類推。通過索引列表可以進行截取、組合等操作。列表索引的操作：</p>
+<div class="codehilite"><pre><span></span><code>list1 = ['js', 'py', 'css', 'html']
+print("list1的第一項：", list1[0])
+print("list1的最後一項：", list1[-1])
+</code></pre></div>
+
+<p>運行結果：</p>
+<p>list1的第一項：js</p>
+<p>list1的最後一項：html以下是列表切片的操作：</p>
+<div class="codehilite"><pre><span></span><code>list1 = ['js', 'py', 'css', 'html']
+print("list1的前3項：", list1[0:3])
+print("list1的2、3項：", list1[1:3])
+</code></pre></div>
+
+<p>運行結果：</p>
+<p>list1的前3項：['js', 'py', 'css']</p>
+<p>list1的2、3項：['py', 'css']</p>
+<h2 id="更新列表">更新列表</h2>
+<p>你可以對列表的數據項進行修改或更新，你也可以使用 append() 方法來添加列表項，如下所示：</p>
+<div class="codehilite"><pre><span></span><code>list1 = ['js', 'py', 'css', 'html']
+print("list1的第三個元素為：", list1[2])
+list1[2] = "sass"
+print("list1的第三個元素為：", list1[2])
+list1.append(jss)
+print("追加列表項後的list1: ", list1)
+</code></pre></div>
+
+<p>運行結果：</p>
+<p>list1的第三個元素為：css</p>
+<p>list1的第三個元素為：sass</p>
+<p>追加列表項後的list1: ['js', 'py', 'sass', 'html', 'jsx']</p>
+<p>刪除列表元素</p>
+<p>可以使用 del 語句來刪除列表的的元素，如下實例：</p>
+<div class="codehilite"><pre><span></span><code>list1 = ['js', 'py', 'css', 'html']
+del list1[0]
+print("刪除列表項後的list1: ", list1)
+</code></pre></div>
+
+<p>運行結果：</p>
+<p>刪除列表項後的list1: ['py', 'css', 'html']</p>
+<h2 id="python3-元組">Python3 元組</h2>
+<p>Python 的元組(tuple，簡寫為 tup)與列表類似，不同之處在於元組的元素不能修改。元組使用小括號()，列表使用方括號[]。元組創建很簡單，只需要在括號中添加元素，並使用逗號隔開即可。</p>
+<p>如下實例：</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">tup1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="err">'</span><span class="nx">d1</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">d2</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">d3</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">d4</span><span class="err">'</span><span class="p">)</span>
+<span class="nx">tup2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="err">'</span><span class="mi">1996</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="mi">2000</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="mi">2012</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="mi">2023</span><span class="err">'</span><span class="p">)</span>
+<span class="nx">tup3</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="sc">'1'</span><span class="p">,</span><span class="w"> </span><span class="sc">'2'</span><span class="p">,</span><span class="w"> </span><span class="sc">'3'</span><span class="p">,</span><span class="w"> </span><span class="sc">'4'</span>
+<span class="nx">tup4</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">()</span>
+<span class="nx">tuple</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="mi">99</span><span class="p">,)</span>
+<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">tup3</span><span class="p">))</span>
+<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">tup4</span><span class="p">))</span>
+<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">tuple</span><span class="p">))</span>
+</code></pre></div>
+
+<p>運行結果：</p>
+<div class="codehilite"><pre><span></span><code>&lt;class 'tuple'&gt;
+&lt;class 'tuple'&gt;
+&lt;class 'tuple'&gt;
+</code></pre></div>
+
+<p>訪問元組</p>
+<p>元組可以使用下標索引來訪問元組中的值，如下實例：</p>
+<div class="codehilite"><pre><span></span><code>tup1 = ('d1', 'd2', 'd3', 'd4')
+tup2 = ('1996', '2000', '2012', '2023')
+print ("tup1[0]: ", tup1[0])
+print ("tup2[1:5]: ", tup2[1:5])
+</code></pre></div>
+
+<p>運行結果：</p>
+<div class="codehilite"><pre><span></span><code>tup1[0]: d1
+tup2[1:5]: ('2000', '2012', '2023')
+</code></pre></div>
+
+<p>修改元組</p>
+<p>元組中的元素值是不允許修改的，但我們可以對元組進行連接組合，如下實例：</p>
+<div class="codehilite"><pre><span></span><code>tupn1 = ('order', '66')
+tupn2 = ('star', 'war')
+tupn3 = tupn1 + tupn2
+print(tupn3)
+</code></pre></div>
+
+<p>運行結果：</p>
+<div class="codehilite"><pre><span></span><code>('order', '66', 'star', 'war')
+</code></pre></div>
+
+<p>元組內置函數</p>
+<h2 id="python-元組包含了以下內置函數">Python 元組包含了以下內置函數</h2>
+<p>序號</td> 方法及描述</td> 範例</td></tr> 1</td> len(tuple)\n計算元組元素值數。</td> &gt;&gt;&gt; tuple1 = (&#x27;google&#x27;, &#x27;W3CSchool&#x27;, &#x27;Taobao&#x27;)\n&gt;&gt;&gt; len(tuple1)\n3\n&gt;&gt;&gt;</td></tr> 2</td> max(tuple)\n返回元組中元素最大值。</td> &gt;&gt;&gt; tuple2 = (&#x27;5&#x27;, &#x27;4&#x27;, &#x27;8&#x27;)\n&gt;&gt;&gt; max(tuple2)\n&#x27;8&#x27;\n&gt;&gt;&gt;</td></tr> 3</td> min(tuple)\n返回元組中元素最小值。</td> &gt;&gt;&gt; tuple2 = (&#x27;5&#x27;, &#x27;4&#x27;, &#x27;8&#x27;)\n&gt;&gt;&gt; min(tuple2)\n&#x27;4&#x27;\n&gt;&gt;&gt;</td></tr> 4</td> tuple(seq)\n將列表轉換爲元組。</td> &gt;&gt;&gt; list1 = [&#x27;google&#x27;, &#x27;Taobao&#x27;, &#x27;W3CSchool&#x27;, &#x27;Baidu&#x27;]\n&gt;&gt;&gt; tuple1-tuple(list1)\n&gt;&gt;&gt; tuple1\n(&#x27;google&#x27;, &#x27;Taobao&#x27;, &#x27;W3CSchool&#x27;, &#x27;Baidu&#x27;)\n&gt;&gt;&gt;</td></tr> 5</td> operator(tuple1, tuple 2)\n軟荷值元組元素</td> &gt;&gt;&gt; import operator\n&gt;&gt;&gt; dict1 = (1, 2, 3)\n&gt;&gt;&gt; dict2 = (&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;)\n&gt;&gt;&gt; operator.eq(dict1, dict2)\nFalse</td></tr></table></p>
+<h2 id="關於元組是不可變的">關於元組是不可變的</h2>
+<p>所謂元組的不可變指的是元組所指向的內存中的內容不可變。</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">tup66</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="sc">'s'</span><span class="p">,</span><span class="w"> </span><span class="sc">'t'</span><span class="p">,</span><span class="w"> </span><span class="sc">'a'</span><span class="p">,</span><span class="w"> </span><span class="sc">'r'</span><span class="p">,</span><span class="w"> </span><span class="sc">'w'</span><span class="p">,</span><span class="w"> </span><span class="sc">'a'</span><span class="p">,</span><span class="w"> </span><span class="sc">'r'</span><span class="p">,</span><span class="w"> </span><span class="sc">'s'</span><span class="p">)</span>
+<span class="nx">tup66</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="sc">'S'</span>
+<span class="nx">Traceback</span><span class="w"> </span><span class="p">(</span><span class="nx">most</span><span class="w"> </span><span class="nx">recent</span><span class="w"> </span><span class="nx">call</span><span class="w"> </span><span class="nx">last</span><span class="p">):</span>
+<span class="nx">tup66</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="sc">'S'</span>
+<span class="nx">typeError</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="nx">tuple</span><span class="err">'</span><span class="w"> </span><span class="nx">object</span><span class="w"> </span><span class="nx">does</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">support</span><span class="w"> </span><span class="nx">item</span><span class="w"> </span><span class="nx">assignment</span>
+</code></pre></div>
+
+<p>從以上實例可以看出，重新賦值的元組 tup，綁定到新的對象了，不是修改了原來的對象。</p>
+<h2 id="python3-字典">Python3 字典</h2>
+<p>在 Python3 中字典(dictionary，簡寫為 dict)是另一種可變容器模型，且可存儲任意類型對象。</p>
+<p>字典的每個鍵值(key=&gt;value) 對用冒號(:)分割，每個對之間用逗號(,)分割，整個字典包括在花括號({})中，格式如下所示：</p>
+<div class="codehilite"><pre><span></span><code>dict = {key1 : value1, key2 : value2}
+</code></pre></div>
+
+<p>鍵必須是唯一的，但值則不必(上表中 Danna 和 Alice 的鍵是不同的，值卻是相同的)。值可以取任何數據類型，但鍵必須是不可變的，如字符串，數字或元組。</p>
+<p>一個簡單的字典實例：</p>
+<div class="codehilite"><pre><span></span><code>dict={'China': 'CN', 'Hong Kong': 'HK', 'Taiwan': 'TW'}
+</code></pre></div>
+
+<p>也可如此創建字典：</p>
+<div class="codehilite"><pre><span></span><code>dict1= {
+China':86}
+dict2 = {'Hong Kong': 22.30858031775129, 114.16673551288073}
+</code></pre></div>
+
+<p>訪問字典裡的值</p>
+<p>與列表取值類似，但列表取值時使用索引，字典取值時使用 key，如下實例：</p>
+<p>以上實例輸出結果：</p>
+<div class="codehilite"><pre><span></span><code><span class="n">dict</span><span class="o">[</span><span class="n">Country</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="n">China</span>
+<span class="n">dict</span><span class="o">[</span><span class="n">code</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="mi">86</span>
+</code></pre></div>
+
+<p>修改字典</p>
+<p>向字典添加新內容的方法是增加新的鍵/值對，修改或刪除已有鍵/值對如下實例：</p>
+<div class="codehilite"><pre><span></span><code><span class="n">dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="s1">'Country'</span><span class="err">:</span><span class="w"> </span><span class="s1">'China'</span><span class="p">,</span><span class="w"> </span><span class="s1">'abbreviation'</span><span class="err">:</span><span class="w"> </span><span class="s1">'CN'</span><span class="p">,</span><span class="w"> </span><span class="s1">'code'</span><span class="err">:</span><span class="w"> </span><span class="s1">'86'</span><span class="err">}</span>
+<span class="n">dict</span><span class="o">[</span><span class="n">'Country'</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Hong Kong'</span>
+<span class="n">dict</span><span class="o">[</span><span class="n">'abbreviation'</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"HK"</span>
+<span class="n">dict</span><span class="o">[</span><span class="n">'code'</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">852</span>
+<span class="k">print</span><span class="p">(</span><span class="ss">"dict[Country]: "</span><span class="p">,</span><span class="w"> </span><span class="n">dict</span><span class="o">[</span><span class="n">'Country'</span><span class="o">]</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="ss">"dict['abbreviation']: "</span><span class="p">,</span><span class="w"> </span><span class="n">dict</span><span class="o">[</span><span class="n">'abbreviation'</span><span class="o">]</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="ss">"dict[code]: "</span><span class="p">,</span><span class="w"> </span><span class="n">dict</span><span class="o">[</span><span class="n">'code'</span><span class="o">]</span><span class="p">)</span>
+</code></pre></div>
+
+<p>以上實例輸出結果：</p>
+<div class="codehilite"><pre><span></span><code><span class="n">dict</span><span class="o">[</span><span class="n">Country</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="n">Hong</span><span class="w"> </span><span class="n">Kong</span>
+<span class="n">dict</span><span class="o">[</span><span class="n">'abbreviation'</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="n">HK</span>
+<span class="n">dict</span><span class="o">[</span><span class="n">code</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="mi">852</span>
+</code></pre></div>
+
+<h2 id="字典鍵的特性">字典鍵的特性</h2>
+<p>字典值可以沒有限制地取任何 Python 對象，既可以是標準的對象，也可以是用戶定義的，但鍵不行。</p>
+<p>兩個重要的點需要記住：</p>
+<ol>
+<li>不允許同一個鍵出現兩次。創建時如果同一個鍵被賦值兩次，後一個值會被記住，如下實例：</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="n">dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="s1">'Country'</span><span class="err">:</span><span class="w"> </span><span class="s1">'China'</span><span class="p">,</span><span class="w"> </span><span class="s1">'abbreviation'</span><span class="err">:</span><span class="w"> </span><span class="s1">'CN'</span><span class="p">,</span><span class="w"> </span><span class="s1">'code'</span><span class="err">:</span><span class="w"> </span><span class="s1">'86'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Country'</span><span class="err">:</span><span class="w"> </span><span class="s1">'Taiwan'</span><span class="err">}</span>
+<span class="k">print</span><span class="p">(</span><span class="ss">"dict[Country]:"</span><span class="p">,</span><span class="w"> </span><span class="n">dict</span><span class="o">[</span><span class="n">'Country'</span><span class="o">]</span><span class="p">)</span>
+</code></pre></div>
+
+<p>以上實例輸出結果：</p>
+<div class="codehilite"><pre><span></span><code><span class="n">dict</span><span class="o">[</span><span class="n">Country</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="n">Taiwan</span>
+</code></pre></div>
+
+<ol start="2">
+<li>鍵必須不可變，所以可以用數字，字符串或元組充當，而用列表就不行，如下實例：</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>dict = {['Country']: 'China', 'abbreviation': 'CN', 'code': 86}
+print("dict['Country']: ",dict['Country'])
+</code></pre></div>
+
+<p>以上實例輸出結果：</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">Traceback</span><span class="w"> </span><span class="p">(</span><span class="nx">most</span><span class="w"> </span><span class="nx">recent</span><span class="w"> </span><span class="nx">call</span><span class="w"> </span><span class="nx">last</span><span class="p">):</span>
+<span class="o">...</span><span class="err">\</span><span class="nx">index</span><span class="p">.</span><span class="nx">py</span><span class="err">"</span><span class="p">,</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w"> </span><span class="k">in</span>
+<span class="nx">dict</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{[</span><span class="err">'</span><span class="nx">Country</span><span class="err">'</span><span class="p">]:</span><span class="w"> </span><span class="err">'</span><span class="nx">China</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">abbreviation</span><span class="err">'</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="nx">CN</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">code</span><span class="err">'</span><span class="p">:</span><span class="w"> </span><span class="mi">86</span><span class="p">}</span>
+<span class="nx">TypeError</span><span class="p">:</span><span class="w"> </span><span class="nx">unhashable</span><span class="w"> </span><span class="k">type</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="nx">list</span><span class="err">'</span>
+</code></pre></div>
+
+<p>字典內置函數&amp;方法</p>
+<p>Python 字典包含了以下內置函數：</p>
+<p>len() 計算字典元素個數，即鍵的總數。</p>
+<div class="codehilite"><pre><span></span><code>dict = {'Country': 'China', 'abbreviation': 'CN', 'code': 86}
+print(len(dict))
+</code></pre></div>
+
+<p>str() 以字符串的形式輸出字典(字符串可打印，字典不可打印)。</p>
+<div class="codehilite"><pre><span></span><code>dict = {'Country': 'China', 'abbreviation': 'CN', 'code': 86}
+print(str(dict))
+</code></pre></div>
+
+<p>type() 返回輸入的變量類型，如果變量是字典就返回字典類型。</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">dict</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="err">'</span><span class="nx">Country</span><span class="err">'</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="nx">China</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">abbreviation</span><span class="err">'</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="nx">CN</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">code</span><span class="err">'</span><span class="p">:</span><span class="w"> </span><span class="mi">86</span><span class="p">}</span>
+<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">dict</span><span class="p">))</span>
+</code></pre></div>
+
+<h2 id="python3-集合">Python3 集合</h2>
+<p>集合(set)是一個無序的不重複元素序列。因此在每次運行的時候集合的運行結果的內容都是相同的，但元素的排列順序卻不是固定的，所以本章中部分案例的運行結果會出現與給出結果不同的情況(運行結果不唯一)。</p>
+<p>可以使用大括號 { } 或者 set() 函數創建集合，注意：創建一個空集合必須用 set() 而不是 { }，因為 { } 是用來創建一個空字典。</p>
+<p>創建格式：</p>
+<div class="codehilite"><pre><span></span><code>parame = {value01,value02,...}
+</code></pre></div>
+
+<p>或者</p>
+<div class="codehilite"><pre><span></span><code>set(value)
+</code></pre></div>
+
+<p>集合實例：</p>
+<div class="codehilite"><pre><span></span><code>basket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}
+print(basket) # 這裡演示的是去重功能
+print('orange' in basket) # 快速判斷元素是否在集合內
+print('crabgrass' in basket)
+</code></pre></div>
+
+<p>運行結果：</p>
+<div class="codehilite"><pre><span></span><code>{'pear', 'banana', 'orange', 'apple'}
+True
+False
+</code></pre></div>
+
+<p>集合的運算：</p>
+<div class="codehilite"><pre><span></span><code>a = set('abracadabra')
+b = set('alacazam')
+print(a)
+print(b)
+print(a-b)
+print(a|b)
+print(a&amp;b)
+print(a^b)
+</code></pre></div>
+
+<p>運行結果：</p>
+<div class="codehilite"><pre><span></span><code>{'b', 'd', 'a', 'c', 'r'}
+{'1', 'z', 'm', 'a', 'c'}
+{'r', 'd', 'b'}
+{'1', 'z', 'b', 'm', 'd', 'a', 'c', 'r'}
+{'c', 'a'}
+{'1', 'z', 'b', 'm', 'r', 'd'}
+</code></pre></div>
+
+<h2 id="集合的基本操作">集合的基本操作</h2>
+<p>添加元素語法格式如下：</p>
+<div class="codehilite"><pre><span></span><code>s.add(x)
+</code></pre></div>
+
+<p>將元素 x 添加到集合 s 中，如果元素已存在，則不進行任何操作。</p>
+<div class="codehilite"><pre><span></span><code>thisset = set("s", "ss", "sss")
+thisset.add("ssss")
+print(thisset)
+</code></pre></div>
+
+<p>運行結果：</p>
+<div class="codehilite"><pre><span></span><code>{'s', 'ss', 'ssss', 'sss'}
+</code></pre></div>
+
+<p>還有一個方法，也可以添加元素，且參數可以是列表，元組，字典等，語法格式如下：</p>
+<div class="codehilite"><pre><span></span><code>s.update(x)
+</code></pre></div>
+
+<p>x 可以有多個，用逗號分開。</p>
+<p>實例：</p>
+<div class="codehilite"><pre><span></span><code>thisset = set("s", "ss", "sss")
+thisset.update({'s1', 1})
+print(thisset)
+thisset.update([11, 1], ["s1", "s2"])
+print(thisset)
+</code></pre></div>
+
+<p>移除元素</p>
+<p>語法格式如下：</p>
+<div class="codehilite"><pre><span></span><code>s.remove(x)
+</code></pre></div>
+
+<p>將元素 x 從集合 s 中移除，如果元素不存在，則會發生錯誤。</p>
+<p>實例：</p>
+<div class="codehilite"><pre><span></span><code>thisset = set("s", "ss", "sss")
+thisset.remove('sss')
+print(thisset)
+</code></pre></div>
+
+<p>用 remove() 如果元素不存在，會發生錯誤</p>
+<p>用 discard() 如果元素不存在，不會發生錯誤隨機刪除集合中的一個元素，語法格式如下：</p>
+<div class="codehilite"><pre><span></span><code>s.pop()
+</code></pre></div>
+
+<p>實例：</p>
+<div class="codehilite"><pre><span></span><code>thisset = set("s", "ss", "sss")
+</code></pre></div>
+
+<p>輸出結果：</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span>
+<span class="n">s</span>
+<span class="err">{'</span><span class="n">sss</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="n">ss</span><span class="err">'}</span>
+<span class="mf">2.</span>
+<span class="n">sss</span>
+<span class="err">{'</span><span class="n">s</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="n">ss</span><span class="err">'}</span>
+<span class="mf">3.</span>
+<span class="n">ss</span>
+<span class="err">{'</span><span class="n">sss</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="n">s</span><span class="err">'}</span>
+<span class="mf">4.</span>
+<span class="n">ss</span>
+<span class="err">{'</span><span class="n">sss</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="n">s</span><span class="err">'}</span>
+</code></pre></div>
+
+<h2 id="結果每次都不同">結果每次都不同</h2>
+<p>set 集合的 pop 方法會對集合進行無序的排列，然後將這個無序排列集合的左面第一個元素進行刪除。因為這個過程是不確定的，所以刪除結果也是不確定的，不建議使用這種方式進行刪除。</p>
+<p>計算集合元素個數</p>
+<p>語法格式如下：</p>
+<p>計算集合 s 的元素個數。</p>
+<p>實例：</p>
+<div class="codehilite"><pre><span></span><code>thisset = set("s", "ss", "sss")
+print(len(thisset))
+</code></pre></div>
+<div class="chnav">
+<a href="/django-notes/ch04-datatypes.html">← 第 4 章 數據類型、運算符與數字</a>
+<a class="course" href="/django-course/">課程總覽</a>
+<a href="/django-notes/ch06-control-oop.html">第 6 章 流程控制、函數、模組與面向對象 →</a>
+</div>
+</main>
+</div>
+</body>
+</html>

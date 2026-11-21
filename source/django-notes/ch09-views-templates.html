@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 9 章 URL 路由、視圖與模板 — Django 學習筆記</title>
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+
+</style>
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+</style>
+<style>
+/* ---- Django 學習筆記：章節封面 + 章節導覽（本站既有慣例） ---- */
+main .sub{font-size:13px;color:var(--muted);margin:-8px 0 16px}
+figure.hero{margin:0 0 26px}
+figure.hero img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);display:block}
+figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-align:center}
+.chnav{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0 10px;font-size:13px}
+.chnav a{flex:1;min-width:150px;text-align:center;text-decoration:none;color:var(--accent2);
+  border:1px solid var(--border);border-radius:6px;padding:9px 10px;background:#fff}
+.chnav a:hover{background:#eaeef2}
+.chnav a.course{font-weight:700}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/django-course/">← 課程總覽</a>
+  <h1>Django 學習筆記</h1>
+<div class="sub">p.129–p.146　18 頁　第 9/14 章</div>
+<figure class="hero"><img src="/img/covers/django-ch09.png" alt="第 9 章 封面"><figcaption>封面插圖：Qwen-Image 2.1 生成</figcaption></figure>
+  <div class="sub">Django 網站框架開發 · 學習筆記<br>第 9 章 · URL 路由、視圖與模板</div>
+  <div class="toc">
+<ul>
+<li><a href="#51-django-視圖的基本概念">5.1 Django 視圖的基本概念</a>
+</li>
+<li><a href="#52-函數視圖">5.2 函數視圖</a>
+</li>
+<li><a href="#53-類視圖">5.3 類視圖</a>
+</li>
+<li><a href="#54-視圖與-url-的連接">5.4 視圖與 URL 的連接</a>
+</li>
+<li><a href="#55-視圖中的上下文與模板交互">5.5 視圖中的上下文與模板交互</a>
+</li>
+<li><a href="#56-總結">5.6 總結</a>
+</li>
+<li><a href="#61-django-模板的基本概念">6.1 Django 模板的基本概念</a>
+</li>
+<li><a href="#62-django-模板語法">6.2 Django 模板語法</a>
+</li>
+<li><a href="#if-條件語句">if 條件語句</a>
+<ul>
+<li><a href="#63-上下文數據的渲染">6.3 上下文數據的渲染</a>
+</li>
+<li><a href="#64-模板繼承">6.4 模板繼承</a>
+</li>
+<li><a href="#65-模板過濾器和自定義模板標籤">6.5 模板過濾器和自定義模板標籤</a>
+</li>
+<li><a href="#66-總結">6.6 總結</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</nav>
+<main>
+<h1 id="第-9-章--url-路由視圖與模板">第 9 章 · URL 路由、視圖與模板</h1>
+<h3 id="51-django-視圖的基本概念">5.1 Django 視圖的基本概念</h3>
+<h4 id="511-視圖的作用">5.1.1 視圖的作用</h4>
+<p>視圖是 Django 應用中處理 HTTP 請求的主要組件。當用戶在瀏覽器中輸入 URL 並發送請求時，Django 會將該請求路由到對應的視圖。視圖可以根據請求中的數據進行處理，如查詢數據庫、處理表單數據或執行其他業務邏輯，然後生成並返回一個響應。</p>
+<p>視圖的主要功能包括：</p>
+<p>處理請求：視圖接收用戶的請求，並解析請求中的數據（如查詢參數、表單數據等）。</p>
+<p>執行業務邏輯：視圖執行應用中的核心業務邏輯，如數據庫查詢、數據計算或其他處理。</p>
+<ul>
+<li>返回響應：視圖根據處理結果生成相應的 HTTP 響應，這可以是動態生成的 HTML 頁面、JSON 數據或重定向等。</li>
+</ul>
+<h4 id="512-視圖的類型">5.1.2 視圖的類型</h4>
+<p>在 Django 中，視圖有兩種主要的實現方式：</p>
+<ol>
+<li>
+<p>函數視圖（Function-based Views，FBV）：視圖用 Python 函數實現，處理 HTTP 請求並返回響應。</p>
+</li>
+<li>
+<p>類視圖（Class-based Views，CBV）：視圖用 Python 類實現，將業務邏輯封裝到類方法中，提供了更靈活和可重用的結構。</p>
+</li>
+</ol>
+<p>兩種視圖的區別在於組織方式和擴展性。函數視圖簡單直觀，適合小型項目或簡單的邏輯，而類視圖通過面向對象的方式提供了更強的擴展性，適合處理複雜的應用邏輯。</p>
+<h3 id="52-函數視圖">5.2 函數視圖</h3>
+<h4 id="521-函數視圖的基本結構">5.2.1 函數視圖的基本結構</h4>
+<p>函數視圖（Function-based Views, FBV）是最簡單的視圖實現方式。它是一個接受HTTP請求對象並返回HTTP響應對象的普通Python函數。函數視圖的結構簡單，直接處理請求並返回結果。</p>
+<p>範例：簡單的函數視圖</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+</code></pre></div>
+
+<p>return HttpResponse("歡迎來到我的網站！")</p>
+<p>在這個例子中，index 函數接受一個 request 對象，該對象包含了所有關於當前 HTTP 請求的信息。函數返回一個 HttpResponse，即一個簡單的包含 "歡迎來到我的網站！" 字符串的響應。</p>
+<h4 id="522-處理-get-和-post-請求">5.2.2 處理 GET 和 POST 請求</h4>
+<p>在 Django 中，視圖可以處理多種 HTTP 方法，如 GET 和 POST。GET 請求通常用於從伺服器獲取數據（如加載網頁），而 POST 請求用於提交數據（如表單提交）。函數視圖可以通過 request.method 來檢查請求的類型並做出不同的響應。</p>
+<p>範例：處理 GET 和 POST 請求</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">contact</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
+<span class="c1"># 處理表單提交邏輯</span>
+</code></pre></div>
+
+<p>return HttpResponse("表單已成功提交！")</p>
+<div class="codehilite"><pre><span></span><code><span class="k">else</span>:
+#<span class="w"> </span>返回空的表單頁面
+<span class="k">return</span><span class="w"> </span><span class="nv">render</span><span class="ss">(</span><span class="nv">request</span>,<span class="w"> </span><span class="s1">'contact.html'</span><span class="ss">)</span>
+</code></pre></div>
+
+<p>在這個例子中，當用戶通過 GET 請求訪問 /contact/ 時，Django 會返回一個帶有表單的頁面（contact.html）；當用戶提交表單後，POST 請求被發送到同一個視圖，視圖將處理表單數據並返回成功消息。</p>
+<h4 id="523-使用上下文數據渲染模板">5.2.3 使用上下文數據渲染模板</h4>
+<p>函數視圖通常需要將數據傳遞給模板來生成動態內容。Django 提供了 render() 函數來將視圖中的上下文數據與模板結合，從而生成 HTML 響應。</p>
+<p>範例：將上下文數據傳遞給模板</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+</code></pre></div>
+
+<p>'title': '我的首頁',</p>
+<p>'welcome_message': '歡迎來到我的網站！'</p>
+<div class="codehilite"><pre><span></span><code>}
+<span class="k">return</span><span class="w"> </span><span class="nv">render</span><span class="ss">(</span><span class="nv">request</span>,<span class="w"> </span><span class="s1">'index.html'</span>,<span class="w"> </span><span class="nv">context</span><span class="ss">)</span>
+</code></pre></div>
+
+<p>在這個例子中，我們將上下文數據（title 和 welcome_message）傳遞給 index.html 模板，模板可以使用這些數據來生成最終的 HTML 頁面。</p>
+<h4 id="524-處理表單數據">5.2.4 處理表單數據</h4>
+<p>視圖不僅僅用於顯示靜態頁面，它們還可以處理用戶提交的表單數據。當用戶通過表單提交數據後，視圖可以從 request.POST 中獲取表單數據並進行處理。</p>
+<p>範例：處理表單提交</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">submit_form</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span>
+<span class="n">email</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'email'</span><span class="p">)</span>
+</code></pre></div>
+
+<p>return HttpResponse(f"姓名: {name}, 電子郵件: {email}")</p>
+<p>return HttpResponse("請通過 POST 提交表單")</p>
+<p>在這個例子中，我們處理了一個簡單的表單提交，從 POST 請求中獲取了用戶輸入的 name 和 email，並返回了它們。</p>
+<h3 id="53-類視圖">5.3 類視圖</h3>
+<h4 id="531-類視圖的基本概念">5.3.1 類視圖的基本概念</h4>
+<p>類視圖（Class-based Views, CBV）是 Django 提供的一種更結構化的視圖實現方式。它將視圖邏輯封裝到類中，並通過類的繼承和方法覆蓋來擴展和重用視圖邏輯。類視圖的主要優勢在於代碼重用和結構化設計，適合處理更複雜的視圖邏輯。</p>
+<p>類視圖中，每個 HTTP 請求方法（如 GET、POST）對應於類中的不同方法，如 get() 和 post()。這使得代碼更加清晰且便於擴展。</p>
+<p>範例：簡單的類視圖</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">View</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IndexView</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+</code></pre></div>
+
+<p>return HttpResponse("歡迎來到我的網站！")在這個例子中，IndexView 是一個類視圖，我們使用 get() 方法來處理 GET 請求，並返回一個簡單的文本響應。</p>
+<h4 id="532-基本類視圖的使用">5.3.2 基本類視圖的使用</h4>
+<p>Django 提供了一些內建的基礎類視圖，如 TemplateView 和 RedirectView，它們可以用來簡化常見的視圖操作。</p>
+<div class="codehilite"><pre><span></span><code>TemplateView
+</code></pre></div>
+
+<p>TemplateView 是一個常用的類視圖，用來渲染靜態模板並返回 HTML 響應。當你只需要顯示一個簡單的模板頁面時，TemplateView 是一個不錯的選擇。</p>
+<p>範例：使用 TemplateView 渲染模板</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.views.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateView</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AboutView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+<span class="n">template_name</span> <span class="o">=</span> <span class="s1">'about.html'</span>
+</code></pre></div>
+
+<p>這個視圖將渲染 about.html 模板，並返回其內容作為響應。template_name 屬性指定了模板的路徑。</p>
+<div class="codehilite"><pre><span></span><code>RedirectView
+</code></pre></div>
+
+<p>RedirectView 用於將用戶重定向到另一個 URL。它非常適合處理頁面遷移或重定向。</p>
+<p>範例：使用 RedirectView 進行重定向</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.views.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">RedirectView</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HomeRedirectView</span><span class="p">(</span><span class="n">RedirectView</span><span class="p">):</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">'/home/'</span>
+</code></pre></div>
+
+<p>這個視圖會將所有對 HomeRedirectView 的請求重定向到 /home/ URL。</p>
+<h4 id="533-處理-get-和-post-請求">5.3.3 處理 GET 和 POST 請求</h4>
+<p>類視圖通過將每個 HTTP 方法映射到對應的方法來處理請求。例如，get() 方法用於處理 GET 請求，而 post() 方法則用於處理 POST 請求。你可以在一個類視圖中同時定義這些方法，從而更靈活地處理不同類型的請求。</p>
+<p>範例：處理 GET 和 POST 請求的類視圖</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">View</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ContactView</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'contact.html'</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span>
+<span class="n">message</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'message'</span><span class="p">)</span>
+</code></pre></div>
+
+<p>return HttpResponse(f"收到來自 {name} 的信息: {message}")</p>
+<p>在這個範例中，ContactView 視圖使用 get() 方法返回一個空白表單頁面，使用 post() 方法來處理表單提交並返回結果。</p>
+<h4 id="534-繼承與覆蓋">5.3.4 繼承與覆蓋</h4>
+<p>類視圖的另一個強大特性是 繼承 和 方法覆蓋。你可以創建一個基礎類視圖，並通過繼承來擴展其功能。這樣可以減少代碼重複，並提高代碼的可維護性。</p>
+<p>範例：使用繼承擴展類視圖</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="k">class</span> <span class="n">BaseView</span>(<span class="n">View</span>):
+<span class="n">def</span> <span class="nb">get</span>(<span class="nb">self</span>, <span class="n">request</span>):
+</code></pre></div>
+
+<p>return HttpResponse("這是基礎視圖")</p>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">CustomView</span>(<span class="n">BaseView</span>):
+<span class="n">def</span> <span class="nb">get</span>(<span class="nb">self</span>, <span class="n">request</span>):
+<span class="n">response</span> = <span class="n">super</span>().<span class="nb">get</span>(<span class="n">request</span>)
+</code></pre></div>
+
+<p>return HttpResponse(response.content + b" 並且這是自定義的內容")</p>
+<p>在這個範例中，CustomView 繼承自 BaseView，並通過 super() 調用了父類的 get() 方法，同時在響應中添加了自定義內容。</p>
+<h3 id="54-視圖與-url-的連接">5.4 視圖與 URL 的連接</h3>
+<h4 id="541-函數視圖與-url-的連接">5.4.1 函數視圖與 URL 的連接</h4>
+<p>在 Django 中，視圖與 URL 的連接是通過 urls.py 文件中的 path() 函數來實現的。無論是函數視圖還是類視圖，都可以通過 path() 與特定的 URL 路徑進行關聯。</p>
+<p>範例：將函數視圖與 URL 連接</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.import</span> <span class="n">views</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+</code></pre></div>
+
+<p>path("views.index, name='index'), # 連接函數視圖</p>
+<div class="codehilite"><pre><span></span><code>]
+</code></pre></div>
+
+<p>這裡，我們將 index 函數視圖與根 URL (/) 進行了連接。</p>
+<h4 id="542-類視圖與-url-的連接">5.4.2 類視圖與 URL 的連接</h4>
+<p>對於類視圖，你需要使用 as_view() 方法來將類轉換為可以處理請求的可調用對象。as_view() 方法會返回一個類視圖的實例，並將其與 URL 進行綁定。</p>
+<p>範例：將類視圖與 URL 連接</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">IndexView</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+</code></pre></div>
+
+<p>path("IndexView.as_view(), name='index'), # 連接類視圖</p>
+<div class="codehilite"><pre><span></span><code>]
+</code></pre></div>
+
+<p>在這裡，我們使用 IndexView.as_view() 來將類視圖與 URL 進行連接。</p>
+<h3 id="55-視圖中的上下文與模板交互">5.5 視圖中的上下文與模板交互</h3>
+<h4 id="551-使用上下文數據渲染模板">5.5.1 使用上下文數據渲染模板</h4>
+<p>視圖通常需要與模板進行交互，從而生成動態的 HTML 頁面。在視圖中，我們可以將數據放入上下文（Context）中，然後將這些數據傳遞給模板進行渲染。</p>
+<p>範例：傳遞上下文數據到模板</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+</code></pre></div>
+
+<p>'title': '我的首頁',</p>
+<p>'welcome_message': '歡迎來到我的網站！'</p>
+<div class="codehilite"><pre><span></span><code>}
+}
+}
+<span class="k">return</span><span class="w"> </span><span class="nv">render</span><span class="ss">(</span><span class="nv">request</span>,<span class="w"> </span><span class="s1">'index.html'</span>,<span class="w"> </span><span class="nv">context</span><span class="ss">)</span>
+</code></pre></div>
+
+<p>在這個範例中，我們將上下文數據（title 和 welcome_message）傳遞給 index.html 模板。模板可以使用這些數據來生成最終的 HTML 頁面。</p>
+<h4 id="552-在類視圖中使用上下文">5.5.2 在類視圖中使用上下文</h4>
+<p>類視圖中的上下文數據可以通過覆蓋 get_context_data() 方法來傳遞。get_context_data() 方法允許我們向模板添加額外的上下文數據。</p>
+<p>範例：在類視圖中傳遞上下文數據</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.views.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateView</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IndexView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+<span class="n">template_name</span> <span class="o">=</span> <span class="s1">'index.html'</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+<p>context['title'] = '我的首頁'</p>
+<p>context['welcome_message'] = '歡迎來到我的網站！'</p>
+<div class="codehilite"><pre><span></span><code><span class="k">return</span><span class="w"> </span><span class="nv">context</span>
+</code></pre></div>
+
+<p>在這裡，我們覆蓋了 get_context_data() 方法，將 title 和 welcome_message 添加到上下文中，然後傳遞給模板進行渲染。</p>
+<h3 id="56-總結">5.6 總結</h3>
+<p>在本章中，我們詳細介紹了 Django 中的 視圖系統，包括 函數視圖 和 類視圖 的基本概念與應用。我們學習瞭如何通過視圖來處理 GET 和 POST 請求，並瞭解了視圖與 URL 之間的連接方式。同時，我們探討瞭如何在視圖中使用上下文數據來渲染模板，以生成動態的 HTML 頁面。</p>
+<p>6: Django 的模板系統</p>
+<p>模板（Template）是 Django 用來渲染動態 HTML 頁面的系統，它將後端數據與 HTML 結合，從而生成用戶可以在瀏覽器中查看的內容。Django 的模板系統提供了靈活的語法，允許開發者在模板中嵌入變量和表達式，還支持模板繼承、過濾器、自定義標籤等高級功能。</p>
+<p>在本章中，我們將深入探討 Django 模板系統的基礎知識，學習如何使用模板語法來渲染上下文數據，實現頁面模塊化的 模板繼承，並瞭解 模板過濾器和 自定義模板標籤 的應用。</p>
+<h3 id="61-django-模板的基本概念">6.1 Django 模板的基本概念</h3>
+<h4 id="611-模板的作用">6.1.1 模板的作用</h4>
+<p>Django 中的模板是用來生成動態 HTML 頁面的工具，它允許開發者將後端視圖中的數據與 HTML 結合，從而實現動態的網頁內容。每當用戶請求一個網頁時，Django 會渲染對應的模板並返回結果給用戶。</p>
+<p>模板的作用包括：</p>
+<ul>
+<li>動態內容渲染：模板可以將上下文數據（如用戶信息、文章內容）插入到HTML中，從而生成個性化的頁面。</li>
+</ul>
+<p>頁面展示控制：模板允許使用條件語句和循環來控制頁面上的數據展示。</p>
+<p>頁面佈局管理：通過模板繼承，開發者可以設置基本頁面框架，並在不同頁面中繼承和擴展這些框架。</p>
+<h4 id="612-模板文件的結構">6.1.2 模板文件的結構</h4>
+<p>Django 的模板通常存儲在應用的 templates/ 目錄中，並以 .html 為擴展名。模板文件本質上是 HTML 文件，但可以包含特殊的 模板標籤 和 變量語法，用來動態渲染數據。</p>
+<p>範例：簡單的 Django 模板</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- templates/index.html --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"en"</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span> <span class="p">/&gt;</span>
+<span class="cp">{{</span> <span class="nv">title</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<!-- 渲染上下文中的 title 變量 -->
+
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;/head&gt;</span>
+<span class="cp">{{</span> <span class="nv">welcome_message</span> <span class="cp">}}</span><span class="x">&lt;/h1&gt;</span>
+</code></pre></div>
+
+<!-- 渲染上下文中的歡迎消息 -->
+
+<div class="codehilite"><pre><span></span><code>&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+
+<p>在這個範例中，{{title}} 和 {{welcome_message}} 是變量標記，它們會被視圖中提供的上下文數據替換。</p>
+<h3 id="62-django-模板語法">6.2 Django 模板語法</h3>
+<h4 id="621-模板變量">6.2.1 模板變量</h4>
+<p>在 Django 模板中，變量使用 雙大括號 {{}} 來表示。變量的值來自視圖函數提供的上下文數據，當模板被渲染時，這些變量會被具體的數據替換。</p>
+<p>範例：使用變量渲染數據</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="n">templates</span><span class="o">/</span><span class="nf">index</span><span class="p">.</span><span class="n">html</span><span class="w"> </span><span class="o">--&gt;</span>
+</code></pre></div>
+
+<p>歡迎來到 {{ site_name }} ! </h1></p>
+<p>我們有 {{ num_posts }} 篇博客文章。</p></p>
+<p>假設視圖函數提供瞭如下上下文：</p>
+<div class="codehilite"><pre><span></span><code>context = {
+</code></pre></div>
+
+<p>'site_name': '我的網站',</p>
+<div class="codehilite"><pre><span></span><code>'num_posts': 42
+}
+</code></pre></div>
+
+<p>渲染後的 HTML 會是：</p>
+<p>歡迎來到 我的網站！</h1></p>
+<p>我們有 42 篇博客文章。</p></p>
+<h4 id="622-模板標籤">6.2.2 模板標籤</h4>
+<p>模板標籤使用 {%%} 表示，通常用於控制流程（如條件語句、循環）或調用模板過濾器和模板標籤。常見的模板標籤有 for（循環）、if（條件判斷）和 block（模板繼承）。</p>
+<h2 id="if-條件語句">if 條件語句</h2>
+<p>if 標籤用來根據條件渲染不同的內容。它可以用來判斷變量是否存在或是否滿足某些條件。</p>
+<p>範例：使用 if 進行條件渲染</p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;!-- templates/user_profile.html --&gt;</span>
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">user.is_authenticated</span> <span class="cp">%}</span>
+</code></pre></div>
+
+<p>歡迎回來，{{ user.username }} ! </p></p>
+<div class="codehilite"><pre><span></span><code>{<span class="o">%</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="o">%</span>}
+</code></pre></div>
+
+<p>請先 <a href="/login/" >登入</a> 。 </p></p>
+<div class="codehilite"><pre><span></span><code>{<span class="o">%</span><span class="w"> </span><span class="k">endif</span><span class="w"> </span><span class="o">%</span>}
+</code></pre></div>
+
+<p>for 循環</p>
+<p>for 標籤用於遍歷列表或查詢集，從而渲染多個數據項。</p>
+<p>範例：使用 for 循環渲染文章列表</p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;!-- templates/blog_list.html --&gt;</span>
+<span class="x">{ % for post in posts % }</span>
+<span class="cp">{{</span> <span class="nv">post.title</span> <span class="cp">}}</span><span class="x"> - </span><span class="cp">{{</span> <span class="nv">post.author</span> <span class="cp">}}</span><span class="x">&lt;/li&gt;</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+<span class="x">&lt;/ul&gt;</span>
+</code></pre></div>
+
+<p>假設上下文中的 posts 是一個包含多篇文章的列表，該模板會渲染每篇文章的標題和作者。</p>
+<h3 id="63-上下文數據的渲染">6.3 上下文數據的渲染</h3>
+<h4 id="631-傳遞上下文到模板">6.3.1 傳遞上下文到模板</h4>
+<p>在視圖函數中，我們使用 Django 提供的 render() 函數來將模板與上下文數據結合，然後將結果返回給用戶。上下文是一個包含數據的字典，模板中的變量可以使用這些數據來生成動態內容。</p>
+<p>範例：在視圖中傳遞上下文</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+</code></pre></div>
+
+<p>'title': '我的首頁',</p>
+<p>'welcome_message': '歡迎來到我的網站！',</p>
+<p>'site_name': '我的網站',</p>
+<div class="codehilite"><pre><span></span><code>'num_posts': 42
+}
+return render(request, 'index.html', context)
+</code></pre></div>
+
+<p>在這裡，我們將上下文數據傳遞給 index.html 模板，模板可以使用這些數據來渲染頁面。</p>
+<h4 id="632-上下文處理器">6.3.2 上下文處理器</h4>
+<p>上下文處理器（Context Processors）是一組函數，它們可以在每個模板中自動提供一些全局可用的上下文數據。Django 提供了一些內建的上下文處理器，例如用來提供當前用戶信息、請求對象和網站設置等。</p>
+<p>範例：自定義上下文處理器</p>
+<p>你可以創建自定義上下文處理器來提供全局變量，這些變量將在所有模板中可用。</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> myapp/context_processors.py
+def site_info(request):
+return {
+</code></pre></div>
+
+<p>'site_name': '我的網站',</p>
+<p>'site_description': '這是一個示例網站'</p>
+<div class="codehilite"><pre><span></span><code>}
+</code></pre></div>
+
+<p>然後，在 settings.py 中將上下文處理器添加到 TEMPLATES 設置中：</p>
+<div class="codehilite"><pre><span></span><code><span class="o">#</span> <span class="n">settings</span><span class="p">.</span><span class="n">py</span>
+<span class="n">TEMPLATES</span> <span class="o">=</span> <span class="p">[</span>
+<span class="p">{</span>
+<span class="s">'BACKEND'</span><span class="p">:</span> <span class="s">'django.template.backends.django.DjangoTemplates'</span><span class="p">,</span>
+<span class="s">'DIRS'</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s">'APP_DIRS'</span><span class="p">:</span> <span class="n">True</span><span class="p">,</span>
+<span class="s">'OPTIONS'</span><span class="p">:</span> <span class="p">{</span>
+<span class="s">'context_processors'</span><span class="p">:</span> <span class="p">[</span>
+<span class="s">'django.template.context_processors.request'</span><span class="p">,</span>
+</code></pre></div>
+
+<p>'myapp.context_processors.site_info', # 添加自定義上下文處理器</p>
+<div class="codehilite"><pre><span></span><code>],
+},
+]
+</code></pre></div>
+
+<p>現在，site_name 和 site_description 變量將在所有模板中可用。</p>
+<h3 id="64-模板繼承">6.4 模板繼承</h3>
+<h4 id="641-模板繼承的概念">6.4.1 模板繼承的概念</h4>
+<p>模板繼承允許你在一個基礎模板中定義網頁的通用結構，然後在具體頁面中繼承這個基礎模板並填充具體的內容。這種方法可以幫助你在應用中保持一致的頁面佈局，同時避免重複代碼。</p>
+<h4 id="642-定義基礎模板">6.4.2 定義基礎模板</h4>
+<p>基礎模板定義了網頁的通用結構和樣式，並使用 **{% block %</p>
+<p>}** 標籤來設置可以被子模板覆蓋的區域。</p>
+<p>範例：定義一個基礎模板</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- templates/base.html --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"en"</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span> <span class="p">/&gt;</span>
+</code></pre></div>
+
+<p>{% block title %}我的網站{% endblock %}</td></p>
+<div class="codehilite"><pre><span></span><code>&lt;/head&gt;
+</code></pre></div>
+
+<p>我的網站標題</h1></p>
+<div class="codehilite"><pre><span></span><code>&lt;/header&gt;
+</code></pre></div>
+
+<p><a href="/">首頁</a></li></p>
+<p><a href="/about/">關於我們</a></li></p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;/ul&gt;</span>
+<span class="x">&lt;/nav&gt;</span>
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}</span><span class="x"> </span><span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"> &lt;/main&gt;</span>
+</code></pre></div>
+
+<p>&copy; 2024 我的網站</p></p>
+<div class="codehilite"><pre><span></span><code>&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+
+<p>在這裡，{% block title %} 和 {% block content %} 是兩個區域，子模板可以覆蓋這些區域來顯示具體的內容。</p>
+<h4 id="643-繼承基礎模板">6.4.3 繼承基礎模板</h4>
+<p>子模板可以使用 {% extends %} 標籤來繼承基礎模板，並使用 {% block %} 標籤來覆蓋父模板中的區域。</p>
+<p>範例：繼承基礎模板的子模板</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="n">templates</span><span class="o">/</span><span class="nf">index</span><span class="p">.</span><span class="n">html</span><span class="w"> </span><span class="o">--&gt;</span>
+</code></pre></div>
+
+<p>{% extends 'base.html' %} {% block title %}首頁 - 我的網站{% endblock %} {% block content %}</p>
+<p>歡迎來到我的網站！</h2></p>
+<p>這是首頁的具體內容。</p></p>
+<div class="codehilite"><pre><span></span><code>{% endblock %}
+</code></pre></div>
+
+<p>在這裡，index.html 繼承了 base.html，並覆蓋了 title 和 content 區域的內容。</p>
+<h3 id="65-模板過濾器和自定義模板標籤">6.5 模板過濾器和自定義模板標籤</h3>
+<h4 id="651-模板過濾器">6.5.1 模板過濾器</h4>
+<p>模板過濾器 是用來修改變量輸出的工具。過濾器可以對變量進行格式化、轉換或其他處理。過濾器使用管道符號 | 來應用。</p>
+<p>範例：使用模板過濾器當前日期：{{ current_dateldate:"Y-m-d" }}</p></p>
+<p>文章數量：{{ num_postsldefault:"暫無文章" }}</p></p>
+<ul>
+<li>
+<p>date 過濾器用於格式化日期。</p>
+</li>
+<li>
+<p>default 過濾器提供一個默認值，當變量為空時使用該值。</p>
+</li>
+</ul>
+<h4 id="652-自定義模板過濾器">6.5.2 自定義模板過濾器</h4>
+<p>你可以創建自定義的模板過濾器來執行特定的格式化或處理邏輯。</p>
+<p>範例：創建自定義過濾器</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/templatetags/my_filters.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django</span><span class="w"> </span><span class="kn">import</span> <span class="n">template</span>
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+<span class="nd">@register</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'add_exclamation'</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_exclamation</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">!"</span>
+</code></pre></div>
+
+<p>然後在模板中使用自定義過濾器：</p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;!-- templates/index.html --&gt;</span>
+<span class="cp">{{</span> <span class="nv">welcome_messageladd_exclamation</span> <span class="cp">}}</span><span class="x">&lt;/p&gt;</span>
+</code></pre></div>
+
+<h4 id="653-自定義模板標籤">6.5.3 自定義模板標籤</h4>
+<p>自定義模板標籤允許你創建複雜的邏輯來在模板中使用。這些標籤可以實現比過濾器更強大的功能。</p>
+<p>範例：創建自定義模板標籤</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/template tags/my_tags.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django</span><span class="w"> </span><span class="kn">import</span> <span class="n">template</span>
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+<span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">multiply</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+</code></pre></div>
+
+<p>然後在模板中使用自定義標籤：</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="n">templates</span><span class="o">/</span><span class="n">calculate</span><span class="o">.</span><span class="n">html</span><span class="w"> </span><span class="o">--&gt;</span>
+<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">my_tags</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+</code></pre></div>
+
+<p>結果：{% multiply 5 3 %} </p></p>
+<h3 id="66-總結">6.6 總結</h3>
+<p>在本章中，我們詳細介紹了 Django 的 模板系統，包括 模板語法、上下文數據的渲染、模板繼承，以及如何使用 模板過濾器和 自定義模板標籤 來生成動態網頁。通過學習這些概念和技術，你可以構建靈活且可重用的前端頁面。</p>
+<p>7: Django 的模型系統與 CRUD 操作</p>
+<p>在 Django 中，模型（Models）是數據庫與應用之間的橋樑，它們負責定義數據的結構並與數據庫進行交互。Django 提供了強大的 ORM（Object-Relational Mapping），使開發者可以通過 Python 代碼來執行對數據庫的操作，而不需要直接編寫 SQL 查詢。CRUD 操作是 Web 應用中常見的操作模式，它包括創建（Create）、讀取（Read）、更新（Update）和刪除（Delete）數據。</p>
+<p>本章將詳細介紹 Django 的模型系統與 CRUD 操作，並講解如何使用 Django 提供的查詢集 API 來查詢和操作數據。</p>
+<div class="chnav">
+<a href="/django-notes/ch08-project-settings.html">← 第 8 章 Project、App 與 settings 配置</a>
+<a class="course" href="/django-course/">課程總覽</a>
+<a href="/django-notes/ch10-models-orm.html">第 10 章 模型、ORM 與查詢集 →</a>
+</div>
+</main>
+</div>
+</body>
+</html>

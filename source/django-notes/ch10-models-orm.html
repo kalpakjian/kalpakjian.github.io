@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 10 章 模型、ORM 與查詢集 — Django 學習筆記</title>
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+
+</style>
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+</style>
+<style>
+/* ---- Django 學習筆記：章節封面 + 章節導覽（本站既有慣例） ---- */
+main .sub{font-size:13px;color:var(--muted);margin:-8px 0 16px}
+figure.hero{margin:0 0 26px}
+figure.hero img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);display:block}
+figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-align:center}
+.chnav{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0 10px;font-size:13px}
+.chnav a{flex:1;min-width:150px;text-align:center;text-decoration:none;color:var(--accent2);
+  border:1px solid var(--border);border-radius:6px;padding:9px 10px;background:#fff}
+.chnav a:hover{background:#eaeef2}
+.chnav a.course{font-weight:700}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/django-course/">← 課程總覽</a>
+  <h1>Django 學習筆記</h1>
+<div class="sub">p.147–p.173　27 頁　第 10/14 章</div>
+<figure class="hero"><img src="/img/covers/django-ch10.png" alt="第 10 章 封面"><figcaption>封面插圖：Qwen-Image 2.1 生成</figcaption></figure>
+  <div class="sub">Django 網站框架開發 · 學習筆記<br>第 10 章 · 模型、ORM 與查詢集</div>
+  <div class="toc">
+<ul>
+<li><a href="#71-django-的模型系統">7.1 Django 的模型系統</a>
+<ul>
+<li><a href="#711-模型的概念">7.1.1 模型的概念</a>
+</li>
+<li><a href="#712-創建模型">7.1.2 創建模型</a>
+</li>
+<li><a href="#721-orm-的作用">7.2.1 ORM 的作用</a>
+</li>
+<li><a href="#722-創建數據庫表">7.2.2 創建數據庫表</a>
+</li>
+</ul>
+</li>
+<li><a href="#73-使用-django-的查詢集-api">7.3 使用 Django 的查詢集 API</a>
+<ul>
+<li><a href="#731-查詢集的基本概念">7.3.1 查詢集的基本概念</a>
+</li>
+<li><a href="#732-查詢數據">7.3.2 查詢數據</a>
+</li>
+<li><a href="#733-排序數據">7.3.3 排序數據</a>
+</li>
+<li><a href="#734-切片與限制數據">7.3.4 切片與限制數據</a>
+</li>
+<li><a href="#741-創建數據">7.4.1 創建數據</a>
+</li>
+<li><a href="#742-讀取數據">7.4.2 讀取數據</a>
+</li>
+<li><a href="#743-更新數據">7.4.3 更新數據</a>
+</li>
+<li><a href="#744-刪除數據">7.4.4 刪除數據</a>
+</li>
+</ul>
+</li>
+<li><a href="#75-查詢集的高級應用">7.5 查詢集的高級應用</a>
+<ul>
+<li><a href="#751-連表查詢與-select_related">7.5.1 連表查詢與 select_related()</a>
+</li>
+<li><a href="#752-聚合查詢">7.5.2 聚合查詢</a>
+</li>
+</ul>
+</li>
+<li><a href="#76-總結">7.6 總結</a>
+</li>
+<li><a href="#81-模型中的關聯關係">8.1 模型中的關聯關係</a>
+<ul>
+<li><a href="#811-一對多關係foreignkey">8.1.1 一對多關係（ForeignKey）</a>
+</li>
+<li><a href="#812-多對多關係manytomanyfield">8.1.2 多對多關係（ManyToManyField）</a>
+</li>
+<li><a href="#813-一對一關係-onetoonefield">8.1.3 一對一關係 (OneToOneField)</a>
+</li>
+</ul>
+</li>
+<li><a href="#82-django-的查詢集-api-與關聯查詢">8.2 Django 的查詢集 API 與關聯查詢</a>
+<ul>
+<li><a href="#823-反向查詢">8.2.3 反向查詢</a>
+</li>
+</ul>
+</li>
+<li><a href="#83-查詢集-api-的高級應用">8.3 查詢集 API 的高級應用</a>
+<ul>
+<li><a href="#831-聚合查詢">8.3.1 聚合查詢</a>
+</li>
+<li><a href="#832-f-查詢與更新">8.3.2 F() 查詢與更新</a>
+</li>
+<li><a href="#833-q-查詢">8.3.3 Q() 查詢</a>
+</li>
+</ul>
+</li>
+<li><a href="#84-模型間的複雜關聯查詢">8.4 模型間的複雜關聯查詢</a>
+<ul>
+<li><a href="#841-通過多級關聯進行查詢">8.4.1 通過多級關聯進行查詢</a>
+</li>
+<li><a href="#842-連表查詢與合併結果">8.4.2 連表查詢與合併結果</a>
+</li>
+</ul>
+</li>
+<li><a href="#85-總結">8.5 總結</a>
+</li>
+<li><a href="#91-humanize-模塊的基本介紹">9.1 Humanize 模塊的基本介紹</a>
+<ul>
+<li><a href="#911-啟用-humanize-模塊">9.1.1 啟用 Humanize 模塊</a>
+</li>
+</ul>
+</li>
+<li><a href="#92-數字格式化過濾器">9.2 數字格式化過濾器</a>
+</li>
+<li><a href="#93-日期和時間的格式化過濾器">9.3 日期和時間的格式化過濾器</a>
+</li>
+<li><a href="#94-應用場景與實踐">9.4 應用場景與實踐</a>
+<ul>
+<li><a href="#941-電商網站中的應用">9.4.1 電商網站中的應用</a>
+</li>
+<li><a href="#942-博客或新聞網站中的應用">9.4.2 博客或新聞網站中的應用</a>
+</li>
+</ul>
+</li>
+<li><a href="#95-高級應用與自定義">9.5 高級應用與自定義</a>
+<ul>
+<li><a href="#951-創建自定義過濾器">9.5.1 創建自定義過濾器</a>
+</li>
+<li><a href="#952-在模板中使用自定義過濾器">9.5.2 在模板中使用自定義過濾器</a>
+</li>
+</ul>
+</li>
+<li><a href="#96-總結">9.6 總結</a>
+</li>
+<li><a href="#101-查詢集-api-中的過濾方法">10.1 查詢集 API 中的過濾方法</a>
+<ul>
+<li><a href="#1012-常見的查詢查找器">10.1.2 常見的查詢查找器</a>
+</li>
+</ul>
+</li>
+<li><a href="#102-表單與數據過濾的結合">10.2 表單與數據過濾的結合</a>
+<ul>
+<li><a href="#1021-基本表單過濾的實現">10.2.1 基本表單過濾的實現</a>
+</li>
+</ul>
+</li>
+<li><a href="#103-基於-url-的數據過濾">10.3 基於 URL 的數據過濾</a>
+<ul>
+<li><a href="#1031-使用-url-參數進行過濾">10.3.1 使用 URL 參數進行過濾</a>
+</li>
+<li><a href="#1032-動態篩選條件的應用">10.3.2 動態篩選條件的應用</a>
+</li>
+</ul>
+</li>
+<li><a href="#104-高級過濾技術">10.4 高級過濾技術</a>
+<ul>
+<li><a href="#1041-使用-q-對象進行複雜過濾">10.4.1 使用 Q 對象進行複雜過濾</a>
+</li>
+<li><a href="#1042-聯表查詢中的過濾">10.4.2 聯表查詢中的過濾</a>
+</li>
+</ul>
+</li>
+<li><a href="#105-數據過濾最佳實踐">10.5 數據過濾最佳實踐</a>
+<ul>
+<li><a href="#1051-提供預設過濾條件">10.5.1 提供預設過濾條件</a>
+</li>
+<li><a href="#1052-使用異步加載提升體驗">10.5.2 使用異步加載提升體驗</a>
+</li>
+</ul>
+</li>
+<li><a href="#106-總結">10.6 總結</a>
+</li>
+</ul>
+</div>
+
+</nav>
+<main>
+<h1 id="第-10-章--模型orm-與查詢集">第 10 章 · 模型、ORM 與查詢集</h1>
+<h2 id="71-django-的模型系統">7.1 Django 的模型系統</h2>
+<h3 id="711-模型的概念">7.1.1 模型的概念</h3>
+<p>在 Django 中，模型是對應於數據庫表的 Python 類。每個模型類對應數據庫中的一個表，每個模型的字段對應表中的列。通過模型，開發者可以使用 Python 代碼來進行數據庫操作，而無需直接編寫 SQL 語句。</p>
+<p>模型的主要功能包括：</p>
+<ul>
+<li>
+<p>定義數據結構：描述數據的字段及其屬性。</p>
+</li>
+<li>
+<p>操作數據：創建、查詢、更新和刪除數據。</p>
+</li>
+<li>
+<p>數據驗證：定義字段的數據類型和驗證規則。</p>
+</li>
+</ul>
+<h3 id="712-創建模型">7.1.2 創建模型</h3>
+<p>模型是 Django 應用的基礎，我們可以通過定義模型類來描述數據表的結構。每個模型都是 django.db.models.Model 的子類，並包含若干字段，每個字段對應數據表中的一列。</p>
+<p>範例：定義一個簡單的文章模型</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/models.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span> <span class="c1"># 標題</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span> <span class="c1"># 內容</span>
+<span class="n">author</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># 作者</span>
+<span class="n">published_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span> <span class="c1"># 發布時間</span>
+<span class="n">created_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 創建時間</span>
+<span class="n">updated_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 更新時間</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+</code></pre></div>
+
+<p>在這裡，我們定義了一個 Article 模型，包含文章的標題、內容、作者、發布時間等字段。<strong>str</strong>() 方法用於定義模型的字符串表示，方便在 Django 的管理後臺中顯示。</p>
+<p>7.2 Django 的 ORM (Object-Relational Mapping)</p>
+<h3 id="721-orm-的作用">7.2.1 ORM 的作用</h3>
+<p>ORM（Object-Relational Mapping）是 Django 用來將 Python 對象映射到數據庫表的工具。ORM 允許開發者以對象的方式來操作數據庫，而無需編寫 SQL 查詢語句。這使得數據庫操作更加簡單和直觀，且數據庫的具體實現對開發者透明。</p>
+<p>ORM 的主要功能包括：</p>
+<ul>
+<li>
+<p>數據庫表與模型對象的映射：每個模型對象代表數據庫中的一行數據。</p>
+</li>
+<li>
+<p>字段與數據類型的映射：每個模型字段對應數據表中的一列。</p>
+</li>
+<li>
+<p>查詢集 API：提供查詢、過濾、排序、更新和刪除數據的 API。</p>
+</li>
+</ul>
+<h3 id="722-創建數據庫表">7.2.2 創建數據庫表</h3>
+<p>當我們定義好模型後，Django 提供了遷移工具來創建或更新數據庫中的表結構。遷移工具會根據模型定義生成對應的 SQL 語句，並執行這些語句來更新數據庫。</p>
+<p>創建或更新數據庫表的步驟如下：</p>
+<ol>
+<li>
+<p>生成遷移文件：根據模型定義生成 SQL 語句。</p>
+</li>
+<li>
+<p>應用遷移：執行遷移，將模型變更應用到數據庫。</p>
+</li>
+</ol>
+<p>範例：創建數據庫表</p>
+<div class="codehilite"><pre><span></span><code># 1. 生成遷移文件
+python manage.py makemigrations
+# 2. 應用遷移
+python manage.py migrate
+</code></pre></div>
+
+<p>makemigrations 命令會根據模型變化生成遷移文件，而 migrate 命令會將這些變更應用到數據庫，從而創建或更新數據庫表。</p>
+<h2 id="73-使用-django-的查詢集-api">7.3 使用 Django 的查詢集 API</h2>
+<h3 id="731-查詢集的基本概念">7.3.1 查詢集的基本概念</h3>
+<p>查詢集（QuerySet）是 Django 提供的用來查詢和操作數據庫的一個接口。查詢集是一個懶加載的數據集，只有在需要時（如進行迭代、打印或評估結果時）才會執行真正的數據庫查詢。</p>
+<p>查詢集 API 是 Django ORM 的核心，它允許我們以簡潔的方式查詢數據庫中的記錄、過濾數據、進行排序和更新。</p>
+<h3 id="732-查詢數據">7.3.2 查詢數據</h3>
+<p>在 Django 中，通過模型的管理器（默認為 objects）可以查詢數據庫中的記錄。以下是一些常見的查詢方法：</p>
+<p>all()：查詢所有數據</p>
+<p>all() 方法會返回模型中所有記錄的查詢集。</p>
+<p>範例：查詢所有文章</p>
+<div class="codehilite"><pre><span></span><code>articles = Article.objects.all()
+</code></pre></div>
+
+<p>filter()：過濾數據</p>
+<p>filter() 方法允許我們根據條件過濾查詢集中的數據。</p>
+<p>範例：查詢特定作者的文章</p>
+<div class="codehilite"><pre><span></span><code>articles_by_john = Article.objects.filter(author='John Doe')
+</code></pre></div>
+
+<p>get()：獲取單個記錄</p>
+<p>get() 方法用於查詢單個記錄。如果查詢結果不唯一（多於一個或不存在），則會引發錯誤。</p>
+<p>範例：查詢 ID 為 1 的文章</p>
+<div class="codehilite"><pre><span></span><code>article = Article.objects.get(id=1)
+</code></pre></div>
+
+<p>exclude()：排除特定數據</p>
+<p>exclude() 方法用來排除符合特定條件的數據。</p>
+<p>範例：排除某位作者的文章</p>
+<div class="codehilite"><pre><span></span><code>articles_not_by_john = Article.objects.exclude(author='John Doe')
+</code></pre></div>
+
+<h3 id="733-排序數據">7.3.3 排序數據</h3>
+<p>Django 提供了 order_by() 方法來對查詢集中的數據進行排序。我們可以根據單個或多個字段來排序，並指定升序或降序。</p>
+<p>範例：按發布時間降序排列文章</p>
+<div class="codehilite"><pre><span></span><code>articles = Article.objects.order_by('-published_at')
+</code></pre></div>
+
+<p>在這裡，負號 - 表示按降序排序。</p>
+<h3 id="734-切片與限制數據">7.3.4 切片與限制數據</h3>
+<p>查詢集支持 Python 的切片語法，允許我們從結果集中提取部分數據。例如，我們可以限制查詢返回的結果數量，或者提取前幾條記錄。</p>
+<p>範例：提取最新的五篇文章</p>
+<div class="codehilite"><pre><span></span><code>latest_articles = Article.objects.order_by('published_at')[5]
+</code></pre></div>
+
+<p>7.4 CRUD 操作：創建、讀取、更新和刪除數據</p>
+<h3 id="741-創建數據">7.4.1 創建數據</h3>
+<p>創建新的數據記錄有兩種方式：一種是通過模型對象的 create() 方法，另一種是通過創建模型實例，然後手動調用 save() 方法來保存數據。</p>
+<p>範例 1：使用 create() 方法創建數據</p>
+<div class="codehilite"><pre><span></span><code>article = Article.objects.create(
+title='新的文章',
+content='這是文章的內容',
+author='Jane Doe',
+published_at=2024-01-01 12:00:00'
+)
+</code></pre></div>
+
+<p>範例 2：使用 save() 方法創建數</p>
+<p>據</p>
+<div class="codehilite"><pre><span></span><code>article = Article(
+title='另一篇文章',
+content='文章內容',
+author='John Doe',
+published_at=2024-01-01 12:00:00'
+)
+article.save()
+</code></pre></div>
+
+<h3 id="742-讀取數據">7.4.2 讀取數據</h3>
+<p>使用查詢集 API 可以輕鬆地讀取和過濾數據。已經在上一節中展示了幾個常見的查詢方法，包括 all()、filter() 和 get()。</p>
+<h3 id="743-更新數據">7.4.3 更新數據</h3>
+<p>要更新現有記錄，我們可以先查詢該記錄，然後修改其屬性並調用 save() 方法來保存更改。</p>
+<p>範例：更新文章標題</p>
+<div class="codehilite"><pre><span></span><code>article = Article.objects.get(id=1)
+article.title = '更新後的文章標題'
+article.save()
+</code></pre></div>
+
+<p>此外，Django 也提供了批量更新的功能，可以使用 update() 方法對查詢集中的多個記錄進行更新。</p>
+<p>範例：批量更新文章作者</p>
+<div class="codehilite"><pre><span></span><code>Article.objects.filter(author='John Doe').update(author='Jane Doe')
+</code></pre></div>
+
+<h3 id="744-刪除數據">7.4.4 刪除數據</h3>
+<p>要刪除數據，可以使用 delete() 方法。這個方法可以應用於單個對象或查詢集。</p>
+<p>範例：刪除單個文章</p>
+<div class="codehilite"><pre><span></span><code>article = Article.objects.get(id=1)
+article.delete()
+</code></pre></div>
+
+<p>範例：刪除所有文章</p>
+<div class="codehilite"><pre><span></span><code>Article.objects.all().delete()
+</code></pre></div>
+
+<h2 id="75-查詢集的高級應用">7.5 查詢集的高級應用</h2>
+<h3 id="751-連表查詢與-select_related">7.5.1 連表查詢與 select_related()</h3>
+<p>在多個模型之間存在外鍵關係時，我們可以使用 select_related() 方法來進行連表查詢，這可以減少數據庫查詢次數，提升性能。</p>
+<p>範例：連表查詢</p>
+<div class="codehilite"><pre><span></span><code>articles = Article.objects.select_related('author').all()
+</code></pre></div>
+
+<p>這將一次性查詢文章及其關聯的作者，避免每次訪問作者字段時進行額外的查詢。</p>
+<h3 id="752-聚合查詢">7.5.2 聚合查詢</h3>
+<p>Django 提供了 aggregate() 和 annotate() 方法來執行數據的聚合查詢（如計數、平均值、總和等）。</p>
+<p>範例：計算文章總數</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Count</span>
+<span class="n">article_count</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">Count</span><span class="p">(</span><span class="s1">'id'</span><span class="p">))</span>
+</code></pre></div>
+
+<h2 id="76-總結">7.6 總結</h2>
+<p>在本章中，我們詳細介紹了 Django 的 模型系統 和 ORM（Object-Relational Mapping）的基礎知識，並學習瞭如何使用查詢集 API 來進行數據的 創建、讀取、更新和刪除（CRUD） 操作。我們還探討了查詢集的高級功能，如連表查詢和聚合查詢，這些功能使得 Django 能夠高效地與數據庫交互。</p>
+<p>8: Django 的數據庫查詢與關聯關係</p>
+<p>在 Django 中，數據庫關聯是指模型之間的相互關係，如一對一、一對多和多對多關係。Django 提供了強大的工具來處理這些關係，並通過查詢集 API 進行關聯查詢。理解並能夠有效地處理這些關係，對於構建複雜的 Web 應用至關重要。</p>
+<p>本章將深入探討 Django 模型中的關聯關係，並介紹如何通過 Django 的查詢集 API 進行高效的數據查詢和關聯操作。</p>
+<h2 id="81-模型中的關聯關係">8.1 模型中的關聯關係</h2>
+<h3 id="811-一對多關係foreignkey">8.1.1 一對多關係（ForeignKey）</h3>
+<p>在 Django 中，一對多關係 是最常見的關聯類型，通過 ForeignKey 字段來實現。例如，一篇文章可能屬於一個特定的分類（Category），但一個分類可以有多篇文章，這就是典型的一對多關係。</p>
+<p>範例：文章與分類的關係</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/models.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Category</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Article</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+<span class="n">category</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span> <span class="c1"># 一篇文章對應一個分類</span>
+<span class="n">published_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+</code></pre></div>
+
+<p>在這個例子中，我們通過 ForeignKey 字段將文章（Article）與分類（Category）關聯起來。on_delete=models.CASCADE 表示當某個分類被刪除時，該分類下的所有文章也會被自動刪除。</p>
+<h3 id="812-多對多關係manytomanyfield">8.1.2 多對多關係（ManyToManyField）</h3>
+<p>多對多關係 表示兩個模型可以相互擁有多個關聯。例如，一篇文章可以有多個標籤（Tag），同時每個標籤也可以關聯到多篇文章。Django 使用 ManyToManyField 來處理多對多關係。</p>
+<p>範例：文章與標籤的多對多關係</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/models.py</span>
+<span class="k">class</span> <span class="n">Tag</span>(<span class="n">models</span>.<span class="n">Model</span>):
+<span class="nb">name</span> = <span class="n">models</span>.<span class="n">CharField</span>(<span class="n">max_length</span>=<span class="mi">100</span>)
+<span class="n">def</span> <span class="n">__str__</span>(<span class="nb">self</span>):
+<span class="k">return</span> <span class="nb">self</span>.<span class="nb">name</span>
+<span class="k">class</span> <span class="n">Article</span>(<span class="n">models</span>.<span class="n">Model</span>):
+<span class="n">title</span> = <span class="n">models</span>.<span class="n">CharField</span>(<span class="n">max_length</span>=<span class="mi">200</span>)
+<span class="n">content</span> = <span class="n">models</span>.<span class="n">TextField</span>()
+<span class="n">tags</span> = <span class="n">models</span>.<span class="n">CharField</span>(<span class="n">Tag</span>) <span class="c1"># 一篇文章可以有多個標籤</span>
+<span class="n">def</span> <span class="n">__str__</span>(<span class="nb">self</span>):
+<span class="k">return</span> <span class="nb">self</span>.<span class="n">title</span>
+</code></pre></div>
+
+<p>在這裡，一篇文章可以擁有多個標籤，而一個標籤也可以屬於多篇文章。Django 自動處理多對多關係背後的數據庫表，不需要手動創建中間表。</p>
+<h3 id="813-一對一關係-onetoonefield">8.1.3 一對一關係 (OneToOneField)</h3>
+<p>一對一關係 表示兩個模型之間有唯一的對應關係。例如，用戶和用戶資料（Profile）通常是一對一的關係。Django 提供了 OneToOneField 來處理這類關係。</p>
+<p>範例：用戶與用戶資料的關係</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/models.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Profile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span> <span class="c1"># 每個用戶對應一個資料</span>
+<span class="n">bio</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">username</span>
+</code></pre></div>
+
+<p>在這個例子中，我們使用 OneToOneField 將 Profile 模型與 User 模型關聯起來，這表示每個用戶只能有一個對應的資料。</p>
+<h2 id="82-django-的查詢集-api-與關聯查詢">8.2 Django 的查詢集 API 與關聯查詢</h2>
+<p>8.2.1 使用 select_related() 進行一對多關聯查詢</p>
+<p>在處理一對多關係時，Django 提供了 select_related() 方法，這是一個性能優化工具，允許我們通過 連表查詢 一次性獲取相關數據，減少數據庫查詢次數。</p>
+<p>範例：查詢文章及其對應的分類</p>
+<div class="codehilite"><pre><span></span><code>articles = Article.objects.select_related('category').all()
+</code></pre></div>
+
+<p>這裡的 select_related('category') 會在查詢文章的同時，也將對應的分類數據一起查詢出來，從而避免多次查詢。</p>
+<p>8.2.2 使用 prefetch_related() 進行多對多關聯查詢</p>
+<p>在多對多關係中，Django 提供了 prefetch_related() 方法來優化查詢。這個方法會先獲取主表數據，然後再通過一次額外的查詢來加載關聯的多對多數據，從而減少數據庫查詢的負擔。</p>
+<p>範例：查詢文章及其標籤</p>
+<div class="codehilite"><pre><span></span><code>articles = Article.objects.prefetch_related('tags').all()
+</code></pre></div>
+
+<p>在這裡，prefetch_related('tags')會加載所有文章的標籤，並將結果進行優化。</p>
+<h3 id="823-反向查詢">8.2.3 反向查詢</h3>
+<p>Django 自動為關聯關係創建了反向查詢屬性，這使得我們可以通過關聯對象進行反向查詢。例如，我們可以通過分類來查詢所有屬於該分類的文章，或者通過標籤來查詢所有帶有該標籤的文章。</p>
+<p>通過分類查詢文章</p>
+<div class="codehilite"><pre><span></span><code>category = Category.objects.get(id=1)
+articles_in_category = category.article_set.all() # 查詢該分類下的所有文章
+</code></pre></div>
+
+<p>article_set 是 Django 自動生成的反向查詢屬性，表示該分類下的所有文章。</p>
+<p>通過標籤查詢文章</p>
+<div class="codehilite"><pre><span></span><code>tag = Tag.objects.get(id=1)
+articles_with_tag = tag.article_set.all() # 查詢所有帶有該標籤的文章
+</code></pre></div>
+
+<p>同樣，article_set 在這裡表示與該標籤關聯的所有文章。</p>
+<h2 id="83-查詢集-api-的高級應用">8.3 查詢集 API 的高級應用</h2>
+<h3 id="831-聚合查詢">8.3.1 聚合查詢</h3>
+<p>Django 提供了強大的聚合查詢功能，允許我們進行統計操作，如 計數、總和、平均值 等。常用的聚合函數包括 Count()、Sum()、Avg() 等。</p>
+<p>範例：計算每個分類下的文章數量</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Count</span>
+<span class="n">category_counts</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">num_articles</span><span class="o">=</span><span class="n">Count</span><span class="p">(</span><span class="s1">'article'</span><span class="p">))</span>
+</code></pre></div>
+
+<p>這裡的 annotate() 方法會為每個分類添加一個 num_articles 屬性，表示該分類下的文章數量。</p>
+<h3 id="832-f-查詢與更新">8.3.2 F() 查詢與更新</h3>
+<p>Django 的 F() 表達式允許我們在查詢中直接使用數據庫中的字段值進行操作，這對於進行數據更新時非常有用。</p>
+<p>範例：將所有文章的點擊次數加 1</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">Django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">F</span>
+<span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">clicks</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s1">'clicks'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+<p>這裡，F('clicks') + 1 表示將每篇文章的點擊次數自增 1，並將結果保存到數據庫中。</p>
+<h3 id="833-q-查詢">8.3.3 Q() 查詢</h3>
+<p>在處理複雜查詢時，我們可以使用 Q() 對象來實現 AND 和 OR 條件的組合查詢。這允許我們在一個查詢中實現多個條件的靈活組合。</p>
+<p>範例：查詢標題中包含 "Django" 或作者為 "John" 的文章</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">Django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Q</span>
+<span class="n">articles</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">title_icontains</span><span class="o">=</span><span class="s1">'Django'</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">author</span><span class="o">=</span><span class="s1">'John'</span><span class="p">))</span>
+</code></pre></div>
+
+<p>這個查詢會返回所有標題中包含 "Django" 或作者為 "John" 的文章。</p>
+<h2 id="84-模型間的複雜關聯查詢">8.4 模型間的複雜關聯查詢</h2>
+<h3 id="841-通過多級關聯進行查詢">8.4.1 通過多級關聯進行查詢</h3>
+<p>Django 的查詢集 API 允許我們通過多級關聯進行數據查詢。例如，我們可以通過文章查詢到與該文章相關的分類，再通過分類查詢該分類下的其他文章。</p>
+<p>範例：查詢某篇文章的同類文章（屬於相同分類的文章）</p>
+<div class="codehilite"><pre><span></span><code>article = Article.objects.get(id=1)
+related_articles = Article.objects.filter(category=article.category).exclude(id=article.id)
+</code></pre></div>
+
+<p>這裡，我們首先查詢了某篇文章的分類，然後查詢該分類下的其他文章，並排除當前文章。</p>
+<h3 id="842-連表查詢與合併結果">8.4.2 連表查詢與合併結果</h3>
+<p>當需要查詢來自多個表的數據時，我們可以使用 Django 的查詢集 API 進行連表查詢，並通過 union()、intersection() 和 difference() 等方法合併查詢結果。</p>
+<p>範例：合併兩個查詢集的結果</p>
+<div class="codehilite"><pre><span></span><code>queryset1 = Article.objects.filter(author='John')
+queryset2 = Article.objects.filter(title__icontains='Python')
+combined_queryset = queryset1.union(queryset2)
+</code></pre></div>
+
+<p>這個範例中，我們將兩個不同的查詢結果合併成一個查詢集，返回的數據包含所有作者為 "John" 的文章以及標題中包含 "Python" 的文章。</p>
+<h2 id="85-總結">8.5 總結</h2>
+<p>在本章中，我們詳細介紹了 Django 中的數據庫查詢與關聯關係，學習瞭如何使用 Django 的 ForeignKey、ManyToManyField 和 OneToOneField 來處理模型之間的關聯。我們還探討瞭如何通過查詢集 API 進行高效的關聯查詢，包括使用 select_related() 和 prefetch_related() 進行優化查詢。最後，我們介紹了 Q() 和 F() 等高級查詢技術，以便處理複雜的數據查詢場景。</p>
+<p>掌握這些技巧後，你將能夠構建高效且靈活的數據查詢邏輯，從而更好地處理 Django 應用中的數據關聯問題。</p>
+<p>9: Django 的 Humanize 模塊</p>
+<p>在 Web 應用中，數據通常需要以人類易於理解的方式呈現。例如，我們不希望用戶看到數字 1000000，而是更希望它顯示為 1,000,000。Django 的 humanize 模塊 正是為瞭解決這些需求，它提供了一些過濾器來將數字、日期和時間等數據轉換成更符合人類閱讀習慣的格式。</p>
+<p>本章將介紹 Django 的 humanize 模塊，學習如何使用其提供的過濾器來格式化數據，並探討一些實際應用場景。</p>
+<h2 id="91-humanize-模塊的基本介紹">9.1 Humanize 模塊的基本介紹</h2>
+<p>Django 的 humanize 模塊是一個模板過濾器模塊，專門用來將數字、日期、時間等數據轉換為更符合人類直觀理解的格式。這些過濾器可以應用於 Django 的模板中，幫助提升用戶體驗，特別是當應用中顯示大量數據時，數據的可讀性至關重要。</p>
+<h3 id="911-啟用-humanize-模塊">9.1.1 啟用 Humanize 模塊</h3>
+<p>要在模板中使用 humanize 模塊，需要首先在模板中加載它。你可以在模板的開頭使用 {% load humanize %} 來加載這個模塊。</p>
+<p>範例：加載 humanize 模塊</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+
+<h2 id="92-數字格式化過濾器">9.2 數字格式化過濾器</h2>
+<p>humanize 提供了多種過濾器來格式化數字，使其更易於閱讀或更符合常見的數據表示方式。</p>
+<p>9.2.1 intcomma：數字加逗號</p>
+<p>intcomma 過濾器會將數字進行逗號分隔，使得長數字更易於閱讀。這在顯示貨幣或大型數字時非常有用。</p>
+<p>範例：使用 intcomma 添加逗號</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="w"> </span><span class="mi">1000000</span><span class="n">intcomma</span><span class="w"> </span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<!-- 輸出：1,000,000 -->
+
+<p>這裡的 1000000 會被格式化為 1,000,000。</p>
+<p>9.2.2 intword：將數字轉換為詞語</p>
+<p>intword 過濾器可以將大數字轉換為更簡單的詞語表示。這在需要以簡潔的方式顯示數據時非常有用，例如在顯示用戶數或點擊次數時。</p>
+<p>範例：使用 intword 將數字轉換為詞語</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="w"> </span><span class="mi">1200000</span><span class="n">lintword</span><span class="w"> </span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<!-- 輸出：1.2 million -->
+
+<p>這裡，1200000 會被轉換為 1.2 million。</p>
+<p>9.2.3 apnumber：轉換為一到九的單詞形式</p>
+<p>apnumber 過濾器將數字 1 到 9 轉換為對應的英文單詞。這在需要遵循 AP 標準格式的文章或內容中很常用。</p>
+<p>範例：使用 apnumber 將數字轉換為單詞</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+<span class="p">{{</span><span class="mi">7</span><span class="n">lapnumber</span><span class="w"> </span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<!-- 輸出：seven -->
+
+<p>這裡，7 會被轉換為 seven。</p>
+<h2 id="93-日期和時間的格式化過濾器">9.3 日期和時間的格式化過濾器</h2>
+<p>除了數字格式化外，humanize 模塊還提供了多種日期和時間的格式化過濾器，讓時間顯示更符合日常語言習慣。</p>
+<p>9.3.1 naturaltime：相對時間顯示</p>
+<p>naturaltime 過濾器可以將時間轉換為相對於當前時間的自然表達方式，例如 “10 minutes ago” （10 分鐘前）、“3 days ago” （3 天前）。</p>
+<p>範例：使用 naturaltime 顯示相對時間</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturaltime</span><span class="w"> </span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<p>如果 published_at 是 10 分鐘前的時間，這段模板會輸出 “10 minutes ago”。</p>
+<p>9.3.2 naturalday：自然語言顯示日期</p>
+<p>naturalday 過濾器用來將日期顯示為自然語言形式。如果日期是今天，會顯示“today”，如果是昨天，則顯示“yesterday”，否則顯示具體的日期。</p>
+<p>範例：使用 naturalday 顯示日期</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">}</span>
+<span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturalday</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<p>這裡，如果 published_at 是昨天的日期，模板將輸出 “yesterday”。</p>
+<p>9.3.3 naturaltime 與 naturalday 的組合</p>
+<p>我們還可以將 naturaltime 和 naturalday 過濾器結合使用，讓時間顯示更加靈活。當時間距離現在較短時，顯示“幾分鐘前”，如果時間較遠，則顯示具體的日期。</p>
+<p>範例：組合使用時間過濾器</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturaltime</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturaltime</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">article</span><span class="o">.</span><span class="n">published_atlnaturalday</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="n">endif</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+</code></pre></div>
+
+<p>這樣可以靈活顯示最近的時間和過去的日期。</p>
+<h2 id="94-應用場景與實踐">9.4 應用場景與實踐</h2>
+<p>Django 的 humanize 模塊可以應用於多種場景，特別是需要展示大量數字或日期的應用。在這裡，我們將探討一些常見的使用場景，並展示如何靈活應用 humanize 過濾器。</p>
+<h3 id="941-電商網站中的應用">9.4.1 電商網站中的應用</h3>
+<p>在電商網站中，價格和商品數量的顯示通常需要進行格式化，以提高用戶體驗。使用humanize的intcomma可以輕鬆實現貨幣的格式化顯示。</p>
+<p>範例：格式化價格與商品數量</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+</code></pre></div>
+
+<p>商品價格：${{ product.pricelintcomma }}</p></p>
+<p>庫存數量：{{ product.stocklintcomma }} 件</p></p>
+<p>這裡的價格和庫存數量會自動加上逗號，讓數據更加易讀。</p>
+<h3 id="942-博客或新聞網站中的應用">9.4.2 博客或新聞網站中的應用</h3>
+<p>在博客或新聞網站中，閱讀數量和發布時間是用戶常關注的信息。使用 intword 和 naturaltime 可以讓這些數據更加直觀。</p>
+<p>範例：格式化閱讀量與發布時間</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">humanize</span><span class="w"> </span><span class="o">%</span><span class="p">}</span>
+</code></pre></div>
+
+<p>閱讀次數：{{ article.viewslintword }}</p></p>
+<p>發布時間：{{ article.published_atnaturaltime }}</p></p>
+<p>這樣，數字如 1200 會顯示為 1.2k，而發布時間會顯示為 “10 分鐘前”。</p>
+<h2 id="95-高級應用與自定義">9.5 高級應用與自定義</h2>
+<p>雖然 Django 的 humanize 模塊已經提供了許多實用的過濾器，但你也可以根據需求創建自定義的過濾器來進一步擴展其功能。</p>
+<h3 id="951-創建自定義過濾器">9.5.1 創建自定義過濾器</h3>
+<p>假設我們需要一個新的過濾器，將數字格式化為中文單位（如萬、億）。我們可以通過 Django 的模板標籤系統來實現。</p>
+<p>範例：自定義數字格式化過濾器</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/template tags/custom_humanize.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django</span><span class="w"> </span><span class="kn">import</span> <span class="n">template</span>
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+<span class="nd">@register</span><span class="o">.</span><span class="n">filter</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">chinese_number</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="k">try</span><span class="p">:</span>
+<span class="n">value</span> <span class="o">=</span> <span class="nb">int</span>
+<span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">10000</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">100000000</span><span class="p">:</span>
+</code></pre></div>
+
+<p>return f{'value // 10000}萬'</p>
+<div class="codehilite"><pre><span></span><code>elif value &gt;= 100000000:
+</code></pre></div>
+
+<p>return f{'value // 100000000}億'</p>
+<div class="codehilite"><pre><span></span><code><span class="k">else</span>:
+<span class="k">return</span><span class="w"> </span><span class="nv">str</span><span class="ss">(</span><span class="nv">value</span><span class="ss">)</span>
+<span class="nv">except</span><span class="w"> </span><span class="ss">(</span><span class="nv">ValueError</span>,<span class="w"> </span><span class="nv">TypeError</span><span class="ss">)</span>:
+<span class="k">return</span><span class="w"> </span><span class="nv">value</span>
+</code></pre></div>
+
+<p>這個自定義過濾器會將數字轉換為中文單位，如 15000 會顯示為 1 萬。</p>
+<h3 id="952-在模板中使用自定義過濾器">9.5.2 在模板中使用自定義過濾器</h3>
+<p>創建完自定義過濾器後，你可以像使用內建過濾器一樣在模板中使用它。</p>
+<p>範例：使用自定義過濾器</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nb">load</span><span class="w"> </span><span class="n">custom_humanize</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+
+<p>觀看次數：{{ video.viewslchinese_number }}</p></p>
+<p>這裡，15000會顯示為1萬，120000000會顯示為1億。</p>
+<h2 id="96-總結">9.6 總結</h2>
+<p>在本章中，我們學習了 Django 的 humanize 模塊，以及如何使用它來將數字和日期轉換為更加人性化的格式。我們探討了幾個常用的過濾器，如 intcomma、intword 和 naturaltime，並展示了它們的應用場景。通過這些過濾器，開發者可以顯著提升應用中數據的可讀性和用戶體驗。</p>
+<p>掌握 humanize 的使用技巧後，開發者可以輕鬆處理大量數據的顯示，並將複雜的數據轉換為用戶易於理解的形式。對於特殊需求，還可以通過自定義過濾器來進一步擴展其功能。</p>
+<p>10: Django 的數據過濾系統</p>
+<p>在現代 Web 應用中，數據的過濾和篩選是非常常見的需求。用戶通常需要在大量數據中找到符合條件的記錄，例如根據日期篩選文章、按價格篩選商品、或者根據特定屬性查找用戶。在 Django 中，我們可以使用其內建的查詢集 API 和其他過濾工具，實現靈活、高效的數據過濾功能。</p>
+<p>本章將深入探討如何在 Django 中實現數據過濾，介紹查詢集的過濾方法、表單過濾的應用，以及一些常見的高級過濾技術，如基於 URL 的過濾和動態篩選功能。</p>
+<h2 id="101-查詢集-api-中的過濾方法">10.1 查詢集 API 中的過濾方法</h2>
+<p>Django 的查詢集 API 是進行數據過濾的基礎工具。通過查詢集，我們可以根據特定條件篩選數據、進行精確查詢或模糊查詢、排序數據，以及根據多條件組合進行篩選。</p>
+<p>10.1.1 基本的 filter() 與 exclude() 方法</p>
+<p>filter() 是 Django 中最常用的查詢方法，用來篩選符合特定條件的數據。你可以根據模型字段設置過濾條件，並且查詢可以是精確匹配或模糊查詢。</p>
+<p>範例：使用 filter() 進行數據過濾</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> 查詢所有發布狀態為 "published" 的文章
+published_articles = Article.objects.filter(status='published')
+<span class="gh">#</span> 查詢特定作者的文章
+john_articles = Article.objects.filter(author='John Doe')
+</code></pre></div>
+
+<p>exclude() 方法的作用則相反，它用來排除符合特定條件的記錄。</p>
+<p>範例：使用 exclude() 排除數據</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> 排除所有草稿狀態的文章
+non_draft_articles = Article.objects.exclude(status='draft')
+</code></pre></div>
+
+<h3 id="1012-常見的查詢查找器">10.1.2 常見的查詢查找器</h3>
+<p>Django 提供了一組查找器，用來對不同類型的數據進行過濾查詢。常見的查找器包括：</p>
+<ul>
+<li>
+<p>精確匹配：field_name=value</p>
+</li>
+<li>
+<p>模糊匹配：name__icontains='keyword'（不區分大小寫）</p>
+</li>
+<li>
+<p>範圍查詢：field_name_range=(start, end)</p>
+</li>
+<li>
+<p>大於/小於查詢：field_name_gte=value（大於或等於）和 field_name_lte=value（小於或等於）</p>
+</li>
+</ul>
+<p>範例：使用查找器進行數據過濾</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> 查詢標題中包含 "Django" 的文章
+django_articles = Article.objects.filter(title__icontains='Django')
+<span class="gh">#</span> 查詢發布時間在 2024 年的文章
+articles_in_2024 = Article.objects.filter(published_at__year=2024)
+<span class="gh">#</span> 查詢價格範圍在 100 到 500 的商品
+filtered_products = Product.objects.filter(price__range=(100, 500))
+</code></pre></div>
+
+<p>這些查找器可以靈活組合使用，實現複雜的查詢和過濾邏輯。</p>
+<h2 id="102-表單與數據過濾的結合">10.2 表單與數據過濾的結合</h2>
+<p>在許多 Web 應用中，數據過濾往往需要通過表單來實現。例如，用戶通過篩選表單選擇某個日期範圍、分類或關鍵字，來篩選出符合條件的數據。在 Django 中，表單和查詢集 API 可以結合使用，從而實現動態的數據過濾。</p>
+<h3 id="1021-基本表單過濾的實現">10.2.1 基本表單過濾的實現</h3>
+<p>我們可以使用 Django 的 Form 類來創建一個過濾表單，並通過查詢集過濾數據。</p>
+<p>範例：使用表單進行簡單的數據過濾</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/forms.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django</span><span class="w"> </span><span class="kn">import</span> <span class="n">forms</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ArticleFilterForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+<span class="n">author</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'作者'</span><span class="p">)</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="p">[(</span><span class="s1">'draft'</span><span class="p">,</span> <span class="s1">'草稿'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'published'</span><span class="p">,</span> <span class="s1">'已發布'</span><span class="p">)],</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">start_date</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'開始日期'</span><span class="p">)</span>
+<span class="n">end_date</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'結束日期'</span><span class="p">)</span>
+</code></pre></div>
+
+<p>接下來，我們需要在視圖中處理表單數據並進行過濾：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.forms</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArticleFilterForm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Article</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">article_list</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="n">form</span> <span class="o">=</span> <span class="n">ArticleFilterForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">articles</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+<span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'author'</span><span class="p">):</span>
+<span class="n">articles</span> <span class="o">=</span> <span class="n">articles</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">author__icontains</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">'author'</span><span class="p">])</span>
+<span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'status'</span><span class="p">):</span>
+<span class="n">articles</span> <span class="o">=</span> <span class="n">articles</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">'status'</span><span class="p">])</span>
+<span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'start_date'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'end_date'</span><span class="p">):</span>
+<span class="n">articles</span> <span class="o">=</span> <span class="n">articles</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">published_at__range</span><span class="o">=</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">'start_date'</span><span class="p">],</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">'end_date'</span><span class="p">]))</span>
+<span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'article_list.html'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'form'</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s1">'articles'</span><span class="p">:</span> <span class="n">articles</span><span class="p">})</span>
+</code></pre></div>
+
+<p>在模板中，我們可以渲染這個過濾表單，並顯示過濾後的結果：</p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;!-- templates/article_list.html --&gt;</span>
+<span class="x">&lt;form method="GET"&gt;</span>
+<span class="cp">{{</span> <span class="nv">form.as_p</span> <span class="cp">}}</span>
+</code></pre></div>
+
+<p><button type="submit">節選</button></p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;/form&gt;</span>
+<span class="cp">{%</span> <span class="k">for</span> <span class="nv">article</span> <span class="k">in</span> <span class="nv">articles</span> <span class="cp">%}</span>
+<span class="cp">{{</span> <span class="nv">article.title</span> <span class="cp">}}</span><span class="x"> - </span><span class="cp">{{</span> <span class="nv">article.author</span> <span class="cp">}}</span><span class="x"> - </span><span class="cp">{{</span> <span class="nv">article.published_at</span> <span class="cp">}}</span>
+<span class="x">&lt;/li&gt;</span>
+<span class="cp">{%</span> <span class="k">empty</span> <span class="cp">%}</span>
+</code></pre></div>
+
+<p>暫無符合條件的文章。</li></p>
+<div class="codehilite"><pre><span></span><code>{% endfor %}
+&lt;/ul&gt;
+</code></pre></div>
+
+<p>通過這樣的設計，用戶可以根據不同條件篩選文章數據。</p>
+<h2 id="103-基於-url-的數據過濾">10.3 基於 URL 的數據過濾</h2>
+<p>有時候，過濾條件可以通過 URL 參數直接傳遞，這樣可以讓過濾功能更加靈活並便於分享。例如，電商網站的篩選結果頁面可以通過 URL 傳遞價格範圍、品牌等條件。</p>
+<h3 id="1031-使用-url-參數進行過濾">10.3.1 使用 URL 參數進行過濾</h3>
+<p>我們可以通過 URL 傳遞過濾參數，並在視圖中根據這些參數進行數據過濾。</p>
+<p>範例：根據 URL 參數進行過濾</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> myapp/views.py
+def product_list(request):
+products = Product.objects.all()
+<span class="gh">#</span> 根據 URL 中的價格範圍進行過濾
+min_price = request.GET.get('min_price')
+max_price = request.GET.get('max_price')
+if min_price:
+products = products.filter(price__gte=min_price)
+if max_price:
+products = products.filter(price__lte=max_price)
+return render(request, 'product_list.html', {'products': products})
+</code></pre></div>
+
+<p>這樣，我們可以通過以下 URL 來篩選商品：</p>
+<div class="codehilite"><pre><span></span><code>/products/?min_price=100&amp;max_price=500
+</code></pre></div>
+
+<h3 id="1032-動態篩選條件的應用">10.3.2 動態篩選條件的應用</h3>
+<p>有時，我們可能希望用戶能夠在頁面上動態改變篩選條件，比如點擊某個按鈕或選擇某個分類時即刻更新結果。這種情況下，我們可以使用 JavaScript 與 URL 結合來動態過濾數據。</p>
+<p>範例：使用篩選按鈕動態改變 URL</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="n">templates</span><span class="o">/</span><span class="n">product_list</span><span class="p">.</span><span class="n">html</span><span class="w"> </span><span class="o">--&gt;</span>
+</code></pre></div>
+
+<p><a href="?min_price=100&max_price=200">價格範圍 100-200</a></p>
+<p><a href="?min_price=200&max_price=300">價格範圍 200-300</a></p>
+<div class="codehilite"><pre><span></span><code><span class="cp">{%</span> <span class="k">for</span> <span class="nv">product</span> <span class="k">in</span> <span class="nv">products</span> <span class="cp">%}</span>
+<span class="x">&lt;</span>
+<span class="x">li&gt; </span><span class="cp">{{</span> <span class="nv">product.name</span> <span class="cp">}}</span><span class="x"> - </span><span class="cp">{{</span> <span class="nv">product.price</span> <span class="cp">}}</span><span class="x">&lt;/li&gt;</span>
+<span class="cp">{%</span> <span class="k">empty</span> <span class="cp">%}</span>
+</code></pre></div>
+
+<p>暫無符合條件的商品。</li></p>
+<div class="codehilite"><pre><span></span><code>{% endfor %}
+&lt;/ul&gt;
+</code></pre></div>
+
+<p>這樣，用戶點擊不同的篩選按鈕時，URL會自動更新，並顯示篩選後的結果。</p>
+<h2 id="104-高級過濾技術">10.4 高級過濾技術</h2>
+<p>除了基本的數據過濾方法外，Django 還提供了一些高級的過濾技術，適用於更複雜的場景，如聯表查詢中的過濾、多條件組合過濾等。</p>
+<h3 id="1041-使用-q-對象進行複雜過濾">10.4.1 使用 Q 對象進行複雜過濾</h3>
+<p>Q 對象允許我們進行複雜的查詢，特別是需要進行 多條件 OR 查詢 或 多條件 AND 查詢 的情況。Q 對象可以通過邏輯運算符 &amp; 和 | 來組合多個查詢條件。</p>
+<p>範例：使用 Q 進行多條件查詢</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">Django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Q</span>
+<span class="c1"># 查詢標題中包含 'Django' 或內容中包含 'Framework' 的文章</span>
+<span class="n">filtered_articles</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+<span class="n">Q</span><span class="p">(</span><span class="n">_icontains</span><span class="o">=</span><span class="s1">'Django'</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">content__icontains</span><span class="o">=</span><span class="s1">'Framework'</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>這裡，Q 對象允許我們同時查詢符合兩個條件的記錄，並用 OR 關係來進行數據過濾。</p>
+<h3 id="1042-聯表查詢中的過濾">10.4.2 聯表查詢中的過濾</h3>
+<p>當模型之間存在外鍵關係或多對多關係時，我們可以使用 select_related 或 prefetch_related 來優化聯表查詢，並在查詢中加入過濾條件。</p>
+<p>範例：查詢有特定標籤的文章</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> 查詢所有標籤為 '技術' 的文章
+articles_with_tag = Article.objects.filter(tags__name='技術').distinct()
+</code></pre></div>
+
+<p>這裡，我們使用聯表查詢來過濾出所有與特定標籤關聯的文章。</p>
+<h2 id="105-數據過濾最佳實踐">10.5 數據過濾最佳實踐</h2>
+<p>在實際應用中，為了提高數據過濾的效率和用戶體驗，我們可以遵循以下幾個最佳實踐：</p>
+<h3 id="1051-提供預設過濾條件">10.5.1 提供預設過濾條件</h3>
+<p>在進行數據過濾時，可以為用戶提供預設的過濾條件，這樣用戶不必每次都手動輸入篩選條件。例如，電商網站可以提供熱門篩選條件如“價格區間”或“品牌”。</p>
+<p>範例：使用預設過濾條件</p>
+<div class="codehilite"><pre><span></span><code>def product_list(request):
+products = Product.objects.all()
+<span class="gh">#</span> 設置預設價格篩選條件
+min_price = request.GET.get('min_price', 50)
+max_price = request.GET.get('max_price', 500)
+products = products.filter(price__gte=min_price, price__lte=max_price)
+return render(request, 'product_list.html', {'products': products})
+</code></pre></div>
+
+<h3 id="1052-使用異步加載提升體驗">10.5.2 使用異步加載提升體驗</h3>
+<p>對於篩選大量數據的情況，可以使用 JavaScript 和 Ajax 來異步加載過濾結果，這樣用戶不必刷新整個頁面就可以看到更新後的數據。</p>
+<h2 id="106-總結">10.6 總結</h2>
+<p>在本章中，我們深入探討了 Django 中的數據過濾系統，學習瞭如何通過查詢集 API 進行數據過濾，並展示瞭如何結合表單來實現靈活的篩選功能。我們還探討了基於 URL 的過濾方法，並介紹了一些高級過濾技術，如 Q 對象和聯表查詢中的過濾。</p>
+<div class="codehilite"><pre><span></span><code>\pagebreak
+</code></pre></div>
+
+<p>11: Django 的分頁系統</p>
+<p>在現代 Web 應用中，數據量往往非常龐大，當數據過多時，將所有數據一次性展示給用戶不僅會降低性能，還會對用戶體驗造成負面影響。此時，我們可以通過分頁（Pagination），將數據按頁顯示，每頁顯示一定數量的記錄。Django 提供了一個強大的內建分頁系統，讓開發者可以輕鬆實現數據的分頁顯示。</p>
+<p>本章將介紹如何使用 Django 的分頁工具進行數據分頁，如何在模板中顯示分頁導航，並探討一些高級的分頁技術，如自定義分頁控制和查詢參數的處理。</p>
+<div class="chnav">
+<a href="/django-notes/ch09-views-templates.html">← 第 9 章 URL 路由、視圖與模板</a>
+<a class="course" href="/django-course/">課程總覽</a>
+<a href="/django-notes/ch11-auth-project.html">第 11 章 分頁、美化、認證與專案實作 →</a>
+</div>
+</main>
+</div>
+</body>
+</html>

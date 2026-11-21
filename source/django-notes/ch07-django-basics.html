@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 7 章 Django 基礎與環境建置 — Django 學習筆記</title>
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+
+</style>
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+</style>
+<style>
+/* ---- Django 學習筆記：章節封面 + 章節導覽（本站既有慣例） ---- */
+main .sub{font-size:13px;color:var(--muted);margin:-8px 0 16px}
+figure.hero{margin:0 0 26px}
+figure.hero img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);display:block}
+figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-align:center}
+.chnav{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0 10px;font-size:13px}
+.chnav a{flex:1;min-width:150px;text-align:center;text-decoration:none;color:var(--accent2);
+  border:1px solid var(--border);border-radius:6px;padding:9px 10px;background:#fff}
+.chnav a:hover{background:#eaeef2}
+.chnav a.course{font-weight:700}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/django-course/">← 課程總覽</a>
+  <h1>Django 學習筆記</h1>
+<div class="sub">p.95–p.108　14 頁　第 7/14 章</div>
+<figure class="hero"><img src="/img/covers/django-ch07.png" alt="第 7 章 封面"><figcaption>封面插圖：Qwen-Image 2.1 生成</figcaption></figure>
+  <div class="sub">Django 網站框架開發 · 學習筆記<br>第 7 章 · Django 基礎與環境建置</div>
+  <div class="toc">
+<ul>
+<li><a href="#1-django-基礎">1. Django 基礎</a>
+<ul>
+<li><a href="#11-使用-django-建立開發環境">1.1 使用 Django 建立開發環境</a>
+</li>
+<li><a href="#12-使用-django-進行基本開發-mvt-框架">1.2 使用 Django 進行基本開發 (MVT 框架)</a>
+</li>
+</ul>
+</li>
+<li><a href="#django-中-mvt-的具體角色">Django 中 MVT 的具體角色</a>
+</li>
+<li><a href="#django-中的-url-路由器">Django 中的 URL 路由器</a>
+<ul>
+<li><a href="#13-django-的優勢與應用場景">1.3 Django 的優勢與應用場景</a>
+</li>
+<li><a href="#14-django-的社羣與資源">1.4 Django 的社羣與資源</a>
+</li>
+<li><a href="#21-準備工作">2.1 準備工作</a>
+</li>
+</ul>
+</li>
+<li><a href="#檢查-python-安裝">檢查 Python 安裝</a>
+</li>
+<li><a href="#安裝-python">安裝 Python</a>
+<ul>
+<li><a href="#22-安裝-django">2.2 安裝 Django</a>
+</li>
+<li><a href="#23-建立虛擬環境">2.3 建立虛擬環境</a>
+</li>
+<li><a href="#24-創建第一個-django-專案">2.4 創建第一個 Django 專案</a>
+</li>
+<li><a href="#25-django-專案結構詳解">2.5 Django 專案結構詳解</a>
+</li>
+</ul>
+</li>
+<li><a href="#關鍵配置項目">關鍵配置項目</a>
+<ul>
+<li><a href="#26-常見問題與錯誤排查">2.6 常見問題與錯誤排查</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</nav>
+<main>
+<h1 id="第-7-章--django-基礎與環境建置">第 7 章 · Django 基礎與環境建置</h1>
+<h2 id="1-django-基礎">1. Django 基礎</h2>
+<h3 id="11-使用-django-建立開發環境">1.1 使用 Django 建立開發環境</h3>
+<p>Django 是一個開源的 Python Web 框架，旨在讓開發過程變得更快捷且更方便維護。Django 強調重用性、低耦合、快速開發，以及 "Don't Repeat Yourself" (DRY) 的開發理念。這使得開發者能夠專注於應用邏輯，而不是解決低層次的細節問題，如 SQL 查詢的編寫或表單驗證。</p>
+<p>Django 最初由新聞網站的開發團隊設計，針對的是需要快速部署、修改頻繁且穩定性要求高的新聞內容管理系統。隨著時間推移，Django 被廣泛應用於不同類型的 Web 應用開發，如社交網絡、電子商務平臺、內容管理系統等。</p>
+<h4 id="111-django-的主要特點">1.1.1 Django 的主要特點</h4>
+<ol>
+<li>快速開發</li>
+</ol>
+<p>Django 的高層次抽象使得 Web 開發變得非常迅速。無論是處理表單、驗證數據，還是設計後臺管理系統，Django 提供了一整套高效工具來處理這些常見的需求。</p>
+<ol start="2">
+<li>完全功能的管理介面</li>
+</ol>
+<p>Django 內建了一個強大且可擴展的管理介面，使得網站管理員可以輕鬆管理網站內容。開發者只需定義模型，Django 就會自動生成對應的管理界面，這在開發 CMS （內容管理系統）時特別有用。</p>
+<ol start="3">
+<li>豐富的庫與模組</li>
+</ol>
+<p>Django 內建了眾多強大的工具和功能模組，如 ORM（對象關聯映射）、模板引擎、表單處理、URL 路由、驗證系統等等。此外，Django 社羣也非常活躍，提供了大量擴展和第三方模組來補充 Django 的原生功能。</p>
+<ol start="4">
+<li>安全性</li>
+</ol>
+<p>Django 提供了防範常見 Web 安全威脅的內建功能，如防止 SQL 注入、跨站腳本攻擊 (XSS)、跨站請求偽造 (CSRF) 等，保護網站免受攻擊。</p>
+<ol start="5">
+<li>可擴展性</li>
+</ol>
+<p>Django 的模組化設計使得它易於擴展和修改。無論是增加新的功能模塊，還是自定義框架的行為，Django 都能夠靈活適應。</p>
+<h3 id="12-使用-django-進行基本開發-mvt-框架">1.2 使用 Django 進行基本開發 (MVT 框架)</h3>
+<p>在學習 Django 之前，我們需要了解其架構模式。許多 Web 框架使用 MVC（Model-View-Controller）架構，Django 則使用一種叫做 MVT（Model-View-Template）的變體架構。</p>
+<h4 id="121-mvc-架構">1.2.1 MVC 架構</h4>
+<p>MVC 是一種軟體設計模式，用來將應用程序分成三個主要部分：</p>
+<ul>
+<li>
+<p>Model（模型）：負責數據邏輯和資料庫的互動。</p>
+</li>
+<li>
+<p>View（視圖）：處理顯示邏輯，呈現數據給用戶。</p>
+</li>
+<li>
+<p>Controller（控制器）：負責接受輸入並將其轉發給相應的模型和視圖。</p>
+</li>
+</ul>
+<h4 id="122-mvt-架構">1.2.2 MVT 架構</h4>
+<p>在 Django 中，MVT 架構替代了傳統的 MVC 架構：</p>
+<ul>
+<li>
+<p>Model（模型）：同樣負責數據邏輯和與資料庫的互動。Django 的 ORM（對象關聯映射）允許開發者使用 Python 對象來進行數據庫操作，而無需直接編寫 SQL。</p>
+</li>
+<li>
+<p>View（視圖）：處理業務邏輯，從模型中獲取數據並將其傳遞給模板渲染。</p>
+</li>
+<li>
+<p>Template（模板）：負責數據的顯示邏輯，將動態內容呈現在靜態 HTML 頁面中。</p>
+</li>
+</ul>
+<h2 id="django-中-mvt-的具體角色">Django 中 MVT 的具體角色</h2>
+<ol>
+<li>
+<p>Model：定義了應用的數據結構，並與資料庫直接互動。你可以在模型中定義字段和方法，來確保數據的完整性。</p>
+</li>
+<li>
+<p>View：處理應用邏輯，根據用戶的請求，從模型中獲取數據並將其傳遞給模板。視圖是控制應用業務流程的核心。</p>
+</li>
+<li>
+<p>Template：負責將視圖傳遞過來的數據渲染成 HTML，並發送給用戶的瀏覽器。</p>
+</li>
+</ol>
+<h2 id="django-中的-url-路由器">Django 中的 URL 路由器</h2>
+<p>在傳統的 MVC 架構中，控制器負責接受用戶的輸入並選擇相應的視圖。在 Django 中，這一功能被 URLConf（URL 配置）取代。Django 使用 URLConf 來定義 URL 模式，並將不同的 URL 分派給相應的視圖函數。</p>
+<h3 id="13-django-的優勢與應用場景">1.3 Django 的優勢與應用場景</h3>
+<p>Django 的設計目標是簡化 Web 應用開發，無論是個人網站還是大型企業應用，它都能勝任。以下列出 Django 的一些應用場景以及其在不同領域的優勢。</p>
+<h4 id="131-django-的優勢">1.3.1 Django 的優勢</h4>
+<ol>
+<li>高效開發</li>
+</ol>
+<p>Django 將開發中常見的任務，如數據庫操作、表單驗證、用戶認證等，進行高度封裝，開發者無需從零開始實現這些功能。這極大地提升了開發效率，讓開發者能在短時間內構建穩定的應用。</p>
+<ol start="2">
+<li>全面的文檔</li>
+</ol>
+<p>Django 擁有非常詳細且完整的官方文檔，涵蓋了從安裝、配置到高級功能的所有方面，這對於新手來說非常友好，也有助於解決開發中遇到的問題。</p>
+<ol start="3">
+<li>大規模社羣支持</li>
+</ol>
+<p>Django 擁有一個龐大且活躍的開發者社羣，社羣成員會定期分享擴展功能、解決常見問題，並開發許多第三方包以增強 Django 的功能。這意味著開發者能輕鬆找到解決方案，並可利用社羣資源來加速開發進度。</p>
+<ol start="4">
+<li>高安全性</li>
+</ol>
+<p>Django 默認集成了多種安全功能，避免開發者犯下常見的安全錯誤，這讓 Django 特別適合於對安全性要求高的項目，如銀行、電子商務等。</p>
+<h4 id="132-django-的應用場景">1.3.2 Django 的應用場景</h4>
+<ol>
+<li>內容管理系統 (CMS)</li>
+</ol>
+<p>許多內容驅動型網站，如新聞網站或博客系統，都使用 Django 來處理大規模的內容創建、管理與發布。Django 的管理介面能快速搭建出一個功能齊全的後臺管理系統，便於管理文章、標籤、分類等內容。</p>
+<ol start="2">
+<li>電子商務平臺</li>
+</ol>
+<p>Django 的 ORM 和強大的資料庫處理功能，使得它成為構建電子商務平臺的理想選擇。從管理產品、訂單、付款到處理用戶帳戶和物流，Django 能夠快速應對電子商務開發中的多種需求。</p>
+<ol start="3">
+<li>社交網絡</li>
+</ol>
+<p>Django 可以用來開發複雜的社交網絡，處理大量用戶生成的內容、消息推送、實時通信等。其擴展性使得開發者能輕鬆實現用戶關係、動態、消息系統等功能。</p>
+<ol start="4">
+<li>學術與研究網站</li>
+</ol>
+<p>許多教育機構、研究組織選擇使用 Django 來開發學術資源平臺。Django 的靈活性和高效開發特性，讓開發者可以迅速構建功能完善的學術系統，並處理大規模數據。</p>
+<ol start="5">
+<li>數據分析與視覺化</li>
+</ol>
+<p>由於 Django 與 Python 完美整合，開發者可以使用 Django 作為數據分析應用的後端框架，並結合 Python 的數據科學庫如 Pandas、NumPy 來進行數據處理與分析，實現強大的數據可視化功能。</p>
+<h3 id="14-django-的社羣與資源">1.4 Django 的社羣與資源</h3>
+<p>作為一個成熟且受歡迎的框架，Django 擁有豐富的資源和社羣支持。無論是初學者還是經驗豐富的開發者，都可以從這些資源中受益，進一步提升開發技能。</p>
+<h4 id="141-官方文檔">1.4.1 官方文檔</h4>
+<p>Django 的官方文檔是學習框架最重要的資源之一。官方文檔提供了清晰的 API 說明、入門指南，以及詳細的功能講解，這對於解決開發中的各類問題非常有幫助。</p>
+<p>官方文檔網址： $ \underline{\text{https://docs.djangoproject.com/zh-hans/stable/}} $</p>
+<h4 id="142-社羣論壇與線上資源">1.4.2 社羣論壇與線上資源</h4>
+<p>Django 擁有活躍的社羣論壇，開發者可以在這些論壇上提出問題、分享經驗，並參與到社羣的討論中。以下是幾個受歡迎的 Django 社羣資源：</p>
+<ul>
+<li>
+<p>StackOverflow : Django 相關的提問和回答是 StackOverflow 上最活躍的 Python 相關話題之一。</p>
+</li>
+<li>
+<p>Django 社羣論壇：提供了專門的 Django 討論區，讓開發者能相互交流和學習。</p>
+</li>
+</ul>
+<h4 id="143-第三方擴展包">1.4.3 第三方擴展包</h4>
+<p>Django 的第三方擴展包極為豐富，幾乎可以滿足所有的開發需求。從用戶驗證到 API 開發，這些包都經過社羣驗證，能快速集成到你的應用中。</p>
+<h4 id="144-django-的版本更新">1.4.4 Django 的版本更新</h4>
+<p>Django 團隊保持定期更新框架版本，以解決已知的漏洞和提升性能。建議開發者定期檢查並升級至最新的穩定版本，以保持項目安全性與兼容性。</p>
+<p>2：設置開發環境</p>
+<h3 id="21-準備工作">2.1 準備工作</h3>
+<p>在開始 Django 開發之前，我們需要為開發設置適當的環境，這包括安裝所需的軟件和配置虛擬環境。本章將帶領你逐步完成這些操作，並開始你的第一個 Django 專案。</p>
+<h4 id="211-安裝-python">2.1.1 安裝 Python</h4>
+<p>Django 是基於 Python 的框架，因此第一步是安裝 Python。你需要檢查你的電腦是否已安裝了正確版本的 Python。</p>
+<h2 id="檢查-python-安裝">檢查 Python 安裝</h2>
+<p>在 macOS 和 Linux 系統上，打開終端（Terminal），輸入以下命令：</p>
+<div class="codehilite"><pre><span></span><code>python3 --version
+</code></pre></div>
+
+<p>在 Windows 系統上，打開命令提示符（Command Prompt），輸入：</p>
+<div class="codehilite"><pre><span></span><code>python --version
+</code></pre></div>
+
+<p>若顯示的 Python 版本為 3.x.x，即表示已安裝正確版本。如果沒有安裝，請前往 Python 官方網站 下載並安裝最新的 Python 3.x 版本。</p>
+<h2 id="安裝-python">安裝 Python</h2>
+<ol>
+<li>
+<p>進入 Python 官方下載頁面。</p>
+</li>
+<li>
+<p>根據你的作業系統選擇相應的版本。</p>
+</li>
+<li>
+<p>安裝時，請勾選 "Add Python to PATH" 選項，以確保可以在命令行中直接調用 python 命令。</p>
+</li>
+</ol>
+<h4 id="212-安裝-pip">2.1.2 安裝 pip</h4>
+<p>pip 是 Python 的包管理工具，用來安裝、更新和管理 Python 軟件包。通常，Python 3.x 自帶 pip。你可以通過以下命令檢查 pip 是否已安裝：</p>
+<div class="codehilite"><pre><span></span><code>pip --version
+</code></pre></div>
+
+<p>若未安裝 pip，可參考官方指引安裝：</p>
+<p>pip 官方安裝指引</p>
+<h3 id="22-安裝-django">2.2 安裝 Django</h3>
+<p>在安裝好 Python 和 pip 之後，我們便可以安裝 Django。Django 可以通過 pip 進行安裝，這是最常見也是推薦的方式。</p>
+<h4 id="221-django-版本選擇">2.2.1 Django 版本選擇</h4>
+<p>Django 團隊會定期發布新版和 LTS（長期支持）版本。通常情況下，建議安裝最新的穩定版本。如果你的項目需要特定版本的 Django（例如 LTS 版本），可以在安裝時指定版本號。</p>
+<h4 id="222-使用-pip-安裝-django">2.2.2 使用 pip 安裝 Django</h4>
+<p>在終端或命令提示符中執行以下命令來安裝最新的 Django：</p>
+<div class="codehilite"><pre><span></span><code>pip install django
+</code></pre></div>
+
+<p>若需要安裝特定版本，可以指定版本號，例如安裝 3.2 版本：</p>
+<div class="codehilite"><pre><span></span><code>pip install django==3.2
+</code></pre></div>
+
+<p>確認 Django 安裝成功</p>
+<p>安裝完成後，可以輸入以下命令來檢查 Django 是否安裝成功，並顯示版本號：</p>
+<div class="codehilite"><pre><span></span><code>django-admin --version
+</code></pre></div>
+
+<h3 id="23-建立虛擬環境">2.3 建立虛擬環境</h3>
+<p>虛擬環境是一個獨立的 Python 執行環境，它允許你在不同的專案中使用不同版本的 Python 和套件，避免衝突。Django 開發通常推薦使用虛擬環境。</p>
+<h4 id="231-安裝虛擬環境工具">2.3.1 安裝虛擬環境工具</h4>
+<p>Python 提供內建的 venv 工具來建立虛擬環境。你可以通過以下命令檢查 venv 是否可用：</p>
+<div class="codehilite"><pre><span></span><code>python3 -m venv --help
+</code></pre></div>
+
+<p>如果沒有問題，就可以使用 venv 來創建虛擬環境。</p>
+<h4 id="232-建立虛擬環境">2.3.2 建立虛擬環境</h4>
+<p>在你的專案目錄下（如 myproject/），創建虛擬環境：</p>
+<div class="codehilite"><pre><span></span><code>python3 -m venv venv
+</code></pre></div>
+
+<p>這會在當前目錄下創建一個名為 venv 的虛擬環境文件夾，該文件夾包含了獨立的 Python 執行環境和包管理工具。</p>
+<h4 id="233-啟動虛擬環境">2.3.3 啟動虛擬環境</h4>
+<p>在 macOS 和 Linux 系統上，使用以下命令啟動虛擬環境：</p>
+<div class="codehilite"><pre><span></span><code>source venv/bin/activate
+</code></pre></div>
+
+<p>在 Windows 系統上，使用以下命令啟動虛擬環境：</p>
+<div class="codehilite"><pre><span></span><code>venv\Scripts\activate
+</code></pre></div>
+
+<p>啟動虛擬環境後，你的終端提示符會變成類似（venv），表示目前正處於虛擬環境中。</p>
+<p>停用虛擬環境</p>
+<p>當你完成工作並想退出虛擬環境時，輸入以下命令：</p>
+<div class="codehilite"><pre><span></span><code>deactivate
+</code></pre></div>
+
+<h3 id="24-創建第一個-django-專案">2.4 創建第一個 Django 專案</h3>
+<p>現在我們已經準備好開發環境，接下來將創建第一個 Django 專案，並運行一個簡單的 Web 伺服器來檢視結果。</p>
+<h4 id="241-使用-django-admin-創建專案">2.4.1 使用 django-admin 創建專案</h4>
+<p>Django 提供了 django-admin 工具，用來創建和管理 Django 專案。在虛擬環境啟動的狀態下，執行以下命令創建新專案：</p>
+<div class="codehilite"><pre><span></span><code>django-admin startproject myproject
+</code></pre></div>
+
+<p>這會創建一個名為 myproject 的新 Django 專案，內部包含以下基本結構：</p>
+<div class="codehilite"><pre><span></span><code>myproject/
+manage.py
+myproject/
+__init__.py
+settings.py
+urls.py
+asgi.py
+wsgi.py
+</code></pre></div>
+
+<p>manage.py：一個實用命令行工具，用於與 Django 專案互動。</p>
+<p>settings.py：專案的設置與配置文件。</p>
+<p>urls.py：負責 URL 路由配置。</p>
+<p>asgi.py / wsgi.py : Django 的 ASGI 和 WSGI 伺服器入口文件。</p>
+<h4 id="242-運行開發伺服器">2.4.2 運行開發伺服器</h4>
+<p>進入專案目錄後，使用 manage.py 命令運行 Django 開發伺服器：</p>
+<div class="codehilite"><pre><span></span><code>python manage.py runserver
+</code></pre></div>
+
+<p>你將看到以下輸出：</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Watching</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">changes</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">StatReloader</span>
+<span class="n">Performing</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">checks</span><span class="o">...</span>
+<span class="n">System</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="n">identified</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="n">silenced</span><span class="p">)</span><span class="o">.</span>
+<span class="n">September</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">2024</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">12</span><span class="p">:</span><span class="mi">45</span><span class="p">:</span><span class="mi">08</span>
+<span class="n">Django</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="mf">3.2</span><span class="o">.</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">settings</span><span class="w"> </span><span class="s1">'myproject.settings'</span>
+<span class="n">Starting</span><span class="w"> </span><span class="n">development</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8000</span><span class="o">/</span>
+<span class="n">Quit</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">CONTROL</span><span class="o">-</span><span class="n">C</span><span class="o">.</span>
+</code></pre></div>
+
+<p>打開瀏覽器，訪問 http://127.0.0.1:8000/，你應該能看到 Django 的歡迎頁面，這說明 Django 開發伺服器已成功運行。</p>
+<h3 id="25-django-專案結構詳解">2.5 Django 專案結構詳解</h3>
+<p>Django 自動生成的專案結構包含了一些關鍵文件和文件夾，我們將逐一解釋這些文件的用途。</p>
+<p>2.5.1 manage.py</p>
+<p>manage.py 是 Django 的命令行工具，用於執行各種管理命令，如啟動伺服器、遷移資料庫、創建應用等。你可以通過以下命令查看 manage.py 支持的所有命令：</p>
+<div class="codehilite"><pre><span></span><code>python manage.py --help
+</code></pre></div>
+
+<p>常用命令包括：</p>
+<ul>
+<li>
+<p>runserver：啟動開發伺服器。</p>
+</li>
+<li>
+<p>migrate：執行資料庫遷移。</p>
+</li>
+<li>
+<p>createsuperuser：創建超級用戶（管理員帳戶）。</p>
+</li>
+<li>
+<p>startapp：創建一個新的 Django 應用。</p>
+</li>
+</ul>
+<p>2.5.2 settings.py</p>
+<p>settings.py 是 Django 專案的配置文件，定義了數據庫配置、應用列表、中間件、模板路徑等。在開發過程中，你將頻繁修改這個文件來配置你的專案。</p>
+<h2 id="關鍵配置項目">關鍵配置項目</h2>
+<ul>
+<li>DEBUG：設置為 True，表示處於開發模式，將顯示詳細的錯誤信息。發布到生產環境時應設置為 False。</li>
+</ul>
+<p>**ALLOWED</p>
+<p>HOSTS**：定義允許訪問 Django 應用的域名列表。在開發環境下通常設置為空列表，但在生產環境中必須指定具體的域名。</p>
+<p>INSTALLED_APPS：列出所有已安裝並啟用的 Django 應用。你將會在此處添加自定義應用或第三方擴展包。</p>
+<p>MIDDLEWARE：列出所有啟用的中間件。中間件是處理請求和響應的過程中應用的一些處理程序。你可以在這裡啟用或禁用某些功能，如會話管理、CSRF保護等。</p>
+<p>TEMPLATES：定義模板引擎的設置。這部分配置負責告訴 Django 在哪裡查找 HTML 模板文件。</p>
+<p>DATABASES：設置資料庫配置，默認使用 SQLite 資料庫。你可以修改這裡來切換至 MySQL、PostgreSQL 等其他資料庫。</p>
+<p>2.5.3 urls.py</p>
+<p>urls.py 負責處理 URL 路由配置。在這個文件中，你可以定義 URL 與視圖的對應關係。每當用戶請求一個 URL，Django 會通過這個文件來判斷應該調用哪個視圖來處理請求。</p>
+<p>2.5.4 asgi.py / wsgi.py</p>
+<p>這兩個文件是 Django 專案的伺服器入口點，分別用於 ASGI（Asynchronous Server Gateway Interface）和 WSGI（Web Server Gateway Interface）。在大多數情況下，你不需要修改這些文件。</p>
+<p>wsgi.py 用於標準的同步應用。</p>
+<p>asgi.py 用於支援異步功能的應用，如 WebSocket。</p>
+<h3 id="26-常見問題與錯誤排查">2.6 常見問題與錯誤排查</h3>
+<p>即使按照正確步驟設置環境和創建專案，你仍可能遇到一些常見錯誤或問題。這裡列出了一些常見問題及其解決方案。</p>
+<p>2.6.1 問題：伺服器無法啟動</p>
+<p>原因 1: Django 未安裝</p>
+<p>解決方案：檢查是否在虛擬環境中運行，並且 Django 是否正確安裝。嘗試重新安裝 Django：</p>
+<div class="codehilite"><pre><span></span><code>pip install django
+</code></pre></div>
+
+<p>原因 2：端口被佔用</p>
+<p>解決方案：如果 8000 端口被其他應用佔用，可以指定其他端口來啟動伺服器：</p>
+<div class="codehilite"><pre><span></span><code>python manage.py runserver 8080
+</code></pre></div>
+
+<p>2.6.2 問題：無法訪問伺服器</p>
+<p>原因：ALLOWED_HOSTS 配置錯誤</p>
+<p>解決方案：在 settings.py 中，確保 ALLOWED_HOSTS 列表包含本地主機 IP 地址：</p>
+<div class="codehilite"><pre><span></span><code>ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+</code></pre></div>
+
+<p>3: Django 中的 Project 與 App，配置 settings.py 和 manage.py 命令</p>
+<p>在 Django 框架中，Project（項目）和 App（應用）是兩個基本概念。理解這兩者之間的區別對於構建高效、可擴展的應用程序至關重要。此外，Django 提供了靈活的配置系統，通過 settings.py 文件來管理項目的全局設置，同時提供了 manage.py 命令來管理和運行開發相關的任務。本章將詳細介紹 Project 和 App 之間的區別，配置 settings.py，以及 常見的 manage.py 命令 和它們的使用場景。</p>
+<div class="chnav">
+<a href="/django-notes/ch06-control-oop.html">← 第 6 章 流程控制、函數、模組與面向對象</a>
+<a class="course" href="/django-course/">課程總覽</a>
+<a href="/django-notes/ch08-project-settings.html">第 8 章 Project、App 與 settings 配置 →</a>
+</div>
+</main>
+</div>
+</body>
+</html>

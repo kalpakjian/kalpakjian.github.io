@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 11 章 分頁、美化、認證與專案實作 — Django 學習筆記</title>
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+
+</style>
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+</style>
+<style>
+/* ---- Django 學習筆記：章節封面 + 章節導覽（本站既有慣例） ---- */
+main .sub{font-size:13px;color:var(--muted);margin:-8px 0 16px}
+figure.hero{margin:0 0 26px}
+figure.hero img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);display:block}
+figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-align:center}
+.chnav{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0 10px;font-size:13px}
+.chnav a{flex:1;min-width:150px;text-align:center;text-decoration:none;color:var(--accent2);
+  border:1px solid var(--border);border-radius:6px;padding:9px 10px;background:#fff}
+.chnav a:hover{background:#eaeef2}
+.chnav a.course{font-weight:700}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/django-course/">← 課程總覽</a>
+  <h1>Django 學習筆記</h1>
+<div class="sub">p.174–p.209　36 頁　第 11/14 章</div>
+<figure class="hero"><img src="/img/covers/django-ch11.png" alt="第 11 章 封面"><figcaption>封面插圖：Qwen-Image 2.1 生成</figcaption></figure>
+  <div class="sub">Django 網站框架開發 · 學習筆記<br>第 11 章 · 分頁、美化、認證與專案實作</div>
+  <div class="toc">
+<ul>
+<li><a href="#111-分頁的基本概念">11.1 分頁的基本概念</a>
+</li>
+<li><a href="#112-使用-paginator-進行分頁">11.2 使用 Paginator 進行分頁</a>
+</li>
+<li><a href="#113-處理分頁參數">11.3 處理分頁參數</a>
+</li>
+<li><a href="#114-自定義分頁控制">11.4 自定義分頁控制</a>
+</li>
+<li><a href="#115-使用-ajax-進行分頁">11.5 使用 Ajax 進行分頁</a>
+</li>
+<li><a href="#116-總結">11.6 總結</a>
+</li>
+<li><a href="#121-為什麼使用-bootstrap">12.1 為什麼使用 Bootstrap?</a>
+</li>
+<li><a href="#122-在-django-項目中引入-bootstrap">12.2. 在 Django 項目中引入 Bootstrap</a>
+</li>
+<li><a href="#123-使用-bootstrap-美化-django-表單">12.3. 使用 Bootstrap 美化 Django 表單</a>
+</li>
+<li><a href="#124-美化-django-的管理後臺">12.4. 美化 Django 的管理後臺</a>
+</li>
+<li><a href="#125-使用-bootstrap-的其他組件">12.5. 使用 Bootstrap 的其他組件</a>
+</li>
+<li><a href="#126-總結">12.6. 總結</a>
+</li>
+<li><a href="#131-django-認證框架介紹">13.1. Django 認證框架介紹</a>
+</li>
+<li><a href="#132-創建-django-項目與應用">13.2. 創建 Django 項目與應用</a>
+</li>
+<li><a href="#133-用戶註冊功能">13.3. 用戶註冊功能</a>
+</li>
+<li><a href="#創建註冊視圖">創建註冊視圖</a>
+</li>
+<li><a href="#配置-url-路由">配置 URL 路由</a>
+</li>
+<li><a href="#創建註冊模板">創建註冊模板</a>
+<ul>
+<li><a href="#134-用戶登錄與登出功能">13.4. 用戶登錄與登出功能</a>
+</li>
+</ul>
+</li>
+<li><a href="#配置登錄-url">配置登錄 URL</a>
+<ul>
+<li><a href="#135-密碼重設功能">13.5. 密碼重設功能</a>
+</li>
+<li><a href="#136-總結">13.6. 總結</a>
+</li>
+<li><a href="#141-設置-django-messages-框架">14.1. 設置 Django messages 框架</a>
+</li>
+<li><a href="#142-使用-messages-在視圖中傳遞消息">14.2. 使用 messages 在視圖中傳遞消息</a>
+</li>
+<li><a href="#143-在模板中顯示消息">14.3. 在模板中顯示消息</a>
+</li>
+<li><a href="#144-messages-框架的進階設置">14.4. messages 框架的進階設置</a>
+</li>
+<li><a href="#145-常見應用場景">14.5. 常見應用場景</a>
+</li>
+<li><a href="#146-總結">14.6. 總結</a>
+</li>
+<li><a href="#151-項目設計與需求分析">15.1. 項目設計與需求分析</a>
+</li>
+<li><a href="#152-建立-django-項目">15.2. 建立 Django 項目</a>
+</li>
+<li><a href="#153-設計數據庫模型">15.3. 設計數據庫模型</a>
+</li>
+<li><a href="#154-開發視圖與業務邏輯">15.4. 開發視圖與業務邏輯</a>
+</li>
+<li><a href="#155-使用-django-表單處理用戶輸入">15.5. 使用 Django 表單處理用戶輸入</a>
+</li>
+<li><a href="#156-報名系統">15.6. 報名系統</a>
+</li>
+<li><a href="#158-項目部署">15.8. 項目部署</a>
+</li>
+<li><a href="#159-總結">15.9. 總結</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</nav>
+<main>
+<h1 id="第-11-章--分頁美化認證與專案實作">第 11 章 · 分頁、美化、認證與專案實作</h1>
+<h3 id="111-分頁的基本概念">11.1 分頁的基本概念</h3>
+<p>分頁的主要目的是將大數據集分成多個小的數據塊，讓用戶可以按頁瀏覽。通常，分頁功能包括：</p>
+<p>每頁顯示固定數量的記錄。</p>
+<p>提供導航控件，讓用戶可以輕鬆跳轉到下一頁、上一頁或特定頁面。</p>
+<p>顯示當前頁面的狀態，如當前頁數、總頁數等。</p>
+<p>Django 提供了一個內建的 Paginator 類，用來處理數據的分頁邏輯，並提供了方便的接口來管理頁面的顯示。</p>
+<h3 id="112-使用-paginator-進行分頁">11.2 使用 Paginator 進行分頁</h3>
+<h4 id="1121-創建分頁器">11.2.1 創建分頁器</h4>
+<p>要實現分頁，首先需要使用 Django 的 Paginator 類來創建分頁器。Paginator 類接受兩個參數：</p>
+<ol>
+<li>
+<p>要分頁的對象列表：通常是一個查詢集。</p>
+</li>
+<li>
+<p>每頁顯示的記錄數：定義每頁需要顯示的記錄數量。</p>
+</li>
+</ol>
+<p>範例：使用 Paginator 創建分頁器</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.core.paginator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Paginator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Article</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">article_list</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="n">article_list</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="c1"># 獲取所有文章</span>
+<span class="n">paginator</span> <span class="o">=</span> <span class="n">Paginator</span><span class="p">(</span><span class="n">article_list</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="c1"># 每頁顯示 10 條記錄</span>
+<span class="n">page_number</span> <span class="mi">173</span>
+</code></pre></div>
+
+<p>在這裡，我們使用 Paginator 對文章列表進行分頁，每頁顯示 10 條記錄。get_page() 方法會根據頁碼返回對應頁面的數據，並且在頁碼無效時自動處理異常。</p>
+<h4 id="1122-在模板中顯示分頁數據">11.2.2 在模板中顯示分頁數據</h4>
+<p>接下來，我們需要在模板中顯示分頁數據和分頁導航。Django 提供了 page_obj，該對象包含當前頁面的數據以及分頁相關的信息，如是否有上一頁、下一頁等。</p>
+<p>範例：在模板中顯示分頁導航</p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;!-- templates/article_list.html --&gt;</span>
+<span class="cp">{%</span> <span class="k">for</span> <span class="nv">article</span> <span class="k">in</span> <span class="nv">page_obj</span> <span class="cp">%}</span>
+<span class="cp">{{</span> <span class="nv">article.title</span> <span class="cp">}}</span><span class="x">&lt;/li&gt;</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+<span class="x">&lt;/ul&gt;</span>
+<span class="x">&lt;div class="pagination"&gt;</span>
+</code></pre></div>
+
+<p>頁 {{ page_obj.number }} 共 {{ page_obj.paginator.num_pages }} </span></p>
+<!-- 顯示上一頁按鈕 -->
+
+<div class="codehilite"><pre><span></span><code><span class="cp">{%</span> <span class="k">if</span> <span class="nv">page_obj.has_previous</span> <span class="cp">%}</span>
+</code></pre></div>
+
+<p><a href="?page={{ page_obj.previous_page_number }}">上一頁</a></p>
+<div class="codehilite"><pre><span></span><code>{<span class="o">%</span><span class="w"> </span><span class="k">endif</span><span class="w"> </span><span class="o">%</span>}
+</code></pre></div>
+
+<!-- 顯示下一頁按鈕 -->
+
+<div class="codehilite"><pre><span></span><code><span class="cp">{%</span> <span class="k">if</span> <span class="nv">page_obj.has_next</span> <span class="cp">%}</span>
+</code></pre></div>
+
+<p><a href="?page={{ page_obj.next_page_number }}">下一頁</a></p>
+<div class="codehilite"><pre><span></span><code>{<span class="o">%</span><span class="w"> </span><span class="k">endif</span><span class="w"> </span><span class="o">%</span>}
+<span class="o">&lt;/</span><span class="nv">div</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<p>在這個範例中，page_obj 包含當前頁面的數據，我們通過循環來顯示當前頁的文章。同時，我們還使用 page_obj.has_previous 和 page_obj.has_next 來顯示上一頁和下一頁的導航按鈕。</p>
+<h3 id="113-處理分頁參數">11.3 處理分頁參數</h3>
+<h4 id="1131-保留查詢參數">11.3.1 保留查詢參數</h4>
+<p>當我們在進行分頁時，可能會遇到需要保留其他查詢參數的情況，例如在篩選後進行分頁，這時我們希望篩選條件能夠保持在 URL 中。</p>
+<p>範例：保留查詢參數進行分頁</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.core.paginator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Paginator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Article</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">article_list</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="n">article_list</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="n">paginator</span> <span class="o">=</span> <span class="n">Paginator</span><span class="p">(</span><span class="n">article_list</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">page_number</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'page'</span><span class="p">)</span>
+<span class="n">page_obj</span> <span class="o">=</span> <span class="n">paginator</span><span class="o">.</span><span class="n">get_page</span><span class="p">(</span><span class="n">page_number</span><span class="p">)</span>
+<span class="c1"># 獲取其他查詢參數</span>
+<span class="n">query_params</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="k">if</span> <span class="s1">'page'</span> <span class="ow">in</span> <span class="n">query_params</span><span class="p">:</span>
+</code></pre></div>
+
+<p>del query_params['page'] # 刪除分頁參數，避免重複</p>
+<div class="codehilite"><pre><span></span><code>query_string = query_params.urlencode()
+return render(request, 'article_list.html', {'page_obj': page_obj, 'query_string': query_string})
+</code></pre></div>
+
+<p>在模板中，我們可以使用這些保留的參數：</p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;div class="pagination"&gt;</span>
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">page_obj.has_previous</span> <span class="cp">%}</span>
+<span class="x">&lt;a href="?page=</span><span class="cp">{{</span> <span class="nv">page_obj.previous_page_number</span> <span class="cp">}}</span><span class="x">&amp;</span><span class="cp">{{</span> <span class="nv">query_string</span> <span class="cp">}}</span><span class="x">"</span>
+</code></pre></div>
+
+<blockquote>
+<p>上一頁</a></p>
+</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="x"> </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">page_obj.has_next</span> <span class="cp">%}</span>
+</code></pre></div>
+
+<p><a href="?page={{ page_obj.next_page_number }}&{{ query_string }}">下一頁</a></p>
+<div class="codehilite"><pre><span></span><code>{<span class="o">%</span><span class="w"> </span><span class="k">endif</span><span class="w"> </span><span class="o">%</span>}
+<span class="o">&lt;/</span><span class="nv">div</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<p>這樣，其他查詢參數將會被保留在 URL 中，確保篩選條件在分頁過程中保持不變。</p>
+<h3 id="114-自定義分頁控制">11.4 自定義分頁控制</h3>
+<h4 id="1141-設置每頁顯示的數量">11.4.1 設置每頁顯示的數量</h4>
+<p>有時，應用中需要允許用戶自定義每頁顯示的記錄數量。你可以通過查詢參數或表單來實現這一點。</p>
+<p>範例：用戶設置每頁顯示數量</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> myapp/views.py
+def article_list(request):
+article_list = Article.objects.all()
+per_page = request.GET.get('per_page', 10) # 默認每頁顯示 10 條記錄
+paginator = Paginator(article_list, per_page)
+page_number = request.GET.get('page')
+page_obj = paginator.get_page(page_number)
+return render(request, 'article_list.html', {'page_obj': page_obj})
+</code></pre></div>
+
+<p>在模板中，使用一個下拉框讓用戶選擇每頁顯示的數量：</p>
+<div class="codehilite"><pre><span></span><code>&lt;form method="GET"&gt;
+</code></pre></div>
+
+<p><label for="per_page">每頁顯示：</label></p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;select</span><span class="w"> </span><span class="na">name=</span><span class="s">"per_page"</span><span class="w"> </span><span class="na">onchange=</span><span class="s">"this.form.submit()"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;option</span><span class="w"> </span><span class="na">value=</span><span class="s">"5"</span><span class="w"> </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">page_obj.paginator.per_page</span> <span class="o">==</span> <span class="m">5</span> <span class="cp">%}</span><span class="err">selected</span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+<span class="err">%}</span><span class="nt">&gt;</span>5<span class="nt">&lt;/option&gt;</span>
+<span class="nt">&lt;option</span><span class="w"> </span><span class="na">value=</span><span class="s">"10"</span><span class="w"> </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">page_obj.paginator.per_page</span> <span class="o">==</span> <span class="m">10</span> <span class="cp">%}</span><span class="err">selected</span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+<span class="err">%}</span><span class="nt">&gt;</span>10<span class="nt">&lt;/option&gt;</span>
+<span class="nt">&lt;option</span><span class="w"> </span><span class="na">value=</span><span class="s">"20"</span><span class="w"> </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">page_obj.paginator.per_page</span> <span class="o">==</span> <span class="m">20</span> <span class="cp">%}</span><span class="err">selected</span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+<span class="err">%}</span><span class="nt">&gt;</span>20<span class="nt">&lt;/option&gt;</span>
+<span class="nt">&lt;/select&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div>
+
+<h4 id="1142-分頁範圍顯示">11.4.2 分頁範圍顯示</h4>
+<p>在某些應用中，為了提升用戶體驗，我們可能希望顯示更靈活的分頁導航，例如只顯示當前頁附近的頁碼，這樣可以避免過長的分頁導航條。</p>
+<p>範例：顯示當前頁附近的頁碼</p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;div class="pagination"&gt;</span>
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">page_obj.has_previous</span> <span class="cp">%}</span>
+</code></pre></div>
+
+<p><a href="?page=1">第一頁</a></p>
+<p><a href="?page={{ page_obj.previous_page_number }}">上一頁</a></p>
+<div class="codehilite"><pre><span></span><code><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="w"> </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">num</span> <span class="k">in</span> <span class="nv">page_obj.paginator.page_range</span> <span class="cp">%}</span><span class="w"> </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">num</span> <span class="o">&gt;=</span> <span class="nv">page_obj.numberladd</span><span class="o">:-</span><span class="m">2</span> <span class="k">and</span> <span class="nv">num</span> <span class="o">&lt;=</span> <span class="nv">page_obj.numberladd</span><span class="o">:</span><span class="m">2</span> <span class="cp">%}</span><span class="w"> </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">num</span> <span class="o">==</span> <span class="nv">page_obj.number</span> <span class="cp">%}</span>
+<span class="cp">{{</span> <span class="nv">num</span> <span class="cp">}}</span><span class="nt">&lt;/span&gt;</span>
+<span class="cp">{%</span> <span class="k">else</span> <span class="cp">%}</span>
+<span class="nt">&lt;a</span><span class="w"> </span><span class="na">href=</span><span class="s">"?page=</span><span class="cp">{{</span> <span class="nv">num</span> <span class="cp">}}</span><span class="s">"</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">num</span> <span class="cp">}}</span><span class="nt">&lt;/a&gt;</span>
+<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="w"> </span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="w"> </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="w"> </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">page_obj.has_next</span> <span class="cp">%}</span>
+</code></pre></div>
+
+<p><a href="?page={{ page_obj.next_page_number }}">下一頁</a></p>
+<p><a href="?page={{ page_obj.paginator.num_pages }}">最後一頁</a></p>
+<div class="codehilite"><pre><span></span><code>{<span class="o">%</span><span class="w"> </span><span class="k">endif</span><span class="w"> </span><span class="o">%</span>}
+<span class="o">&lt;/</span><span class="nv">div</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<p>這樣的分頁導航將只顯示當前頁附近的頁碼，提升可讀性。</p>
+<h3 id="115-使用-ajax-進行分頁">11.5 使用 Ajax 進行分頁</h3>
+<p>傳統的分頁需要刷新整個頁面，但在現代 Web 應用中，使用 Ajax 可以實現更好的用戶體驗，讓分頁過程在不刷新整個頁面的情況下完成。</p>
+<h4 id="1151-基本的-ajax-分頁實現">11.5.1 基本的 Ajax 分頁實現</h4>
+<p>範例：使用 Ajax 請求分頁數據</p>
+<ol>
+<li>在視圖中返回分頁的 HTML：</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.template.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">render_to_string</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">JsonResponse</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">article_list</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="n">article_list</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="n">paginator</span> <span class="o">=</span> <span class="n">Paginator</span><span class="p">(</span><span class="n">article_list</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">page_number</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'page'</span><span class="p">)</span>
+<span class="n">page_obj</span> <span class="o">=</span> <span class="n">paginator</span><span class="o">.</span><span class="n">get_page</span><span class="p">(</span><span class="n">page_number</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="ow">is</span><span class="o">/</span><span class="n">ajax</span><span class="p">():</span>
+<span class="n">html</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">'partials/article_list.html'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'page_obj'</span><span class="p">:</span> <span class="n">page_obj</span><span class="p">})</span>
+<span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">'html'</span><span class="p">:</span> <span class="n">html</span><span class="p">})</span>
+<span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'article_list.html'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'page_obj'</span><span class="p">:</span> <span class="n">page_obj</span><span class="p">})</span>
+</code></pre></div>
+
+<ol start="2">
+<li>創建一個 partials/article_list.html 模板來渲染數據。</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="cp">{%</span> <span class="k">for</span> <span class="nv">article</span> <span class="k">in</span> <span class="nv">page_obj</span> <span class="cp">%}</span>
+<span class="cp">{{</span> <span class="nv">article.title</span> <span class="cp">}}</span><span class="x">&lt;/li&gt;</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+<span class="x">&lt;/ul&gt;</span>
+</code></pre></div>
+
+<p>這樣的實現方式可以讓分頁過程變得更加流暢，提升用戶體驗。</p>
+<h3 id="116-總結">11.6 總結</h3>
+<p>在本章中，我們深入探討了 Django 的分頁系統，學習瞭如何使用 Paginator 來進行數據分頁，並在模板中顯示分頁導航。我們還探討瞭如何處理分頁參數、允許用戶設置每頁顯示的數量，並介紹瞭如何使用 Ajax 實現動態分頁。</p>
+<p>掌握這些技巧後，開發者可以輕鬆實現靈活的分頁功能，從而有效地處理大數據集並提升應用的性能和用戶體驗。</p>
+<p>12: Django 與前端框架整合</p>
+<p>使用 Bootstrap 美化 Django 頁面</p>
+<p>在 Django 項目中，美化前端界面是提升用戶體驗的重要部分。儘管 Django 提供了強大的後端開發功能，但在前端方面，使用框架如 Bootstrap 能夠迅速提升頁面的外觀和響應式設計。Bootstrap 是一個非常流行的 HTML、CSS 和 JavaScript 框架，它使得構建漂亮且響應式的網站變得簡單且高效。</p>
+<p>在本章中，我們將介紹如何將 Bootstrap 集成到 Django 項目中，並使用 Bootstrap 的組件來設計和美化 Django 頁面。</p>
+<ol start="12">
+<li>Bootstrap 簡介</li>
+</ol>
+<p>Bootstrap 是由 Twitter 開發的一個開源前端框架，旨在幫助開發者快速構建現代化、響應式的網頁。Bootstrap 提供了大量的預設樣式、佈局和組件，如導航欄、按鈕、表單、卡片和模式框等，並且內建了響應式網格系統，使得頁面能夠自適應不同尺寸的設備。</p>
+<h3 id="121-為什麼使用-bootstrap">12.1 為什麼使用 Bootstrap?</h3>
+<ul>
+<li>
+<p>快速開發：Bootstrap 提供了許多預設樣式和組件，開發者無需從頭設計每個元素。</p>
+</li>
+<li>
+<p>響應式設計：Bootstrap 內建了響應式佈局系統，可以讓網站自動適應不同設備的屏幕尺寸。</p>
+</li>
+<li>
+<p>一致的設計：通過使用 Bootstrap，你可以保證網站各個部分的設計風格保持一致。</p>
+</li>
+<li>
+<p>擴展性：開發者可以自定義 Bootstrap，並根據需求擴展樣式。</p>
+</li>
+</ul>
+<h3 id="122-在-django-項目中引入-bootstrap">12.2. 在 Django 項目中引入 Bootstrap</h3>
+<h4 id="1221-通過-cdn-引入-bootstrap">12.2.1 通過 CDN 引入 Bootstrap</h4>
+<p>在 Django 頁面中使用 Bootstrap 最簡單的方法是通過 CDN（內容分發網絡）直接加載 Bootstrap 的 CSS 和 JavaScript 文件。你只需要在模板文件的 標籤中加入 Bootstrap 的 CDN 連結。</p>
+<p>範例：在 Django 模板中引入 Bootstrap</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- templates/base.html --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"en"</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"viewport"</span> <span class="na">content</span><span class="o">=</span><span class="s">"width=device-width, initial-scale=1.0"</span> <span class="p">/&gt;</span>
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">title</span> <span class="cp">%}</span>My Django Site<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<!-- 引入 Bootstrap CSS -->
+
+<div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="n">link</span>
+<span class="n">href</span><span class="o">=</span><span class="s">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"</span>
+<span class="n">rel</span><span class="o">=</span><span class="s">"stylesheet"</span>
+<span class="n">integrity</span><span class="o">=</span><span class="s">"sha384-</span>
+<span class="n">GLhITQ8iRABdZLl6O3oVMWSkTQOp6b7In1ZJ3</span><span class="o">/</span><span class="n">Jr59b6EGGoI1mK2KmlKfdiwaH</span><span class="s">"</span>
+<span class="n">crossorigin</span><span class="o">=</span><span class="s">"anonymous"</span>
+<span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<!-- 主內容區塊 -->
+
+<div class="codehilite"><pre><span></span><code><span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}</span><span class="x"> </span><span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
+</code></pre></div>
+
+<!-- 引入 Bootstrap JavaScript -->
+
+<div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="n">script</span>
+<span class="n">src</span><span class="o">=</span><span class="s">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"</span>
+<span class="n">integrity</span><span class="o">=</span><span class="s">"sha384-</span>
+<span class="n">w76A2O1pCtWcVfIRxPyD9F9clb3hb1lVtGA6pBMeLrccv8AUdPaCPG8FAT</span><span class="o">/</span><span class="n">h61pL</span><span class="s">"</span>
+<span class="n">crossorigin</span><span class="o">=</span><span class="s">"anonymous"</span>
+</code></pre></div>
+
+<blockquote>
+</script>
+</blockquote>
+<div class="codehilite"><pre><span></span><code>&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+
+<p>這樣，我們的 Django 頁面已經加載了 Bootstrap 的 CSS 和 JavaScript 文件，接下來我們可以使用 Bootstrap 提供的組件和樣式。</p>
+<h4 id="1222-使用-bootstrap-的網格系統">12.2.2 使用 Bootstrap 的網格系統</h4>
+<p>Bootstrap 的網格系統基於 12 列布局，可以非常靈活地設計響應式的頁面佈局。使用 row 和 col 類別，你可以創建自適應的佈局。</p>
+<p>範例：使用網格系統創建基本佈局</p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;!-- templates/home.html --&gt;</span>
+<span class="cp">{%</span> <span class="k">extends</span> <span class="s1">'base.html'</span> <span class="cp">%}</span><span class="x"> </span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}</span>
+<span class="x">&lt;div class="container"&gt;</span>
+<span class="x">&lt;div class="row"&gt;</span>
+<span class="x">&lt;div class="col-md-4"&gt;</span>
+<span class="x">&lt;div class="card"&gt;</span>
+<span class="x">&lt;div class="card-body"&gt;</span>
+</code></pre></div>
+
+<h5 class="card-title">欄目 1</h5>
+
+<p class="card-text">這是第一個欄目中的內容。</p>
+
+<div class="codehilite"><pre><span></span><code>&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="col-md-4"&gt;
+&lt;div class="card"&gt;
+&lt;div class="card-body"&gt;
+</code></pre></div>
+
+<h5 class="card-title">欄目 2</h5>
+
+<p class="card-text">這是第二個欄目中的內容。</p>
+
+<div class="codehilite"><pre><span></span><code>&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="col-md-4"&gt;
+&lt;div class="card"&gt;
+&lt;div class="card-body"&gt;
+</code></pre></div>
+
+<h5 class="card-title">欄目 3</h5>
+
+<div class="codehilite"><pre><span></span><code>&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
+
+<p class="card-text">這是第三個欄目中的內容。</p>
+
+<div class="codehilite"><pre><span></span><code>&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+{% endblock %}
+</code></pre></div>
+
+<p>在這個範例中，我們使用 Bootstrap 的網格系統將內容分成三列，並使用 card 組件來顯示每個欄目。</p>
+<h3 id="123-使用-bootstrap-美化-django-表單">12.3. 使用 Bootstrap 美化 Django 表單</h3>
+<p>在 Django 中，表單是非常常見的元素，Bootstrap 提供了大量的預設樣式來美化表單，使其更具吸引力且易於使用。</p>
+<p>12.3.1 自動應用 Bootstrap 樣式到 Django 表單</p>
+<p>我們可以使用 Django 的 widget_tweaks 第三方庫來自動將 Bootstrap 的樣式應用到 Django 表單上。</p>
+<p>安裝 django-widget-tweaks</p>
+<p>首先，安裝 django-widget-tweaks：</p>
+<div class="codehilite"><pre><span></span><code>pip install django-widget-tweaks
+</code></pre></div>
+
+<p>然後將它添加到 settings.py 中的已安裝應用：</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> settings.py
+INSTALLED_APPS = [
+'widget_tweaks',
+<span class="gh">#</span> 其他應用
+]
+</code></pre></div>
+
+<p>使用 widget_tweaks 應用 Bootstrap 樣式</p>
+<p>接下來，我們可以在模板中使用 widget_tweaks 將 Bootstrap 的樣式應用到表單字段。</p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;!-- templates/register.html --&gt;</span>
+<span class="cp">{%</span> <span class="k">extends</span> <span class="s1">'base.html'</span> <span class="o">%</span> <span class="o">}</span> <span class="o">{</span> <span class="o">%</span> <span class="nv">load</span> <span class="nv">widget_tweaks</span> <span class="o">%</span> <span class="o">}</span> <span class="o">{</span> <span class="o">%</span> <span class="nb">block</span> <span class="nv">content</span> <span class="o">%</span> <span class="o">}</span>
+<span class="o">&lt;</span><span class="nv">div</span> <span class="nv">class</span><span class="o">=</span><span class="s2">"container mt-5"</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<p>註冊</h2></p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;form</span><span class="w"> </span><span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+<span class="cp">{%</span> <span class="k">csrf_token</span> <span class="cp">%}</span>
+<span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">"mb-3"</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">form.usernameladd_class</span><span class="s2">:"form-control"</span> <span class="cp">}}</span><span class="w"> </span><span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">"mb-3"</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">form.emailladd_class</span><span class="s2">:"form-control"</span> <span class="cp">}}</span><span class="w"> </span><span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">"mb-3"</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">form.password.add_class</span><span class="s2">:"form-control"</span> <span class="cp">}}</span><span class="w"> </span><span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">"mb-3"</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">form.password2ladd_class</span><span class="s2">:"form-control"</span> <span class="cp">}}</span><span class="w"> </span><span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+
+<p><button type="submit" class="btn btn-primary">註冊</button></p>
+<div class="codehilite"><pre><span></span><code>&lt;/form&gt;
+&lt;/div&gt;
+{% endblock %}
+</code></pre></div>
+
+<p>在這個範例中，我們使用 widget_tweaks 的 add_class 過濾器將 Bootstrap 的 form-control 類別應用到每個表單字段，這樣表單就會自動使用 Bootstrap 樣式進行渲染。</p>
+<h3 id="124-美化-django-的管理後臺">12.4. 美化 Django 的管理後臺</h3>
+<p>Django 的內建管理後臺功能強大，但默認樣式比較樸素。我們可以使用 django-admin-interface 這個第三方庫來美化 Django 管理後臺，使其更具現代感。</p>
+<h4 id="1241-安裝-django-admin-interface">12.4.1 安裝 django-admin-interface</h4>
+<p>首先，安裝 django-admin-interface：</p>
+<div class="codehilite"><pre><span></span><code>pip install django-admin-interface
+</code></pre></div>
+
+<p>然後在 settings.py 中添加該應用：</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> settings.py
+INSTALLED_APPS = [
+'admin_interface',
+'colorfield',
+'django.contrib.admin',
+<span class="gh">#</span> 其他應用
+]
+</code></pre></div>
+
+<p>接著運行遷移命令：</p>
+<div class="codehilite"><pre><span></span><code>python manage.py migrate
+</code></pre></div>
+
+<h4 id="1242-自定義-django-管理後臺樣式">12.4.2 自定義 Django 管理後臺樣式</h4>
+<p>安裝好 django-admin-interface 後，我們可以通過管理後臺的 "Theme" 設置來自定義後臺的配色方案和佈局，這使得 Django 管理後臺更加美觀且易於使用。</p>
+<h3 id="125-使用-bootstrap-的其他組件">12.5. 使用 Bootstrap 的其他組件</h3>
+<p>Bootstrap 提供了很多現成的組件，如導航欄、按鈕、模態框（Modal）、標籤頁（Tabs）等，這些組件可以讓你的 Django 頁面更加豐富和交互性更強。</p>
+<h4 id="1251-導航欄navbar">12.5.1 導航欄（Navbar）</h4>
+<p>範例：在 Django 項目中使用 Bootstrap 的導航欄</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="n">templates</span><span class="o">/</span><span class="n">base</span><span class="p">.</span><span class="n">html</span><span class="w"> </span><span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="n">nav</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="s">"navbar navbar-expand-lg navbar-light bg-light"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">div</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="s">"container-fluid"</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<p><a class="navbar-brand" href="#">我的網站</a></p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nx">button</span>
+<span class="kd">class</span><span class="p">=</span><span class="s">"navbar-toggler"</span>
+<span class="k">type</span><span class="p">=</span><span class="s">"button"</span>
+<span class="nx">data</span><span class="o">-</span><span class="nx">bs</span><span class="o">-</span><span class="nx">toggle</span><span class="p">=</span><span class="s">"collapse"</span>
+<span class="p">&lt;</span><span class="o">/</span><span class="nx">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="o">/</span><span class="nx">div</span><span class="p">&gt;</span>
+<span class="nx">data</span><span class="o">-</span><span class="nx">bs</span><span class="o">-</span><span class="nx">target</span><span class="p">=</span><span class="s">"#navbarNav"</span>
+<span class="nx">aria</span><span class="o">-</span><span class="nx">controls</span><span class="p">=</span><span class="s">"navbarNav"</span>
+<span class="nx">aria</span><span class="o">-</span><span class="nx">expanded</span><span class="p">=</span><span class="s">"false"</span>
+<span class="nx">aria</span><span class="o">-</span><span class="nx">label</span><span class="p">=</span><span class="s">"Toggle navigation"</span>
+</code></pre></div>
+
+<blockquote></blockquote>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;span</span><span class="w"> </span><span class="na">class=</span><span class="s">"navbar-toggler-icon"</span><span class="nt">&gt;&lt;/span&gt;</span>
+<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">"collapse navbar-collapse"</span><span class="w"> </span><span class="na">id=</span><span class="s">"navbarNav"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;ul</span><span class="w"> </span><span class="na">class=</span><span class="s">"navbar-nav"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;li</span><span class="w"> </span><span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+</code></pre></div>
+
+<p><a class="nav-link active" aria-current="page" href="#">首頁</a></p>
+<div class="codehilite"><pre><span></span><code>&lt;/li&gt;
+&lt;li class="nav-item"&gt;
+</code></pre></div>
+
+<p><a class="nav-link" href="#">功能</a></p>
+<div class="codehilite"><pre><span></span><code>&lt;/li&gt;
+&lt;li class="nav-item"&gt;
+</code></pre></div>
+
+<p><a class="nav-link" href="#">聯繫我們</a></p>
+<div class="codehilite"><pre><span></span><code>&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/nav&gt;
+</code></pre></div>
+
+<p>這個導航欄可以自適應不同設備的屏幕，並且使用了 Bootstrap 的 collapse 功能，當屏幕變小時會自動收縮成按鈕形式。</p>
+<h4 id="1252-模態框modal">12.5.2 模態框（Modal）</h4>
+<p>範例：在 Django 頁面中使用模態框</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nx">button</span>
+<span class="k">type</span><span class="p">=</span><span class="s">"button"</span>
+<span class="kd">class</span><span class="p">=</span><span class="s">"btn btn-primary"</span>
+<span class="nx">data</span><span class="o">-</span><span class="nx">bs</span><span class="o">-</span><span class="nx">toggle</span><span class="p">=</span><span class="s">"modal"</span>
+<span class="nx">data</span><span class="o">-</span><span class="nx">bs</span><span class="o">-</span><span class="nx">target</span><span class="p">=</span><span class="s">"#exampleModal"</span>
+</code></pre></div>
+
+<blockquote></blockquote>
+<p>打開模態框</p>
+<div class="codehilite"><pre><span></span><code>&lt;/button&gt;
+</code></pre></div>
+
+<!-- 模態框 -->
+
+<div class="codehilite"><pre><span></span><code>&lt;div
+class="modal fade"
+id="exampleModal"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+</code></pre></div>
+
+<blockquote></blockquote>
+<div class="codehilite"><pre><span></span><code>&lt;div class="modal-dialog"&gt;
+&lt;div class="modal-content"&gt;
+&lt;div class="modal-header"&gt;
+</code></pre></div>
+
+<h5 class="modal-title" id="exampleModalLabel">模態框標題</h5>
+
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nx">button</span>
+<span class="k">type</span><span class="p">=</span><span class="s">"button"</span>
+<span class="kd">class</span><span class="p">=</span><span class="s">"btn-close"</span>
+<span class="nx">data</span><span class="o">-</span><span class="nx">bs</span><span class="o">-</span><span class="nx">dismiss</span><span class="p">=</span><span class="s">"modal"</span>
+<span class="nx">aria</span><span class="o">-</span><span class="nx">label</span><span class="p">=</span><span class="s">"Close"</span>
+<span class="p">&lt;</span><span class="o">/</span><span class="nx">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="o">/</span><span class="nx">div</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<div class="modal-body">這是模態框的內容</div>
+
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nx">div</span><span class="w"> </span><span class="kd">class</span><span class="p">=</span><span class="s">"modal-footer"</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nx">button</span><span class="w"> </span><span class="k">type</span><span class="p">=</span><span class="s">"button"</span><span class="w"> </span><span class="kd">class</span><span class="p">=</span><span class="s">"btn btn-secondary"</span><span class="w"> </span><span class="nx">data</span><span class="o">-</span><span class="nx">bs</span><span class="o">-</span><span class="nx">dismiss</span><span class="p">=</span><span class="s">"modal"</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<p>關閉</p>
+<div class="codehilite"><pre><span></span><code>&lt;/button&gt;
+</code></pre></div>
+
+<p><button type="button" class="btn btn-primary">保存變更</button></p>
+<div class="codehilite"><pre><span></span><code>&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</code></pre></div>
+
+<p>這個模態框可以用來展示額外的信息或用戶交互表單，且不會重新加載頁面。</p>
+<h3 id="126-總結">12.6. 總結</h3>
+<p>在本章中，我們學習瞭如何將 Bootstrap 集成到 Django 項目中，並使用 Bootstrap 的組件和樣式美化頁面。Bootstrap 提供了大量現成的樣式和工具，可以幫助我們快速構建響應式且美觀的 Django 網站。通過掌握這些技巧，你可以顯著提升 Django 項目的前端外觀和用戶體驗。</p>
+<p>13 : Django 用戶註冊與登錄系統</p>
+<p>在大多數 Web 應用中，用戶註冊與登錄系統 是基本且關鍵的功能，讓用戶可以創建帳戶、登錄應用並存取個人資料。Django 提供了一套完整的認證框架，方便我們快速地實現這些功能。通過這個系統，用戶可以安全地註冊、登錄和管理自己的帳戶。</p>
+<p>在本章中，我們將學習如何構建一個完整的 Django 用戶註冊與登錄系統，包括註冊、登錄、登出、密碼重設等功能。這些功能將為我們的應用提供一個穩定且安全的用戶認證系統。</p>
+<h3 id="131-django-認證框架介紹">13.1. Django 認證框架介紹</h3>
+<p>Django 的內建認證系統處理了常見的用戶相關功能，包括：</p>
+<ul>
+<li>
+<p>用戶註冊和登錄</p>
+</li>
+<li>
+<p>密碼加密存儲</p>
+</li>
+<li>
+<p>用戶身份驗證</p>
+</li>
+<li>
+<p>權限控制（管理員與普通用戶）</p>
+</li>
+<li>
+<p>登出和密碼重設功能</p>
+</li>
+</ul>
+<p>我們可以使用 Django 自帶的視圖和表單快速實現這些功能，同時也能靈活地定製這些視圖來滿足具體需求。</p>
+<h3 id="132-創建-django-項目與應用">13.2. 創建 Django 項目與應用</h3>
+<p>首先，我們將創建一個新的 Django 項目並添加應用來處理用戶認證。</p>
+<h4 id="1321-創建-django-項目與應用">13.2.1 創建 Django 項目與應用</h4>
+<p>使用以下命令來創建一個新的 Django 項目和應用：</p>
+<div class="codehilite"><pre><span></span><code>django-admin startproject myproject
+cd myproject
+python manage.py startapp accounts
+</code></pre></div>
+
+<p>在 settings.py 中添加應用到已安裝應用列表中：</p>
+<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="nx">settings</span><span class="p">.</span><span class="nx">py</span>
+<span class="nx">INSTALLED_APPS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span>
+<span class="err">'</span><span class="nx">accounts</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">admin</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">auth</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">contenttypes</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">sessions</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">messages</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">staticfiles</span><span class="err">'</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<p>接下來，我們將實現用戶註冊和登錄功能。</p>
+<h3 id="133-用戶註冊功能">13.3. 用戶註冊功能</h3>
+<p>13.3.1 使用 Django 內建的 UserCreationForm</p>
+<p>Django 提供了 UserCreationForm，這是一個用來註冊新用戶的表單。我們可以使用這個表單來輕鬆實現用戶註冊功能。</p>
+<h2 id="創建註冊視圖">創建註冊視圖</h2>
+<p>在 accounts/views.py 中創建註冊視圖，該視圖會處理用戶的註冊請求並保存新用戶。</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># accounts/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.contrib.auth.forms</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserCreationForm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.contrib.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">login</span><span class="p">,</span> <span class="n">authenticate</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
+<span class="n">form</span> <span class="o">=</span> <span class="n">UserCreationForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+
+<p>login(request, user) # 自動登錄</p>
+<p>return redirect('home') # 重定向到主頁面</p>
+<div class="codehilite"><pre><span></span><code><span class="k">else</span><span class="o">:</span>
+<span class="n">form</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserCreationForm</span><span class="p">()</span>
+<span class="k">return</span><span class="w"> </span><span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="p">'</span><span class="n">accounts</span><span class="o">/</span><span class="n">register</span><span class="p">.</span><span class="n">html</span><span class="p">',</span><span class="w"> </span><span class="p">{'</span><span class="n">form</span><span class="p">'</span><span class="o">:</span><span class="w"> </span><span class="n">form</span><span class="p">})</span>
+</code></pre></div>
+
+<h2 id="配置-url-路由">配置 URL 路由</h2>
+<p>我們需要將註冊視圖連接到 URL。在 accounts/urls.py 中添加對應的路由：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># accounts/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.import</span> <span class="n">views</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'register/'</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">register</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'register'</span><span class="p">),</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<p>別忘了將這個路由文件包含在主路由中。在 myproject/urls.py 中引入 accounts 應用的路由：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># myproject/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.contrib</span><span class="w"> </span><span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'admin/'</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">),</span>
+</code></pre></div>
+
+<p>path('accounts/', include('accounts.urls')), # 包含用戶路由</p>
+<div class="codehilite"><pre><span></span><code>]
+</code></pre></div>
+
+<h2 id="創建註冊模板">創建註冊模板</h2>
+<p>創建一個註冊表單的模板文件 templates/accounts/register.html :</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- templates/accounts/register.html --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"en"</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"viewport"</span> <span class="na">content</span><span class="o">=</span><span class="s">"width=device-width, initial-scale=1.0"</span> <span class="p">/&gt;</span>
+</code></pre></div>
+
+<p>註冊</title></p>
+<div class="codehilite"><pre><span></span><code>&lt;/head&gt;
+</code></pre></div>
+
+<p>註冊</h2></p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;form method="post"&gt;</span>
+<span class="cp">{%</span> <span class="k">csrf_token</span> <span class="cp">%}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">form.as_p</span> <span class="cp">}}</span>
+</code></pre></div>
+
+<p><button type="submit">註冊</button></p>
+<div class="codehilite"><pre><span></span><code>&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+
+<p>這樣，當用戶訪問 /accounts/register/ 時，會看到註冊表單，並且可以創建新帳戶。</p>
+<h3 id="134-用戶登錄與登出功能">13.4. 用戶登錄與登出功能</h3>
+<p>Django 提供了現成的登錄和登出視圖，我們可以直接使用，並為其設置對應的 URL 路徑。</p>
+<h4 id="1341-使用內建登錄視圖">13.4.1 使用內建登錄視圖</h4>
+<p>Django 內建了 LoginView，它會處理登錄表單的顯示和用戶認證。</p>
+<h2 id="配置登錄-url">配置登錄 URL</h2>
+<p>在 accounts/urls.py 中配置登錄視圖的路由：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># accounts/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.contrib.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span> <span class="k">as</span> <span class="n">auth_views</span>
+<span class="n">urlpatterns</span> <span class="o">+=</span> <span class="p">[</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'login/'</span><span class="p">,</span> <span class="n">auth_views</span><span class="o">.</span><span class="n">LoginView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span><span class="n">template_name</span><span class="o">=</span><span class="s1">'accounts/login.html'</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">'login'</span><span class="p">),</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'logout/'</span><span class="p">,</span> <span class="n">auth_views</span><span class="o">.</span><span class="n">LogoutView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">'logout'</span><span class="p">),</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<ul>
+<li>
+<p>LoginView 使用自定義模板 login.html 顯示登錄表單。</p>
+</li>
+<li>
+<p>LogoutView 則處理用戶登出的邏輯，並且登出後自動重定向到主頁。</p>
+</li>
+</ul>
+<p>創建登錄模板</p>
+<p>我們需要創建一個 login.html 文件來顯示登錄表單：</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- templates/accounts/login.html --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"en"</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"viewport"</span> <span class="na">content</span><span class="o">=</span><span class="s">"width=device-width, initial-scale=1.0"</span> <span class="p">/&gt;</span>
+</code></pre></div>
+
+<p>登錄</title></p>
+<div class="codehilite"><pre><span></span><code>&lt;/head&gt;
+</code></pre></div>
+
+<p>登錄</h2></p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;form method="post"&gt;</span>
+<span class="cp">{%</span> <span class="k">csrf_token</span> <span class="cp">%}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">form.as_p</span> <span class="cp">}}</span>
+</code></pre></div>
+
+<p><button type="submit">登錄</button></p>
+<div class="codehilite"><pre><span></span><code>&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+
+<p>登錄成功後，用戶將被重定向到預設的 next URL，或主頁。</p>
+<h3 id="135-密碼重設功能">13.5. 密碼重設功能</h3>
+<p>Django 還提供了內建的密碼重設功能，允許用戶重設他們的密碼。</p>
+<h4 id="1351-密碼重設流程">13.5.1 密碼重設流程</h4>
+<p>Django 內建的密碼重設功能包括四個步驟：</p>
+<ol>
+<li>
+<p>重設密碼請求：用戶輸入他們的電子郵件，系統會發送一封重設密碼的郵件。</p>
+</li>
+<li>
+<p>郵件發送確認：顯示確認郵件已發送的頁面。</p>
+</li>
+<li>
+<p>設置新密碼：用戶通過郵件中的鏈接設置新密碼。</p>
+</li>
+<li>
+<p>完成密碼重設：顯示密碼重設成功的頁面。</p>
+</li>
+</ol>
+<h4 id="1352-配置密碼重設的-url">13.5.2 配置密碼重設的 URL</h4>
+<p>我們可以使用 Django 內建的密碼重設視圖來處理這一流程。首先，配置對應的 URL 路徑：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># accounts/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.contrib.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span> <span class="k">as</span> <span class="n">auth_views</span>
+<span class="n">urlpatterns</span> <span class="o">+=</span> <span class="p">[</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'password_reset'</span><span class="p">,</span>
+<span class="n">auth_views</span><span class="o">.</span><span class="n">PasswordResetView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span><span class="n">template_name</span><span class="o">=</span><span class="s1">'accounts/password_reset.html'</span><span class="p">),</span>
+<span class="n">name</span><span class="o">=</span><span class="s1">'password_reset'</span><span class="p">,</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'password_reset_done'</span><span class="p">,</span>
+<span class="n">auth_views</span><span class="o">.</span><span class="n">PasswordResetDoneView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span><span class="n">template_name</span><span class="o">=</span><span class="s1">'accounts/password_reset_done.html'</span><span class="p">),</span>
+<span class="n">name</span><span class="o">=</span><span class="s1">'password_reset_done'</span><span class="p">),</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'reset/ / /'</span><span class="p">,</span>
+<span class="n">auth_views</span><span class="o">.</span><span class="n">PasswordResetConfirmView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span><span class="n">template_name</span><span class="o">=</span><span class="s1">'accounts/password_reset_confirm.html'</span><span class="p">),</span>
+<span class="n">name</span><span class="o">=</span><span class="s1">'password_reset_confirm'</span><span class="p">),</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'password_reset_complete/'</span><span class="p">,</span>
+<span class="n">auth_views</span><span class="o">.</span><span class="n">PasswordResetCompleteView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span><span class="n">template_name</span><span class="o">=</span><span class="s1">'accounts/password_reset_complete.html'</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">'password_reset_complete'</span><span class="p">),</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<h4 id="1353-設置郵件服務">13.5.3 設置郵件服務</h4>
+<p>Django 會發送包含密碼重設鏈接的電子郵件。因此，我們需要在 settings.py 中配置郵件服務器。</p>
+<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="n">settings</span><span class="p">.</span><span class="n">py</span>
+<span class="n">EMAIL_BACKEND</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'django.core.mail.backends.smtp.EmailBackend'</span>
+<span class="n">EMAIL_HOST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'smtp.gmail.com'</span>
+<span class="n">EMAIL_PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">587</span>
+<span class="n">EMAIL_USE_TLS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">True</span>
+<span class="n">EMAIL_HOST_USER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'youremail@gmail.com'</span>
+<span class="n">EMAIL_HOST_PASSWORD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'yourpassword'</span>
+</code></pre></div>
+
+<h4 id="1354-創建模板">13.5.4 創建模板</h4>
+<p>我們還需要為每個密碼重設步驟創建模板，例如：</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&lt;!--</span><span class="w"> </span><span class="n">templates</span><span class="o">/</span><span class="n">accounts</span><span class="o">/</span><span class="n">password_reset</span><span class="p">.</span><span class="n">html</span><span class="w"> </span><span class="o">--&gt;</span>
+</code></pre></div>
+
+<p>重設密碼</h2></p>
+<div class="codehilite"><pre><span></span><code><span class="x">&lt;form method="post"&gt;</span>
+<span class="cp">{%</span> <span class="k">csrf_token</span> <span class="cp">%}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">form.as_p</span> <span class="cp">}}</span>
+</code></pre></div>
+
+<p><button type="submit">發送重設鏈接</button></p>
+<div class="codehilite"><pre><span></span><code>&lt;/form&gt;
+</code></pre></div>
+
+<h3 id="136-總結">13.6. 總結</h3>
+<p>在本章中，我們學習瞭如何在 Django 中使用內建的工具和表單來實現完整的用戶認證系統，這包括用戶註冊、登錄、登出以及密碼重設功能。Django 的認證系統非常靈活且安全，我們可以根據具體需求進行擴展和自定義。</p>
+<p>14: 使用 Django 消息框架和外部庫</p>
+<p>在 Django 中，messages 框架提供了一種方便的方式來顯示臨時消息，通常用於向用戶反饋信息（如成功、錯誤、警告等）。這些消息在用戶執行某些操作（如提交表單、登錄、註冊等）後顯示，並且會在頁面重新加載後自動消失。</p>
+<p>Django 的 messages 框架內置了多種類型的消息，例如：</p>
+<p>messages.debug: 調試信息</p>
+<p>messages.info: 一般信息</p>
+<ul>
+<li>
+<p>messages.success: 成功信息</p>
+</li>
+<li>
+<p>messages.warning: 警告信息</p>
+</li>
+<li>
+<p>messages.error: 錯誤信息</p>
+</li>
+</ul>
+<p>接下來，我們將展示如何在 Django 項目中使用 messages 框架，包括設置、顯示消息以及處理不同的消息類型。</p>
+<h3 id="141-設置-django-messages-框架">14.1. 設置 Django messages 框架</h3>
+<p>messages 框架是 Django 的內建功能，通常默認已經啟用。我們只需要確保在項目的 settings.py 文件中，MIDDLEWARE 和 TEMPLATES 配置包含相關設置。</p>
+<h4 id="1411-確認-middleware-配置">14.1.1 確認 MIDDLEWARE 配置</h4>
+<p>確保 MIDDLEWARE 中包含 Django.contrib.messages.middleware.MessageMiddleware，這個中間件處理每個請求的消息存儲和顯示。</p>
+<div class="codehilite"><pre><span></span><code># settings.py
+MIDDLEWARE = [
+'django.middleware.security.SecurityMiddleware',
+'django.contrib.sessions.middleware.SessionMiddleware',
+'django.middleware.common.CommonMiddleware',
+'django.middleware.csrf.CsrfViewMiddleware',
+'django.contrib.auth.middleware.AuthenticationMiddleware',
+</code></pre></div>
+
+<p>'django.contrib.messages.middleware.MessageMiddleware', # 確保這一行存在</p>
+<div class="codehilite"><pre><span></span><code>'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+</code></pre></div>
+
+<h4 id="1412-確認-context_processors-配置">14.1.2 確認 context_processors 配置</h4>
+<p>在 TEMPLATES 設置中，確保 $ \underline{\text{django.contrib.messages.context_processors.messages}} $ 存在於 context_processors 列表中，這樣可以讓模板能夠訪問 messages。</p>
+<div class="codehilite"><pre><span></span><code><span class="o">#</span> <span class="n">settings</span><span class="p">.</span><span class="n">py</span>
+<span class="n">TEMPLATES</span> <span class="o">=</span> <span class="p">[</span>
+<span class="p">{</span>
+<span class="s">'BACKEND'</span><span class="p">:</span> <span class="s">'django.template.backends.django.DjangoTemplates'</span><span class="p">,</span>
+<span class="s">'DIRS'</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s">'APP_DIRS'</span><span class="p">:</span> <span class="n">True</span><span class="p">,</span>
+<span class="s">'OPTIONS'</span><span class="p">:</span> <span class="p">{</span>
+<span class="s">'context_processors'</span><span class="p">:</span> <span class="p">[</span>
+<span class="s">'django.template.context_processors.debug'</span><span class="p">,</span>
+<span class="s">'django.template.context_processors.request'</span><span class="p">,</span>
+<span class="s">'django.contrib.auth.context_processors.auth'</span><span class="p">,</span>
+</code></pre></div>
+
+<p>'django.contrib.messages.context_processors.messages', # 確保這一行存在</p>
+<div class="codehilite"><pre><span></span><code>],
+},
+]
+]
+</code></pre></div>
+
+<h3 id="142-使用-messages-在視圖中傳遞消息">14.2. 使用 messages 在視圖中傳遞消息</h3>
+<p>Django 提供了幾個內置的消息類型（如 success, error, warning 等），我們可以在視圖中調用這些消息類型，並將信息傳遞給模板進行顯示。</p>
+<h4 id="1421-使用-messages-在視圖中設置消息">14.2.1 使用 messages 在視圖中設置消息</h4>
+<p>以下是如何在 Django 視圖中使用消息系統的範例。假設我們有一個註冊用戶的視圖，註冊成功後，我們想顯示一個成功消息。</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># accounts/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.contrib.auth.forms</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserCreationForm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.contrib</span><span class="w"> </span><span class="kn">import</span> <span class="n">messages</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
+<span class="n">form</span> <span class="o">=</span> <span class="n">UserCreationForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+<span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div>
+
+<p>messages.success(request, '註冊成功！歡迎使用本網站。')</p>
+<p>return redirect('login') # 註冊成功後跳轉到登錄頁面</p>
+<div class="codehilite"><pre><span></span><code><span class="k">else</span>:
+</code></pre></div>
+
+<p>messages.error(request, '註冊失敗，請檢查表單內容。')</p>
+<div class="codehilite"><pre><span></span><code><span class="k">else</span><span class="o">:</span>
+<span class="n">form</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserCreationForm</span><span class="p">()</span>
+<span class="k">return</span><span class="w"> </span><span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="p">'</span><span class="n">accounts</span><span class="o">/</span><span class="n">register</span><span class="p">.</span><span class="n">html</span><span class="p">',</span><span class="w"> </span><span class="p">{'</span><span class="n">form</span><span class="p">'</span><span class="o">:</span><span class="w"> </span><span class="n">form</span><span class="p">})</span>
+</code></pre></div>
+
+<p>在這個例子中，我們在表單提交成功後使用了 messages.success 來設置一個成功消息，而當表單提交失敗時，則使用 messages.error 來設置錯誤消息。</p>
+<h4 id="1422-messages-的其他類型">14.2.2 messages 的其他類型</h4>
+<p>除了 success 和 error，Django 還有以下幾種類型的消息：</p>
+<p>messages.debug(request, "這是一條調試信息"): 用於顯示調試信息。</p>
+<p>messages.info(request, "這是一條信息消息"): 用於顯示一般信息。</p>
+<p>messages.warning(request, "這是一條警告消息"): 用於顯示警告信息。</p>
+<h3 id="143-在模板中顯示消息">14.3. 在模板中顯示消息</h3>
+<p>我們需要在模板中遍歷並顯示所有傳遞過來的消息。Django 的 messages 系統會自動將消息傳遞到模板中，並且可以使用模板語法進行顯示。</p>
+<h4 id="1431-顯示消息的模板代碼">14.3.1 顯示消息的模板代碼</h4>
+<p>以下是顯示 messages 的標準模板代碼，它會遍歷所有的消息並根據消息類型來應用不同的樣式：</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- templates/base.html --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"en"</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"viewport"</span> <span class="na">content</span><span class="o">=</span><span class="s">"width=device-width, initial-scale=1.0"</span> <span class="p">/&gt;</span>
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">title</span> <span class="cp">%}</span>My Django Site<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span>
+<span class="na">href</span><span class="o">=</span><span class="s">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"</span>
+<span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span>
+</code></pre></div>
+
+<blockquote></blockquote>
+<div class="codehilite"><pre><span></span><code>&lt;/head&gt;
+&lt;div class="container"&gt;
+</code></pre></div>
+
+<!-- 消息顯示區域 -->
+
+<div class="codehilite"><pre><span></span><code><span class="cp">{%</span> <span class="k">if</span> <span class="nv">messages</span> <span class="cp">%}</span>
+<span class="x">&lt;div class="mt-3"&gt;</span>
+<span class="cp">{%</span> <span class="k">for</span> <span class="nv">message</span> <span class="k">in</span> <span class="nv">messages</span> <span class="cp">%}</span>
+<span class="x">&lt;div</span>
+<span class="x">class="alert alert-</span><span class="cp">{{</span> <span class="nv">message.tags</span> <span class="cp">}}</span><span class="x"> alert-dismissible fade show"</span>
+<span class="x">role="alert"</span>
+</code></pre></div>
+
+<blockquote></blockquote>
+<div class="codehilite"><pre><span></span><code><span class="p">{{</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="p">}}</span>
+<span class="p">&lt;</span><span class="nx">button</span>
+<span class="k">type</span><span class="p">=</span><span class="s">"button"</span>
+<span class="kd">class</span><span class="p">=</span><span class="s">"btn-close"</span>
+<span class="nx">data</span><span class="o">-</span><span class="nx">bs</span><span class="o">-</span><span class="nx">dismiss</span><span class="p">=</span><span class="s">"alert"</span>
+<span class="nx">aria</span><span class="o">-</span><span class="nx">label</span><span class="p">=</span><span class="s">"Close"</span>
+</code></pre></div>
+
+<blockquote>
+<p></button></p>
+</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="w"> </span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}</span><span class="w"> </span><span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;script</span><span class="w"> </span><span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+<p>在這個範例中，alert alert-{{ message.tags }} 根據消息的類型（如 success, error, info）來設置不同的 Bootstrap 樣式，從而使消息顯示更加美觀。當用戶執行某個動作（如註冊或登錄）後，消息會顯示在頁面頂部，並帶有可關閉的按鈕。</p>
+<h3 id="144-messages-框架的進階設置">14.4. messages 框架的進階設置</h3>
+<p>有時，我們希望自定義 messages 的一些行為，Django 提供了許多選項讓我們進行配置。</p>
+<h4 id="1441-更改消息的存儲方式">14.4.1 更改消息的存儲方式</h4>
+<p>Django 默認使用 SessionStorage 來存儲消息，這意味著消息會存儲在會話中，並在下一個請求中顯示。你也可以選擇使用 CookieStorage 來存儲消息。你可以在 settings.py 中進行設置：</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> settings.py
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+</code></pre></div>
+
+<h4 id="1442-自定義消息標籤">14.4.2 自定義消息標籤</h4>
+<p>如果你想自定義消息的樣式類型，或者自定義每種消息的顯示方式，可以使用MESSAGE_TAGS來定義不同類型消息的樣式標籤。</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># settings.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.contrib.messages</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">message_constants</span>
+<span class="n">MESSAGE_TAGS</span> <span class="o">=</span> <span class="p">{</span>
+<span class="n">message_constants</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span> <span class="s1">'secondary'</span><span class="p">,</span>
+<span class="n">message_constants</span><span class="o">.</span><span class="n">INFO</span><span class="p">:</span> <span class="s1">'info'</span><span class="p">,</span>
+<span class="n">message_constants</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">:</span> <span class="s1">'success'</span><span class="p">,</span>
+<span class="n">message_constants</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="s1">'warning'</span><span class="p">,</span>
+<span class="n">message_constants</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span> <span class="s1">'danger'</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>在這個範例中，我們將不同類型的消息對應到 Bootstrap 的樣式類別，例如將 message.error 對應到 danger 類別。</p>
+<h3 id="145-常見應用場景">14.5. 常見應用場景</h3>
+<h4 id="1451-註冊成功後顯示歡迎消息">14.5.1 註冊成功後顯示歡迎消息</h4>
+<p>當用戶成功註冊後，顯示一個歡迎消息：</p>
+<p>messages.success(request, '恭喜！您的帳戶已成功創建。')</p>
+<h4 id="1452-登錄失敗後顯示錯誤消息">14.5.2 登錄失敗後顯示錯誤消息</h4>
+<p>當用戶登錄失敗時，顯示一個錯誤消息提示：</p>
+<p>messages.error(request, '登錄失敗，請檢查您的用戶名和密碼。')</p>
+<h4 id="1453-表單提交錯誤提示">14.5.3 表單提交錯誤提示</h4>
+<p>當用戶提交的表單數據無效時，顯示一個錯誤提示消息：</p>
+<p>messages.warning(request, '表單提交有誤</p>
+<p>，請檢查輸入內容。)</p>
+<h3 id="146-總結">14.6. 總結</h3>
+<p>Django 的 messages 框架是一個強大且靈活的工具，用於向用戶顯示各種類型的臨時消息。它可以提升用戶體驗，讓用戶清楚瞭解操作結果。通過與 Bootstrap 或其他前端框架結合，我們可以實現美觀且直觀的消息顯示。</p>
+<p>本章涵蓋了從基礎到進階的 messages 使用方式，通過掌握這些技巧，你可以為應用添加實時反饋功能，並提升整體的用戶互動性。</p>
+<p>15：設計並完成自定義 Django 項目</p>
+<p>Django 是一個強大且靈活的 Web 框架，允許開發者快速構建高度定製化的應用。通過結合 Django 的內建功能與自定義邏輯，我們可以設計並完成一個符合具體需求的項目。本章將探討如何從零開始設計並完成一個自定義的 Django 項目，涵蓋項目設計思路、模型定義、視圖開發、模板渲染、前端美化、數據庫操作及部署等關鍵步驟。</p>
+<p>本章的目標是幫助你掌握如何設計和開發一個完整的自定義 Django 項目，並提供實際的步驟來完成開發流程。</p>
+<h3 id="151-項目設計與需求分析">15.1. 項目設計與需求分析</h3>
+<p>在開發 Django 項目之前，首先要進行需求分析和項目設計。這是項目成功的基礎，清晰的目標和需求將決定項目結構、功能設計和技術選型。</p>
+<h4 id="1511-明確需求">15.1.1 明確需求</h4>
+<p>假設我們的項目是一個簡單的事件管理系統，允許用戶創建、查看和報名參加事件。具體需求包括：</p>
+<p>用戶能夠註冊、登錄系統。</p>
+<p>用戶可以創建事件，設置時間、地點和詳細說明。</p>
+<p>所有用戶都能查看事件列表和詳細內容。</p>
+<p>用戶可以報名參加事件，並且系統會記錄報名人數。</p>
+<p>管理員可以管理事件，包括編輯和刪除事件。</p>
+<h4 id="1512-設計項目結構">15.1.2 設計項目結構</h4>
+<p>根據需求，我們將系統劃分為以下模塊：</p>
+<ol>
+<li>
+<p>用戶系統：註冊、登錄、登出、密碼重置。</p>
+</li>
+<li>
+<p>事件管理系統：事件的創建、查看、編輯和刪除。</p>
+</li>
+<li>
+<p>報名系統：用戶能夠報名參加事件。</p>
+</li>
+</ol>
+<h4 id="1513-數據庫模型設計">15.1.3 數據庫模型設計</h4>
+<p>每個功能模塊的核心是數據庫模型，我們需要為事件和報名系統設計數據庫模型。</p>
+<h3 id="152-建立-django-項目">15.2. 建立 Django 項目</h3>
+<p>在分析完需求並設計結構後，我們可以開始實際開發。首先，創建一個新的 Django 項目和應用。</p>
+<h4 id="1521-創建項目與應用">15.2.1 創建項目與應用</h4>
+<p>使用 Django 自帶的命令行工具來創建項目和應用：</p>
+<div class="codehilite"><pre><span></span><code>django-admin startproject eventmanager
+cd eventmanager
+python manage.py startapp events
+</code></pre></div>
+
+<p>eventmanager 是我們的主項目，而 events 則是用來處理事件管理和報名的應用。</p>
+<p>在 settings.py 中添加我們的應用：</p>
+<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="nx">settings</span><span class="p">.</span><span class="nx">py</span>
+<span class="nx">INSTALLED_APPS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span>
+<span class="err">'</span><span class="nx">events</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">admin</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">auth</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">contenttypes</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">sessions</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">messages</span><span class="err">'</span><span class="p">,</span>
+<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">staticfiles</span><span class="err">'</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<h4 id="1522-設置路由和應用結構">15.2.2 設置路由和應用結構</h4>
+<p>我們需要設置主路由來處理應用的 URL 路徑。在 eventmanager/urls.py 中包括 events 應用的 URL。</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># eventmanager/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.contrib</span><span class="w"> </span><span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'admin/'</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">),</span>
+</code></pre></div>
+
+<p>path('events/', include('events.urls')), # 包含事件應用的路由</p>
+<div class="codehilite"><pre><span></span><code>]
+</code></pre></div>
+
+<p>接下來，創建一個 $ \underline{\text{urls.py}} $ 文件來處理事件應用中的路由：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># events/urls.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+<span class="n">path</span><span class="p">(</span><span class="s2">", views.event_list, name='event_list'),</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'create/'</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">event_create</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'event_create'</span><span class="p">),</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'&lt;int:id&gt;'</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">event_detail</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'event_detail'</span><span class="p">),</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'&lt;int:id&gt;/edit/, views.event_edit, name='</span><span class="n">event_edit</span><span class="s1">'),</span>
+<span class="n">path</span><span class="p">(</span><span class="s1">'&lt;int:id&gt;/delete/, views.event_delete, name='</span><span class="n">event_delete</span><span class="s1">'),</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<h3 id="153-設計數據庫模型">15.3. 設計數據庫模型</h3>
+<p>接下來，我們將定義項目中的數據庫模型，這將是整個應用邏輯的核心部分。每個事件應該有標題、時間、地點、描述以及最大報名人數。用戶可以通過事件的 ID 進行報名。</p>
+<h4 id="1531-定義事件模型">15.3.1 定義事件模型</h4>
+<p>在 models.py 文件中定義事件和報名模型：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># events/models.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.contrib.auth.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Event</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+<span class="n">location</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">event_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span>
+<span class="n">max_attendees</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">()</span>
+<span class="n">created_by</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+<span class="n">created_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Registration</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Event</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="n">registrations</span><span class="s1">', on_delete=models.CASCADE)</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+<span class="n">registered_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">return</span> <span class="n">f</span><span class="p">{</span><span class="s1">'self.user.username} registered for </span><span class="si">{self.event.title}</span>
+</code></pre></div>
+
+<p>這裡我們定義了兩個模型：</p>
+<ul>
+<li>
+<p>Event 模型包含事件的所有信息。</p>
+</li>
+<li>
+<p>Registration 模型記錄了用戶報名的事件。</p>
+</li>
+</ul>
+<p>運行遷移命令以將模型應用到數據庫中：</p>
+<div class="codehilite"><pre><span></span><code>python manage.py makemigrations
+python manage.py migrate
+</code></pre></div>
+
+<h3 id="154-開發視圖與業務邏輯">15.4. 開發視圖與業務邏輯</h3>
+<p>有了數據模型後，我們需要編寫視圖來處理數據邏輯和業務操作，如創建事件、編輯事件、查看事件詳情等。</p>
+<h4 id="1541-創建和查看事件">15.4.1 創建和查看事件</h4>
+<p>我們首先編寫事件的創建和查看視圖。</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># events/views.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">get_object_or_404</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Event</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.forms</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventForm</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">event_list</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="n">events</span> <span class="o">=</span> <span class="n">Event</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'events/event_list.html'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'events'</span><span class="p">:</span> <span class="n">events</span><span class="p">})</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">event_create</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
+<span class="n">form</span> <span class="o">=</span> <span class="n">EventForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">event</span><span class="o">.</span><span class="n">created_by</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span> <span class="c1"># 將當前用戶設為創建者</span>
+<span class="n">event</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">'event_list'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+<span class="n">form</span> <span class="o">=</span> <span class="n">EventForm</span><span class="p">()</span>
+<span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'events/event_form.html'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'form'</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">event_detail</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Event</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+<span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'events/event_detail.html'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'event'</span><span class="p">:</span> <span class="n">event</span><span class="p">})</span>
+</code></pre></div>
+
+<p>在這裡，我們創建了三個視圖：</p>
+<ol>
+<li>
+<p>event_list：顯示所有事件列表。</p>
+</li>
+<li>
+<p>event_create：處理創建新事件的邏輯。</p>
+</li>
+<li>
+<p>event_detail：顯示事件的詳細信息。</p>
+</li>
+</ol>
+<h4 id="1542-編輯與刪除事件">15.4.2 編輯與刪除事件</h4>
+<p>管理員應能夠編輯和刪除事件，我們也需要編寫這些操作的視圖：</p>
+<div class="codehilite"><pre><span></span><code>def event_edit(request, id):
+event = get_object_or_404(Event, id=id)
+if request.method == 'POST':
+form = EventForm(request.POST, instance=event)
+if form.is_valid():
+form.save()
+return redirect('event_detail', id=event.id)
+else:
+form = EventForm(instance=event)
+return render(request, 'events/event_form.html', {'form': form})
+def event_delete(request.id):
+event = get_object_or_404(Event, id=id)
+if request.method == 'POST':
+event.delete()
+return redirect('event_list')
+return render(request, 'events/event_confirm_delete.html', {'event': event})
+</code></pre></div>
+
+<h3 id="155-使用-django-表單處理用戶輸入">15.5. 使用 Django 表單處理用戶輸入</h3>
+<p>為了處理事件的創建和編輯，我們需要使用 Django 表單來獲取用戶輸入數據。首先，創建一個 forms.py 文件。</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># events/forms.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Django</span><span class="w"> </span><span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Event</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EventForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Event</span>
+<span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'title'</span><span class="p">,</span> <span class="s1">'description'</span><span class="p">,</span> <span class="s1">'location'</span><span class="p">,</span> <span class="s1">'event_date'</span><span class="p">,</span> <span class="s1">'max_attendees'</span><span class="p">]</span>
+</code></pre></div>
+
+<p>這個表單將生成一個事件的輸入表單，包含事件的標題、描述、地點等信息。</p>
+<h3 id="156-報名系統">15.6. 報名系統</h3>
+<p>除了事件管理，我們還需要為用戶提供報名參加事件的功能。</p>
+<h4 id="1561-報名邏輯">15.6.1 報名邏輯</h4>
+<p>在 views.py 中添加報名功能：</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Registration</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">event_register</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Event</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">Registration</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+<span class="c1"># 如果用戶已經報名，則提示錯誤</span>
+</code></pre></div>
+
+<p>messages.error(request, '你已經報名過此活動。')</p>
+<div class="codehilite"><pre><span></span><code><span class="n">elif</span><span class="w"> </span><span class="k">event</span><span class="p">.</span><span class="n">registrations</span><span class="p">.</span><span class="n">count</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="k">event</span><span class="p">.</span><span class="nl">max_attendees:</span>
+<span class="p">#</span><span class="w"> </span><span class="err">如果報名已滿</span>
+</code></pre></div>
+
+<p>messages.error(request, '報名已滿。')</p>
+<div class="codehilite"><pre><span></span><code><span class="k">else</span>:
+#<span class="w"> </span>添加報名
+<span class="nv">Registration</span>.<span class="nv">objects</span>.<span class="nv">create</span><span class="ss">(</span><span class="nv">event</span><span class="o">=</span><span class="nv">event</span>,<span class="w"> </span><span class="nv">user</span><span class="o">=</span><span class="nv">request</span>.<span class="nv">user</span><span class="ss">)</span>
+</code></pre></div>
+
+<p>messages.success(request, '成功報名活動！')</p>
+<div class="codehilite"><pre><span></span><code>return redirect('event_detail', id=event.id)
+</code></pre></div>
+
+<p>15.7. 美化前端：使用 Bootstrap</p>
+<p>為了讓頁面更加美觀，我們可以使用 Bootstrap 來美化前端。這部分我們在模板文件中引入 Bootstrap，並將表單和按鈕進行樣式化。</p>
+<p>範例模板：</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- templates/base.html --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"en"</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"viewport"</span> <span class="na">content</span><span class="o">=</span><span class="s">"width=device-width, initial-scale=1.0"</span> <span class="p">/&gt;</span>
+Event Manager<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span>
+<span class="na">href</span><span class="o">=</span><span class="s">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"container mt-5"</span><span class="p">&gt;</span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}</span> <span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span> <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h3 id="158-項目部署">15.8. 項目部署</h3>
+<p>開發完成後，項目需要部署到生產環境。使用工具如 Gunicorn 作為應用服務器，並將 Nginx 作為反向代理來處理靜態文件。數據庫可以使用 PostgreSQL 來替代開發時使用的 SQLite，以確保數據安全和應用穩定性。</p>
+<h3 id="159-總結">15.9. 總結</h3>
+<p>本章中，我們學習瞭如何設計並完成一個自定義的 Django 項目，並且通過需求分析、數據庫模型設計、視圖開發以及前端美化的步驟，實現了一個完整的事件管理系統。我們還學習瞭如何使用 Django 的表單和消息框架處理用戶交互，並在完成後部署應用到生產環境。</p>
+<p>參考資料：</p>
+<div class="codehilite"><pre><span></span><code>https://docs.djangoproject.com/en/4.2/
+</code></pre></div>
+<div class="chnav">
+<a href="/django-notes/ch10-models-orm.html">← 第 10 章 模型、ORM 與查詢集</a>
+<a class="course" href="/django-course/">課程總覽</a>
+<a href="/django-notes/ch12-git-basics.html">第 12 章 後端開發與 Git 基礎 →</a>
+</div>
+</main>
+</div>
+</body>
+</html>

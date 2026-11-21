@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 3 章 Python3 基礎語法 — Django 學習筆記</title>
+<style>
+:root {
+  --accent:#c0392b;
+  --accent2:#2c6fb1;
+  --bg:#ffffff;
+  --panel:#f6f8fa;
+  --border:#d8dee4;
+  --text:#24292f;
+  --muted:#57606a;
+  --code-bg:#f6f8fa;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Microsoft JhengHei","PingFang TC","Noto Sans TC",
+              -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.75;
+}
+.layout { display:flex; align-items:flex-start; }
+
+/* ---------------- sidebar ---------------- */
+nav.sidebar {
+  position:sticky; top:0; flex:0 0 300px; height:100vh; overflow-y:auto;
+  background:var(--panel); border-right:1px solid var(--border);
+  padding:18px 14px 60px; font-size:13.5px;
+}
+nav.sidebar h1 {
+  font-size:15px; margin:0 0 4px; color:var(--accent); line-height:1.4;
+}
+nav.sidebar .home {
+  display:block; margin-bottom:12px; padding:6px 10px;
+  background:#e6ebf1; border-radius:6px; font-size:12.5px;
+  color:var(--accent2); text-decoration:none; font-weight:600;
+}
+nav.sidebar .home:hover { background:var(--accent2); color:#fff; }
+nav.sidebar .quiz {
+  display:block; margin-bottom:12px; padding:8px 10px;
+  background:var(--accent); color:#fff; border-radius:6px;
+  font-size:12.5px; font-weight:700; text-align:center;
+  text-decoration:none;
+}
+nav.sidebar .quiz:hover { background:#a5301f; color:#fff; }
+nav.sidebar .sub { color:var(--muted); font-size:11.5px; margin-bottom:14px; }
+nav.sidebar ul { list-style:none; margin:0; padding-left:0; }
+nav.sidebar ul ul { padding-left:14px; }
+nav.sidebar li { margin:2px 0; }
+nav.sidebar a {
+  color:var(--text); text-decoration:none; display:block;
+  padding:2px 6px; border-radius:4px;
+}
+nav.sidebar a:hover { background:#e6ebf1; color:var(--accent2); }
+
+/* ---------------- content ---------------- */
+main { flex:1 1 auto; min-width:0; padding:32px 46px 120px; max-width:1080px; }
+main > h1:first-child {
+  font-size:30px; border-bottom:3px solid var(--accent);
+  padding-bottom:12px; margin-top:0; color:var(--accent);
+}
+h2 {
+  font-size:23px; margin-top:52px; padding:8px 0 8px 14px;
+  border-left:6px solid var(--accent); background:var(--panel);
+  border-radius:0 6px 6px 0;
+}
+h3 { font-size:18.5px; margin-top:34px; color:var(--accent2);
+      border-bottom:1px dashed var(--border); padding-bottom:5px; }
+h4 { font-size:16.5px; margin-top:24px; }
+p, li { font-size:15.5px; }
+
+code {
+  background:#eef1f4; padding:1px 5px; border-radius:4px;
+  font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:13.5px; color:#b3005c;
+}
+pre {
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:0; overflow-x:auto; margin:14px 0; line-height:1.55;
+}
+pre code {
+  background:none; color:inherit; padding:0; font-size:13px;
+  display:block; padding:14px 16px;
+}
+.codehilite { border:1px solid var(--border); border-radius:8px;
+               overflow-x:auto; margin:14px 0; background:var(--code-bg); }
+.codehilite pre { margin:0; border:0; border-radius:0; }
+
+table {
+  border-collapse:collapse; width:100%; margin:16px 0; font-size:14px;
+  display:block; overflow-x:auto;
+}
+th, td { border:1px solid var(--border); padding:8px 11px; text-align:left;
+          vertical-align:top; }
+th { background:var(--panel); font-weight:600; }
+tr:nth-child(even) td { background:#fbfcfd; }
+
+blockquote {
+  margin:16px 0; padding:12px 18px; border-left:5px solid var(--accent2);
+  background:#f0f6fc; border-radius:0 6px 6px 0;
+}
+blockquote p { margin:6px 0; }
+
+details {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:6px; padding:8px 14px; margin:8px 0;
+}
+details summary { cursor:pointer; font-weight:600; color:var(--accent2); }
+details[open] summary { margin-bottom:6px; }
+
+hr { border:0; border-top:1px solid var(--border); margin:40px 0; }
+
+/* ---------------- print ---------------- */
+@media print {
+  nav.sidebar { display:none; }
+  .layout { display:block; }
+  main { padding:0; max-width:none; font-size:11pt; }
+  h2 { page-break-after:avoid; break-after:avoid; }
+  pre, table, details { page-break-inside:avoid; break-inside:avoid; }
+  pre code { font-size:8.5pt; }
+  details { border:0; background:none; }
+  details > summary { display:none; }
+  details { display:block; }
+}
+@media (max-width:900px) {
+  .layout { display:block; }
+  nav.sidebar { position:static; height:auto; flex:none; width:auto;
+                 border-right:0; border-bottom:1px solid var(--border); }
+  main { padding:20px 16px 80px; }
+}
+
+</style>
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+</style>
+<style>
+/* ---- Django 學習筆記：章節封面 + 章節導覽（本站既有慣例） ---- */
+main .sub{font-size:13px;color:var(--muted);margin:-8px 0 16px}
+figure.hero{margin:0 0 26px}
+figure.hero img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);display:block}
+figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-align:center}
+.chnav{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0 10px;font-size:13px}
+.chnav a{flex:1;min-width:150px;text-align:center;text-decoration:none;color:var(--accent2);
+  border:1px solid var(--border);border-radius:6px;padding:9px 10px;background:#fff}
+.chnav a:hover{background:#eaeef2}
+.chnav a.course{font-weight:700}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="home" href="/django-course/">← 課程總覽</a>
+  <h1>Django 學習筆記</h1>
+<div class="sub">p.24–p.28　5 頁　第 3/14 章</div>
+<figure class="hero"><img src="/img/covers/django-ch03.png" alt="第 3 章 封面"><figcaption>封面插圖：Qwen-Image 2.1 生成</figcaption></figure>
+  <div class="sub">Django 網站框架開發 · 學習筆記<br>第 3 章 · Python3 基礎語法</div>
+  <div class="toc">
+<ul>
+<li><a href="#python3-基礎語法">Python3 基礎語法</a>
+</li>
+<li><a href="#編碼">編碼</a>
+</li>
+<li><a href="#python-保留字">Python 保留字</a>
+</li>
+<li><a href="#註釋">註釋</a>
+</li>
+<li><a href="#縮進">縮進</a>
+</li>
+<li><a href="#類型判斷">類型判斷</a>
+</li>
+<li><a href="#輸入等待用戶輸入">輸入&amp;等待用戶輸入</a>
+</li>
+<li><a href="#例子">例子</a>
+</li>
+<li><a href="#同一行顯示多條語句">同一行顯示多條語句</a>
+</li>
+<li><a href="#import-與-fromimport">import 與 from...import</a>
+</li>
+<li><a href="#print-輸出">print 輸出</a>
+</li>
+</ul>
+</div>
+
+</nav>
+<main>
+<h1 id="第-3-章--python3-基礎語法">第 3 章 · Python3 基礎語法</h1>
+<h2 id="python3-基礎語法">Python3 基礎語法</h2>
+<h2 id="編碼">編碼</h2>
+<p>默認情況下，Python 3 源碼文件以 UTF-8 編碼，所有字符串都是 unicode 字符串。當然你也可以為源碼文件指定不同的編碼：</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> -*- coding: cp-1252 -*-
+</code></pre></div>
+
+<p>標識符</p>
+<p>第一個字符必須是字母表中字母或下劃線'。</p>
+<p>標識符的其他的部分有字母、數字和下劃線組成。</p>
+<p>標識符對大小寫敏感。</p>
+<p>在 Python 3 中，非 ASCII 編碼的標識符也是允許的了。</p>
+<h2 id="python-保留字">Python 保留字</h2>
+<p>保留字即關鍵字，我們不能把它們用作任何標識符名稱。Python 的標準庫提供了一個關鍵詞模塊，我們可以使用它來查看當前版本的所有保留字：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import keyword</p>
+<p>keyword.kwlist</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="codehilite"><pre><span></span><code>['False', 'None', 'True', '__peg_parser__', 'and', 'as', 'assert', 'async', 'await', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
+</code></pre></div>
+
+<h2 id="註釋">註釋</h2>
+<p>Python 中單行註釋以#開頭，多行註釋採用三對單引號("")或者三對雙引號("")將註釋括起來。</p>
+<div class="codehilite"><pre><span></span><code>#這是單行註釋
+0000
+</code></pre></div>
+
+<p>這是多行註釋</p>
+<p>這是多行註釋</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">0000</span>
+</code></pre></div>
+
+<p>*****</p>
+<p>也可以用三個單引號來進行多行註釋</p>
+<p>*****</p>
+<p>實際上 python 註釋只有一種，就是單行註釋，多行註釋的這種使用方法類似於 java 的 javadoc，三引號的這種使用方法實際上是用來聲明多行長字符串的。</p>
+<h2 id="縮進">縮進</h2>
+<p>Python 最具特色的就是使用縮進來表示代碼塊。縮進的空格數是可變的，但是同一個代碼塊的語句必須包含相同的縮進空格數。</p>
+<div class="codehilite"><pre><span></span><code>def hi:
+print('hi') //縮進了
+</code></pre></div>
+
+<p>標準數據類型</p>
+<p>Python 中有六個標準的數據類型：</p>
+<p>Number (數字)</p>
+<p>String (字符串)</p>
+<p>List (列表)</p>
+<p>Tuple (元組)</p>
+<p>Set (集合)</p>
+<p>Dictionary (字典)</p>
+<p>Python3 的六個標準數據類型：</p>
+<p>不可變數據(3個)：Number (數字)、String(字符串)、Tuple (元組)</p>
+<p>可變數據(3 個)：List (列表)、Dictionary(字典)、Set(集合)</p>
+<p>可變數據和不可變數據是相對於引用地址來說的，不可變數據類型不允許變量的值發生變化，如果改變了的變量的值，相當於新建了一個對象，而對於相同的值的對象，內部會有一個引用計數來記錄有多少個變量引用了這個對象。可變數據類型允許變量的值發生變化。對變量進行修改操作只會改變變量的值，不會新建對象，變量引用的地址也不會發生變化，不過對於相同的值的不同對象，在內存中則會存在不同的對象，即每個對像都有自己的地址，相當於內存中對於同值的對象保存了多份，這裡不存在引用計數，是實實在在的對象。</p>
+<p>簡單地講，可變數據和不可變數據的“變”是相對於引用地址來說的，不是不能改變其數據，而是改變數據的時候會不會改變變量的引用地址。</p>
+<h2 id="類型判斷">類型判斷</h2>
+<p>例子</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">isStr</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">"餅瑞瑪"</span>
+<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">isStr</span><span class="p">))</span>
+<span class="nx">isInt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span>
+<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">isInt</span><span class="p">))</span>
+<span class="nx">isTuple</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="err">'</span><span class="nx">德瑪</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="mi">20</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="sc">'x'</span><span class="p">)</span>
+<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">isTuple</span><span class="p">))</span>
+<span class="nx">isList</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="sc">'d'</span><span class="p">,</span><span class="w"> </span><span class="sc">'4'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">垃圾</span><span class="err">'</span><span class="p">]</span>
+<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">isList</span><span class="p">))</span>
+</code></pre></div>
+
+<p>在 index.py (用 python index.py 開啟)</p>
+<p>字符串</p>
+<p>Python 中單引號和雙引號使用完全相同，但單引號和雙引號不能匹配。</p>
+<p>使用三對引號("或")可以囊括一個多行字符串。</p>
+<p>與其他語言相似，python 也使用"作為轉義字符</p>
+<p>自然字符串，通過在字符串前加 r 或 R。如 r"this is a line with \n" 則\n 會顯示，並不是換行。</p>
+<p>Python 允許處理 unicode 字符串，加前綴 u 或 U，如 u"this is an unicode string"。</p>
+<p>字符串是不可變的。</p>
+<p>按字面意義級聯字符串，如"this " "is " "string"會被自動轉換為 this is string。</p>
+<p>字符串可以用+運算符連接在一起，用*運算符重複。</p>
+<p>Python 中的字符串有兩種索引方式，從左往右以 0 開始，從右往左以-1 開始。</p>
+<p>Python 中的字符串不能改變(詳見上一小點的引用)。</p>
+<p>Python 沒有單獨的字符類型，一個字符就是長度為 1 的字符串。</p>
+<p>字符串的截取的語法格式如下：變量[頭下標：尾下標：步長]</p>
+<h2 id="輸入等待用戶輸入">輸入&amp;等待用戶輸入</h2>
+<p>input 函數可以用來接受輸入，它可以傳入一個字符串，當 input 函數調用的時候，會在控制台打印這個字符串(所以這個字符串通常被用來做輸入的提示信息)</p>
+<p>input函數會讀取輸入內容直到讀到回車，也就是說，內容輸入完畢後要按回車鍵才能執行。</p>
+<h2 id="例子">例子</h2>
+<div class="codehilite"><pre><span></span><code><span class="nx">input</span><span class="p">(</span><span class="s">"記得接Enter："</span><span class="p">)</span>
+<span class="nx">x</span><span class="p">=</span><span class="nx">input</span><span class="p">(</span><span class="s">"輸入把少年："</span><span class="p">)</span>
+<span class="nx">print</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">x</span><span class="p">))</span>
+</code></pre></div>
+
+<p>在 index1.py (用 python index1.py 開啟)</p>
+<h2 id="同一行顯示多條語句">同一行顯示多條語句</h2>
+<p>Python 可以在同一行中使用多條語句，語句之間使用分號(;) 分割，以下是一個簡單的實例：</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="p">;</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">'nothing'</span><span class="p">;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+</code></pre></div>
+
+<p>輸出結果為：</p>
+<div class="codehilite"><pre><span></span><code>nothing
+</code></pre></div>
+
+<h2 id="import-與-fromimport">import 與 from...import</h2>
+<p>在 Python 用 import 或者 from...import 來導入相應的模塊。</p>
+<p>將整個模塊(somemodule)導入，格式為：</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">somemodule</span>
+</code></pre></div>
+
+<p>從某個模塊中導入某個函數，格式為：</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">somemodule</span><span class="w"> </span><span class="kn">import</span> <span class="n">somefunction</span>
+</code></pre></div>
+
+<p>從某個模塊中導入多個函數，格式為：</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">somemodule</span><span class="w"> </span><span class="kn">import</span> <span class="n">firstfunc</span><span class="p">,</span> <span class="n">secondfunc</span><span class="p">,</span> <span class="n">thirdfunc</span>
+</code></pre></div>
+
+<p>將某個模塊中的全部函數導入，格式為：</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">somemodule</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+
+<p>多個語句構成代碼組</p>
+<p>縮進相同的一組語句構成一個代碼塊，我們稱之代碼組。</p>
+<p>像 if、while、def 和 class 這樣的複合語句，首行以關鍵字開始，以冒號(:) 結束，該行之後的一行或多行代碼構成代碼組。</p>
+<p>我們將首行及後面的代碼組稱為一個子句(clause)。</p>
+<p>實例：</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nv">expression</span><span class="w"> </span>:
+<span class="nv">suite</span>
+<span class="nv">elif</span><span class="w"> </span><span class="nv">expression</span><span class="w"> </span>:
+<span class="nv">suite</span>
+<span class="k">else</span><span class="w"> </span>:
+<span class="nv">suite</span>
+</code></pre></div>
+
+<h2 id="print-輸出">print 輸出</h2>
+<p>print 函數是 python 的基本輸出函數，他可以將變量輸出(或者說，打印)到控制台。在第一個 python 程序中，我們就用到了 print 函數：</p>
+<div class="codehilite"><pre><span></span><code>print("Hello, World!")
+str = "Hello, World!"
+print(str)
+</code></pre></div>
+
+<p>Python3 編程第一步</p>
+<p>在下例裡，我們能寫出一個初步的斐波納契數列如下：</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>,<span class="w"> </span><span class="mi">1</span>
+<span class="k">while</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span>:
+<span class="nv">print</span><span class="ss">(</span><span class="nv">b</span><span class="ss">)</span>
+<span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
+</code></pre></div>
+
+<p>其中代碼 a, b = b, a + b 的計算方式為先計算右邊的表達式，然後同時賦值給左邊，等價於：</p>
+<div class="codehilite"><pre><span></span><code>n = b
+m = a + b
+a = n
+b = m
+</code></pre></div>
+<div class="chnav">
+<a href="/django-notes/ch02-python-intro.html">← 第 2 章 Python 簡介與安裝</a>
+<a class="course" href="/django-course/">課程總覽</a>
+<a href="/django-notes/ch04-datatypes.html">第 4 章 數據類型、運算符與數字 →</a>
+</div>
+</main>
+</div>
+</body>
+</html>
