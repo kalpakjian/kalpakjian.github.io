@@ -237,59 +237,75 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
   <div class="sub">Django 網站框架開發 · 學習筆記<br>第 6 章 · 流程控制、函數、模組與面向對象</div>
   <div class="toc">
 <ul>
-<li><a href="#判斷元素是否在集合中存在">判斷元素是否在集合中存在</a>
+<li><a href="#1-條件控制if--elif--else">1. 條件控制（if / elif / else）</a>
+<ul>
+<li><a href="#11-match-casepython-310">1.1 match-case（Python 3.10+）</a>
 </li>
-<li><a href="#python3-條件控制">Python3 條件控制</a>
+<li><a href="#12-實例猜數字">1.2 實例：猜數字</a>
 </li>
-<li><a href="#實例">實例</a>
+</ul>
 </li>
-<li><a href="#while-循環">while 循環</a>
+<li><a href="#2-循環while--for">2. 循環（while / for）</a>
+<ul>
+<li><a href="#21-break--continue--else">2.1 break / continue / else</a>
 </li>
-<li><a href="#pass-語句">pass 語句</a>
+<li><a href="#22-pass">2.2 pass</a>
 </li>
-<li><a href="#生成器">生成器</a>
+</ul>
 </li>
-<li><a href="#函數變量作用域">函數變量作用域</a>
+<li><a href="#3-迭代器與生成器">3. 迭代器與生成器</a>
 </li>
-<li><a href="#關鍵字參數">關鍵字參數</a>
+<li><a href="#4-函數function">4. 函數（Function）</a>
+<ul>
+<li><a href="#41-變數作用域">4.1 變數作用域</a>
 </li>
-<li><a href="#返回值">返回值</a>
+<li><a href="#42-關鍵字參數">4.2 關鍵字參數</a>
 </li>
-<li><a href="#可變參數列表">可變參數列表</a>
+<li><a href="#43-可變參數-args">4.3 可變參數 *args</a>
 </li>
-<li><a href="#python3-數據結構">Python3 數據結構</a>
+</ul>
 </li>
-<li><a href="#列表">列表</a>
+<li><a href="#5-常用數據結構複習">5. 常用數據結構（複習）</a>
+<ul>
+<li><a href="#51-列表list方法">5.1 列表（List）方法</a>
 </li>
-<li><a href="#將列表當做堆棧使用">將列表當做堆棧使用</a>
+<li><a href="#52-當堆棧使用">5.2 當堆棧使用</a>
 </li>
-<li><a href="#列表推導式">列表推導式</a>
+<li><a href="#53-列表推導式">5.3 列表推導式</a>
 </li>
-<li><a href="#嵌套列表解析">嵌套列表解析</a>
+<li><a href="#54-元組--集合--字典">5.4 元組 / 集合 / 字典</a>
 </li>
-<li><a href="#import-語句">import 語句</a>
+</ul>
 </li>
-<li><a href="#from--import-語句">from ... import 語句</a>
+<li><a href="#6-模組module">6. 模組（Module）</a>
+<ul>
+<li><a href="#61-匯入方式">6.1 匯入方式</a>
 </li>
-<li><a href="#_name_屬性">_name_屬性</a>
+<li><a href="#62-name-屬性">6.2 name 屬性</a>
 </li>
-<li><a href="#python3-錯誤和異常">Python3 錯誤和異常</a>
+<li><a href="#63-dir">6.3 dir()</a>
 </li>
-<li><a href="#異常">異常</a>
+</ul>
 </li>
-<li><a href="#python3-面向對象">Python3 面向對象</a>
+<li><a href="#7-錯誤與異常">7. 錯誤與異常</a>
 </li>
-<li><a href="#python3-面向對象技術簡介">Python3 面向對象技術簡介</a>
+<li><a href="#8-面向對象oop">8. 面向對象（OOP）</a>
+<ul>
+<li><a href="#81-基本名詞">8.1 基本名詞</a>
 </li>
-<li><a href="#類對象">類對象</a>
+<li><a href="#82-類定義與實例化">8.2 類定義與實例化</a>
 </li>
-<li><a href="#繼承">繼承</a>
+<li><a href="#83-繼承">8.3 繼承</a>
 </li>
-<li><a href="#方法重寫">方法重寫</a>
+<li><a href="#84-類的專屬方法魔術方法">8.4 類的專屬方法（魔術方法）</a>
 </li>
-<li><a href="#識別主流-python-框架的功能及應用場景">識別主流 Python 框架的功能及應用場景</a>
+</ul>
 </li>
-<li><a href="#fastapi-與-django-的比較">FastAPI 與 Django 的比較</a>
+<li><a href="#9-主流-python-框架">9. 主流 Python 框架</a>
+<ul>
+<li><a href="#91-fastapi-vs-django">9.1 FastAPI vs Django</a>
+</li>
+</ul>
 </li>
 </ul>
 </div>
@@ -297,53 +313,8 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 </nav>
 <main>
 <h1 id="第-6-章--流程控制函數模組與面向對象">第 6 章 · 流程控制、函數、模組與面向對象</h1>
-<p>運行結果：
-清空集合
-語法格式如下：</p>
-<div class="codehilite"><pre><span></span><code>s.clear()
-</code></pre></div>
-
-<p>清空集合 s。
-實例：</p>
-<div class="codehilite"><pre><span></span><code>thisset = set(("s", "ss", "sss"))
-thisset.clear()
-print(thisset)
-</code></pre></div>
-
-<p>運行結果：</p>
-<div class="codehilite"><pre><span></span><code>set()
-</code></pre></div>
-
-<h2 id="判斷元素是否在集合中存在">判斷元素是否在集合中存在</h2>
-<p>判斷元素 x 是否在集合 s 中，存在則返回 True，不存在則返回 False。實例：</p>
-<div class="codehilite"><pre><span></span><code>thisset = set(("s", "ss", "sss"))
-print("ss" in thisset)
-print("sssss" in thisset)
-</code></pre></div>
-
-<p>運行結果：</p>
-<div class="codehilite"><pre><span></span><code>True
-False
-</code></pre></div>
-
-<h2 id="python3-條件控制">Python3 條件控制</h2>
-<p>if 語句 Python 條件語句是通過一條或多條語句的執行結果(True 或者 False)來決定執行的代碼塊Python 中 if 語句的一般形式如下所示：</p>
-<div class="codehilite"><pre><span></span><code>if condition_1:
-    statement_block_1
-</code></pre></div>
-
-<p>流程圖如下所示：
-這種 if 語句只有在符合條件的時候才會執行代碼塊內的代碼，是一種比較常見的用法。另一種常見的用法是：</p>
-<div class="codehilite"><pre><span></span><code>if condition_1:
-    statement_block_1
-else:
-    statement_block_2
-</code></pre></div>
-
-<p>流程圖如下所示：
-這種語句是一種常用的 if-else 語句，通常用於二分支結構的條件語句代碼。
-在一些時候，我們可能需要多分支的條件語句代碼，可以在 if-else 語句中混合 elif 語句進行使用：
-Python 中用elif 代替了else if，所以if語句的關鍵字為：if - elif - else。</p>
+<h2 id="1-條件控制if--elif--else">1. 條件控制（if / elif / else）</h2>
+<p>Python 用縮排區分區塊，條件後要加冒號 <code>:</code>。</p>
 <div class="codehilite"><pre><span></span><code>if condition_1:
     statement_block_1
 elif condition_2:
@@ -352,873 +323,346 @@ else:
     statement_block_3
 </code></pre></div>
 
-<p>流程圖如下所示：
-如果"condition_1" 為 True 將執行"statement_block_1" 塊語句，如果"condition_1" 為 False，將判斷"condition_2"，如果"condition_2" 為 True 將執行"statement_block_2" 塊語句，如果"condition_2" 為 False，將執行"statement_block_3" 塊語句。
-使用第一種常用的 if 語句搭配合適的條件可以實現第二種和第三種語句的全部效果，但在執行效率和代碼可讀性上會變得比較糟糕。
-注意：
-每個條件後面要使用冒號(:)，表示接下來是滿足條件後要執行的語句塊。
-使用縮進來劃分語句塊，相同縮進數的語句在一起組成一個語句塊。
-在 Python 中沒有 switch - case 語句，但在 python3 中添加了用法類似的 match-case 語句。
-match-case 語句(python3.10 新特性)
-在其他語言(比如說經典的 C 語言)中有一種多分支條件判斷語句，可以進行模式匹配(通俗的講，就是將傳入的內容跟多個已存在的樣例進行比較，找到相同的案例並按照該案例的代碼進行處理，如果沒有相同案例就按默認案例進行處理，可以查看其他編程語言的條件語句的 Switch 相關部分內容進行比較參考)。在 python3.10 中也引入了這樣的新特性。
-一個 match 語句的使用示例：</p>
+<ul>
+<li>條件為 <code>True</code> 才執行對應區塊。</li>
+<li><code>elif</code> 等於其他語言的 <code>else if</code>。</li>
+<li>Python 沒有 <code>switch-case</code>，但 3.10 起提供 <code>match-case</code>。</li>
+</ul>
+<h3 id="11-match-casepython-310">1.1 match-case（Python 3.10+）</h3>
 <div class="codehilite"><pre><span></span><code>def http_error(status):
     match status:
         case 400:
             return "Bad request"
         case 404:
             return "Not found"
-        case 418:
-            return "I'm a teapot"
         case _:
-            return "Something's wrong with the Internet"
+            return "Unknown"
 </code></pre></div>
 
-<p>上述代碼等價於：</p>
-<div class="codehilite"><pre><span></span><code>def http_error(status):
-    if status == 400:
-        return "Bad request"
-    elif status == 404:
-        return "Not found"
-    elif status == 418:
-        return "I'm a teapot"
-    else:
-        return "Something's wrong with the Internet"
-</code></pre></div>
-
-<p>以下為 if 中常用的操作運算符:</p>
-<table>
-<thead>
-<tr>
-<th>操作符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>&lt;</td>
-<td>小於</td>
-</tr>
-<tr>
-<td>&lt;=</td>
-<td>小於或等於</td>
-</tr>
-<tr>
-<td>&gt;</td>
-<td>大於</td>
-</tr>
-<tr>
-<td>&gt;=</td>
-<td>大於或等於</td>
-</tr>
-<tr>
-<td>**</td>
-<td>等於,比較對像是否相等</td>
-</tr>
-<tr>
-<td>!=</td>
-<td>不等於</td>
-</tr>
-</tbody>
-</table>
-<h2 id="實例">實例</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">print</span><span class="ss">(</span><span class="mi">5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">6</span><span class="ss">)</span>
-#<span class="w"> </span>使用變量
-<span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span>
-<span class="nv">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span>
-<span class="nv">print</span><span class="ss">(</span><span class="nv">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">y</span><span class="ss">)</span>
-<span class="nv">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span>
-<span class="nv">guess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
-<span class="nv">print</span><span class="ss">(</span><span class="s2">"猜數字！"</span><span class="ss">)</span>
+<h3 id="12-實例猜數字">1.2 實例：猜數字</h3>
+<div class="codehilite"><pre><span></span><code><span class="nv">number</span>,<span class="w"> </span><span class="nv">guess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span>,<span class="w"> </span><span class="o">-</span><span class="mi">1</span>
 <span class="k">while</span><span class="w"> </span><span class="nv">guess</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nv">number</span>:
-<span class="w">    </span><span class="nv">guess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">int</span><span class="ss">(</span><span class="nv">input</span><span class="ss">(</span><span class="s2">"請輸入你要猜的數字"</span><span class="ss">))</span>
+<span class="w">    </span><span class="nv">guess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">int</span><span class="ss">(</span><span class="nv">input</span><span class="ss">(</span><span class="s2">"請輸入你要猜的數字："</span><span class="ss">))</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">guess</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">number</span>:
-<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"你猜中了，真厲害！"</span><span class="ss">)</span>
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"猜中了！"</span><span class="ss">)</span>
 <span class="w">    </span><span class="nv">elif</span><span class="w"> </span><span class="nv">guess</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">number</span>:
-<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"猜小了，再猜猜？"</span><span class="ss">)</span>
-<span class="w">    </span><span class="nv">elif</span><span class="w"> </span><span class="nv">guess</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nv">number</span>:
-<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"猜大了，在猜猜？"</span><span class="ss">)</span>
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"猜小了"</span><span class="ss">)</span>
+<span class="w">    </span><span class="k">else</span>:
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"猜大了"</span><span class="ss">)</span>
 </code></pre></div>
 
-<p>Python3 循環
-介紹 Python 循環語句的使用。
-Python 中的循環語句有 for 和 while。
-Python 循環語句的控制結構圖如下所示：</p>
-<h2 id="while-循環">while 循環</h2>
-<p>Python 中 while 語句的一般形式：
-while 判斷條件：</p>
-<div class="codehilite"><pre><span></span><code>statements
+<h2 id="2-循環while--for">2. 循環（while / for）</h2>
+<ul>
+<li><strong>while</strong>：條件為真時重複執行。</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="nt">n</span><span class="o">,</span><span class="w"> </span><span class="nt">s</span><span class="o">,</span><span class="w"> </span><span class="nt">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">100</span><span class="o">,</span><span class="w"> </span><span class="nt">0</span><span class="o">,</span><span class="w"> </span><span class="nt">1</span>
+<span class="nt">while</span><span class="w"> </span><span class="nt">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nt">n</span><span class="o">:</span>
+<span class="w">    </span><span class="nt">s</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nt">i</span><span class="o">;</span><span class="w"> </span><span class="nt">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nt">1</span>
+<span class="nt">print</span><span class="o">(</span><span class="nt">s</span><span class="o">)</span><span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="nt">5050</span>
 </code></pre></div>
 
-<p>同樣需要注意冒號和縮進。另外，在 Python 中沒有 do-while 循環。以下實例使用了 while 來計算 1 到 100 的總和：</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span>
-<span class="nv">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="nv">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
-<span class="k">while</span><span class="w"> </span><span class="nv">counter</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nv">n</span>:
-<span class="w">    </span><span class="nv">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">sum</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">counter</span>
-<span class="w">    </span><span class="nv">counter</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="s1">'Sum of 1 until %d: %d'</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="ss">(</span><span class="nv">n</span>,<span class="nv">sum</span><span class="ss">))</span>
-</code></pre></div>
-
-<p>執行結果如下：</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Sum</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="mi">100</span>:<span class="w"> </span><span class="mi">5050</span>
-</code></pre></div>
-
-<p>for 語句
-Python for 循環可以遍歷任何序列的項目，如一個列表或者一個字符串。
-for 循環的一般格式如下：</p>
-<div class="codehilite"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span>:
-<span class="k">else</span>:
-<span class="w">    </span><span class="nv">pass</span><span class="w">  </span>#<span class="w"> </span>內容省略
-</code></pre></div>
-
-<p>Python for 循環實例：</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="s1">'BvS'</span>,<span class="w"> </span><span class="s1">'水水俠'</span>,<span class="w"> </span><span class="s1">'神奇女俠'</span>,<span class="w"> </span><span class="s1">'大超回歸'</span>]
-<span class="k">for</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">DC</span>:
-<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">x</span><span class="ss">)</span>
-</code></pre></div>
-
-<p>執行結果如下：</p>
-<div class="codehilite"><pre><span></span><code>BvS
-</code></pre></div>
-
-<p>水水俠
-神奇女俠
-大超回歸
-range()函數
-如果你需要遍歷數字序列，可以使用內置 range() 函數。它會生成數列，例如：</p>
-<div class="codehilite"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="mi">10</span><span class="ss">)</span>:
+<ul>
+<li><strong>for</strong>：遍歷序列（列表、字串等）。</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span>[<span class="s1">'a'</span>,<span class="w"> </span><span class="s1">'b'</span>,<span class="w"> </span><span class="s1">'c'</span>]:
 <span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
-<span class="w">    </span>#<span class="w"> </span>你也可以使用<span class="nv">range</span><span class="w"> </span>指定區間的值：
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="mi">5</span>,<span class="mi">9</span><span class="ss">)</span>:
-<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
-<span class="w">        </span>#也可以使<span class="nv">range</span><span class="w"> </span>以指定數字開始並指定不同的增量
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="mi">0</span>,<span class="w"> </span><span class="mi">10</span>,<span class="w"> </span><span class="mi">3</span><span class="ss">)</span>:
-<span class="w">            </span><span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
-<span class="w">            </span>#負數：
-<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="o">-</span><span class="mi">10</span>,<span class="w"> </span><span class="o">-</span><span class="mi">100</span>,<span class="w"> </span><span class="o">-</span><span class="mi">30</span><span class="ss">)</span>:
-<span class="w">                </span><span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
 </code></pre></div>
 
-<p>您可以結合 range() 和 len() 函數以遍歷一個序列的索引，如下所示：</p>
-<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="c1">--- range() + len()</span>
-<span class="n">aa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="n">'a', 's', 'd', 'f', 'g'</span><span class="o">]</span>
-<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">aa</span><span class="p">))</span><span class="err">:</span>
-<span class="w">    </span><span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">aa</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">)</span>
+<h3 id="21-break--continue--else">2.1 break / continue / else</h3>
+<ul>
+<li><code>break</code>：跳出迴圈（對應的 <code>else</code> 不執行）。</li>
+<li><code>continue</code>：略過本次、進入下一輪。</li>
+<li><code>else</code>：迴圈正常結束時執行（被 <code>break</code> 中斷則不執行）。</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="mi">2</span>,<span class="w"> </span><span class="mi">10</span><span class="ss">)</span>:
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="mi">2</span>,<span class="w"> </span><span class="nv">n</span><span class="ss">)</span>:
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span>:
+<span class="w">            </span><span class="k">break</span>
+<span class="w">    </span><span class="k">else</span>:
+<span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="nv">n</span>,<span class="w"> </span><span class="s1">'is a prime number'</span><span class="ss">)</span>
 </code></pre></div>
 
-<p>可以使用 range() 函數來創建一個列表：</p>
-<div class="codehilite"><pre><span></span><code>pp = list(range(5))
-print(pp)
-</code></pre></div>
-
-<p>break 和 continue 語句及循環中的 else 子句
-break 語句可以跳出 for 和 while 的循環體。如果你從 for 或 while 循環中終止，任何對應的循環 else 塊將不執行。
-continue 語句被用來告訴 Python 跳過當前循環中的當此循環，然後繼續進行下一輪循環。
-循環語句可以有 else 子句；它在窮盡列表(以 for 循環)或條件變為假(以 while 循環)循環終止時被執行，但循環被 break 終止時不執行，如下查尋質數的循環例子：</p>
-<div class="codehilite"><pre><span></span><code>for n in range(2, 10):
-    for x in range(2, n):
-        if n % x == 0:
-            print(n, 'equals', x, '**', n//x)
-            break
-        else:
-            # 循環中沒有找到元素
-            print(n, 'is a prime number')
-</code></pre></div>
-
-<h2 id="pass-語句">pass 語句</h2>
-<p>pass 語句什麼都不做。它只在語法上需要一條語句但程序不需要任何操作時使用。例如：</p>
+<h3 id="22-pass">2.2 pass</h3>
+<p><code>pass</code> 不做任何事，用於「語法上需要語句、但不想做事」之處：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">while</span><span class="w"> </span><span class="nv">True</span>:
 <span class="w">    </span><span class="nv">pass</span>
 </code></pre></div>
 
-<p>最小的類：</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">MyEmptyClass:</span>
-    <span class="nb">pass</span>
+<h2 id="3-迭代器與生成器">3. 迭代器與生成器</h2>
+<ul>
+<li><strong>迭代器</strong>：記住走訪位置的物件，只能往前；用 <code>iter()</code> 建立、<code>next()</code> 取值。</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="nv">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">iter</span><span class="ss">(</span>[<span class="mi">1</span>,<span class="w"> </span><span class="mi">2</span>,<span class="w"> </span><span class="mi">3</span>,<span class="w"> </span><span class="mi">4</span>]<span class="ss">)</span>
+<span class="nv">print</span><span class="ss">(</span><span class="k">next</span><span class="ss">(</span><span class="nv">it</span><span class="ss">)</span>,<span class="w"> </span><span class="k">next</span><span class="ss">(</span><span class="nv">it</span><span class="ss">))</span>
 </code></pre></div>
 
-<p>Python3 迭代器與生成器 - 迭代器迭代是 Python 最強大的功能之一，是訪問集合元素的一種方式。
-迭代器是一個可以記住遍歷的位置的對象。
-迭代器對像從集合的第一個元素開始訪問，直到所有的元素被訪問完結束。迭代器只能往前不會後退。
-迭代器有兩個基本的方法：iter()和next()。
-字符串，列表或元組對像都可用於創建迭代器：</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="mi">1</span>,<span class="w"> </span><span class="mi">2</span>,<span class="w"> </span><span class="mi">3</span>,<span class="w"> </span><span class="mi">4</span>]
-<span class="nv">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">iter</span><span class="ss">(</span><span class="nv">list</span><span class="ss">)</span>
-<span class="nv">print</span><span class="ss">(</span><span class="k">next</span><span class="ss">(</span><span class="nv">it</span><span class="ss">))</span>
-<span class="nv">print</span><span class="ss">(</span><span class="k">next</span><span class="ss">(</span><span class="nv">it</span><span class="ss">))</span>
-</code></pre></div>
-
-<p>迭代器對象可以使用常規 for 語句進行遍歷：</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="mi">1</span>,<span class="w"> </span><span class="mi">2</span>,<span class="w"> </span><span class="mi">3</span>,<span class="w"> </span><span class="mi">4</span>]
-<span class="nv">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">iter</span><span class="ss">(</span><span class="nv">list</span><span class="ss">)</span><span class="w"> </span>#<span class="w"> </span>創建迭代器對象
-<span class="k">for</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">it</span>:
-<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">x</span>,<span class="w"> </span><span class="k">end</span><span class="o">=</span><span class="s2">""</span><span class="ss">)</span>
-</code></pre></div>
-
-<h2 id="生成器">生成器</h2>
-<p>在 Python 中，使用了 yield 的函數被稱為生成器(generator)。跟普通函數不同的是，生成器是一個返回迭代器的函數，只能用於迭代操作，更簡單點理解生成器就是一個迭代器。在調用生成器運行的過程中，每次遇到 yield 時函數會暫停並保存當前所有的運行信息，返回 yield 的值。並在下一次執行 next() 方法時從當前位置繼續運行。
-以下實例使用 yield 實現斐波那契數列：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-</code></pre></div>
-
-<p>def fibonacci(n): # 生成器函數 - 斐波那契</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>,<span class="w"> </span><span class="mi">1</span>,<span class="w"> </span><span class="mi">0</span>
-<span class="k">while</span><span class="w"> </span><span class="nv">True</span>:
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="ss">(</span><span class="nv">counter</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nv">n</span><span class="ss">)</span>:
-<span class="w">        </span><span class="k">return</span>
+<ul>
+<li><strong>生成器</strong>：使用 <code>yield</code> 的函數；每次遇到 <code>yield</code> 會暫停並保存狀態，下次再從原處繼續。</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="nv">def</span><span class="w"> </span><span class="nv">fibonacci</span><span class="ss">(</span><span class="nv">n</span><span class="ss">)</span>:
+<span class="w">    </span><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>,<span class="w"> </span><span class="mi">1</span>,<span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="nv">c</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nv">n</span>:
 <span class="w">        </span><span class="nv">yield</span><span class="w"> </span><span class="nv">a</span>
 <span class="w">        </span><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
-<span class="w">        </span><span class="nv">counter</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">        </span><span class="nv">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">fibonacci</span><span class="ss">(</span><span class="mi">10</span><span class="ss">)</span><span class="w"> </span>#<span class="w"> </span><span class="nv">f</span><span class="w"> </span>是一個迭代器，由生成器返回生成
-<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="nv">True</span>:
-<span class="w">            </span><span class="nv">try</span>:
-<span class="w">                </span><span class="nv">print</span><span class="w"> </span><span class="ss">(</span><span class="k">next</span><span class="ss">(</span><span class="nv">f</span><span class="ss">)</span>,<span class="w"> </span><span class="k">end</span><span class="o">=</span><span class="s2">""</span><span class="ss">)</span>
-<span class="w">            </span><span class="nv">except</span><span class="w"> </span><span class="nv">StopIteration</span>:
-<span class="w">                </span><span class="nv">sys</span>.<span class="k">exit</span><span class="ss">()</span>
+<span class="w">        </span><span class="nv">c</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="k">for</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">fibonacci</span><span class="ss">(</span><span class="mi">10</span><span class="ss">)</span>:
+<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">x</span>,<span class="w"> </span><span class="k">end</span><span class="o">=</span><span class="s1">' '</span><span class="ss">)</span>
 </code></pre></div>
 
-<p>Python3 函數
-本章節我們將為大家介紹 Python 中函數的應用。
-Python 定義函數使用 def 關鍵字，一般格式如下：
-def 函數名（參數列表）：
-函數體讓我們使用函數來輸出"Hello World!"：</p>
+<h2 id="4-函數function">4. 函數（Function）</h2>
+<p>用 <code>def</code> 定義：</p>
 <div class="codehilite"><pre><span></span><code>def hello():
     print("hello World!")
-    hello()
-</code></pre></div>
 
-<p>更複雜點的應用，函數中帶上參數變量：</p>
-<div class="codehilite"><pre><span></span><code>def area(width, height):
+def area(width, height):
     return width * height
-def print_welcome(name):
-    print("Welcome", name)
-    print_welcome("Fred")
-    w = 4
-    h = 5
-    print("width =", w, " height =", h, " area =", area(w, h))
 </code></pre></div>
 
-<p>輸出結果：</p>
-<div class="codehilite"><pre><span></span><code>Welcome Fred
-width = 4 height = 5 area = 20
+<h3 id="41-變數作用域">4.1 變數作用域</h3>
+<p>函數內為<strong>局部</strong>變數、函數外為<strong>全域</strong>變數；同名時函數內優先用局部。</p>
+<div class="codehilite"><pre><span></span><code>a = 4            # 全域
+def f1():
+    a = 17       # 局部
+    print(a)     # 17
+def f2():
+    print(a)     # 4
 </code></pre></div>
 
-<h2 id="函數變量作用域">函數變量作用域</h2>
-<p>定義在函數內部的變量擁有一個局部作用域，定義在函數外的擁有全局作用域。通過以下實例，你可以清楚瞭解 Python 函數變量的作用域：</p>
-<div class="codehilite"><pre><span></span><code><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="c1"># 全局變量</span>
-<span class="n">def</span><span class="w"> </span><span class="n">print_func1</span><span class="p">():</span>
-<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">17</span><span class="w"> </span><span class="c1"># 局部變量</span>
-<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">"in print_func a = "</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
-<span class="n">def</span><span class="w"> </span><span class="n">print_func2</span><span class="p">():</span>
-<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">"in print_func a = "</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
-<span class="w">    </span><span class="n">print_func1</span><span class="p">()</span>
-<span class="w">    </span><span class="n">print_func2</span><span class="p">()</span>
-<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">"a = "</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
+<h3 id="42-關鍵字參數">4.2 關鍵字參數</h3>
+<p>呼叫時可用 <code>名稱=值</code>，順序可調換：</p>
+<div class="codehilite"><pre><span></span><code>def parrot(voltage, state='a stiff', action='voom'):
+    ...
+
+parrot(1000)
+parrot(voltage=1000, action='VOOOOOM')
+parrot(action='VOOOOOM', voltage=1000)
 </code></pre></div>
 
-<p>運行結果：</p>
-<div class="codehilite"><pre><span></span><code><span class="ow">in</span><span class="w"> </span><span class="n">print_func</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">17</span>
-<span class="ow">in</span><span class="w"> </span><span class="n">print_func</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
-<span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
-</code></pre></div>
-
-<h2 id="關鍵字參數">關鍵字參數</h2>
-<p>函數也可以使用 kwarg = value 的關鍵字參數形式被調用。例如，以下函數：</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">def</span><span class="w"> </span><span class="nx">parrot</span><span class="p">(</span><span class="nx">voltage</span><span class="p">,</span><span class="w"> </span><span class="nx">state</span><span class="p">=</span><span class="err">'</span><span class="nx">a</span><span class="w"> </span><span class="nx">stiff</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="nx">action</span><span class="p">=</span><span class="err">'</span><span class="nx">voom</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">=</span><span class="err">'</span><span class="nx">Norwegian</span><span class="w"> </span><span class="nx">Blue</span><span class="err">'</span><span class="p">):</span>
-<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="s">"-- This parrot wouldn't"</span><span class="p">,</span><span class="w"> </span><span class="nx">action</span><span class="p">,</span><span class="w"> </span><span class="nx">end</span><span class="p">=</span><span class="err">''</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="s">"if you put"</span><span class="p">,</span><span class="w"> </span><span class="nx">voltage</span><span class="p">,</span><span class="w"> </span><span class="s">"volts through it."</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="s">"-- Lovely plumage, the"</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="s">"-- It's"</span><span class="p">,</span><span class="w"> </span><span class="nx">state</span><span class="p">,</span><span class="w"> </span><span class="s">"!"</span><span class="p">)</span>
-</code></pre></div>
-
-<p>可以以下幾種方式被調用：</p>
-<div class="codehilite"><pre><span></span><code>parrot(1000) # 1 positional argument
-parrot(voltage=1000) # 1 keyword argument
-parrot(voltage=1000000, action='VOOOOOM') # 2 keyword arguments
-parrot(action='VOOOOOM', voltage=1000000) # 2 keyword arguments
-parrot('a million', 'bereft of life', 'jump') # 3 positional arguments
-parrot('a thousand', state='pushing up the daisies') # 1 positional, 1 keyword
-</code></pre></div>
-
-<p>以下為錯誤調用方法：</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">parrot</span><span class="ss">()</span><span class="w"> </span>#<span class="w"> </span><span class="nv">required</span><span class="w"> </span><span class="nv">argument</span><span class="w"> </span><span class="nv">missing</span>
-<span class="nv">parrot</span><span class="ss">(</span><span class="nv">voltage</span><span class="o">=</span><span class="mi">5</span>.<span class="mi">0</span>,<span class="w"> </span><span class="s1">'dead'</span><span class="ss">)</span><span class="w"> </span>#<span class="w"> </span><span class="nv">non</span><span class="o">-</span><span class="nv">keyword</span><span class="w"> </span><span class="nv">argument</span><span class="w"> </span><span class="nv">after</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">keyword</span><span class="w"> </span><span class="nv">argument</span>
-<span class="nv">parrot</span><span class="ss">(</span><span class="mi">110</span>,<span class="w"> </span><span class="nv">voltage</span><span class="o">=</span><span class="mi">220</span><span class="ss">)</span><span class="w"> </span>#<span class="w"> </span><span class="nv">duplicate</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">same</span><span class="w"> </span><span class="nv">argument</span>
-<span class="nv">parrot</span><span class="ss">(</span><span class="nv">actor</span><span class="o">=</span><span class="s1">'John Cleese'</span><span class="ss">)</span><span class="w"> </span>#<span class="w"> </span><span class="nv">unknown</span><span class="w"> </span><span class="nv">keyword</span><span class="w"> </span><span class="nv">argument</span>
-</code></pre></div>
-
-<h2 id="返回值">返回值</h2>
-<p>Python 函數使用 return 語句返回函數值，可以將函數作為一個值賦值給指定變量：</p>
-<div class="codehilite"><pre><span></span><code>def return_sum(x,y):
-    c = x + y
-    return c
-    res = return_sum(4,5)
-    print(res)
-</code></pre></div>
-
-<h2 id="可變參數列表">可變參數列表</h2>
-<p>最後，一個較不常用的功能是可以讓函數調用可變個數的參數。
-這些參數被包裝進一個元組(查看元組和序列)。
-在這些可變個數的參數之前，可以有零到多個普通的參數：</p>
-<div class="codehilite"><pre><span></span><code>def arithmetic_mean(*args):
-    if len(args) == 0:
+<h3 id="43-可變參數-args">4.3 可變參數 *args</h3>
+<p>用 <code>*args</code> 接收不定個數的參數（打包成元組）：</p>
+<div class="codehilite"><pre><span></span><code>def mean(*args):
+    if not args:
         return 0
-    else:
-        sum = 0
-        for x in args:
-            sum += x
-            return sum / len(args)
-            print(arithmetic_mean(45,32,89,78))
-            print(arithmetic_mean(8989.8,78787.78,3453,78778.73))
-            print(arithmetic_mean(45,32))
-            print(arithmetic_mean(45))
-            print(arithmetic_mean())
+    return sum(args) / len(args)
+
+print(mean(45, 32, 89))
 </code></pre></div>
 
-<h2 id="python3-數據結構">Python3 數據結構</h2>
-<h2 id="列表">列表</h2>
-<p>Python 中列表是可變的，這是它區別於字符串和元組的最重要的特點，一句話概括即：列表可以修改，而字符串和元組不能修改。以下是 Python 中列表的方法：</p>
+<h2 id="5-常用數據結構複習">5. 常用數據結構（複習）</h2>
+<h3 id="51-列表list方法">5.1 列表（List）方法</h3>
 <table>
 <thead>
 <tr>
 <th>方法</th>
-<th>描述</th>
+<th>說明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>list.append(x)</td>
-<td>把一個元素添加到列表的結尾，相當於a[len(a):] = [x]。</td>
+<td><code>append(x)</code></td>
+<td>尾端加入元素</td>
 </tr>
 <tr>
-<td>list.extend(L)</td>
-<td>通過添加指定列表的所有元素來擴充列表，相當於a[len(a):] = L。</td>
+<td><code>extend(L)</code></td>
+<td>併入另一個列表</td>
 </tr>
 <tr>
-<td>list.insert(i, x)</td>
-<td>在指定位置插入一個元素。第一個參數是準備插入到其前面的那個元素的索引，例如a.insert(0, x)會插入到整個列表之前，而a.insert(len(a), x)相當於a.append(x)。</td>
+<td><code>insert(i, x)</code></td>
+<td>在位置 i 插入</td>
 </tr>
 <tr>
-<td>list.remove(x)</td>
-<td>刪除列表中值為x的第一個元素。如果沒有這樣的元素，就會返回一個錯誤。</td>
+<td><code>remove(x)</code></td>
+<td>刪除第一個值為 x 的元素</td>
 </tr>
 <tr>
-<td>list.pop([i])</td>
-<td>從列表的指定位置刪除元素，並將其返回。如果沒有指定索引，a.pop()返回最後一個元素。元素隨即從列表中被刪除。（方法中i兩邊的方括號表示這個參數是可選的，而不是要求你輸入一對方括號，你會經常在Python庫參考手冊中遇到這樣的標記。）</td>
+<td><code>pop([i])</code></td>
+<td>移除並回傳第 i 個（預設最後一個）</td>
 </tr>
 <tr>
-<td>list.clear()</td>
-<td>移除列表中的所有項，等於del a[i]。</td>
+<td><code>clear()</code></td>
+<td>清空</td>
 </tr>
 <tr>
-<td>list.index(x)</td>
-<td>返回列表中第一個值為x的元素的索引。如果沒有匹配的元素就會返回一個錯誤。</td>
+<td><code>index(x)</code> / <code>count(x)</code></td>
+<td>索引／出現次數</td>
 </tr>
 <tr>
-<td>list.count(x)</td>
-<td>返回x在列表中出現的次數。</td>
+<td><code>sort()</code> / <code>reverse()</code></td>
+<td>排序／反轉</td>
 </tr>
 <tr>
-<td>list.sort()</td>
-<td>對列表中的元素進行排序。</td>
-</tr>
-<tr>
-<td>list.reverse()</td>
-<td>倒排列表中的元素。</td>
-</tr>
-<tr>
-<td>list.copy()</td>
-<td>返回列表的滾複製，等於a[i]。</td>
-</tr>
-<tr>
-<td>下面示例演示了列表的大部分方法：</td>
-<td></td>
+<td><code>copy()</code></td>
+<td>複製</td>
 </tr>
 </tbody>
 </table>
-<div class="codehilite"><pre><span></span><code>a = [66.25, 333, 333, 1, 1234.5]
-print(a.count(333), a.count(66.25), a.count('x'))
-a.insert(2, -1)
-a.append(333)
-print(a)
-print(a.index(333))
-a.remove(333)
-print(a)
-a.reverse()
-print(a)
-a.sort()
-print(a)
-</code></pre></div>
-
-<p>注意：類似 insert, remove 或 sort 等修改列表的方法沒有返回值。</p>
-<h2 id="將列表當做堆棧使用">將列表當做堆棧使用</h2>
-<p>列表的方法使得列表可以很方便的作為一個堆棧來使用，堆棧作為特定的數據結構，最先進入的元素會最後一個被釋放(後進先出)。用 append() 方法可以把一個元素添加到堆棧頂。用不指定索引的 pop() 方法可以把一個元素從堆棧頂釋放出來。例如：</p>
+<h3 id="52-當堆棧使用">5.2 當堆棧使用</h3>
+<p><code>append()</code> 推入、<code>pop()</code> 彈出（後進先出）：</p>
 <div class="codehilite"><pre><span></span><code>stack = [3, 4, 5]
 stack.append(6)
-stack.append(7)
-print(stack)
 stack.pop()
-print(stack.pop())
-print(stack)
-stack.pop()
-print(stack.pop())
-print(stack)
-stack.pop()
-print(stack.pop())
-print(stack)
-print(stack)
 </code></pre></div>
 
-<h2 id="列表推導式">列表推導式</h2>
-<p>列表推導式提供了從序列創建列表的簡單途徑。通常應用程序將一些操作應用於某個序列的每個元素，用其獲得的結果作為生成新列表的元素，或者根據確定的判定條件創建子序列。
-每個列表推導式都在 for 之後跟一個表達式，然後有零到多個 for 或 if 子句。返回結果是一個根據表達從其後的 for 和 if 上下文環境中生成出來的列表。如果希望表達式推導出一個元組，就必須使用括號。
-語法格式：
-結果值1 if 判斷條件 else 結果2 for 變量名 in 原列表
-這裡我們將列表中每個數值乘三，獲得一個新的列表：</p>
-<div class="codehilite"><pre><span></span><code>vec = [2, 4, 6]
-vec2 = [3*x for x in vec]
-print(vec2)
+<h3 id="53-列表推導式">5.3 列表推導式</h3>
+<p>語法：<code>[運算式 for 變數 in 序列 (if 條件)]</code></p>
+<div class="codehilite"><pre><span></span><code>vec2 = [3*x for x in [2, 4, 6]]
+fruits = [w.strip() for w in [' banana', ' loganberry']]
 </code></pre></div>
 
-<p>這裡我們對序列裡每一個元素逐個調用某方法：</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">freshfruit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="s1">' banana'</span>,<span class="w"> </span><span class="s1">' loganberry'</span>,<span class="w"> </span><span class="s1">' passion fruit'</span>]
-<span class="nv">freshfruit2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="nv">weapon</span>.<span class="nv">strip</span><span class="ss">()</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">weapon</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">freshfruit</span>]
-<span class="nv">print</span><span class="ss">(</span><span class="nv">freshfruit2</span><span class="ss">)</span>
-</code></pre></div>
-
-<h2 id="嵌套列表解析">嵌套列表解析</h2>
-<p>Python 的列表還可以嵌套。以下實例展示了 $ 3 \times 4 $ 的矩陣列表：</p>
-<div class="codehilite"><pre><span></span><code>matrix = [
-,
-,
-,
-]
-</code></pre></div>
-
-<p>以下實例將3 * 4 的矩陣列表轉換為4 * 3 列表：</p>
-<div class="codehilite"><pre><span></span><code><span class="n">#兩個方法</span>
-<span class="n">list1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="n">[row[i</span><span class="o">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">row</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">matrix</span><span class="err">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="err">]</span>
-<span class="k">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
-<span class="n">transposed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
-<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="err">:</span>
-<span class="w">    </span><span class="n">transposed</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="o">[</span><span class="n">row[i</span><span class="o">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">row</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">matrix</span><span class="err">]</span><span class="p">)</span>
-<span class="w">    </span><span class="k">print</span><span class="p">(</span><span class="n">transposed</span><span class="p">)</span>
-</code></pre></div>
-
-<p>元組和序列
-元組由若干逗號分隔的值組成，例如：</p>
-<div class="codehilite"><pre><span></span><code>t = 12345, 54321, 'hello!'
-print(t[0])
-print(t)
-# tuples
-u = t, (1, 2, 3, 4, 5)
-print(u)
-</code></pre></div>
-
-<p>如你所見，元組在輸出時總是有括號的，以便於正確表達嵌套結構。在輸入時可能有或沒有括號，不過括號通常是必須的(如果元組是更大的表達式的一部分)。
-集合
-集合是一個無序不重複元素的集。基本功能包括關係測試和消除重複元素。
-可以用大括號({}) 創建集合。注意:如果要創建一個空集合,你必須用 set() 而不是{}；後者創建一個空的字典，下一節我們會介紹這個數據結構。
-以下是一個簡單的演示：</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">basket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>{<span class="s1">'apple'</span>,<span class="w"> </span><span class="s1">'orange'</span>,<span class="w"> </span><span class="s1">'apple'</span>,<span class="w"> </span><span class="s1">'pear'</span>,<span class="w"> </span><span class="s1">'orange'</span>,<span class="w"> </span><span class="s1">'banana'</span>}
-<span class="nv">print</span><span class="ss">(</span><span class="nv">basket</span><span class="ss">)</span>
-<span class="nv">print</span><span class="ss">(</span><span class="s1">'orange'</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">basket</span><span class="ss">)</span>
-<span class="nv">print</span><span class="ss">(</span><span class="s1">'crabgrass'</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">basket</span><span class="ss">)</span>
-<span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">set</span><span class="ss">(</span><span class="s1">'abracadabra'</span><span class="ss">)</span>
-<span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">set</span><span class="ss">(</span><span class="s1">'alacazam'</span><span class="ss">)</span>
-<span class="nv">print</span><span class="ss">(</span><span class="nv">a</span><span class="ss">)</span>
-<span class="nv">print</span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>
-<span class="nv">print</span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>
-<span class="nv">print</span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>
-<span class="nv">print</span><span class="ss">(</span><span class="nv">a</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="nv">b</span><span class="ss">)</span>
-<span class="nv">aa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>{<span class="nv">x</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="s1">'abracadabra'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="s1">'abc'</span>}
-<span class="nv">print</span><span class="ss">(</span><span class="nv">aa</span><span class="ss">)</span>
-</code></pre></div>
-
-<p>字典
-另一個非常有用的 Python 內建數據類型是字典。
-序列是以連續的整數為索引，與此不同的是，字典以關鍵字為索引，關鍵字可以是任意不可變類型，通常用字符串或數值。
-理解字典的最佳方式是把它看做無序的鍵=&gt; 值對集合。在同一個字典之內，關鍵字必須是互不相同。
-一對大括號創建一個空的字典：{}。
-這是一個字典運用的簡單例子：</p>
+<h3 id="54-元組--集合--字典">5.4 元組 / 集合 / 字典</h3>
+<ul>
+<li><strong>元組</strong>：<code>t = 1, 2, 3</code>，不可修改；輸出時會有括號。</li>
+<li><strong>集合</strong>：<code>{}</code> 或 <code>set()</code>（空集合必須用 <code>set()</code>）；支援集合運算、去重。</li>
+<li><strong>字典</strong>：<code>{key: value}</code>，無序鍵值對；可用 <code>dict()</code> 或字典推導建立。</li>
+</ul>
 <div class="codehilite"><pre><span></span><code>tel = {'jack': 4098, 'sape': 4139}
 tel['guido'] = 4127
-print(tel)
-print(tel['jack'])
-del tel['sape']
-tel['irv'] = 4127
-print(tel)
-print(list(tel.keys()))
+print(tel['jack'], 'guido' in tel)
 print(sorted(tel.keys()))
-print('guido' in tel)
-print('jack' not in tel)
-<span class="gh">#</span>構造函數dict()直接從鍵值對元組列表中構建字典·如果有固定的模式，列表推聯式指定特定的鍵值對：
-ccc = dict([('sape', 4139), ('guido', 4127), ('jack', 4098)])
-print(ccc)
-<span class="gh">#</span> 字典推導可以用來創建任意鍵和值的表達式詞典：
+
+ccc = dict([('sape', 4139), ('guido', 4127)])
 bbb = {x: x**2 for x in (2, 4, 6)}
-print(bbb)
-<span class="gh">#</span>如果鍵字只是整單的字符串，使用鍵字參數指定鍵值對有時候更方便：
-aaa = dict(sape=4139, guido=4127, jack=4098)
+aaa = dict(sape=4139, guido=4127)
 </code></pre></div>
 
-<p>Python3(模塊)
-模塊是一個包含所有你定義的函數和變量的文件，其後綴名是.py。模塊可以被別的程序引入，以使用該模塊中的函數等功能。這也是使用 Python 標準庫的方法。下面是一個使用 Python 標準庫中模塊的例子。</p>
+<h2 id="6-模組module">6. 模組（Module）</h2>
+<p>模組就是一個 <code>.py</code> 檔（含函數與變數），可被其他程式引入。</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'命令行參數如下：'</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\\</span><span class="s1">n</span><span class="se">\\</span><span class="s1">nPython 路徑為：'</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">'</span><span class="se">\\</span><span class="s1">n'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>     <span class="c1"># 命令列參數（列表）</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>     <span class="c1"># 模組搜尋路徑（列表）</span>
 </code></pre></div>
 
-<p>1、import sys 引入 Python 標準庫中的 sys.py 模塊；這是引入某一模塊的方法。
-2、sys.argv 是一個包含命令行參數的列表。
-3、sys.path 包含了一個 Python 解釋器自動查找所需模塊的路徑的列表。</p>
-<h2 id="import-語句">import 語句</h2>
-<p>如果要使用 Python 源文件，只需在另一個源文件裡執行 import 語句，import 語句語法如下：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">module1</span><span class="o">,</span><span class="w"> </span><span class="nn">module2</span><span class="o">,</span><span class="w"> </span><span class="nn">module3</span>
+<h3 id="61-匯入方式">6.1 匯入方式</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">module1</span><span class="o">,</span><span class="w"> </span><span class="nn">module2</span>            <span class="c1"># 匯入整個模組</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">modname</span><span class="w"> </span><span class="kn">import</span> <span class="n">name1</span><span class="p">,</span> <span class="n">name2</span>   <span class="c1"># 匯入指定部分</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">modname</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>              <span class="c1"># 匯入全部（少用）</span>
 </code></pre></div>
 
-<p>當解釋器遇到 import 語句，如果模塊在當前的搜索路徑就會被導入。
-搜索路徑是一個解釋器會先進行搜索的所有目錄的列表。如果想要導入模塊 support，需要把命令放在腳本的頂端：</p>
-<div class="codehilite"><pre><span></span><code><span class="gh">#</span> filename: support.py
-def print_func( par ):
-    print("Hello : ", par)
-    return
-</code></pre></div>
-
-<p>(support.py) index.py 引入 support 模塊：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">support</span>
-<span class="n">support</span><span class="o">.</span><span class="n">print_func</span><span class="p">(</span><span class="s1">'okok'</span><span class="p">)</span>
-</code></pre></div>
-
-<p>一個模塊只會被導入一次，不管你執行了多少次 import。這樣可以防止導入模塊被一遍又一遍地執行。
-當我們使用 import 語句的時候，Python 解釋器是怎樣找到對應的文件的呢？這就涉及到 Python 的搜索路徑，搜索路徑是由一系列目錄名組成的，Python 解釋器就依次從這些目錄中去尋找所引入的模塊。
-因此若像我一樣在當前目錄下存在與要引入模塊同名的文件，就會把要引入的模塊屏蔽掉。
-瞭解了搜索路徑的概念，就可以在腳本中修改 sys.path 來引入一些不在搜索路徑中的模塊。
-代碼如下： fibo.py
-def fib(n): # 定義到 n 的斐波那契數列</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>,<span class="w"> </span><span class="mi">1</span>
-<span class="k">while</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">n</span>:
-<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">b</span>,<span class="w"> </span><span class="k">end</span><span class="o">=</span><span class="s1">''</span><span class="ss">)</span>
-<span class="w">    </span><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
-<span class="w">    </span><span class="nv">print</span><span class="ss">()</span>
-</code></pre></div>
-
-<p>def fib2(n): # 返回到 n 的斐波那契數列</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[]
-<span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>,<span class="w"> </span><span class="mi">1</span>
-<span class="k">while</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">n</span>:
-<span class="w">    </span><span class="nb">result</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">b</span><span class="ss">)</span>
-<span class="w">    </span><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">b</span>,<span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">b</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">result</span>
-</code></pre></div>
-
-<p>導入這個 fibo 模塊：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">fibo</span>
-<span class="n">fibo</span><span class="o">.</span><span class="n">fib</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fibo</span><span class="o">.</span><span class="n">fib2</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fibo</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
-</code></pre></div>
-
-<h2 id="from--import-語句">from ... import 語句</h2>
-<p>Python 的 from 語句讓你從模塊中導入一個指定的部分到當前命名空間中，語法如下：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">modname</span><span class="w"> </span><span class="kn">import</span> <span class="n">name1</span><span class="p">,</span> <span class="n">name2</span><span class="p">,</span> <span class="n">name3</span>
-</code></pre></div>
-
-<p>例如，要導入模塊 fibo 的 fib 函數，使用如下語句：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fibo</span><span class="w"> </span><span class="kn">import</span> <span class="n">fib</span><span class="p">,</span> <span class="n">fib2</span>
-</code></pre></div>
-
-<p>這個聲明不會把整個 fibo 模塊導入到當前的命名空間中，它只會將 fibo 裡的 fib 函數引入進來。
-from ... import * 語句
-把一個模塊的所有內容全都導入到當前的命名空間也是可行的，只需使用如下聲明：</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">modname</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
-</code></pre></div>
-
-<p>這提供了一個簡單的方法來導入一個模塊中的所有項目。然而這種聲明不該被過多的使用。</p>
-<h2 id="_name_屬性">_name_屬性</h2>
-<p>一個模塊被另一個程序第一次引入時，其主程序將運行。如果我們想在模塊被引入時，模塊中的某一程序塊不執行，我們可以用_name_屬性來使該程序塊僅在該模塊自身運行時執行。</p>
+<p>一個模組只會被匯入一次；搜尋路徑由 <code>sys.path</code> 決定，可用它引入不在路徑中的模組。</p>
+<h3 id="62-name-屬性">6.2 <strong>name</strong> 屬性</h3>
+<p>模組被引入時 <code>__name__</code> 為模組名；直接執行時為 <code>'__main__'</code>。常用來區分「被引入」與「直接執行」：</p>
 <div class="codehilite"><pre><span></span><code>if __name__ == '__main__':
-    print('程序自身在通行')
+    print('程式自身在執行')
 else:
-    print('我來自另一模塊')
+    print('我來自另一模組')
 </code></pre></div>
 
-<p>每個模塊都有一個_name_屬性，當其值是'main'時，表明該模塊自身在運行，否則是被引入。
-每個_name_與_main底下是雙下劃線，是“__”去掉中間的空格。</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">dir</span><span class="p">()</span>
-<span class="c1">#內置的函數 dir() 可以找到模塊內定義的所有名稱，以一個字符串列表的形式返回：</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">fibo</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">fibo</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">sys</span><span class="p">))</span>
-</code></pre></div>
-
-<h2 id="python3-錯誤和異常">Python3 錯誤和異常</h2>
-<p>作為 Python 初學者，在剛學習 Python 編程時，經常會看到一些報錯信息 Python 有兩種錯誤很容易辨認：語法錯誤和異常。
-語法錯誤
-Python 的語法錯誤或者稱之為解析錯，是初學者經常碰到的，如下實例</p>
-<div class="codehilite"><pre><span></span><code><span class="k">while</span><span class="w"> </span><span class="nv">True</span><span class="w"> </span><span class="nv">print</span><span class="ss">(</span><span class="s1">'Hello world'</span><span class="ss">)</span>
-<span class="nv">File</span><span class="w"> </span><span class="s2">" "</span>,<span class="w"> </span><span class="nv">line</span><span class="w"> </span><span class="mi">1</span>,<span class="w"> </span><span class="nv">in</span><span class="w"> </span>?
-<span class="k">while</span><span class="w"> </span><span class="nv">True</span><span class="w"> </span><span class="nv">print</span><span class="ss">(</span><span class="s1">'Hello world'</span><span class="ss">)</span>
-<span class="o">^</span>
-<span class="nv">SyntaxError</span>:<span class="w"> </span><span class="nv">invalid</span><span class="w"> </span><span class="nv">syntax</span>
-</code></pre></div>
-
-<p>這個例子中，函數 print() 被檢查到有錯誤，是它前面缺少了一個冒號(:)。
-語法分析器指出了出錯的一行，並且在最先找到的錯誤的位置標記了一個小小的箭頭。</p>
-<h2 id="異常">異常</h2>
-<p>即便 Python 程序的語法是正確的，在運行它的時候，也有可能發生錯誤。運行期檢測到的錯誤被稱為異常。
-大多數的異常都不會被程序處理，都以錯誤信息的形式展現在這裡：</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>10 * (1/0)</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="codehilite"><pre><span></span><code>Traceback (most recent call last):
-File " ", line 1, in ?
-ZeroDivisionError: division by zero
-</code></pre></div>
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>4 + spam*3</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="codehilite"><pre><span></span><code>Traceback (most recent call last):
-File " ", line 1, in ?
-NameError: name 'spam' is not defined
-</code></pre></div>
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>'2' + 2</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="codehilite"><pre><span></span><code><span class="nx">Traceback</span><span class="w"> </span><span class="p">(</span><span class="nx">most</span><span class="w"> </span><span class="nx">recent</span><span class="w"> </span><span class="nx">call</span><span class="w"> </span><span class="nx">last</span><span class="p">):</span>
-<span class="nx">File</span><span class="w"> </span><span class="s">" "</span><span class="p">,</span><span class="w"> </span><span class="nx">line</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">?</span>
-<span class="nx">TypeError</span><span class="p">:</span><span class="w"> </span><span class="nx">Can</span><span class="err">'</span><span class="nx">t</span><span class="w"> </span><span class="nx">convert</span><span class="w"> </span><span class="err">'</span><span class="nx">int</span><span class="err">'</span><span class="w"> </span><span class="nx">object</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">str</span><span class="w"> </span><span class="nx">implicitly</span>
-</code></pre></div>
-
-<p>異常以不同的類型出現，這些類型都作為信息的一部分打印出來：例子中的類型有
-ZeroDivisionError, NameError 和 TypeError。
-錯誤信息的前面部分顯示了異常發生的上下文，並以調用棧的形式顯示具體信息。</p>
-<h2 id="python3-面向對象">Python3 面向對象</h2>
-<p>Python 從設計之初就是一門面向對象的語言，正因為如此，在 Python 中創建一個類和對像是很容易的。簡單的瞭解下面向對象的一些基本特徵。</p>
-<h2 id="python3-面向對象技術簡介">Python3 面向對象技術簡介</h2>
-<p>類(Class): 用來描述具有相同的屬性和方法的對象的集合。它定義了該集合中每個對象所共有的屬性和方法。對像是類的實例。
-類變量：類變量在整個實例化的對像中是公用的。類變量定義在類中且在函數體之外。類變量通常不作為實例變量使用。
-數據成員：類變量或者實例變量用於處理類及其實例對象的相關的數據。
-方法重寫：如果從父類繼承的方法不能滿足子類的需求，可以對其進行改寫，這個過程叫方法的覆蓋(override)，也稱為方法的重寫。
-局部變量：定義在方法中的變量，只作用於當前實例的類。
-實例變量：在類的聲明中，屬性是用變量來表示的。這種變量就稱為實例變量，是在類聲明的內部但是在類的其他成員方法之外聲明的。
-繼承：即一個派生類(derived class)繼承基類(base class)的字段和方法。繼承也允許把一個派生類的對像作為一個基類對像對待。例如，有這樣一個設計：一個 Dog 類型的對象 派生自 Animal 類，這是模擬"是一個(is-a) "關係(例圖，Dog 是一個 Animal)。
-實例化：創建一個類的實例，類的具體對象。
-方法：類中定義的函數。
-對象：通過類定義的數據結構實例。對象包括兩個數據成員(類變量和實例變量)和方法。
-類定義</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">ClassName:</span>
-<span class="c1"># &lt;statement-1&gt;</span>
-<span class="c1"># .</span>
-<span class="c1"># .</span>
-<span class="c1"># .</span>
-<span class="c1"># &lt;statement-N&gt;</span>
-    <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
-</code></pre></div>
-
-<p>類實例化後，可以使用其屬性，實際上，創建一個類之後，可以通過類名訪問其屬性。</p>
-<h2 id="類對象">類對象</h2>
-<p>類對象支持兩種操作：屬性引用和實例化。
-屬性引用使用和 Python 中所有的屬性引用一樣的標準語法：obj.name。
-類對象創建後，類命名空間中所有的命名都是有效屬性名。所以如果類定義是這樣：</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">MyClass:</span>
-    <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
-</code></pre></div>
-
-<p>"""一個簡單的類實例"""</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12345</span>
-<span class="nv">def</span><span class="w"> </span><span class="nv">f</span><span class="ss">(</span><span class="nv">self</span><span class="ss">)</span>:
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s1">'hello world'</span>
-<span class="w">    </span>#<span class="w"> </span>實例化類
-<span class="w">    </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">MyClass</span><span class="ss">()</span>
-<span class="w">    </span>#<span class="w"> </span>訪問類的屬性和方法
-<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"MyClass 類的屬性 i 為："</span>,<span class="w"> </span><span class="nv">x</span>.<span class="nv">i</span><span class="ss">)</span>
-<span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"MyClass 類的方法 f 輸出為："</span>,<span class="w"> </span><span class="nv">x</span>.<span class="nv">f</span><span class="ss">())</span>
-</code></pre></div>
-
-<p>實例化類：</p>
-<div class="codehilite"><pre><span></span><code># 實例化類
-x = MyClass()
-# 訪問類的屬性和方法
-</code></pre></div>
-
-<p>以上創建了一個新的類實例並將該對象賦給局部變量 x，x 為空的對象。
-執行以上程序輸出結果為：
-MyClass 類的屬性 i 為：12345
-MyClass 類的方法 f 輸出為：hello world
-很多類都傾向於將對象創建為有初始狀態的。因此類可能會定義一個名為_init_()的特殊方法（構造方法），像下面這樣：</p>
-<div class="codehilite"><pre><span></span><code>def <span class="ge">_init_</span>(self):
-    self.data = []
-</code></pre></div>
-
-<h2 id="繼承">繼承</h2>
-<p>Python 同樣支持類的繼承，如果一種語言不支持繼承，類就沒有什麼意義。派生類的定義如下所示：</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">DerivedClassName</span>(<span class="n">BaseClassName</span>):
-<span class="c1"># &lt;statement-1&gt;</span>
-<span class="c1"># .</span>
-<span class="c1"># .</span>
-<span class="c1"># .</span>
-<span class="c1"># &lt;statement-N&gt;</span>
-    <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
-</code></pre></div>
-
-<p>需要注意圓括號中基類的順序，若是基類中有相同的方法名，而在子類使用時未指定，Python 從左至右搜索即方法在子類中未找到時，從左到右查找基類中是否包含方法。
-BaseClassName (示例中的基類名)必須與派生類定義在一個作用域內。除了類，還可以用表達式，基類定義在另一個模塊中時這一點非常有用：</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">DerivedClassName</span>(<span class="n">modname</span>.<span class="n">BaseClassName</span>):
-    <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
-</code></pre></div>
-
-<p>實例</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 類定義</span>
-<span class="k">class</span> <span class="n">people:</span>
-    <span class="c1"># 定義基本屬性</span>
-    <span class="nb">name</span> = <span class="s">''</span>
-    <span class="n">age</span> = <span class="mi">0</span>
-    <span class="c1"># 定義私有屬性，私有屬性在額外部無法直接進行訪問</span>
-    <span class="n">_weight</span> = <span class="mi">0</span>
-    <span class="c1"># 定義構造方法</span>
-<span class="n">def</span> <span class="n">__init__</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>):
-    <span class="nb">self</span>.<span class="nb">name</span> = <span class="n">n</span>
-    <span class="nb">self</span>.<span class="n">age</span> = <span class="n">a</span>
-    <span class="nb">self</span>.<span class="n">_weight</span> = <span class="nb">w</span>
-<span class="n">def</span> <span class="n">speak</span>(<span class="nb">self</span>):
-    <span class="nb">print</span>(<span class="s">"%s 說：我 %d 處："</span> %(<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>))
-    <span class="c1">#單獨承示例</span>
-<span class="k">class</span> <span class="n">student</span>(<span class="n">people</span>):
-    <span class="n">grade</span> = <span class="s">''</span>
-<span class="n">def</span> <span class="n">__init__</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>, <span class="n">g</span>):
-    <span class="c1"># 調用父類的構造</span>
-    <span class="n">people</span>.<span class="n">__init__</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>)
-    <span class="nb">self</span>.<span class="n">grade</span> = <span class="n">g</span>
-    <span class="c1"># 覆為父類的方法</span>
-<span class="n">def</span> <span class="n">speak</span>(<span class="nb">self</span>):
-    <span class="nb">print</span>(<span class="s">"%s 說：我 %d 處了，我在讀 %d 年級"</span>%(<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>, <span class="nb">self</span>.<span class="n">grade</span>))
-    <span class="nb">s</span> = <span class="n">student</span>(<span class="s">'ken'</span>, <span class="mi">10</span>, <span class="mi">60</span>, <span class="mi">3</span>)
-    <span class="nb">s</span>.<span class="n">speak</span>()
-</code></pre></div>
-
-<p>多繼承
-Python 同樣有限的支持多繼承形式。多繼承的類定義形如下例：</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">DerivedClassName</span>(<span class="n">Base1</span>, <span class="n">Base2</span>, <span class="n">Base3</span>):
-<span class="c1"># &lt;statement-1&gt;</span>
-<span class="c1"># .</span>
-<span class="c1"># .</span>
-<span class="c1"># .</span>
-<span class="c1"># &lt;statement-N&gt;</span>
-    <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
-</code></pre></div>
-
-<p>需要注意圓括號中父類的順序，若是父類中有相同的方法名，而在子類使用時未指定，Python從左至右搜索即方法在子類中未找到時，從左到右查找父類中是否包含方法。</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 鎖定義</span>
-<span class="k">class</span> <span class="n">people:</span>
-    <span class="c1">#定義基本屬性</span>
-    <span class="nb">name</span> = <span class="s">''</span>
-    <span class="n">age</span> = <span class="mi">0</span>
-    <span class="c1">#定義私有屬性，私有屬性在標外部無法直接進行訪問</span>
-    <span class="n">_weight</span> = <span class="mi">0</span>
-    <span class="c1">#定義構造方法</span>
-<span class="n">def</span> <span class="n">_init_</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>):
-    <span class="nb">self</span>.<span class="nb">name</span> = <span class="n">n</span>
-    <span class="nb">self</span>.<span class="n">age</span> = <span class="n">a</span>
-    <span class="nb">self</span>.<span class="n">_weight</span> = <span class="nb">w</span>
-<span class="n">def</span> <span class="n">speak</span>(<span class="nb">self</span>):
-    <span class="nb">print</span>(<span class="s">"%s 說：我 %d 處："</span> %(<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>))
-    <span class="c1">#單維承示例</span>
-<span class="k">class</span> <span class="n">student</span>(<span class="n">people</span>):
-    <span class="n">grade</span> = <span class="s">''</span>
-<span class="n">def</span> <span class="n">_init_</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>, <span class="n">g</span>):
-    <span class="c1"># 調用父類的構造</span>
-    <span class="n">people</span>.<span class="n">_init_</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="nb">w</span>)
-    <span class="nb">self</span>.<span class="n">grade</span> = <span class="n">g</span>
-    <span class="c1"># 覆商父類的方法</span>
-<span class="n">def</span> <span class="n">speak</span>(<span class="nb">self</span>):
-    <span class="nb">print</span>(<span class="s">"%s 說：我 %d 處了，我在讀 %d 年級"</span> % (<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>, <span class="nb">self</span>.<span class="n">grade</span>))
-</code></pre></div>
-
-<h2 id="方法重寫">方法重寫</h2>
-<p>如果你的父類方法的功能不能滿足你的需求，你可以在子類重寫你父類的方法，實例如下：
-class Parent: # 定義父類</p>
-<div class="codehilite"><pre><span></span><code>def myMethod(self):
-    print('調用父類方法')
-</code></pre></div>
-
-<p>class Child(Parent): # 定義子類</p>
-<div class="codehilite"><pre><span></span><code>def myMethod(self):
-    print('調用子類方法')
-    c = Child() # 子類實例
-</code></pre></div>
-
-<p>c.myMethod() # 子類調用重寫方法
-類的專屬方法：</p>
+<h3 id="63-dir">6.3 dir()</h3>
+<p><code>dir(模組)</code> 會以字串列表回傳該模組定義的所有名稱。</p>
+<h2 id="7-錯誤與異常">7. 錯誤與異常</h2>
 <ul>
-<li><strong>init</strong>：構造函數，在生成對象時調用</li>
-<li><strong>del</strong>：析構函數，釋放對象時使用</li>
-<li><strong>repr</strong>：打印，轉換</li>
-<li><strong>setitem</strong>：按照索引賦值</li>
-<li>getitem：按照索引獲取值</li>
-<li><strong>len</strong>：獲得長度</li>
-<li><strong>cmp</strong>：比較運算</li>
-<li><strong>call</strong>：函數調用</li>
-<li><strong>add</strong>：加運算</li>
-<li><strong>sub</strong>：減運算</li>
-<li><strong>mul</strong>：乘運算</li>
-<li><strong>div</strong>：除運算</li>
-<li><strong>mod</strong>：求餘運算</li>
-<li><strong>pow</strong>：乘方</li>
+<li><strong>語法錯誤（SyntaxError）</strong>：程式還沒執行就被檢查出來，例如少了冒號。</li>
+<li><strong>異常（Exception）</strong>：語法正確、但執行時出錯：</li>
 </ul>
-<p>參考資料：</p>
-<div class="codehilite"><pre><span></span><code>https://www.w3cschool.cn/python3/
+<table>
+<thead>
+<tr>
+<th>異常</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ZeroDivisionError</code></td>
+<td>除以零</td>
+</tr>
+<tr>
+<td><code>NameError</code></td>
+<td>使用未定義的名稱</td>
+</tr>
+<tr>
+<td><code>TypeError</code></td>
+<td>型別不符（如 <code>'2' + 2</code>）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-面向對象oop">8. 面向對象（OOP）</h2>
+<h3 id="81-基本名詞">8.1 基本名詞</h3>
+<ul>
+<li><strong>類（Class）</strong>：物件的藍圖，定義屬性與方法。</li>
+<li><strong>物件（Object）</strong>：類的實例。</li>
+<li><strong>類變數</strong>：所有實例共用；<strong>實例變數</strong>：各實例自有。</li>
+<li><strong>方法</strong>：類中定義的函數。</li>
+<li><strong>繼承</strong>：子類取得父類的欄位與方法，並可<strong>重寫（override）</strong>。</li>
+</ul>
+<h3 id="82-類定義與實例化">8.2 類定義與實例化</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">MyClass:</span>
+    <span class="n">i</span> = <span class="mi">12345</span>
+    <span class="n">def</span> <span class="nb">f</span>(<span class="nb">self</span>):
+        <span class="k">return</span> <span class="s">'hello world'</span>
+
+<span class="nb">x</span> = <span class="n">MyClass</span>()
+<span class="nb">print</span>(<span class="nb">x</span>.<span class="n">i</span>, <span class="nb">x</span>.<span class="nb">f</span>())
 </code></pre></div>
 
-<h2 id="識別主流-python-框架的功能及應用場景">識別主流 Python 框架的功能及應用場景</h2>
-<p>以下是一些主流的 Python 框架及其功能和應用場景的簡要描述：
-1) Django
-功能：Django 是一個全功能的、高級的 Python Web 框架，提供了許多內置的功能和工具，包括 ORM(對象關係映射)、表單處理、身份驗證、管理後臺等。
-應用場景：Django 適用於構建複雜而大型的 Web 應用程式，尤其是需要快速發展和高效率開發的場景。它適用於中大型團隊合作開發，並在安全性、可維護性和擴展性方面具有優勢。
-2) Flask :
-功能： Flask 是一個輕量級的 Python Web 框架，提供了基本的功能和核心組件，同時具有可擴展性和靈活性。
-應用場景：Flask 適用於簡單而輕量的 Web 應用程式，特別是在快速原型開發、小型項目或單個開發者的場景中。它以其簡單易用和高度可定製的特點受到許多開發者的歡迎。
-3) Tornado :
-功能：Tornado 是一個非阻塞式的 Python Web 框架，具有高度的擴展性和低延遲性能。它內建了支持同步和非同步處理的工具，並與大量的 IO 操作相容。
-應用場景：Tornado 適用於需要高性能、高併發和真實時間性能的 Web 應用程式。它常用於即時通訊應用程式、實時分析、實時數據處理等場景。
-4) Bottle :
-功能：Bottle 是一個輕量級的 Python Web 框架，具有簡單易用的 API 和最小的依賴性，適合小型應用程式和小型項目的開發。
-應用場景：Bottle 適用於簡單的 Web 應用程式和 RESTful API 開發，尤其在小型項目和快速原型開發的情境中非常方便。
-5) web2py :
-功能： web2py 是一個全堆棧的 Python Web 框架，提供了完整的解決方案，包括 ORM 、驗證、安全性等。它強調開發的簡單性和可靠性。
-應用場景：web2py 適用於開發中型和大型的 Web 應用程式，尤其在對安全性和可靠性要求較高的場景中。該框架具有簡單的學習曲線，並提供了易於使用的工具和內建功能。
-需要注意的是，以上僅是對於這些框架的簡要描述，每個框架還有更多的功能和特點，並且在特定情境下可能存在更多的應用場景。選擇合適的框架應該根據項目的具體需求、開發者的偏好以及框架本身的特性來進行評估。</p>
-<h2 id="fastapi-與-django-的比較">FastAPI 與 Django 的比較</h2>
-<p>在現代網路開發框架中，FastAPI 與 Django 是兩個常見的選擇。這兩個框架各有其優點，適用於不同的開發需求。以下將從性能、易用性、擴展性等方面來比較這兩者。
-1). 性能
-FastAPI 被設計為高效能的非同步框架，使用 Python 的異步（asynchronous）功能。這使得 FastAPI 在處理大量同時請求時，能夠表現得更為出色。根據官方測試，FastAPI 的性能甚至可以與 Node.js 等非同步框架相媲美。
-另一方面，Django 是一個傳統的同步框架，性能較為穩定，但在大量並發請求下，處理速度可能不及 FastAPI。Django 主要著重於功能完備性與易用性，而非極致的性能優化。
-2). 易用性
-Django 以「電池全備」的方式著稱，這意味著它內建了眾多功能，如用戶認證、管理介面、ORM（Object-Relational Mapping）等。對於開發者來說，這使得 Django 更加方便快速上手。即使是較為複雜的項目，Django 也能提供現成的解決方案。
-FastAPI 則以極簡主義和靈活性著稱。它的核心功能簡潔，開發者可以根據需要自行選擇第三方工具。這使得 FastAPI 更加靈活，特別適合那些希望對每個部分都有更多掌控權的開發者。
-3). 擴展性與社羣支持Django 擁有龐大的使用者羣體與豐富的第三方庫支持，使得擴展和自定義非常容易。許多現有的插件可以直接集成到專案中，省去了大量的開發時間和成本。
-相比之下，FastAPI 的生態系統還在快速發展中，儘管它的社羣不如 Django 成熟，但在某些領域（例如 API 開發）具有強大的競爭力。此外，因為 FastAPI 是基於 Pydantic 和 Starlette 的，因此開發者能夠使用這些工具進行擴展。
-4). 何時使用 FastAPI? 何時使用 Django?
-如果您的項目重點是構建高性能的 API 服務，尤其是需要處理大量的並發請求，並且希望利用 Python 的非同步功能，那麼 FastAPI 是理想的選擇。
-如果您需要一個功能完備的網路應用框架，並且希望快速啟動項目而不必從零開始設計後端架構，Django 會是更好的選擇。Django 適合構建內容管理系統（CMS）、電子商務平臺等需要強大數據庫支持的應用。
-5). 結論
-FastAPI 和 Django 各自針對不同的使用場景進行了優化。FastAPI 更注重性能和靈活性，而 Django 提供了豐富的功能和較低的學習門檻。在選擇這兩個框架時，應根據項目的具體需求來決定。</p>
+<p><code>__init__(self)</code> 是建構方法，建立物件時初始化狀態。</p>
+<h3 id="83-繼承">8.3 繼承</h3>
+<p>以 <code>class 子類(父類)</code> 定義；找不到的方法往父類找。也支援<strong>多重繼承</strong> <code>class C(A, B)</code>。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">people:</span>
+    <span class="n">def</span> <span class="n">__init__</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>):
+        <span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span> = <span class="n">n</span>, <span class="n">a</span>
+    <span class="n">def</span> <span class="n">speak</span>(<span class="nb">self</span>):
+        <span class="nb">print</span>(<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>)
+
+<span class="k">class</span> <span class="n">student</span>(<span class="n">people</span>):
+    <span class="n">def</span> <span class="n">__init__</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>, <span class="n">g</span>):
+        <span class="n">people</span>.<span class="n">__init__</span>(<span class="nb">self</span>, <span class="n">n</span>, <span class="n">a</span>)   <span class="c1"># 呼叫父類建構</span>
+        <span class="nb">self</span>.<span class="n">grade</span> = <span class="n">g</span>
+    <span class="n">def</span> <span class="n">speak</span>(<span class="nb">self</span>):                  <span class="c1"># 重寫父類方法</span>
+        <span class="nb">print</span>(<span class="nb">self</span>.<span class="nb">name</span>, <span class="nb">self</span>.<span class="n">age</span>, <span class="nb">self</span>.<span class="n">grade</span>)
+
+<span class="nb">s</span> = <span class="n">student</span>(<span class="s">'ken'</span>, <span class="mi">10</span>, <span class="mi">3</span>)
+<span class="nb">s</span>.<span class="n">speak</span>()
+</code></pre></div>
+
+<h3 id="84-類的專屬方法魔術方法">8.4 類的專屬方法（魔術方法）</h3>
+<p><code>__init__</code>（建構）、<code>__del__</code>（解構）、<code>__repr__</code>（列印）、<code>__len__</code>（長度）、<code>__add__</code> / <code>__sub__</code> / <code>__mul__</code>（運算）等。</p>
+<h2 id="9-主流-python-框架">9. 主流 Python 框架</h2>
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>特色</th>
+<th>適用場景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Django</strong></td>
+<td>全功能、「電池全備」：ORM、表單、認證、後台</td>
+<td>中大型、複雜的 Web 應用</td>
+</tr>
+<tr>
+<td><strong>Flask</strong></td>
+<td>輕量、可擴充、彈性高</td>
+<td>小型專案、快速原型、單人開發</td>
+</tr>
+<tr>
+<td><strong>Tornado</strong></td>
+<td>非阻塞、高擴展、低延遲</td>
+<td>高併發、即時通訊、即時資料處理</td>
+</tr>
+<tr>
+<td><strong>Bottle</strong></td>
+<td>極輕量、低依賴</td>
+<td>小型應用、RESTful API</td>
+</tr>
+<tr>
+<td><strong>web2py</strong></td>
+<td>全堆棧、強調簡單與安全</td>
+<td>中大型、重視安全性的專案</td>
+</tr>
+</tbody>
+</table>
+<h3 id="91-fastapi-vs-django">9.1 FastAPI vs Django</h3>
+<ul>
+<li><strong>性能</strong>：FastAPI 為非同步框架，高併發下較快；Django 為同步框架，穩定但較慢。</li>
+<li><strong>易用性</strong>：Django 內建功能多、上手快；FastAPI 極簡、彈性高。</li>
+<li><strong>擴展性</strong>：Django 生態成熟、第三方庫多；FastAPI 生態成長中，API 開發競爭力強。</li>
+<li><strong>選擇建議</strong>：要高效能 API → FastAPI；要功能完備的網站 → Django。</li>
+</ul>
+<p><strong>參考資料</strong>：https://www.w3cschool.cn/python3/</p>
 <div class="chnav">
 <a href="/django-notes/ch05-sequence.html">← 第 5 章 序列與容器類型</a>
 <a class="course" href="/django-course/">課程總覽</a>
