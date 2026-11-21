@@ -256,82 +256,78 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 <main>
 <h1 id="第-2-章--python-簡介與安裝">第 2 章 · Python 簡介與安裝</h1>
 <ul>
-<li>組合圖(Composite Structure Diagram):</li>
+<li>組合圖(Composite Structure Diagram):
+組合圖描述系統中的動態行為和構造，重點關注內部部件之間的構成關係。它是結構圖和行為圖的結合體。</li>
+<li>時序圖(Timing Diagram):
+時序圖描述對象之間的時間和順序關係，展示了消息被發送和接收的時間順序，有助於可視化系統中時間相關的行為。
+交互協作圖(Interaction Overview Diagram):
+交互協作圖描述參與者和消息之間的交互，以及它們之間的順序和流程。它提供了對系統交互的概覽和總體把握。
+通用行為圖(Activity Diagram):
+通用行為圖是一種強大的行為圖類型，用於描述業務過程、流程和控制流。它可以表示複雜的流程和決策邏輯。
+序列圖(Sequence Diagram):
+序列圖描述了對象之間的交互順序，展示了消息的發送和接收順序。它特別適合於描述業務流程和對象之間的交互。
+構件圖(Composite Structure Diagram):
+構件圖描述系統的組成部件之間的結構和關係。它特別關注系統中部件的內部構造和部件之間的連接。</li>
+<li>狀態圖(State Machine Diagram):
+狀態圖用於描述對象的狀態和行為，展示對像在不同狀態之間的轉換過程。它可以描述對象的生命週期和狀態變化。
+以上是主要的 UML 圖表類型，它們各自關注系統的不同方面和視角。通過使用不同類型的 UML 圖表，開發人員可以更好地描述、建模和交流系統的結構、行為和交互，從而進行更有效的網頁開發工作。
+分析 Python 在網絡應用開發中的角色
+Python 的歷史與特性</li>
 </ul>
-<p>組合圖描述系統中的動態行為和構造，重點關注內部部件之間的構成關係。它是結構圖和行為圖的結合體。</p>
-<ul>
-<li>時序圖(Timing Diagram):</li>
-</ul>
-<p>時序圖描述對象之間的時間和順序關係，展示了消息被發送和接收的時間順序，有助於可視化系統中時間相關的行為。</p>
-<p>交互協作圖(Interaction Overview Diagram):</p>
-<p>交互協作圖描述參與者和消息之間的交互，以及它們之間的順序和流程。它提供了對系統交互的概覽和總體把握。</p>
-<p>通用行為圖(Activity Diagram):</p>
-<p>通用行為圖是一種強大的行為圖類型，用於描述業務過程、流程和控制流。它可以表示複雜的流程和決策邏輯。</p>
-<p>序列圖(Sequence Diagram):</p>
-<p>序列圖描述了對象之間的交互順序，展示了消息的發送和接收順序。它特別適合於描述業務流程和對象之間的交互。</p>
-<p>構件圖(Composite Structure Diagram):</p>
-<p>構件圖描述系統的組成部件之間的結構和關係。它特別關注系統中部件的內部構造和部件之間的連接。</p>
-<ul>
-<li>狀態圖(State Machine Diagram):</li>
-</ul>
-<p>狀態圖用於描述對象的狀態和行為，展示對像在不同狀態之間的轉換過程。它可以描述對象的生命週期和狀態變化。</p>
-<p>以上是主要的 UML 圖表類型，它們各自關注系統的不同方面和視角。通過使用不同類型的 UML 圖表，開發人員可以更好地描述、建模和交流系統的結構、行為和交互，從而進行更有效的網頁開發工作。</p>
-<p>分析 Python 在網絡應用開發中的角色</p>
-<p>Python 的歷史與特性</p>
 <h2 id="什麼是-python">什麼是 Python</h2>
-<p>Python(英國發音：/ˈpaɪθən/ 美國發音：/ˈpaɪθɑːn/)，是一種面向對象的解釋型計算機程序設計語言，由荷蘭人 Guido van Rossum 於 1989 年發明，第一個公開發行版發行於 1991 年</p>
-<p>Python 是一個高層次的結合瞭解釋性、編譯性、互動性和麵向對象的腳本語言。</p>
-<p>Python 的設計具有很強的可讀性，相比其他語言經常使用英文關鍵字，其他語言的一些標點符號，它具有比其他語言更有特色語法結構。</p>
+<p>Python(英國發音：/ˈpaɪθən/ 美國發音：/ˈpaɪθɑːn/)，是一種面向對象的解釋型計算機程序設計語言，由荷蘭人 Guido van Rossum 於 1989 年發明，第一個公開發行版發行於 1991 年
+Python 是一個高層次的結合瞭解釋性、編譯性、互動性和麵向對象的腳本語言。
+Python 的設計具有很強的可讀性，相比其他語言經常使用英文關鍵字，其他語言的一些標點符號，它具有比其他語言更有特色語法結構。</p>
 <h2 id="python-發展歷史">Python 發展歷史</h2>
-<p>Python 是由 Guido van Rossum 在八十年代末和九十年代初，在荷蘭國家數學和計算機科學研究所設計出來的。</p>
-<p>Python 本身也是由諸多其他語言發展而來的,這包括 ABC、Modula-3、C、C++、Algol-68、SmallTalk、Unix shell 和其他的腳本語言等等。</p>
-<p>Python 的源代碼與文檔以 Python Software Foundation License（PSF 許可證）第 2 版發佈，可以自由使用、修改和再分發（含商業用途），修改後的版本不強制開源。</p>
-<p>現在 Python 是由一個核心開發團隊在維護，Guido van Rossum 仍然佔據著至關重要的作用，指導其進展。</p>
-<p>Python2.0 於 2000 年 10 月 16 日發布，增加了實現完整的垃圾回收，並且支持 Unicode。</p>
-<p>Python3.0 於 2008 年 12 月 3 日發布，此版不完全兼容之前的 Python 源代碼。不過，很多新特性後來也被移植到舊的 Python 2.6/2.7 版本。</p>
-<p>Python 3.0 版本，常被稱為 Python 3000，或簡稱 Py3k。相對於 Python 的早期版本，這是一個較大的升級。</p>
-<p>Python 2.7 被確定為最後一個 Python 2.x 版本，它除了支持 Python 2.x 語法外，還支持部分 Python 3.1 語法。</p>
-<p>Python3.x 版本，未來主流的版本。</p>
-<p>Python 優點：</p>
-<p>易於學習：Python 有相對較少的關鍵字，結構簡單，和一個明確定義的語法，學習起來更加簡單。</p>
-<p>易於閱讀：Python 代碼定義的更清晰。</p>
-<p>易於維護：Python 的成功在於它的源代碼是相當容易維護的。</p>
-<p>一個廣泛的標準庫：Python 的最大的優勢之一是豐富的庫，跨平臺的，在 UNIX，Windows 和 Macintosh 兼容很好。</p>
-<p>互動模式：互動模式的支持，您可以從終端輸入執行代碼並獲得結果的語言，互動的測試和調試代碼片斷。</p>
-<p>可移植：基於其開放源代碼的特性，Python 已經被移植(也就是使其工作)到許多平臺。</p>
-<p>可擴展：如果你需要一段運行很快的關鍵代碼，或者是想要編寫一些不願開放的算法，你可以使用 C 或 C++ 完成那部分程序，然後從你的 Python 程序中調用。</p>
-<p>數據庫：Python 提供所有主要的商業數據庫的接口。</p>
-<p>GUI 編程：Python 支持 GUI 可以創建和移植到許多系統調用。</p>
-<p>可嵌入: 你可以將 Python 嵌入到 C/C++ 程序, 讓你的程序的用戶獲得"腳本化"的能力。</p>
+<p>Python 是由 Guido van Rossum 在八十年代末和九十年代初，在荷蘭國家數學和計算機科學研究所設計出來的。
+Python 本身也是由諸多其他語言發展而來的,這包括 ABC、Modula-3、C、C++、Algol-68、SmallTalk、Unix shell 和其他的腳本語言等等。
+Python 的源代碼與文檔以 Python Software Foundation License（PSF 許可證）第 2 版發佈，可以自由使用、修改和再分發（含商業用途），修改後的版本不強制開源。
+現在 Python 是由一個核心開發團隊在維護，Guido van Rossum 仍然佔據著至關重要的作用，指導其進展。
+Python2.0 於 2000 年 10 月 16 日發布，增加了實現完整的垃圾回收，並且支持 Unicode。
+Python3.0 於 2008 年 12 月 3 日發布，此版不完全兼容之前的 Python 源代碼。不過，很多新特性後來也被移植到舊的 Python 2.6/2.7 版本。
+Python 3.0 版本，常被稱為 Python 3000，或簡稱 Py3k。相對於 Python 的早期版本，這是一個較大的升級。
+Python 2.7 被確定為最後一個 Python 2.x 版本，它除了支持 Python 2.x 語法外，還支持部分 Python 3.1 語法。
+Python3.x 版本，未來主流的版本。
+Python 優點：
+易於學習：Python 有相對較少的關鍵字，結構簡單，和一個明確定義的語法，學習起來更加簡單。
+易於閱讀：Python 代碼定義的更清晰。
+易於維護：Python 的成功在於它的源代碼是相當容易維護的。
+一個廣泛的標準庫：Python 的最大的優勢之一是豐富的庫，跨平臺的，在 UNIX，Windows 和 Macintosh 兼容很好。
+互動模式：互動模式的支持，您可以從終端輸入執行代碼並獲得結果的語言，互動的測試和調試代碼片斷。
+可移植：基於其開放源代碼的特性，Python 已經被移植(也就是使其工作)到許多平臺。
+可擴展：如果你需要一段運行很快的關鍵代碼，或者是想要編寫一些不願開放的算法，你可以使用 C 或 C++ 完成那部分程序，然後從你的 Python 程序中調用。
+數據庫：Python 提供所有主要的商業數據庫的接口。
+GUI 編程：Python 支持 GUI 可以創建和移植到許多系統調用。
+可嵌入: 你可以將 Python 嵌入到 C/C++ 程序, 讓你的程序的用戶獲得"腳本化"的能力。</p>
 <h2 id="python-應用方向">Python 應用方向</h2>
-<p>Python 其中一個應用是網站建設，以下網站應用了 Python 進行 web 開發：</p>
-<p>Youtube - 視頻社交網站</p>
-<p>Reddit - 社交分享網站</p>
-<p>Dropbox - 文件分享服務</p>
-<p>豆瓣網-圖書、唱片、電影等文化產品的資料數據庫網站</p>
-<p>Blender - 使用 Python 作為建模工具與 GUI 語言的開源 3D 繪圖軟件</p>
-<p>Inkscape - 一個開源的 SVG 矢量圖形編輯器。</p>
-<p>機器學習與人工智能- TensorFlow，Keras，pytorch 等機器學習庫讓 python 成為最適合機器學習的語言</p>
-<p>數據分析與數據挖掘-各式各樣的 python 爬蟲可以幫助數據分析工程師獲取數據，而豐富的 python 數據處理庫可以處理這些數據並以可視化形式或者可調用形式展現出來科學計算和算法設計-曾經 matlab 作為科學計算的行業標杆，但現在 python 正在蠶食它的市場。而簡單的語法讓 python 更適合進行算法開發(算法工程師可以輕鬆上手算法開發)</p>
-<p>IDLE - 作為 python 安裝時自帶的 IDE，這款 IDE 就是由 Guido van Rossum 使用 python+tkinter 寫出來的。</p>
-<p>Python 的缺點:</p>
-<p>有優點就會有缺點，python 作為一門解釋型語言，擁有了解釋型語言的優點(跨平臺可移植性，動態變量等)也有解釋型語言的缺點(效率較低)。</p>
-<p>另外，python 作為一門近乎萬能的語言，就像瑞士軍刀一樣，他擁有很多功能，但在具體的功能上都不如一些專精的語言，當對性能有一定要求的時候，python 不是好選擇！</p>
-<p>Python 3 安裝</p>
-<p>Python 官網：https://www.python.org/</p>
-<p>Python 安裝</p>
-<p>Python 已經被移植在許多平臺上(經過改動使它能夠工作在不同平臺上)。</p>
-<p>您需要下載適用於您使用平臺的二進制代碼，然後安裝 Python。</p>
-<p>如果您平臺的二進制代碼是不可用的，你需要使用 C 編譯器手動編譯源代碼。</p>
-<p>編譯的源代碼，功能上有更多的選擇性，為 Python 安裝提供了更多的靈活性。</p>
-<p>以下為不同平臺上安裝 Python 的方法：</p>
-<p>Unix &amp; Linux 平臺安裝 Python：</p>
-<p>以下為在 Unix &amp; Linux 平臺上安裝 Python 的簡單步驟：</p>
-<p>打開 WEB 瀏覽器訪問 https://www.python.org/downloads/source/</p>
-<p>選擇適用於 Unix/Linux 的源碼壓縮包。</p>
-<p>下載及解壓壓縮包 Python-3.x.x.tgz，3.x.x 你下載的對應版本號。</p>
-<p>如果你需要自定義一些選項修改 Modules/Setup</p>
-<p>以 Python 3.14.10 版本為例：</p>
+<p>Python 其中一個應用是網站建設，以下網站應用了 Python 進行 web 開發：
+Youtube - 視頻社交網站
+Reddit - 社交分享網站
+Dropbox - 文件分享服務
+豆瓣網-圖書、唱片、電影等文化產品的資料數據庫網站
+Blender - 使用 Python 作為建模工具與 GUI 語言的開源 3D 繪圖軟件
+Inkscape - 一個開源的 SVG 矢量圖形編輯器。
+機器學習與人工智能- TensorFlow，Keras，pytorch 等機器學習庫讓 python 成為最適合機器學習的語言
+數據分析與數據挖掘-各式各樣的 python 爬蟲可以幫助數據分析工程師獲取數據，而豐富的 python 數據處理庫可以處理這些數據並以可視化形式或者可調用形式展現出來科學計算和算法設計-曾經 matlab 作為科學計算的行業標杆，但現在 python 正在蠶食它的市場。而簡單的語法讓 python 更適合進行算法開發(算法工程師可以輕鬆上手算法開發)
+IDLE - 作為 python 安裝時自帶的 IDE，這款 IDE 就是由 Guido van Rossum 使用 python+tkinter 寫出來的。
+Python 的缺點:
+有優點就會有缺點，python 作為一門解釋型語言，擁有了解釋型語言的優點(跨平臺可移植性，動態變量等)也有解釋型語言的缺點(效率較低)。
+另外，python 作為一門近乎萬能的語言，就像瑞士軍刀一樣，他擁有很多功能，但在具體的功能上都不如一些專精的語言，當對性能有一定要求的時候，python 不是好選擇！
+Python 3 安裝
+Python 官網：https://www.python.org/
+Python 安裝
+Python 已經被移植在許多平臺上(經過改動使它能夠工作在不同平臺上)。
+您需要下載適用於您使用平臺的二進制代碼，然後安裝 Python。
+如果您平臺的二進制代碼是不可用的，你需要使用 C 編譯器手動編譯源代碼。
+編譯的源代碼，功能上有更多的選擇性，為 Python 安裝提供了更多的靈活性。
+以下為不同平臺上安裝 Python 的方法：
+Unix &amp; Linux 平臺安裝 Python：
+以下為在 Unix &amp; Linux 平臺上安裝 Python 的簡單步驟：
+打開 WEB 瀏覽器訪問 https://www.python.org/downloads/source/
+選擇適用於 Unix/Linux 的源碼壓縮包。
+下載及解壓壓縮包 Python-3.x.x.tgz，3.x.x 你下載的對應版本號。
+如果你需要自定義一些選項修改 Modules/Setup
+以 Python 3.14.10 版本為例：</p>
 <div class="codehilite"><pre><span></span><code># tar -zxvf Python-3.14.10.tgz
 # cd Python-3.14.10
 # ./configure
@@ -343,76 +339,64 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 Python 3.14.10
 </code></pre></div>
 
-<p>Windows 平臺安裝 Python：</p>
-<p>以下為在 Windows 平臺上安裝 Python 的簡單步驟：</p>
-<p>打開 WEB 瀏覽器訪問 https://www.python.org/downloads/windows/</p>
-<p>在下載列表中選擇 Windows 平臺安裝包，包格式為：python-3.14.10-amd64.exe 文件，-3.14.10 為你要安裝的版本號，-amd64 為你係統的版本。</p>
-<p>下載後，雙擊下載包，進入 Python 安裝嚮導，安裝非常簡單，你只需要使用默認的設置一直點擊"下一步"直到安裝完成即可。</p>
-<p>MAC 平臺安裝 Python:</p>
-<p>MAC 系統一般都自帶有 Python2.7 版本的環境，你也可以在鏈接 https://www.python.org/downloads/mac-osx/下載安裝最新版</p>
+<p>Windows 平臺安裝 Python：
+以下為在 Windows 平臺上安裝 Python 的簡單步驟：
+打開 WEB 瀏覽器訪問 https://www.python.org/downloads/windows/
+在下載列表中選擇 Windows 平臺安裝包，包格式為：python-3.14.10-amd64.exe 文件，-3.14.10 為你要安裝的版本號，-amd64 為你係統的版本。
+下載後，雙擊下載包，進入 Python 安裝嚮導，安裝非常簡單，你只需要使用默認的設置一直點擊"下一步"直到安裝完成即可。
+MAC 平臺安裝 Python:
+MAC 系統一般都自帶有 Python2.7 版本的環境，你也可以在鏈接 https://www.python.org/downloads/mac-osx/下載安裝最新版</p>
 <h2 id="環境變量配置">環境變量配置</h2>
-<p>程序和可執行文件可以在許多目錄，而這些路徑很可能不在操作系統提供可執行文件的搜索路徑中。</p>
-<p>Path(路徑)存儲在環境變量中，這是由操作系統維護的一個命名的字符串。這些變量包含可用的命令行解釋器和其他程序的信息。</p>
-<p>Unix 或 Windows 中路徑變量為 PATH(UNIX 區分大小寫，Windows 不區分大小寫)。在 MacOS 中，安裝程序過程中改變了 python 的安裝路徑。如果你需要在其他目錄引用 Python，你必須在 path 中添加 Python 目錄。</p>
-<p>在 Unix/Linux 設置環境變量</p>
-<p>在 csh shell 輸入：</p>
-<p>setenv PATH "$PATH:/本機/local/bin/python"</p>
-<p>按下 Enter。</p>
-<p>在 bash shell (Linux) 輸入:</p>
-<p>export PATH="$PATH:/本機/local/bin/python"</p>
-<p>按下 Enter。</p>
-<p>在 sh 或者 ksh shell 輸入:</p>
+<p>程序和可執行文件可以在許多目錄，而這些路徑很可能不在操作系統提供可執行文件的搜索路徑中。
+Path(路徑)存儲在環境變量中，這是由操作系統維護的一個命名的字符串。這些變量包含可用的命令行解釋器和其他程序的信息。
+Unix 或 Windows 中路徑變量為 PATH(UNIX 區分大小寫，Windows 不區分大小寫)。在 MacOS 中，安裝程序過程中改變了 python 的安裝路徑。如果你需要在其他目錄引用 Python，你必須在 path 中添加 Python 目錄。
+在 Unix/Linux 設置環境變量
+在 csh shell 輸入：
+setenv PATH "$PATH:/本機/local/bin/python"
+按下 Enter。
+在 bash shell (Linux) 輸入:
+export PATH="$PATH:/本機/local/bin/python"
+按下 Enter。
+在 sh 或者 ksh shell 輸入:</p>
 <div class="codehilite"><pre><span></span><code>PATH="$PATH:/本機/local/bin/python"
 </code></pre></div>
 
-<p>按下 Enter。</p>
-<p>注意：/本機/local/bin/python 是 Python 的安裝目錄。</p>
+<p>按下 Enter。
+注意：/本機/local/bin/python 是 Python 的安裝目錄。</p>
 <h2 id="在-windows-設置環境變量">在 Windows 設置環境變量</h2>
-<p>在 python 安裝的時候勾選自動添加 python 到 path 路徑可可以免去配置環境這個過程，本教程介紹的是當在命令提示符中輸入 python 顯示指令不存在的情況下需要進行的操作。</p>
-<p>在環境變量中添加 Python 目錄：</p>
-<p>在命令提示符中(cmd)：輸入</p>
+<p>在 python 安裝的時候勾選自動添加 python 到 path 路徑可可以免去配置環境這個過程，本教程介紹的是當在命令提示符中輸入 python 顯示指令不存在的情況下需要進行的操作。
+在環境變量中添加 Python 目錄：
+在命令提示符中(cmd)：輸入</p>
 <div class="codehilite"><pre><span></span><code>path=%path%;C:\Python
 </code></pre></div>
 
-<p>按下"Enter"。</p>
-<p>注意: C:\Python 是 Python 的安裝目錄。</p>
-<p>也可以通過以下方式設置：</p>
-<ol>
-<li>
-<p>右鍵點擊"計算機"，然後點擊"屬性"</p>
-</li>
-<li>
-<p>然後點擊"高級系統設置"</p>
-</li>
-<li>
-<p>選擇"系統變量"窗口下面的"Path",雙擊即可！</p>
-</li>
-<li>
-<p>然後在"Path"行，添加 python 安裝路徑即可(我的 D:\Python32)，所以在後面，添加該路徑即可。ps：記住，路徑直接用分號";隔開！</p>
-</li>
-<li>
-<p>最後設置成功以後，在 cmd 命令行，輸入命令"python"，就可以有相關顯示。</p>
-</li>
-</ol>
-<p>運行 Python</p>
-<p>交互式解釋器：</p>
-<p>你可以通過命令行窗口進入 Python，並在交互式解釋器中開始編寫 Python 代碼。</p>
-<p>你可以在 Unix、DOS 或任何其他提供了命令行或者 shell 的系統進行 Python 編碼工作。</p>
+<p>按下"Enter"。
+注意: C:\Python 是 Python 的安裝目錄。
+也可以通過以下方式設置：
+1. 右鍵點擊"計算機"，然後點擊"屬性"
+2. 然後點擊"高級系統設置"
+3. 選擇"系統變量"窗口下面的"Path",雙擊即可！
+4. 然後在"Path"行，添加 python 安裝路徑即可(我的 D:\Python32)，所以在後面，添加該路徑即可。ps：記住，路徑直接用分號";隔開！
+5. 最後設置成功以後，在 cmd 命令行，輸入命令"python"，就可以有相關顯示。
+運行 Python
+交互式解釋器：
+你可以通過命令行窗口進入 Python，並在交互式解釋器中開始編寫 Python 代碼。
+你可以在 Unix、DOS 或任何其他提供了命令行或者 shell 的系統進行 Python 編碼工作。</p>
 <div class="codehilite"><pre><span></span><code>$<span class="w"> </span>python<span class="w"> </span><span class="c1"># Unix/Linux</span>
 or
 C:&gt;python<span class="w"> </span><span class="c1"># Windows/DOS</span>
 </code></pre></div>
 
-<p>如何退出？</p>
-<p>在交互型解釋器中輸入 exit()按回車即可退出。</p>
+<p>如何退出？
+在交互型解釋器中輸入 exit()按回車即可退出。</p>
 <h2 id="python3-vscode-配置">Python3 VSCode 配置</h2>
-<p>VSCode(全稱：Visual Studio Code)是一款由微軟開發的跨平臺免費源代碼編輯器。VSCode 開發環境非常簡單易用，僅需要安裝相關的插件進行簡易的配置就可以與原有的 python 環境組成一套具有簡單的代碼調試運行的開發工具。對於輕量級的 python 開發和 python 學習是比較友好的。優秀的代碼提示和更多插件功能讓 VSCode 的使用體驗不亞於知名 pythonIDE—pycharm。準備工作：</p>
-<p>安裝 Python 3</p>
-<p>安裝 VS Code</p>
-<p>安裝 VS Code Python 擴展和 Pylance 拓展</p>
-<p>安裝 VS Code Python 擴展和 Pylance 拓展</p>
-<p>接著我們安裝 VS Code Python 擴展：</p>
-<p>Python 擴展將自動安裝 Pylance 和 Jupyter</p>
+<p>VSCode(全稱：Visual Studio Code)是一款由微軟開發的跨平臺免費源代碼編輯器。VSCode 開發環境非常簡單易用，僅需要安裝相關的插件進行簡易的配置就可以與原有的 python 環境組成一套具有簡單的代碼調試運行的開發工具。對於輕量級的 python 開發和 python 學習是比較友好的。優秀的代碼提示和更多插件功能讓 VSCode 的使用體驗不亞於知名 pythonIDE—pycharm。準備工作：
+安裝 Python 3
+安裝 VS Code
+安裝 VS Code Python 擴展和 Pylance 拓展
+安裝 VS Code Python 擴展和 Pylance 拓展
+接著我們安裝 VS Code Python 擴展：
+Python 擴展將自動安裝 Pylance 和 Jupyter</p>
 <div class="chnav">
 <a href="/django-notes/ch01-thinking-web.html">← 第 1 章 計算思維與網頁框架基礎</a>
 <a class="course" href="/django-course/">課程總覽</a>

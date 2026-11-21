@@ -276,11 +276,11 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 <span class="mf">8</span>
 </code></pre></div>
 
-<p>這個例子介紹了幾個新特徵。</p>
-<p>第一行包含了一個複合賦值：</p>
-<p>變量 a 和 b 同時得到新值 0 和 1 。</p>
-<p>最後一行也使用了複合賦值的方法：等價於 c = a，a = b，b = b + c。</p>
-<p>最後嘗試使用 if 條件控制</p>
+<p>這個例子介紹了幾個新特徵。
+第一行包含了一個複合賦值：
+變量 a 和 b 同時得到新值 0 和 1 。
+最後一行也使用了複合賦值的方法：等價於 c = a，a = b，b = b + c。
+最後嘗試使用 if 條件控制</p>
 <div class="codehilite"><pre><span></span><code>age = int(input("請輸入你家狗狗的年齡："))
 print("")
 if age &lt; 0:
@@ -296,17 +296,16 @@ elif age &gt; 2:
     input('點擊 enter 鍵退出')
 </code></pre></div>
 
-<p>(在 index1.py)</p>
 <h2 id="python3-基本數據類型">Python3 基本數據類型</h2>
-<p>在 Python 中，變量就是變量，它沒有類型，我們所說的"類型"是變量所指的內存中對象的類型。Python 3 中有六個標準的數據類型：</p>
-<p>Numbers (數字)</p>
-<p>String (字符串)</p>
-<p>List (列表)</p>
-<p>Tuple (元組)</p>
-<p>Sets (集合)</p>
-<p>Dictionaries (字典)Numbers(數字)</p>
-<p>Python 3 支持 int （整型）、float （浮點型）、bool （布爾型）、complex （複數）。</p>
-<p>數值類型的賦值和計算都是很直觀的，就像大多數語言一樣。內置的 type() 函數可以用來查詢 變量所指的對像類型。</p>
+<p>在 Python 中，變量就是變量，它沒有類型，我們所說的"類型"是變量所指的內存中對象的類型。Python 3 中有六個標準的數據類型：
+Numbers (數字)
+String (字符串)
+List (列表)
+Tuple (元組)
+Sets (集合)
+Dictionaries (字典)Numbers(數字)
+Python 3 支持 int （整型）、float （浮點型）、bool （布爾型）、complex （複數）。
+數值類型的賦值和計算都是很直觀的，就像大多數語言一樣。內置的 type() 函數可以用來查詢 變量所指的對像類型。</p>
 <div class="codehilite"><pre><span></span><code><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">,</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="m m-Double">5.5</span><span class="p">,</span><span class="w"> </span><span class="nx">True</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="o">+</span><span class="mi">3</span><span class="nx">j</span>
 <span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">a</span><span class="p">),</span><span class="w"> </span><span class="k">type</span><span class="p">(</span><span class="nx">b</span><span class="p">),</span><span class="w"> </span><span class="k">type</span><span class="p">(</span><span class="nx">c</span><span class="p">),</span><span class="w"> </span><span class="k">type</span><span class="p">(</span><span class="nx">d</span><span class="p">))</span>
 <span class="err">#</span><span class="w"> </span><span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="nx">int</span><span class="err">'</span><span class="p">&gt;</span><span class="w"> </span><span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="nx">float</span><span class="err">'</span><span class="p">&gt;</span><span class="w"> </span><span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="kt">bool</span><span class="err">'</span><span class="p">&gt;</span><span class="w"> </span><span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="nx">complex</span><span class="err">'</span><span class="p">&gt;</span>
@@ -317,9 +316,9 @@ elif age &gt; 2:
 print(isinstance(aa, int))
 </code></pre></div>
 
-<p>isinstance 和 type 的區別在於：</p>
-<p>type ()不會認為子類是一種父類類型。</p>
-<p>isinstance ()會認為子類是一種父類類型。</p>
+<p>isinstance 和 type 的區別在於：
+type ()不會認為子類是一種父類類型。
+isinstance ()會認為子類是一種父類類型。</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">A</span><span class="p">:</span>
 <span class="w">    </span><span class="nx">pass</span>
 <span class="kd">class</span><span class="w"> </span><span class="nx">B</span><span class="p">(</span><span class="nx">A</span><span class="p">):</span>
@@ -336,20 +335,12 @@ print(isinstance(aa, int))
 </code></pre></div>
 
 <ol>
-<li>
-<p>Python 可以同時為多個變量賦值，如 a, b = 1, 2。</p>
-</li>
-<li>
-<p>一個變量可以通過賦值指向不同類型的對象。</p>
-</li>
-<li>
-<p>數值的除法（/）總是返回一個浮點數，要獲取整數使用//操作符。</p>
-</li>
-<li>
-<p>在混合計算時，Python 會把整型轉換成為浮點數 (index.py)String（字符串）</p>
-</li>
+<li>Python 可以同時為多個變量賦值，如 a, b = 1, 2。</li>
+<li>一個變量可以通過賦值指向不同類型的對象。</li>
+<li>數值的除法（/）總是返回一個浮點數，要獲取整數使用//操作符。</li>
+<li>在混合計算時，Python 會把整型轉換成為浮點數 String（字符串）
+Python 中的字符串 str 用單引號('')或雙引號("") 括起來，同時使用反斜槓() 轉義特殊字符。</li>
 </ol>
-<p>Python 中的字符串 str 用單引號('')或雙引號("") 括起來，同時使用反斜槓() 轉義特殊字符。</p>
 <div class="codehilite"><pre><span></span><code><span class="nx">s</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">'</span><span class="nx">Yes</span><span class="p">,</span><span class="w"> </span><span class="nx">he</span><span class="w"> </span><span class="nx">doesn</span><span class="err">\</span><span class="sc">'t'</span>
 <span class="nx">print</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">(</span><span class="nx">s</span><span class="p">),</span><span class="w"> </span><span class="nx">len</span><span class="p">(</span><span class="nx">s</span><span class="p">))</span>
 </code></pre></div>
@@ -363,17 +354,17 @@ print(r'C:\some\name')
 <div class="codehilite"><pre><span></span><code>print('str' + 'ing', 'my'*3)
 </code></pre></div>
 
-<p>Python 中的字符串有兩種索引方式，</p>
-<p>第一種是從左往右，從0開始依次增加；</p>
-<p>第二種是從右往左，從-1開始依次減少。</p>
-<p>注意，沒有單獨的字符類型，一個字符就是長度為1的字符串。</p>
+<p>Python 中的字符串有兩種索引方式，
+第一種是從左往右，從0開始依次增加；
+第二種是從右往左，從-1開始依次減少。
+注意，沒有單獨的字符類型，一個字符就是長度為1的字符串。</p>
 <div class="codehilite"><pre><span></span><code>word = 'Python'
 print(word[0], word[5])
 print(word[-1], word[-6])
 </code></pre></div>
 
-<p>還可以對字符串進行切片，獲取一段子串。用冒號分隔兩個索引，形式為變量[頭下標：尾下標]。</p>
-<p>截取的範圍是前閉後開的(頭下標取，尾下標不取)，並且兩個索引都可以省略：</p>
+<p>還可以對字符串進行切片，獲取一段子串。用冒號分隔兩個索引，形式為變量[頭下標：尾下標]。
+截取的範圍是前閉後開的(頭下標取，尾下標不取)，並且兩個索引都可以省略：</p>
 <div class="codehilite"><pre><span></span><code><span class="s s-Atom">word</span> <span class="o">=</span> <span class="s s-Atom">'ilovepython'</span>
 <span class="s s-Atom">word</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">5</span><span class="p">]</span>
 <span class="s s-Atom">word</span><span class="p">[</span><span class="o">:</span><span class="p">]</span>
@@ -381,34 +372,24 @@ print(word[-1], word[-6])
 <span class="s s-Atom">word</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="o">:-</span><span class="mi">6</span><span class="p">]</span>
 </code></pre></div>
 
-<p>與 C 字符串不同的是，Python 字符串不能被改變。向一個索引位置賦值，比如 word[0] = 'm' 會導致錯誤。</p>
-<p>注意：</p>
-<ol>
-<li>
-<p>反斜槓可以用來轉義，使用 r 可以讓反斜槓不發生轉義。</p>
-</li>
-<li>
-<p>字符串可以用+ 運算符連接在一起，用* 運算符重複。</p>
-</li>
-<li>
-<p>Python 中的字符串有兩種索引方式，從左往右以 0 開始，從右往左以 -1 開始。</p>
-</li>
-<li>
-<p>Python 中的字符串不能改變。</p>
-</li>
-</ol>
+<p>與 C 字符串不同的是，Python 字符串不能被改變。向一個索引位置賦值，比如 word[0] = 'm' 會導致錯誤。
+注意：
+1. 反斜槓可以用來轉義，使用 r 可以讓反斜槓不發生轉義。
+2. 字符串可以用+ 運算符連接在一起，用* 運算符重複。
+3. Python 中的字符串有兩種索引方式，從左往右以 0 開始，從右往左以 -1 開始。
+4. Python 中的字符串不能改變。</p>
 <div class="codehilite"><pre><span></span><code>(index1.py)
 </code></pre></div>
 
-<p>List(列表)</p>
-<p>List(列表)是 Python 中使用最頻繁的數據類型。</p>
-<p>列表是寫在方括號之間、用逗號分隔開的元素列表。列表中元素的類型可以不相同：</p>
+<p>List(列表)
+List(列表)是 Python 中使用最頻繁的數據類型。
+列表是寫在方括號之間、用逗號分隔開的元素列表。列表中元素的類型可以不相同：</p>
 <div class="codehilite"><pre><span></span><code>a = ['him', 25, 100, 'her']
 print(a)
 </code></pre></div>
 
-<p>和字符串一樣，列表同樣可以被索引和切片，列表被切片後返回一個包含所需元素的新列表。詳細的在這裡就不贅述了。</p>
-<p>列表還支持串聯操作，使用+ 操作符：</p>
+<p>和字符串一樣，列表同樣可以被索引和切片，列表被切片後返回一個包含所需元素的新列表。詳細的在這裡就不贅述了。
+列表還支持串聯操作，使用+ 操作符：</p>
 <div class="codehilite"><pre><span></span><code>a = [1, 2, 3, 4, 5]
 a + [6, 7, 8]
 </code></pre></div>
@@ -424,41 +405,31 @@ a
 <div class="codehilite"><pre><span></span><code>a
 </code></pre></div>
 
-<p>List 內置了很多方法，例如 append()、pop() 等等，這在後面會講到。</p>
-<p>注意：</p>
-<ol>
-<li>
-<p>List 寫在方括號之間，元素用逗號隔開。</p>
-</li>
-<li>
-<p>和字符串一樣，List 可以被索引和切片。</p>
-</li>
-<li>
-<p>List 可以使用+ 操作符進行拼接。</p>
-</li>
-<li>
-<p>List 中的元素是可以改變的。</p>
-</li>
-</ol>
+<p>List 內置了很多方法，例如 append()、pop() 等等，這在後面會講到。
+注意：
+1. List 寫在方括號之間，元素用逗號隔開。
+2. 和字符串一樣，List 可以被索引和切片。
+3. List 可以使用+ 操作符進行拼接。
+4. List 中的元素是可以改變的。</p>
 <div class="codehilite"><pre><span></span><code>(index2.py)
 </code></pre></div>
 
-<p>Tuple(元組)</p>
-<p>元組(tuple)與列表類似，不同之處在於元組的元素不能修改。元組寫在小括號裡，元素之間用逗號隔開。</p>
-<p>元組中的元素類型也可以不相同：</p>
+<p>Tuple(元組)
+元組(tuple)與列表類似，不同之處在於元組的元素不能修改。元組寫在小括號裡，元素之間用逗號隔開。
+元組中的元素類型也可以不相同：</p>
 <div class="codehilite"><pre><span></span><code><span class="nx">a</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1991</span><span class="p">,</span><span class="w"> </span><span class="mi">2014</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">physics</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">math</span><span class="err">'</span><span class="p">)</span>
 <span class="nx">print</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">(</span><span class="nx">a</span><span class="p">),</span><span class="w"> </span><span class="nx">len</span><span class="p">(</span><span class="nx">a</span><span class="p">))</span>
 </code></pre></div>
 
-<p>元組與字符串類似，可以被索引且下標索引從 0 開始，也可以進行截取/切片(看上面，這裡不再贅述)。</p>
-<p>其實，可以把字符串看作一種特殊的元組。</p>
+<p>元組與字符串類似，可以被索引且下標索引從 0 開始，也可以進行截取/切片(看上面，這裡不再贅述)。
+其實，可以把字符串看作一種特殊的元組。</p>
 <div class="codehilite"><pre><span></span><code>tup = (1, 2, 3, 4, 5, 6)
 print(tup[0], tup[1:5])
 tup[0] = 11 # 修改元組元素的操作是非法的
 </code></pre></div>
 
-<p>雖然 tuple 的元素不可改變，但它可以包含可變的對象，比如 list 列表。</p>
-<p>構造包含 0 個或 1 個元素的 tuple 是個特殊的問題，所以有一些額外的語法規則</p>
+<p>雖然 tuple 的元素不可改變，但它可以包含可變的對象，比如 list 列表。
+構造包含 0 個或 1 個元素的 tuple 是個特殊的問題，所以有一些額外的語法規則</p>
 <div class="codehilite"><pre><span></span><code>tup1 = () # 空元組
 tup2 = (20,) # 一個元素，需要在元素後添加組號
 </code></pre></div>
@@ -468,29 +439,19 @@ tup2 = (20,) # 一個元素，需要在元素後添加組號
 print(tup1 + tup2)
 </code></pre></div>
 
-<p>string、list 和 tuple 都屬於 sequence （序列）。</p>
-<p>注意：</p>
-<ol>
-<li>
-<p>與字符串一樣，元組的元素不能修改。</p>
-</li>
-<li>
-<p>元組也可以被索引和切片，方法都是一樣的。</p>
-</li>
-<li>
-<p>注意構造包含 0 或 1 個元素的元組的特殊語法規則。</p>
-</li>
-<li>
-<p>元組也可以使用+ 操作符進行拼接。</p>
-</li>
-</ol>
+<p>string、list 和 tuple 都屬於 sequence （序列）。
+注意：
+1. 與字符串一樣，元組的元素不能修改。
+2. 元組也可以被索引和切片，方法都是一樣的。
+3. 注意構造包含 0 或 1 個元素的元組的特殊語法規則。
+4. 元組也可以使用+ 操作符進行拼接。</p>
 <div class="codehilite"><pre><span></span><code>(index3.py)
 </code></pre></div>
 
-<p>Sets(集合)</p>
-<p>集合(set)是一個無序不重複元素的集。</p>
-<p>基本功能是進行成員關係測試和消除重複元素。</p>
-<p>可以使用大括號或者 set() 函數創建 set 集合，注意：創建一個空集合必須用 set() 而不是 {}，因為 {} 是用來創建一個空字典。</p>
+<p>Sets(集合)
+集合(set)是一個無序不重複元素的集。
+基本功能是進行成員關係測試和消除重複元素。
+可以使用大括號或者 set() 函數創建 set 集合，注意：創建一個空集合必須用 set() 而不是 {}，因為 {} 是用來創建一個空字典。</p>
 <div class="codehilite"><pre><span></span><code>student = {'Tom', 'Jim', 'Mary', 'Tom', 'Jack', 'Rose'}
 print(student)
 # set可以進行集合運算
@@ -504,70 +465,62 @@ print(a ^ b) # a和b中不同時存在的元素
 (index4.py)
 </code></pre></div>
 
-<p>Dictionaries(字典)</p>
-<p>字典(dictionary)是 Python 中另一個非常有用的內置數據類型。</p>
-<p>字典是一種映射類型(mapping type)，它是一個無序的鍵值對(key-value)集合。</p>
-<p>關鍵字(key)必須使用不可變類型，也就是說 list 和包含可變類型的 tuple 不能做關鍵字。在同一個字典中，關鍵字(key)必須互不相同。</p>
+<p>Dictionaries(字典)
+字典(dictionary)是 Python 中另一個非常有用的內置數據類型。
+字典是一種映射類型(mapping type)，它是一個無序的鍵值對(key-value)集合。
+關鍵字(key)必須使用不可變類型，也就是說 list 和包含可變類型的 tuple 不能做關鍵字。在同一個字典中，關鍵字(key)必須互不相同。</p>
 <div class="codehilite"><pre><span></span><code>dic = {} # 創建空字典
 tel = {'Jack':1557, 'Tom':1320, 'Rose':1886}
 print(tel)
 print(tel['Jack']) # 主要的操作：通過key查詢
 </code></pre></div>
 
-<p>del tel['Rose'] # 刪除一個鍵值對</p>
-<p>tel['Mary'] = 4127 # 添加一個鍵值對</p>
+<p>del tel['Rose'] # 刪除一個鍵值對
+tel['Mary'] = 4127 # 添加一個鍵值對</p>
 <div class="codehilite"><pre><span></span><code>print(tel)
 </code></pre></div>
 
-<p>list(tel.keys()) # 返回所有key組成的list</p>
-<p>sorted(tel.keys()) # 按key排序</p>
-<p>另外，字典類型也有一些內置的函數，例如 clear()、keys()、values() 等。</p>
-<p>注意：</p>
-<ol>
-<li>
-<p>字典是一種映射類型，它的元素是鍵值對。</p>
-</li>
-<li>
-<p>字典的關鍵字必須為不可變類型，且不能重複。</p>
-</li>
-<li>
-<p>創建空字典使用{}。</p>
-</li>
-</ol>
+<p>list(tel.keys()) # 返回所有key組成的list
+sorted(tel.keys()) # 按key排序
+另外，字典類型也有一些內置的函數，例如 clear()、keys()、values() 等。
+注意：
+1. 字典是一種映射類型，它的元素是鍵值對。
+2. 字典的關鍵字必須為不可變類型，且不能重複。
+3. 創建空字典使用{}。</p>
 <div class="codehilite"><pre><span></span><code>(index5.py)
 </code></pre></div>
 
 <h2 id="python3-註釋">Python3 註釋</h2>
-<p>Python3 註釋可以確保對模塊，函數，方法和行內註釋使用正確的風格，有專門的符號和格式，有單行與多行的區別。</p>
-<p>Python 中的註釋有單行註釋和多行註釋：</p>
-<p>Python 中單行註釋以#開頭，例如：</p>
+<p>Python3 註釋可以確保對模塊，函數，方法和行內註釋使用正確的風格，有專門的符號和格式，有單行與多行的區別。
+Python 中的註釋有單行註釋和多行註釋：
+Python 中單行註釋以#開頭，例如：</p>
 <div class="codehilite"><pre><span></span><code># 我就是注釋
 print("Hello, World")
 </code></pre></div>
 
-<p>多行註釋用三個單引號("")或者三個雙引號("")將需要註釋的內容囊括起來，例如：1、單引號("")</p>
-<p>這是多行註釋，用三個單引號</p>
-<p>這是多行註釋，用三個單引號</p>
-<p>這是多行註釋，用三個單引號</p>
+<p>多行註釋用三個單引號("")或者三個雙引號("")將需要註釋的內容囊括起來，例如：1、單引號("")
+這是多行註釋，用三個單引號
+這是多行註釋，用三個單引號
+這是多行註釋，用三個單引號</p>
 <div class="codehilite"><pre><span></span><code>print("Hello, World!")
 </code></pre></div>
 
-<p>2、雙引號("")</p>
-<p>這是多行註釋，用三個雙引號</p>
-<p>這是多行註釋，用三個雙引號</p>
-<p>這是多行註釋，用三個雙引號</p>
+<p>2、雙引號("")
+這是多行註釋，用三個雙引號
+這是多行註釋，用三個雙引號
+這是多行註釋，用三個雙引號</p>
 <div class="codehilite"><pre><span></span><code>print("Hello, World!")
 </code></pre></div>
 
 <h2 id="python3-運算符">Python3 運算符</h2>
-<p>Python 的運算符。舉個簡單的例子 $ 4+5=9 $。例子中，4 和 5 被稱為運算符，“+”稱為運算符。Python 語言支持以下類型的運算符：</p>
-<p>算術運算符</p>
-<p>比較(關係)運算符</p>
-<p>賦值運算符</p>
-<p>總編輯運算符</p>
-<p>成員運算符</p>
-<p>身分運算符</p>
-<p>運算符優先級</p>
+<p>Python 的運算符。舉個簡單的例子 $ 4+5=9 $。例子中，4 和 5 被稱為運算符，“+”稱為運算符。Python 語言支持以下類型的運算符：
+算術運算符
+比較(關係)運算符
+賦值運算符
+總編輯運算符
+成員運算符
+身分運算符
+運算符優先級</p>
 <h2 id="python-算術運算符">Python 算術運算符</h2>
 <p>下面假設變量 a 爲 21，變量 b 爲 10：</p>
 <table>
@@ -640,15 +593,15 @@ ccc = aaa//bbb
 print("aaa//bbb 的值爲：", ccc)
 </code></pre></div>
 
-<p>以上實例輸出結果：</p>
-<p>a 不等於 b</p>
-<p>a 不等於 b</p>
-<p>a 大於等於 b</p>
-<p>a 大於 b</p>
-<p>aa 小於等於 bb</p>
-<p>aa 小於 bb</p>
-<p>Python 比較運算符</p>
-<p>下面假設變量 a 為 10，變量 b 為 20：</p>
+<p>以上實例輸出結果：
+a 不等於 b
+a 不等於 b
+a 大於等於 b
+a 大於 b
+aa 小於等於 bb
+aa 小於 bb
+Python 比較運算符
+下面假設變量 a 為 10，變量 b 為 20：</p>
 <table>
 <thead>
 <tr>
@@ -700,9 +653,9 @@ print("aaa//bbb 的值爲：", ccc)
 </tr>
 </tbody>
 </table>
-<p>所有比較運算符返回 1 表示真，返回 0 表示假。這個分別與特殊的變化量 True 和 False 等價。</p>
-<p>注意：True 和 False 的首字母為大寫。</p>
-<p>下面實例演示了 Python 所有比較運符的操作：</p>
+<p>所有比較運算符返回 1 表示真，返回 0 表示假。這個分別與特殊的變化量 True 和 False 等價。
+注意：True 和 False 的首字母為大寫。
+下面實例演示了 Python 所有比較運符的操作：</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">21</span>
 <span class="nt">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">10</span>
 <span class="nt">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">0</span>
@@ -734,13 +687,13 @@ print("aaa//bbb 的值爲：", ccc)
 <span class="w">                        </span><span class="nt">print</span><span class="o">(</span><span class="s2">"aa 小於 bb"</span><span class="o">)</span>
 </code></pre></div>
 
-<p>以上實例輸出結果：</p>
-<p>a 不等於 b</p>
-<p>a 不等於 b</p>
-<p>a 大於等於 b</p>
-<p>a 大於 b</p>
-<p>aa 小於等於 bb</p>
-<p>aa 小於 bb</p>
+<p>以上實例輸出結果：
+a 不等於 b
+a 不等於 b
+a 大於等於 b
+a 大於 b
+aa 小於等於 bb
+aa 小於 bb</p>
 <div class="codehilite"><pre><span></span><code>(index1.py)
 </code></pre></div>
 
@@ -818,19 +771,19 @@ c //= a
 print("7 - c 的值爲：", c)
 </code></pre></div>
 
-<p>以上實例輸出結果：</p>
-<p>1 - c 的值爲：31</p>
-<p>2 - c 的值爲：52</p>
-<p>3 - c 的值爲：1092</p>
-<p>4 - c 的值爲：52.0</p>
-<p>5 - c 的值爲：2</p>
-<p>6 - c 的值爲：2097152</p>
-<p>7 - c 的值爲：99864</p>
+<p>以上實例輸出結果：
+1 - c 的值爲：31
+2 - c 的值爲：52
+3 - c 的值爲：1092
+4 - c 的值爲：52.0
+5 - c 的值爲：2
+6 - c 的值爲：2097152
+7 - c 的值爲：99864</p>
 <div class="codehilite"><pre><span></span><code>(index2.py)
 </code></pre></div>
 
-<p>Python 總編輯算符</p>
-<p>Python 語言支持總編輯運算符，以下假設置量 a 為 10，b 為 20：</p>
+<p>Python 總編輯算符
+Python 語言支持總編輯運算符，以下假設置量 a 為 10，b 為 20：</p>
 <table>
 <thead>
 <tr>
@@ -893,12 +846,12 @@ print("7 - c 的值爲：", c)
 <span class="w">                    </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"5 - 變量 a 和 b 都為 true"</span><span class="ss">)</span>
 </code></pre></div>
 
-<p>以上實例輸出結果：</p>
-<p>1 - 變量 a 和 b 都為 true</p>
-<p>2 - 變量 a 和 b 都為 true，或其中一個變量為 true</p>
-<p>3 - 變量 a 和 b 有一個不為 true</p>
-<p>4 - 變量 a 和 b 都為 true，或其中一個變量為 true</p>
-<p>5 - 變量 a 和 b 都為 false，或其中一個變量為 false</p>
+<p>以上實例輸出結果：
+1 - 變量 a 和 b 都為 true
+2 - 變量 a 和 b 都為 true，或其中一個變量為 true
+3 - 變量 a 和 b 有一個不為 true
+4 - 變量 a 和 b 都為 true，或其中一個變量為 true
+5 - 變量 a 和 b 都為 false，或其中一個變量為 false</p>
 <div class="codehilite"><pre><span></span><code>(index3.py)
 </code></pre></div>
 
@@ -945,10 +898,10 @@ print("7 - c 的值爲：", c)
 <span class="w">            </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"3 - 變量 a 不在給定的列表中 list 中"</span><span class="ss">)</span>
 </code></pre></div>
 
-<p>以上實例輸出結果：</p>
-<p>1 - 變量 a 不在給定的列表中 list 中</p>
-<p>2 - 變量 b 不在給定的列表中 list 中</p>
-<p>3 - 變量 a 在給定的列表中 list 中</p>
+<p>以上實例輸出結果：
+1 - 變量 a 不在給定的列表中 list 中
+2 - 變量 b 不在給定的列表中 list 中
+3 - 變量 a 在給定的列表中 list 中</p>
 <div class="codehilite"><pre><span></span><code>(index4.py)
 </code></pre></div>
 
@@ -998,11 +951,11 @@ print("7 - c 的值爲：", c)
 <span class="w">                </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"4 - a 和 b 有相同的標識"</span><span class="ss">)</span>
 </code></pre></div>
 
-<p>以上實例輸出結果：</p>
-<p>1 - a 和 b 有相同的標識</p>
-<p>2 - a 和 b 有相同的標識</p>
-<p>3 - a 和 b 沒有相同的標識</p>
-<p>4 - a 和 b 沒有相同的標識</p>
+<p>以上實例輸出結果：
+1 - a 和 b 有相同的標識
+2 - a 和 b 有相同的標識
+3 - a 和 b 沒有相同的標識
+4 - a 和 b 沒有相同的標識</p>
 <div class="codehilite"><pre><span></span><code>(index2.py)
 </code></pre></div>
 
@@ -1114,51 +1067,41 @@ e = (a + b) <span class="gs">* c / d # (30 *</span> 15) / 5
 <div class="codehilite"><pre><span></span><code>e = a + (b * c) / d; # 20 + (150/5)
 </code></pre></div>
 
-<p>print ("a + (b * c) / d 運算結果為：", e)</p>
-<p>以上實例輸出結果：</p>
-<p>(a + b) * c / d 運算結果為：90.0</p>
-<p>((a + b) * c) / d 運算結果為：90.0</p>
-<p>(a + b) * (c / d) 運算結果為：90.0</p>
-<p>a + (b * c) / d 運算結果為：50.0</p>
+<p>print ("a + (b * c) / d 運算結果為：", e)
+以上實例輸出結果：
+(a + b) * c / d 運算結果為：90.0
+((a + b) * c) / d 運算結果為：90.0
+(a + b) * (c / d) 運算結果為：90.0
+a + (b * c) / d 運算結果為：50.0</p>
 <div class="codehilite"><pre><span></span><code>(index6.py)
 </code></pre></div>
 
 <h2 id="python3-數字">Python3 數字</h2>
-<p>Python 數字類型用於數值的儲存。數值類型是不允許改變的，如果改變數字數據類型的值，將重新分配內存空間。</p>
-<p>以下實例在變量賦值時 Number 對象將被創建：</p>
+<p>Python 數字類型用於數值的儲存。數值類型是不允許改變的，如果改變數字數據類型的值，將重新分配內存空間。
+以下實例在變量賦值時 Number 對象將被創建：</p>
 <div class="codehilite"><pre><span></span><code><span class="n">var1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 <span class="n">var2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span>
 </code></pre></div>
 
-<p>Python 支持三種不同的數值類型：</p>
-<p>整型(Int) - 通常被稱為是整型或整數，是正或負整數，不帶小數點。Python3 整型是沒有限制大小的，可以當作 Long 類型使用，所以 Python3 沒有 Python2 的 Long 類型。</p>
-<p>浮點型(float) - 浮點型由整數部分與小數部分組成，浮點型也可以使用科學計數法表示 $ (2.5e2 = 2.5 \times 10^{2} = 250) $</p>
-<p>複數( (complex)) - 複數由實數部分和虛數部分構成，可以用 a + bj,或者 complex(a,b)表示，複數的實部 a 和虛部 b 都是浮點型。</p>
+<p>Python 支持三種不同的數值類型：
+整型(Int) - 通常被稱為是整型或整數，是正或負整數，不帶小數點。Python3 整型是沒有限制大小的，可以當作 Long 類型使用，所以 Python3 沒有 Python2 的 Long 類型。
+浮點型(float) - 浮點型由整數部分與小數部分組成，浮點型也可以使用科學計數法表示 $ (2.5e2 = 2.5 \times 10^{2} = 250) $
+複數( (complex)) - 複數由實數部分和虛數部分構成，可以用 a + bj,或者 complex(a,b)表示，複數的實部 a 和虛部 b 都是浮點型。</p>
 <h2 id="python-數字類型轉換">Python 數字類型轉換</h2>
-<p>我們需要對數據內置的類型進行轉換，數據類型的轉換，你只需要將數據類型作為函數名即可。</p>
-<ul>
-<li>
-<p>nt(x)將 x 轉換為一個整數。</p>
-</li>
-<li>
-<p>$ \text{loat}(x) $ 將 x 轉換到一個浮點數。</p>
-</li>
-<li>
-<p>complex(x)將 x 轉換到一個複數，實數部分為 x ，虛數部分為 0 。</p>
-</li>
-<li>
-<p>complex(x, y)將 x 和 y 轉換到一個複數，實數部分為 x ，虛數部分為 y 。 x 和 y 是數字表達式。</p>
-</li>
-</ul>
-<p>以下實例將浮點數變量 a 轉換為整數：</p>
+<p>我們需要對數據內置的類型進行轉換，數據類型的轉換，你只需要將數據類型作為函數名即可。
+- nt(x)將 x 轉換為一個整數。
+- $ \text{loat}(x) $ 將 x 轉換到一個浮點數。
+- complex(x)將 x 轉換到一個複數，實數部分為 x ，虛數部分為 0 。
+- complex(x, y)將 x 和 y 轉換到一個複數，實數部分為 x ，虛數部分為 y 。 x 和 y 是數字表達式。
+以下實例將浮點數變量 a 轉換為整數：</p>
 <div class="codehilite"><pre><span></span><code>a = 1.0
 int(a)
 1
 </code></pre></div>
 
 <h2 id="python-數字運算">Python 數字運算</h2>
-<p>Python 解釋器可以作為一個簡單的計算器，您可以在解釋器裡輸入一個表達式，它將輸出表達式的值。</p>
-<p>表達式的語法很直白：+，-，*和/，和其它語言(如 Pascal 或 C)裡一樣。例如：</p>
+<p>Python 解釋器可以作為一個簡單的計算器，您可以在解釋器裡輸入一個表達式，它將輸出表達式的值。
+表達式的語法很直白：+，-，*和/，和其它語言(如 Pascal 或 C)裡一樣。例如：</p>
 <div class="codehilite"><pre><span></span><code>a = 2+2
 print(a)
 a1 = 50 - 5*6
@@ -1169,8 +1112,8 @@ a3 = 8 / 5 # 總是返回一個浮點數
 print(a3)
 </code></pre></div>
 
-<p>注意：在不同的機器上浮點運算的結果可能會不一樣。</p>
-<p>在整數除法中，除法/總是返回一個浮點數，如果只想得到整數的結果，丟棄可能的分數部分，可以使用運算符//：</p>
+<p>注意：在不同的機器上浮點運算的結果可能會不一樣。
+在整數除法中，除法/總是返回一個浮點數，如果只想得到整數的結果，丟棄可能的分數部分，可以使用運算符//：</p>
 <div class="codehilite"><pre><span></span><code><span class="gh">#</span> b = 17 / 3 # 整數除法返回浮點型
 <span class="gh">#</span> print(b)
 <span class="gh">#</span> b1 = 17 // 3# 整數除法返回下取整後的結果
@@ -1190,20 +1133,20 @@ c2 = 7 // 2.0
 print(c2)
 </code></pre></div>
 
-<p>(index.py) 等號=用於給變量賦值。賦值之後，除了下一個提示符，解釋器不會顯示任何結果。</p>
+<p>等號=用於給變量賦值。賦值之後，除了下一個提示符，解釋器不會顯示任何結果。</p>
 <div class="codehilite"><pre><span></span><code>width = 20
 height = 5*9
 print(width * height)
 </code></pre></div>
 
-<p>(index.py) Python 可以使用**操作來進行冪運算：</p>
+<p>Python 可以使用**操作來進行冪運算：</p>
 <div class="codehilite"><pre><span></span><code>d = 5 ** 2
 print(d)
 d1 = 2 ** 7
 print(d1)
 </code></pre></div>
 
-<p>(index.py) 不同類型的數混合運算時會將整數轉換為浮點數：</p>
+<p>不同類型的數混合運算時會將整數轉換為浮點數：</p>
 <div class="codehilite"><pre><span></span><code>e = 3 * 3.75 / 1.5
 print(e)
 e1 = 7.0 / 2

@@ -276,15 +276,15 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 <main>
 <h1 id="第-5-章--序列與容器類型">第 5 章 · 序列與容器類型</h1>
 <h2 id="python3-序列">Python3 序列</h2>
-<p>在編程語言中，將以某種方式(比如通過編號)組合起來的數據元素(如數字，字符串乃至其他數據結構)集合稱為數據結構。在 python 中，最基本的數據結構為序列(sequence，簡寫為 seq)。</p>
-<p>所謂序列，指的是一塊可存放多個值的連續內存空間，這些值按一定順序排列，可通過每個值所在位置的編號(稱為索引)訪問它們。</p>
-<p>為了更形象的認識序列，可以將它看做是一家旅店，那麼店中的每個房間就如同序列存儲數據的一個個內存空間，每個房間所特有的房間號就相當於索引值。也就是說，通過房間號(索引)我們可以找到這家旅店(序列)中的每個房間(內存空間)。</p>
-<p>在 Python 中，序列類型包括字符串、列表、元組、集合和字典，這些序列支持以下幾種通用的操作，但比較特殊的是，集合和字典不支持索引、切片、相加和相乘操作。</p>
-<p>字符串也是一種常見的序列(所以以下的例子以字符串作為)，它也可以直接通過索引訪問字符串內的字符。</p>
+<p>在編程語言中，將以某種方式(比如通過編號)組合起來的數據元素(如數字，字符串乃至其他數據結構)集合稱為數據結構。在 python 中，最基本的數據結構為序列(sequence，簡寫為 seq)。
+所謂序列，指的是一塊可存放多個值的連續內存空間，這些值按一定順序排列，可通過每個值所在位置的編號(稱為索引)訪問它們。
+為了更形象的認識序列，可以將它看做是一家旅店，那麼店中的每個房間就如同序列存儲數據的一個個內存空間，每個房間所特有的房間號就相當於索引值。也就是說，通過房間號(索引)我們可以找到這家旅店(序列)中的每個房間(內存空間)。
+在 Python 中，序列類型包括字符串、列表、元組、集合和字典，這些序列支持以下幾種通用的操作，但比較特殊的是，集合和字典不支持索引、切片、相加和相乘操作。
+字符串也是一種常見的序列(所以以下的例子以字符串作為)，它也可以直接通過索引訪問字符串內的字符。</p>
 <h2 id="序列索引">序列索引</h2>
-<p>序列中，每個元素都有屬於自己的編號(索引)。從起始元素開始，索引值從0開始遞增，如圖1所示。</p>
-<p>除此之外，Python 還支持索引值是負數，此類索引是從右向左計數，換句話說，從最後一個元素開始計數，從索引值-1開始，如圖2所示。</p>
-<p>無論是採用正索引值，還是負索引值，都可以訪問序列中的任何元素。以字符串為例</p>
+<p>序列中，每個元素都有屬於自己的編號(索引)。從起始元素開始，索引值從0開始遞增，如圖1所示。
+除此之外，Python 還支持索引值是負數，此類索引是從右向左計數，換句話說，從最後一個元素開始計數，從索引值-1開始，如圖2所示。
+無論是採用正索引值，還是負索引值，都可以訪問序列中的任何元素。以字符串為例</p>
 <div class="codehilite"><pre><span></span><code>str = "python"
 print(str[0], "=", str[-6])
 print(str[5], "=", str[-1])
@@ -295,12 +295,12 @@ print(str[5], "=", str[-1])
 <div class="codehilite"><pre><span></span><code><span class="n">sname</span><span class="p">[</span><span class="n">start</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">step</span><span class="p">]</span>
 </code></pre></div>
 
-<p>其中，各個參數的含義分別是：</p>
-<p>sname：表示序列的名稱；</p>
-<p>start：表示切片的開始索引位置(包括該位置)，此參數也可以不指定，會默認為0，也就是從序列的開頭進行切片；</p>
-<p>end：表示切片的結束索引位置(不包括該位置)，如果不指定，則默認為序列的長度；</p>
-<p>step：表示在切片過程中，隔幾個存儲位置(包含當前位置)取一次元素，也就是說，如果 step 的值大於 1，則在進行切片去序列元素時，會“跳躍式”的取元素。如果省略設置 step 的值，則最後一個冒號就可以省略。</p>
-<p>例如，對字符串 “python” 進行切片：</p>
+<p>其中，各個參數的含義分別是：
+sname：表示序列的名稱；
+start：表示切片的開始索引位置(包括該位置)，此參數也可以不指定，會默認為0，也就是從序列的開頭進行切片；
+end：表示切片的結束索引位置(不包括該位置)，如果不指定，則默認為序列的長度；
+step：表示在切片過程中，隔幾個存儲位置(包含當前位置)取一次元素，也就是說，如果 step 的值大於 1，則在進行切片去序列元素時，會“跳躍式”的取元素。如果省略設置 step 的值，則最後一個冒號就可以省略。
+例如，對字符串 “python” 進行切片：</p>
 <div class="codehilite"><pre><span></span><code>str = "python"
 # 取索引區間為[0,2]之間（不包括索引2處的字符）的字符串
 print(str[:2])
@@ -317,8 +317,8 @@ python
 </code></pre></div>
 
 <h2 id="序列相加">序列相加</h2>
-<p>Python 中，支持兩種類型相同的序列使用 “+” 運算符做相加操作，它會將兩個序列進行連接，但不會去除重複的元素。這裡所說的 “類型相同”，指的是 “+” 運算符的兩側序列要麼都是列表類型，要麼都是元組類型，要麼都是字符串。</p>
-<p>例如，前面章節中我們已經實現用“+”運算符連接2個(甚至多個)字符串，如下所示：</p>
+<p>Python 中，支持兩種類型相同的序列使用 “+” 運算符做相加操作，它會將兩個序列進行連接，但不會去除重複的元素。這裡所說的 “類型相同”，指的是 “+” 運算符的兩側序列要麼都是列表類型，要麼都是元組類型，要麼都是字符串。
+例如，前面章節中我們已經實現用“+”運算符連接2個(甚至多個)字符串，如下所示：</p>
 <div class="codehilite"><pre><span></span><code>str1 = "py"
 str2 = "th"
 str3 = "on"
@@ -372,8 +372,8 @@ print(" : ", str1 + str2 + str3)
 </tr>
 </tbody>
 </table>
-<p>部分序列不能應用其中的部分函數，比如字典中不能直接使用list，詳細的函數介紹請參閱相應數類型的函數介紹。</p>
-<p>這裡給大家給幾個例子：</p>
+<p>部分序列不能應用其中的部分函數，比如字典中不能直接使用list，詳細的函數介紹請參閱相應數類型的函數介紹。
+這裡給大家給幾個例子：</p>
 <div class="codehilite"><pre><span></span><code>str4 = "python-django"
 #找出最大的字符
 print(max(str4))
@@ -404,17 +404,17 @@ print("list1的第一項：", list1[0])
 print("list1的最後一項：", list1[-1])
 </code></pre></div>
 
-<p>運行結果：</p>
-<p>list1的第一項：js</p>
-<p>list1的最後一項：html以下是列表切片的操作：</p>
+<p>運行結果：
+list1的第一項：js
+list1的最後一項：html以下是列表切片的操作：</p>
 <div class="codehilite"><pre><span></span><code>list1 = ['js', 'py', 'css', 'html']
 print("list1的前3項：", list1[0:3])
 print("list1的2、3項：", list1[1:3])
 </code></pre></div>
 
-<p>運行結果：</p>
-<p>list1的前3項：['js', 'py', 'css']</p>
-<p>list1的2、3項：['py', 'css']</p>
+<p>運行結果：
+list1的前3項：['js', 'py', 'css']
+list1的2、3項：['py', 'css']</p>
 <h2 id="更新列表">更新列表</h2>
 <p>你可以對列表的數據項進行修改或更新，你也可以使用 append() 方法來添加列表項，如下所示：</p>
 <div class="codehilite"><pre><span></span><code>list1 = ['js', 'py', 'css', 'html']
@@ -425,22 +425,22 @@ list1.append(jss)
 print("追加列表項後的list1: ", list1)
 </code></pre></div>
 
-<p>運行結果：</p>
-<p>list1的第三個元素為：css</p>
-<p>list1的第三個元素為：sass</p>
-<p>追加列表項後的list1: ['js', 'py', 'sass', 'html', 'jsx']</p>
-<p>刪除列表元素</p>
-<p>可以使用 del 語句來刪除列表的的元素，如下實例：</p>
+<p>運行結果：
+list1的第三個元素為：css
+list1的第三個元素為：sass
+追加列表項後的list1: ['js', 'py', 'sass', 'html', 'jsx']
+刪除列表元素
+可以使用 del 語句來刪除列表的的元素，如下實例：</p>
 <div class="codehilite"><pre><span></span><code>list1 = ['js', 'py', 'css', 'html']
 del list1[0]
 print("刪除列表項後的list1: ", list1)
 </code></pre></div>
 
-<p>運行結果：</p>
-<p>刪除列表項後的list1: ['py', 'css', 'html']</p>
+<p>運行結果：
+刪除列表項後的list1: ['py', 'css', 'html']</p>
 <h2 id="python3-元組">Python3 元組</h2>
-<p>Python 的元組(tuple，簡寫為 tup)與列表類似，不同之處在於元組的元素不能修改。元組使用小括號()，列表使用方括號[]。元組創建很簡單，只需要在括號中添加元素，並使用逗號隔開即可。</p>
-<p>如下實例：</p>
+<p>Python 的元組(tuple，簡寫為 tup)與列表類似，不同之處在於元組的元素不能修改。元組使用小括號()，列表使用方括號[]。元組創建很簡單，只需要在括號中添加元素，並使用逗號隔開即可。
+如下實例：</p>
 <div class="codehilite"><pre><span></span><code><span class="nx">tup1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="err">'</span><span class="nx">d1</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">d2</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">d3</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="nx">d4</span><span class="err">'</span><span class="p">)</span>
 <span class="nx">tup2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="err">'</span><span class="mi">1996</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="mi">2000</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="mi">2012</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">'</span><span class="mi">2023</span><span class="err">'</span><span class="p">)</span>
 <span class="nx">tup3</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="sc">'1'</span><span class="p">,</span><span class="w"> </span><span class="sc">'2'</span><span class="p">,</span><span class="w"> </span><span class="sc">'3'</span><span class="p">,</span><span class="w"> </span><span class="sc">'4'</span>
@@ -457,8 +457,8 @@ print("刪除列表項後的list1: ", list1)
 &lt;class 'tuple'&gt;
 </code></pre></div>
 
-<p>訪問元組</p>
-<p>元組可以使用下標索引來訪問元組中的值，如下實例：</p>
+<p>訪問元組
+元組可以使用下標索引來訪問元組中的值，如下實例：</p>
 <div class="codehilite"><pre><span></span><code>tup1 = ('d1', 'd2', 'd3', 'd4')
 tup2 = ('1996', '2000', '2012', '2023')
 print ("tup1[0]: ", tup1[0])
@@ -470,8 +470,8 @@ print ("tup2[1:5]: ", tup2[1:5])
 tup2[1:5]: ('2000', '2012', '2023')
 </code></pre></div>
 
-<p>修改元組</p>
-<p>元組中的元素值是不允許修改的，但我們可以對元組進行連接組合，如下實例：</p>
+<p>修改元組
+元組中的元素值是不允許修改的，但我們可以對元組進行連接組合，如下實例：</p>
 <div class="codehilite"><pre><span></span><code>tupn1 = ('order', '66')
 tupn2 = ('star', 'war')
 tupn3 = tupn1 + tupn2
@@ -531,13 +531,13 @@ print(tupn3)
 
 <p>從以上實例可以看出，重新賦值的元組 tup，綁定到新的對象了，不是修改了原來的對象。</p>
 <h2 id="python3-字典">Python3 字典</h2>
-<p>在 Python3 中字典(dictionary，簡寫為 dict)是另一種可變容器模型，且可存儲任意類型對象。</p>
-<p>字典的每個鍵值(key=&gt;value) 對用冒號(:)分割，每個對之間用逗號(,)分割，整個字典包括在花括號({})中，格式如下所示：</p>
+<p>在 Python3 中字典(dictionary，簡寫為 dict)是另一種可變容器模型，且可存儲任意類型對象。
+字典的每個鍵值(key=&gt;value) 對用冒號(:)分割，每個對之間用逗號(,)分割，整個字典包括在花括號({})中，格式如下所示：</p>
 <div class="codehilite"><pre><span></span><code>dict = {key1 : value1, key2 : value2}
 </code></pre></div>
 
-<p>鍵必須是唯一的，但值則不必(上表中 Danna 和 Alice 的鍵是不同的，值卻是相同的)。值可以取任何數據類型，但鍵必須是不可變的，如字符串，數字或元組。</p>
-<p>一個簡單的字典實例：</p>
+<p>鍵必須是唯一的，但值則不必(上表中 Danna 和 Alice 的鍵是不同的，值卻是相同的)。值可以取任何數據類型，但鍵必須是不可變的，如字符串，數字或元組。
+一個簡單的字典實例：</p>
 <div class="codehilite"><pre><span></span><code>dict={'China': 'CN', 'Hong Kong': 'HK', 'Taiwan': 'TW'}
 </code></pre></div>
 
@@ -547,15 +547,15 @@ China':86}
 dict2 = {'Hong Kong': 22.30858031775129, 114.16673551288073}
 </code></pre></div>
 
-<p>訪問字典裡的值</p>
-<p>與列表取值類似，但列表取值時使用索引，字典取值時使用 key，如下實例：</p>
-<p>以上實例輸出結果：</p>
+<p>訪問字典裡的值
+與列表取值類似，但列表取值時使用索引，字典取值時使用 key，如下實例：
+以上實例輸出結果：</p>
 <div class="codehilite"><pre><span></span><code><span class="n">dict</span><span class="o">[</span><span class="n">Country</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="n">China</span>
 <span class="n">dict</span><span class="o">[</span><span class="n">code</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="mi">86</span>
 </code></pre></div>
 
-<p>修改字典</p>
-<p>向字典添加新內容的方法是增加新的鍵/值對，修改或刪除已有鍵/值對如下實例：</p>
+<p>修改字典
+向字典添加新內容的方法是增加新的鍵/值對，修改或刪除已有鍵/值對如下實例：</p>
 <div class="codehilite"><pre><span></span><code><span class="n">dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="s1">'Country'</span><span class="err">:</span><span class="w"> </span><span class="s1">'China'</span><span class="p">,</span><span class="w"> </span><span class="s1">'abbreviation'</span><span class="err">:</span><span class="w"> </span><span class="s1">'CN'</span><span class="p">,</span><span class="w"> </span><span class="s1">'code'</span><span class="err">:</span><span class="w"> </span><span class="s1">'86'</span><span class="err">}</span>
 <span class="n">dict</span><span class="o">[</span><span class="n">'Country'</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Hong Kong'</span>
 <span class="n">dict</span><span class="o">[</span><span class="n">'abbreviation'</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"HK"</span>
@@ -572,11 +572,9 @@ dict2 = {'Hong Kong': 22.30858031775129, 114.16673551288073}
 </code></pre></div>
 
 <h2 id="字典鍵的特性">字典鍵的特性</h2>
-<p>字典值可以沒有限制地取任何 Python 對象，既可以是標準的對象，也可以是用戶定義的，但鍵不行。</p>
-<p>兩個重要的點需要記住：</p>
-<ol>
-<li>不允許同一個鍵出現兩次。創建時如果同一個鍵被賦值兩次，後一個值會被記住，如下實例：</li>
-</ol>
+<p>字典值可以沒有限制地取任何 Python 對象，既可以是標準的對象，也可以是用戶定義的，但鍵不行。
+兩個重要的點需要記住：
+1. 不允許同一個鍵出現兩次。創建時如果同一個鍵被賦值兩次，後一個值會被記住，如下實例：</p>
 <div class="codehilite"><pre><span></span><code><span class="n">dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="s1">'Country'</span><span class="err">:</span><span class="w"> </span><span class="s1">'China'</span><span class="p">,</span><span class="w"> </span><span class="s1">'abbreviation'</span><span class="err">:</span><span class="w"> </span><span class="s1">'CN'</span><span class="p">,</span><span class="w"> </span><span class="s1">'code'</span><span class="err">:</span><span class="w"> </span><span class="s1">'86'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Country'</span><span class="err">:</span><span class="w"> </span><span class="s1">'Taiwan'</span><span class="err">}</span>
 <span class="k">print</span><span class="p">(</span><span class="ss">"dict[Country]:"</span><span class="p">,</span><span class="w"> </span><span class="n">dict</span><span class="o">[</span><span class="n">'Country'</span><span class="o">]</span><span class="p">)</span>
 </code></pre></div>
@@ -599,9 +597,9 @@ print("dict['Country']: ",dict['Country'])
 <span class="nx">TypeError</span><span class="p">:</span><span class="w"> </span><span class="nx">unhashable</span><span class="w"> </span><span class="k">type</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="nx">list</span><span class="err">'</span>
 </code></pre></div>
 
-<p>字典內置函數&amp;方法</p>
-<p>Python 字典包含了以下內置函數：</p>
-<p>len() 計算字典元素個數，即鍵的總數。</p>
+<p>字典內置函數&amp;方法
+Python 字典包含了以下內置函數：
+len() 計算字典元素個數，即鍵的總數。</p>
 <div class="codehilite"><pre><span></span><code>dict = {'Country': 'China', 'abbreviation': 'CN', 'code': 86}
 print(len(dict))
 </code></pre></div>
@@ -617,9 +615,9 @@ print(str(dict))
 </code></pre></div>
 
 <h2 id="python3-集合">Python3 集合</h2>
-<p>集合(set)是一個無序的不重複元素序列。因此在每次運行的時候集合的運行結果的內容都是相同的，但元素的排列順序卻不是固定的，所以本章中部分案例的運行結果會出現與給出結果不同的情況(運行結果不唯一)。</p>
-<p>可以使用大括號 { } 或者 set() 函數創建集合，注意：創建一個空集合必須用 set() 而不是 { }，因為 { } 是用來創建一個空字典。</p>
-<p>創建格式：</p>
+<p>集合(set)是一個無序的不重複元素序列。因此在每次運行的時候集合的運行結果的內容都是相同的，但元素的排列順序卻不是固定的，所以本章中部分案例的運行結果會出現與給出結果不同的情況(運行結果不唯一)。
+可以使用大括號 { } 或者 set() 函數創建集合，注意：創建一個空集合必須用 set() 而不是 { }，因為 { } 是用來創建一個空字典。
+創建格式：</p>
 <div class="codehilite"><pre><span></span><code>parame = {value01,value02,...}
 </code></pre></div>
 
@@ -679,8 +677,8 @@ print(thisset)
 <div class="codehilite"><pre><span></span><code>s.update(x)
 </code></pre></div>
 
-<p>x 可以有多個，用逗號分開。</p>
-<p>實例：</p>
+<p>x 可以有多個，用逗號分開。
+實例：</p>
 <div class="codehilite"><pre><span></span><code>thisset = set("s", "ss", "sss")
 thisset.update({'s1', 1})
 print(thisset)
@@ -688,20 +686,20 @@ thisset.update([11, 1], ["s1", "s2"])
 print(thisset)
 </code></pre></div>
 
-<p>移除元素</p>
-<p>語法格式如下：</p>
+<p>移除元素
+語法格式如下：</p>
 <div class="codehilite"><pre><span></span><code>s.remove(x)
 </code></pre></div>
 
-<p>將元素 x 從集合 s 中移除，如果元素不存在，則會發生錯誤。</p>
-<p>實例：</p>
+<p>將元素 x 從集合 s 中移除，如果元素不存在，則會發生錯誤。
+實例：</p>
 <div class="codehilite"><pre><span></span><code>thisset = set("s", "ss", "sss")
 thisset.remove('sss')
 print(thisset)
 </code></pre></div>
 
-<p>用 remove() 如果元素不存在，會發生錯誤</p>
-<p>用 discard() 如果元素不存在，不會發生錯誤隨機刪除集合中的一個元素，語法格式如下：</p>
+<p>用 remove() 如果元素不存在，會發生錯誤
+用 discard() 如果元素不存在，不會發生錯誤隨機刪除集合中的一個元素，語法格式如下：</p>
 <div class="codehilite"><pre><span></span><code>s.pop()
 </code></pre></div>
 
@@ -725,11 +723,11 @@ print(thisset)
 </code></pre></div>
 
 <h2 id="結果每次都不同">結果每次都不同</h2>
-<p>set 集合的 pop 方法會對集合進行無序的排列，然後將這個無序排列集合的左面第一個元素進行刪除。因為這個過程是不確定的，所以刪除結果也是不確定的，不建議使用這種方式進行刪除。</p>
-<p>計算集合元素個數</p>
-<p>語法格式如下：</p>
-<p>計算集合 s 的元素個數。</p>
-<p>實例：</p>
+<p>set 集合的 pop 方法會對集合進行無序的排列，然後將這個無序排列集合的左面第一個元素進行刪除。因為這個過程是不確定的，所以刪除結果也是不確定的，不建議使用這種方式進行刪除。
+計算集合元素個數
+語法格式如下：
+計算集合 s 的元素個數。
+實例：</p>
 <div class="codehilite"><pre><span></span><code>thisset = set("s", "ss", "sss")
 print(len(thisset))
 </code></pre></div>

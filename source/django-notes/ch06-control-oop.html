@@ -297,14 +297,14 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 </nav>
 <main>
 <h1 id="第-6-章--流程控制函數模組與面向對象">第 6 章 · 流程控制、函數、模組與面向對象</h1>
-<p>運行結果：</p>
-<p>清空集合</p>
-<p>語法格式如下：</p>
+<p>運行結果：
+清空集合
+語法格式如下：</p>
 <div class="codehilite"><pre><span></span><code>s.clear()
 </code></pre></div>
 
-<p>清空集合 s。</p>
-<p>實例：</p>
+<p>清空集合 s。
+實例：</p>
 <div class="codehilite"><pre><span></span><code>thisset = set(("s", "ss", "sss"))
 thisset.clear()
 print(thisset)
@@ -332,18 +332,18 @@ False
     statement_block_1
 </code></pre></div>
 
-<p>流程圖如下所示：</p>
-<p>這種 if 語句只有在符合條件的時候才會執行代碼塊內的代碼，是一種比較常見的用法。另一種常見的用法是：</p>
+<p>流程圖如下所示：
+這種 if 語句只有在符合條件的時候才會執行代碼塊內的代碼，是一種比較常見的用法。另一種常見的用法是：</p>
 <div class="codehilite"><pre><span></span><code>if condition_1:
     statement_block_1
 else:
     statement_block_2
 </code></pre></div>
 
-<p>流程圖如下所示：</p>
-<p>這種語句是一種常用的 if-else 語句，通常用於二分支結構的條件語句代碼。</p>
-<p>在一些時候，我們可能需要多分支的條件語句代碼，可以在 if-else 語句中混合 elif 語句進行使用：</p>
-<p>Python 中用elif 代替了else if，所以if語句的關鍵字為：if - elif - else。</p>
+<p>流程圖如下所示：
+這種語句是一種常用的 if-else 語句，通常用於二分支結構的條件語句代碼。
+在一些時候，我們可能需要多分支的條件語句代碼，可以在 if-else 語句中混合 elif 語句進行使用：
+Python 中用elif 代替了else if，所以if語句的關鍵字為：if - elif - else。</p>
 <div class="codehilite"><pre><span></span><code>if condition_1:
     statement_block_1
 elif condition_2:
@@ -352,16 +352,16 @@ else:
     statement_block_3
 </code></pre></div>
 
-<p>流程圖如下所示：</p>
-<p>如果"condition_1" 為 True 將執行"statement_block_1" 塊語句，如果"condition_1" 為 False，將判斷"condition_2"，如果"condition_2" 為 True 將執行"statement_block_2" 塊語句，如果"condition_2" 為 False，將執行"statement_block_3" 塊語句。</p>
-<p>使用第一種常用的 if 語句搭配合適的條件可以實現第二種和第三種語句的全部效果，但在執行效率和代碼可讀性上會變得比較糟糕。</p>
-<p>注意：</p>
-<p>每個條件後面要使用冒號(:)，表示接下來是滿足條件後要執行的語句塊。</p>
-<p>使用縮進來劃分語句塊，相同縮進數的語句在一起組成一個語句塊。</p>
-<p>在 Python 中沒有 switch - case 語句，但在 python3 中添加了用法類似的 match-case 語句。</p>
-<p>match-case 語句(python3.10 新特性)</p>
-<p>在其他語言(比如說經典的 C 語言)中有一種多分支條件判斷語句，可以進行模式匹配(通俗的講，就是將傳入的內容跟多個已存在的樣例進行比較，找到相同的案例並按照該案例的代碼進行處理，如果沒有相同案例就按默認案例進行處理，可以查看其他編程語言的條件語句的 Switch 相關部分內容進行比較參考)。在 python3.10 中也引入了這樣的新特性。</p>
-<p>一個 match 語句的使用示例：</p>
+<p>流程圖如下所示：
+如果"condition_1" 為 True 將執行"statement_block_1" 塊語句，如果"condition_1" 為 False，將判斷"condition_2"，如果"condition_2" 為 True 將執行"statement_block_2" 塊語句，如果"condition_2" 為 False，將執行"statement_block_3" 塊語句。
+使用第一種常用的 if 語句搭配合適的條件可以實現第二種和第三種語句的全部效果，但在執行效率和代碼可讀性上會變得比較糟糕。
+注意：
+每個條件後面要使用冒號(:)，表示接下來是滿足條件後要執行的語句塊。
+使用縮進來劃分語句塊，相同縮進數的語句在一起組成一個語句塊。
+在 Python 中沒有 switch - case 語句，但在 python3 中添加了用法類似的 match-case 語句。
+match-case 語句(python3.10 新特性)
+在其他語言(比如說經典的 C 語言)中有一種多分支條件判斷語句，可以進行模式匹配(通俗的講，就是將傳入的內容跟多個已存在的樣例進行比較，找到相同的案例並按照該案例的代碼進行處理，如果沒有相同案例就按默認案例進行處理，可以查看其他編程語言的條件語句的 Switch 相關部分內容進行比較參考)。在 python3.10 中也引入了這樣的新特性。
+一個 match 語句的使用示例：</p>
 <div class="codehilite"><pre><span></span><code>def http_error(status):
     match status:
         case 400:
@@ -440,13 +440,13 @@ else:
 <span class="w">        </span><span class="nv">print</span><span class="ss">(</span><span class="s2">"猜大了，在猜猜？"</span><span class="ss">)</span>
 </code></pre></div>
 
-<p>Python3 循環</p>
-<p>介紹 Python 循環語句的使用。</p>
-<p>Python 中的循環語句有 for 和 while。</p>
-<p>Python 循環語句的控制結構圖如下所示：</p>
+<p>Python3 循環
+介紹 Python 循環語句的使用。
+Python 中的循環語句有 for 和 while。
+Python 循環語句的控制結構圖如下所示：</p>
 <h2 id="while-循環">while 循環</h2>
-<p>Python 中 while 語句的一般形式：</p>
-<p>while 判斷條件：</p>
+<p>Python 中 while 語句的一般形式：
+while 判斷條件：</p>
 <div class="codehilite"><pre><span></span><code>statements
 </code></pre></div>
 
@@ -464,9 +464,9 @@ else:
 <div class="codehilite"><pre><span></span><code><span class="nv">Sum</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="mi">100</span>:<span class="w"> </span><span class="mi">5050</span>
 </code></pre></div>
 
-<p>for 語句</p>
-<p>Python for 循環可以遍歷任何序列的項目，如一個列表或者一個字符串。</p>
-<p>for 循環的一般格式如下：</p>
+<p>for 語句
+Python for 循環可以遍歷任何序列的項目，如一個列表或者一個字符串。
+for 循環的一般格式如下：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span>:
 <span class="k">else</span>:
 <span class="w">    </span><span class="nv">pass</span><span class="w">  </span>#<span class="w"> </span>內容省略
@@ -482,11 +482,11 @@ else:
 <div class="codehilite"><pre><span></span><code>BvS
 </code></pre></div>
 
-<p>水水俠</p>
-<p>神奇女俠</p>
-<p>大超回歸</p>
-<p>range()函數</p>
-<p>如果你需要遍歷數字序列，可以使用內置 range() 函數。它會生成數列，例如：</p>
+<p>水水俠
+神奇女俠
+大超回歸
+range()函數
+如果你需要遍歷數字序列，可以使用內置 range() 函數。它會生成數列，例如：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="mi">10</span><span class="ss">)</span>:
 <span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">i</span><span class="ss">)</span>
 <span class="w">    </span>#<span class="w"> </span>你也可以使用<span class="nv">range</span><span class="w"> </span>指定區間的值：
@@ -512,10 +512,10 @@ else:
 print(pp)
 </code></pre></div>
 
-<p>break 和 continue 語句及循環中的 else 子句</p>
-<p>break 語句可以跳出 for 和 while 的循環體。如果你從 for 或 while 循環中終止，任何對應的循環 else 塊將不執行。</p>
-<p>continue 語句被用來告訴 Python 跳過當前循環中的當此循環，然後繼續進行下一輪循環。</p>
-<p>循環語句可以有 else 子句；它在窮盡列表(以 for 循環)或條件變為假(以 while 循環)循環終止時被執行，但循環被 break 終止時不執行，如下查尋質數的循環例子：</p>
+<p>break 和 continue 語句及循環中的 else 子句
+break 語句可以跳出 for 和 while 的循環體。如果你從 for 或 while 循環中終止，任何對應的循環 else 塊將不執行。
+continue 語句被用來告訴 Python 跳過當前循環中的當此循環，然後繼續進行下一輪循環。
+循環語句可以有 else 子句；它在窮盡列表(以 for 循環)或條件變為假(以 while 循環)循環終止時被執行，但循環被 break 終止時不執行，如下查尋質數的循環例子：</p>
 <div class="codehilite"><pre><span></span><code>for n in range(2, 10):
     for x in range(2, n):
         if n % x == 0:
@@ -537,11 +537,11 @@ print(pp)
     <span class="nb">pass</span>
 </code></pre></div>
 
-<p>Python3 迭代器與生成器 - 迭代器迭代是 Python 最強大的功能之一，是訪問集合元素的一種方式。</p>
-<p>迭代器是一個可以記住遍歷的位置的對象。</p>
-<p>迭代器對像從集合的第一個元素開始訪問，直到所有的元素被訪問完結束。迭代器只能往前不會後退。</p>
-<p>迭代器有兩個基本的方法：iter()和next()。</p>
-<p>字符串，列表或元組對像都可用於創建迭代器：</p>
+<p>Python3 迭代器與生成器 - 迭代器迭代是 Python 最強大的功能之一，是訪問集合元素的一種方式。
+迭代器是一個可以記住遍歷的位置的對象。
+迭代器對像從集合的第一個元素開始訪問，直到所有的元素被訪問完結束。迭代器只能往前不會後退。
+迭代器有兩個基本的方法：iter()和next()。
+字符串，列表或元組對像都可用於創建迭代器：</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="mi">1</span>,<span class="w"> </span><span class="mi">2</span>,<span class="w"> </span><span class="mi">3</span>,<span class="w"> </span><span class="mi">4</span>]
 <span class="nv">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">iter</span><span class="ss">(</span><span class="nv">list</span><span class="ss">)</span>
 <span class="nv">print</span><span class="ss">(</span><span class="k">next</span><span class="ss">(</span><span class="nv">it</span><span class="ss">))</span>
@@ -556,8 +556,8 @@ print(pp)
 </code></pre></div>
 
 <h2 id="生成器">生成器</h2>
-<p>在 Python 中，使用了 yield 的函數被稱為生成器(generator)。跟普通函數不同的是，生成器是一個返回迭代器的函數，只能用於迭代操作，更簡單點理解生成器就是一個迭代器。在調用生成器運行的過程中，每次遇到 yield 時函數會暫停並保存當前所有的運行信息，返回 yield 的值。並在下一次執行 next() 方法時從當前位置繼續運行。</p>
-<p>以下實例使用 yield 實現斐波那契數列：</p>
+<p>在 Python 中，使用了 yield 的函數被稱為生成器(generator)。跟普通函數不同的是，生成器是一個返回迭代器的函數，只能用於迭代操作，更簡單點理解生成器就是一個迭代器。在調用生成器運行的過程中，每次遇到 yield 時函數會暫停並保存當前所有的運行信息，返回 yield 的值。並在下一次執行 next() 方法時從當前位置繼續運行。
+以下實例使用 yield 實現斐波那契數列：</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 </code></pre></div>
 
@@ -577,11 +577,11 @@ print(pp)
 <span class="w">                </span><span class="nv">sys</span>.<span class="k">exit</span><span class="ss">()</span>
 </code></pre></div>
 
-<p>Python3 函數</p>
-<p>本章節我們將為大家介紹 Python 中函數的應用。</p>
-<p>Python 定義函數使用 def 關鍵字，一般格式如下：</p>
-<p>def 函數名（參數列表）：</p>
-<p>函數體讓我們使用函數來輸出"Hello World!"：</p>
+<p>Python3 函數
+本章節我們將為大家介紹 Python 中函數的應用。
+Python 定義函數使用 def 關鍵字，一般格式如下：
+def 函數名（參數列表）：
+函數體讓我們使用函數來輸出"Hello World!"：</p>
 <div class="codehilite"><pre><span></span><code>def hello():
     print("hello World!")
     hello()
@@ -657,9 +657,9 @@ parrot('a thousand', state='pushing up the daisies') # 1 positional, 1 keyword
 </code></pre></div>
 
 <h2 id="可變參數列表">可變參數列表</h2>
-<p>最後，一個較不常用的功能是可以讓函數調用可變個數的參數。</p>
-<p>這些參數被包裝進一個元組(查看元組和序列)。</p>
-<p>在這些可變個數的參數之前，可以有零到多個普通的參數：</p>
+<p>最後，一個較不常用的功能是可以讓函數調用可變個數的參數。
+這些參數被包裝進一個元組(查看元組和序列)。
+在這些可變個數的參數之前，可以有零到多個普通的參數：</p>
 <div class="codehilite"><pre><span></span><code>def arithmetic_mean(*args):
     if len(args) == 0:
         return 0
@@ -770,11 +770,11 @@ print(stack)
 </code></pre></div>
 
 <h2 id="列表推導式">列表推導式</h2>
-<p>列表推導式提供了從序列創建列表的簡單途徑。通常應用程序將一些操作應用於某個序列的每個元素，用其獲得的結果作為生成新列表的元素，或者根據確定的判定條件創建子序列。</p>
-<p>每個列表推導式都在 for 之後跟一個表達式，然後有零到多個 for 或 if 子句。返回結果是一個根據表達從其後的 for 和 if 上下文環境中生成出來的列表。如果希望表達式推導出一個元組，就必須使用括號。</p>
-<p>語法格式：</p>
-<p>結果值1 if 判斷條件 else 結果2 for 變量名 in 原列表</p>
-<p>這裡我們將列表中每個數值乘三，獲得一個新的列表：</p>
+<p>列表推導式提供了從序列創建列表的簡單途徑。通常應用程序將一些操作應用於某個序列的每個元素，用其獲得的結果作為生成新列表的元素，或者根據確定的判定條件創建子序列。
+每個列表推導式都在 for 之後跟一個表達式，然後有零到多個 for 或 if 子句。返回結果是一個根據表達從其後的 for 和 if 上下文環境中生成出來的列表。如果希望表達式推導出一個元組，就必須使用括號。
+語法格式：
+結果值1 if 判斷條件 else 結果2 for 變量名 in 原列表
+這裡我們將列表中每個數值乘三，獲得一個新的列表：</p>
 <div class="codehilite"><pre><span></span><code>vec = [2, 4, 6]
 vec2 = [3*x for x in vec]
 print(vec2)
@@ -805,8 +805,8 @@ print(vec2)
 <span class="w">    </span><span class="k">print</span><span class="p">(</span><span class="n">transposed</span><span class="p">)</span>
 </code></pre></div>
 
-<p>元組和序列</p>
-<p>元組由若干逗號分隔的值組成，例如：</p>
+<p>元組和序列
+元組由若干逗號分隔的值組成，例如：</p>
 <div class="codehilite"><pre><span></span><code>t = 12345, 54321, 'hello!'
 print(t[0])
 print(t)
@@ -815,11 +815,11 @@ u = t, (1, 2, 3, 4, 5)
 print(u)
 </code></pre></div>
 
-<p>如你所見，元組在輸出時總是有括號的，以便於正確表達嵌套結構。在輸入時可能有或沒有括號，不過括號通常是必須的(如果元組是更大的表達式的一部分)。</p>
-<p>集合</p>
-<p>集合是一個無序不重複元素的集。基本功能包括關係測試和消除重複元素。</p>
-<p>可以用大括號({}) 創建集合。注意:如果要創建一個空集合,你必須用 set() 而不是{}；後者創建一個空的字典，下一節我們會介紹這個數據結構。</p>
-<p>以下是一個簡單的演示：</p>
+<p>如你所見，元組在輸出時總是有括號的，以便於正確表達嵌套結構。在輸入時可能有或沒有括號，不過括號通常是必須的(如果元組是更大的表達式的一部分)。
+集合
+集合是一個無序不重複元素的集。基本功能包括關係測試和消除重複元素。
+可以用大括號({}) 創建集合。注意:如果要創建一個空集合,你必須用 set() 而不是{}；後者創建一個空的字典，下一節我們會介紹這個數據結構。
+以下是一個簡單的演示：</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">basket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>{<span class="s1">'apple'</span>,<span class="w"> </span><span class="s1">'orange'</span>,<span class="w"> </span><span class="s1">'apple'</span>,<span class="w"> </span><span class="s1">'pear'</span>,<span class="w"> </span><span class="s1">'orange'</span>,<span class="w"> </span><span class="s1">'banana'</span>}
 <span class="nv">print</span><span class="ss">(</span><span class="nv">basket</span><span class="ss">)</span>
 <span class="nv">print</span><span class="ss">(</span><span class="s1">'orange'</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">basket</span><span class="ss">)</span>
@@ -835,12 +835,12 @@ print(u)
 <span class="nv">print</span><span class="ss">(</span><span class="nv">aa</span><span class="ss">)</span>
 </code></pre></div>
 
-<p>字典</p>
-<p>另一個非常有用的 Python 內建數據類型是字典。</p>
-<p>序列是以連續的整數為索引，與此不同的是，字典以關鍵字為索引，關鍵字可以是任意不可變類型，通常用字符串或數值。</p>
-<p>理解字典的最佳方式是把它看做無序的鍵=&gt; 值對集合。在同一個字典之內，關鍵字必須是互不相同。</p>
-<p>一對大括號創建一個空的字典：{}。</p>
-<p>這是一個字典運用的簡單例子：</p>
+<p>字典
+另一個非常有用的 Python 內建數據類型是字典。
+序列是以連續的整數為索引，與此不同的是，字典以關鍵字為索引，關鍵字可以是任意不可變類型，通常用字符串或數值。
+理解字典的最佳方式是把它看做無序的鍵=&gt; 值對集合。在同一個字典之內，關鍵字必須是互不相同。
+一對大括號創建一個空的字典：{}。
+這是一個字典運用的簡單例子：</p>
 <div class="codehilite"><pre><span></span><code>tel = {'jack': 4098, 'sape': 4139}
 tel['guido'] = 4127
 print(tel)
@@ -862,8 +862,8 @@ print(bbb)
 aaa = dict(sape=4139, guido=4127, jack=4098)
 </code></pre></div>
 
-<p>Python3(模塊)</p>
-<p>模塊是一個包含所有你定義的函數和變量的文件，其後綴名是.py。模塊可以被別的程序引入，以使用該模塊中的函數等功能。這也是使用 Python 標準庫的方法。下面是一個使用 Python 標準庫中模塊的例子。</p>
+<p>Python3(模塊)
+模塊是一個包含所有你定義的函數和變量的文件，其後綴名是.py。模塊可以被別的程序引入，以使用該模塊中的函數等功能。這也是使用 Python 標準庫的方法。下面是一個使用 Python 標準庫中模塊的例子。</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">'命令行參數如下：'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">:</span>
@@ -871,16 +871,16 @@ aaa = dict(sape=4139, guido=4127, jack=4098)
     <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\\</span><span class="s1">n</span><span class="se">\\</span><span class="s1">nPython 路徑為：'</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">'</span><span class="se">\\</span><span class="s1">n'</span><span class="p">)</span>
 </code></pre></div>
 
-<p>1、import sys 引入 Python 標準庫中的 sys.py 模塊；這是引入某一模塊的方法。</p>
-<p>2、sys.argv 是一個包含命令行參數的列表。</p>
-<p>3、sys.path 包含了一個 Python 解釋器自動查找所需模塊的路徑的列表。</p>
+<p>1、import sys 引入 Python 標準庫中的 sys.py 模塊；這是引入某一模塊的方法。
+2、sys.argv 是一個包含命令行參數的列表。
+3、sys.path 包含了一個 Python 解釋器自動查找所需模塊的路徑的列表。</p>
 <h2 id="import-語句">import 語句</h2>
 <p>如果要使用 Python 源文件，只需在另一個源文件裡執行 import 語句，import 語句語法如下：</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">module1</span><span class="o">,</span><span class="w"> </span><span class="nn">module2</span><span class="o">,</span><span class="w"> </span><span class="nn">module3</span>
 </code></pre></div>
 
-<p>當解釋器遇到 import 語句，如果模塊在當前的搜索路徑就會被導入。</p>
-<p>搜索路徑是一個解釋器會先進行搜索的所有目錄的列表。如果想要導入模塊 support，需要把命令放在腳本的頂端：</p>
+<p>當解釋器遇到 import 語句，如果模塊在當前的搜索路徑就會被導入。
+搜索路徑是一個解釋器會先進行搜索的所有目錄的列表。如果想要導入模塊 support，需要把命令放在腳本的頂端：</p>
 <div class="codehilite"><pre><span></span><code><span class="gh">#</span> filename: support.py
 def print_func( par ):
     print("Hello : ", par)
@@ -892,12 +892,12 @@ def print_func( par ):
 <span class="n">support</span><span class="o">.</span><span class="n">print_func</span><span class="p">(</span><span class="s1">'okok'</span><span class="p">)</span>
 </code></pre></div>
 
-<p>一個模塊只會被導入一次，不管你執行了多少次 import。這樣可以防止導入模塊被一遍又一遍地執行。</p>
-<p>當我們使用 import 語句的時候，Python 解釋器是怎樣找到對應的文件的呢？這就涉及到 Python 的搜索路徑，搜索路徑是由一系列目錄名組成的，Python 解釋器就依次從這些目錄中去尋找所引入的模塊。</p>
-<p>因此若像我一樣在當前目錄下存在與要引入模塊同名的文件，就會把要引入的模塊屏蔽掉。</p>
-<p>瞭解了搜索路徑的概念，就可以在腳本中修改 sys.path 來引入一些不在搜索路徑中的模塊。</p>
-<p>代碼如下： fibo.py</p>
-<p>def fib(n): # 定義到 n 的斐波那契數列</p>
+<p>一個模塊只會被導入一次，不管你執行了多少次 import。這樣可以防止導入模塊被一遍又一遍地執行。
+當我們使用 import 語句的時候，Python 解釋器是怎樣找到對應的文件的呢？這就涉及到 Python 的搜索路徑，搜索路徑是由一系列目錄名組成的，Python 解釋器就依次從這些目錄中去尋找所引入的模塊。
+因此若像我一樣在當前目錄下存在與要引入模塊同名的文件，就會把要引入的模塊屏蔽掉。
+瞭解了搜索路徑的概念，就可以在腳本中修改 sys.path 來引入一些不在搜索路徑中的模塊。
+代碼如下： fibo.py
+def fib(n): # 定義到 n 的斐波那契數列</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">a</span>,<span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>,<span class="w"> </span><span class="mi">1</span>
 <span class="k">while</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">n</span>:
 <span class="w">    </span><span class="nv">print</span><span class="ss">(</span><span class="nv">b</span>,<span class="w"> </span><span class="k">end</span><span class="o">=</span><span class="s1">''</span><span class="ss">)</span>
@@ -930,9 +930,9 @@ def print_func( par ):
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fibo</span><span class="w"> </span><span class="kn">import</span> <span class="n">fib</span><span class="p">,</span> <span class="n">fib2</span>
 </code></pre></div>
 
-<p>這個聲明不會把整個 fibo 模塊導入到當前的命名空間中，它只會將 fibo 裡的 fib 函數引入進來。</p>
-<p>from ... import * 語句</p>
-<p>把一個模塊的所有內容全都導入到當前的命名空間也是可行的，只需使用如下聲明：</p>
+<p>這個聲明不會把整個 fibo 模塊導入到當前的命名空間中，它只會將 fibo 裡的 fib 函數引入進來。
+from ... import * 語句
+把一個模塊的所有內容全都導入到當前的命名空間也是可行的，只需使用如下聲明：</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">modname</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 </code></pre></div>
 
@@ -945,8 +945,8 @@ else:
     print('我來自另一模塊')
 </code></pre></div>
 
-<p>每個模塊都有一個_name_屬性，當其值是'main'時，表明該模塊自身在運行，否則是被引入。</p>
-<p>每個_name_與_main底下是雙下劃線，是“__”去掉中間的空格。</p>
+<p>每個模塊都有一個_name_屬性，當其值是'main'時，表明該模塊自身在運行，否則是被引入。
+每個_name_與_main底下是雙下劃線，是“__”去掉中間的空格。</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">dir</span><span class="p">()</span>
 <span class="c1">#內置的函數 dir() 可以找到模塊內定義的所有名稱，以一個字符串列表的形式返回：</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">fibo</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span>
@@ -955,9 +955,9 @@ else:
 </code></pre></div>
 
 <h2 id="python3-錯誤和異常">Python3 錯誤和異常</h2>
-<p>作為 Python 初學者，在剛學習 Python 編程時，經常會看到一些報錯信息 Python 有兩種錯誤很容易辨認：語法錯誤和異常。</p>
-<p>語法錯誤</p>
-<p>Python 的語法錯誤或者稱之為解析錯，是初學者經常碰到的，如下實例</p>
+<p>作為 Python 初學者，在剛學習 Python 編程時，經常會看到一些報錯信息 Python 有兩種錯誤很容易辨認：語法錯誤和異常。
+語法錯誤
+Python 的語法錯誤或者稱之為解析錯，是初學者經常碰到的，如下實例</p>
 <div class="codehilite"><pre><span></span><code><span class="k">while</span><span class="w"> </span><span class="nv">True</span><span class="w"> </span><span class="nv">print</span><span class="ss">(</span><span class="s1">'Hello world'</span><span class="ss">)</span>
 <span class="nv">File</span><span class="w"> </span><span class="s2">" "</span>,<span class="w"> </span><span class="nv">line</span><span class="w"> </span><span class="mi">1</span>,<span class="w"> </span><span class="nv">in</span><span class="w"> </span>?
 <span class="k">while</span><span class="w"> </span><span class="nv">True</span><span class="w"> </span><span class="nv">print</span><span class="ss">(</span><span class="s1">'Hello world'</span><span class="ss">)</span>
@@ -965,11 +965,11 @@ else:
 <span class="nv">SyntaxError</span>:<span class="w"> </span><span class="nv">invalid</span><span class="w"> </span><span class="nv">syntax</span>
 </code></pre></div>
 
-<p>這個例子中，函數 print() 被檢查到有錯誤，是它前面缺少了一個冒號(:)。</p>
-<p>語法分析器指出了出錯的一行，並且在最先找到的錯誤的位置標記了一個小小的箭頭。</p>
+<p>這個例子中，函數 print() 被檢查到有錯誤，是它前面缺少了一個冒號(:)。
+語法分析器指出了出錯的一行，並且在最先找到的錯誤的位置標記了一個小小的箭頭。</p>
 <h2 id="異常">異常</h2>
-<p>即便 Python 程序的語法是正確的，在運行它的時候，也有可能發生錯誤。運行期檢測到的錯誤被稱為異常。</p>
-<p>大多數的異常都不會被程序處理，都以錯誤信息的形式展現在這裡：</p>
+<p>即便 Python 程序的語法是正確的，在運行它的時候，也有可能發生錯誤。運行期檢測到的錯誤被稱為異常。
+大多數的異常都不會被程序處理，都以錯誤信息的形式展現在這裡：</p>
 <blockquote>
 <blockquote>
 <blockquote>
@@ -1006,23 +1006,23 @@ NameError: name 'spam' is not defined
 <span class="nx">TypeError</span><span class="p">:</span><span class="w"> </span><span class="nx">Can</span><span class="err">'</span><span class="nx">t</span><span class="w"> </span><span class="nx">convert</span><span class="w"> </span><span class="err">'</span><span class="nx">int</span><span class="err">'</span><span class="w"> </span><span class="nx">object</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">str</span><span class="w"> </span><span class="nx">implicitly</span>
 </code></pre></div>
 
-<p>異常以不同的類型出現，這些類型都作為信息的一部分打印出來：例子中的類型有</p>
-<p>ZeroDivisionError, NameError 和 TypeError。</p>
-<p>錯誤信息的前面部分顯示了異常發生的上下文，並以調用棧的形式顯示具體信息。</p>
+<p>異常以不同的類型出現，這些類型都作為信息的一部分打印出來：例子中的類型有
+ZeroDivisionError, NameError 和 TypeError。
+錯誤信息的前面部分顯示了異常發生的上下文，並以調用棧的形式顯示具體信息。</p>
 <h2 id="python3-面向對象">Python3 面向對象</h2>
 <p>Python 從設計之初就是一門面向對象的語言，正因為如此，在 Python 中創建一個類和對像是很容易的。簡單的瞭解下面向對象的一些基本特徵。</p>
 <h2 id="python3-面向對象技術簡介">Python3 面向對象技術簡介</h2>
-<p>類(Class): 用來描述具有相同的屬性和方法的對象的集合。它定義了該集合中每個對象所共有的屬性和方法。對像是類的實例。</p>
-<p>類變量：類變量在整個實例化的對像中是公用的。類變量定義在類中且在函數體之外。類變量通常不作為實例變量使用。</p>
-<p>數據成員：類變量或者實例變量用於處理類及其實例對象的相關的數據。</p>
-<p>方法重寫：如果從父類繼承的方法不能滿足子類的需求，可以對其進行改寫，這個過程叫方法的覆蓋(override)，也稱為方法的重寫。</p>
-<p>局部變量：定義在方法中的變量，只作用於當前實例的類。</p>
-<p>實例變量：在類的聲明中，屬性是用變量來表示的。這種變量就稱為實例變量，是在類聲明的內部但是在類的其他成員方法之外聲明的。</p>
-<p>繼承：即一個派生類(derived class)繼承基類(base class)的字段和方法。繼承也允許把一個派生類的對像作為一個基類對像對待。例如，有這樣一個設計：一個 Dog 類型的對象 派生自 Animal 類，這是模擬"是一個(is-a) "關係(例圖，Dog 是一個 Animal)。</p>
-<p>實例化：創建一個類的實例，類的具體對象。</p>
-<p>方法：類中定義的函數。</p>
-<p>對象：通過類定義的數據結構實例。對象包括兩個數據成員(類變量和實例變量)和方法。</p>
-<p>類定義</p>
+<p>類(Class): 用來描述具有相同的屬性和方法的對象的集合。它定義了該集合中每個對象所共有的屬性和方法。對像是類的實例。
+類變量：類變量在整個實例化的對像中是公用的。類變量定義在類中且在函數體之外。類變量通常不作為實例變量使用。
+數據成員：類變量或者實例變量用於處理類及其實例對象的相關的數據。
+方法重寫：如果從父類繼承的方法不能滿足子類的需求，可以對其進行改寫，這個過程叫方法的覆蓋(override)，也稱為方法的重寫。
+局部變量：定義在方法中的變量，只作用於當前實例的類。
+實例變量：在類的聲明中，屬性是用變量來表示的。這種變量就稱為實例變量，是在類聲明的內部但是在類的其他成員方法之外聲明的。
+繼承：即一個派生類(derived class)繼承基類(base class)的字段和方法。繼承也允許把一個派生類的對像作為一個基類對像對待。例如，有這樣一個設計：一個 Dog 類型的對象 派生自 Animal 類，這是模擬"是一個(is-a) "關係(例圖，Dog 是一個 Animal)。
+實例化：創建一個類的實例，類的具體對象。
+方法：類中定義的函數。
+對象：通過類定義的數據結構實例。對象包括兩個數據成員(類變量和實例變量)和方法。
+類定義</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">ClassName:</span>
 <span class="c1"># &lt;statement-1&gt;</span>
 <span class="c1"># .</span>
@@ -1034,9 +1034,9 @@ NameError: name 'spam' is not defined
 
 <p>類實例化後，可以使用其屬性，實際上，創建一個類之後，可以通過類名訪問其屬性。</p>
 <h2 id="類對象">類對象</h2>
-<p>類對象支持兩種操作：屬性引用和實例化。</p>
-<p>屬性引用使用和 Python 中所有的屬性引用一樣的標準語法：obj.name。</p>
-<p>類對象創建後，類命名空間中所有的命名都是有效屬性名。所以如果類定義是這樣：</p>
+<p>類對象支持兩種操作：屬性引用和實例化。
+屬性引用使用和 Python 中所有的屬性引用一樣的標準語法：obj.name。
+類對象創建後，類命名空間中所有的命名都是有效屬性名。所以如果類定義是這樣：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">MyClass:</span>
     <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
@@ -1058,11 +1058,11 @@ x = MyClass()
 # 訪問類的屬性和方法
 </code></pre></div>
 
-<p>以上創建了一個新的類實例並將該對象賦給局部變量 x，x 為空的對象。</p>
-<p>執行以上程序輸出結果為：</p>
-<p>MyClass 類的屬性 i 為：12345</p>
-<p>MyClass 類的方法 f 輸出為：hello world</p>
-<p>很多類都傾向於將對象創建為有初始狀態的。因此類可能會定義一個名為_init_()的特殊方法（構造方法），像下面這樣：</p>
+<p>以上創建了一個新的類實例並將該對象賦給局部變量 x，x 為空的對象。
+執行以上程序輸出結果為：
+MyClass 類的屬性 i 為：12345
+MyClass 類的方法 f 輸出為：hello world
+很多類都傾向於將對象創建為有初始狀態的。因此類可能會定義一個名為_init_()的特殊方法（構造方法），像下面這樣：</p>
 <div class="codehilite"><pre><span></span><code>def <span class="ge">_init_</span>(self):
     self.data = []
 </code></pre></div>
@@ -1078,8 +1078,8 @@ x = MyClass()
     <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
 
-<p>需要注意圓括號中基類的順序，若是基類中有相同的方法名，而在子類使用時未指定，Python 從左至右搜索即方法在子類中未找到時，從左到右查找基類中是否包含方法。</p>
-<p>BaseClassName (示例中的基類名)必須與派生類定義在一個作用域內。除了類，還可以用表達式，基類定義在另一個模塊中時這一點非常有用：</p>
+<p>需要注意圓括號中基類的順序，若是基類中有相同的方法名，而在子類使用時未指定，Python 從左至右搜索即方法在子類中未找到時，從左到右查找基類中是否包含方法。
+BaseClassName (示例中的基類名)必須與派生類定義在一個作用域內。除了類，還可以用表達式，基類定義在另一個模塊中時這一點非常有用：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">DerivedClassName</span>(<span class="n">modname</span>.<span class="n">BaseClassName</span>):
     <span class="nb">pass</span>  <span class="c1"># 內容省略</span>
 </code></pre></div>
@@ -1113,8 +1113,8 @@ x = MyClass()
     <span class="nb">s</span>.<span class="n">speak</span>()
 </code></pre></div>
 
-<p>多繼承</p>
-<p>Python 同樣有限的支持多繼承形式。多繼承的類定義形如下例：</p>
+<p>多繼承
+Python 同樣有限的支持多繼承形式。多繼承的類定義形如下例：</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">DerivedClassName</span>(<span class="n">Base1</span>, <span class="n">Base2</span>, <span class="n">Base3</span>):
 <span class="c1"># &lt;statement-1&gt;</span>
 <span class="c1"># .</span>
@@ -1152,8 +1152,8 @@ x = MyClass()
 </code></pre></div>
 
 <h2 id="方法重寫">方法重寫</h2>
-<p>如果你的父類方法的功能不能滿足你的需求，你可以在子類重寫你父類的方法，實例如下：</p>
-<p>class Parent: # 定義父類</p>
+<p>如果你的父類方法的功能不能滿足你的需求，你可以在子類重寫你父類的方法，實例如下：
+class Parent: # 定義父類</p>
 <div class="codehilite"><pre><span></span><code>def myMethod(self):
     print('調用父類方法')
 </code></pre></div>
@@ -1164,89 +1164,59 @@ x = MyClass()
     c = Child() # 子類實例
 </code></pre></div>
 
-<p>c.myMethod() # 子類調用重寫方法</p>
-<p>類的專屬方法：</p>
-<ul>
-<li>
-<p><strong>init</strong>：構造函數，在生成對象時調用</p>
-</li>
-<li>
-<p><strong>del</strong>：析構函數，釋放對象時使用</p>
-</li>
-<li>
-<p><strong>repr</strong>：打印，轉換</p>
-</li>
-<li>
-<p><strong>setitem</strong>：按照索引賦值</p>
-</li>
-<li>
-<p>getitem：按照索引獲取值</p>
-</li>
-<li>
-<p><strong>len</strong>：獲得長度</p>
-</li>
-<li>
-<p><strong>cmp</strong>：比較運算</p>
-</li>
-<li>
-<p><strong>call</strong>：函數調用</p>
-</li>
-<li>
-<p><strong>add</strong>：加運算</p>
-</li>
-<li>
-<p><strong>sub</strong>：減運算</p>
-</li>
-<li>
-<p><strong>mul</strong>：乘運算</p>
-</li>
-<li>
-<p><strong>div</strong>：除運算</p>
-</li>
-<li>
-<p><strong>mod</strong>：求餘運算</p>
-</li>
-<li>
-<p><strong>pow</strong>：乘方</p>
-</li>
-</ul>
-<p>參考資料：</p>
+<p>c.myMethod() # 子類調用重寫方法
+類的專屬方法：
+- <strong>init</strong>：構造函數，在生成對象時調用
+- <strong>del</strong>：析構函數，釋放對象時使用
+- <strong>repr</strong>：打印，轉換
+- <strong>setitem</strong>：按照索引賦值
+- getitem：按照索引獲取值
+- <strong>len</strong>：獲得長度
+- <strong>cmp</strong>：比較運算
+- <strong>call</strong>：函數調用
+- <strong>add</strong>：加運算
+- <strong>sub</strong>：減運算
+- <strong>mul</strong>：乘運算
+- <strong>div</strong>：除運算
+- <strong>mod</strong>：求餘運算
+- <strong>pow</strong>：乘方
+參考資料：</p>
 <div class="codehilite"><pre><span></span><code>https://www.w3cschool.cn/python3/
 </code></pre></div>
 
 <h2 id="識別主流-python-框架的功能及應用場景">識別主流 Python 框架的功能及應用場景</h2>
-<p>以下是一些主流的 Python 框架及其功能和應用場景的簡要描述：</p>
-<p>1) Django</p>
-<p>功能：Django 是一個全功能的、高級的 Python Web 框架，提供了許多內置的功能和工具，包括 ORM(對象關係映射)、表單處理、身份驗證、管理後臺等。</p>
-<p>應用場景：Django 適用於構建複雜而大型的 Web 應用程式，尤其是需要快速發展和高效率開發的場景。它適用於中大型團隊合作開發，並在安全性、可維護性和擴展性方面具有優勢。</p>
-<p>2) Flask :</p>
-<p>功能： Flask 是一個輕量級的 Python Web 框架，提供了基本的功能和核心組件，同時具有可擴展性和靈活性。</p>
-<p>應用場景：Flask 適用於簡單而輕量的 Web 應用程式，特別是在快速原型開發、小型項目或單個開發者的場景中。它以其簡單易用和高度可定製的特點受到許多開發者的歡迎。</p>
-<p>3) Tornado :</p>
-<p>功能：Tornado 是一個非阻塞式的 Python Web 框架，具有高度的擴展性和低延遲性能。它內建了支持同步和非同步處理的工具，並與大量的 IO 操作相容。</p>
-<p>應用場景：Tornado 適用於需要高性能、高併發和真實時間性能的 Web 應用程式。它常用於即時通訊應用程式、實時分析、實時數據處理等場景。</p>
-<p>4) Bottle :</p>
-<p>功能：Bottle 是一個輕量級的 Python Web 框架，具有簡單易用的 API 和最小的依賴性，適合小型應用程式和小型項目的開發。</p>
-<p>應用場景：Bottle 適用於簡單的 Web 應用程式和 RESTful API 開發，尤其在小型項目和快速原型開發的情境中非常方便。</p>
-<p>5) web2py :</p>
-<p>功能： web2py 是一個全堆棧的 Python Web 框架，提供了完整的解決方案，包括 ORM 、驗證、安全性等。它強調開發的簡單性和可靠性。</p>
-<p>應用場景：web2py 適用於開發中型和大型的 Web 應用程式，尤其在對安全性和可靠性要求較高的場景中。該框架具有簡單的學習曲線，並提供了易於使用的工具和內建功能。</p>
-<p>需要注意的是，以上僅是對於這些框架的簡要描述，每個框架還有更多的功能和特點，並且在特定情境下可能存在更多的應用場景。選擇合適的框架應該根據項目的具體需求、開發者的偏好以及框架本身的特性來進行評估。</p>
+<p>以下是一些主流的 Python 框架及其功能和應用場景的簡要描述：
+1) Django
+功能：Django 是一個全功能的、高級的 Python Web 框架，提供了許多內置的功能和工具，包括 ORM(對象關係映射)、表單處理、身份驗證、管理後臺等。
+應用場景：Django 適用於構建複雜而大型的 Web 應用程式，尤其是需要快速發展和高效率開發的場景。它適用於中大型團隊合作開發，並在安全性、可維護性和擴展性方面具有優勢。
+2) Flask :
+功能： Flask 是一個輕量級的 Python Web 框架，提供了基本的功能和核心組件，同時具有可擴展性和靈活性。
+應用場景：Flask 適用於簡單而輕量的 Web 應用程式，特別是在快速原型開發、小型項目或單個開發者的場景中。它以其簡單易用和高度可定製的特點受到許多開發者的歡迎。
+3) Tornado :
+功能：Tornado 是一個非阻塞式的 Python Web 框架，具有高度的擴展性和低延遲性能。它內建了支持同步和非同步處理的工具，並與大量的 IO 操作相容。
+應用場景：Tornado 適用於需要高性能、高併發和真實時間性能的 Web 應用程式。它常用於即時通訊應用程式、實時分析、實時數據處理等場景。
+4) Bottle :
+功能：Bottle 是一個輕量級的 Python Web 框架，具有簡單易用的 API 和最小的依賴性，適合小型應用程式和小型項目的開發。
+應用場景：Bottle 適用於簡單的 Web 應用程式和 RESTful API 開發，尤其在小型項目和快速原型開發的情境中非常方便。
+5) web2py :
+功能： web2py 是一個全堆棧的 Python Web 框架，提供了完整的解決方案，包括 ORM 、驗證、安全性等。它強調開發的簡單性和可靠性。
+應用場景：web2py 適用於開發中型和大型的 Web 應用程式，尤其在對安全性和可靠性要求較高的場景中。該框架具有簡單的學習曲線，並提供了易於使用的工具和內建功能。
+需要注意的是，以上僅是對於這些框架的簡要描述，每個框架還有更多的功能和特點，並且在特定情境下可能存在更多的應用場景。選擇合適的框架應該根據項目的具體需求、開發者的偏好以及框架本身的特性來進行評估。</p>
 <h2 id="fastapi-與-django-的比較">FastAPI 與 Django 的比較</h2>
-<p>在現代網路開發框架中，FastAPI 與 Django 是兩個常見的選擇。這兩個框架各有其優點，適用於不同的開發需求。以下將從性能、易用性、擴展性等方面來比較這兩者。</p>
-<p>1). 性能</p>
-<p>FastAPI 被設計為高效能的非同步框架，使用 Python 的異步（asynchronous）功能。這使得 FastAPI 在處理大量同時請求時，能夠表現得更為出色。根據官方測試，FastAPI 的性能甚至可以與 Node.js 等非同步框架相媲美。</p>
-<p>另一方面，Django 是一個傳統的同步框架，性能較為穩定，但在大量並發請求下，處理速度可能不及 FastAPI。Django 主要著重於功能完備性與易用性，而非極致的性能優化。</p>
-<p>2). 易用性</p>
-<p>Django 以「電池全備」的方式著稱，這意味著它內建了眾多功能，如用戶認證、管理介面、ORM（Object-Relational Mapping）等。對於開發者來說，這使得 Django 更加方便快速上手。即使是較為複雜的項目，Django 也能提供現成的解決方案。</p>
-<p>FastAPI 則以極簡主義和靈活性著稱。它的核心功能簡潔，開發者可以根據需要自行選擇第三方工具。這使得 FastAPI 更加靈活，特別適合那些希望對每個部分都有更多掌控權的開發者。</p>
-<p>3). 擴展性與社羣支持Django 擁有龐大的使用者羣體與豐富的第三方庫支持，使得擴展和自定義非常容易。許多現有的插件可以直接集成到專案中，省去了大量的開發時間和成本。</p>
-<p>相比之下，FastAPI 的生態系統還在快速發展中，儘管它的社羣不如 Django 成熟，但在某些領域（例如 API 開發）具有強大的競爭力。此外，因為 FastAPI 是基於 Pydantic 和 Starlette 的，因此開發者能夠使用這些工具進行擴展。</p>
-<p>4). 何時使用 FastAPI? 何時使用 Django?</p>
-<p>如果您的項目重點是構建高性能的 API 服務，尤其是需要處理大量的並發請求，並且希望利用 Python 的非同步功能，那麼 FastAPI 是理想的選擇。</p>
-<p>如果您需要一個功能完備的網路應用框架，並且希望快速啟動項目而不必從零開始設計後端架構，Django 會是更好的選擇。Django 適合構建內容管理系統（CMS）、電子商務平臺等需要強大數據庫支持的應用。</p>
-<p>5). 結論</p>
-<p>FastAPI 和 Django 各自針對不同的使用場景進行了優化。FastAPI 更注重性能和靈活性，而 Django 提供了豐富的功能和較低的學習門檻。在選擇這兩個框架時，應根據項目的具體需求來決定。</p>
+<p>在現代網路開發框架中，FastAPI 與 Django 是兩個常見的選擇。這兩個框架各有其優點，適用於不同的開發需求。以下將從性能、易用性、擴展性等方面來比較這兩者。
+1). 性能
+FastAPI 被設計為高效能的非同步框架，使用 Python 的異步（asynchronous）功能。這使得 FastAPI 在處理大量同時請求時，能夠表現得更為出色。根據官方測試，FastAPI 的性能甚至可以與 Node.js 等非同步框架相媲美。
+另一方面，Django 是一個傳統的同步框架，性能較為穩定，但在大量並發請求下，處理速度可能不及 FastAPI。Django 主要著重於功能完備性與易用性，而非極致的性能優化。
+2). 易用性
+Django 以「電池全備」的方式著稱，這意味著它內建了眾多功能，如用戶認證、管理介面、ORM（Object-Relational Mapping）等。對於開發者來說，這使得 Django 更加方便快速上手。即使是較為複雜的項目，Django 也能提供現成的解決方案。
+FastAPI 則以極簡主義和靈活性著稱。它的核心功能簡潔，開發者可以根據需要自行選擇第三方工具。這使得 FastAPI 更加靈活，特別適合那些希望對每個部分都有更多掌控權的開發者。
+3). 擴展性與社羣支持Django 擁有龐大的使用者羣體與豐富的第三方庫支持，使得擴展和自定義非常容易。許多現有的插件可以直接集成到專案中，省去了大量的開發時間和成本。
+相比之下，FastAPI 的生態系統還在快速發展中，儘管它的社羣不如 Django 成熟，但在某些領域（例如 API 開發）具有強大的競爭力。此外，因為 FastAPI 是基於 Pydantic 和 Starlette 的，因此開發者能夠使用這些工具進行擴展。
+4). 何時使用 FastAPI? 何時使用 Django?
+如果您的項目重點是構建高性能的 API 服務，尤其是需要處理大量的並發請求，並且希望利用 Python 的非同步功能，那麼 FastAPI 是理想的選擇。
+如果您需要一個功能完備的網路應用框架，並且希望快速啟動項目而不必從零開始設計後端架構，Django 會是更好的選擇。Django 適合構建內容管理系統（CMS）、電子商務平臺等需要強大數據庫支持的應用。
+5). 結論
+FastAPI 和 Django 各自針對不同的使用場景進行了優化。FastAPI 更注重性能和靈活性，而 Django 提供了豐富的功能和較低的學習門檻。在選擇這兩個框架時，應根據項目的具體需求來決定。</p>
 <div class="chnav">
 <a href="/django-notes/ch05-sequence.html">← 第 5 章 序列與容器類型</a>
 <a class="course" href="/django-course/">課程總覽</a>

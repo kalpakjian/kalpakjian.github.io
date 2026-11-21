@@ -435,6 +435,33 @@ def _insert_figures(text, no):
     return text
 
 
+JUNK_LINE = re.compile(r"^(20\d\d[/-]\d{1,2}[/-]\d{1,2}|[\w\u4e00-\u9fff.-]+\.(md|pptx|pdf|key))$")
+JUNK_TOKEN = re.compile(
+    r"[（(]\s*(在\s*)?index\d*\.py\s*[）)]"
+    r"|在\s*index\d*\.py\s*[（(]用\s*python\s*index\d*\.py\s*開啟[）)]"
+    r"|[（(]用\s*python\s*index\d*\.py\s*開啟[）)]"
+)
+
+
+def _strip_ocr_junk(text):
+    """去掉簡報頁尾殘留：單獨一行的日期／來源檔名，以及 (index.py) 這類檔案標記（不動程式碼）。"""
+    out, in_code = [], False
+    for line in text.splitlines():
+        if line.startswith(FENCE):
+            in_code = not in_code
+            out.append(line)
+            continue
+        if in_code:
+            out.append(line)
+            continue
+        if JUNK_LINE.match(line.strip()):
+            continue
+        cleaned = JUNK_TOKEN.sub("", line).rstrip()
+        if cleaned.strip():
+            out.append(cleaned)
+    return "\n".join(out) + "\n"
+
+
 def _fix_placeholders(code):
     """教材骨架的佔位行（單一個 . 或 <statement-N>）→ 註解；只有宣告沒有 body → 補 pass。"""
     lines = [("# ." if ln.strip() == "." else ln) for ln in code.splitlines()]
@@ -511,6 +538,7 @@ def render_md(items, no, title):
     flush()
     text = "\n".join(out).rstrip() + "\n"
     text = repair_code_blocks(text)  # 先修結構（合併被切碎的 fence、重建縮排），再做文字替換
+    text = _strip_ocr_junk(text)     # 去掉頁尾日期／來源檔名／(index.py) 標記
     text = _insert_figures(text, no)  # 手繪 SVG 圖（MVT／模型關聯／Git Flow）
     text = _dumps_to_tables(text)    # OCR 拍平的 HTML 表格 → markdown 表格
     text, _n = _apply_region_rewrites(text)
