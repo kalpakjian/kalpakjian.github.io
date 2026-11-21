@@ -209,14 +209,14 @@ UML 廣泛應用於軟件開發的各個階段，包括需求分析、系統設�
 定義屬性和操作：
 
 - 書籍類 (Book) :
-- 屬性: title: String、author: String、isbn: String
-- 操作：getDetails(): String
+    - 屬性: title: String、author: String、isbn: String
+    - 操作：getDetails(): String
 - 會員類 (Member) :
-- 屬性: name: String、memberId: String
-- 操作：register(), borrowBook(book: Book): LoanRecord
+    - 屬性: name: String、memberId: String
+    - 操作：register(), borrowBook(book: Book): LoanRecord
 - 借閱記錄類 (LoanRecord) :
-- 屬性：loanDate: Date、returnDate: Date
-- 操作：markReturned()
+    - 屬性：loanDate: Date、returnDate: Date
+    - 操作：markReturned()
 
 建立類之間的關係：
 
@@ -276,19 +276,20 @@ UML 廣泛應用於軟件開發的各個階段，包括需求分析、系統設�
 定義屬性值：
 
 - book1: Book
-- title: "UML Basics"
-- author: "John Doe"
-- isbn: "1234567890"
+    - title: "UML Basics"
+    - author: "John Doe"
+    - isbn: "1234567890"
 - book2: Book
-- title: "Advanced UML"
-- author: "Jane Smith"
-- isbn: "0987654321"
+    - title: "Advanced UML"
+    - author: "Jane Smith"
+    - isbn: "0987654321"
 - member1: Member
-- name: "Alice"
-- memberld: "M001"
+    - name: "Alice"
+    - memberld: "M001"
 - loan1: LoanRecord
-- loanDate: "2024-01-01"
-- returnDate: "2024-01-15"
+    - loanDate: "2024-01-01"
+    - returnDate: "2024-01-15"
+
 建立對象之間的鏈接：
 
 - member1: Member 與 loan1: LoanRecord 之間有一個借閱鏈接。

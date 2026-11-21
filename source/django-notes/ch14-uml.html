@@ -642,15 +642,21 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 </ul>
 <p>定義屬性和操作：</p>
 <ul>
-<li>書籍類 (Book) :</li>
+<li>書籍類 (Book) :<ul>
 <li>屬性: title: String、author: String、isbn: String</li>
 <li>操作：getDetails(): String</li>
-<li>會員類 (Member) :</li>
+</ul>
+</li>
+<li>會員類 (Member) :<ul>
 <li>屬性: name: String、memberId: String</li>
 <li>操作：register(), borrowBook(book: Book): LoanRecord</li>
-<li>借閱記錄類 (LoanRecord) :</li>
+</ul>
+</li>
+<li>借閱記錄類 (LoanRecord) :<ul>
 <li>屬性：loanDate: Date、returnDate: Date</li>
 <li>操作：markReturned()</li>
+</ul>
+</li>
 </ul>
 <p>建立類之間的關係：</p>
 <ul>
@@ -707,26 +713,32 @@ figure.fig-svg figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;tex
 </ul>
 <p>定義屬性值：</p>
 <ul>
-<li>book1: Book</li>
+<li>book1: Book<ul>
 <li>title: "UML Basics"</li>
 <li>author: "John Doe"</li>
 <li>isbn: "1234567890"</li>
-<li>book2: Book</li>
+</ul>
+</li>
+<li>book2: Book<ul>
 <li>title: "Advanced UML"</li>
 <li>author: "Jane Smith"</li>
 <li>isbn: "0987654321"</li>
-<li>member1: Member</li>
+</ul>
+</li>
+<li>member1: Member<ul>
 <li>name: "Alice"</li>
 <li>memberld: "M001"</li>
-<li>loan1: LoanRecord</li>
+</ul>
+</li>
+<li>loan1: LoanRecord<ul>
 <li>loanDate: "2024-01-01"</li>
-<li>
-<p>returnDate: "2024-01-15"
-建立對象之間的鏈接：</p>
+<li>returnDate: "2024-01-15"</li>
+</ul>
 </li>
-<li>
-<p>member1: Member 與 loan1: LoanRecord 之間有一個借閱鏈接。</p>
-</li>
+</ul>
+<p>建立對象之間的鏈接：</p>
+<ul>
+<li>member1: Member 與 loan1: LoanRecord 之間有一個借閱鏈接。</li>
 <li>loan1: LoanRecord 與 book1: Book 之間有一個借閱鏈接。</li>
 </ul>
 <p>下面是這個圖書館管理系統的對象圖示例：</p>
