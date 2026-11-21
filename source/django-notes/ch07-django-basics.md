@@ -144,7 +144,7 @@ Django 團隊保持定期更新框架版本，以解決已知的漏洞和提升�
 
 #### 2.1.1 安裝 Python
 
-Django 是基於 Python 的框架，因此第一步是安裝 Python。你需要檢查你的電腦是否已安裝了正確版本的 Python。
+Django 是基於 Python 的框架，因此第一步是安裝 Python。你需要檢查你的電腦是否已安裝了正確版本的 Python。Django 5.2 支援 Python 3.10 至 3.14，建議安裝 Python 3.14 的最新版本；Python 3.10 已於 2026 年 10 月停止支援，Python 3.15 目前未列入 Django 5.2 的支援範圍。
 
 ## 檢查 Python 安裝
 
@@ -185,19 +185,19 @@ pip 官方安裝指引
 
 #### 2.2.1 Django 版本選擇
 
-Django 團隊會定期發布新版和 LTS（長期支持）版本。通常情況下，建議安裝最新的穩定版本。如果你的項目需要特定版本的 Django（例如 LTS 版本），可以在安裝時指定版本號。
+Django 團隊會定期發布功能版本與 LTS（長期支持）版本。本課程以 Django 5.2 LTS 為準：2025 年 4 月 2 日發布，安全支援至 2028 年 4 月，支援 Python 3.10 至 3.14。生產環境建議使用 LTS 版本，想試用新功能才安裝最新的功能版本；不論哪一種，都應使用該系列最新的補丁版本。
 
 #### 2.2.2 使用 pip 安裝 Django
 
-在終端或命令提示符中執行以下命令來安裝最新的 Django：
+在終端或命令提示符中執行以下命令來安裝 Django 5.2 LTS 的最新補丁版本（需要 Python 3.10 或以上）：
 
 ```
-pip install django
+pip install "django~=5.2"
 ```
-若需要安裝特定版本，可以指定版本號，例如安裝 3.2 版本：
+若需要固定 5.2 系列的版本，可以指定版本號，例如：
 
 ```
-pip install django==3.2
+pip install "django==5.2.*"
 ```
 確認 Django 安裝成功
 
@@ -294,7 +294,7 @@ Watching for file changes with StatReloader
 Performing system checks...
 System check identified no issues (0 silenced).
 September 15, 2024 - 12:45:08
-Django version 3.2.10, using settings 'myproject.settings'
+Django version 5.2.19, using settings 'myproject.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 ```
@@ -364,7 +364,7 @@ asgi.py 用於支援異步功能的應用，如 WebSocket。
 解決方案：檢查是否在虛擬環境中運行，並且 Django 是否正確安裝。嘗試重新安裝 Django：
 
 ```
-pip install django
+pip install "django~=5.2"
 ```
 原因 2：端口被佔用
 

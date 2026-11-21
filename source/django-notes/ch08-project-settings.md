@@ -352,7 +352,7 @@ mycommand.py
 2. 編寫自定義命令邏輯：
 
 ```
-from Django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand
 class Command(BaseCommand):
 help = '這是一個自定義命令範例'
 def handle(self, *args, **kwargs):
@@ -390,8 +390,8 @@ urls.py 文件是 URLconf 的配置文件，通常放置在 Django 項目目錄�
 
 ```
 # myproject/urls.py
-from Django.contrib import admin
-from Django.urls import path
+from django.contrib import admin
+from django.urls import path
 from myapp import views
 urlpatterns = [
 ```
@@ -428,7 +428,7 @@ path('about/', views.about, name='about'), # 靜態 "關於我們" 頁面
 
 ```
 # myapp/urls.py
-from Django.urls import path
+from django.urls import path
 from . import views
 urlpatterns = [
 ```
@@ -491,7 +491,7 @@ path(route, view, kwargs=None, name=None)
 
 ```
 # myapp/urls.py
-from Django.urls import path
+from django.urls import path
 from . import views
 urlpatterns = [
 ```
@@ -539,7 +539,7 @@ Django 的視圖（View）負責處理用戶的 HTTP 請求並返回響應。每
 
 ```
 # myapp/views.py
-from Django.http import HttpResponse
+from django.http import HttpResponse
 def index(request):
 ```
 return HttpResponse("歡迎來到我的網站！")
@@ -554,7 +554,7 @@ return HttpResponse("歡迎來到我的網站！")
 
 ```
 # myapp/urls.py
-from Django.urls import path
+from django.urls import path
 from . import views
 urlpatterns = [
 ```
@@ -574,7 +574,7 @@ path('contact/', views.contact, name='contact'), # 將 contact/ URL 連接到 co
 
 ```
 # myapp/views.py
-from Django.http import HttpResponse
+from django.http import HttpResponse
 def post_detail(request, id):
 ```
 return HttpResponse(f"這是文章 {id} 的詳情頁面")
@@ -657,7 +657,7 @@ return HttpResponse(f"這是產品 {product.name} 的詳情頁面")
 
 ```
 # blog/views.py
-from Django.shortcuts import redirect
+from django.shortcuts import redirect
 def submit_comment(request, post_id):
 if request.method == 'POST':
 # 保存評論邏輯

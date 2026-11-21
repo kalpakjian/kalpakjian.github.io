@@ -34,7 +34,7 @@
 
 ```
 # myapp/views.py
-from Django.http import HttpResponse
+from django.http import HttpResponse
 def index(request):
 ```
 return HttpResponse("歡迎來到我的網站！")
@@ -49,8 +49,8 @@ return HttpResponse("歡迎來到我的網站！")
 
 ```
 # myapp/views.py
-from Django.shortcuts import render
-from Django.http import HttpResponse
+from django.shortcuts import render
+from django.http import HttpResponse
 def contact(request):
 if request.method == 'POST':
 # 處理表單提交邏輯
@@ -72,7 +72,7 @@ return render(request, 'contact.html')
 
 ```
 # myapp/views.py
-from Django.shortcuts import render
+from django.shortcuts import render
 def index(request):
 context = {
 ```
@@ -94,7 +94,7 @@ return render(request, 'index.html', context)
 
 ```
 # myapp/views.py
-from Django.http import HttpResponse
+from django.http import HttpResponse
 def submit_form(request):
 if request.method == 'POST':
 name = request.POST.get('name')
@@ -118,8 +118,8 @@ return HttpResponse("請通過 POST 提交表單")
 
 ```
 # myapp/views.py
-from Django.http import HttpResponse
-from Django.views import View
+from django.http import HttpResponse
+from django.views import View
 class IndexView(View):
 def get(self, request):
 ```
@@ -138,7 +138,7 @@ TemplateView 是一個常用的類視圖，用來渲染靜態模板並返回 HTM
 
 ```
 # myapp/views.py
-from Django.views.generic import TemplateView
+from django.views.generic import TemplateView
 class AboutView(TemplateView):
 template_name = 'about.html'
 ```
@@ -153,7 +153,7 @@ RedirectView 用於將用戶重定向到另一個 URL。它非常適合處理頁
 
 ```
 # myapp/views.py
-from Django.views.generic import RedirectView
+from django.views.generic import RedirectView
 class HomeRedirectView(RedirectView):
 url = '/home/'
 ```
@@ -167,9 +167,9 @@ url = '/home/'
 
 ```
 # myapp/views.py
-from Django.shortcuts import render
-from Django.http import HttpResponse
-from Django.views import View
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.views import View
 class ContactView(View):
 def get(self, request):
 return render(request, 'contact.html')
@@ -253,7 +253,7 @@ path("IndexView.as_view(), name='index'), # 連接類視圖
 
 ```
 # myapp/views.py
-from Django.shortcuts import render
+from django.shortcuts import render
 def index(request):
 context = {
 ```
@@ -277,7 +277,7 @@ return render(request, 'index.html', context)
 
 ```
 # myapp/views.py
-from Django.views.generic import TemplateView
+from django.views.generic import TemplateView
 class IndexView(TemplateView):
 template_name = 'index.html'
 def get_context_data(self, **kwargs):

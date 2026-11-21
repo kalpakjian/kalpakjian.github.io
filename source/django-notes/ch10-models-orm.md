@@ -364,7 +364,7 @@ Django 的 F() 表達式允許我們在查詢中直接使用數據庫中的字�
 範例：將所有文章的點擊次數加 1
 
 ```
-from Django.db.models import F
+from django.db.models import F
 Article.objects.update(clicks=F('clicks') + 1)
 ```
 這裡，F('clicks') + 1 表示將每篇文章的點擊次數自增 1，並將結果保存到數據庫中。
@@ -376,7 +376,7 @@ Article.objects.update(clicks=F('clicks') + 1)
 範例：查詢標題中包含 "Django" 或作者為 "John" 的文章
 
 ```
-from Django.db.models import Q
+from django.db.models import Q
 articles = Article.objects.filter(Q(title_icontains='Django') | Q(author='John'))
 ```
 這個查詢會返回所有標題中包含 "Django" 或作者為 "John" 的文章。
@@ -792,7 +792,7 @@ Q 對象允許我們進行複雜的查詢，特別是需要進行 多條件 OR �
 範例：使用 Q 進行多條件查詢
 
 ```
-from Django.db.models import Q
+from django.db.models import Q
 # 查詢標題中包含 'Django' 或內容中包含 'Framework' 的文章
 filtered_articles = Article.objects.filter(
 Q(_icontains='Django') | Q(content__icontains='Framework')

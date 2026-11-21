@@ -26,8 +26,8 @@ Django 提供了一個內建的 Paginator 類，用來處理數據的分頁邏�
 
 ```
 # myapp/views.py
-from Django.core.paginator import Paginator
-from Django.shortcuts import render
+from django.core.paginator import Paginator
+from django.shortcuts import render
 from .models import Article
 def article_list(request):
 article_list = Article.objects.all() # 獲取所有文章
@@ -273,11 +273,8 @@ Bootstrap 是由 Twitter 開發的一個開源前端框架，旨在幫助開發�
 
 ```
 <link
-href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css"
 rel="stylesheet"
-integrity="sha384-
-GLhITQ8iRABdZLl6O3oVMWSkTQOp6b7In1ZJ3/Jr59b6EGGoI1mK2KmlKfdiwaH"
-crossorigin="anonymous"
 />
 </head>
 ```
@@ -290,10 +287,7 @@ crossorigin="anonymous"
 
 ```
 <script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-integrity="sha384-
-w76A2O1pCtWcVfIRxPyD9F9clb3hb1lVtGA6pBMeLrccv8AUdPaCPG8FAT/h61pL"
-crossorigin="anonymous"
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/js/bootstrap.bundle.min.js"
 ```
 ></script>
 
@@ -634,9 +628,9 @@ Django 提供了 UserCreationForm，這是一個用來註冊新用戶的表單�
 
 ```
 # accounts/views.py
-from Django.shortcuts import render, redirect
-from Django.contrib.auth.forms import UserCreationForm
-from Django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 def register(request):
 if request.method == 'POST':
 form = UserCreationForm(request.POST)
@@ -658,7 +652,7 @@ return render(request, 'accounts/register.html', {'form': form})
 
 ```
 # accounts/urls.py
-from Django.urls import path
+from django.urls import path
 from .import views
 urlpatterns = [
 path('register/', views.register, name='register'),
@@ -668,8 +662,8 @@ path('register/', views.register, name='register'),
 
 ```
 # myproject/urls.py
-from Django.contrib import admin
-from Django.urls import path, include
+from django.contrib import admin
+from django.urls import path, include
 urlpatterns = [
 path('admin/', admin.site.urls),
 ```
@@ -723,7 +717,7 @@ Django 內建了 LoginView，它會處理登錄表單的顯示和用戶認證。
 
 ```
 # accounts/urls.py
-from Django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views
 urlpatterns += [
 path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
 path('logout/', auth_views.LogoutView.as_view(), name='logout'),
@@ -732,6 +726,8 @@ path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 - LoginView 使用自定義模板 login.html 顯示登錄表單。
 
 - LogoutView 則處理用戶登出的邏輯，並且登出後自動重定向到主頁。
+
+- 注意：Django 5.0 起 LogoutView 只接受 POST 請求（以 GET 登出已被移除），模板要用表單提交（`<form method="post">{% csrf_token %}<button type="submit">登出</button></form>`），不能用 `<a href>` 連結。
 
 創建登錄模板
 
@@ -786,7 +782,7 @@ Django 內建的密碼重設功能包括四個步驟：
 
 ```
 # accounts/urls.py
-from Django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views
 urlpatterns += [
 path('password_reset',
 auth_views.PasswordResetView.as_view(template_name='accounts/password_reset.html'),
@@ -912,9 +908,9 @@ Django 提供了幾個內置的消息類型（如 success, error, warning 等）
 
 ```
 # accounts/views.py
-from Django.shortcuts import render, redirect
-from Django.contrib.auth.forms import UserCreationForm
-from Django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 def register(request):
 if request.method == 'POST':
 form = UserCreationForm(request.POST)
@@ -963,7 +959,7 @@ messages.warning(request, "這是一條警告消息"): 用於顯示警告信息�
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 {% block title %}My Django Site{% endblock %}</td>
 <link
-href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css"
 rel="stylesheet"
 ```
 >
@@ -1000,7 +996,7 @@ aria-label="Close"
 </div>
 {% endif %} {% block content %} {% endblock %}
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 ```
@@ -1024,7 +1020,7 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 ```
 # settings.py
-from Django.contrib.messages import constants as message_constants
+from django.contrib.messages import constants as message_constants
 MESSAGE_TAGS = {
 message_constants.DEBUG: 'secondary',
 message_constants.INFO: 'info',
@@ -1136,8 +1132,8 @@ INSTALLED_APPS = [
 
 ```
 # eventmanager/urls.py
-from Django.contrib import admin
-from Django.urls import path, include
+from django.contrib import admin
+from django.urls import path, include
 urlpatterns = [
 path('admin/', admin.site.urls),
 ```
@@ -1150,7 +1146,7 @@ path('events/', include('events.urls')), # 包含事件應用的路由
 
 ```
 # events/urls.py
-from Django.urls import path
+from django.urls import path
 from . import views
 urlpatterns = [
 path(", views.event_list, name='event_list'),
@@ -1170,8 +1166,8 @@ path('<int:id>/delete/, views.event_delete, name='event_delete'),
 
 ```
 # events/models.py
-from Django.db import models
-from Django.contrib.auth.models import User
+from django.db import models
+from django.contrib.auth.models import User
 class Event(models.Model):
 title = models.CharField(max_length=200)
 description = models.TextField()
@@ -1211,7 +1207,7 @@ python manage.py migrate
 
 ```
 # events/views.py
-from Django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Event
 from .forms import EventForm
 def event_list(request):
@@ -1324,7 +1320,7 @@ return redirect('event_detail', id=event.id)
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 Event Manager</title>
 <link
-href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <div class="container mt-5">{% block content %} {% endblock %} </div>
 </body>
@@ -1341,6 +1337,6 @@ href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min
 參考資料：
 
 ```
-https://docs.djangoproject.com/en/4.2/
+https://docs.djangoproject.com/en/5.2/
 ```
 

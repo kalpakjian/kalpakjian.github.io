@@ -293,7 +293,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>函數視圖（Function-based Views, FBV）是最簡單的視圖實現方式。它是一個接受HTTP請求對象並返回HTTP響應對象的普通Python函數。函數視圖的結構簡單，直接處理請求並返回結果。</p>
 <p>範例：簡單的函數視圖</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
 </code></pre></div>
 
@@ -303,8 +303,8 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>在 Django 中，視圖可以處理多種 HTTP 方法，如 GET 和 POST。GET 請求通常用於從伺服器獲取數據（如加載網頁），而 POST 請求用於提交數據（如表單提交）。函數視圖可以通過 request.method 來檢查請求的類型並做出不同的響應。</p>
 <p>範例：處理 GET 和 POST 請求</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">contact</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
 <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
 <span class="c1"># 處理表單提交邏輯</span>
@@ -321,7 +321,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>函數視圖通常需要將數據傳遞給模板來生成動態內容。Django 提供了 render() 函數來將視圖中的上下文數據與模板結合，從而生成 HTML 響應。</p>
 <p>範例：將上下文數據傳遞給模板</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
 <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
 </code></pre></div>
@@ -337,7 +337,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>視圖不僅僅用於顯示靜態頁面，它們還可以處理用戶提交的表單數據。當用戶通過表單提交數據後，視圖可以從 request.POST 中獲取表單數據並進行處理。</p>
 <p>範例：處理表單提交</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">submit_form</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
 <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
 <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span>
@@ -353,8 +353,8 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>類視圖中，每個 HTTP 請求方法（如 GET、POST）對應於類中的不同方法，如 get() 和 post()。這使得代碼更加清晰且便於擴展。</p>
 <p>範例：簡單的類視圖</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">View</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">View</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">IndexView</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
 </code></pre></div>
@@ -368,7 +368,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>TemplateView 是一個常用的類視圖，用來渲染靜態模板並返回 HTML 響應。當你只需要顯示一個簡單的模板頁面時，TemplateView 是一個不錯的選擇。</p>
 <p>範例：使用 TemplateView 渲染模板</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.views.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateView</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.views.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateView</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">AboutView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
 <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'about.html'</span>
 </code></pre></div>
@@ -380,7 +380,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>RedirectView 用於將用戶重定向到另一個 URL。它非常適合處理頁面遷移或重定向。</p>
 <p>範例：使用 RedirectView 進行重定向</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.views.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">RedirectView</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.views.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">RedirectView</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">HomeRedirectView</span><span class="p">(</span><span class="n">RedirectView</span><span class="p">):</span>
 <span class="n">url</span> <span class="o">=</span> <span class="s1">'/home/'</span>
 </code></pre></div>
@@ -390,9 +390,9 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>類視圖通過將每個 HTTP 方法映射到對應的方法來處理請求。例如，get() 方法用於處理 GET 請求，而 post() 方法則用於處理 POST 請求。你可以在一個類視圖中同時定義這些方法，從而更靈活地處理不同類型的請求。</p>
 <p>範例：處理 GET 和 POST 請求的類視圖</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">View</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">View</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ContactView</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
 <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">'contact.html'</span><span class="p">)</span>
@@ -453,7 +453,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>視圖通常需要與模板進行交互，從而生成動態的 HTML 頁面。在視圖中，我們可以將數據放入上下文（Context）中，然後將這些數據傳遞給模板進行渲染。</p>
 <p>範例：傳遞上下文數據到模板</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">render</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
 <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
 </code></pre></div>
@@ -471,7 +471,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>類視圖中的上下文數據可以通過覆蓋 get_context_data() 方法來傳遞。get_context_data() 方法允許我們向模板添加額外的上下文數據。</p>
 <p>範例：在類視圖中傳遞上下文數據</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.views.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateView</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.views.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateView</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">IndexView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
 <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'index.html'</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>

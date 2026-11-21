@@ -286,7 +286,7 @@ Git 與其他版本控制系統相比，具有以下幾個顯著優勢：
 
 - sudo apt-get install git
 
-。在 CentOS/Fedora 上：
+。在 CentOS Stream／Rocky Linux／Fedora 上（CentOS 7 於 2024-06、CentOS 8 於 2021-12 已停止維護）：
 
 - sudo yum install git
 
@@ -511,7 +511,7 @@ git branch -d new-feature
 
 Git Flow 是一種複雜的工作流程，適用於大型項目，具有嚴格的分支管理策略。
 
-1. 使用主分支（master）和開發分支（develop）。
+1. 使用主分支（master）和開發分支（develop）。（時代註記：GitHub 自 2020 年起新倉庫預設分支名為 `main`，原理相同。）
 
 2. 每個新功能在 develop 分支上創建一個 feature 分支。
 
@@ -1605,7 +1605,7 @@ git pull origin develop
 
 #### 3.8.5 自動化測試和持續集成
 
-在合併分支之前，應進行自動化測試，確保代碼質量和穩定性。持續集成（CI）工具可以自動運行測試，並在測試通過後自動部署新版本。常見的 CI 工具包括 Jenkins、Travis CI 和 CircleCI。
+在合併分支之前，應進行自動化測試，確保代碼質量和穩定性。持續集成（CI）工具可以自動運行測試，並在測試通過後自動部署新版本。常見的 CI 工具包括 Jenkins、Travis CI 和 CircleCI。（時代註記：Travis CI 的免費額度自 2021 年大幅收緊，新專案多改用 GitHub Actions 或 GitLab CI；這一節保留是為了理解概念。）
 
 ## 小結
 
@@ -2218,7 +2218,7 @@ Git LFS 會自動處理大文件的推送和拉取操作，與普通的 Git 文�
 
 Git Flow 是一種複雜的工作流程，適用於大型項目，具有嚴格的分支管理策略。
 
-1. 使用主分支 (master) 和開發分支 (develop)。
+1. 使用主分支 (master) 和開發分支 (develop)。（時代註記：GitHub 自 2020 年起新倉庫預設分支名為 `main`，原理相同。）
 
 2. 每個新功能在 develop 分支上創建一個 feature 分支。
 
@@ -2510,7 +2510,7 @@ Travis CI 配置示例
 language: python
 python:
 ```
-- "3.8"
+- "3.14"
 
 ```
 install:
@@ -2964,7 +2964,7 @@ Travis CI 是一個託管的持續集成服務，專為 GitHub 託管的開源�
 language: python
 python:
 ```
-- "3.8"
+- "3.14"
 
 ```
 install:

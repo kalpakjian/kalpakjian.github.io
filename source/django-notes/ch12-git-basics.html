@@ -769,7 +769,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <p>sudo apt-get install git</p>
 </li>
 </ul>
-<p>。在 CentOS/Fedora 上：</p>
+<p>。在 CentOS Stream／Rocky Linux／Fedora 上（CentOS 7 於 2024-06、CentOS 8 於 2021-12 已停止維護）：</p>
 <ul>
 <li>sudo yum install git</li>
 </ul>
@@ -946,7 +946,7 @@ git branch -d new-feature
 <p>Git Flow 是一種複雜的工作流程，適用於大型項目，具有嚴格的分支管理策略。</p>
 <ol>
 <li>
-<p>使用主分支（master）和開發分支（develop）。</p>
+<p>使用主分支（master）和開發分支（develop）。（時代註記：GitHub 自 2020 年起新倉庫預設分支名為 <code>main</code>，原理相同。）</p>
 </li>
 <li>
 <p>每個新功能在 develop 分支上創建一個 feature 分支。</p>
@@ -1830,7 +1830,7 @@ git pull origin develop
 <h4 id="384-代碼審查">3.8.4 代碼審查</h4>
 <p>在合併分支之前，應進行代碼審查。代碼審查有助於發現潛在問題、提高代碼質量和促進知識共享。常見的代碼審查工具包括 GitHub Pull Request、GitLab Merge Request 和 Bitbucket Pull Request。</p>
 <h4 id="385-自動化測試和持續集成">3.8.5 自動化測試和持續集成</h4>
-<p>在合併分支之前，應進行自動化測試，確保代碼質量和穩定性。持續集成（CI）工具可以自動運行測試，並在測試通過後自動部署新版本。常見的 CI 工具包括 Jenkins、Travis CI 和 CircleCI。</p>
+<p>在合併分支之前，應進行自動化測試，確保代碼質量和穩定性。持續集成（CI）工具可以自動運行測試，並在測試通過後自動部署新版本。常見的 CI 工具包括 Jenkins、Travis CI 和 CircleCI。（時代註記：Travis CI 的免費額度自 2021 年大幅收緊，新專案多改用 GitHub Actions 或 GitLab CI；這一節保留是為了理解概念。）</p>
 <h2 id="小結_2">小結</h2>
 <p>本章介紹了 Git 分支管理的基本概念和操作，包括創建、切換、查看、合併和刪除分支。此外，還介紹了常見的分支策略和合併策略，如 Feature 分支、Release 分支、Hotfix 分支、快進合併和無快進合併等。通過分支管理工具和技術，如 Git Flow、GitHub Flow 和 GitLab Flow，可以有效地管理大型項目的分支和版本。最後，介紹了一些分支管理的最佳實踐，如保持分支命名規範、定期合併和更新分支、小步提交和頻繁提交、代碼審查和自動化測試等。</p>
 <p>這些內容幫助你掌握了 Git 分支管理的基本使用方法和常見操作，為進一步深入學習和使用 Git 打下了堅實的基礎。</p>
@@ -2341,7 +2341,7 @@ git submodule update
 <p>Git Flow 是一種複雜的工作流程，適用於大型項目，具有嚴格的分支管理策略。</p>
 <ol>
 <li>
-<p>使用主分支 (master) 和開發分支 (develop)。</p>
+<p>使用主分支 (master) 和開發分支 (develop)。（時代註記：GitHub 自 2020 年起新倉庫預設分支名為 <code>main</code>，原理相同。）</p>
 </li>
 <li>
 <p>每個新功能在 develop 分支上創建一個 feature 分支。</p>
@@ -2654,7 +2654,7 @@ python:
 </code></pre></div>
 
 <ul>
-<li>"3.8"</li>
+<li>"3.14"</li>
 </ul>
 <div class="codehilite"><pre><span></span><code>install:
 </code></pre></div>
@@ -3127,7 +3127,7 @@ python:
 </code></pre></div>
 
 <ul>
-<li>"3.8"</li>
+<li>"3.14"</li>
 </ul>
 <div class="codehilite"><pre><span></span><code>install:
 </code></pre></div>

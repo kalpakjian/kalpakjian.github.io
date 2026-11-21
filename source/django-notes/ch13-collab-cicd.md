@@ -315,14 +315,14 @@ build:
 runs-on: ubuntu-latest
 steps:
 ```
-- uses: actions/checkout@v2
+- uses: actions/checkout@v7
 
 - name: Set up Python
 
 ```
-uses: actions/setup-python@v2
+uses: actions/setup-python@v7
 with:
-python-version: 3.8
+python-version: '3.14'
 ```
 - name: Install dependencies
 
@@ -457,7 +457,7 @@ README.md：項目簡介、安裝和使用說明。
 
 CONTRIBUTING.md：貢獻指南，包括如何報告問題、提交代碼和參與討論。
 
-LICENSE：項目許可證，確保項目的法律保護。
+LICENSE：項目的開源授權文件，說明他人可以如何使用、修改和再分發這個項目。
 
 ### 9.2 分支策略和工作流
 
@@ -591,7 +591,7 @@ sh 'make test'
 language: python
 python:
 ```
-- "3.8"
+- "3.14"
 
 ```
 install:
@@ -666,14 +666,14 @@ build:
 runs-on: ubuntu-latest
 steps:
 ```
-- uses: actions/checkout@v2
+- uses: actions/checkout@v7
 
 - name: Set up Python
 
 ```
-uses: actions/setup-python@v2
+uses: actions/setup-python@v7
 with:
-python-version: 3.8
+python-version: '3.14'
 ```
 - name: Install dependencies
 
@@ -824,14 +824,14 @@ build:
 runs-on: ubuntu-latest
 steps:
 ```
-- uses: actions/checkout@v2
+- uses: actions/checkout@v7
 
 - name: Set up Python
 
 ```
-uses: actions/setup-python@v2
+uses: actions/setup-python@v7
 with:
-python-version: 3.8
+python-version: '3.14'
 ```
 - name: Install dependencies
 
@@ -943,14 +943,14 @@ build:
 runs-on: ubuntu-latest
 steps:
 ```
-- uses: actions/checkout@v2
+- uses: actions/checkout@v7
 
 - name: Set up Python
 
 ```
-uses: actions/setup-python@v2
+uses: actions/setup-python@v7
 with:
-python-version: 3.8
+python-version: '3.14'
 ```
 - name: Install dependencies
 
@@ -1219,14 +1219,14 @@ build:
 runs-on: ubuntu-latest
 steps:
 ```
-- uses: actions/checkout@v2
+- uses: actions/checkout@v7
 
 - name: Set up Python
 
 ```
-uses: actions/setup-python@v2
+uses: actions/setup-python@v7
 with:
-python-version: 3.8
+python-version: '3.14'
 ```
 - name: Install dependencies
 
@@ -1325,14 +1325,14 @@ build:
 runs-on: ubuntu-latest
 steps:
 ```
-- uses: actions/checkout@v2
+- uses: actions/checkout@v7
 
 - name: Set up Python
 
 ```
-uses: actions/setup-python@v2
+uses: actions/setup-python@v7
 with:
-python-version: 3.8
+python-version: '3.14'
 ```
 - name: Install dependencies
 
@@ -1377,7 +1377,7 @@ lint:
 runs-on: ubuntu-latest
 steps:
 ```
-- uses: actions/checkout@v2
+- uses: actions/checkout@v7
 
 - name: Set up Node.js
 
@@ -1514,14 +1514,14 @@ build:
 runs-on: ubuntu-latest
 steps:
 ```
-- uses: actions/checkout@v2
+- uses: actions/checkout@v7
 
 - name: Set up Python
 
 ```
-uses: actions/setup-python@v2
+uses: actions/setup-python@v7
 with:
-python-version: 3.8
+python-version: '3.14'
 ```
 - name: Install dependencies
 
@@ -1633,14 +1633,14 @@ build:
 runs-on: ubuntu-latest
 steps:
 ```
-- uses: actions/checkout@v2
+- uses: actions/checkout@v7
 
 - name: Set up Python
 
 ```
-uses: actions/setup-python@v2
+uses: actions/setup-python@v7
 with:
-python-version: 3.8
+python-version: '3.14'
 ```
 - name: Install dependencies
 
@@ -1764,7 +1764,7 @@ Docker 是一種流行的容器化工具，用於將應用程序及其依賴打�
 
 ```
 # 使用 Python 基礎鏡像
-FROM python:3.8
+FROM python:3.14
 # 設置工作目錄
 WORKDIR /app
 # 複製當前目錄內容到容器中
@@ -1925,14 +1925,14 @@ build:
 runs-on: ubuntu-latest
 steps:
 ```
-- uses: actions/checkout@v2
+- uses: actions/checkout@v7
 
 - name: Set up Python
 
 ```
-uses: actions/setup-python@v2
+uses: actions/setup-python@v7
 with:
-python-version: 3.8
+python-version: '3.14'
 ```
 - name: Install dependencies
 
@@ -2014,7 +2014,7 @@ cd grafana-8.0.0
 
 #### 11.5.3 使用 ELK 堆棧進行日誌管理
 
-ELK 堆棧由 Elasticsearch、Logstash 和 Kibana 組成，是一個強大的日誌管理解決方案。
+ELK 堆棧由 Elasticsearch、Logstash 和 Kibana 組成，是一個強大的日誌管理解決方案。（時代註記：下面的指令是 2021 年的 7.13.2 版本；現行 Elastic Stack 已到 8.x 以上，下載連結與設定格式略有不同。）
 
 安裝 Elasticsearch
 

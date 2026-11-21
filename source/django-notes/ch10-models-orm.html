@@ -653,7 +653,7 @@ articles_with_tag = tag.article_set.all() # 查詢所有帶有該標籤的文章
 <h3 id="832-f-查詢與更新">8.3.2 F() 查詢與更新</h3>
 <p>Django 的 F() 表達式允許我們在查詢中直接使用數據庫中的字段值進行操作，這對於進行數據更新時非常有用。</p>
 <p>範例：將所有文章的點擊次數加 1</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">Django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">F</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">F</span>
 <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">clicks</span><span class="o">=</span><span class="n">F</span><span class="p">(</span><span class="s1">'clicks'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></div>
 
@@ -661,7 +661,7 @@ articles_with_tag = tag.article_set.all() # 查詢所有帶有該標籤的文章
 <h3 id="833-q-查詢">8.3.3 Q() 查詢</h3>
 <p>在處理複雜查詢時，我們可以使用 Q() 對象來實現 AND 和 OR 條件的組合查詢。這允許我們在一個查詢中實現多個條件的靈活組合。</p>
 <p>範例：查詢標題中包含 "Django" 或作者為 "John" 的文章</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">Django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Q</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Q</span>
 <span class="n">articles</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">title_icontains</span><span class="o">=</span><span class="s1">'Django'</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">author</span><span class="o">=</span><span class="s1">'John'</span><span class="p">))</span>
 </code></pre></div>
 
@@ -962,7 +962,7 @@ return render(request, 'product_list.html', {'products': products})
 <h3 id="1041-使用-q-對象進行複雜過濾">10.4.1 使用 Q 對象進行複雜過濾</h3>
 <p>Q 對象允許我們進行複雜的查詢，特別是需要進行 多條件 OR 查詢 或 多條件 AND 查詢 的情況。Q 對象可以通過邏輯運算符 &amp; 和 | 來組合多個查詢條件。</p>
 <p>範例：使用 Q 進行多條件查詢</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">Django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Q</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Q</span>
 <span class="c1"># 查詢標題中包含 'Django' 或內容中包含 'Framework' 的文章</span>
 <span class="n">filtered_articles</span> <span class="o">=</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
 <span class="n">Q</span><span class="p">(</span><span class="n">_icontains</span><span class="o">=</span><span class="s1">'Django'</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">content__icontains</span><span class="o">=</span><span class="s1">'Framework'</span><span class="p">)</span>

@@ -592,7 +592,7 @@ mycommand.py
 <ol start="2">
 <li>編寫自定義命令邏輯：</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">Django.core.management.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseCommand</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.core.management.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseCommand</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
 <span class="n">help</span> <span class="o">=</span> <span class="s1">'這是一個自定義命令範例'</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -618,8 +618,8 @@ mycommand.py
 <p>urls.py 文件是 URLconf 的配置文件，通常放置在 Django 項目目錄下的根目錄以及每個應用內部。項目根目錄的 urls.py 文件負責處理全局的 URL 路徑，而每個應用內的 urls.py 則管理該應用的特定路徑。</p>
 <p>以下是一個典型的 urls.py 文件結構範例：</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myproject/urls.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.contrib</span><span class="w"> </span><span class="kn">import</span> <span class="n">admin</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib</span><span class="w"> </span><span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">myapp</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
 <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
 </code></pre></div>
@@ -656,7 +656,7 @@ mycommand.py
 </ul>
 <p>範例：定義靜態和動態 URL</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/urls.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
 <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
 </code></pre></div>
@@ -719,7 +719,7 @@ urlpatterns = [
 </ul>
 <p>範例：使用 path() 定義 URL</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/urls.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
 <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
 </code></pre></div>
@@ -752,7 +752,7 @@ urlpatterns = [
 <h4 id="442-定義函數視圖">4.4.2 定義函數視圖</h4>
 <p>函數視圖是一個接受 HTTP 請求對象並返回 HTTP 響應對象的 Python 函數。以下是一個簡單的視圖函數範例：</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
 </code></pre></div>
 
@@ -762,7 +762,7 @@ urlpatterns = [
 <p>一旦視圖定義好，我們需要將它們與 URL 進行連接，這是通過 urls.py 文件中的 path() 函數來完成的。</p>
 <p>範例：將視圖與 URL 連接</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/urls.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">views</span>
 <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
 </code></pre></div>
@@ -775,7 +775,7 @@ urlpatterns = [
 <p>在動態 URL 中，我們需要從 URL 中提取變量，並將這些變量傳遞給視圖函數。視圖函數可以使用這些變量來生成不同的內容或查詢資料庫。</p>
 <p>範例：處理動態 URL 的視圖</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># myapp/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">HttpResponse</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">post_detail</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
 </code></pre></div>
 
@@ -834,7 +834,7 @@ product = get_object_or_404(Product, id=id)
 <p>動態 URL 也可以用於處理表單提交。例如，用戶提交評論後，你可以重定向他們到該評論所屬的文章頁面。</p>
 <p>範例：處理評論提交並重定向</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># blog/views.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">redirect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">redirect</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">submit_comment</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">post_id</span><span class="p">):</span>
 <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">'POST'</span><span class="p">:</span>
 <span class="c1"># 保存評論邏輯</span>

@@ -410,7 +410,7 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <h3 id="21-準備工作">2.1 準備工作</h3>
 <p>在開始 Django 開發之前，我們需要為開發設置適當的環境，這包括安裝所需的軟件和配置虛擬環境。本章將帶領你逐步完成這些操作，並開始你的第一個 Django 專案。</p>
 <h4 id="211-安裝-python">2.1.1 安裝 Python</h4>
-<p>Django 是基於 Python 的框架，因此第一步是安裝 Python。你需要檢查你的電腦是否已安裝了正確版本的 Python。</p>
+<p>Django 是基於 Python 的框架，因此第一步是安裝 Python。你需要檢查你的電腦是否已安裝了正確版本的 Python。Django 5.2 支援 Python 3.10 至 3.14，建議安裝 Python 3.14 的最新版本；Python 3.10 已於 2026 年 10 月停止支援，Python 3.15 目前未列入 Django 5.2 的支援範圍。</p>
 <h2 id="檢查-python-安裝">檢查 Python 安裝</h2>
 <p>在 macOS 和 Linux 系統上，打開終端（Terminal），輸入以下命令：</p>
 <div class="codehilite"><pre><span></span><code>python3 --version
@@ -443,14 +443,14 @@ figure.hero figcaption{font-size:12.5px;color:var(--muted);margin-top:6px;text-a
 <h3 id="22-安裝-django">2.2 安裝 Django</h3>
 <p>在安裝好 Python 和 pip 之後，我們便可以安裝 Django。Django 可以通過 pip 進行安裝，這是最常見也是推薦的方式。</p>
 <h4 id="221-django-版本選擇">2.2.1 Django 版本選擇</h4>
-<p>Django 團隊會定期發布新版和 LTS（長期支持）版本。通常情況下，建議安裝最新的穩定版本。如果你的項目需要特定版本的 Django（例如 LTS 版本），可以在安裝時指定版本號。</p>
+<p>Django 團隊會定期發布功能版本與 LTS（長期支持）版本。本課程以 Django 5.2 LTS 為準：2025 年 4 月 2 日發布，安全支援至 2028 年 4 月，支援 Python 3.10 至 3.14。生產環境建議使用 LTS 版本，想試用新功能才安裝最新的功能版本；不論哪一種，都應使用該系列最新的補丁版本。</p>
 <h4 id="222-使用-pip-安裝-django">2.2.2 使用 pip 安裝 Django</h4>
-<p>在終端或命令提示符中執行以下命令來安裝最新的 Django：</p>
-<div class="codehilite"><pre><span></span><code>pip install django
+<p>在終端或命令提示符中執行以下命令來安裝 Django 5.2 LTS 的最新補丁版本（需要 Python 3.10 或以上）：</p>
+<div class="codehilite"><pre><span></span><code>pip install "django~=5.2"
 </code></pre></div>
 
-<p>若需要安裝特定版本，可以指定版本號，例如安裝 3.2 版本：</p>
-<div class="codehilite"><pre><span></span><code>pip install django==3.2
+<p>若需要固定 5.2 系列的版本，可以指定版本號，例如：</p>
+<div class="codehilite"><pre><span></span><code>pip install "django==5.2.*"
 </code></pre></div>
 
 <p>確認 Django 安裝成功</p>
@@ -519,7 +519,7 @@ wsgi.py
 <span class="n">Performing</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">checks</span><span class="o">...</span>
 <span class="n">System</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="n">identified</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="n">silenced</span><span class="p">)</span><span class="o">.</span>
 <span class="n">September</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">2024</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">12</span><span class="p">:</span><span class="mi">45</span><span class="p">:</span><span class="mi">08</span>
-<span class="n">Django</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="mf">3.2</span><span class="o">.</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">settings</span><span class="w"> </span><span class="s1">'myproject.settings'</span>
+<span class="n">Django</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="mf">5.2</span><span class="o">.</span><span class="mi">19</span><span class="p">,</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">settings</span><span class="w"> </span><span class="s1">'myproject.settings'</span>
 <span class="n">Starting</span><span class="w"> </span><span class="n">development</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8000</span><span class="o">/</span>
 <span class="n">Quit</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">CONTROL</span><span class="o">-</span><span class="n">C</span><span class="o">.</span>
 </code></pre></div>
@@ -570,7 +570,7 @@ wsgi.py
 <p>2.6.1 問題：伺服器無法啟動</p>
 <p>原因 1: Django 未安裝</p>
 <p>解決方案：檢查是否在虛擬環境中運行，並且 Django 是否正確安裝。嘗試重新安裝 Django：</p>
-<div class="codehilite"><pre><span></span><code>pip install django
+<div class="codehilite"><pre><span></span><code>pip install "django~=5.2"
 </code></pre></div>
 
 <p>原因 2：端口被佔用</p>

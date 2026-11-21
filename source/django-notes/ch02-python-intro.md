@@ -48,7 +48,7 @@ Python 是由 Guido van Rossum 在八十年代末和九十年代初，在荷蘭�
 
 Python 本身也是由諸多其他語言發展而來的,這包括 ABC、Modula-3、C、C++、Algol-68、SmallTalk、Unix shell 和其他的腳本語言等等。
 
-像 Perl 語言一樣，Python 源代碼同樣遵循 GPL(GNU General Public License)協議。
+Python 的源代碼與文檔以 Python Software Foundation License（PSF 許可證）第 2 版發佈，可以自由使用、修改和再分發（含商業用途），修改後的版本不強制開源。
 
 現在 Python 是由一個核心開發團隊在維護，Guido van Rossum 仍然佔據著至關重要的作用，指導其進展。
 
@@ -140,11 +140,11 @@ Unix & Linux 平臺安裝 Python：
 
 如果你需要自定義一些選項修改 Modules/Setup
 
-以 Python3.8.5 版本為例：
+以 Python 3.14.10 版本為例：
 
 ```
-# tar -zxvf Python-3.8.5.tgz
-# cd Python-3.8.5
+# tar -zxvf Python-3.14.10.tgz
+# cd Python-3.14.10
 # ./configure
 # make && make install
 ```
@@ -152,7 +152,7 @@ Unix & Linux 平臺安裝 Python：
 
 ```
 # python3 -V
-Python 3.8.5
+Python 3.14.10
 ```
 Windows 平臺安裝 Python：
 
@@ -160,7 +160,7 @@ Windows 平臺安裝 Python：
 
 打開 WEB 瀏覽器訪問 https://www.python.org/downloads/windows/
 
-在下載列表中選擇 Windows 平臺安裝包，包格式為：python-3.8.5-amd64.exe 文件，-3.8.5 為你要安裝的版本號，-amd64 為你係統的版本。
+在下載列表中選擇 Windows 平臺安裝包，包格式為：python-3.14.10-amd64.exe 文件，-3.14.10 為你要安裝的版本號，-amd64 為你係統的版本。
 
 下載後，雙擊下載包，進入 Python 安裝嚮導，安裝非常簡單，你只需要使用默認的設置一直點擊"下一步"直到安裝完成即可。
 
