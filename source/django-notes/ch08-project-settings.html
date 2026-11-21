@@ -415,18 +415,23 @@ views.py
 <h4 id="321-settingspy-文件的結構">3.2.1 settings.py 文件的結構</h4>
 <p>典型的 settings.py 文件由多個設置參數組</p>
 <p>成，每個參數控制 Django 項目的不同方面。以下是一些常見的設置項：</p>
-<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="nx">settings</span><span class="p">.</span><span class="nx">py</span>
-<span class="err">#</span><span class="w"> </span><span class="nx">基本設置</span>
-<span class="nx">DEBUG</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">True</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">是否處於調試模式</span>
-<span class="nx">ALLOWED_HOSTS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">設定允許訪問的主機</span>
-<span class="err">#</span><span class="w"> </span><span class="nx">應用程式註冊</span>
-<span class="nx">INSTALLED_APPS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span>
-<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">admin</span><span class="err">'</span><span class="p">,</span>
-<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">auth</span><span class="err">'</span><span class="p">,</span>
-<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">contenttypes</span><span class="err">'</span><span class="p">,</span>
-<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">sessions</span><span class="err">'</span><span class="p">,</span>
-<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">messages</span><span class="err">'</span><span class="p">,</span>
-<span class="err">'</span><span class="nx">django</span><span class="p">.</span><span class="nx">contrib</span><span class="p">.</span><span class="nx">staticfiles</span><span class="err">'</span><span class="p">,</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># settings.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># 專案根目錄（Django 2.0 起用 pathlib，3.2+ 的 startproject 就是這樣產生）</span>
+<span class="n">BASE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+
+<span class="c1"># 基本設置</span>
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># 是否處於調試模式</span>
+<span class="n">ALLOWED_HOSTS</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># 設定允許訪問的主機</span>
+<span class="c1"># 應用程式註冊</span>
+<span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+<span class="s1">'django.contrib.admin'</span><span class="p">,</span>
+<span class="s1">'django.contrib.auth'</span><span class="p">,</span>
+<span class="s1">'django.contrib.contenttypes'</span><span class="p">,</span>
+<span class="s1">'django.contrib.sessions'</span><span class="p">,</span>
+<span class="s1">'django.contrib.messages'</span><span class="p">,</span>
+<span class="s1">'django.contrib.staticfiles'</span><span class="p">,</span>
 </code></pre></div>
 
 <p>'myapp', # 自己的應用</p>
@@ -466,7 +471,9 @@ views.py
 <span class="p">}</span>
 <span class="p">}</span>
 <span class="o">#</span> <span class="err">靜態文件設置</span>
-<span class="n">STATIC_URL</span> <span class="o">=</span> <span class="err">'</span><span class="o">/</span><span class="n">static</span><span class="o">/</span>
+<span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s">'/static/'</span>
+<span class="o">#</span> <span class="err">預設主鍵型別（</span><span class="n">Django</span> <span class="mf">3.2</span> <span class="err">起</span> <span class="n">startproject</span> <span class="err">會產生；未設定時</span> <span class="n">migrate</span> <span class="err">會出現</span> <span class="n">W042</span> <span class="err">警告）</span>
+<span class="n">DEFAULT_AUTO_FIELD</span> <span class="o">=</span> <span class="s">'django.db.models.BigAutoField'</span>
 </code></pre></div>
 
 <h4 id="322-常見配置項目解析">3.2.2 常見配置項目解析</h4>

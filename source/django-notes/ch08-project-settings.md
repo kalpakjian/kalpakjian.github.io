@@ -143,6 +143,11 @@ settings.py 是 Django 項目中最重要的配置文件之一，負責管理項
 
 ```
 # settings.py
+from pathlib import Path
+
+# 專案根目錄（Django 2.0 起用 pathlib，3.2+ 的 startproject 就是這樣產生）
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # 基本設置
 DEBUG = True # 是否處於調試模式
 ALLOWED_HOSTS = [] # 設定允許訪問的主機
@@ -194,7 +199,9 @@ DATABASES = {
 }
 }
 # 靜態文件設置
-STATIC_URL = '/static/
+STATIC_URL = '/static/'
+# 預設主鍵型別（Django 3.2 起 startproject 會產生；未設定時 migrate 會出現 W042 警告）
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ```
 #### 3.2.2 常見配置項目解析
 

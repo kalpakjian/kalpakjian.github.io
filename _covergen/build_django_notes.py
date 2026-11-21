@@ -90,6 +90,28 @@ ERA_FIXES = [
 # OCR 把 SRI 雜湊拆成兩行，貼進專案會被瀏覽器拒載 → 直接移除 integrity / crossorigin
 INTEGRITY_RE = re.compile(r'integrity="sha384-[^"]*"\s*\n(crossorigin="anonymous"\s*\n)?')
 
+# 第二輪（2026-11）：settings 範例與 Git 指令，讓範例貼上就能跑
+SAMPLE_FIXES = [
+    # BASE_DIR 用了 3 次卻沒有定義 → 補上 startproject 的寫法
+    (
+        "# settings.py\n# 基本設置\n",
+        "# settings.py\nfrom pathlib import Path\n\n"
+        "# 專案根目錄（Django 2.0 起用 pathlib，3.2+ 的 startproject 就是這樣產生）\n"
+        "BASE_DIR = Path(__file__).resolve().parent.parent\n\n# 基本設置\n",
+    ),
+    # git stash save：Git 2.16 起建議 push -m
+    ('git stash save "描述信息"', 'git stash push -m "描述信息"'),
+]
+
+# STATIC_URL 範例缺結尾引號（SyntaxError）；該行後面就是收尾的 fence，可精準定位
+STATIC_BLOCK_RE = re.compile(r"STATIC_URL = '/static/\n```")
+STATIC_BLOCK_FIX = (
+    "STATIC_URL = '/static/'\n"
+    "# 預設主鍵型別（Django 3.2 起 startproject 會產生；未設定時 migrate 會出現 W042 警告）\n"
+    "DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n"
+    "```"
+)
+
 
 def render_md(items, no, title):
     out = ["# 第 %d 章 · %s" % (no, title), ""]
@@ -126,6 +148,10 @@ def render_md(items, no, title):
     # B/C：前端與 Actions 版本、教材年份註記
     for old, new in ERA_FIXES:
         text = text.replace(old, new)
+    # 第二輪：settings 範例可執行性 + Git 指令語法
+    for old, new in SAMPLE_FIXES:
+        text = text.replace(old, new)
+    text = STATIC_BLOCK_RE.sub(STATIC_BLOCK_FIX, text)
     text = INTEGRITY_RE.sub("", text)
     # 正文的 ** 是冪運算符或 OCR 裝飾線，留在正文會被當成粗體配對 → 轉義（程式碼區塊內不動）
     lines, in_code = [], False

@@ -2030,7 +2030,7 @@ git stash
 ```
 使用描述信息保存工作進度：
 
-git stash save "描述信息"
+git stash push -m "描述信息"
 
 #### 5.3.3 查看 Stash 列表
 
