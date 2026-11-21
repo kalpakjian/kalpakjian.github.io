@@ -155,7 +155,7 @@ date: 2026-11-21 20:00:00
 
 ## 15 · 附加篇章：FBI 連環殺手（最簡 Django 範例）
 
-![附加篇章 FBI 連環殺手](/img/covers/django-cover.png)
+![第 15 章 FBI 連環殺手](/img/covers/django-ch15.png)
 
 - **定位**：最小可運作的 Django 專案，完整走過 Model → View → Template
 - **涵蓋**：3 個模型與 ForeignKey 關聯、視圖 `select_related()`、Bootstrap 表格模板、種子資料、執行步驟
@@ -165,7 +165,7 @@ date: 2026-11-21 20:00:00
 
 ## 16 · 附加篇章：Iris 分類（Django × 機器學習）
 
-![附加篇章 Iris 分類](/img/covers/django-cover.png)
+![第 16 章 Iris 分類](/img/covers/django-ch16.png)
 
 - **定位**：把機器學習模型接進 Django 的最小服務
 - **涵蓋**：RandomForest 訓練與 joblib 存檔、模型快取載入、網頁表單與 JSON API 雙介面、執行步驟
