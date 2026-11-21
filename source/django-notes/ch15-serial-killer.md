@@ -2,6 +2,8 @@
 
 **導讀**：這是一個**最小可運作**的 Django 專案——只有 3 個模型、1 個視圖、1 個模板，完整走過 **Model → View → Template** 的流程，非常適合當作「第一個 Django 專案」的範本。
 
+**專案原始碼（GitHub）**：https://github.com/kalpakjian/fbi-serial-killer
+
 ## 1. 專案簡介
 
 - **主題**：FBI 探員捉拿連環殺手的記錄（純示範資料）。

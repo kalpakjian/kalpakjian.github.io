@@ -2,6 +2,8 @@
 
 **導讀**：這個範例把**機器學習模型接進 Django**：先用 scikit-learn 訓練一個鳶尾花（Iris）分類器並存成檔案，再由 Django 提供**網頁表單**與 **JSON API** 兩種預測介面。是「把 ML 模型變成服務」的最小實作。
 
+**專案原始碼（GitHub）**：https://github.com/kalpakjian/django-ml-app
+
 ## 1. 專案簡介
 
 - **主題**：輸入鳶尾花的 4 個尺寸特徵，預測品種（setosa／versicolor／virginica）。

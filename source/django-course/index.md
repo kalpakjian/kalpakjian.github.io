@@ -160,6 +160,7 @@ date: 2026-11-21 20:00:00
 - **定位**：最小可運作的 Django 專案，完整走過 Model → View → Template
 - **涵蓋**：3 個模型與 ForeignKey 關聯、視圖 `select_related()`、Bootstrap 表格模板、種子資料、執行步驟
 - **👉 [看筆記](/django-notes/ch15-serial-killer.html)**
+- **程式碼**：👉 [kalpakjian/fbi-serial-killer](https://github.com/kalpakjian/fbi-serial-killer)
 
 ---
 
@@ -170,3 +171,4 @@ date: 2026-11-21 20:00:00
 - **定位**：把機器學習模型接進 Django 的最小服務
 - **涵蓋**：RandomForest 訓練與 joblib 存檔、模型快取載入、網頁表單與 JSON API 雙介面、執行步驟
 - **👉 [看筆記](/django-notes/ch16-iris-ml.html)**
+- **程式碼**：👉 [kalpakjian/django-ml-app](https://github.com/kalpakjian/django-ml-app)
