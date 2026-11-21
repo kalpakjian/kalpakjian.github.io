@@ -224,32 +224,9 @@ UML 廣泛應用於軟件開發的各個階段，包括需求分析、系統設�
 - 借閱記錄與會員和書籍之間存在聚合關係。
 
 下面是這個圖書館管理系統的類圖示例：
-```
-Book
-title: String
-author: String
-isbn: String
-getDetails(): String
-Member
-name: String
-memberId: String
-register()
-borrowBook(book: Book):
-LoanRecord
-LoanRecord
-LoanRecord
-loanDate: Date
-returnDate: Date
-```
-+----+
-```
-| markReturned( )
-```
-+----+
-```
-Member 1 *----* LoanRecord
-LoanRecord *----* 1 Book
-```
+
+<figure class="fig-svg"><svg viewBox="0 0 860 470" width="100%" role="img" aria-label="UML 類圖：圖書館管理系統的 Member、LoanRecord、Book 三個類與關聯" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><rect x="20" y="150" width="260" height="134" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="20" y1="176" x2="280" y2="176" stroke="#2c6fb1" stroke-width="1.2"/><line x1="20" y1="226" x2="280" y2="226" stroke="#2c6fb1" stroke-width="1.2"/><text x="150" y="168" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">Member 會員</text><text x="30" y="196" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">- name: String</text><text x="30" y="216" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">- memberId: String</text><text x="30" y="244" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#e6edf3">+ register()</text><text x="30" y="264" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#e6edf3">+ borrowBook(book: Book): LoanRecord</text><rect x="360" y="40" width="240" height="114" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="360" y1="66" x2="600" y2="66" stroke="#2c6fb1" stroke-width="1.2"/><line x1="360" y1="116" x2="600" y2="116" stroke="#2c6fb1" stroke-width="1.2"/><text x="480" y="58" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">LoanRecord 借閱記錄</text><text x="370" y="86" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">- loanDate: Date</text><text x="370" y="106" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">- returnDate: Date</text><text x="370" y="134" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#e6edf3">+ markReturned()</text><rect x="360" y="330" width="240" height="134" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="360" y1="356" x2="600" y2="356" stroke="#2c6fb1" stroke-width="1.2"/><line x1="360" y1="426" x2="600" y2="426" stroke="#2c6fb1" stroke-width="1.2"/><text x="480" y="348" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">Book 書籍</text><text x="370" y="376" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">- title: String</text><text x="370" y="396" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">- author: String</text><text x="370" y="416" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">- isbn: String</text><text x="370" y="444" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#e6edf3">+ getDetails(): String</text><line x1="280" y1="206" x2="356" y2="120" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="292" y="150" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">1</text><text x="336" y="128" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">*</text><line x1="480" y1="156" x2="480" y2="326" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="486" y="194" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">*</text><text x="486" y="316" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">1</text></svg><figcaption>圖　類圖：Member 與 LoanRecord 一對多、LoanRecord 與 Book 多對一；每個類分三格（類名／屬性／操作）。</figcaption></figure>
+
 ### 3.5 類圖的實踐應用
 類圖在軟件開發的各個階段都有廣泛應用，特別是在系統設計和架構設計階段。具體來說，類圖的實踐應用包括：
 
@@ -310,33 +287,17 @@ LoanRecord *----* 1 Book
 - name: "Alice"
 - memberld: "M001"
 - loan1: LoanRecord
-```
-o loanDate: "2024-01-01"
-o returnDate: "2024-01-15"
-```
+- loanDate: "2024-01-01"
+- returnDate: "2024-01-15"
 建立對象之間的鏈接：
 
 - member1: Member 與 loan1: LoanRecord 之間有一個借閱鏈接。
 - loan1: LoanRecord 與 book1: Book 之間有一個借閱鏈接。
 
 下面是這個圖書館管理系統的對象圖示例：
-```
-book1 : Book
-title: UML Basics
-author: John Doe
-isbn: 1234567890
-book2 : Book
-title: Advanced UML
-author: Jane Smith
-isbn: 0987654321
-member1 : Member
-name: Alice
-memberId: M001
-loan1 : LoanRecord
-loanDate: 2024-01-01
-returnDate: 2024-01-15
-member1 : Member <--- borrow ---> loan1 : LoanRecord <--- loan ---> book1 : Book
-```
+
+<figure class="fig-svg"><svg viewBox="0 0 860 350" width="100%" role="img" aria-label="UML 物件圖：member1、loan1、book1 三個實例與借閱鏈接" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><rect x="20" y="60" width="250" height="74" rx="6" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="20" y1="86" x2="270" y2="86" stroke="#2c6fb1" stroke-width="1.2"/><text x="145" y="78" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12.5" fill="#e6edf3" text-decoration="underline">member1 : Member</text><text x="30" y="106" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">name = "Alice"</text><text x="30" y="128" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">memberId = "M001"</text><rect x="330" y="60" width="250" height="74" rx="6" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="330" y1="86" x2="580" y2="86" stroke="#2c6fb1" stroke-width="1.2"/><text x="455" y="78" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12.5" fill="#e6edf3" text-decoration="underline">loan1 : LoanRecord</text><text x="340" y="106" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">loanDate = "2024-01-01"</text><text x="340" y="128" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">returnDate = "2024-01-15"</text><rect x="620" y="60" width="220" height="96" rx="6" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="620" y1="86" x2="840" y2="86" stroke="#2c6fb1" stroke-width="1.2"/><text x="730" y="78" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12.5" fill="#e6edf3" text-decoration="underline">book1 : Book</text><text x="630" y="106" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">title = "UML Basics"</text><text x="630" y="128" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">author = "John Doe"</text><text x="630" y="150" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">isbn = "1234567890"</text><rect x="620" y="220" width="220" height="96" rx="6" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="620" y1="246" x2="840" y2="246" stroke="#2c6fb1" stroke-width="1.2"/><text x="730" y="238" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12.5" fill="#e6edf3" text-decoration="underline">book2 : Book</text><text x="630" y="266" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">title = "Advanced UML"</text><text x="630" y="288" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">author = "Jane Smith"</text><text x="630" y="310" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">isbn = "0987654321"</text><line x1="270" y1="96" x2="326" y2="96" stroke="#39d0d8" stroke-width="1.6"/><text x="272" y="88" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">borrow</text><line x1="580" y1="96" x2="616" y2="96" stroke="#39d0d8" stroke-width="1.6"/><text x="582" y="88" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">loan</text><text x="620" y="212" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#e6edf3">（本次借閱未用到 book2）</text></svg><figcaption>圖　物件圖：名稱加底線代表實例；member1 經 loan1 連到 book1，對應類圖 Member—LoanRecord—Book 的關聯。</figcaption></figure>
+
 ### 4.5 對象圖的實踐應用
 對象圖在軟件開發的各個階段都有廣泛應用，特別是在系統分析和設計階段。具體來說，對象圖的實踐應用包括：
 
@@ -501,8 +462,7 @@ member1 : Member <--- borrow ---> loan1 : LoanRecord <--- loan ---> book1 : Book
 4. 關注點分離：活動圖應該關注特定的活動或流程，避免將多個活動或流程混在一起，確保每個活動圖都有明確的目的和範圍。
 5. 考慮異常流程：在設計活動圖時，應該考慮可能的異常流程和處理方式，確保系統能夠應對各種情況。
 
-### 6.7 活動圖與其他 UML 圖
-## 表的關係
+### 6.7 活動圖與其他 UML 圖表的關係
 活動圖與其他 UML 圖表有著緊密的關係，它們共同描述了系統的靜態結構和動態行為。具體來說，活動圖與其他 UML 圖表的關係包括：
 
 1. 用例圖（Use Case Diagram）：用例圖描述系統的功能需求和參與者；活動圖描述用例中的具體活動和流程。活動圖中的活動和流程應該與用例圖中的用例對應。
@@ -758,8 +718,7 @@ member1 : Member <--- borrow ---> loan1 : LoanRecord <--- loan ---> book1 : Book
 4. 用例圖（Use Case Diagram）：用例圖描述系統的功能需求和參與者；部署圖描述系統的物理部署結構和節點之間的關係。用例圖中的功能需求應該分配到部署圖中的構件上。
 
 ### 9.8 小結
-本章介紹了部署圖的基本概念、構成元素、繪製步驟和實踐應用。通過這些內容，我
-們對部署圖有了深入的理解，並掌握了部署圖與其他 UML 圖表的關係。在接下來的章節中，我們將繼續學習 UML 的其他圖表及其應用，並通過實踐活動進一步掌握 UML 的使用技巧。
+本章介紹了部署圖的基本概念、構成元素、繪製步驟和實踐應用。通過這些內容，我們對部署圖有了深入的理解，並掌握了部署圖與其他 UML 圖表的關係。在接下來的章節中，我們將繼續學習 UML 的其他圖表及其應用，並通過實踐活動進一步掌握 UML 的使用技巧。
 第 10 章：綜合案例分析與實踐應用
 ### 10.1 綜合案例簡介
 在前面的章節中，我們學習了 UML 的各種圖表及其應用，包括用例圖、類圖、對象圖、序列圖、活動圖、狀態圖、組件圖和部署圖。為了鞏固這些知識，本章將通過一個綜合案例，展示如何在一個完整的軟件開發過程中應用這些 UML 圖表。我們將以一個線上圖書館管理系統為例，從需求分析到設計和部署，全面應用 UML 圖表。
@@ -775,118 +734,53 @@ member1 : Member <--- borrow ---> loan1 : LoanRecord <--- loan ---> book1 : Book
 ### 10.3 用例圖設計
 根據需求分析，繪製線上圖書館管理系統的用例圖。用例圖展示了系統的功能需求和參與者。
 用例圖：
+
+<figure class="fig-svg"><svg viewBox="0 0 860 580" width="100%" role="img" aria-label="UML 用例圖：線上圖書館管理系統的 7 個用例與用戶、管理員" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><rect x="250" y="20" width="380" height="540" rx="12" fill="none" stroke="#2c6fb1" stroke-width="1.6"/><text x="440" y="46" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#39d0d8">線上圖書館管理系統</text><ellipse cx="440" cy="84" rx="118" ry="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.5"/><text x="440" y="89" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">註冊</text><ellipse cx="440" cy="146" rx="118" ry="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.5"/><text x="440" y="151" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">登錄</text><ellipse cx="440" cy="208" rx="118" ry="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.5"/><text x="440" y="213" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">瀏覽／搜索書籍</text><ellipse cx="440" cy="270" rx="118" ry="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.5"/><text x="440" y="275" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">借閱書籍</text><ellipse cx="440" cy="332" rx="118" ry="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.5"/><text x="440" y="337" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">還書</text><ellipse cx="440" cy="394" rx="118" ry="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.5"/><text x="440" y="399" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">管理書籍</text><ellipse cx="440" cy="456" rx="118" ry="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.5"/><text x="440" y="461" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">管理用戶</text><rect x="30" y="170" width="140" height="50" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="100" y="200" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="15" fill="#e6edf3">用戶</text><line x1="170" y1="195" x2="322" y2="84" stroke="#39d0d8" stroke-width="1.4"/><line x1="170" y1="195" x2="322" y2="146" stroke="#39d0d8" stroke-width="1.4"/><line x1="170" y1="195" x2="322" y2="208" stroke="#39d0d8" stroke-width="1.4"/><line x1="170" y1="195" x2="322" y2="270" stroke="#39d0d8" stroke-width="1.4"/><line x1="170" y1="195" x2="322" y2="332" stroke="#39d0d8" stroke-width="1.4"/><rect x="690" y="372" width="140" height="50" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="760" y="402" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="15" fill="#e6edf3">管理員</text><line x1="690" y1="397" x2="558" y2="394" stroke="#39d0d8" stroke-width="1.4"/><line x1="690" y1="397" x2="558" y2="456" stroke="#39d0d8" stroke-width="1.4"/></svg><figcaption>圖　用例圖：用戶連到註冊、登錄、瀏覽／搜索書籍、借閱書籍、還書；管理員連到管理書籍、管理用戶。</figcaption></figure>
+
 ### 10.4 類圖設計
 根據用例圖，繪製系統的類圖。類圖展示了系統的靜態結構，包括類、屬性、操作和類之間的關係。
 類圖：
-```
-User 1 --- * Loan * --- 1 Book
-Admin * --- * Book
-```
+
+<figure class="fig-svg"><svg viewBox="0 0 860 430" width="100%" role="img" aria-label="UML 類圖：線上圖書館的 User、Loan、Book、Admin 四個類與關聯" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><rect x="20" y="90" width="190" height="94" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="20" y1="116" x2="210" y2="116" stroke="#2c6fb1" stroke-width="1.2"/><line x1="20" y1="146" x2="210" y2="146" stroke="#2c6fb1" stroke-width="1.2"/><text x="115" y="108" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">User 用戶</text><text x="30" y="136" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">- username: String</text><text x="30" y="164" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#e6edf3">+ register()</text><rect x="300" y="90" width="210" height="94" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="300" y1="116" x2="510" y2="116" stroke="#2c6fb1" stroke-width="1.2"/><line x1="300" y1="146" x2="510" y2="146" stroke="#2c6fb1" stroke-width="1.2"/><text x="405" y="108" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">Loan 借閱</text><text x="310" y="136" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">- loanDate: Date</text><text x="310" y="164" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#e6edf3">+ markReturned()</text><rect x="600" y="90" width="220" height="94" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="600" y1="116" x2="820" y2="116" stroke="#2c6fb1" stroke-width="1.2"/><line x1="600" y1="146" x2="820" y2="146" stroke="#2c6fb1" stroke-width="1.2"/><text x="710" y="108" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">Book 書籍</text><text x="610" y="136" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">- title: String</text><text x="610" y="164" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#e6edf3">+ getDetails()</text><rect x="300" y="300" width="210" height="94" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="300" y1="326" x2="510" y2="326" stroke="#2c6fb1" stroke-width="1.2"/><line x1="300" y1="356" x2="510" y2="356" stroke="#2c6fb1" stroke-width="1.2"/><text x="405" y="318" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">Admin 管理員</text><text x="310" y="346" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">- staffId: String</text><text x="310" y="374" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#e6edf3">+ manageBook()</text><line x1="210" y1="140" x2="296" y2="140" stroke="#39d0d8" stroke-width="1.6"/><text x="216" y="132" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">1 : *</text><line x1="510" y1="140" x2="596" y2="140" stroke="#39d0d8" stroke-width="1.6"/><text x="518" y="132" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">* : 1</text><line x1="480" y1="300" x2="700" y2="188" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="560" y="272" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">* : *</text></svg><figcaption>圖　類圖：User 1:N Loan、Loan N:1 Book、Admin N:N Book；每個類分三格（類名／屬性／操作）。</figcaption></figure>
+
 ### 10.5 對象圖設計
 根據類圖，繪製系統的對象圖。對象圖展示了系統在某一時刻的對象實例及其之間的關係。
 對象圖：
-用戶1:User
 
-- 用戶名：Alice
-- 電子郵件：alice@example.com
+<figure class="fig-svg"><svg viewBox="0 0 860 190" width="100%" role="img" aria-label="UML 物件圖：用戶1、借閱1、書籍1 三個實例與借閱鏈接" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><rect x="20" y="60" width="250" height="74" rx="6" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="20" y1="86" x2="270" y2="86" stroke="#2c6fb1" stroke-width="1.2"/><text x="145" y="78" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12.5" fill="#e6edf3" text-decoration="underline">用戶1 : User</text><text x="30" y="106" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">用戶名：Alice</text><text x="30" y="128" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">電子郵件：alice@example.com</text><rect x="330" y="60" width="250" height="74" rx="6" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="330" y1="86" x2="580" y2="86" stroke="#2c6fb1" stroke-width="1.2"/><text x="455" y="78" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12.5" fill="#e6edf3" text-decoration="underline">借閱1 : Loan</text><text x="340" y="106" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">借閱日期：2024-01-01</text><text x="340" y="128" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">還書日期：2024-01-15</text><rect x="620" y="60" width="220" height="96" rx="6" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><line x1="620" y1="86" x2="840" y2="86" stroke="#2c6fb1" stroke-width="1.2"/><text x="730" y="78" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12.5" fill="#e6edf3" text-decoration="underline">書籍1 : Book</text><text x="630" y="106" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">書名：UML基礎</text><text x="630" y="128" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">作者：John Doe</text><text x="630" y="150" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">ISBN: 1234567890</text><line x1="270" y1="96" x2="326" y2="96" stroke="#39d0d8" stroke-width="1.6"/><text x="272" y="88" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">Borrow</text><line x1="580" y1="96" x2="616" y2="96" stroke="#39d0d8" stroke-width="1.6"/><text x="582" y="88" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">Borrow</text></svg><figcaption>圖　物件圖：名稱加底線代表實例；用戶1 經借閱1 連到書籍1，對應類圖 User—Loan—Book 的關聯。</figcaption></figure>
 
-書籍1:Book
-
-- 書名：UML基礎
-- 作者：John Doe
-- ISBN: 1234567890
-
-借閱1:Loan
-
-- 借閱日期：2024-01-01
-- 還書日期：2024-01-15
-```
-User1 --- Borrow --> Loan1 --- Borrow --> Book1
-```
 ### 10.6 序列圖設計
 根據用例圖，繪製系統的序列圖。序列圖展示了對象之間的交互過程及其消息傳遞的順序。
 序列圖：
-```
-User Library System Database
-```
-|-- 註冊 (register)---->
-|-- 存儲用戶信息 (storeUser)---->
-|-- 註冊成功 (registerSuccess)-|
-|<--- 註冊成功通知 (registerSuccess)
+
+<figure class="fig-svg"><svg viewBox="0 0 860 330" width="100%" role="img" aria-label="UML 序列圖：用戶註冊流程中 User、Library System、Database 的訊息順序" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><rect x="25" y="20" width="170" height="40" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="110" y="45" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12" fill="#e6edf3">User 用戶</text><line x1="110" y1="60" x2="110" y2="290" stroke="#2c6fb1" stroke-width="1.2" stroke-dasharray="4 5"/><rect x="345" y="20" width="170" height="40" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="430" y="45" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12" fill="#e6edf3">Library System 系統</text><line x1="430" y1="60" x2="430" y2="290" stroke="#2c6fb1" stroke-width="1.2" stroke-dasharray="4 5"/><rect x="665" y="20" width="170" height="40" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="750" y="45" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12" fill="#e6edf3">Database 資料庫</text><line x1="750" y1="60" x2="750" y2="290" stroke="#2c6fb1" stroke-width="1.2" stroke-dasharray="4 5"/><line x1="110" y1="110" x2="430" y2="110" stroke="#39d0d8" stroke-width="1.6" marker-end="url(#a)"/><text x="270" y="102" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#e6edf3">註冊（register）</text><line x1="430" y1="175" x2="750" y2="175" stroke="#39d0d8" stroke-width="1.6" marker-end="url(#a)"/><text x="590" y="167" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#e6edf3">存儲用戶信息（storeUser）</text><line x1="430" y1="240" x2="110" y2="240" stroke="#39d0d8" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#a)"/><text x="270" y="232" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#e6edf3">註冊成功通知（registerSuccess）</text></svg><figcaption>圖　序列圖：用戶送出註冊，系統將資料寫入資料庫，最後回覆註冊成功通知。</figcaption></figure>
+
 ### 10.7 活動圖設計
 根據用例圖，繪製系統的活動圖。活動圖展示了系統中的活動流程和控制流。
 活動圖：
-| 註冊流程
-初始狀態
-輸入用戶信息
-檢查用戶信息
-有效 無效
-存儲用戶 提示錯誤
-註冊成功 結束
+
+<figure class="fig-svg"><svg viewBox="0 0 860 570" width="100%" role="img" aria-label="UML 活動圖：用戶註冊流程，含資料有效性的決策分支" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><circle cx="330" cy="34" r="11" fill="#e6edf3"/><line x1="330" y1="45" x2="330" y2="68" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><rect x="230" y="70" width="200" height="52" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="330" y="102" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="14" fill="#e6edf3">輸入用戶信息</text><line x1="330" y1="122" x2="330" y2="148" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><rect x="230" y="150" width="200" height="52" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="330" y="182" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="14" fill="#e6edf3">檢查用戶信息</text><line x1="330" y1="202" x2="330" y2="232" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><polygon points="330,234 412,280 330,326 248,280" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="330" y="285" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#e6edf3">資料有效？</text><line x1="330" y1="326" x2="330" y2="348" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="340" y="342" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#39d0d8">是</text><rect x="230" y="350" width="200" height="52" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="330" y="382" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="14" fill="#e6edf3">存儲用戶</text><line x1="330" y1="402" x2="330" y2="428" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><rect x="230" y="430" width="200" height="52" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="330" y="462" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="14" fill="#e6edf3">註冊成功</text><line x1="330" y1="482" x2="330" y2="508" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="342" y="500" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#39d0d8">結束</text><circle cx="330" cy="522" r="13" fill="none" stroke="#e6edf3" stroke-width="1.8"/><circle cx="330" cy="522" r="7" fill="#e6edf3"/><line x1="412" y1="280" x2="466" y2="280" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="424" y="272" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#39d0d8">否</text><rect x="468" y="254" width="170" height="52" rx="10" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="553" y="286" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="14" fill="#e6edf3">提示錯誤</text><path d="M553 306 V522 H346" fill="none" stroke="#39d0d8" stroke-width="1.6" marker-end="url(#a)"/></svg><figcaption>圖　活動圖：輸入資料後檢查，有效則存儲用戶、顯示註冊成功；無效則提示錯誤，兩條路都走到結束。</figcaption></figure>
+
 ### 10.8 狀態圖設計
 根據類圖，繪製系統的狀態圖。狀態圖展示了對象在其生命週期中所經歷的各種狀態以及導致狀態變化的事件。
 狀態圖：
-用戶狀態圖
-初始狀態：未註冊
-註冊中
-已註冊
-登錄中
-已登錄
-注銷中
-已注銷
+
+<figure class="fig-svg"><svg viewBox="0 0 860 640" width="100%" role="img" aria-label="UML 狀態圖：用戶帳戶由未註冊到已註銷的七個狀態與轉換事件" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><circle cx="240" cy="24" r="9" fill="#e6edf3"/><line x1="240" y1="33" x2="240" y2="46" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><rect x="130" y="50" width="220" height="56" rx="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="240" y="85" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="14" fill="#e6edf3">未註冊</text><rect x="130" y="130" width="220" height="56" rx="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="240" y="165" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="14" fill="#e6edf3">註冊中</text><line x1="240" y1="106" x2="240" y2="126" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="228" y="120" text-anchor="end" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">提交註冊</text><rect x="130" y="210" width="220" height="56" rx="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="240" y="245" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="14" fill="#e6edf3">已註冊</text><line x1="240" y1="186" x2="240" y2="206" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="228" y="200" text-anchor="end" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">註冊成功</text><rect x="130" y="290" width="220" height="56" rx="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="240" y="325" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="14" fill="#e6edf3">登錄中</text><line x1="240" y1="266" x2="240" y2="286" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="228" y="280" text-anchor="end" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">登錄</text><rect x="130" y="370" width="220" height="56" rx="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="240" y="405" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="14" fill="#e6edf3">已登錄</text><line x1="240" y1="346" x2="240" y2="366" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="228" y="360" text-anchor="end" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">登錄成功</text><rect x="130" y="450" width="220" height="56" rx="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="240" y="485" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="14" fill="#e6edf3">注銷中</text><line x1="240" y1="426" x2="240" y2="446" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="228" y="440" text-anchor="end" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">注銷</text><rect x="130" y="530" width="220" height="56" rx="26" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="240" y="565" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="14" fill="#e6edf3">已注銷</text><line x1="240" y1="506" x2="240" y2="526" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><text x="228" y="520" text-anchor="end" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11" fill="#39d0d8">注銷完成</text></svg><figcaption>圖　狀態圖：未註冊→註冊中→已註冊→登錄中→已登錄→注銷中→已註銷，箭頭上的文字是觸發轉換的事件。</figcaption></figure>
+
 ### 10.9 組件圖設計
 根據類圖和序列圖，繪製系統的組件圖。組件圖展示了系統中的物理模塊及其相互依賴關係。
 組件圖：
-用戶界面 (User Interface)
 
-- 註冊 (register)
-- 登錄 (login)
-- 搜索書籍 (searchBooks)
-```
-|
-v
-```
-業務邏輯層 (Business Logic)
-
-- 處理用戶註冊 (handleRegister)
-- 處理用戶登錄 (handleLogin)
-- 處理書籍搜索 (handleSearchBooks)
-```
-|
-v
-```
-資料層 (Data Layer)
-
-- 存儲用戶信息 (storeUser)
-- 查詢書籍 (queryBooks)
+<figure class="fig-svg"><svg viewBox="0 0 860 470" width="100%" role="img" aria-label="UML 組件圖：用戶界面、業務邏輯層、資料層三層與依賴方向" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><rect x="240" y="20" width="380" height="104" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="430" y="44" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#39d0d8">用戶界面（User Interface）</text><text x="258" y="68" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#e6edf3">• 註冊（register）</text><text x="258" y="88" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#e6edf3">• 登錄（login）</text><text x="258" y="108" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#e6edf3">• 搜索書籍（searchBooks）</text><rect x="240" y="190" width="380" height="104" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="430" y="214" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#39d0d8">業務邏輯層（Business Logic）</text><text x="258" y="238" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#e6edf3">• 處理用戶註冊（handleRegister）</text><text x="258" y="258" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#e6edf3">• 處理用戶登錄（handleLogin）</text><text x="258" y="278" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#e6edf3">• 處理書籍搜索（handleSearchBooks）</text><rect x="240" y="360" width="380" height="84" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="430" y="384" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="13" fill="#39d0d8">資料層（Data Layer）</text><text x="258" y="408" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#e6edf3">• 存儲用戶信息（storeUser）</text><text x="258" y="428" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#e6edf3">• 查詢書籍（queryBooks）</text><line x1="430" y1="124" x2="430" y2="186" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><line x1="430" y1="294" x2="430" y2="356" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/></svg><figcaption>圖　組件圖：用戶界面依賴業務邏輯層，業務邏輯層依賴資料層；箭頭由上往下代表呼叫方向。</figcaption></figure>
 
 ### 10.10 部署圖設計
 根據組件圖，繪製系統的部署圖。部署圖展示了系統的物理部署結構，包括硬件節點、軟件構件及其相互關係。
 部署圖：
-客戶端（Client）
 
-- 用戶界面構件（User Interface Component）
-```
-|
-|
-V
-```
-應用服務器（Application Server）
-```
-|
-```
+<figure class="fig-svg"><svg viewBox="0 0 860 490" width="100%" role="img" aria-label="UML 部署圖：客戶端、應用服務器、數據庫服務器三個節點與構件" style="background:#0d1117;border-radius:10px"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#39d0d8"/></marker></defs><rect x="260" y="20" width="340" height="108" rx="8" fill="none" stroke="#2c6fb1" stroke-width="1.8"/><rect x="260" y="20" width="340" height="28" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="430" y="39" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12.5" fill="#39d0d8">客戶端（Client）</text><rect x="276" y="66" width="308" height="34" rx="6" fill="#132030" stroke="#2c6fb1" stroke-width="1.4"/><text x="430" y="88" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#e6edf3">用戶界面構件（User Interface Component）</text><rect x="260" y="190" width="340" height="108" rx="8" fill="none" stroke="#2c6fb1" stroke-width="1.8"/><rect x="260" y="190" width="340" height="28" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="430" y="209" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12.5" fill="#39d0d8">應用服務器（Application Server）</text><rect x="276" y="236" width="308" height="34" rx="6" fill="#132030" stroke="#2c6fb1" stroke-width="1.4"/><text x="430" y="258" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#e6edf3">業務邏輯構件（Business Logic Component）</text><rect x="260" y="360" width="340" height="108" rx="8" fill="none" stroke="#2c6fb1" stroke-width="1.8"/><rect x="260" y="360" width="340" height="28" rx="8" fill="#132030" stroke="#2c6fb1" stroke-width="1.6"/><text x="430" y="379" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="12.5" fill="#39d0d8">數據庫服務器（Database Server）</text><rect x="276" y="406" width="308" height="34" rx="6" fill="#132030" stroke="#2c6fb1" stroke-width="1.4"/><text x="430" y="428" text-anchor="middle" font-family="'Microsoft JhengHei','Segoe UI',sans-serif" font-size="11.5" fill="#e6edf3">資料層構件（Data Layer Component）</text><line x1="430" y1="128" x2="430" y2="186" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/><line x1="430" y1="298" x2="430" y2="356" stroke="#39d0d8" stroke-width="1.8" marker-end="url(#a)"/></svg><figcaption>圖　部署圖：用戶界面構件在客戶端，業務邏輯構件在應用服務器，資料層構件在數據庫服務器，箭頭代表呼叫方向。</figcaption></figure>
 
-- 業務邏輯構件（Business Logic Component）
-```
-|
-|
-V
-```
-數據庫服務器（Database Server）
-資料層構件（Data Layer Component）
 ### 10.11 綜合案例總結
-## 通過以上的綜合
-案例分析，我們展示瞭如何在一個完整的軟件開發過程中應用各種 UML 圖表。每個圖表都有其特定的用途和優勢，幫助開發團隊從不同的角度理解和設計系統。具體來說：
+通過以上的綜合案例分析，我們展示瞭如何在一個完整的軟件開發過程中應用各種 UML 圖表。每個圖表都有其特定的用途和優勢，幫助開發團隊從不同的角度理解和設計系統。具體來說：
 
 1. 用例圖：幫助捕捉和分析系統的功能需求，確定系統的功能範圍和參與者。
 2. 類圖：幫助設計系統的靜態結構，定義系統中的類及其屬性、操作和類之間的關係。
