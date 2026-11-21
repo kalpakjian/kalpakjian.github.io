@@ -356,6 +356,6 @@ def submit_comment(request, post_id):
         return redirect('post_detail', id=post_id)
 ```
 
-## 7. Django 視圖系統（導論）
+## 7. Django 視圖系統
 
-視圖（View）負責處理 HTTP 請求、產生 HTTP 回應，並與模板協作生成動態 HTML。視圖分**函數視圖**與**類視圖**兩種，細節見後續章節。
+視圖（View）負責處理 HTTP 請求、產生 HTTP 回應，並與模板協作生成動態 HTML；詳細內容見第 9 章。
