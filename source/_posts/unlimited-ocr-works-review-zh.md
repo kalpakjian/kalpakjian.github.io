@@ -133,9 +133,18 @@ v1 論文自己很誠實：「still has a finite context length, and the prefill
 ## 六、部署與硬體
 
 - **權重**：BF16 約 6.7 GB，一張 RTX 4090 24 GB 綽綽有餘，社群也有 GGUF 量化可跑更小的卡。
-- **生態**：transformers（v1）／vLLM（v1）／SGLang（v2）／ms-swift 微調／ModelScope／Baidu Cloud，Hugging Face Spaces 有官方 demo 可免裝先玩。
+- **生態**：transformers（v1）／vLLM（v1）／SGLang（v2）／llama.cpp（社群 GGUF）／Docker／ms-swift 微調／ModelScope／Baidu Cloud，Hugging Face Spaces 有官方 demo 可免裝先玩。
 - **Python 版本坑**：官方只測過 **Python 3.12 + torch 2.10 + CUDA 12.9**。系統若是最新的 Python 3.15，直接裝大概率踩 wheel 相容性的坑——老實開一個 3.12 的 venv。
 - **Windows 本機**：transformers 路線可行（純 PyTorch）；vLLM／SGLang 建議走 WSL2 或 Linux 主機。
+
+**順便算一筆帳：為什麼值得自己跑。** 雲端 OCR 按頁計費，而且每一頁都是一次獨立呼叫——你付錢買到的，剛好就是「一堆互不相連的單頁文字」，跨頁的上下文還得自己接回去。以 2026 年 11 月官網牌價為例（每 1,000 頁，每月前 1,000 頁免費）：
+
+| 服務 | 牌價（每千頁） | 100 萬頁的帳單 |
+|---|---|---|
+| Google Cloud Vision（Document Text Detection） | US$1.50 | US$1,500 |
+| Amazon Textract（Extraction） | US$8.50 | US$8,500 |
+
+Azure Document Intelligence 的 Read 模型同屬這個量級（本文未逐項核對）；Textract 要抽表格或自訂欄位還會再跳一個檔次，Custom 是 US$40／千頁。自架的邊際成本只有電費：4090 滿載約 450 W，跑一整晚是幾度電的量級；權重 MIT、只需下載一次，頁數再多也不會多出一張帳單。
 
 ## 七、評分卡
 
@@ -148,7 +157,7 @@ v1 論文自己很誠實：「still has a finite context length, and the prefill
 | 多語言覆蓋 | 6 | 中英文強；希伯來／阿拉伯文有回報災情 |
 | 部署生態 | 8.5 | vLLM／SGLang／GGUF／ms-swift／雲端全齊 |
 | 工程品質與安全 | 6 | 63 個 open issues、`eval()` 後處理是實打實的隱患 |
-| 授權與成本 | 10 | MIT、權重全開、可商用 |
+| 授權與成本 | 10 | MIT、權重全開、可商用；對照雲端每千頁 US$1.50–8.50 |
 
 **綜合：8/10。**
 
@@ -166,3 +175,4 @@ Unlimited-OCR 是少見「LinkedIn 貼文沒有誇大核心技術」的案例：
 - 論文：[arXiv:2606.23050 — Unlimited OCR Works](https://arxiv.org/abs/2606.23050)、[arXiv:2610.39308 — Unlimited OCR Works 2](https://arxiv.org/abs/2610.39308)
 - 程式碼與 issue 區：[github.com/baidu/Unlimited-OCR](https://github.com/baidu/Unlimited-OCR)
 - 第三方評論：[alphaXiv 頁面](https://www.alphaxiv.org/abs/2606.23050)（消融實驗質疑）、Hugging Face 未驗證 ParseBench 提交
+- 牌價：[Google Cloud Vision pricing](https://cloud.google.com/vision/pricing)、[Amazon Textract pricing](https://aws.amazon.com/textract/pricing/)（2026/11 查核）
