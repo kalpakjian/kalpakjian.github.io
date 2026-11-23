@@ -19,12 +19,14 @@ banner_img: /img/covers/inkling-2-mini-4090-local-zh.png
 
 社群上那則貼文本來只打算掃過去：一個 26B 的模型「打贏 GPT-6 Luna、MiniMax-M3、Claude Haiku 5.5」，「在你的 16GB 筆電上跑」，「支援 1M context」，「SWE-bench Pro (Hard) 77.9%」。這種組合通常九成是流量農場在講不存在的東西。
 
-實際查了之後：<strong>模型是真的</strong>。`unsloth/Inkling-2-Mini-GGUF` 有 80 萬次下載、879 個讚，權重來自 Thinking Machines Lab、Apache 2.0，2026 年 11 月釋出。但貼文把三件事縫在一起：真的模型、挑過的對照組、以及一句會讓你買錯機器的硬體建議。以下是把它真的跑在 RTX 4090 上的完整紀錄——所有數字都是本機實測，或回到一手來源查證。
+實際查了之後：<strong>模型是真的</strong>。`unsloth/Inkling-2-Mini-GGUF` 寫稿當下有 80 萬次下載、879 個讚（隔天已翻到 129 萬／1,046），權重來自 Thinking Machines Lab、Apache 2.0，2026 年 11 月釋出。但貼文把三件事縫在一起：真的模型、挑過的對照組、以及一句會讓你買錯機器的硬體建議。以下是把它真的跑在 RTX 4090 上的完整紀錄——所有數字都是本機實測，或回到一手來源查證。
 
 <!-- more -->
 
 > <strong>一句話總結</strong>：Inkling 2 Mini 在 4090 上跑得動、答案也正確，但生成只有 25 tok/s、prefill 136 tok/s，而且 32K context 就吃掉 23.0／24.5 GB VRAM——<strong>1M context 在單張 24GB 卡上不存在</strong>。<br />
 > 它是一顆值得下載來玩的模型，不是貼文說的那個「16GB 筆電就能跑」的東西。<br />
+
+> <strong>2026-11-24 02:00 更新</strong>：Unsloth 於 11/23 深夜重新上傳了全部量化檔（主線 llama.cpp 現在也載得進去）、換掉 dspark draft 模型、宣稱解碼快 1.9×，並修掉 Q8_0 KV cache 佔用比 F16 還多的 bug。本文補上這些變動，以及兩項我自己重跑的實測（§5、§6）。<br />
 
 ## 三十秒結論
 
@@ -52,7 +54,8 @@ banner_img: /img/covers/inkling-2-mini-4090-local-zh.png
 | 打贏 Claude Haiku 5.5 | ❌ 沒說哪個 effort。Haiku low 是 19（輸 1 分），medium 25、max 36 都贏 |
 | 打贏 MiniMax-M3 | ✅ 20 vs 19，贏 1 分（M3 是 428B 總參數、23B active 的巨獸） |
 | 跑在 16GB 筆電 | ⚠️ 只有 1–2 bit 量化塞得進去，品質會掉；4-bit 需要 17–18 GB |
-| ready for Unsloth + llama.cpp | ✅ 但要 Unsloth 自己的 llama.cpp build，主線認不得這個架構 |
+| ready for Unsloth + llama.cpp | ✅ 11/23 更新後<strong>連主線 llama.cpp 也載得進去</strong>；但文件裡的 cuda12 portable 仍會認不到 CUDA 13 的機器（見 §2） |
+| 真正的強項 | 文件／圖表數值讀取、GUI 元素定位——但 GUI 那項我複現不出官方數字（見 §5、§6） |
 
 補一個貼文沒說的：模型卡上那兩個 coding 分數很漂亮，但 Artificial Analysis 獨立跑出來的 Terminal-Bench 4.0 只有 <strong>5.6%</strong>，跟 Qwen3.8-27B 同分。自報與第三方之間那道縫，一直是本地模型評測最大的變數。
 
@@ -75,6 +78,8 @@ Available devices:
 ```
 
 這件事值得記下來：<strong>llama.cpp 的 CUDA 版本要對上你機器上的 toolkit，不是對上驅動</strong>。驅動很新不代表 CUDA 12 的 build 會動。
+
+補記（11/24）：官方已重新上傳全部量化檔，「主線 llama.cpp 現在也載得進去」。所以這個坑只在兩種情況還會踩到——沿用舊 revision 的檔案，或照文件抓 cuda12 portable。
 
 ### 坑二：1M context 是規格，不是可用長度
 
@@ -106,18 +111,73 @@ Available devices:
 
 <strong>第一，確認沒有層掉到 CPU。</strong>VRAM 用掉 23.0 GB，權重 17.6 GB 全在卡上，nvidia-smi 顯示 100% 利用率——不是 offload 造成的。
 
-<strong>第二，看功耗。</strong>這是關鍵：利用率 94–100%，功耗只有 133–136 W，而 4090 額定 450 W。滿載的算力工作會把功耗推到 300 W 以上；停在 134 W 代表 GPU 大部分時間在等資料，不是在算。合理的解釋是 looped transformer 每個 token 要重複過層，加上 MoE 的專家權重搬運，讓有效 FLOPs 遠高於「5.4B active」這個數字給人的印象。
+<strong>第二，看功耗。</strong>這是關鍵：利用率 94–100%，功耗只有 133–136 W，而 4090 額定 450 W。滿載的算力工作會把功耗推到 300 W 以上；停在 134 W 代表 GPU 大部分時間在等資料，不是在算。官方文件給了答案：<strong>第 6–17 層會重複跑三次</strong>。所以一個 token 不是走 26 層，而是走「12 層 × 3 遍」，等效計算量遠高於 5.4B active 給人的印象，再疊上 MoE 的專家權重搬運。<strong>5.4B active 省的是記憶體，不是時間</strong>——而且官方沒有提供推論時可調的 loop 次數，這個旋鈕你轉不到。
 
-也試了官方附的投機解碼（`dspark`，383.6 MB 的 draft 模型，`--spec-type draft-dspark`）：
+另一個要標明的變數：上面所有數字來自 build b12588（11/20）。官方現在推 b12649，宣稱解碼比主線 llama.cpp 快 <strong>1.9×</strong>，但測試卡是 B200／RTX PRO 6000／A100，<strong>沒有 4090 的數據</strong>。所以「1.9×」用在你這張卡上是未證實的，25 tok/s 也可能已經過時。
+
+也試了官方附的投機解碼（`dspark` draft 模型，`--spec-type draft-dspark`）：
 
 | 設定 | 生成速度 | 接受率 | 平均接受長度 |
 |---|---|---|---|
 | 無 draft | 25.1 tok/s | — | — |
-| dspark n_max=3 | 23.8 tok/s | 44–46% | 2.33–2.37 |
+| dspark（384 MB 舊版）＋ n_max=3 | 23.8 tok/s | 44–46% | 2.33–2.37 |
 
-<strong>投機解碼在這裡是負收益</strong>：接受率不到一半，draft 的額外開銷蓋過省下的步數，而且多佔 VRAM。已經移除，回到乾淨配置。
+<strong>當時是負收益</strong>：接受率不到一半，draft 的額外開銷蓋過省下的步數，還多佔 VRAM，所以移除了。
 
-## 五、Artificial Analysis 那 20 分要怎麼讀
+但這個結論要打折。11/23 深夜官方把 draft 換成 <strong>481 MB 新版</strong>（舊檔改名 `..._Q8_0_Old.gguf`），建議參數也從 `n_max=3` 改成 `n_max=2`。我測的是舊版＋舊參數，<strong>新版沒測</strong>——所以「dspark 無效」只在舊版成立，別當成定論。
+
+## 五、它的強項到底在哪：分項對照
+
+AA 的綜合分只給一個數字，看不出擅長什麼。官方文件另外放了一張五模型分項表（Inkling 2 Mini／Gemma 4 31B／Muse Glimmer／Qwen3.8-27B／Nemotron 3.5 Super VL），把 Inkling 贏的與輸的分開看，輪廓就出來了。
+
+贏的：
+
+| 基準 | Inkling 2 Mini | Qwen3.8-27B | Gemma 4 31B | 測什麼 |
+|---|---|---|---|---|
+| ScreenSpot Pro | <strong>76.5%</strong>／87.7% | 57.6% | 5.9% | 截圖上找可點元素 |
+| JobBench | <strong>49.6%</strong> | 33.4% | 8.2% | 端到端任務完成 |
+| LongBench v2 | <strong>66.9%</strong> | 52.3% | 52.9% | 長文檢索問答 |
+| DeepSearchQA | <strong>85.3%</strong> | 79.7% | 61.7% | 多跳搜尋推理 |
+| OmniDocBench v1.6 | <strong>92.8%</strong> | 91.5% | 82.5% | 文件版面與表格 |
+| Chartography | 22.1%／<strong>72.5%</strong> | 12.2%／52.1% | 12.0%／11.8% | 圖表理解 |
+| ARC-AGI v2 | <strong>49.3%</strong> | 42.4% | – | 抽象推理 |
+
+輸的：
+
+| 基準 | Inkling 2 Mini | Qwen3.8-27B | 測什麼 |
+|---|---|---|---|
+| GDPVal-AA v2.1 | 1319 | <strong>1427</strong> | 產出價值的專業工作 |
+| AutomationBench-AA | 41.8% | <strong>48.2%</strong> | 自動化流程 |
+| AA-Omniscience 非幻覺 | 63.4% | <strong>71.4%</strong> | 不知道時會不會編 |
+| Terminal Bench v2.1 | 71.6% | <strong>73.0%</strong> | 終端機任務 |
+| MMMU Pro | 74.9% | <strong>76.3%</strong> | 學術級視覺推理 |
+| HLE-Diamond | 15.2% | <strong>15.3%</strong> | 博士級難題（兩個都很低） |
+
+三句話讀完：<strong>它是「看畫面」與「讀文件」的模型，不是「寫程式」與「講知識」的模型</strong>。贏的每一項都和視覺、版面、長文有關；輸的每一項都和產出品質、工具鏈自動化、以及「不確定時閉嘴」有關。最後那項對寫技術文章的人特別要記：非幻覺 63.4% 意味著它比其他小模型更敢編。
+
+⚠️ 這整張表是廠商自報（同一個來源也給出 77.9% 的 SWE-bench Pro），我沒有重跑這些基準。§6 是我自己補的兩項小測，剛好用來檢查這張表的可信度。
+
+## 六、我補測了它的兩個招牌能力
+
+<strong>測試一：讀圖上的數值。</strong>加上 610 MB 的 `mmproj-F16.gguf` 之後（VRAM 20,440 MiB @16K context），拿本文的圖 1 問它六個問題：生成吞吐、prefill 吞吐、權重佔用、功耗、總 VRAM、哪個條比較長。
+
+結果 <strong>6/6 全對</strong>（25.1、136.3、17.6、134、23,169、prefill）。這與 OmniDocBench 92.8% 的方向一致——但要看清楚它做對的是「讀圖上的印刷數字」，那是 OCR，不是圖表推理。不要拿這個去推論它能看懂趨勢。
+
+<strong>測試二：GUI 元素定位。</strong>做一張座標完全已知的 1920×1080 介面（4 個側欄文字項、3 個工具列色塊按鈕、1 個列尾小按鈕），每個目標問一次「點這裡」，座標落在 bbox 內算命中。
+
+| 測試 | 命中率 |
+|---|---|
+| 1080p，像素座標 | <strong>2–4／8</strong> |
+| 1080p，0–1000 正規化座標 | 1／8 |
+| 3840×2160，像素座標 | 1／8 |
+
+成敗模式非常乾淨：<strong>三個大色塊按鈕全中，誤差在 3 px 內</strong>（答 `960,61`，真值 `960,62`）；側欄文字列與那個小按鈕全滅，還吐出 `3,-27`、`1920,1080` 這種角落亂數。換成 0–1000 正規化反而更差，所以不是座標慣例的問題。
+
+也就是說：<strong>它看得到圖、也算得出座標，但在「密集文字與小目標裡挑對那一個」這件事上很弱</strong>——而這正是 ScreenSpot-Pro 的考題設計。官方 76.5% 這個數字，我在本地複現不出來。
+
+兩個限制必須寫在前面：樣本只有 8 題（差一題就是 12.5%），畫面是我合成的，而且<strong>沒有對照組</strong>——沒有拿一個已知 GUI 能力強的模型跑同一組題目，所以「模型弱」與「我的題目刁」還沒辦法分離。
+
+## 七、Artificial Analysis 那 20 分要怎麼讀
 
 貼文的「打贏」全部建立在同一個技巧上：拿別人最省的模式來比。
 
@@ -135,15 +195,15 @@ Available devices:
 2. <strong>對 Haiku 的比較站不住腳</strong>。Haiku 5.5 在任何一個非 low 的檔位都贏 Inkling，而 medium 才是它的預設。
 3. <strong>它很囉唆</strong>。AA 量到它在 Intelligence Index 上吐了 1.61 億 output token，是中位數（8,570 萬）的兩倍。這解釋了為什麼單題成本 $0.59 不算貴——是量太大。
 
-## 六、我的實務結論
+## 八、我的實務結論
 
 - <strong>想自己跑一顆 26B 來玩</strong>：可以，`UD-Q4_K_XL` ＋ 32K context ＋ CUDA 13 的 build，不要開 dspark。下載 16.4 GB，五分鐘的事。
 - <strong>想接進 coding agent 當主力</strong>：不建議。prefill 136 tok/s 意味著每次重讀三萬 token 的 repo 要 3.7 分鐘，生成 25 tok/s 再疊上去，那個等待會把你逼回雲端 API。
 - <strong>衝著 1M context 來的</strong>：換硬體。單張 24 GB 只能到 32K 左右。
-- <strong>想讓它看圖</strong>：再抓 610 MB 的 `mmproj-F16.gguf`，多一個 `--mmproj` 參數。這輪沒測影像品質。
+- <strong>想讓它看圖</strong>：抓 610 MB 的 `mmproj-F16.gguf`，多一個 `--mmproj` 參數。讀圖上的字與表格數字可用（實測 6/6），但別指望它做 GUI 座標定位（實測 2–4/8）。
 - <strong>貼文真正的價值</strong>：它讓你真的去下載了。它的數字要自己驗——尤其是「16GB 筆電」和「打贏 Claude Haiku 5.5」這兩句。
 
-## 七、來源與延伸
+## 九、來源與延伸
 
 | 實體 | 連結 | 實查結果 |
 |---|---|---|
@@ -151,11 +211,14 @@ Available devices:
 | 官方跑法文件 | [Unsloth: Run Inkling 2 Mini](https://unsloth.ai/docs/models/inkling-2-mini) | 記憶體分級表、dspark 參數、looped-layer 需求 |
 | 模型評測 | [AA: Inkling 2 Mini](https://artificialanalysis.ai/models/inkling-2-mini) | 20 分、5.4B active、1M context、$0.15／$0.50 |
 | 全站排行 | [AA: Model Leaderboard](https://artificialanalysis.ai/models) | Index v5.0.1，榜首 65 分 |
+| 11/23 更新紀錄 | [Unsloth 文件的 23rd November Update](https://unsloth.ai/docs/models/inkling-2-mini) | 1.9× 解碼加速、主線 llama.cpp 相容、Q8_0 KV cache 修正 |
+| 分項基準表 | 同上文件 Benchmarks 區塊 | 五模型對照，廠商自報 |
 
-> <strong>查證說明</strong>：本文所有效能數字為 2026-11-23 在本機（RTX 4090 24 GB／i7-13700K／64 GB RAM）實測，llama.cpp b12588-mix-c0c3de8（CUDA 13 portable）＋ UD-Q4_K_XL。<br />
-> 分數與價格於同日讀取 Artificial Analysis 模型頁，該站榜單每週更新，數字會漂。<br />
-> 模型卡自報的 DeepSWE v1.1 與 SWE-bench Pro v2 沒有重跑，本文只做轉述並標明其來源性質。<br />
-> 未測：tool calling、影像輸入、長 context 下的品質衰減。<br />
+> <strong>查證說明</strong>：本文效能數字為 2026-11-23 在本機（RTX 4090 24 GB／i7-13700K／64 GB RAM）實測，llama.cpp b12588-mix-c0c3de8（CUDA 13 portable）＋ UD-Q4_K_XL；§6 的視覺測試於 11-24 凌晨用同一份權重加 `mmproj-F16` 重跑。<br />
+> 分數與價格於 11-23／11-24 讀取 Artificial Analysis 模型頁，該站榜單每週更新，數字會漂。<br />
+> §5 的分項對照表是廠商自報；模型卡的 DeepSWE v1.1 與 SWE-bench Pro v2 我沒有重跑，只做轉述並標明來源性質。<br />
+> §6 的 GUI 定位只有 8 題、單一合成畫面、且無對照組，只能當哨兵不能當結論。<br />
+> 未測：tool calling、長 context 下的品質衰減、新版 dspark（481 MB）、以及 b12649 的 1.9× 是否適用於 4090。<br />
 >
 > <strong>封面與圖表</strong>：封面由本機 ComfyUI 的 Qwen-Image 2.1 生成（刻意不含文字）；<br />
 > 圖 1 為手繪內嵌 SVG——含中文標籤的圖表交給 AI 生圖會爛成方塊。
