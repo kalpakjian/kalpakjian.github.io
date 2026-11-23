@@ -24,9 +24,11 @@ banner_img: /img/covers/inkling-2-mini-4090-local-zh.png
 <!-- more -->
 
 > <strong>一句話總結</strong>：Inkling 2 Mini 在 4090 上跑得動、答案也正確，但生成只有 25 tok/s、prefill 136 tok/s，而且 32K context 就吃掉 23.0／24.5 GB VRAM——<strong>1M context 在單張 24GB 卡上不存在</strong>。<br />
-> 它是一顆值得下載來玩的模型，不是貼文說的那個「16GB 筆電就能跑」的東西。<br />
+> 它值得下載來驗一次，但不值得留在硬碟裡。<br />
 
 > <strong>2026-11-24 02:00 更新</strong>：Unsloth 於 11/23 深夜重新上傳了全部量化檔（主線 llama.cpp 現在也載得進去）、換掉 dspark draft 模型、宣稱解碼快 1.9×，並修掉 Q8_0 KV cache 佔用比 F16 還多的 bug。本文補上這些變動，以及兩項我自己重跑的實測（§5、§6）。<br />
+>
+> <strong>2026-11-24 02:30 增修</strong>：補上「這顆模型到底該用在哪」的完整判斷（§8），結論是<strong>沒有明確使用時機</strong>——同級每一項都排第二，唯一獨佔的 1M context 在單張 24 GB 上拿不到。<br />
 
 ## 三十秒結論
 
@@ -38,7 +40,8 @@ banner_img: /img/covers/inkling-2-mini-4090-local-zh.png
 | 記憶體 | 32K context 用掉 23,169／24,564 MiB，剩 1.4 GB |
 | 16GB 筆電能不能跑 | 只能跑 1–2 bit（9–11 GB）；官方建議的 4-bit 要 17.6 GB |
 | 貼文哪裡誤導 | 「打贏 Claude Haiku 5.5」只在 Haiku 調到 low effort 時成立（20 vs 19） |
-| 直不值得接進 coding agent | 不建議：prefill 136 tok/s，三萬 token 的 repo 要 3.7 分鐘才開始吐字 |
+| 值不值得接進 coding agent | 不建議：prefill 136 tok/s，三萬 token 的 repo 要 3.7 分鐘才開始吐字 |
+| 那什麼時候該用它 | <strong>幾乎沒有</strong>：同級每一項都排第二，唯一獨佔的 1M context 在本地拿不到（見 §8） |
 
 ## 一、先驗貨：貼文哪裡真、哪裡灌水
 
@@ -195,13 +198,47 @@ AA 的綜合分只給一個數字，看不出擅長什麼。官方文件另外�
 2. <strong>對 Haiku 的比較站不住腳</strong>。Haiku 5.5 在任何一個非 low 的檔位都贏 Inkling，而 medium 才是它的預設。
 3. <strong>它很囉唆</strong>。AA 量到它在 Intelligence Index 上吐了 1.61 億 output token，是中位數（8,570 萬）的兩倍。這解釋了為什麼單題成本 $0.59 不算貴——是量太大。
 
-## 八、我的實務結論
+## 八、那什麼時候該用它？——答案是：幾乎不用
 
-- <strong>想自己跑一顆 26B 來玩</strong>：可以，`UD-Q4_K_XL` ＋ 32K context ＋ CUDA 13 的 build，不要開 dspark。下載 16.4 GB，五分鐘的事。
-- <strong>想接進 coding agent 當主力</strong>：不建議。prefill 136 tok/s 意味著每次重讀三萬 token 的 repo 要 3.7 分鐘，生成 25 tok/s 再疊上去，那個等待會把你逼回雲端 API。
-- <strong>衝著 1M context 來的</strong>：換硬體。單張 24 GB 只能到 32K 左右。
-- <strong>想讓它看圖</strong>：抓 610 MB 的 `mmproj-F16.gguf`，多一個 `--mmproj` 參數。讀圖上的字與表格數字可用（實測 6/6），但別指望它做 GUI 座標定位（實測 2–4/8）。
-- <strong>貼文真正的價值</strong>：它讓你真的去下載了。它的數字要自己驗——尤其是「16GB 筆電」和「打贏 Claude Haiku 5.5」這兩句。
+前七節把強項、弱項、速度、記憶體都量過了，最後只剩一個問題：什麼情況下它是最佳解？把規格跟同分數的對手攤平，答案不太好看。
+
+| 維度 | Inkling 2 Mini | Qwen3.8-27B | 誰贏 |
+|---|---|---|---|
+| 授權 | Apache 2.0 | Apache 2.0 | 平手 |
+| 輸入模態 | 文字＋影像 | 文字＋影像＋<strong>影片</strong> | Qwen |
+| Context | <strong>1M</strong> | 256k | Inkling（但只在 API 上成立） |
+| AA 綜合分 | 20 | 20 | 平手 |
+| Active 參數／token | <strong>5.4B</strong> | 27B dense | 名義上 Inkling，本地實測反而慢（§4） |
+| 本地生成速度 | 25 tok/s | 未測 | 待測 |
+
+攤完只剩兩個真正的差異點，而且兩個都不屬於「在自己電腦上跑」的人：
+
+1. <strong>1M context</strong>：單張 24 GB 只到 32K，這個優勢只有透過它的 API 才拿得到。
+2. <strong>5.4B active</strong>：對「用自有 GPU 做高併發服務」的人來說每 token 成本更低；但 looped 架構把這個優勢吃掉了，而你不是在跑服務。
+
+<strong>所以結論是：它沒有明確的使用時機。</strong>
+
+「同級第二」聽起來體面，翻成白話就是「除了第一名，沒有理由選它」。它在幾乎每一欄都得補一句「但是」——但是 1M 只在 API、但是速度要靠新 build、但是 GUI 那 76.5% 我複現不出來、但是非幻覺比 Qwen 低 8 個百分點。<strong>需要這麼多「但是」的模型，就是沒有 niche。</strong>
+
+而且這不只是我一個人的量測問題：它自報的兩個招牌長處（SWE-bench Pro 77.9%、ScreenSpot Pro 76.5%）在我能驗的範圍內都往下掉，唯一穩住的是「讀文件上的字」（實測 6/6）——而那一項，專門的 OCR 模型做得比它更快更省。
+
+### 我會改口的三個條件
+
+都寫成可驗證的，不是空話：
+
+1. 你需要在<strong>單一開源權重</strong>模型上吃 1M context。本地做不到，所以這句話實際上等於「你要用它的 API」。
+2. 你在<strong>自有 GPU 上做高併發的多模態服務</strong>，每 token 成本比單次延遲重要。
+3. 你要<strong>研究或微調 looped transformer</strong>（同一份權重、不同深度的實驗）——那它是目前少數的開源素材。
+
+三個都不是「一張 4090、做 OCR、寫技術筆記」的人。
+
+### 對應到我自己的用法
+
+- <strong>守尾門與判斷</strong>：維持 Qwen3.8-27B。同分、非幻覺高 8 個百分點、能吃的模態還多一種、同樣是 Apache 2.0。
+- <strong>文件結構重建</strong>：用 OCR 的行框自己算（行距 → 斷段、縮排 → 清單、行高 → 標題），別讓 LLM 從純文字猜。這一步跟用哪顆模型無關，效益卻最大。
+- <strong>想看它一眼</strong>：下載 17.6 GB 要五分鐘，刪掉要五秒。我最後就是刪掉了——留 17 GB 在硬碟裡給一顆「每項第二」的模型不划算。
+
+如果只帶走一句：<strong>那則貼文真正的價值，是讓你真的去下載了一次，然後發現自己不需要它。</strong>
 
 ## 九、來源與延伸
 
@@ -218,6 +255,7 @@ AA 的綜合分只給一個數字，看不出擅長什麼。官方文件另外�
 > 分數與價格於 11-23／11-24 讀取 Artificial Analysis 模型頁，該站榜單每週更新，數字會漂。<br />
 > §5 的分項對照表是廠商自報；模型卡的 DeepSWE v1.1 與 SWE-bench Pro v2 我沒有重跑，只做轉述並標明來源性質。<br />
 > §6 的 GUI 定位只有 8 題、單一合成畫面、且無對照組，只能當哨兵不能當結論。<br />
+> §8 的規格對照於 11-24 02:30 直接讀 Qwen3.8-27B 的模型頁（Apache 2.0、256k、文字＋影像＋影片、AA 20 分），不是憑印象。<br />
 > 未測：tool calling、長 context 下的品質衰減、新版 dspark（481 MB）、以及 b12649 的 1.9× 是否適用於 4090。<br />
 >
 > <strong>封面與圖表</strong>：封面由本機 ComfyUI 的 Qwen-Image 2.1 生成（刻意不含文字）；<br />
