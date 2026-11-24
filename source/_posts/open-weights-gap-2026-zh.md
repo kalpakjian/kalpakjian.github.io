@@ -7,6 +7,8 @@ tags:
   - 人工智慧
   - 機器學習
   - 學習筆記
+index_img: /img/covers/open-weights-gap-2026-zh.png
+banner_img: /img/covers/open-weights-gap-2026-zh.png
 ---
 
 一句話：「最難的代理式工程現在由閉源領先」有硬證據；「開放權重永遠追不上」沒有。中間那幾個最常被引用的數字（12 分、13 分、12 倍），我一個一個回到一手來源重算，結論是三個都要打折。
