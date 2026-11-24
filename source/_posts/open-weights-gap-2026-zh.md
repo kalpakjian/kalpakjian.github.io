@@ -1,5 +1,5 @@
 ---
-title: open-weights-gap-2026-zh
+title: 開放權重永遠追不上？12 分、13 分、12 倍，逐條查回來
 date: 2026-11-24 20:00:00
 categories:
   - 學習資源
