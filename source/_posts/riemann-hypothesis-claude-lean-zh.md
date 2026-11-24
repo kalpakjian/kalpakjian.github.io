@@ -60,6 +60,56 @@ Mathlib 是它的共享數學庫：代數、分析、拓撲、機率、電腦科
 
 所以「對不對」這一層，數學界已經不太吵了。吵的是另一件事，見第 4 節。
 
+<!-- FIG-B -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" role="img" aria-label="驗證信任鏈：原始碼、inert export、四個 kernel、敘述比對" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker><marker id="mfbbf2499" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf2499"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="658.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">四個 kernel、一個 inert export、三個公理</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一層的存在，都是為了讓下一層不必信任上一層</text>
+<rect x="60" y="118" width="620" height="64" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="370.0" y="148.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">① Lean 原始碼（175,187 檔）</text>
+<text x="370.0" y="170.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">沙盒重編譯：無網路、來源唯讀</text>
+<rect x="60" y="212" width="620" height="64" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="370.0" y="242.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">② inert export（61,570,595,788 bytes）</text>
+<text x="370.0" y="264.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只含五個定理的依賴閉包；原始碼碰不到檢查器</text>
+<rect x="60" y="306" width="620" height="168" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="76" y="330" font-size="13.5" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">③ 四個 kernel 各檢一次同一份 export</text>
+<rect x="76" y="348" width="284" height="52" rx="10" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="218.0" y="372.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Lean 官方 kernel</text>
+<text x="218.0" y="394.0" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">48 h 03 m／82.6 GiB</text>
+<rect x="376" y="348" width="284" height="52" rx="10" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="518.0" y="372.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">paranoid kernel</text>
+<text x="518.0" y="394.0" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">72 h 20 m／98.8 GiB</text>
+<rect x="76" y="410" width="284" height="52" rx="10" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="218.0" y="434.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">nanoda（Rust）</text>
+<text x="218.0" y="456.0" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">27 m 42 s／80 執行緒</text>
+<rect x="376" y="410" width="284" height="52" rx="10" fill="#1c2230" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="518.0" y="434.0" font-size="13.5" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">con-leche ＋ con-ron</text>
+<text x="518.0" y="456.0" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">附健全性形式證明</text>
+<rect x="60" y="496" width="620" height="66" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="370.0" y="527.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">④ 敘述比對：證的定理 ＝ Mathlib 的 RiemannHypothesis</text>
+<text x="370.0" y="549.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Comparator、con-leche --compare；兩個獨立實作</text>
+<path d="M 370 182 L 370 210" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 370 276 L 370 304" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<path d="M 370 474 L 370 494" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="712" y="306" width="148" height="256" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="786" y="334" font-size="13" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">全篇只依賴</text>
+<text x="786" y="366" font-size="11.5" fill="#fbbf24" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">propext</text>
+<text x="786" y="392" font-size="11.5" fill="#fbbf24" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">Classical.choice</text>
+<text x="786" y="418" font-size="11.5" fill="#fbbf24" text-anchor="middle" font-family="'Cascadia Mono',Consolas,'Courier New',monospace">Quot.sound</text>
+<text x="786" y="470" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">沒有</text>
+<text x="786" y="490" font-size="11" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Lean core 以外</text>
+<text x="786" y="510" font-size="12" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">的任何公理</text>
+<path d="M 710 505 L 686 525" fill="none" stroke="#fbbf2499" stroke-width="1.5" marker-end="url(#mfbbf2499)"/>
+<text x="60" y="600" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">被檢查的不是原始碼，是匯出後的證明物件；所以「程式碼裡藏了什麼」不影響結論。</text>
+<text x="60" y="626" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三個公理是 Lean 的標準公理，不是作者自己加的假設。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：驗證的四層。被檢查的是 export 而不是原始碼，所以「程式碼裡藏了什麼」碰不到結論；四個 kernel 裡有兩個附健全性形式證明，專門用來堵「Lean 的邏輯本身有 bug」。</figcaption>
+</figure>
+<!-- /FIG-B -->
+
+
 ## 2. 五個要打折的數字
 
 | 常見說法 | 實際情況 |
@@ -80,6 +130,40 @@ Mathlib 是它的共享數學庫：代數、分析、拓撲、機率、電腦科
 
 有個細節很能說明這份東西的性質：175,187 個模組裡，有一個模組的 .olean 每次編譯不完全相同。原因是 `BBtop.eq_1` 這個自動生成的等式引理，Lean 會拿「第一個用到它的定理」的 bound variable 名字去命名，並行編譯時可能拿到不同名字。這是 Lean issue #15498，v4.36.0 修掉。kernel 檢查不看名字，所以不影響正確性；但它提醒你，手上這東西是被當<strong>程式碼</strong>在審的，不是被當文章在讀的。
 
+
+<!-- FIG-A -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-label="壓縮金字塔：從 1,700 萬行 Lean 到一句話" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="618.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個證明，五種長度</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一層都是上一層的壓縮；只有最下面那層是人能讀的</text>
+<text x="60" y="108" font-size="13" fill="#8b949e" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">機器那一側（可檢查）</text>
+<text x="760" y="108" font-size="13" fill="#8b949e" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">這一步做了什麼</text>
+<rect x="60" y="126" width="640" height="64" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="76" y="155.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1,700 萬行 Lean</text>
+<text x="76" y="176.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">175,187 個檔案，只依賴 Mathlib</text>
+<text x="760" y="210" font-size="15.5" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">↓ 編譯</text>
+<rect x="60" y="220" width="540" height="64" rx="10" fill="#161b22" stroke="#58a6ff66" stroke-width="1.5"/>
+<text x="76" y="249.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">61.5 GB proof export</text>
+<text x="76" y="270.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1,484,729 個宣告：五個定理的依賴閉包</text>
+<text x="760" y="304" font-size="15.5" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">↓ 匯出</text>
+<rect x="60" y="314" width="430" height="64" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="76" y="343.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">13 條假設</text>
+<text x="76" y="364.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">主不等式 (M) 的歸約，沒有一條被獨立證明</text>
+<text x="760" y="398" font-size="15.5" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">↓ 歸約</text>
+<rect x="60" y="408" width="320" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="76" y="437.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">265 頁人類版</text>
+<text x="76" y="458.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Rubinstein v2，古典解析數論的語言</text>
+<text x="760" y="492" font-size="15.5" fill="#c084fc" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">↓ 翻譯</text>
+<rect x="60" y="502" width="230" height="64" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="76" y="531.0" font-size="15.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">一句話：√X 鏈</text>
+<text x="76" y="552.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Stepanov 方法 ＋ theta lift 鏈</text>
+<text x="60" y="596" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">長度往下遞減，理解沒有自動往上——最後一行就是第 6 節那句話的候選。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：同一個證明的五種長度。每一層都是上一層的壓縮，但只有最下面那層是人能讀的——這就是「1,700 萬行」不能直接換算成「證明有多長」的原因。</figcaption>
+</figure>
+<!-- /FIG-A -->
+
 所以「17M 行 vs 五行」不是兩份證明的長度比較。真正的問題是：有沒有人類長度的版本？答案是「有第一版，但有洞」。
 
 ## 4. 缺口的真正大小：13 個洞
@@ -87,6 +171,60 @@ Mathlib 是它的共享數學庫：代數、分析、拓撲、機率、電腦科
 Waterloo 的 Michael Rubinstein 在 11 月 21 日放了 164 頁，22 日更新到 265 頁。標題很直白：把 RH 這件事，對黎曼 zeta 函數解釋一遍。寫法是古典解析數論的語言，不是 Lean。
 
 但它不是完整的證明。它做的是：從一個主不等式 (M) 推出 RH，然後把 (M) 歸約成 <strong>13 條用古典語言寫下的假設</strong>，並註明哪幾條由 Lean 開發提供。13 條裡沒有一條被獨立證明。(M) 這一段在稿子裡是空的，第 I.12 節列出還缺什麼。
+
+<!-- FIG-D -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 610" role="img" aria-label="歸約圖：黎曼猜想被歸約成十三條未證假設" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker><marker id="m2dd4bfbb" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2dd4bfbb"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="608.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">缺口不是頁數，是十三條沒人證過的假設</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Rubinstein 的 265 頁人類版做到的，就是把 RH 搬成這樣一張圖</text>
+<rect x="330" y="118" width="240" height="58" rx="10" fill="#161b22" stroke="#3fb95066" stroke-width="1.5"/>
+<text x="450.0" y="152.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">黎曼猜想 RH</text>
+<path d="M 450 176 L 450 204" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="280" y="206" width="340" height="64" rx="10" fill="#161b22" stroke="#fbbf2466" stroke-width="1.5"/>
+<text x="450.0" y="236.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">主不等式 (M)</text>
+<text x="450.0" y="258.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">加權質數冪和的估計；稿中這段是空的</text>
+<path d="M 450 270 L 450 296" fill="none" stroke="#7d8590" stroke-width="2" marker-end="url(#m7d8590)"/>
+<rect x="71.0" y="306" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="120.0" y="336.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">1</text>
+<rect x="181.0" y="306" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="230.0" y="336.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">2</text>
+<rect x="291.0" y="306" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="340.0" y="336.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">3</text>
+<rect x="401.0" y="306" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="450.0" y="336.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">4</text>
+<rect x="511.0" y="306" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="560.0" y="336.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">5</text>
+<rect x="621.0" y="306" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="670.0" y="336.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">6</text>
+<rect x="731.0" y="306" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="780.0" y="336.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">7</text>
+<rect x="126.0" y="368" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="175.0" y="398.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">8</text>
+<rect x="236.0" y="368" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="285.0" y="398.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">9</text>
+<rect x="346.0" y="368" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="395.0" y="398.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">10</text>
+<rect x="456.0" y="368" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="505.0" y="398.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">11</text>
+<rect x="566.0" y="368" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="615.0" y="398.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">12</text>
+<rect x="676.0" y="368" width="98" height="50" rx="10" fill="#161b22" stroke="#7d859066" stroke-width="1.5"/>
+<text x="725.0" y="398.4" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">13</text>
+<rect x="170" y="452" width="560" height="60" rx="10" fill="#161b22" stroke="#2dd4bf66" stroke-width="1.5"/>
+<text x="450.0" y="480.0" font-size="15" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Lean 開發（175,187 檔）</text>
+<text x="450.0" y="502.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">其中幾條由它提供；哪幾條見 §I.12</text>
+<path d="M 300 450 L 300 426" fill="none" stroke="#2dd4bfbb" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#m2dd4bfbb)"/>
+<path d="M 450 450 L 450 426" fill="none" stroke="#2dd4bfbb" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#m2dd4bfbb)"/>
+<path d="M 600 450 L 600 426" fill="none" stroke="#2dd4bfbb" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#m2dd4bfbb)"/>
+<text x="450" y="548" font-size="13" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">十三條裡沒有一條被獨立證明；本文也沒有逐條評估它們的內容。</text>
+<text x="450" y="574" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">能確定的是：最難的部分目前仍然指向機器。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 4：缺口不是頁數，是十三條假設。RH 被搬成 (M)，(M) 被搬成十三條古典語言的假設；其中幾條由 Lean 開發提供，哪幾條看 §I.12。</figcaption>
+</figure>
+<!-- /FIG-D -->
+
 
 換句話說，目前的人話翻譯，是把最難的部分指回機器。這就是玄奘困境的精確版本：譯文有了，但譯文裡有十三處寫著「原文如此」。
 
@@ -100,6 +238,48 @@ Waterloo 的 Michael Rubinstein 在 11 月 21 日放了 164 頁，22 日更新�
 
 Rubinstein 那份 265 頁，自己註明是「with Claude, Codex and Gemini as an aid」寫成的。倫敦 Queen Mary 的 Abhishek Saha 用 OpenAI 的模型把 Lean 片段壓成研討會單頁海報，他估最終可以壓到 10,000 頁以下、甚至 1,000 頁。
 
+<!-- FIG-E -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" role="img" aria-label="三天時間軸：發佈、認證、兩個版本的人類版、報導" style="width:100%;height:auto;display:block">
+<defs><marker id="m7d8590" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d8590"/></marker></defs>
+<rect x="0.75" y="0.75" width="898.5" height="398.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">五天，機器那一側就結束了</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">人類那一側從 11/21 才開始，目前還停在十三個洞</text>
+<path d="M 110 200 L 790 200" fill="none" stroke="#30363d" stroke-width="2"/>
+<circle cx="110.0" cy="200" r="7" fill="#2dd4bf"/>
+<text x="110.0" y="138" font-size="13" fill="#2dd4bf" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">11/20</text>
+<text x="110.0" y="160" font-size="12.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">發佈 1,700 萬行</text>
+<text x="110.0" y="178" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Lean 檔</text>
+<circle cx="246.0" cy="200" r="7" fill="#58a6ff"/>
+<text x="246.0" y="230" font-size="13" fill="#58a6ff" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">11/21</text>
+<text x="246.0" y="252" font-size="12.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">FRO ＋ Mathlib</text>
+<text x="246.0" y="270" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">full confidence</text>
+<circle cx="382.0" cy="200" r="7" fill="#c084fc"/>
+<text x="382.0" y="138" font-size="13" fill="#c084fc" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">11/21</text>
+<text x="382.0" y="160" font-size="12.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">人類版 v1</text>
+<text x="382.0" y="178" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">164 頁，有洞</text>
+<circle cx="518.0" cy="200" r="7" fill="#c084fc"/>
+<text x="518.0" y="230" font-size="13" fill="#c084fc" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">11/22</text>
+<text x="518.0" y="252" font-size="12.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">人類版 v2</text>
+<text x="518.0" y="270" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">265 頁，13 個洞</text>
+<circle cx="654.0" cy="200" r="7" fill="#fbbf24"/>
+<text x="654.0" y="138" font-size="13" fill="#fbbf24" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">11/22–23</text>
+<text x="654.0" y="160" font-size="12.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">paranoid kernel</text>
+<text x="654.0" y="178" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">72 h 跑完</text>
+<circle cx="790.0" cy="200" r="7" fill="#7d8590"/>
+<text x="790.0" y="230" font-size="13" fill="#7d8590" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">11/24</text>
+<text x="790.0" y="252" font-size="12.5" fill="#e6edf3" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">WIRED 報導</text>
+<text x="790.0" y="270" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">「alien」</text>
+<path d="M 110 316 L 790 316" fill="none" stroke="#7d8590" stroke-width="1.6"/>
+<path d="M 790 316 L 808 316" fill="none" stroke="#7d8590" stroke-width="1.6" marker-end="url(#m7d8590)"/>
+<text x="110" y="342" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">人類理解：仍在 13 個洞</text>
+<text x="808" y="342" font-size="12" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">未完成</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 5：五天，機器那一側就結束了。人類那一側從 11/21 才開始，還在十三個洞。</figcaption>
+</figure>
+<!-- /FIG-E -->
+
+
 所以不是「AI 寫、人翻譯」的兩段式，而是 AI 寫、AI 初譯、人決定哪一段值得讀。人退到的位置不是第二線，是<strong>編輯台</strong>。這比「人退到第二線」更奇怪，也更值得注意：判斷力變成稀缺資源，而判斷力恰好是最難外包的那一種。
 
 ## 6. 目前最接近「拍桌子」的一句話
@@ -109,6 +289,49 @@ Alpöge 自己的輪廓是這樣：這是 <strong>Stepanov 方法</strong>的後
 有限體上，Weil 與 Deligne 證了曲線版的 RH。Stepanov 在 1969 年（後來由 Bombieri 簡化）給了更初等的路：造一個輔助多項式，讓它在要數的點上高重數消失，高重數逼出強估計，而強估計就是 RH 在講的事。重數靠微分來量；整數上沒有微分，所以這條路一百年過不去。
 
 他的想法是：用一串 <strong>theta lift</strong> 冒充重數。走過一串 totally definite unitary groups，每一步賺一個重數單位。對長度 X 的 von Mangoldt 和，鏈長約 <strong>√X</strong>。他自己的說法是：事後看，很難想像它還能是別的。
+
+<!-- FIG-C -->
+<figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-label="Stepanov 方法的兩欄對照：有限體靠微分，整數靠 theta lift 鏈" style="width:100%;height:auto;display:block">
+<rect x="0.75" y="0.75" width="898.5" height="598.5" rx="16" fill="#0d1117" stroke="#222b36" stroke-width="1.5"/>
+<text x="48" y="52" font-size="25" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">同一個想法，換一種東西來充當「重數」</text>
+<text x="48" y="82" font-size="14.5" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">左邊是已證的有限體版，右邊是 Alpöge 搬到整數上的做法</text>
+<rect x="60" y="118" width="380" height="372" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="76" y="146" font-size="14" fill="#c084fc" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">有限體上（1940s 已證）</text>
+<rect x="470" y="118" width="370" height="372" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="486" y="146" font-size="14" fill="#f472b6" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">整數上（一百年過不去）</text>
+<rect x="76" y="166" width="348" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="250.0" y="196.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">曲線 C / F_q</text>
+<text x="250.0" y="218.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">只有有限個點，可以逐點數</text>
+<rect x="486" y="166" width="338" height="64" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="655.0" y="196.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Z 上沒有微分</text>
+<text x="655.0" y="218.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">重數無從量起 — 這就是卡住的地方</text>
+<rect x="76" y="242" width="348" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="250.0" y="272.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">輔助多項式 f</text>
+<text x="250.0" y="294.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">在要數的點 P 上重數 m 消失</text>
+<rect x="486" y="242" width="338" height="64" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="655.0" y="272.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">替代：theta lift 鏈</text>
+<text x="655.0" y="294.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">U(X0) → U(X1) → … → U(Xm)</text>
+<rect x="76" y="318" width="348" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="250.0" y="348.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">有微分 → 重數可量</text>
+<text x="250.0" y="370.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">f 的第 k 階導數不為零的次數</text>
+<rect x="486" y="318" width="338" height="64" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="655.0" y="348.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">每一步 +1 重數</text>
+<text x="655.0" y="370.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">用一個 unitary group 換一次「微分」</text>
+<rect x="76" y="394" width="348" height="64" rx="10" fill="#161b22" stroke="#c084fc66" stroke-width="1.5"/>
+<text x="250.0" y="424.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">得到估計</text>
+<text x="250.0" y="446.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Weil／Deligne；Stepanov 的初等版</text>
+<rect x="486" y="394" width="338" height="64" rx="10" fill="#161b22" stroke="#f472b666" stroke-width="1.5"/>
+<text x="655.0" y="424.0" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">對長度 X 的 von Mangoldt 和</text>
+<text x="655.0" y="446.0" font-size="11.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">鏈長 m ≈ √X；重數另外算</text>
+<text x="450" y="522" font-size="14" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">差異只有一處：重數這一步，左邊用微分，右邊用一串 theta lift。</text>
+<text x="450" y="548" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">示意圖。每一步是一個 unitary group，鏈長 ≈ √X 與重數是兩個量，不要合併讀。</text>
+<text x="450" y="574" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Alpöge 自己的說法：這是 Stepanov 方法的後代，「事後看很難想像它還能是別的」。</text>
+</svg>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 3：Stepanov 方法的兩欄對照。差別只有一處——重數這一步用什麼換。示意圖；鏈長與重數是兩個量，不要合併讀。</figcaption>
+</figure>
+<!-- /FIG-C -->
+
 
 配料清單長得嚇人：Stepanov 式行列式、Bost slope inequality、用 Behrend 構造挑的 Iwasawa tower、relative trace formula、Gan–Gross–Prasad periods、seesaw identities、Rallis 的 theta lift、Chowla–Selberg 公式、Weyl 與 Siegel 的 mass 計算、弱化版的 Vandiver 猜想；時間軸最後一條（11/16）只寫了「GRH」兩個字。
 
