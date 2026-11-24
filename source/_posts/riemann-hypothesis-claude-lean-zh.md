@@ -105,7 +105,7 @@ Mathlib 是它的共享數學庫：代數、分析、拓撲、機率、電腦科
 <text x="60" y="600" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">被檢查的不是原始碼，是匯出後的證明物件；所以「程式碼裡藏了什麼」不影響結論。</text>
 <text x="60" y="626" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">三個公理是 Lean 的標準公理，不是作者自己加的假設。</text>
 </svg>
-<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：驗證的四層。被檢查的是 export 而不是原始碼，所以「程式碼裡藏了什麼」碰不到結論；四個 kernel 裡有兩個附健全性形式證明，專門用來堵「Lean 的邏輯本身有 bug」。</figcaption>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：驗證的四層。被檢查的是 export 而不是原始碼，所以「程式碼裡藏了什麼」碰不到結論；四個 kernel 裡有兩個附健全性形式證明，專門用來堵「Lean 的邏輯本身有 bug」。</figcaption>
 </figure>
 <!-- /FIG-B -->
 
@@ -160,7 +160,7 @@ Mathlib 是它的共享數學庫：代數、分析、拓撲、機率、電腦科
 <text x="76" y="552.0" font-size="12" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Stepanov 方法 ＋ theta lift 鏈</text>
 <text x="60" y="596" font-size="13" fill="#8b949e" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">長度往下遞減，理解沒有自動往上——最後一行就是第 6 節那句話的候選。</text>
 </svg>
-<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 1：同一個證明的五種長度。每一層都是上一層的壓縮，但只有最下面那層是人能讀的——這就是「1,700 萬行」不能直接換算成「證明有多長」的原因。</figcaption>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 2：同一個證明的五種長度。每一層都是上一層的壓縮，但只有最下面那層是人能讀的——這就是「1,700 萬行」不能直接換算成「證明有多長」的原因。</figcaption>
 </figure>
 <!-- /FIG-A -->
 
@@ -221,7 +221,7 @@ Waterloo 的 Michael Rubinstein 在 11 月 21 日放了 164 頁，22 日更新�
 <text x="450" y="548" font-size="13" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">十三條裡沒有一條被獨立證明；本文也沒有逐條評估它們的內容。</text>
 <text x="450" y="574" font-size="13" fill="#e6edf3" font-weight="700" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">能確定的是：最難的部分目前仍然指向機器。</text>
 </svg>
-<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 4：缺口不是頁數，是十三條假設。RH 被搬成 (M)，(M) 被搬成十三條古典語言的假設；其中幾條由 Lean 開發提供，哪幾條看 §I.12。</figcaption>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 3：缺口不是頁數，是十三條假設。RH 被搬成 (M)，(M) 被搬成十三條古典語言的假設；其中幾條由 Lean 開發提供，哪幾條看 §I.12。</figcaption>
 </figure>
 <!-- /FIG-D -->
 
@@ -275,7 +275,7 @@ Rubinstein 那份 265 頁，自己註明是「with Claude, Codex and Gemini as a
 <text x="110" y="342" font-size="13.5" fill="#e6edf3" font-weight="700" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">人類理解：仍在 13 個洞</text>
 <text x="808" y="342" font-size="12" fill="#8b949e" text-anchor="end" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">未完成</text>
 </svg>
-<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 5：五天，機器那一側就結束了。人類那一側從 11/21 才開始，還在十三個洞。</figcaption>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 4：五天，機器那一側就結束了。人類那一側從 11/21 才開始，還在十三個洞。</figcaption>
 </figure>
 <!-- /FIG-E -->
 
@@ -328,7 +328,7 @@ Alpöge 自己的輪廓是這樣：這是 <strong>Stepanov 方法</strong>的後
 <text x="450" y="548" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">示意圖。每一步是一個 unitary group，鏈長 ≈ √X 與重數是兩個量，不要合併讀。</text>
 <text x="450" y="574" font-size="12.5" fill="#8b949e" text-anchor="middle" font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif">Alpöge 自己的說法：這是 Stepanov 方法的後代，「事後看很難想像它還能是別的」。</text>
 </svg>
-<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 3：Stepanov 方法的兩欄對照。差別只有一處——重數這一步用什麼換。示意圖；鏈長與重數是兩個量，不要合併讀。</figcaption>
+<figcaption style="font-size:13.5px;color:#9aa7b4;margin-top:10px;line-height:1.65;text-align:left">圖 5：Stepanov 方法的兩欄對照。差別只有一處——重數這一步用什麼換。示意圖；鏈長與重數是兩個量，不要合併讀。</figcaption>
 </figure>
 <!-- /FIG-C -->
 
