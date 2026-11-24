@@ -191,9 +191,9 @@ class Svg(object):
                 + svg + '\n</body></html>\n')
         return svg
 
-    def figure(self, caption, marker="FIGURE"):
+    def figure(self, caption, marker="FIGURE", svg=None):
         """Site figure markup (dark card + figcaption) with the SVG inlined."""
-        svg = self._wrap()
+        svg = svg if svg is not None else self._wrap()
         return ('<!-- %s -->\n<figure style="margin:20px 0;padding:14px 12px;'
                 'background:#0d1117;border:1px solid #222b36;border-radius:12px;'
                 'text-align:center;-webkit-print-color-adjust:exact;'
