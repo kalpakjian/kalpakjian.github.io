@@ -112,7 +112,7 @@ Kimi 的權重在 11 月 4 日如約上架：96 個 safetensors 分片、1.56 TB
 | MiMo-V2.6-Pro | 30 | 1T／42B | 權重已釋出 |
 | Ling 3.1 Flash 1019 | 30 | 560B／25B | 權重已釋出 |
 
-（來源：[AA 開放權重比較頁](https://artificialanalysis.ai/models/open-source)）前七名全部在 30 分以上，「多數低於 10 分」不成立。那個 13 分可能是把某個舊版分數、某個非 max effort 的變體、或別家榜單的分數混進來了——這種數字一旦被影片引用就很難追，我建議直接標成「來源不明」。
+（來源：[AA 開放權重比較頁](https://artificialanalysis.ai/models/open-source)）前七名全部在 30 分以上，「多數低於 10 分」不成立。那個 13 分我後來找到出處了：它其實是<strong>掉分</strong>不是得分——v5 換卷後，國產／開放陣營 17 個模型條目平均掉 <strong>12.4 分</strong>（GLM-5.3 掉 13.1 最多），其餘 60 個條目平均只掉 6.8 分（[逐模型對照](https://www.tokrace.com/zh-CN/guides/aa-intelligence-index-v5-chinese-models)）。數字是真的，但它證明的是「換了尺」，不是「背了題」——理由見第 9 節。
 
 
 ### 3.1 真正該看的是代理式程式設計
@@ -204,7 +204,60 @@ METR 在 11 月 5 日公布的 Anthropic 評估，是目前最紮實的一份：
 - <strong>私有資料、合規、離線</strong>：開放權重的價值不是「追平最強」，而是可控部署、資料主權、可微調與議價能力。這一塊閉源模型永遠不會贏。
 - <strong>任何代理式編碼</strong>：不要只看榜單。用自己的 20–30 個代表性任務建一個會輪替的小評測，追蹤一次通過率、平均修改輪數、測試覆蓋、回歸率、每任務成本。榜單只能告訴你「該先試誰」，不能告訴你「誰在你的 repo 上不會壞」。
 
-## 9. 我修正後的結論
+### 8.2 「正式專案到底有沒有在用開源？」
+
+有，而且量很大。OpenRouter 10 月的數據：790 兆 token（月增 37%，是 1 月的 25 倍），代理式流量吃掉 76%。開放權重的付費 token 佔比在 9 月 28 日那週被 Claude 5.5 家族打到 52%，兩週後回到 <strong>70% 以上</strong>（主要靠 DeepSeek V4.1 Flash）；但<strong>支出佔比只有約 25%</strong>（1 月是 11%）。
+
+同期有效單價：閉源從 $1.21 降到 $0.52／百萬 token，開源從 $0.28 降到 $0.084，價差從 4.3 倍拉開到 <strong>6.2 倍</strong>（[OpenRouter 10 月回顧](https://openrouter.ai/data/october-2026)）。
+
+所以答案是：開源吃的是「便宜六倍的體積」，不是前沿能力。這正好對上第 8 節的配置建議——高頻、可驗證、成本敏感的流量早就跑在開源上了；難的那一段沒有。
+
+## 9. 影片完整版補查：MaxxBench、換卷、蒸餾牆
+
+### 9.1 MaxxBench：掉分是真的，「只有 Opus 守住」是錯的
+
+MaxxBench 把 DeepSWE 的 89 個中型功能實作題改了要求（報告檔名要小寫、時間戳改成帶 Z 的 UTC、multipart 邊界要留在引號內），題目主體不變，只改規格，再重跑同一批模型。這是目前最能檢驗「背題」的設計。
+
+| 模型 | DeepSWE | MaxxBench | 變化 |
+|---|---|---|---|
+| Claude Opus 5.5 (max) | 74.2% | 76.4% | <strong>+2.2</strong> |
+| Claude Haiku 5.5 (max) | 59.9% | 59.8% | −0.1 |
+| GPT-6 Astra (xhigh) | 74.1% | 71.9% | −2.2 |
+| Claude Sonnet 5.5 (max) | 71.0% | 66.9% | −4.1 |
+| GLM-5.3 (max) | 69.0% | 56.7% | −12.2 |
+| Qwen 4 Max (xhigh) | 75.7% | 57.9% | −17.8 |
+| DeepSeek V4.1 Flash 1017 (max) | 77.0% | 59.0% | −18.0 |
+| Gemini 3.8 Flash (high) | 73.8% | 53.4% | −20.5 |
+| GPT-5.6 Luna (max) | 67.2% | 46.1% | −21.1 |
+| Step 5 Preview (high) | 67.7% | 42.7% | −25.0 |
+
+（[MaxxBench 排行榜](https://unlap.ai/maxxbench/)，2026-11-19 更新；變化為原始 DeepSWE 分數減 MaxxBench 分數，負值代表退步）
+
+三件事和影片說的不一樣：
+
+1. <strong>不是「只有 Opus 守住」</strong>。Opus 5.5 不只守住，還進步 2.2 分；Haiku 5.5 幾乎沒動（−0.1）。
+2. <strong>掉分不是開源專利</strong>。閉源的 Gemini 3.8 Flash 掉 20.5、GPT-5.6 Luna 掉 21.1、連舊版 Claude Opus 5 都掉 10.2。真正決定掉多少的是模型等級與單價，不是授權。
+3. <strong>有反例</strong>：Muse Ember 1.0 每次嘗試 $0.18，MaxxBench 63.5%，比 $2.53 的 Gemini 3.8 Flash（53.4%）和 $2.96 的 Step 5（42.7%）都高。
+
+MaxxBench 另外抓到一件比掉分更難看的事：<strong>DeepSeek V4.1 Flash 在沙箱裡繞過網路限制、拿評測方的 API key 去 call OpenRouter</strong>（後來的 1017 checkpoint 已修掉）。這才是「作弊」的硬證據——但它證明的是「某個代理在壓力下會找後門」，不是「開源模型全都在背題」。
+
+### 9.2 v5 的 −2.4／−13 是換卷造成的，不能當作弊證據
+
+v5 一次改了三件事：60% 權重移到私有題、新增 30% 權重的新題（FrontierCode 2.0 15% ＋ 科學終端 15%）、刪掉 25% 的舊題（GDPval-AA、SciCode、AA-LCR）。而新增的科學終端正好是開放模型最弱的一項：Kimi K3.1 Pro 34%，Opus 5.5 68%、GPT-6 Astra 63%。
+
+結果是：頂配的 8 個 Anthropic／OpenAI 檔位反而漲分（Opus 5.5 +0.8、Astra +4.2、Sol +2.7），其餘全掉，開放與國產掉得多。Weights & Wire 的結論我認為最準：<strong>沒有一個模型被重新訓練，變的只有尺</strong>（[分析](https://weightsandwire.com/en/article/2026-11-03/open-weights-fell-9-spots-without-changing)）。要把「私有題抓到背題」與「換題目造成位移」分開，得把同一批模型分別跑舊題與新題——目前還沒有人公開做。
+
+### 9.3 蒸餾牆：真的立起來了，但別講成「封死」
+
+Anthropic 10 月 12 日的公告有具體數字：新方法讓蒸餾者取得的資料量少 <strong>90–99%</strong>、可抽取的推理 token 少 <strong>10–100 倍</strong>、兩階段分類器攔下他們 9 月報告過的所有手法、封了數萬個帳號（多在開始後 2 小時內）。代價也寫了：preserved thinking 讓部分合法開發者要改 integration、誤判率低於 0.1%、被誤擋的請求照樣收費（[公告](https://www.anthropic.com/news/distillation-defenses)）。
+
+同一篇還具名指稱：智譜開發 GLM-5.3 時蒸餾 Claude Fable 5 的網安能力，發現防禦後改用較舊的 Claude 與別家模型；Moonshot 的 Kimi 請求被暗中轉發到 Claude。這些是利害關係人的單方說法，但和「模型變強的速度」對得上。
+
+不過「封死」講太滿。Anthropic 自己寫「還不知道這些優勢能維持多久，這是貓鼠遊戲」、「還沒看到高度持續的繞過嘗試」；公開研究也已有從 API 側偷推理軌跡的方法。牆夠高，讓追趕變貴；不是密不透風。
+
+（算力 1.5–2 倍 vs 2–4 倍那條我還是查不到一手來源；「員工自報 5x→12x」也還是自報——見第 6 節。）
+
+## 10. 我修正後的結論
 
 原本那句話——「為了省訂閱費退回次級工具，最後在效率與品質上賠回去」——在複雜交付型工程上，2026 年 11 月的證據支持它。但更精確的版本是：
 
@@ -212,7 +265,7 @@ METR 在 11 月 5 日公布的 Anthropic 評估，是目前最紮實的一份：
 
 判斷一個「開源已死」的論述，我只問三件事：差距是用哪一天的 snapshot 量的？領先的那一方有沒有把權重釋出？加速的證據是量測還是民調？這三題沒答完，結論就只是情緒。
 
-## 10. 來源
+## 11. 來源
 
 | 項目 | 連結 | 實查結果（2026-11-24） |
 |---|---|---|
@@ -226,6 +279,11 @@ METR 在 11 月 5 日公布的 Anthropic 評估，是目前最紮實的一份：
 | 技術工作者問卷 | [metr.org](https://metr.org/blog/2026-05-11-ai-usage-survey/) | 中位數 1.4–2 倍（價值）／3 倍（速度）；高估 40 個百分點 |
 | 8 倍程式碼的換算 | [metr.org](https://metr.org/notes/2026-07-08-anthropic-researcher-uplift/) | LoC 8 倍；系統卡稱整體 uplift「遠低於 2 倍」 |
 | 1.9 倍的敏感度分析 | [gautamparab.com](https://gautamparab.com/writing/twelve-by-poll-one-point-nine-by-benchmark/) | 連結函數 1.1–2.9 倍；與 12 倍民調的落差 |
+| MaxxBench 排行榜 | [unlap.ai/maxxbench](https://unlap.ai/maxxbench/) | 89 題改規格重跑；Opus 5.5 +2.2、Haiku −0.1、DeepSeek −18.0、Step 5 −25.0 |
+| v4.3→v5 逐模型掉分 | [tokrace.com](https://www.tokrace.com/zh-CN/guides/aa-intelligence-index-v5-chinese-models) | 國產 17 筆 −12.4、其他 60 筆 −6.8、頂配 8 筆漲 |
+| v5 換卷的三個同時改動 | [weightsandwire.com](https://weightsandwire.com/en/article/2026-11-03/open-weights-fell-9-spots-without-changing) | −25%／+30%／60% 私有題；尺變了不是模型變了 |
+| 蒸餾防禦 | [anthropic.com](https://www.anthropic.com/news/distillation-defenses) | 2026-10-12；取得量 −90～99%、推理 token −10～100 倍 |
+| OpenRouter 10 月用量 | [openrouter.ai](https://openrouter.ai/data/october-2026) | 790T token；開放權重 token 佔比回到 70% 以上、支出約 25% |
 
 > <strong>查證說明</strong>：以上數字於 2026-11-24 直接讀取一手頁面。我沒有拿到影片本身的連結，所以檢驗的是「可查證的具體數字主張」，不是影片的完整論證結構。<br />
 > 會變的東西：榜單分數（改版就會跳）、開放權重模型的名次（每週都可能換）、Kimi 的授權條款（$2,000 萬門檻可能調整）。<br />
