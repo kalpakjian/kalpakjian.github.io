@@ -25,6 +25,8 @@ banner_img: /img/covers/meanflow-average-velocity-jvp-zh.png
 > <strong>一句話結論</strong>：MeanFlow 把取樣壓到 1 次前向（1-NFE）而且仍保留 classifier-free guidance，但那不是「flow 一步就好」，而是要求網路自我一致地滿足平均／瞬時速度的恆等式；代價落在訓練的 JVP，不在推論。<br />
 > 對車機與機器人，真正的門檻不是 FID，而是少了中間步之後，失敗變得更難偵測。<br />
 
+> <strong>2026-11-24 補充</strong>：新增 §8，補上「一步 vs 多步到底差多少」的 FID 對照（1-NFE 3.43、2-NFE 2.20、SiT-XL 2.06），以及三個容易被抄錯的細節（JVP 是 forward-mode、同一個場而非雙頭輸出、IntMeanFlow 是語音任務）。<br />
+
 ## 三十秒結論
 
 | 問題 | 一句話回答 |
@@ -142,8 +144,39 @@ v_cfg(z, t | c) = ω · v(z, t | c) + (1 − ω) · v(z, t)
 | MeanFlow 論文 | [2505.13447](https://arxiv.org/abs/2505.13447) | Geng、Deng、Bai、Kolter、He（CMU／MIT），2025-05；1-NFE FID 3.43，ImageNet 256×256，from scratch |
 | Action-to-Action Flow Matching | [2602.07322](https://arxiv.org/abs/2602.07322) | 確實存在；對應「以上一個動作為起點、而非純高斯噪聲」的路線 |
 | action chunk／receding horizon 的來源 | [2505.22094](https://arxiv.org/abs/2505.22094) | 我沒有逐段核對；這個做法在機器人模仿學習裡是通例 |
+| 第一作者本人的導讀 | [CMU CSD PhD Blog](https://www.cs.cmu.edu/~csd-phd-blog/2026/mean-flows/) | 2026-09-03，Zhengyang Geng；§8 的 FID 對照與「JVP 成本」說法出自此處 |
+| IntMeanFlow（去 JVP 的語音版本） | [2510.07979](https://arxiv.org/abs/2510.07979) | 2025-10，cs.SD；積分速度蒸餾，token→spectrogram 1-NFE、text→spectrogram 3-NFE |
+| 官方實作 | [Gsunshine/meanflow](https://github.com/Gsunshine/meanflow) | 論文為 NeurIPS 2025 oral；本文示意程式碼未對照此 repo |
 
 > <strong>查證說明</strong>：本文的式 4、6、8、9、10 於 2026-11-24 直接讀取 arXiv HTML 版逐式核對；FID 3.43 是論文自報數字，我<strong>沒有重跑</strong>。<br />
 > 「Tesla 車機介面採用 MeanFlow」我找不到可靠公開來源，本文不採信。<br />
 >
 > <strong>封面與圖表</strong>：封面由本機 ComfyUI 的 Qwen-Image 生成（刻意不含文字）；圖表為手繪內嵌 SVG——含中文標籤的圖表交給 AI 生圖會爛成方塊。<br />
+
+## 8. 補充：一步到底差多少，與三個容易抄錯的細節
+
+先把「一步等於多步」這個印象修掉。同一個 benchmark（ImageNet 256×256）上：
+
+| 模型 | 取樣 NFE | FID（越低越好） |
+|---|---|---|
+| MeanFlow MF-XL | 1 | <strong>3.43</strong> |
+| MeanFlow（更長訓練） | 2 | <strong>2.20</strong> |
+| Shortcut-XL | 1 | 10.60 |
+| iCT-XL | 1 | 34.24 |
+| IMM-XL（1-step 但含 guidance） | 2 | 7.77 |
+| DiT-XL | 250（含 guidance 500） | 2.27 |
+| SiT-XL | 250（含 guidance 500） | 2.06 |
+
+正確的結論是：一步把「從零訓練的一步模型」與多步強權之間的差距，從約 5 倍壓到<strong>大約 1 分</strong>；給它第二次評估就到 2.20，幾乎貼上花了兩個數量級算力的 DiT／SiT。IMM-XL 那一列同時驗證了 §5 的判準——它的「1-step」其實是 2-NFE，因為 guidance 吃掉了另一次前向。
+
+### 8.1 三個容易被抄錯的細節
+
+1. <strong>JVP 不是多一次 backward</strong>。它是 forward-mode AD 的切線傳播，成本量級接近一次前向；target 之所以要 stop-gradient，正是為了不做二次反傳。有些轉述寫成「多一次反向」，拿去估訓練預算是會估錯的。
+2. <strong>不是雙頭輸出</strong>。uθ 是同一個場，在 (z, r, t) 上求值；r = t 時它就是瞬時速度 v。沒有第二個 head、也沒有兩個 loss，只是多吃了兩個時間座標。
+3. <strong>對 r 的偏導項乘 0 這件事有前提</strong>。它成立只在 r 與 t 互相獨立時；若取樣時讓 r 依賴 t，Leibniz 規則會補上 −v(z_r, r)·dr/dt 這一項。論文腳註 1 有寫，但抄公式時最常被省略。
+
+### 8.2 「去 JVP」的後續研究只解決了一半
+
+常被拿來說「JVP 可以省掉」的是 IntMeanFlow（語音 TTS）：用教師模型的瞬時速度在區間上近似平均速度，即積分速度蒸餾，同時去掉 JVP 與 self-bootstrap，理由寫得很清楚——JVP 吃 GPU 記憶體、self-bootstrap 讓訓練不穩。它報的是 token→spectrogram 1-NFE、text→spectrogram 3-NFE。
+
+兩件事要分開看：那是<strong>語音</strong>任務，沒有 ImageNet 對照；而「區間拆分」不是它的方法，是 MeanFlow 自己在取樣時把 [0,1] 切成多段換品質的 few-step 做法，跟降低 JVP 需求無關。把這條線讀成「影像模型也有通用免 JVP 方案」，就會高估目前的成熟度。
