@@ -16,7 +16,7 @@ banner_img: /img/covers/riemann-hypothesis-claude-lean-zh.png
 > <strong>30 秒結論</strong>：<br />
 > 一、驗證程度遠超「初步檢查」：175,187 個模組全部編譯、五個主定理只依賴三個標準公理、61.5 GB 的 proof export 被 Lean 官方 kernel（單執行緒 48 小時）、paranoid kernel 與三個獨立 kernel 接受，其中兩個還附有「相對於集合論不可能接受假證明」的形式化證明。而且證的不只 RH，還包含 Dirichlet L 函數的 GRH。<br />
 > 二、「25 萬頁」是作者自己說是玩笑的數字；「1700 萬行」是真的，但它不是「證明的長度」，是編譯產物。<br />
-> 三、真正的缺口不是頁數，是 <strong>13 條還沒證的假設</strong>。目前人類版最前線是 Rubinstein 的 265 頁工作草案，它把最難的部分指回 Lean 碼。<br />
+> 三、真正的缺口不是頁數，是 <strong>13 條還沒證的假設</strong>。目前人類版最前線是 Rubinstein 的 265 頁工作草案，它把最難的部分指回 Lean 碼。另外，11/23 起有一個公開質疑（最終陳述恐為同義反覆）還沒有人用語意審查結案——所以正確的描述是「通過機械檢查、尚未通過語意審查」，不是「已確立」，也不是「已推翻」。<br />
 
 ## 背景：Lean 與 Mathlib，用蓋房子理解
 
@@ -58,7 +58,7 @@ Mathlib 是它的共享數學庫：代數、分析、拓撲、機率、電腦科
 
 最關鍵的設計是「inert export」：被檢查的不是 Lean 原始碼，而是編譯後匯出的純證明物件。原始碼裡就算藏了惡意程式碼，也碰不到檢查器。con-leche 與 con-ron 另附形式化證明，說明它們相對於集合論不可能接受假證明，這是專門用來堵「Lean 的邏輯本身有 bug」那條路。
 
-所以「對不對」這一層，數學界已經不太吵了。吵的是另一件事，見第 4 節。
+所以「這份碼能不能編譯、證的是不是 Mathlib 的那句話」這一層，已經不太吵了。吵的是另一件事：最後那句話到底有沒有內容。見下一小節。
 
 <!-- FIG-B -->
 <figure style="margin:20px 0;padding:14px 12px;background:#0d1117;border:1px solid #222b36;border-radius:12px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact">
@@ -109,6 +109,16 @@ Mathlib 是它的共享數學庫：代數、分析、拓撲、機率、電腦科
 </figure>
 <!-- /FIG-B -->
 
+### 還沒結案的那一半：最後一句是不是同義反覆？
+
+11 月 23 日，物理與數學研究者 Jenny Nielsen 在 X 上提出一個具體質疑。她的說法是：這份 Lean 裡的計算「定義了一個自訂的 bundle 去對上 zeta，一旦它對上 Riemann，Lean 就認證它是 Riemann，儘管那個對上 zeta 的 bundle 是用 nonsense 造的」；濃縮成一句就是「RH = RH」——<strong>最後那個黎曼猜想陳述，可能是以同義反覆的形式寫出來的，背後沒有論證</strong>。
+
+這個質疑嚴重，但它剛好撞上這次驗證做得最具體的一步。FRO 與 Mathlib 的聲明裡有一條常被略過：他們另外開了一個只 import Mathlib 的檔案，用 Comparator 與 con-leche 的 `--compare` 兩個獨立工具，確認 Alpöge 證的定理與 Mathlib 的 `RiemannHypothesis` <strong>逐字相同</strong>。如果最後那句是自訂包裝出來、內容空洞的 Prop，這一步過不了——它比的是 Mathlib 自己的 zeta 與自己的陳述，不是作者的版本。
+
+於是現在有兩股相反的力量：機械證據說最終陳述就是 Mathlib 那一句；閱讀印象說中間那座橋是用爛材料搭的。兩者可以同時成立——繞路、冗餘、用爛方法造中間物件，都不會讓結論變假；Alpöge 自己也只承認「垃圾」與「沒清理」。真正致命的情況只有一種：被指為同義反覆的是<strong>最後那句</strong>，而不是中間的引理。
+
+而這件事目前沒有第三方做過語意審查。要結案也只有一條路：有人把 1,700 萬行讀到能指出「從哪一條引理開始變成同義反覆」，或反過來指出「那一條其實有內容」。在那之前，正確的描述是<strong>通過機械檢查、尚未通過語意審查</strong>——既不是已確立的黎曼猜想證明，也不是被打掉的假成果。
+
 
 ## 2. 五個要打折的數字
 
@@ -119,6 +129,7 @@ Mathlib 是它的共享數學庫：代數、分析、拓撲、機率、電腦科
 | 100 萬美元懸賞快發了 | Clay 的規則是：須發表於世界公認的審稿期刊，且<strong>發表兩年後</strong>才進評審程序。這是規則問題，與 AI 無關 |
 | 這是唯一的證明 | 同一天，Masullo 的全人類、無 AI 證明由 Vakil 以「hurried announcement」名義貼出 |
 | Anthropic 官方宣佈 | 是 Alpöge 的個人貼文，時間在 Anthropic 那斯達克上市（11/19）後一天。他自己說「The precise timing is horrible」 |
+| 他承認程式碼是垃圾 | 11/23 的〈Stupid things I did〉：「The Lean is full of garbage obviously, but compiles」。他道歉的是發布方式與溝通，不是撤回結果 |
 
 補一個正向的數字：從發佈到社群完成稽核，只有兩天，參與者超過 200 人。
 
@@ -373,9 +384,14 @@ Lean FRO 那份公告的最後一句，其實自己承認了這一點：「We lo
 | Nature 報導 | [nature.com](https://www.nature.com/articles/d41586-026-03812-7) | 同日 Masullo 全人類證明、Maynard 評語、167 年 |
 | WIRED 報導 | [wired.com](https://www.wired.com/story/ai-solved-maths-most-famous-problem/) | 「250,000 頁是玩笑」、Saha 的 10,000 頁估計、「alien」評語 |
 | The Guardian 報導 | [theguardian.com](https://www.theguardian.com/technology/2026/nov/21/anthropic-riemann-hypothesis-solved-claude-ai) | 六週、兩組織獨立驗證、Anthropic 上市時序 |
+| Alpöge〈Stupid things I did〉 | [x.com/__alpoge__](https://x.com/__alpoge__) | 11/23：250,000 頁是玩笑；「full of garbage, but compiles」 |
+| Nielsen 的「RH = RH」質疑 | [x.com/QualiaQuanta](https://x.com/QualiaQuanta/status/2124992214199595215) | 自訂 bundle、最終陳述恐為同義反覆；尚無第三方語意審查 |
+| The Decoder 報導 | [the-decoder.com](https://the-decoder.com/anthropic-researcher-stands-by-his-ai-assisted-riemann-proof-but-owns-up-to-stupid-things-in-the-rollout/) | 他維持結果有效，承認發布方式有問題 |
+| Business Insider 報導 | [businessinsider.com](https://embed.businessinsider.com/anthropic-levent-alpoe-riemann-hypothesis-page-length-joke-angers-mathematicians-2026-11) | 數學家對玩笑的反應；Armstrong：Lean 轉自然語言頁數可乘 10 倍 |
 
 > <strong>查證說明</strong>：以上數字於 2026-11-25 直接讀取一手頁面。<br />
 > 會變的東西：MIT 頁面持續更新（`lake comparator` 那一輪當時還在跑）、Rubinstein 的稿子是 working draft、Verification log 每天有新條目。<br />
 > 沒實測的東西：我沒有自己重跑 kernel 檢查（需要 80 GB 記憶體與兩天），也沒有讀完 265 頁稿子；13 條假設的具體內容我沒有逐條評估。<br />
+> 11/25 補寫的爭議段落：Nielsen 的質疑我沒有獨立驗證——我沒有去讀那批壓縮檔裡被她指為同義反覆的段落，只確認了公開貼文與報導的內容。<br />
 >
 > <strong>封面</strong>：由本機 ComfyUI 的 Qwen-Image 2.1 生成（刻意不含文字），三個種子出候選後挑一張。
