@@ -51,6 +51,11 @@ permalink: ocr/ch01/
 
 ### 光明卡現火龍，點名香港倒下
 
+<figure style="margin:22px 0;text-align:center">
+<img src="/img/ocr-ch01/hk-falls-card.jpg" alt="光明卡二○二○年更新版「Hong Kong Falls」卡：紅色火龍盤踞火焰之上，下方是燒焦的竹枝與香港天際線剪影；右側為 Illuminati: The Game of Conspiracy Second Edition 遊戲盒" style="width:100%;max-width:640px;border-radius:12px">
+<figcaption class="image-caption" style="margin:10px 0 0;text-align:left">圖 1：二○二○年更新版新增的「Hong Kong Falls」（香港倒下）卡，畫面是一條火龍與下方幾根竹子；右為《Illuminati: The Game of Conspiracy》Second Edition 盒面。（畫面來源：YouTube「Tabletop Jason」開箱影片）</figcaption>
+</figure>
+
 光明卡二○二○年更新版新增張名為「Hong Kong Falls」（香港倒下）的卡片，描繪一條火龍，下面有幾根竹子。（圖：翻攝畫面）
 
 光明會的陰謀論遊戲卡（Illuminati: The Game of Conspiracy），有例不虛發的惡名。一九九五年，光明會陰謀論遊戲卡顯示雙子塔和五角大樓爆炸，圖像和後來的新聞照片不幸吻合。二○二○年的第二版光明會陰謀遊戲卡，其中一張是「香港倒下」（Hong Kong Falls）。卡的圖像是火龍，下面的東西像是竹棚的竹枝，說是木棍也可以，火龍上方是港島中環的高樓。這張卡是否暗示香港這場劫難？網民眾說紛紜。山人認為，竹木起火，世所多見，偶然命中，只屬巧合。至於香港沉淪之說，九七之後也是不絕於口，然而香港至今仍是太平，只是繁華未如往日而已。
