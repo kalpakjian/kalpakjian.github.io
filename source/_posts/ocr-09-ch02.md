@@ -186,6 +186,10 @@ permalink: ocr/ch02/
 <rect width="900" height="520" fill="#f4e3c1"/>
 <rect x="4" y="4" width="892" height="512" fill="none" stroke="#b08a4a" stroke-width="3"/>
 <rect x="18" y="18" width="864" height="484" fill="#fffdf8" stroke="#d8a63c" stroke-width="3"/>
+<circle cx="120" cy="130" r="26" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+<path d="M152 130 L164 130 M147.7 146 L155.3 152 M135 157.7 L142.1 168.1 M120 162 L120 174 M105 157.7 L97.9 168.1 M92.3 146 L84.7 152 M88 130 L76 130 M92.3 114 L84.7 108 M105 102.3 L97.9 91.9 M120 98 L120 86 M135 102.3 L142.1 91.9 M147.7 114 L155.3 108" stroke="#c0392b" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="120" cy="130" r="19" fill="#c0392b"/>
+<text x="120" y="137" text-anchor="middle" font-size="18" fill="#fffdf8" font-family="'Songti SC','STSong','SimSun','Noto Serif TC',serif">日</text>
 <text x="42" y="58" font-size="22" fill="#8a6a2f" font-family="'Songti SC','STSong','SimSun','Noto Serif TC',serif">丙午馬年（2026）春牛圖</text>
 <line x1="52" y1="420" x2="848" y2="420" stroke="#cbb489" stroke-width="2"/>
 <ellipse cx="320" cy="422" rx="200" ry="6" fill="#000" opacity="0.06"/>
