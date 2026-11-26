@@ -144,6 +144,11 @@ permalink: ocr/ch02/
 
 ## 三、「春牛圖」、「地母經」：農桑不如預期，經濟白忙一趟
 
+<figure style="margin:22px 0;text-align:center">
+<img src="/img/ocr-ch02/chuniu-2026.jpg" alt="丙午年《通勝》「春牛圖」頁：上方紅字讖詩，中間是紅色的春牛與執柳枝的芒神，右側直排為春牛、芒神的造像說明，下方是〈地母經〉詩句與宜忌" style="width:100%;max-width:520px;border-radius:12px">
+<figcaption class="image-caption" style="margin:10px 0 0;text-align:left">圖 2：丙午年《通勝》（廣經堂年曆書）的「春牛圖」頁——上方是讖詩，中間畫紅身春牛與執柳枝的芒神，右側直排是春牛、芒神的尺寸與顏色規定。此印本與文中引述的（永經堂）版本不是同一本。</figcaption>
+</figure>
+
 洪水即於春夏流丙午之年不甚憂魯衛縱然災待禦江東還是穀豐收
 
 低田似覺難苗秀高地猶能望黍油桑賤致令絲稍少獨教蠶婦拙生謀丙午年春牛圖
@@ -304,7 +309,7 @@ permalink: ocr/ch02/
   <text x="622" y="489">蹄：黃</text>
 </g>
 </svg>
-<figcaption class="image-caption" style="margin:10px 0 0;text-align:left">圖 2：丙午年春牛圖——牛身紅、腹黑、角耳尾青、脛白蹄黃、尾巴左繳；芒神為少壯相，紅衣黑腰帶、頭梳兩髻、赤足，立於牛前左邊。顏色依五行：丙午雙火，故頭身皆赤。</figcaption>
+<figcaption class="image-caption" style="margin:10px 0 0;text-align:left">圖 3：丙午年春牛圖——牛身紅、腹黑、角耳尾青、脛白蹄黃、尾巴左繳；芒神為少壯相，紅衣黑腰帶、頭梳兩髻、赤足，立於牛前左邊。顏色依五行：丙午雙火，故頭身皆赤。</figcaption>
 </figure>
 
 「春牛圖」是中國傳統年畫，用以祈求豐收和吉祥。春牛象徵農耕與豐收，旁邊的芒神（句芒）掌管農業。春牛及芒神的造像可反映當年的節氣與農事提示，清代《新竹縣志初稿》有詳細記載。
