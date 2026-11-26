@@ -87,6 +87,43 @@ permalink: ocr/ch02/
 
 ## 二、值年卦「同人」：天火同人，多方結盟，聚眾鬥爭
 
+<figure style="margin:22px 0;text-align:center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-label="丙午年值年卦「同人」的卦象：上卦乾三條陽爻為天，下卦离陽陰陽為火，左側標卦名同人，右側直書天火同人" style="width:100%;height:auto;display:block">
+<title>同人卦（天火同人）：上卦乾、下卦离</title>
+<rect width="720" height="360" fill="#f4e3c1"/>
+<rect x="4" y="4" width="712" height="352" fill="none" stroke="#b08a4a" stroke-width="3"/>
+<rect x="210" y="34" width="396" height="292" fill="#fffdf8" stroke="#d8a63c" stroke-width="3"/>
+<g fill="#a85a12">
+<rect x="240" y="90" width="196" height="14"/>
+<rect x="240" y="122" width="196" height="14"/>
+<rect x="240" y="154" width="196" height="14"/>
+<rect x="240" y="186" width="196" height="14"/>
+<rect x="240" y="218" width="78" height="14"/>
+<rect x="358" y="218" width="78" height="14"/>
+<rect x="240" y="250" width="196" height="14"/>
+</g>
+<g fill="none" stroke="#9a9a9a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M450 90 Q458 90 458 100 L458 120 Q458 129 468 129 Q458 129 458 138 L458 158 Q458 168 450 168"/>
+<path d="M450 186 Q458 186 458 196 L458 216 Q458 225 468 225 Q458 225 458 234 L458 254 Q458 264 450 264"/>
+</g>
+<g font-family="'Songti SC','STSong','SimSun','Noto Serif TC','Source Han Serif TC',serif" font-size="22" fill="#c9871f">
+<text x="478" y="137">乾為上卦</text>
+<text x="478" y="233">离為下卦</text>
+</g>
+<g font-family="'Songti SC','STSong','SimSun','Noto Serif TC','Source Han Serif TC',serif" font-size="70" fill="#533a17" text-anchor="middle">
+<text x="74" y="206">同</text>
+<text x="146" y="206">人</text>
+</g>
+<g font-family="'Songti SC','STSong','SimSun','Noto Serif TC','Source Han Serif TC',serif" font-size="56" fill="#bc8723" text-anchor="middle">
+<text x="660" y="81">天</text>
+<text x="660" y="161">火</text>
+<text x="660" y="241">同</text>
+<text x="660" y="321">人</text>
+</g>
+</svg>
+<figcaption class="image-caption" style="margin:10px 0 0">圖 1：丙午年值年卦「同人」——上卦乾為天（三陽爻），下卦离為火（陽陰陽），故稱「天火同人」。</figcaption>
+</figure>
+
 丙午年，熱火朝天好熱鬧，拉幫結夥鬥一番。根據北宋邵雍《皇極經世》，丙午馬年的值年卦為同人。《雜卦傳》：「同人，親也。」故此同人卦傳統解釋為與人和同，大家志同道合，一齊做事之意。乾為天子，同人為諸侯覲見天子之象，亦即《周禮》所說的「春見曰朝，夏見曰宗，秋見曰覲，冬見曰遇，時見曰會，殷見曰同的朝朝覲會同之禮。同人卦的典故，是一群諸侯集合，朝見周天子，以示和同、親近之意，並且討伐不服從的諸侯。此卦表面上說會同、和氣，實際上是群雄並立，決志武鬥！乙巳年之後，時局有幾年不太平，好似赤馬紅羊劫說，丙午（二○二六年二月四日至二○二七年二月三日）、丁未（二○二七年二月四日至二○二八年二月三日）兩年都是劫難。要到二○二八、二九年，香港才恢復繁榮穩定，但經濟和市道能否回復以往「魚翅撈飯」那樣好景，仍是未知之數。
 
 「同人」的卦象，是下卦（本卦）是離火，上卦是乾天。火性炎上，離火自下炎上而與天同。或者以離為日，與天同光。卦象的九五（陽爻在第五爻）和六二（陰爻在第二爻）兩爻，都是合乎其位，中正相應，故此有同人之意。訓詁家認為，離卦的離字也可以解作羅，是網羅眾多之意。
