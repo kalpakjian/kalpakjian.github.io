@@ -35,19 +35,15 @@ permalink: ocr/ch02/
 
 歌曲的引子，是潮聲風聲的迴盪，幽幽訴說着風裏來浪裏去的無奈，這是現代海濱城市人的體會。
 
-如果你站在空蕩蕩的港口聽到潮水，感覺就像你失去了你的身體和靈魂。啊！這座城市的奇異天空！海鷗笑我做了夢。
-
-如果流星像眼淚一樣墜落，
-
-哨聲叫你回到遠方的家鄉，
-
-啊！總有一天我會回到那座城市，
-
-告訴我你現在很好。
-
-啊！總有一天我會回到那座城市，
-
-告訴眾人我的見聞。
+<figure class="lyric-frame">
+<p>如果你站在空蕩蕩的港口聽到潮水，感覺就像你失去了你的身體和靈魂。啊！這座城市的奇異天空！海鷗笑我做了夢。</p>
+<p>如果流星像眼淚一樣墜落，</p>
+<p>哨聲叫你回到遠方的家鄉，</p>
+<p>啊！總有一天我會回到那座城市，</p>
+<p>告訴我你現在很好。</p>
+<p>啊！總有一天我會回到那座城市，</p>
+<p>告訴眾人我的見聞。</p>
+</figure>
 
 大概在一九九八年的夏天，我
 
@@ -351,4 +347,13 @@ Farmer's Almanac）名字相近，後者已發聲明澄清，將繼續每年發�
 .markdown-body h3 { color: var(--custom-accent); }
 .markdown-body .ocr-note { font-size: 0.82em; line-height: 1.5; }
 .markdown-body .ocr-note .note-num { color: var(--custom-accent); font-weight: 600; }
+/* 歌詞：原書用淺紅粉紅框 */
+.markdown-body .lyric-frame {
+  margin: 1.6em 0;
+  padding: 1.05em 1.25em;
+  border: 2px solid #e08fa3;
+  border-radius: 10px;
+  background: rgba(224, 143, 163, 0.10);
+}
+.markdown-body .lyric-frame p { margin: 0; line-height: 1.95; }
 </style>
