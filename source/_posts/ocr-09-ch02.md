@@ -180,6 +180,129 @@ permalink: ocr/ch02/
 
 ### 紅身春牛頭朝南，赤足芒神立牛左
 
+<figure style="margin:22px 0;text-align:center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" style="width:100%;height:auto;display:block" role="img" aria-label="丙午年春牛圖：紅身牛頭朝南，赤足少壯芒神立於牛前左">
+<title>丙午年春牛圖</title>
+<rect width="900" height="520" fill="#f4e3c1"/>
+<rect x="4" y="4" width="892" height="512" fill="none" stroke="#b08a4a" stroke-width="3"/>
+<rect x="18" y="18" width="864" height="484" fill="#fffdf8" stroke="#d8a63c" stroke-width="3"/>
+<text x="42" y="58" font-size="22" fill="#8a6a2f" font-family="'Songti SC','STSong','SimSun','Noto Serif TC',serif">丙午馬年（2026）春牛圖</text>
+<line x1="52" y1="420" x2="848" y2="420" stroke="#cbb489" stroke-width="2"/>
+<ellipse cx="320" cy="422" rx="200" ry="6" fill="#000" opacity="0.06"/>
+<!-- 遠側牛腿 -->
+<g stroke="#6d1a10" stroke-width="2.5">
+  <path d="M252 300 L296 300 L288 366 L262 366 Z" fill="#93291d"/>
+  <path d="M262 366 L288 366 L285 404 L265 404 Z" fill="#e2d9c4"/>
+  <path d="M265 404 L285 404 L285 416 L265 416 Z" fill="#b8851a"/>
+  <path d="M330 300 L370 300 L364 366 L338 366 Z" fill="#93291d"/>
+  <path d="M338 366 L364 366 L361 404 L341 404 Z" fill="#e2d9c4"/>
+  <path d="M341 404 L361 404 L361 416 L341 416 Z" fill="#b8851a"/>
+</g>
+<!-- 牛尾（左繳，長一尺二寸） -->
+<path d="M170 258 C148 262 132 276 126 294 C124 302 126 308 130 312 C131 300 137 286 148 277 C157 270 164 264 172 262 Z"
+      fill="#1f7a5a" stroke="#12513c" stroke-width="2.5"/>
+<ellipse cx="131" cy="302" rx="4.5" ry="7" transform="rotate(-35 131 302)" fill="#12513c"/>
+<!-- 牛身剪影（頭朝右＝南） -->
+<path id="ox" d="M146 272 C146 244 168 234 196 232 C280 230 366 234 436 234 C452 234 462 230 472 226
+  C482 222 500 218 514 220 C528 222 538 230 546 240 L588 252 C598 254 604 264 602 276
+  C600 288 592 294 580 294 L556 292 C540 296 528 302 518 306 C496 314 470 318 452 320
+  C440 322 430 322 418 320 L300 322 C240 322 178 320 158 306 C148 298 144 286 146 272 Z"
+  fill="#c0392b" stroke="#6d1a10" stroke-width="3"/>
+<!-- 腹黑（沿腹線的弧形黑帶，clip 直接放路徑，不用 use 以免非 Chrome 失效） -->
+<clipPath id="ox-body"><path d="M146 272 C146 244 168 234 196 232 C280 230 366 234 436 234 C452 234 462 230 472 226
+  C482 222 500 218 514 220 C528 222 538 230 546 240 L588 252 C598 254 604 264 602 276
+  C600 288 592 294 580 294 L556 292 C540 296 528 302 518 306 C496 314 470 318 452 320
+  C440 322 430 322 418 320 L300 322 C240 322 178 320 158 306 C148 298 144 286 146 272 Z"/></clipPath>
+<g clip-path="url(#ox-body)">
+  <path d="M168 292 C240 312 400 312 462 294 L462 340 L168 340 Z" fill="#2a2622"/>
+</g>
+<!-- 近側牛腿（脛白、蹄黃） -->
+<g stroke="#6d1a10" stroke-width="3">
+  <path d="M202 312 L250 312 L240 366 L212 366 Z" fill="#c0392b"/>
+  <path d="M212 366 L240 366 L238 404 L214 404 Z" fill="#f7f2e6"/>
+  <path d="M212 404 L238 404 L238 420 L212 420 Z" fill="#d9a521"/>
+  <path d="M378 312 L422 312 L414 366 L388 366 Z" fill="#c0392b"/>
+  <path d="M388 366 L414 366 L412 404 L390 404 Z" fill="#f7f2e6"/>
+  <path d="M390 404 L412 404 L412 420 L390 420 Z" fill="#d9a521"/>
+</g>
+<!-- 角、耳（青） -->
+<path d="M518 226 C516 204 506 186 490 176 C500 174 512 182 520 194 C526 204 530 216 530 224 Z" fill="#1f7a5a" stroke="#12513c" stroke-width="2.5"/>
+<path d="M534 222 C534 200 528 180 514 168 C524 167 534 175 540 188 C545 199 545 212 544 220 Z" fill="#1f7a5a" stroke="#12513c" stroke-width="2.5"/>
+<path d="M508 236 C494 240 484 247 480 258 C491 258 501 250 507 243 Z" fill="#1f7a5a" stroke="#12513c" stroke-width="2.5"/>
+<path d="M522 232 C511 230 499 234 492 241 C501 247 513 243 520 238 Z" fill="#1f7a5a" stroke="#12513c" stroke-width="2.5"/>
+<!-- 眼、鼻 -->
+<circle cx="532" cy="244" r="3.6" fill="#2a2622"/>
+<path d="M526 236 C530 233 536 234 539 238" fill="none" stroke="#6d1a10" stroke-width="2" stroke-linecap="round"/>
+<ellipse cx="586" cy="264" rx="3.6" ry="2.6" transform="rotate(-20 586 264)" fill="#4a0f0a"/>
+<!-- 籠頭索（白色苧繩）、拘子、口開 -->
+<path d="M572 252 C588 254 599 263 599 276 C599 287 591 293 581 293" fill="none" stroke="#a89066" stroke-width="4.6" stroke-linecap="round"/>
+<path d="M572 252 C588 254 599 263 599 276 C599 287 591 293 581 293" fill="none" stroke="#efe6d2" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="568" cy="254" r="5" fill="#d9c39a" stroke="#8b5a2b" stroke-width="2"/>
+<path d="M568 256 C592 296 640 318 672 328" fill="none" stroke="#a89066" stroke-width="5" stroke-linecap="round"/>
+<path d="M568 256 C592 296 640 318 672 328" fill="none" stroke="#efe6d2" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M576 285 C586 282 595 285 599 289 L596 293 C588 293 580 291 572 289 Z" fill="#4a0f0a"/>
+<!-- 芒神：少壯相、紅衣黑帶、兩髻、赤足、立牛前左 -->
+<path d="M704 292 L736 292 C742 310 744 340 748 366 L692 366 C696 340 698 310 704 292 Z" fill="#c0392b" stroke="#6d1a10" stroke-width="3"/>
+<path d="M712 292 L726 306 M728 292 L714 306" fill="none" stroke="#6d1a10" stroke-width="2"/>
+<path d="M706 300 L676 330" stroke="#a93023" stroke-width="11" stroke-linecap="round" fill="none"/>
+<path d="M734 300 L754 268" stroke="#a93023" stroke-width="11" stroke-linecap="round" fill="none"/>
+<rect x="694" y="322" width="52" height="9" fill="#2a2622"/>
+<path d="M700 366 L718 366 L718 398 L700 398 Z" fill="#2f4f6f" stroke="#1d3350" stroke-width="2"/>
+<path d="M722 366 L740 366 L740 398 L722 398 Z" fill="#2f4f6f" stroke="#1d3350" stroke-width="2"/>
+<path d="M688 420 C688 410 693 400 703 400 L714 400 C716 411 710 420 700 420 Z" fill="#f0c9a0" stroke="#a4754a" stroke-width="2"/>
+<path d="M720 420 C720 410 725 400 735 400 L746 400 C748 411 742 420 732 420 Z" fill="#f0c9a0" stroke="#a4754a" stroke-width="2"/>
+<circle cx="676" cy="330" r="4.5" fill="#f0c9a0" stroke="#a4754a" stroke-width="2"/>
+<circle cx="720" cy="272" r="16" fill="#f0c9a0" stroke="#a4754a" stroke-width="2.5"/>
+<path d="M704 266 A16 16 0 0 1 736 266 C730 258 710 258 704 266 Z" fill="#2a2622"/>
+<circle cx="712" cy="256" r="5" fill="#2a2622"/>
+<circle cx="728" cy="256" r="5" fill="#2a2622"/>
+<ellipse cx="735" cy="274" rx="3.5" ry="6" fill="#c0392b" stroke="#6d1a10" stroke-width="1.5"/>
+<path d="M701 265 C696 259 696 253 700 250 C704 255 706 261 705 266 Z" fill="#c0392b" stroke="#6d1a10" stroke-width="1.5"/>
+<circle cx="714" cy="271" r="1.9" fill="#2a2622"/>
+<circle cx="726" cy="271" r="1.9" fill="#2a2622"/>
+<path d="M715 280 C718 283 722 283 725 280" fill="none" stroke="#a4754a" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="754" cy="268" r="4.5" fill="#f0c9a0" stroke="#a4754a" stroke-width="2"/>
+<path d="M754 268 C766 240 778 210 790 182" fill="none" stroke="#7a9e3b" stroke-width="3" stroke-linecap="round"/>
+<ellipse cx="766" cy="240" rx="5" ry="9" transform="rotate(-30 766 240)" fill="#7a9e3b"/>
+<ellipse cx="778" cy="212" rx="5" ry="9" transform="rotate(-35 778 212)" fill="#7a9e3b"/>
+<ellipse cx="789" cy="186" rx="4.5" ry="8" transform="rotate(-40 789 186)" fill="#7a9e3b"/>
+<path d="M752 262 L758 264 M750 256 L756 258" stroke="#d9a521" stroke-width="3" stroke-linecap="round"/>
+<!-- 標註 -->
+<defs><marker id="tip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#b9ac96"/></marker></defs>
+<g font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" font-size="14" fill="#8a7f6a">
+  <path d="M612 196 L652 196" stroke="#b9ac96" stroke-width="1.5" marker-end="url(#tip)"/>
+  <text x="630" y="186" text-anchor="middle">南</text>
+  <path d="M462 182 L488 178" stroke="#cdbfa6" stroke-width="1.5"/>
+  <text x="456" y="186" text-anchor="end">角、耳：青</text>
+  <path d="M104 300 L126 294" stroke="#cdbfa6" stroke-width="1.5"/>
+  <text x="98" y="304" text-anchor="end">尾左繳</text>
+  <path d="M424 386 L410 396" stroke="#cdbfa6" stroke-width="1.5"/>
+  <text x="430" y="392">脛白、蹄黃</text>
+  <path d="M600 316 L586 298" stroke="#cdbfa6" stroke-width="1.5"/>
+  <text x="606" y="322">口開</text>
+  <path d="M700 402 L716 392" stroke="#cdbfa6" stroke-width="1.5"/>
+  <text x="720" y="446" text-anchor="middle">少壯相、紅衣黑帶、赤足、立牛前左</text>
+</g>
+<!-- 圖例 -->
+<g font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" font-size="14" fill="#6b5a3e">
+  <text x="450" y="464" text-anchor="middle">芒神 3 尺 6 寸 5 分＝365 日　牛高 4 尺＝四季　身長 8 尺＝八節氣　尾長 1 尺 2 寸＝十二月</text>
+</g>
+<g font-family="'Segoe UI','Microsoft JhengHei','Noto Sans TC',sans-serif" font-size="13" fill="#6b5a3e">
+  <rect x="128" y="478" width="12" height="12" fill="#c0392b" stroke="#6d1a10"/>
+  <text x="146" y="489">頭、身：紅（丙午雙火）</text>
+  <rect x="298" y="478" width="12" height="12" fill="#2a2622"/>
+  <text x="316" y="489">腹：黑</text>
+  <rect x="386" y="478" width="12" height="12" fill="#1f7a5a" stroke="#12513c"/>
+  <text x="404" y="489">角、耳、尾：青</text>
+  <rect x="518" y="478" width="12" height="12" fill="#f7f2e6" stroke="#a89b82"/>
+  <text x="536" y="489">脛：白</text>
+  <rect x="604" y="478" width="12" height="12" fill="#d9a521" stroke="#8a6a10"/>
+  <text x="622" y="489">蹄：黃</text>
+</g>
+</svg>
+<figcaption class="image-caption" style="margin:10px 0 0;text-align:left">圖 2：丙午年春牛圖——牛身紅、腹黑、角耳尾青、脛白蹄黃、尾巴左繳；芒神為少壯相，紅衣黑腰帶、頭梳兩髻、赤足，立於牛前左邊。顏色依五行：丙午雙火，故頭身皆赤。</figcaption>
+</figure>
+
 「春牛圖」是中國傳統年畫，用以祈求豐收和吉祥。春牛象徵農耕與豐收，旁邊的芒神（句芒）掌管農業。春牛及芒神的造像可反映當年的節氣與農事提示，清代《新竹縣志初稿》有詳細記載。
 
 ### 春牛造像
