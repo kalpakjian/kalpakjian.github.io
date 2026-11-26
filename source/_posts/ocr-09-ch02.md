@@ -181,8 +181,6 @@ permalink: ocr/ch02/
 
 王元帥行雷
 
-第二章
-
 ### 紅身春牛頭朝南，赤足芒神立牛左
 
 <figure style="margin:22px 0;text-align:center">
