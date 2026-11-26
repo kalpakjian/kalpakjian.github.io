@@ -28,15 +28,17 @@ permalink: ocr/cover/
 
 ## 封面文字
 
+馬年開運
+
 **陳雲**
 
-連程分析
+運程分析
 
 政治趨勢
 
 民間風俗
 
-第十四
+天人大事年鑑
 
 <style>
 .markdown-body h1,
