@@ -16,7 +16,7 @@ permalink: ocr/zongxu-2/
 
 > 出處：《馬年開運》（丙午 2026）總序，第 10–11 頁；OCR 校對稿，未經出版社校訂。
 
-## 命定與定命
+# 命定與定命
 
 命由天地承受而來，有長短，順命的理而行就長壽，逆命的理而行就短壽，故此我們要有禮義和行動的法則來定命。統治社會的君子是盡力去行禮法和祭祀神靈，至於庶民就盡力去做好他們的事業。2「定命」是華夏古人頗為重要的觀念，即是知道自己命定要做些什麼，之後按照自己所處的位置來制定自己的生涯指引。
 
@@ -31,3 +31,11 @@ permalink: ocr/zongxu-2/
 3命分，此處我是創新此詞的用法。命在唐·宋的意思依然是命運或天賦。唐人白居易《白雲期》詩，「年長識
 
 [補自 Paddle] 命分，心慵少營為。」宋人俞文豹《吹劍錄外集》（《欽定四庫全書》本）曰：「中人以下，逐逐利慾，使其不
+
+<style>
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 { color: var(--custom-accent); }
+.markdown-body .ocr-note { font-size: 0.82em; line-height: 1.5; }
+.markdown-body .ocr-note .note-num { color: var(--custom-accent); font-weight: 600; }
+</style>

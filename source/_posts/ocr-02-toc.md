@@ -14,7 +14,7 @@ permalink: ocr/toc/
 
 > 出處：《馬年開運》（丙午 2026）目錄頁（第 3–4 頁，頁碼依原書）；OCR 校對稿，未經出版社校訂。
 
-## 目錄
+# 目錄
 
 - 總序　6
   - 樂天知命，仁者定命　6
@@ -53,3 +53,11 @@ permalink: ocr/toc/
   - 五、民間發財奇技　257
   - 六、山人致富祕笈　260
 - 復興神壇簡介　270
+
+<style>
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 { color: var(--custom-accent); }
+.markdown-body .ocr-note { font-size: 0.82em; line-height: 1.5; }
+.markdown-body .ocr-note .note-num { color: var(--custom-accent); font-weight: 600; }
+</style>
