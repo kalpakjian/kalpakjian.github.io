@@ -428,6 +428,12 @@ permalink: ocr/ch05/
 .markdown-body h3,
 .markdown-body h4 { color: var(--custom-accent); }
 .markdown-body h4 { font-size: 1.05em; margin: 1.35em 0 0.5em; }
+/* 側欄目錄：本頁 23 條會超出一屏，主題預設把 scrollbar 隱藏，下半截（子鼠…亥豬）會像不存在 → 這裡讓它看得見並加高 */
+#toc .toc-body { max-height: 86vh; scrollbar-width: thin; scrollbar-color: rgba(192, 57, 43, 0.5) transparent; }
+#toc .toc-body::-webkit-scrollbar { display: block; width: 6px; }
+#toc .toc-body::-webkit-scrollbar-track { background: transparent; }
+#toc .toc-body::-webkit-scrollbar-thumb { background: rgba(192, 57, 43, 0.45); border-radius: 3px; }
+
 .markdown-body .ocr-note { font-size: 0.82em; line-height: 1.5; }
 .markdown-body .ocr-note .note-num { color: var(--custom-accent); font-weight: 600; }
 </style>
