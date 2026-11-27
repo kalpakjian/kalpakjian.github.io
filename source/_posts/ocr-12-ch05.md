@@ -13,8 +13,6 @@ hide_from_home: true   # 專題子頁：不列首頁（歸檔／分類／標籤�
 permalink: ocr/ch05/
 ---
 
-# 第五章 十二生肖有庇佑，沖犯太歲唔駛憂
-
 春風得意馬蹄疾，馬年隨春至，喜迎好運年。古老農諺云：「牛馬年，好種田，就怕雞猴這兩年。」意思是牛年馬年一般都會風調雨順，五穀豐登，雞年猴年一般都是壞年冬，歲歉收。凡事樂觀，凡事相信，凡事盼望，山人相信今年會是你的好時年，一本開運書在手，十二生肖人人東成西就，沖犯太歲可化解，大家唔駛愁。
 
 ## 一、太歲信仰，刑沖破害
@@ -121,6 +119,63 @@ permalink: ocr/ch05/
 <figure style="margin:22px 0;text-align:center">
 <img src="/img/ocr-ch05/star-chart-197.jpg" alt="原書第 197 頁「丙午年十二生肖與十二星宮之流年星盤」：十二生肖分列各方，各配所屬星宮（白羊、金牛、雙子、巨蟹、獅子、處女、天秤、天蠍、人馬、山羊、水瓶、雙魚），宮內外逐一標出流年吉星與凶星——三臺、將星、金匱、扳鞍、歲合、太陽、天解、文昌、月德、紅鸞、紫微、龍德等，以及劍鋒、飛刃、大耗、天哭、劫煞、死符、貫索、官符等" style="width:100%;max-width:560px;border-radius:12px">
 <figcaption class="image-caption" style="margin:10px 0 0;text-align:left">圖 2：原書第 197 頁的「丙午年十二生肖與十二星宮之流年星盤」——十二生肖配十二星宮，逐宮標出流年吉凶星曜，配合紫微斗數、華夏、天竺和古希臘的星相學，共冶一爐。</figcaption>
+</figure>
+
+<figure style="margin:22px 0;text-align:center">
+<svg viewBox="0 0 520 400" role="img" aria-labelledby="fig2b-t" style="width:100%;max-width:520px;height:auto">
+<title id="fig2b-t">十二生肖與十二星宮對應表</title>
+<desc>子鼠－水瓶、丑牛－山羊、寅虎－人馬、卯兔－天蠍、辰龍－天秤、巳蛇－處女、午馬－獅子、未羊－巨蟹、申猴－雙子、酉雞－金牛、戌狗－白羊、亥豬－雙魚。依原書第 197 頁星盤的位置對應整理。</desc>
+<text x="260" y="34" text-anchor="middle" font-size="16" fill="var(--custom-accent, #c0392b)">十二生肖 × 十二星宮（依原書 p197 星盤位置整理）</text>
+<text x="86" y="74" text-anchor="end" font-size="15" fill="currentColor">子鼠</text>
+<text x="100" y="74" font-size="13" fill="var(--custom-accent, #c0392b)">→</text>
+<text x="112" y="74" font-size="15" fill="currentColor" opacity="0.9">水瓶座</text>
+<line x1="16" y1="88" x2="240" y2="88" stroke="currentColor" stroke-opacity="0.12"/>
+<text x="86" y="126" text-anchor="end" font-size="15" fill="currentColor">丑牛</text>
+<text x="100" y="126" font-size="13" fill="var(--custom-accent, #c0392b)">→</text>
+<text x="112" y="126" font-size="15" fill="currentColor" opacity="0.9">山羊座</text>
+<line x1="16" y1="140" x2="240" y2="140" stroke="currentColor" stroke-opacity="0.12"/>
+<text x="86" y="178" text-anchor="end" font-size="15" fill="currentColor">寅虎</text>
+<text x="100" y="178" font-size="13" fill="var(--custom-accent, #c0392b)">→</text>
+<text x="112" y="178" font-size="15" fill="currentColor" opacity="0.9">人馬座</text>
+<line x1="16" y1="192" x2="240" y2="192" stroke="currentColor" stroke-opacity="0.12"/>
+<text x="86" y="230" text-anchor="end" font-size="15" fill="currentColor">卯兔</text>
+<text x="100" y="230" font-size="13" fill="var(--custom-accent, #c0392b)">→</text>
+<text x="112" y="230" font-size="15" fill="currentColor" opacity="0.9">天蠍座</text>
+<line x1="16" y1="244" x2="240" y2="244" stroke="currentColor" stroke-opacity="0.12"/>
+<text x="86" y="282" text-anchor="end" font-size="15" fill="currentColor">辰龍</text>
+<text x="100" y="282" font-size="13" fill="var(--custom-accent, #c0392b)">→</text>
+<text x="112" y="282" font-size="15" fill="currentColor" opacity="0.9">天秤座</text>
+<line x1="16" y1="296" x2="240" y2="296" stroke="currentColor" stroke-opacity="0.12"/>
+<text x="86" y="334" text-anchor="end" font-size="15" fill="currentColor">巳蛇</text>
+<text x="100" y="334" font-size="13" fill="var(--custom-accent, #c0392b)">→</text>
+<text x="112" y="334" font-size="15" fill="currentColor" opacity="0.9">處女座</text>
+<line x1="16" y1="348" x2="240" y2="348" stroke="currentColor" stroke-opacity="0.12"/>
+<text x="342" y="74" text-anchor="end" font-size="15" fill="currentColor">午馬</text>
+<text x="356" y="74" font-size="13" fill="var(--custom-accent, #c0392b)">→</text>
+<text x="368" y="74" font-size="15" fill="currentColor" opacity="0.9">獅子座</text>
+<line x1="272" y1="88" x2="496" y2="88" stroke="currentColor" stroke-opacity="0.12"/>
+<text x="342" y="126" text-anchor="end" font-size="15" fill="currentColor">未羊</text>
+<text x="356" y="126" font-size="13" fill="var(--custom-accent, #c0392b)">→</text>
+<text x="368" y="126" font-size="15" fill="currentColor" opacity="0.9">巨蟹座</text>
+<line x1="272" y1="140" x2="496" y2="140" stroke="currentColor" stroke-opacity="0.12"/>
+<text x="342" y="178" text-anchor="end" font-size="15" fill="currentColor">申猴</text>
+<text x="356" y="178" font-size="13" fill="var(--custom-accent, #c0392b)">→</text>
+<text x="368" y="178" font-size="15" fill="currentColor" opacity="0.9">雙子座</text>
+<line x1="272" y1="192" x2="496" y2="192" stroke="currentColor" stroke-opacity="0.12"/>
+<text x="342" y="230" text-anchor="end" font-size="15" fill="currentColor">酉雞</text>
+<text x="356" y="230" font-size="13" fill="var(--custom-accent, #c0392b)">→</text>
+<text x="368" y="230" font-size="15" fill="currentColor" opacity="0.9">金牛座</text>
+<line x1="272" y1="244" x2="496" y2="244" stroke="currentColor" stroke-opacity="0.12"/>
+<text x="342" y="282" text-anchor="end" font-size="15" fill="currentColor">戌狗</text>
+<text x="356" y="282" font-size="13" fill="var(--custom-accent, #c0392b)">→</text>
+<text x="368" y="282" font-size="15" fill="currentColor" opacity="0.9">白羊座</text>
+<line x1="272" y1="296" x2="496" y2="296" stroke="currentColor" stroke-opacity="0.12"/>
+<text x="342" y="334" text-anchor="end" font-size="15" fill="currentColor">亥豬</text>
+<text x="356" y="334" font-size="13" fill="var(--custom-accent, #c0392b)">→</text>
+<text x="368" y="334" font-size="15" fill="currentColor" opacity="0.9">雙魚座</text>
+<line x1="272" y1="348" x2="496" y2="348" stroke="currentColor" stroke-opacity="0.12"/>
+</svg>
+<figcaption class="image-caption" style="margin:10px 0 0;text-align:left">圖 2b：原書星盤把十二生肖與十二星宮並列，這裡按圖版上的位置逐一列出對應關係（示意整理，供對照；星曜分佈仍以上方原書圖版為準）。</figcaption>
 </figure>
 
 ### 子鼠
