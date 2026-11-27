@@ -196,4 +196,28 @@ body {
   }
 }
 
-
+/* ===== 側欄目錄（tocbot）修正 ===== */
+/* Fluid 1.9.9 用 .toc-list-item{-webkit-line-clamp:2;overflow:hidden} 做長標題省略號，
+   但只要該 <li> 含有子層 <ol>（h1→h2→h3 這種鏈），整棵子樹會被一併夾掉，
+   目錄看起來只剩第一條（例如只見到章標題）。含子層的項目必須放行。 */
+#toc .toc-list-item {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+/* 目錄可捲，但主題把 scrollbar 藏起來；長目錄下半截會像不存在，這裡讓它看得見 */
+#toc .toc-body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(192, 57, 43, 0.5) transparent;
+}
+#toc .toc-body::-webkit-scrollbar {
+  display: block;
+  width: 6px;
+}
+#toc .toc-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+#toc .toc-body::-webkit-scrollbar-thumb {
+  background: rgba(192, 57, 43, 0.45);
+  border-radius: 3px;
+}
